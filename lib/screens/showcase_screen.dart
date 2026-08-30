@@ -549,6 +549,10 @@ class _CalloutSideLayerState extends State<_CalloutSideLayer>
   late final Animation<double> _entry;
   DeviceType? _outgoing;
 
+  /// Counts hops, so the tiles motif reseeds its per-tile speeds each time
+  /// instead of taking the card apart in the same order every lap.
+  int _hop = 0;
+
   @override
   void initState() {
     super.initState();
@@ -574,6 +578,7 @@ class _CalloutSideLayerState extends State<_CalloutSideLayer>
     super.didUpdateWidget(oldWidget);
     if (oldWidget.device != widget.device) {
       _outgoing = oldWidget.device;
+      _hop++;
       _controller.forward(from: 0);
     }
   }
@@ -601,13 +606,14 @@ class _CalloutSideLayerState extends State<_CalloutSideLayer>
             ? _outgoing!
             : widget.device;
         final Animation<double> transition = showingOutgoing ? _exit : _entry;
-        final motion.CalloutMotif motif = _motifFor(shownDevice);
-
+        // Every hop dissolves: the callouts do not travel between sets, they
+        // come apart where they stand and the next set assembles in place.
         return motion.CalloutTransition(
-          motif: motif,
+          motif: motion.CalloutMotif.tiles,
           animation: transition,
           entering: !showingOutgoing,
           side: _motionSide(widget.side),
+          seed: _hop,
           child: _buildCalloutSet(
             context,
             shownDevice,
@@ -875,14 +881,6 @@ motion.CalloutSide _motionSide(callouts.CalloutSide side) {
   return side == callouts.CalloutSide.left
       ? motion.CalloutSide.left
       : motion.CalloutSide.right;
-}
-
-motion.CalloutMotif _motifFor(DeviceType device) {
-  return switch (device) {
-    DeviceType.desktop => motion.CalloutMotif.sweep,
-    DeviceType.mobile => motion.CalloutMotif.trapdoor,
-    DeviceType.tablet => motion.CalloutMotif.siphon,
-  };
 }
 
 callouts.DeviceType _calloutDevice(DeviceType device) {
