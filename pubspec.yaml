@@ -1,0 +1,81 @@
+name: plate_number_holder
+description: >-
+  Showcase / poster app for the plate_number package. Lives outside the
+  package repo so the library stays free of demo-only assets (fonts,
+  textures, device-frame art) and demo-only dependencies.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.10.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # ---------------------------------------------------------------------------
+  # The library under demonstration.
+  #
+  # This is a PATH dependency on the sibling checkout, so editing the library
+  # and hot-reloading this app is a single loop — no publish, no `pub get`
+  # between the two. It assumes the two repos sit side by side:
+  #
+  #   StudioProjects/
+  #     plate-number-upgrade/   <- the package (this dependency)
+  #     plate_number_holder/    <- this app
+  #
+  # When the library is split into core_plate / iran_plate / germany_plate,
+  # this single entry is replaced by the country packages the demo actually
+  # shows, each of which pulls core_plate in transitively:
+  #
+  #   iran_plate:
+  #     path: ../plate-core/packages/iran_plate
+  #   germany_plate:
+  #     path: ../plate-core/packages/germany_plate
+  # ---------------------------------------------------------------------------
+  plate_number:
+    path: ../plate-core
+
+  # Used directly by the showcase to drive PlateCardBloc from the demo screen.
+  flutter_bloc: ^8.1.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+
+  # Poster-only artwork. These belong to the demo, not to the library — the
+  # library ships only the assets a real plate needs (flag SVG, EU stickers).
+  assets:
+    - assets/textures/bg_grain_a.png
+    - assets/textures/bg_grain_b.png
+    - assets/textures/tex_screen.png
+    - assets/textures/tex_overlay.png
+
+  # Each family ships as per-script subsets, and the `-latin-ext` file holds
+  # ONLY the Latin Extended block — it has no A–Z at all. Declaring it alone
+  # left every glyph in the poster to the system fallback, which has neither
+  # the `wght`/`wdth` axes nor the metrics §2 is specified against, so cards
+  # wrapped far taller than the design and collided. Every subset a family has
+  # must be listed; Flutter falls through them glyph by glyph.
+  fonts:
+    - family: Archivo
+      fonts:
+        - asset: assets/fonts/Archivo-latin.ttf
+        - asset: assets/fonts/Archivo-latin-ext.ttf
+    - family: MartianMono
+      fonts:
+        - asset: assets/fonts/MartianMono-latin.ttf
+        - asset: assets/fonts/MartianMono-latin-ext.ttf
+    - family: Newsreader
+      fonts:
+        - asset: assets/fonts/Newsreader-latin.ttf
+        - asset: assets/fonts/Newsreader-latin-ext.ttf
+    - family: Vazirmatn
+      fonts:
+        - asset: assets/fonts/Vazirmatn-arabic.ttf
+        - asset: assets/fonts/Vazirmatn-latin.ttf
+        - asset: assets/fonts/Vazirmatn-latin-ext.ttf
