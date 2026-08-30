@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:plate_number/model/plate_box.dart';
 import 'package:plate_number/model/plate_country.dart';
+import 'package:plate_number/model/plate_spec.dart';
 import 'package:plate_number/theme/plate_theme.dart';
 import 'package:plate_number/widgets/country_panel.dart';
 import 'package:plate_number/widgets/plate_flag.dart';
@@ -55,6 +57,7 @@ class FlagPanelGallery extends StatelessWidget {
                             child: CountryPanel(
                               theme: theme,
                               country: PlateCountry.iran,
+                              panel: const PlatePanel(box: PlateBox(0, 0, 0, 0)),
                             ),
                           ),
                         ))
