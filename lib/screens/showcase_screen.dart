@@ -608,11 +608,9 @@ class _CalloutSideLayerState extends State<_CalloutSideLayer>
         final Animation<double> transition = showingOutgoing ? _exit : _entry;
         // Every hop dissolves: the callouts do not travel between sets, they
         // come apart where they stand and the next set assembles in place.
-        return motion.CalloutTransition(
-          motif: motion.CalloutMotif.tiles,
+        return motion.TileTransition(
           animation: transition,
           entering: !showingOutgoing,
-          side: _motionSide(widget.side),
           seed: _hop,
           child: _buildCalloutSet(
             context,
@@ -875,12 +873,6 @@ _DeviceGeometry _geometryFor(DeviceType device) {
     DeviceType.mobile => const _DeviceGeometry(0.677, 0.191, 0.190, 0.646),
     DeviceType.tablet => const _DeviceGeometry(0.523, 0.231, 0.454, 0.556),
   };
-}
-
-motion.CalloutSide _motionSide(callouts.CalloutSide side) {
-  return side == callouts.CalloutSide.left
-      ? motion.CalloutSide.left
-      : motion.CalloutSide.right;
 }
 
 callouts.DeviceType _calloutDevice(DeviceType device) {
