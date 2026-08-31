@@ -13,7 +13,6 @@ class PlateDisplay extends StatelessWidget {
     this.inactiveColor,
     this.keyboard,
     this.bloc,
-    @Deprecated('Use inputSource') this.letterInputMode,
     this.inputSource,
     this.onActiveIndexChanged,
     this.controller,
@@ -27,12 +26,6 @@ class PlateDisplay extends StatelessWidget {
   /// Lets a host drive character entry from outside the plate (e.g. a custom
   /// on-screen keypad). Forwarded straight to [PlateCanvas].
   final PlateInputController? controller;
-
-  /// How the car plate letter is entered. Null lets the plate resolve the
-  /// platform default; pass [LetterInputMode.hostKeypad] when an app-supplied
-  /// pad (e.g. the laptop deck's letter keys) feeds the letter in.
-  @Deprecated('Use inputSource')
-  final LetterInputMode? letterInputMode;
 
   /// How characters get into the plate. Null lets the plate resolve the
   /// platform default; pass [PlateInputSource.host] when an app-supplied pad
@@ -78,7 +71,6 @@ class PlateDisplay extends StatelessWidget {
       plateWidthFactor: plateWidthFactor,
       activeColor: activeColor,
       inactiveColor: inactiveColor,
-      letterInputMode: letterInputMode,
       inputSource: inputSource,
       onActiveIndexChanged: onActiveIndexChanged,
       controller: controller,
@@ -102,7 +94,6 @@ class _PlateDisplayBody extends StatelessWidget {
     required this.plateWidthFactor,
     required this.activeColor,
     required this.inactiveColor,
-    required this.letterInputMode,
     required this.inputSource,
     required this.onActiveIndexChanged,
     required this.controller,
@@ -115,7 +106,6 @@ class _PlateDisplayBody extends StatelessWidget {
   final double plateWidthFactor;
   final Color? activeColor;
   final Color? inactiveColor;
-  final LetterInputMode? letterInputMode;
   final PlateInputSource? inputSource;
   final ValueChanged<int?>? onActiveIndexChanged;
   final PlateInputController? controller;
@@ -129,18 +119,21 @@ class _PlateDisplayBody extends StatelessWidget {
       plateWidthFactor: plateWidthFactor,
       activeColor: activeColor,
       inactiveColor: inactiveColor,
-      letterInputMode: letterInputMode,
       inputSource: inputSource,
       onActiveIndexChanged: onActiveIndexChanged,
       controller: controller,
     );
 
+    // Boundaried against each other: the two change on completely different
+    // clocks — a key lights and unlights twice per keystroke, the plate's
+    // glyphs change once — and sharing a layer meant each flash re-rasterised
+    // the plate, and each typed character re-rasterised all 42 keys.
     final body = keyboard == null
         ? inputSurface
         : Column(
             children: [
-              Expanded(child: inputSurface),
-              keyboard!,
+              Expanded(child: RepaintBoundary(child: inputSurface)),
+              RepaintBoundary(child: keyboard!),
             ],
           );
 
@@ -160,7 +153,6 @@ class _PlateInputSurface extends StatelessWidget {
     required this.plateWidthFactor,
     required this.activeColor,
     required this.inactiveColor,
-    required this.letterInputMode,
     required this.inputSource,
     required this.onActiveIndexChanged,
     required this.controller,
@@ -170,7 +162,6 @@ class _PlateInputSurface extends StatelessWidget {
   final double plateWidthFactor;
   final Color? activeColor;
   final Color? inactiveColor;
-  final LetterInputMode? letterInputMode;
   final PlateInputSource? inputSource;
   final ValueChanged<int?>? onActiveIndexChanged;
   final PlateInputController? controller;
@@ -185,7 +176,6 @@ class _PlateInputSurface extends StatelessWidget {
 
     final plate = PlateCanvas(
       spec: spec,
-      letterInputMode: letterInputMode,
       inputSource: inputSource,
       onActiveIndexChanged: onActiveIndexChanged,
       controller: controller,

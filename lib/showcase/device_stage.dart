@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:plate_number/plate_number.dart';
 
 import '../device_preview/device_config.dart';
@@ -168,6 +169,15 @@ class _DeviceStageState extends State<DeviceStage> {
       return;
     }
     final result = GermanPlateValidator.validateValues(spec, values);
+    // Only `isValid` is rendered from this (it picks the underline colour), and
+    // this fires on EVERY bloc emission — i.e. every keystroke. Rebuilding the
+    // stage each time meant a new DeviceFrame, a fresh page on the glass and a
+    // fresh keypad per character. Store the result either way; rebuild only
+    // when the thing actually drawn from it changes.
+    if (_germanValidation?.isValid == result.isValid) {
+      _germanValidation = result;
+      return;
+    }
     setState(() => _germanValidation = result);
   }
 
@@ -313,41 +323,50 @@ class _DeviceStageState extends State<DeviceStage> {
         controller: config.usesController ? _plateInput : null,
         showBackdrop: true,
         plateWidthFactor: config.plateWidthFactor,
-        // The keypad is the only part of the page that cares about the pressed
-        // key, so it — and nothing above it — resubscribes per keystroke.
+        // The pad watches the pressed key itself, so the twice-per-keystroke
+        // flash rebuilds individual keys rather than this whole page.
+        //
+        // The barred-key set is the one thing here that does have to track the
+        // typed value, so the full pad sits under a BlocBuilder scoped to
+        // itself — the recompute stays local instead of dragging the stage,
+        // the device shell and the plate along with it.
         keyboard: !config.showsKeypad
             ? null
-            : ValueListenableBuilder<String?>(
-                valueListenable: _pressedKey,
-                builder: (context, pressed, _) => !config.compactKeypad
-                    ? PlateKeypad(
-                        highlightedKey: pressed,
-                        compact: false,
-                        showLetters: showLetters,
-                        digitAlphabet: PlateAlphabet.latinDigits,
-                        letterAlphabet: PlateAlphabet.latinUppercase,
-                        activeAlphabet: activeAlphabet,
-                        // NOTE the deliberate demo tension: the auto-typist
-                        // commits via bloc.add and is unaffected by key
-                        // enabledness, so the scripted "88" red beat still
-                        // plays; greying protects only interactive taps.
-                        unavailableKeys: _unavailableKeysFor(_bloc.state),
-                        theme: const PlateKeypadTheme(
-                          highlight: PosterTokens.keypadHighlight,
-                          keyBorder: PosterTokens.hairline,
-                        ),
-                        onKey: (key) => key == kPlateBackspaceKey
-                            ? _plateInput.backspace()
-                            : _plateInput.submit(key),
-                      )
-                    : PlateKeypad(
-                        highlightedKey: pressed,
-                        compact: config.compactKeypad,
-                        theme: const PlateKeypadTheme(
-                          highlight: PosterTokens.keypadHighlight,
-                          keyBorder: PosterTokens.hairline,
-                        ),
-                      ),
+            : !config.compactKeypad
+            ? BlocBuilder<PlateCardBloc, PlateCardState>(
+                bloc: _bloc,
+                builder: (context, state) => PlateKeypad(
+                  highlightedKey: null,
+                  highlightedKeyListenable: _pressedKey,
+                  compact: false,
+                  showLetters: showLetters,
+                  digitAlphabet: PlateAlphabet.latinDigits,
+                  letterAlphabet: PlateAlphabet.latinUppercase,
+                  activeAlphabet: activeAlphabet,
+                  // NOTE the deliberate demo tension: the auto-typist commits
+                  // via bloc.add and is unaffected by key enabledness, so the
+                  // scripted "88" red beat still plays; greying protects only
+                  // interactive taps.
+                  unavailableKeys: _unavailableKeysFor(state),
+                  theme: const PlateKeypadTheme(
+                    highlight: PosterTokens.keypadHighlight,
+                    keyBorder: PosterTokens.hairline,
+                  ),
+                  onKey: (key) => key == kPlateBackspaceKey
+                      ? _plateInput.backspace()
+                      : _plateInput.submit(key),
+                ),
+              )
+            // The compact pad bars nothing, so it never needs the bloc: built
+            // once, and only its keys react to a flash.
+            : PlateKeypad(
+                highlightedKey: null,
+                highlightedKeyListenable: _pressedKey,
+                compact: config.compactKeypad,
+                theme: const PlateKeypadTheme(
+                  highlight: PosterTokens.keypadHighlight,
+                  keyBorder: PosterTokens.hairline,
+                ),
               ),
       ),
     );
