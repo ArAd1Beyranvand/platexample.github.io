@@ -8,12 +8,12 @@
 //   * everything here goes through the package's public surface
 //     (`package:plate_number/plate_number.dart`), so if the demo compiles,
 //     the published API is genuinely sufficient to build a real UI with;
-//   * the library can be split into core_plate + iran_plate + germany_plate
-//     without touching a single file in this project beyond the import lines.
+//   * the library could be split into plate_number + plate_keypad +
+//     iran_plate + germany_plate without touching a single file in this
+//     project beyond the import lines — which is exactly what P7 and P8 did.
 //
-// The dependency is wired as a path dependency in pubspec.yaml — see the
-// comment block there for the expected folder layout and for what changes
-// once the country packages land.
+// The libraries are wired as path dependencies in pubspec.yaml — see the
+// comment block there for the expected folder layout.
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

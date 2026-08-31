@@ -25,12 +25,12 @@ dependencies:
   #   StudioProjects/plate/
   #     plate-core/             package `plate_number` (-> `core_plate` in P9)
   #     plate-keypad/           package `plate_keypad`  (extracted in P7)
-  #     iran-plate/             package `iran_plate`    (P8, not yet)
-  #     germany-plate/          package `germany_plate` (P8, not yet)
+  #     iran-plate/             package `iran_plate`    (extracted in P8)
+  #     germany-plate/          package `germany_plate` (extracted in P8)
   #     plate_number_holder/    this app
   #
-  # P8 will move the country specs/assets/validator into iran-plate and
-  # germany-plate; until then plate_number still ships them.
+  # As of P8 plate_number ships no country and no assets, so this app names
+  # every country it draws. An app that draws one country depends on one.
   # ---------------------------------------------------------------------------
   plate_number:
     path: ../plate-core
@@ -39,6 +39,14 @@ dependencies:
   # in P7. Depends on plate_number for PlateAlphabet.
   plate_keypad:
     path: ../plate-keypad
+
+  # The country packages, extracted from plate_number in P8. Each owns its own
+  # plate specs, alphabets and flag/sticker assets, and depends on plate_number
+  # and nothing else — not on the keypad, and not on each other.
+  iran_plate:
+    path: ../iran-plate
+  germany_plate:
+    path: ../germany-plate
 
   # Used directly by the showcase to drive PlateCardBloc from the demo screen.
   flutter_bloc: ^9.1.1
@@ -51,8 +59,9 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
-  # Poster-only artwork. These belong to the demo, not to the library — the
-  # library ships only the assets a real plate needs (flag SVG, EU stickers).
+  # Poster-only artwork. These belong to the demo, not to the library — core
+  # ships no assets at all since P8, and the assets a real plate needs (flag
+  # SVGs, EU stickers) ship in iran_plate / germany_plate.
   assets:
     - assets/textures/bg_grain_a.png
     - assets/textures/bg_grain_b.png

@@ -1,6 +1,7 @@
 // Run with: flutter run -t lib/minimal/main.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iran_plate/iran_plate.dart';
 import 'package:plate_keypad/plate_keypad.dart';
 import 'package:plate_number/plate_number.dart';
 
