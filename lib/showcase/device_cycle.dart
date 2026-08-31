@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:plate_number/model/plate_spec.dart';
+import 'package:plate_number/plate_number.dart';
 
 import '../device_preview/device_config.dart';
 import 'demo_config.dart';
