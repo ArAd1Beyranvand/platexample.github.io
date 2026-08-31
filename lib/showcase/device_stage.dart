@@ -1,7 +1,4 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:plate_number/plate_number.dart';
 
 import '../device_preview/device_config.dart';
@@ -93,99 +90,15 @@ class _DeviceStageState extends State<DeviceStage> {
   /// pad via its alphabet. Null when focus is off the plate.
   int? _activeIndex;
 
-  /// Latest validation of the German plate's typed value, or null when nothing
-  /// has been flagged yet (empty letter slot, or a non-German device is shown).
-  /// Drives the tablet plate's active-field colour: red when invalid. Reset on
-  /// every content swap, same as [_activeIndex].
-  GermanPlateValidationResult? _germanValidation;
-
-  /// Watches [_bloc]'s state so typed German values can be re-validated. Re-
-  /// subscribed on every content swap because [_bloc] is recreated there.
-  StreamSubscription<PlateCardState>? _blocSub;
-
   void _setActiveIndex(int? index) {
     if (_activeIndex == index) return;
     setState(() => _activeIndex = index);
-  }
-
-  /// Barred keys for the tablet's keypad, derived from the active slot's
-  /// group and the values already typed before it. Empty when the active
-  /// slot isn't in a barred group (or there is none).
-  Set<String> _unavailableKeysFor(PlateCardState state) {
-    final index = _activeIndex;
-    if (index == null) return const {};
-    final spec = specFor(DeviceType.tablet);
-    final values = state.plateNumber.values;
-    PlateTextGroup? groupContaining(String key) {
-      for (final g in spec.textGroups) {
-        if (g.key == key && g.indices.contains(index)) return g;
-      }
-      return null;
-    }
-
-    String valueBeforeActive(PlateTextGroup group) {
-      final buffer = StringBuffer();
-      for (final i in group.indices) {
-        if (i >= index) continue;
-        buffer.write(i < values.length ? (values[i] ?? '') : '');
-      }
-      return buffer.toString();
-    }
-
-    final serialGroup = groupContaining('serial');
-    if (serialGroup != null) {
-      return GermanPlateValidator.barredNextDigits(
-        valueBeforeActive(serialGroup),
-      );
-    }
-    final lettersGroup = groupContaining('letters');
-    if (lettersGroup != null) {
-      return GermanPlateValidator.barredNextLetters(
-        valueBeforeActive(lettersGroup),
-      );
-    }
-    return const {};
-  }
-
-  /// Subscribes [_validateGermanPlate] to the current [_bloc], dropping any
-  /// subscription to a previous (now-closed) bloc first.
-  void _listenToBloc() {
-    _blocSub?.cancel();
-    _blocSub = _bloc.stream.listen(_validateGermanPlate);
-  }
-
-  /// Re-derives [_germanValidation] from a fresh plate state. Only meaningful
-  /// while the German plate is on screen; a no-op for other devices.
-  void _validateGermanPlate(PlateCardState state) {
-    if (!mounted || _contentDevice != DeviceType.tablet) return;
-    final spec = specFor(DeviceType.tablet);
-    final values = state.plateNumber.values;
-    // Don't flag anything red while the identifier letter is still blank — an
-    // empty letter always fails the regex, which would be noise, not signal.
-    if (spec.valueOfGroup('letters', values).isEmpty) {
-      if (_germanValidation != null) {
-        setState(() => _germanValidation = null);
-      }
-      return;
-    }
-    final result = GermanPlateValidator.validateValues(spec, values);
-    // Only `isValid` is rendered from this (it picks the underline colour), and
-    // this fires on EVERY bloc emission — i.e. every keystroke. Rebuilding the
-    // stage each time meant a new DeviceFrame, a fresh page on the glass and a
-    // fresh keypad per character. Store the result either way; rebuild only
-    // when the thing actually drawn from it changes.
-    if (_germanValidation?.isValid == result.isValid) {
-      _germanValidation = result;
-      return;
-    }
-    setState(() => _germanValidation = result);
   }
 
   @override
   void initState() {
     super.initState();
     _typist.addListener(_syncPressedKey);
-    _listenToBloc();
     // The first device never fires a transition phase, so kick it off directly
     // once the tree is laid out.
     WidgetsBinding.instance.addPostFrameCallback((_) => _maybeStartTyping());
@@ -196,7 +109,6 @@ class _DeviceStageState extends State<DeviceStage> {
     _typist.removeListener(_syncPressedKey);
     _typist.dispose();
     _pressedKey.dispose();
-    _blocSub?.cancel();
     _bloc.close();
     _controller.dispose();
     _plateInput.dispose();
@@ -223,8 +135,6 @@ class _DeviceStageState extends State<DeviceStage> {
     _contentDevice = _frameDevice;
     _bloc = PlateCardBloc(specFor(_contentDevice));
     _activeIndex = null;
-    _germanValidation = null;
-    _listenToBloc();
     setState(() {});
   }
 
@@ -307,13 +217,15 @@ class _DeviceStageState extends State<DeviceStage> {
       builder: (context, _) => PlateDisplay(
         spec: config.spec,
         mode: PlateMode.input,
-        // activeColor is the completed-field underline colour; swap it to red
-        // for the tablet's German plate when the typed value is invalid (e.g. a
-        // forbidden letter combination). Other devices keep the accent.
-        activeColor:
-            config.showsValidation && _germanValidation?.isValid == false
-            ? PosterTokens.invalid
-            : PosterTokens.accent,
+        activeColor: PosterTokens.accent,
+        // The plate judges itself now: with a validator and autoValidate on, it
+        // paints its own completed-field underline red when the typed value is
+        // invalid. The stage neither subscribes to the bloc nor holds a verdict
+        // — a host that wants its own timing would read
+        // PlateInputController.validation instead.
+        alertColor: PosterTokens.invalid,
+        validator: config.validator,
+        autoValidate: config.showsValidation,
         bloc: _bloc,
         // The laptop deck already carries letter keys, so its letter comes in
         // through the library's on-screen-keypad mode instead of the modal
@@ -326,39 +238,34 @@ class _DeviceStageState extends State<DeviceStage> {
         // The pad watches the pressed key itself, so the twice-per-keystroke
         // flash rebuilds individual keys rather than this whole page.
         //
-        // The barred-key set is the one thing here that does have to track the
-        // typed value, so the full pad sits under a BlocBuilder scoped to
-        // itself — the recompute stays local instead of dragging the stage,
-        // the device shell and the plate along with it.
+        // The full pad used to sit under a BlocBuilder scoped to itself,
+        // because the barred-key set had to track the typed value. Nothing in
+        // it depends on plate state any more, so the BlocBuilder is gone and
+        // the pad is built from the stage's own state alone. The rebuild was
+        // dropped, not hoisted.
         keyboard: !config.showsKeypad
             ? null
             : !config.compactKeypad
-            ? BlocBuilder<PlateCardBloc, PlateCardState>(
-                bloc: _bloc,
-                builder: (context, state) => PlateKeypad(
-                  highlightedKey: null,
-                  highlightedKeyListenable: _pressedKey,
-                  compact: false,
-                  showLetters: showLetters,
-                  digitAlphabet: PlateAlphabet.latinDigits,
-                  letterAlphabet: PlateAlphabet.latinUppercase,
-                  activeAlphabet: activeAlphabet,
-                  // NOTE the deliberate demo tension: the auto-typist commits
-                  // via bloc.add and is unaffected by key enabledness, so the
-                  // scripted "88" red beat still plays; greying protects only
-                  // interactive taps.
-                  unavailableKeys: _unavailableKeysFor(state),
-                  theme: const PlateKeypadTheme(
-                    highlight: PosterTokens.keypadHighlight,
-                    keyBorder: PosterTokens.hairline,
-                  ),
-                  onKey: (key) => key == kPlateBackspaceKey
-                      ? _plateInput.backspace()
-                      : _plateInput.submit(key),
+            ? PlateKeypad(
+                highlightedKey: null,
+                highlightedKeyListenable: _pressedKey,
+                compact: false,
+                showLetters: showLetters,
+                digitAlphabet: PlateAlphabet.latinDigits,
+                letterAlphabet: PlateAlphabet.latinUppercase,
+                activeAlphabet: activeAlphabet,
+                // The demo now types a forbidden value by hand or by script —
+                // every key in the active alphabet is tappable either way — and
+                // the plate goes red once it lands. That is the behaviour being
+                // demonstrated.
+                theme: const PlateKeypadTheme(
+                  highlight: PosterTokens.keypadHighlight,
+                  keyBorder: PosterTokens.hairline,
                 ),
+                onKey: (key) => key == kPlateBackspaceKey
+                    ? _plateInput.backspace()
+                    : _plateInput.submit(key),
               )
-            // The compact pad bars nothing, so it never needs the bloc: built
-            // once, and only its keys react to a flash.
             : PlateKeypad(
                 highlightedKey: null,
                 highlightedKeyListenable: _pressedKey,

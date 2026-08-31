@@ -21,6 +21,7 @@ class DemoConfig {
     required this.plateWidthFactor,
     required this.usesController,
     required this.showsValidation,
+    this.validator,
     required this.compactKeypad,
     required this.showsKeypad,
   });
@@ -43,8 +44,14 @@ class DemoConfig {
   final bool usesController;
 
   /// Whether typed values are validated (the tablet's German plate) — gates the
-  /// active-slot tracking and the red invalid-underline colour.
+  /// active-slot tracking and, as `PlateCanvas.autoValidate`, the red
+  /// invalid-underline colour the plate now paints for itself.
   final bool showsValidation;
+
+  /// The rule this device's plate is judged against, when [showsValidation] is
+  /// on. Variation as data: a country validator is a value in this table, not
+  /// a `device == tablet` branch in the stage. Never prevents a keystroke.
+  final PlateValidator? validator;
 
   /// Whether the on-screen keypad renders in its compact layout (mobile) rather
   /// than the full pad (tablet). Only meaningful when [showsKeypad] is true.
@@ -75,6 +82,7 @@ const Map<DeviceType, DemoConfig> demoConfigs = {
     plateWidthFactor: 0.62,
     usesController: true,
     showsValidation: true,
+    validator: GermanPlateValidator(),
     compactKeypad: false,
     showsKeypad: true,
   ),

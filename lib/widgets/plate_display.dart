@@ -11,6 +11,9 @@ class PlateDisplay extends StatelessWidget {
     required this.mode,
     this.activeColor,
     this.inactiveColor,
+    this.alertColor,
+    this.validator,
+    this.autoValidate = false,
     this.keyboard,
     this.bloc,
     this.inputSource,
@@ -53,6 +56,18 @@ class PlateDisplay extends StatelessWidget {
   /// Accent for an empty/in-progress input-field underline.
   final Color? inactiveColor;
 
+  /// Underline colour the plate paints itself when [autoValidate] is on and
+  /// [validator] judges the typed value invalid.
+  final Color? alertColor;
+
+  /// The rule the plate is judged against. Never prevents input. Forwarded
+  /// straight to [PlateCanvas].
+  final PlateValidator? validator;
+
+  /// Whether the plate validates every committed value and paints the alert
+  /// itself. Forwarded straight to [PlateCanvas].
+  final bool autoValidate;
+
   /// Paints an ambient [PlateBackdrop] behind the plate content. Off by
   /// default, so existing call sites keep today's plain-glass look.
   final bool showBackdrop;
@@ -71,6 +86,9 @@ class PlateDisplay extends StatelessWidget {
       plateWidthFactor: plateWidthFactor,
       activeColor: activeColor,
       inactiveColor: inactiveColor,
+      alertColor: alertColor,
+      validator: validator,
+      autoValidate: autoValidate,
       inputSource: inputSource,
       onActiveIndexChanged: onActiveIndexChanged,
       controller: controller,
@@ -94,6 +112,9 @@ class _PlateDisplayBody extends StatelessWidget {
     required this.plateWidthFactor,
     required this.activeColor,
     required this.inactiveColor,
+    required this.alertColor,
+    required this.validator,
+    required this.autoValidate,
     required this.inputSource,
     required this.onActiveIndexChanged,
     required this.controller,
@@ -106,6 +127,9 @@ class _PlateDisplayBody extends StatelessWidget {
   final double plateWidthFactor;
   final Color? activeColor;
   final Color? inactiveColor;
+  final Color? alertColor;
+  final PlateValidator? validator;
+  final bool autoValidate;
   final PlateInputSource? inputSource;
   final ValueChanged<int?>? onActiveIndexChanged;
   final PlateInputController? controller;
@@ -119,6 +143,9 @@ class _PlateDisplayBody extends StatelessWidget {
       plateWidthFactor: plateWidthFactor,
       activeColor: activeColor,
       inactiveColor: inactiveColor,
+      alertColor: alertColor,
+      validator: validator,
+      autoValidate: autoValidate,
       inputSource: inputSource,
       onActiveIndexChanged: onActiveIndexChanged,
       controller: controller,
@@ -153,6 +180,9 @@ class _PlateInputSurface extends StatelessWidget {
     required this.plateWidthFactor,
     required this.activeColor,
     required this.inactiveColor,
+    required this.alertColor,
+    required this.validator,
+    required this.autoValidate,
     required this.inputSource,
     required this.onActiveIndexChanged,
     required this.controller,
@@ -162,6 +192,9 @@ class _PlateInputSurface extends StatelessWidget {
   final double plateWidthFactor;
   final Color? activeColor;
   final Color? inactiveColor;
+  final Color? alertColor;
+  final PlateValidator? validator;
+  final bool autoValidate;
   final PlateInputSource? inputSource;
   final ValueChanged<int?>? onActiveIndexChanged;
   final PlateInputController? controller;
@@ -172,10 +205,13 @@ class _PlateInputSurface extends StatelessWidget {
     final theme = base.copyWith(
       activeColor: activeColor ?? base.activeColor,
       inactiveColor: inactiveColor ?? base.inactiveColor,
+      alertColor: alertColor ?? base.alertColor,
     );
 
     final plate = PlateCanvas(
       spec: spec,
+      validator: validator,
+      autoValidate: autoValidate,
       inputSource: inputSource,
       onActiveIndexChanged: onActiveIndexChanged,
       controller: controller,
