@@ -1,6 +1,7 @@
 // Run with: flutter run -t lib/minimal/main.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:plate_keypad/plate_keypad.dart';
 import 'package:plate_number/plate_number.dart';
 
 void main() {
@@ -16,11 +17,19 @@ class MinimalApp extends StatelessWidget {
       home: Scaffold(
         body: BlocProvider(
           create: (_) => PlateCardBloc(IranPlates.car),
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              // inputSource defaults per platform and can be overridden
-              child: PlateCanvas(spec: IranPlates.car),
+          child: Builder(
+            builder: (context) => Center(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                // inputSource defaults per platform and can be overridden
+                child: PlateCanvas(
+                  spec: IranPlates.car,
+                  // The Iran car plate has a `chosen`-alphabet letter slot;
+                  // core no longer ships a picker, so supply one.
+                  onChooseCharacter: (alphabet) =>
+                      PlateCharacterPicker.show(context, alphabet),
+                ),
+              ),
             ),
           ),
         ),

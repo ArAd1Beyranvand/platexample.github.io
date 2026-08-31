@@ -16,25 +16,29 @@ dependencies:
   # ---------------------------------------------------------------------------
   # The library under demonstration.
   #
-  # This is a PATH dependency on the sibling checkout, so editing the library
-  # and hot-reloading this app is a single loop — no publish, no `pub get`
-  # between the two. It assumes the two repos sit side by side:
+  # PATH dependencies on sibling checkouts, so editing a library and
+  # hot-reloading this app is a single loop — no publish, no `pub get` between
+  # them. The split makes the libraries siblings of each other, not a
+  # `packages/` directory inside one repo (see plate-core/docs/split/PLAN.md
+  # §0). Layout:
   #
-  #   StudioProjects/
-  #     plate-number-upgrade/   <- the package (this dependency)
-  #     plate_number_holder/    <- this app
+  #   StudioProjects/plate/
+  #     plate-core/             package `plate_number` (-> `core_plate` in P9)
+  #     plate-keypad/           package `plate_keypad`  (extracted in P7)
+  #     iran-plate/             package `iran_plate`    (P8, not yet)
+  #     germany-plate/          package `germany_plate` (P8, not yet)
+  #     plate_number_holder/    this app
   #
-  # When the library is split into core_plate / iran_plate / germany_plate,
-  # this single entry is replaced by the country packages the demo actually
-  # shows, each of which pulls core_plate in transitively:
-  #
-  #   iran_plate:
-  #     path: ../plate-core/packages/iran_plate
-  #   germany_plate:
-  #     path: ../plate-core/packages/germany_plate
+  # P8 will move the country specs/assets/validator into iran-plate and
+  # germany-plate; until then plate_number still ships them.
   # ---------------------------------------------------------------------------
   plate_number:
     path: ../plate-core
+
+  # The optional on-screen keypad + slot picker, extracted from plate_number
+  # in P7. Depends on plate_number for PlateAlphabet.
+  plate_keypad:
+    path: ../plate-keypad
 
   # Used directly by the showcase to drive PlateCardBloc from the demo screen.
   flutter_bloc: ^9.1.1

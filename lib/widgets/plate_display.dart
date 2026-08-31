@@ -17,6 +17,7 @@ class PlateDisplay extends StatelessWidget {
     this.keyboard,
     this.bloc,
     this.inputSource,
+    required this.onChooseCharacter,
     this.onActiveIndexChanged,
     this.controller,
     this.showBackdrop = false,
@@ -32,9 +33,13 @@ class PlateDisplay extends StatelessWidget {
 
   /// How characters get into the plate. Null lets the plate resolve the
   /// platform default; pass [PlateInputSource.host] when an app-supplied pad
-  /// (e.g. the laptop deck's letter keys or the tablet's [PlateKeypad]) feeds
+  /// (e.g. the laptop deck's letter keys or the tablet's `PlateKeypad`) feeds
   /// characters in. Forwarded straight to [PlateCanvas].
   final PlateInputSource? inputSource;
+
+  /// Presents a chooser for a `chosen`-alphabet slot. Required since the keypad
+  /// split — core ships no built-in picker. Forwarded straight to [PlateCanvas].
+  final Future<String?> Function(PlateAlphabet alphabet) onChooseCharacter;
 
   /// Fires when the focused plate slot changes, reporting its position in
   /// [spec]'s slots, or null when focus leaves the plate. Resolve it against
@@ -90,6 +95,7 @@ class PlateDisplay extends StatelessWidget {
       validator: validator,
       autoValidate: autoValidate,
       inputSource: inputSource,
+      onChooseCharacter: onChooseCharacter,
       onActiveIndexChanged: onActiveIndexChanged,
       controller: controller,
     );
@@ -116,6 +122,7 @@ class _PlateDisplayBody extends StatelessWidget {
     required this.validator,
     required this.autoValidate,
     required this.inputSource,
+    required this.onChooseCharacter,
     required this.onActiveIndexChanged,
     required this.controller,
   });
@@ -131,6 +138,7 @@ class _PlateDisplayBody extends StatelessWidget {
   final PlateValidator? validator;
   final bool autoValidate;
   final PlateInputSource? inputSource;
+  final Future<String?> Function(PlateAlphabet alphabet) onChooseCharacter;
   final ValueChanged<int?>? onActiveIndexChanged;
   final PlateInputController? controller;
 
@@ -147,6 +155,7 @@ class _PlateDisplayBody extends StatelessWidget {
       validator: validator,
       autoValidate: autoValidate,
       inputSource: inputSource,
+      onChooseCharacter: onChooseCharacter,
       onActiveIndexChanged: onActiveIndexChanged,
       controller: controller,
     );
@@ -184,6 +193,7 @@ class _PlateInputSurface extends StatelessWidget {
     required this.validator,
     required this.autoValidate,
     required this.inputSource,
+    required this.onChooseCharacter,
     required this.onActiveIndexChanged,
     required this.controller,
   });
@@ -196,6 +206,7 @@ class _PlateInputSurface extends StatelessWidget {
   final PlateValidator? validator;
   final bool autoValidate;
   final PlateInputSource? inputSource;
+  final Future<String?> Function(PlateAlphabet alphabet) onChooseCharacter;
   final ValueChanged<int?>? onActiveIndexChanged;
   final PlateInputController? controller;
 
@@ -213,6 +224,7 @@ class _PlateInputSurface extends StatelessWidget {
       validator: validator,
       autoValidate: autoValidate,
       inputSource: inputSource,
+      onChooseCharacter: onChooseCharacter,
       onActiveIndexChanged: onActiveIndexChanged,
       controller: controller,
     );

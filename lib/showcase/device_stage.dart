@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:plate_keypad/plate_keypad.dart';
 import 'package:plate_number/plate_number.dart';
 
 import '../device_preview/device_config.dart';
@@ -231,6 +232,10 @@ class _DeviceStageState extends State<DeviceStage> {
         // through the library's on-screen-keypad mode instead of the modal
         // picker. Other devices keep their platform default.
         inputSource: config.inputSource,
+        // Core ships no built-in picker since the keypad split; hand it the
+        // one from plate_keypad for any `chosen`-alphabet slot.
+        onChooseCharacter: (alphabet) =>
+            PlateCharacterPicker.show(context, alphabet),
         onActiveIndexChanged: config.showsValidation ? _setActiveIndex : null,
         controller: config.usesController ? _plateInput : null,
         showBackdrop: true,
