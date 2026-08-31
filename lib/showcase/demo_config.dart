@@ -66,7 +66,7 @@ class DemoConfig {
 /// [DeviceType], holding exactly what `device_stage.dart` used to inline.
 const Map<DeviceType, DemoConfig> demoConfigs = {
   DeviceType.desktop: DemoConfig(
-    spec: PlateSpecs.irCar,
+    spec: IranPlates.car,
     script: carScript,
     inputSource: PlateInputSource.host,
     plateWidthFactor: 0.55,
@@ -76,7 +76,7 @@ const Map<DeviceType, DemoConfig> demoConfigs = {
     showsKeypad: false,
   ),
   DeviceType.tablet: DemoConfig(
-    spec: PlateSpecs.deCar,
+    spec: GermanPlates.car,
     script: germanCarScript,
     inputSource: PlateInputSource.host,
     plateWidthFactor: 0.62,
@@ -87,7 +87,7 @@ const Map<DeviceType, DemoConfig> demoConfigs = {
     showsKeypad: true,
   ),
   DeviceType.mobile: DemoConfig(
-    spec: PlateSpecs.irBicycle,
+    spec: IranPlates.bicycle,
     script: bicycleScript,
     inputSource: null,
     plateWidthFactor: 0.86,

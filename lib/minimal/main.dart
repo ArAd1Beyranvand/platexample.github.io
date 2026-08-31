@@ -15,12 +15,12 @@ class MinimalApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         body: BlocProvider(
-          create: (_) => PlateCardBloc(PlateSpecs.irCar),
+          create: (_) => PlateCardBloc(IranPlates.car),
           child: Center(
             child: Padding(
               padding: const EdgeInsets.all(16),
               // inputSource defaults per platform and can be overridden
-              child: PlateCanvas(spec: PlateSpecs.irCar),
+              child: PlateCanvas(spec: IranPlates.car),
             ),
           ),
         ),

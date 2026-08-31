@@ -270,6 +270,10 @@ class _DeviceStageState extends State<DeviceStage> {
                 highlightedKey: null,
                 highlightedKeyListenable: _pressedKey,
                 compact: config.compactKeypad,
+                // The compact pad drives the bicycle plate, which is Persian —
+                // stated here now that PlateKeypad has no country default.
+                digitAlphabet: PersianAlphabets.digits,
+                letterAlphabet: PersianAlphabets.plateLetters,
                 theme: const PlateKeypadTheme(
                   highlight: PosterTokens.keypadHighlight,
                   keyBorder: PosterTokens.hairline,
