@@ -755,7 +755,7 @@ class _CompactCallouts extends StatelessWidget {
           alignment: Alignment.topCenter,
           children: <Widget>[
             ...previousChildren,
-            if (currentChild != null) currentChild,
+            if (currentChild case final child?) ...[child],
           ],
         );
       },

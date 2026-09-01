@@ -108,7 +108,7 @@ class CalloutCard extends StatelessWidget {
     return Text(
       spec.title,
       style: baseStyle,
-      textAlign: spec.isCentered ? TextAlign.center : null,
+      textAlign: spec.isCentered ? TextAlign.center : (direction == TextDirection.rtl ? TextAlign.right : TextAlign.left),
     );
   }
 
@@ -274,7 +274,7 @@ class CalloutCard extends StatelessWidget {
           if (spec.body != null)
             Directionality(
               textDirection: direction,
-              child: Text(spec.body!, style: _bodyStyle(metrics.f)),
+              child: Text(spec.body!, style: _bodyStyle(metrics.f), textAlign: direction == TextDirection.rtl ? TextAlign.right : TextAlign.left),
             ),
 
           // Footer (card 05)

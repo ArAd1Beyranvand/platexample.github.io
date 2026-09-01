@@ -54,7 +54,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.0
+  flutter_lints: ^6.0.0
 
 flutter:
   uses-material-design: true
@@ -92,3 +92,16 @@ flutter:
         - asset: assets/fonts/Vazirmatn-arabic.ttf
         - asset: assets/fonts/Vazirmatn-latin.ttf
         - asset: assets/fonts/Vazirmatn-latin-ext.ttf
+
+# Local development only: resolve path dependencies from sibling checkouts until
+# they are published. pub.dev ignores dependency_overrides for consumers — they
+# get versioned dependencies above. Safe to delete once packages are on pub.dev.
+dependency_overrides:
+  core_plate:
+    path: ../core-plate
+  plate_keypad:
+    path: ../plate-keypad
+  iran_plate:
+    path: ../iran-plate
+  germany_plate:
+    path: ../germany-plate
