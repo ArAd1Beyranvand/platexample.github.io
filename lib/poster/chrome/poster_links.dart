@@ -83,8 +83,8 @@ class _LinkButtonState extends State<_LinkButton> {
 
     final Widget panel = BevelPanel(
       style: BevelStyle.dark,
-      groundColor: hovered ? PosterGradients.linkButtonHover : PosterColors.cardHeroDe,
-      groundGradient: hovered ? null : null,
+      groundColor: hovered ? PosterGradients.linkButtonHover : null,
+      groundGradient: hovered ? null : PosterGradients.cardSteel,
       screenGrain: false,
       shadow: BevelShadow.none,
       padding: const EdgeInsets.fromLTRB(29, 21, 29, 22),
