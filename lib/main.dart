@@ -1,16 +1,17 @@
-// Entry point of the plate_number showcase.
+// Entry point of the plate showcase.
 //
-// This app is the *consumer* of the plate_number package, kept in its own
+// This app is the *consumer* of the four plate packages, kept in its own
 // repository on purpose:
 //
-//   * the package stays small — no poster fonts, no texture PNGs, no
+//   * each package stays small — no poster fonts, no texture PNGs, no
 //     device-frame painters, no demo-only dependencies in its pubspec;
-//   * everything here goes through the package's public surface
-//     (`package:plate_number/plate_number.dart`), so if the demo compiles,
-//     the published API is genuinely sufficient to build a real UI with;
-//   * the library could be split into plate_number + plate_keypad +
-//     iran_plate + germany_plate without touching a single file in this
-//     project beyond the import lines — which is exactly what P7 and P8 did.
+//   * everything here goes through their public surfaces
+//     (`package:core_plate/core_plate.dart` and the country / keypad
+//     barrels), so if the demo compiles, the API is genuinely sufficient
+//     to build a real UI with;
+//   * the library was split into core_plate + plate_keypad + iran_plate +
+//     germany_plate without touching a single file in this project beyond
+//     the import lines — which is exactly what P7, P8 and P9 did.
 //
 // The libraries are wired as path dependencies in pubspec.yaml — see the
 // comment block there for the expected folder layout.

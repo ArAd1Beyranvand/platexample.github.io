@@ -1,27 +1,34 @@
 # plate_number_holder
 
-The showcase / poster app for the [`plate_number`](../plate-number-upgrade)
-Flutter package. It used to live inside the package repo as `example/`; it was
-split out so the package ships nothing demo-only.
+The showcase / poster app for the plate library — [`core_plate`](../core-plate)
+plus [`iran_plate`](../iran-plate), [`germany_plate`](../germany-plate) and
+[`plate_keypad`](../plate-keypad). It used to live inside the package repo as
+`example/`; it was split out so the packages ship nothing demo-only.
+
+The app keeps its name. It is an app, not a package, and renaming its repo,
+Android namespace and Linux binary would churn a lot of files for no benefit.
 
 ## Why it is a separate project
 
-| stays in the package | lives here |
+| stays in the packages | lives here |
 | --- | --- |
 | plate widgets, specs, validators, bloc | poster layout, callout cards, device frames |
-| the flag SVG and EU stickers a real plate needs | Archivo / MartianMono / Newsreader / Vazirmatn fonts, grain + screen textures |
-| `flutter_bloc`, `flutter_svg`, `country_flags` | everything the demo alone needs |
+| the flag SVGs and EU stickers a real plate needs (in `iran_plate` / `germany_plate`) | Archivo / MartianMono / Newsreader / Vazirmatn fonts, grain + screen textures |
+| `flutter_bloc`, `flutter_svg` | everything the demo alone needs |
 
-Because this app consumes only the package's public surface, it doubles as a
-compile-time check that the published API is enough to build a real UI.
+Because this app consumes only the packages' public surfaces, it doubles as a
+compile-time check that the API is enough to build a real UI.
 
 ## Running it
 
-The two checkouts must sit side by side:
+The five checkouts must sit side by side:
 
 ```
-StudioProjects/
-  plate-number-upgrade/   # the package
+StudioProjects/plate/
+  core-plate/
+  iran-plate/
+  germany-plate/
+  plate-keypad/
   plate_number_holder/    # this app
 ```
 
@@ -30,7 +37,7 @@ flutter pub get
 flutter run
 ```
 
-`pubspec.yaml` points at the package by **path**, so editing the library and
+`pubspec.yaml` points at every package by **path**, so editing a library and
 hot-reloading here is one loop.
 
 ## Layout
@@ -45,14 +52,24 @@ lib/
   poster/            poster chrome: tokens, backdrop, callouts, cards
   device_preview/    phone / laptop frames and transitions
   dev/               galleries used while designing tokens, bevels, backdrops
-  minimal/           the smallest possible use of the package
+  minimal/           the smallest possible use of the library
 ```
 
-`lib/minimal/main.dart` is the one to read first if you want to see the package
-used plainly, without any poster dressing.
+`lib/minimal/main.dart` is the one to read first if you want to see the library
+used plainly, without any poster dressing. After the split it is two imports and
+one `PlateCanvas`:
 
-## After the library split
+```dart
+import 'package:core_plate/core_plate.dart';
+import 'package:iran_plate/iran_plate.dart';
+```
 
-Once `plate_number` becomes `core_plate` + `iran_plate` + `germany_plate`, only
-`pubspec.yaml` and the `package:plate_number/...` import lines change here; no
-widget in this project needs touching.
+It also imports `plate_keypad` — the showcase uses the bundled on-screen keypad
+and the `chosen`-slot picker, which is a demo choice, not a requirement of
+rendering an Iranian plate.
+
+## Known remaining work
+
+The libraries have no widget-returning functions left. The holder still does —
+`device_stage.dart` and the poster layer (`PLAN.md` §5). That is a future holder
+cleanup, out of scope for the split.

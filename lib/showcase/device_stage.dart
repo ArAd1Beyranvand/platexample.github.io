@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iran_plate/iran_plate.dart';
 import 'package:plate_keypad/plate_keypad.dart';
-import 'package:plate_number/plate_number.dart';
+import 'package:core_plate/core_plate.dart';
 
 import '../device_preview/device_config.dart';
 import '../device_preview/device_frame.dart';

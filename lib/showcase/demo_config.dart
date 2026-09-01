@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:germany_plate/germany_plate.dart';
 import 'package:iran_plate/iran_plate.dart';
-import 'package:plate_number/plate_number.dart';
+import 'package:core_plate/core_plate.dart';
 
 import '../device_preview/device_config.dart';
 import 'plate_typist.dart';

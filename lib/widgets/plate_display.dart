@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:plate_number/plate_number.dart';
+import 'package:core_plate/core_plate.dart';
 
 import '../poster/plate_backdrop.dart';
 
