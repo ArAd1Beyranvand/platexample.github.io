@@ -19,34 +19,34 @@ dependencies:
   # PATH dependencies on sibling checkouts, so editing a library and
   # hot-reloading this app is a single loop — no publish, no `pub get` between
   # them. The split makes the libraries siblings of each other, not a
-  # `packages/` directory inside one repo (see core-plate/docs/split/PLAN.md
+  # `packages/` directory inside one repo (see core_plate/docs/split/PLAN.md
   # §0). Path-only, not published (PLAN.md §6.6). Layout:
   #
   #   StudioProjects/plate/
-  #     core-plate/             package `core_plate`   (the engine)
-  #     plate-keypad/           package `plate_keypad`  (extracted in P7)
-  #     iran-plate/             package `iran_plate`    (extracted in P8)
-  #     germany-plate/          package `germany_plate` (extracted in P8)
+  #     core_plate/             package `core_plate`   (the engine)
+  #     plate_keypad/           package `plate_keypad`  (extracted in P7)
+  #     iran_plate/             package `iran_plate`    (extracted in P8)
+  #     germany_plate/          package `germany_plate` (extracted in P8)
   #     plate_number_holder/    this app (keeps its name — it is an app, not a package)
   #
   # core_plate ships no country and no assets, so this app names every country
   # it draws. An app that draws one country depends on one.
   # ---------------------------------------------------------------------------
   core_plate:
-    path: ../core-plate
+    path: ../core_plate
 
   # The optional on-screen keypad + slot picker, extracted from core_plate
   # in P7. Depends on core_plate for PlateAlphabet.
   plate_keypad:
-    path: ../plate-keypad
+    path: ../plate_keypad
 
   # The country packages, extracted from core_plate in P8. Each owns its own
   # plate specs, alphabets and flag/sticker assets, and depends on core_plate
   # and nothing else — not on the keypad, and not on each other.
   iran_plate:
-    path: ../iran-plate
+    path: ../iran_plate
   germany_plate:
-    path: ../germany-plate
+    path: ../germany_plate
 
   # Used directly by the showcase to drive PlateCardBloc from the demo screen.
   flutter_bloc: ^9.1.1
@@ -98,10 +98,10 @@ flutter:
 # get versioned dependencies above. Safe to delete once packages are on pub.dev.
 dependency_overrides:
   core_plate:
-    path: ../core-plate
+    path: ../core_plate
   plate_keypad:
-    path: ../plate-keypad
+    path: ../plate_keypad
   iran_plate:
-    path: ../iran-plate
+    path: ../iran_plate
   germany_plate:
-    path: ../germany-plate
+    path: ../germany_plate
