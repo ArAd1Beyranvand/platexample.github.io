@@ -1,3 +1,8 @@
+FREE PALESTINE 🇮🇷🇵🇸 پاینده ایران
+GO VEGAN 🌱
+==================================
+
+
 # plate_number_holder
 
 The showcase / poster app for the plate library — [`core_plate`](../core-plate)

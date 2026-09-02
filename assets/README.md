@@ -1,3 +1,8 @@
+FREE PALESTINE 🇮🇷🇵🇸 پاینده ایران
+GO VEGAN 🌱
+==================================
+
+
 # Poster assets
 
 Extracted from `Plate Number Poster.html`. Drop the two folders into
