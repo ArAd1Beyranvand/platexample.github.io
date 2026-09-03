@@ -828,37 +828,53 @@ class _CompactCalloutSet extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        for (int index = 0; index < specs.length; index++) ...<Widget>[
-          if (index > 0) const SizedBox(height: 18),
-          _CompactCalloutRow(spec: specs[index], metrics: metrics),
-        ],
+        // Row 1: the hero / long callout card
+        _CompactCalloutCard(spec: specs[0], metrics: metrics),
+        const SizedBox(height: 18),
+        // Row 2: two equal-height callout cards side by side
+        if (specs.length > 1)
+          IntrinsicHeight(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Expanded(
+                  child: _CompactCalloutCard(
+                    spec: specs[1],
+                    metrics: metrics,
+                  ),
+                ),
+                if (specs.length > 2) ...[
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: _CompactCalloutCard(
+                      spec: specs[2],
+                      metrics: metrics,
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ),
       ],
     );
   }
 }
 
-class _CompactCalloutRow extends StatelessWidget {
-  const _CompactCalloutRow({required this.spec, required this.metrics});
+class _CompactCalloutCard extends StatelessWidget {
+  const _CompactCalloutCard({required this.spec, required this.metrics});
 
   final callouts.CalloutSpec spec;
   final PosterMetrics metrics;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Expanded(
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              return CalloutCard(
-                spec: spec,
-                widthDesignPx: constraints.maxWidth / metrics.f,
-              );
-            },
-          ),
-        ),
-      ],
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return CalloutCard(
+          spec: spec,
+          widthDesignPx: constraints.maxWidth / metrics.f,
+        );
+      },
     );
   }
 }
