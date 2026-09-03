@@ -732,48 +732,86 @@ class _MediumCalloutItem extends StatelessWidget {
 /// share it.
 final Duration _kCalloutSwap = const DeviceTransitionDurations().total;
 
-class _CompactCallouts extends StatelessWidget {
+class _CompactCallouts extends StatefulWidget {
   const _CompactCallouts({required this.device});
 
   final DeviceType device;
 
   @override
-  Widget build(BuildContext context) {
-    return AnimatedSwitcher(
-      // Deliberately not the frame morph's duration: the callouts are prose and
-      // need to stay readable on the way out, so they cross-fade on their own,
-      // slower clock while the shell reshapes underneath them.
+  State<_CompactCallouts> createState() => _CompactCalloutsState();
+}
+
+class _CompactCalloutsState extends State<_CompactCallouts>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final Animation<double> _exit;
+  late final Animation<double> _entry;
+  DeviceType? _outgoing;
+  int _hop = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
       duration: _kCalloutSwap,
-      switchInCurve: Curves.easeOutCubic,
-      switchOutCurve: Curves.easeInCubic,
-      layoutBuilder: (currentChild, previousChildren) {
-        return Stack(
-          alignment: Alignment.topCenter,
-          children: <Widget>[
-            ...previousChildren,
-            if (currentChild case final child?) ...[child],
-          ],
+    );
+    _exit = CurvedAnimation(
+      parent: _controller,
+      curve: const Interval(0, 0.46),
+    );
+    _entry = CurvedAnimation(
+      parent: _controller,
+      curve: const Interval(0.54, 1),
+    );
+  }
+
+  @override
+  void didUpdateWidget(covariant _CompactCallouts oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.device != widget.device) {
+      _outgoing = oldWidget.device;
+      _hop++;
+      _controller.forward(from: 0);
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, _) {
+        final settled =
+            _outgoing == null ||
+            _controller.status == AnimationStatus.completed;
+        if (settled) {
+          return _CompactCalloutSet(
+            key: ValueKey<DeviceType>(widget.device),
+            device: widget.device,
+          );
+        }
+
+        final bool showingOutgoing = _controller.value < 0.5;
+        final DeviceType shownDevice = showingOutgoing
+            ? _outgoing!
+            : widget.device;
+        final Animation<double> transition = showingOutgoing ? _exit : _entry;
+        return motion.TileTransition(
+          animation: transition,
+          entering: !showingOutgoing,
+          seed: _hop,
+          child: _CompactCalloutSet(
+            key: ValueKey<DeviceType>(shownDevice),
+            device: shownDevice,
+          ),
         );
       },
-      transitionBuilder: (child, animation) {
-        return AnimatedBuilder(
-          animation: animation,
-          child: child,
-          builder: (context, child) {
-            return Opacity(
-              opacity: animation.value,
-              child: Transform.translate(
-                offset: Offset(0, 24 * (1 - animation.value)),
-                child: child,
-              ),
-            );
-          },
-        );
-      },
-      child: _CompactCalloutSet(
-        key: ValueKey<DeviceType>(device),
-        device: device,
-      ),
     );
   }
 }
