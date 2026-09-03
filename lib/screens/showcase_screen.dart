@@ -311,7 +311,8 @@ class _CompactPoster extends StatelessWidget {
             const _CompactMeta(),
           ],
         ),
-      ),
+        ),
+      ],
     );
   }
 }
