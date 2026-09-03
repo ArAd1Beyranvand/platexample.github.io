@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../cards/bevel_panel.dart';
 import '../poster_scale.dart';
@@ -12,16 +13,13 @@ import '../poster_tokens.dart';
 /// `13 18 14`, gap 10. On hover the ground goes to `#EDEFF3` and the label and
 /// icon invert to dark.
 ///
-/// `url_launcher` is NOT a dependency of `example/pubspec.yaml`, and §6 says
-/// to add one only if it is already present — so the tap is a deliberate
-/// no-op here. Reported to the migration owner; wire a launcher in later if
-/// desired.
+/// Tapping opens the core_plate page on pub.dev / GitHub via `url_launcher`
+/// in the platform's default browser.
 class PosterLinks extends StatelessWidget {
   const PosterLinks({super.key});
 
-  static const String pubDevUrl = 'https://pub.dev/packages/plate_number';
-  static const String githubUrl =
-      'https://github.com/ArAd1Beyranvand/plate-number-upgrade';
+  static const String pubDevUrl = 'https://pub.dev/packages/core_plate';
+  static const String githubUrl = 'https://github.com/ArAd1Beyranvand/core-plate';
 
   @override
   Widget build(BuildContext context) {
@@ -34,12 +32,20 @@ class PosterLinks extends StatelessWidget {
           label: 'PUB.DEV',
           url: pubDevUrl,
           iconBuilder: (Color color) => _CubeIcon(color: color),
+          // pub.dev / Dart brand blue.
+          ground: const Color(0xFF0175C2),
+          groundHover: const Color(0xFF0161A8),
+          content: Colors.white,
         ),
         SizedBox(height: metrics.px(8)),
         _LinkButton(
           label: 'GITHUB',
           url: githubUrl,
           iconBuilder: (Color color) => _OctocatIcon(color: color),
+          // GitHub brand near-black.
+          ground: const Color(0xFF1F2328),
+          groundHover: const Color(0xFF32383F),
+          content: Colors.white,
         ),
       ],
     );
@@ -53,11 +59,21 @@ class _LinkButton extends StatefulWidget {
     required this.label,
     required this.url,
     required this.iconBuilder,
+    required this.ground,
+    required this.groundHover,
+    required this.content,
   });
 
   final String label;
   final String url;
   final _IconBuilder iconBuilder;
+
+  /// The button's own brand colour, and its hover variant.
+  final Color ground;
+  final Color groundHover;
+
+  /// Icon + label colour that reads on [ground].
+  final Color content;
 
   @override
   State<_LinkButton> createState() => _LinkButtonState();
@@ -66,9 +82,9 @@ class _LinkButton extends StatefulWidget {
 class _LinkButtonState extends State<_LinkButton> {
   bool _hovered = false;
 
-  void _onTap() {
-    // No-op: url_launcher is not a dependency (see class doc). The button
-    // still reads as interactive so the composition is faithful.
+  Future<void> _onTap() async {
+    final Uri uri = Uri.parse(widget.url);
+    await launchUrl(uri, mode: LaunchMode.externalApplication);
   }
 
   @override
@@ -76,15 +92,14 @@ class _LinkButtonState extends State<_LinkButton> {
     final PosterMetrics metrics = PosterMetrics.of(context);
     final bool hovered = _hovered;
 
-    // Ground and content invert on hover.
-    final Color contentColor =
-        hovered ? const Color(0xFF12141B) : PosterColors.inkDisplay1;
+    // Each button wears its own site's colours; hover just shifts the ground.
+    final Color contentColor = widget.content;
     final double iconSize = metrics.px(29);
 
     final Widget panel = BevelPanel(
       style: BevelStyle.dark,
-      groundColor: hovered ? PosterGradients.linkButtonHover : null,
-      groundGradient: hovered ? null : PosterGradients.cardSteel,
+      groundColor: hovered ? widget.groundHover : widget.ground,
+      groundGradient: null,
       screenGrain: false,
       shadow: BevelShadow.none,
       padding: const EdgeInsets.fromLTRB(29, 21, 29, 22),

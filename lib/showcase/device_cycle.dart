@@ -15,7 +15,7 @@ class DeviceCycleController extends ChangeNotifier {
 
 /// The [PlateSpec] a given [device] should show: mobile demos the Iranian
 /// bicycle plate, the tablet demos the German car plate, and the laptop demos
-/// the Iranian car plate.
+/// the Palestinian car plate.
 PlateSpec specFor(DeviceType device) => demoConfigs[device]!.spec;
 
 /// Cycles through a sequence of [DeviceType]s on demand, rebuilding [builder]

@@ -219,6 +219,9 @@ class _DeviceStageState extends State<DeviceStage> {
       builder: (context, _) => PlateDisplay(
         spec: config.spec,
         mode: PlateMode.input,
+        // Null for the plates printed black on white; the laptop's Palestinian
+        // plate carries its green-on-white theme here.
+        baseTheme: config.theme,
         activeColor: PosterTokens.accent,
         // The plate judges itself now: with a validator and autoValidate on, it
         // paints its own completed-field underline red when the typed value is

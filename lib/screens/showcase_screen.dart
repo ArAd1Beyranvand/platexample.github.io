@@ -277,33 +277,29 @@ class _CompactPoster extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: PosterColors.stageBlack,
-        gradient: RadialGradient(
-          center: Alignment(0.55, -0.15),
-          radius: 1.2,
-          colors: <Color>[
-            PosterColors.groundRadialCore,
-            PosterColors.stageBlack,
-          ],
+    return Stack(
+      fit: StackFit.expand,
+      children: <Widget>[
+        PosterBackdrop(
+          sweep: SweepLight(
+            isHopping: phase == DeviceTransitionPhase.frameTransform,
+          ),
         ),
-      ),
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(16, 20, 16, 28),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            const PosterMasthead(),
-            const SizedBox(height: 18),
-            const _CompactWordmark(),
-            const SizedBox(height: 20),
-            AspectRatio(
-              aspectRatio: 832 / 486,
-              child: RepaintBoundary(
-                child: DeviceStage(
-                  onFrameDeviceChanged: onFrameDeviceChanged,
-                  onPhaseChanged: onPhaseChanged,
+        SingleChildScrollView(
+          padding: const EdgeInsets.fromLTRB(16, 20, 16, 28),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const PosterMasthead(),
+              const SizedBox(height: 18),
+              const _CompactWordmark(),
+              const SizedBox(height: 20),
+              AspectRatio(
+                aspectRatio: 832 / 486,
+                child: RepaintBoundary(
+                  child: DeviceStage(
+                    onFrameDeviceChanged: onFrameDeviceChanged,
+                    onPhaseChanged: onPhaseChanged,
                 ),
               ),
             ),

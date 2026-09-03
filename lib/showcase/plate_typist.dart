@@ -48,6 +48,22 @@ const List<TypistStep> carScript = [
   KeyStep(7, '0'),
 ];
 
+/// The keystrokes for the Palestinian car plate ("1·0234·56"): the region
+/// digit, a pause, the four-digit serial as one burst, then the trailing pair.
+/// The digit form, not the letter form — a plate ending in a category letter
+/// finishes on the second-to-last slot, and the typist has no way to say
+/// "stop here", so a script for it would leave the run waiting on a slot the
+/// plate is done with.
+const List<TypistStep> palestineCarScript = [
+  KeyStep(0, '1', pauseAfter: true),
+  KeyStep(1, '0'),
+  KeyStep(2, '2'),
+  KeyStep(3, '3'),
+  KeyStep(4, '4', pauseAfter: true),
+  KeyStep(5, '5'),
+  KeyStep(6, '6'),
+];
+
 /// The keystrokes for the German car plate demo: types the district ("DA")
 /// and identifier letter ("X", slot 2 — deCar only has a single identifier-
 /// letter slot, so a 2-letter entry like "SS" can never actually be typed

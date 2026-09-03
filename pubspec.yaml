@@ -46,18 +46,21 @@ dependencies:
     path: ../iran_plate
   germany_plate:
     path: ../germany_plate
+  palestine_plate:
+    path: ../palestine_plate
 
   # Used directly by the showcase to drive PlateCardBloc from the demo screen.
   flutter_bloc: ^9.1.1
+  url_launcher: ^6.3.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
 
-# Local development only: plate_keypad, iran_plate, and germany_plate still use
-# path dependencies until they are published on pub.dev. core_plate is now
-# published and uses the versioned dependency above.
+# Local development only: plate_keypad, iran_plate, germany_plate and
+# palestine_plate still use path dependencies until they are published on
+# pub.dev. core_plate is now published and uses the versioned dependency above.
 dependency_overrides:
   plate_keypad:
     path: ../plate_keypad
@@ -65,6 +68,8 @@ dependency_overrides:
     path: ../iran_plate
   germany_plate:
     path: ../germany_plate
+  palestine_plate:
+    path: ../palestine_plate
 
 flutter:
   uses-material-design: true

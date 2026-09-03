@@ -22,6 +22,7 @@ class PlateDisplay extends StatelessWidget {
     this.controller,
     this.showBackdrop = false,
     this.plateWidthFactor = 0.62,
+    this.baseTheme,
   });
 
   final PlateSpec spec;
@@ -81,6 +82,11 @@ class PlateDisplay extends StatelessWidget {
   /// own FittedBox would otherwise fill the whole glass.
   final double plateWidthFactor;
 
+  /// The plate's printed colours, before the input-field accents below are
+  /// layered on. Null keeps the black-on-white `PlateTheme.standard()`; a
+  /// plate that ships its own (the Palestinian green-on-white) passes it here.
+  final PlateTheme? baseTheme;
+
   @override
   Widget build(BuildContext context) {
     final child = _PlateDisplayBody(
@@ -98,6 +104,7 @@ class PlateDisplay extends StatelessWidget {
       onChooseCharacter: onChooseCharacter,
       onActiveIndexChanged: onActiveIndexChanged,
       controller: controller,
+      baseTheme: baseTheme,
     );
     if (bloc != null) {
       return BlocProvider.value(value: bloc!, child: child);
@@ -125,6 +132,7 @@ class _PlateDisplayBody extends StatelessWidget {
     required this.onChooseCharacter,
     required this.onActiveIndexChanged,
     required this.controller,
+    required this.baseTheme,
   });
 
   final PlateMode mode;
@@ -141,6 +149,7 @@ class _PlateDisplayBody extends StatelessWidget {
   final Future<String?> Function(PlateAlphabet alphabet) onChooseCharacter;
   final ValueChanged<int?>? onActiveIndexChanged;
   final PlateInputController? controller;
+  final PlateTheme? baseTheme;
 
   @override
   Widget build(BuildContext context) {
@@ -158,6 +167,7 @@ class _PlateDisplayBody extends StatelessWidget {
       onChooseCharacter: onChooseCharacter,
       onActiveIndexChanged: onActiveIndexChanged,
       controller: controller,
+      baseTheme: baseTheme,
     );
 
     // Boundaried against each other: the two change on completely different
@@ -196,6 +206,7 @@ class _PlateInputSurface extends StatelessWidget {
     required this.onChooseCharacter,
     required this.onActiveIndexChanged,
     required this.controller,
+    required this.baseTheme,
   });
 
   final PlateSpec spec;
@@ -209,10 +220,11 @@ class _PlateInputSurface extends StatelessWidget {
   final Future<String?> Function(PlateAlphabet alphabet) onChooseCharacter;
   final ValueChanged<int?>? onActiveIndexChanged;
   final PlateInputController? controller;
+  final PlateTheme? baseTheme;
 
   @override
   Widget build(BuildContext context) {
-    final base = PlateTheme.standard();
+    final base = baseTheme ?? PlateTheme.standard();
     final theme = base.copyWith(
       activeColor: activeColor ?? base.activeColor,
       inactiveColor: inactiveColor ?? base.inactiveColor,

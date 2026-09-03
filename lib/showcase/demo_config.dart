@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:germany_plate/germany_plate.dart';
 import 'package:iran_plate/iran_plate.dart';
+import 'package:palestine_plate/palestine_plate.dart';
 import 'package:core_plate/core_plate.dart';
 
 import '../device_preview/device_config.dart';
@@ -26,6 +27,7 @@ class DemoConfig {
     this.validator,
     required this.compactKeypad,
     required this.showsKeypad,
+    this.theme,
   });
 
   /// The plate rendered on the glass and fed to its backing bloc.
@@ -62,14 +64,20 @@ class DemoConfig {
   /// Whether an on-screen keypad is shown at all (the laptop has none — its deck
   /// carries the keys).
   final bool showsKeypad;
+
+  /// The plate's own colours, when it has any. Null means the black-on-white
+  /// `PlateTheme.standard()` the Iranian and German plates are printed in; the
+  /// Palestinian plate is green on white and ships its theme with the country.
+  final PlateTheme? theme;
 }
 
 /// The variation-as-data table behind the showcase: one [DemoConfig] per
 /// [DeviceType], holding exactly what `device_stage.dart` used to inline.
 const Map<DeviceType, DemoConfig> demoConfigs = {
   DeviceType.desktop: DemoConfig(
-    spec: IranPlates.car,
-    script: carScript,
+    spec: PalestinePlate.car,
+    theme: PalestineTheme.green,
+    script: palestineCarScript,
     inputSource: PlateInputSource.host,
     plateWidthFactor: 0.55,
     usesController: true,
