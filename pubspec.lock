@@ -112,13 +112,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  germany_plate:
-    dependency: "direct main"
-    description:
-      path: "../germany_plate"
-      relative: true
-    source: path
-    version: "0.1.0"
   http:
     dependency: transitive
     description:
@@ -206,13 +199,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
-  palestine_plate:
-    dependency: "direct main"
-    description:
-      path: "../palestine_plate"
-      relative: true
-    source: path
-    version: "0.1.0"
   path:
     dependency: transitive
     description:
@@ -241,6 +227,20 @@ packages:
     dependency: "direct main"
     description:
       path: "../plate_keypad"
+      relative: true
+    source: path
+    version: "0.1.0"
+  plate_palestine:
+    dependency: "direct main"
+    description:
+      path: "../plate_palestine"
+      relative: true
+    source: path
+    version: "0.1.0"
+  plate_yemen:
+    dependency: "direct main"
+    description:
+      path: "../plate_yemen"
       relative: true
     source: path
     version: "0.1.0"

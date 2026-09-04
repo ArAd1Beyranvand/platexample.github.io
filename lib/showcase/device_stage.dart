@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:iran_plate/iran_plate.dart';
 import 'package:plate_keypad/plate_keypad.dart';
@@ -9,6 +11,7 @@ import '../device_preview/device_transition.dart';
 import '../poster/poster_tokens.dart';
 import '../showcase/demo_config.dart';
 import '../showcase/device_cycle.dart';
+import '../showcase/plate_mirror.dart';
 import '../showcase/plate_typist.dart';
 import '../widgets/plate_display.dart';
 
@@ -61,6 +64,62 @@ class _DeviceStageState extends State<DeviceStage> {
   /// starts blank. [PlateDisplay] renders from it via its `bloc` param.
   late PlateCardBloc _bloc = PlateCardBloc(specFor(_contentDevice));
 
+  /// Bloc for the read-only second plate, on the devices that show two — the
+  /// laptop, stacking Yemen's 2026 unified plate over the 1993 northern one,
+  /// and the tablet, stacking a legacy West Bank plate over a Gaza plate. Null
+  /// on the phone, which shows one.
+  PlateCardBloc? _secondaryBloc;
+
+  /// Copies each committed value from [_bloc] onto [_secondaryBloc]. Live for
+  /// as long as a two-plate device is on screen.
+  StreamSubscription<PlateCardState>? _mirror;
+
+  /// Points [_secondaryBloc] and [_mirror] at the content device, discarding
+  /// whatever the outgoing device left behind.
+  ///
+  /// The mirror is a subscription rather than a `BlocListener` in the tree
+  /// because the second plate has to keep up with the auto-typist even while
+  /// the stage itself is not rebuilding — keystrokes deliberately do not
+  /// rebuild this subtree (see [_pressedKey]).
+  void _installMirror() {
+    _mirror?.cancel();
+    _mirror = null;
+    _secondaryBloc?.close();
+    _secondaryBloc = null;
+
+    final config = demoConfigs[_contentDevice]!;
+    final secondarySpec = config.secondarySpec;
+    final pairs = config.mirrorPairs;
+    // Both or neither: a second spec with no pairing would render a plate that
+    // never fills in, and a pairing with no spec has nothing to write to.
+    assert((secondarySpec == null) == (pairs == null));
+    if (secondarySpec == null || pairs == null) return;
+
+    final secondary = PlateCardBloc(secondarySpec);
+    _secondaryBloc = secondary;
+
+    void write(PlateCardState state) {
+      final mirrored = mirrorByGroup(
+        from: config.spec,
+        to: secondarySpec,
+        values: state.plateNumber.values,
+        pairs: pairs,
+      );
+      for (var i = 0; i < mirrored.length; i++) {
+        // The bloc drops a ValueIsChanged that changes nothing, so replaying
+        // the whole value on every keystroke costs one emission, not seven.
+        secondary.add(ValueIsChanged(index: i, value: mirrored[i]));
+      }
+    }
+
+    // Once up front, then on every change. The stream only reports changes, so
+    // without this pass the slots a spec fills from a one-character alphabet —
+    // Gaza's leading `3`, printed on every Gaza plate ever issued — would sit
+    // blank until the first keystroke arrived to trigger them.
+    write(_bloc.state);
+    _mirror = _bloc.stream.listen(write);
+  }
+
   /// Drives character entry from the tablet's [VirtualKeypad] into the
   /// attached [PlateCanvas], without either side knowing the active slot's
   /// index.
@@ -101,6 +160,7 @@ class _DeviceStageState extends State<DeviceStage> {
   void initState() {
     super.initState();
     _typist.addListener(_syncPressedKey);
+    _installMirror();
     // The first device never fires a transition phase, so kick it off directly
     // once the tree is laid out.
     WidgetsBinding.instance.addPostFrameCallback((_) => _maybeStartTyping());
@@ -111,6 +171,8 @@ class _DeviceStageState extends State<DeviceStage> {
     _typist.removeListener(_syncPressedKey);
     _typist.dispose();
     _pressedKey.dispose();
+    _mirror?.cancel();
+    _secondaryBloc?.close();
     _bloc.close();
     _controller.dispose();
     _plateInput.dispose();
@@ -136,6 +198,7 @@ class _DeviceStageState extends State<DeviceStage> {
     _bloc.close();
     _contentDevice = _frameDevice;
     _bloc = PlateCardBloc(specFor(_contentDevice));
+    _installMirror();
     _activeIndex = null;
     setState(() {});
   }
@@ -219,9 +282,17 @@ class _DeviceStageState extends State<DeviceStage> {
       builder: (context, _) => PlateDisplay(
         spec: config.spec,
         mode: PlateMode.input,
-        // Null for the plates printed black on white; the laptop's Palestinian
-        // plate carries its green-on-white theme here.
+        // Null for the plates printed black on white; the plates that ship
+        // their own colours — the Palestinian green-on-white, both Yemeni ones
+        // — carry them here.
         baseTheme: config.theme,
+        // The laptop stacks Yemen's two current systems and the tablet stacks
+        // Palestine's, both plates filling in from the same keystrokes. See
+        // plate_mirror.dart, and its caveat that the crossover is a display
+        // device rather than a claim about a vehicle.
+        secondarySpec: config.secondarySpec,
+        secondaryTheme: config.secondaryTheme,
+        secondaryBloc: _secondaryBloc,
         activeColor: PosterTokens.accent,
         // The plate judges itself now: with a validator and autoValidate on, it
         // paints its own completed-field underline red when the typed value is

@@ -26,7 +26,8 @@ dependencies:
   #     core_plate/             package `core_plate`   (the engine)
   #     plate_keypad/           package `plate_keypad`  (extracted in P7)
   #     iran_plate/             package `iran_plate`    (extracted in P8)
-  #     germany_plate/          package `germany_plate` (extracted in P8)
+  #     plate_palestine/        package `plate_palestine`
+  #     plate_yemen/            package `plate_yemen`
   #     plate_number_holder/    this app (keeps its name — it is an app, not a package)
   #
   # core_plate ships no country and no assets, so this app names every country
@@ -44,10 +45,18 @@ dependencies:
   # and nothing else — not on the keypad, and not on each other.
   iran_plate:
     path: ../iran_plate
-  germany_plate:
-    path: ../germany_plate
-  palestine_plate:
-    path: ../palestine_plate
+
+  # The two countries the showcase draws a *pair* of plates for, because
+  # neither has one plate: Palestine's West Bank and Gaza designs (the tablet),
+  # and Yemen's 2026 unified and 1993 northern systems (the laptop).
+  #
+  # `plate_palestine` supersedes the older `palestine_plate`, which this app no
+  # longer depends on. The directory is still a sibling checkout; nothing here
+  # imports it.
+  plate_palestine:
+    path: ../plate_palestine
+  plate_yemen:
+    path: ../plate_yemen
 
   # Used directly by the showcase to drive PlateCardBloc from the demo screen.
   flutter_bloc: ^9.1.1
@@ -58,25 +67,25 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^6.0.0
 
-# Local development only: plate_keypad, iran_plate, germany_plate and
-# palestine_plate still use path dependencies until they are published on
+# Local development only: plate_keypad, iran_plate, plate_palestine and
+# plate_yemen still use path dependencies until they are published on
 # pub.dev. core_plate is now published and uses the versioned dependency above.
 dependency_overrides:
   plate_keypad:
     path: ../plate_keypad
   iran_plate:
     path: ../iran_plate
-  germany_plate:
-    path: ../germany_plate
-  palestine_plate:
-    path: ../palestine_plate
+  plate_palestine:
+    path: ../plate_palestine
+  plate_yemen:
+    path: ../plate_yemen
 
 flutter:
   uses-material-design: true
 
   # Poster-only artwork. These belong to the demo, not to the library — core
   # ships no assets at all since P8, and the assets a real plate needs (flag
-  # SVGs, EU stickers) ship in iran_plate / germany_plate.
+  # SVGs, stickers) ship in the country package that needs them.
   assets:
     - assets/textures/bg_grain_a.png
     - assets/textures/bg_grain_b.png

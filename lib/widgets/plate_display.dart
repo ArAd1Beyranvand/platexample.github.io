@@ -23,6 +23,9 @@ class PlateDisplay extends StatelessWidget {
     this.showBackdrop = false,
     this.plateWidthFactor = 0.62,
     this.baseTheme,
+    this.secondarySpec,
+    this.secondaryTheme,
+    this.secondaryBloc,
   });
 
   final PlateSpec spec;
@@ -87,6 +90,22 @@ class PlateDisplay extends StatelessWidget {
   /// plate that ships its own (the Palestinian green-on-white) passes it here.
   final PlateTheme? baseTheme;
 
+  /// A second plate stacked beneath [spec], rendered read-only from
+  /// [secondaryBloc]. Null (the default) keeps the single-plate layout.
+  ///
+  /// It is a whole second plate rather than a second value on one, because the
+  /// two plates it exists for — Yemen's 2026 unified plate and the 1993
+  /// northern one still current across the north — have different slot counts,
+  /// different registers and different colours. One `PlateSpec` cannot be both.
+  final PlateSpec? secondarySpec;
+
+  /// The printed colours of [secondarySpec].
+  final PlateTheme? secondaryTheme;
+
+  /// The bloc [secondarySpec] renders from. The host owns it and writes the
+  /// mirrored value into it; nothing here types into it.
+  final PlateCardBloc? secondaryBloc;
+
   @override
   Widget build(BuildContext context) {
     final child = _PlateDisplayBody(
@@ -105,6 +124,9 @@ class PlateDisplay extends StatelessWidget {
       onActiveIndexChanged: onActiveIndexChanged,
       controller: controller,
       baseTheme: baseTheme,
+      secondarySpec: secondarySpec,
+      secondaryTheme: secondaryTheme,
+      secondaryBloc: secondaryBloc,
     );
     if (bloc != null) {
       return BlocProvider.value(value: bloc!, child: child);
@@ -133,6 +155,9 @@ class _PlateDisplayBody extends StatelessWidget {
     required this.onActiveIndexChanged,
     required this.controller,
     required this.baseTheme,
+    required this.secondarySpec,
+    required this.secondaryTheme,
+    required this.secondaryBloc,
   });
 
   final PlateMode mode;
@@ -150,6 +175,9 @@ class _PlateDisplayBody extends StatelessWidget {
   final ValueChanged<int?>? onActiveIndexChanged;
   final PlateInputController? controller;
   final PlateTheme? baseTheme;
+  final PlateSpec? secondarySpec;
+  final PlateTheme? secondaryTheme;
+  final PlateCardBloc? secondaryBloc;
 
   @override
   Widget build(BuildContext context) {
@@ -168,6 +196,9 @@ class _PlateDisplayBody extends StatelessWidget {
       onActiveIndexChanged: onActiveIndexChanged,
       controller: controller,
       baseTheme: baseTheme,
+      secondarySpec: secondarySpec,
+      secondaryTheme: secondaryTheme,
+      secondaryBloc: secondaryBloc,
     );
 
     // Boundaried against each other: the two change on completely different
@@ -207,6 +238,9 @@ class _PlateInputSurface extends StatelessWidget {
     required this.onActiveIndexChanged,
     required this.controller,
     required this.baseTheme,
+    required this.secondarySpec,
+    required this.secondaryTheme,
+    required this.secondaryBloc,
   });
 
   final PlateSpec spec;
@@ -221,6 +255,9 @@ class _PlateInputSurface extends StatelessWidget {
   final ValueChanged<int?>? onActiveIndexChanged;
   final PlateInputController? controller;
   final PlateTheme? baseTheme;
+  final PlateSpec? secondarySpec;
+  final PlateTheme? secondaryTheme;
+  final PlateCardBloc? secondaryBloc;
 
   @override
   Widget build(BuildContext context) {
@@ -241,11 +278,65 @@ class _PlateInputSurface extends StatelessWidget {
       controller: controller,
     );
 
+    final secondary = secondarySpec;
+    final secondaryBlocOrNull = secondaryBloc;
+
     return Center(
       child: FractionallySizedBox(
         widthFactor: plateWidthFactor,
-        child: PlateThemeScope(theme: theme, child: plate),
+        child: secondary == null || secondaryBlocOrNull == null
+            ? PlateThemeScope(theme: theme, child: plate)
+            : Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  PlateThemeScope(theme: theme, child: plate),
+                  // Roughly a tenth of a plate's height, so the pair reads as
+                  // two plates rather than one tall object.
+                  const SizedBox(height: 18),
+                  _SecondaryPlate(
+                    spec: secondary,
+                    theme: secondaryTheme ?? PlateTheme.standard(),
+                    bloc: secondaryBlocOrNull,
+                  ),
+                ],
+              ),
       ),
     );
   }
+}
+
+/// The read-only plate stacked under the one being typed into.
+///
+/// [PlateMode.display] rather than input: it carries a mirrored value, so it
+/// has nothing to focus and no keystroke to accept, and display mode draws bare
+/// glyphs on the face instead of live text fields. It is not `ShowPlate`
+/// because `ShowPlate` takes no [PlateTheme] and would paint the standard
+/// black-on-white plate — which for the northern Yemeni plate would be the
+/// wrong colour, and on that system the colour is the vehicle class.
+class _SecondaryPlate extends StatelessWidget {
+  const _SecondaryPlate({
+    required this.spec,
+    required this.theme,
+    required this.bloc,
+  });
+
+  final PlateSpec spec;
+  final PlateTheme theme;
+  final PlateCardBloc bloc;
+
+  @override
+  Widget build(BuildContext context) => BlocProvider.value(
+    value: bloc,
+    child: PlateThemeScope(
+      theme: theme,
+      child: PlateCanvas(
+        spec: spec,
+        mode: PlateMode.display,
+        theme: theme,
+        // Display mode never opens a chooser; the parameter is required, so
+        // satisfy it with one that is never called.
+        onChooseCharacter: (alphabet) async => null,
+      ),
+    ),
+  );
 }

@@ -1,6 +1,6 @@
 // Entry point of the plate showcase.
 //
-// This app is the *consumer* of the four plate packages, kept in its own
+// This app is the *consumer* of the plate packages, kept in its own
 // repository on purpose:
 //
 //   * each package stays small — no poster fonts, no texture PNGs, no
@@ -9,9 +9,10 @@
 //     (`package:core_plate/core_plate.dart` and the country / keypad
 //     barrels), so if the demo compiles, the API is genuinely sufficient
 //     to build a real UI with;
-//   * the library was split into core_plate + plate_keypad + iran_plate +
-//     germany_plate without touching a single file in this project beyond
-//     the import lines — which is exactly what P7, P8 and P9 did.
+//   * the library was split into core_plate + plate_keypad + a country
+//     package per country without touching a single file in this project
+//     beyond the import lines — which is exactly what P7, P8 and P9 did, and
+//     what adding plate_palestine and plate_yemen since has cost.
 //
 // The libraries are wired as path dependencies in pubspec.yaml — see the
 // comment block there for the expected folder layout.

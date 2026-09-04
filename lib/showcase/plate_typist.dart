@@ -48,45 +48,66 @@ const List<TypistStep> carScript = [
   KeyStep(7, '0'),
 ];
 
-/// The keystrokes for the Palestinian car plate ("1·0234·56"): the region
-/// digit, a pause, the four-digit serial as one burst, then the trailing pair.
-/// The digit form, not the letter form — a plate ending in a category letter
-/// finishes on the second-to-last slot, and the typist has no way to say
-/// "stop here", so a script for it would leave the run waiting on a slot the
-/// plate is done with.
-const List<TypistStep> palestineCarScript = [
-  KeyStep(0, '1', pauseAfter: true),
-  KeyStep(1, '0'),
+/// The keystrokes for the tablet demo: a legacy West Bank plate (`7·1234·40`),
+/// mirrored live onto the Gaza plate below it (`3·1234·40`).
+///
+/// Slot 0 is the district code — `7` is the northern West Bank, registered
+/// after 1995. Slots 1–4 are the serial. Slots 5–6 are the usage class, and
+/// they are the whole point of the run:
+///
+/// - The run passes through an invalid state and comes back.
+///   `PSWestBankLegacyValidator` stays quiet until the usage group has
+///   something in it, so nothing goes red while the serial is being typed. The
+///   first usage digit (`4`) leaves a one-digit code, which is not a legal
+///   class — the plate goes red and holds there long enough to read. The second
+///   digit (`0`) finishes it as `40`, which is valid, and the red clears.
+/// - `40` means **private** on the West Bank plate and **municipality** on the
+///   Gaza plate. The two code spaces are unrelated and share only their digits,
+///   which is exactly why the two plates below are printed in different
+///   colours from the same typed value.
+///
+/// The district digit is `7` rather than a rounder number because Gaza's
+/// leading slot is a one-character alphabet: it fills itself with `3` and
+/// never takes the district digit, and a `7` above a `3` makes that visible
+/// instead of looking like a coincidence.
+const List<TypistStep> palestineLegacyCarScript = [
+  KeyStep(0, '7', pauseAfter: true),
+  KeyStep(1, '1'),
   KeyStep(2, '2'),
   KeyStep(3, '3'),
   KeyStep(4, '4', pauseAfter: true),
-  KeyStep(5, '5'),
-  KeyStep(6, '6'),
+  // One digit is an unfinished usage class, and the plate says so before the
+  // second digit rescues it.
+  KeyStep(5, '4', holdAfter: Duration(milliseconds: 1200)),
+  KeyStep(6, '0'),
 ];
 
-/// The keystrokes for the German car plate demo: types the district ("DA")
-/// and identifier letter ("X", slot 2 — deCar only has a single identifier-
-/// letter slot, so a 2-letter entry like "SS" can never actually be typed
-/// here; [GermanPlateValidator]'s forbidden *letter* pairs are unreachable
-/// through this spec). It then types "88" into the serial digits, which
-/// *is* reachable — the digits field spans four slots (3-6) — and lands on
-/// one of the validator's forbidden numbers. It holds on the resulting
-/// invalid (red) state long enough to read it, backs the two offending
-/// digits out, then types the valid remainder so the plate finishes as
-/// "DA X1953".
-const List<TypistStep> germanCarScript = [
-  KeyStep(0, 'D'),
-  KeyStep(1, 'A', pauseAfter: true),
-  KeyStep(2, 'X', pauseAfter: true),
-  // Serial digits (slots 3-6): "88" reproduces a forbidden number.
-  KeyStep(3, '8'),
-  KeyStep(4, '8', holdAfter: Duration(milliseconds: 1200)),
-  BackspaceStep(),
-  BackspaceStep(pauseAfter: true),
+/// The keystrokes for the Yemeni laptop demo, typed into the 2026 unified
+/// plate and mirrored live onto the 1993 northern plate below it.
+///
+/// Slots 0-4 are the five-digit vehicle number; slots 5-6 are the two-digit
+/// code stacked in the blue side panel. The mirror sends the number to the
+/// northern plate's serial and the side code to its governorate register, so
+/// the whole run reads as one value written out in two grammars.
+///
+/// The run deliberately passes through an invalid state and comes back:
+/// `YemenUnifiedValidator` stays quiet until the side code has something in
+/// it, so nothing goes red while the number is being typed, and the first
+/// side-code digit ("0") lands the plate on a one-digit code — invalid, and
+/// painted red. It holds there long enough to read, then the second digit
+/// ("6") finishes the code as `06`, which is Al Hudaydah on the northern
+/// plate below. `3` was chosen as the number's leading digit because a
+/// northern serial is never zero-padded.
+const List<TypistStep> yemenUnifiedCarScript = [
+  KeyStep(0, '3'),
+  KeyStep(1, '4', pauseAfter: true),
+  KeyStep(2, '7'),
   KeyStep(3, '1'),
-  KeyStep(4, '9'),
-  KeyStep(5, '5', pauseAfter: true),
-  KeyStep(6, '3'),
+  KeyStep(4, '9', pauseAfter: true),
+  // Side code (slots 5-6): one digit is an unfinished code, and the plate
+  // says so before the second digit rescues it.
+  KeyStep(5, '0', holdAfter: Duration(milliseconds: 1200)),
+  KeyStep(6, '6'),
 ];
 
 /// The keystrokes for the bicycle plate: eight straight digits, no letter.

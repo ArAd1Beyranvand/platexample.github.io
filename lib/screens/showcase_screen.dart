@@ -287,31 +287,29 @@ class _CompactPoster extends StatelessWidget {
         ),
         SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(16, 20, 16, 28),
-          child: IntrinsicHeight(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                const PosterMasthead(),
-                const SizedBox(height: 18),
-                const _CompactWordmark(),
-                const SizedBox(height: 20),
-                AspectRatio(
-                  aspectRatio: 832 / 486,
-                  child: RepaintBoundary(
-                    child: DeviceStage(
-                      onFrameDeviceChanged: onFrameDeviceChanged,
-                      onPhaseChanged: onPhaseChanged,
-                  ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const PosterMasthead(),
+              const SizedBox(height: 18),
+              const _CompactWordmark(),
+              const SizedBox(height: 20),
+              AspectRatio(
+                aspectRatio: 832 / 486,
+                child: RepaintBoundary(
+                  child: DeviceStage(
+                    onFrameDeviceChanged: onFrameDeviceChanged,
+                    onPhaseChanged: onPhaseChanged,
                 ),
               ),
-              const SizedBox(height: 24),
-              _CompactCallouts(device: device),
-              const SizedBox(height: 28),
-              const _CompactLinks(),
-              const SizedBox(height: 16),
-              const _CompactMeta(),
-            ],
             ),
+            const SizedBox(height: 24),
+            _CompactCallouts(device: device),
+            const SizedBox(height: 28),
+            const _CompactLinks(),
+            const SizedBox(height: 16),
+            const _CompactMeta(),
+          ],
           ),
         ),
       ],
@@ -828,54 +826,34 @@ class _CompactCalloutSet extends StatelessWidget {
   Widget build(BuildContext context) {
     final metrics = PosterMetrics.of(context);
     final specs = callouts.calloutSets[_calloutDevice(device)]!;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        // Row 1: the hero / long callout card
-        _CompactCalloutCard(spec: specs[0], metrics: metrics),
-        const SizedBox(height: 18),
-        // Row 2: two equal-height callout cards side by side
-        if (specs.length > 1)
-          IntrinsicHeight(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Expanded(
-                  child: _CompactCalloutCard(
-                    spec: specs[1],
-                    metrics: metrics,
-                  ),
-                ),
-                if (specs.length > 2) ...[
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: _CompactCalloutCard(
-                      spec: specs[2],
-                      metrics: metrics,
-                    ),
-                  ),
-                ],
-              ],
-            ),
-          ),
-      ],
-    );
-  }
-}
-
-class _CompactCalloutCard extends StatelessWidget {
-  const _CompactCalloutCard({required this.spec, required this.metrics});
-
-  final callouts.CalloutSpec spec;
-  final PosterMetrics metrics;
-
-  @override
-  Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        return CalloutCard(
-          spec: spec,
-          widthDesignPx: constraints.maxWidth / metrics.f,
+        final scale = metrics.f;
+        final fullPx = constraints.maxWidth / scale;
+        final halfPx = (constraints.maxWidth - 12) / 2 / scale;
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            CalloutCard(spec: specs[0], widthDesignPx: fullPx),
+            const SizedBox(height: 18),
+            if (specs.length > 1)
+              IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Expanded(
+                      child: CalloutCard(spec: specs[1], widthDesignPx: halfPx),
+                    ),
+                    if (specs.length > 2) ...[
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: CalloutCard(spec: specs[2], widthDesignPx: halfPx),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+          ],
         );
       },
     );

@@ -38,7 +38,7 @@ class TileTransition extends StatefulWidget {
 
   /// Tile rows. Columns are derived from the card's own aspect so the tiles
   /// come out roughly square rather than as letterbox slabs.
-  static const int rows = 5;
+  static const int rows = 7;
 
   /// The earliest point in the window at which a tile may finish. Every tile
   /// lands somewhere in [earliest, 1] — i.e. between t/2 and t, so the last
@@ -149,7 +149,7 @@ class _TilePainter extends SnapshotPainter {
 
     const int rows = TileTransition.rows;
     final double tileH = size.height / rows;
-    final int cols = math.max(2, math.min(14, (size.width / tileH).round()));
+    final int cols = math.max(2, math.min(20, (size.width / tileH).round()));
     final double tileW = size.width / cols;
 
     // Image pixels per logical pixel, so each tile takes its own slice of the
