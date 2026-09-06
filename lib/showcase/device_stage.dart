@@ -125,7 +125,7 @@ class _DeviceStageState extends State<DeviceStage> {
   }
 
   /// A tapped laptop keycap, routed through the attached plate's active slot.
-  /// PlateInputController.submit is a no-op when the character isn't in the
+  /// PlateController.submit is a no-op when the character isn't in the
   /// slot's alphabet, so the deck's Persian letters land only on letter slots
   /// and its digits only on digit slots — no hard-coded character checks here,
   /// and it keeps working for any plate of any country.
@@ -299,7 +299,7 @@ class _DeviceStageState extends State<DeviceStage> {
         // paints its own completed-field underline red when the typed value is
         // invalid. The stage neither watches the value nor holds a verdict — a
         // host that wants its own timing would read
-        // PlateInputController.validation instead.
+        // PlateController.validation instead.
         alertColor: PosterTokens.invalid,
         validator: config.validator,
         autoValidate: config.showsValidation,

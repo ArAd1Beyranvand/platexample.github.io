@@ -48,7 +48,7 @@ class DemoConfig {
   /// Fraction of the glass width the plate occupies.
   final double plateWidthFactor;
 
-  /// Whether the shared [PlateInputController] drives this device's plate.
+  /// Whether the shared [PlateController] drives this device's plate.
   final bool usesController;
 
   /// Whether typed values are validated (the tablet's Palestinian plate and

@@ -27,7 +27,7 @@ class KeyStep extends TypistStep {
   final String char;
 }
 
-/// Deletes a character via [PlateInputController.backspace] — the active
+/// Deletes a character via [PlateController.backspace] — the active
 /// slot if it holds a value, otherwise the previous slot.
 class BackspaceStep extends TypistStep {
   const BackspaceStep({super.pauseAfter, super.holdAfter});

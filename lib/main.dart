@@ -12,7 +12,7 @@
 //   * the library was split into core_plate + plate_keypad + a country
 //     package per country without touching a single file in this project
 //     beyond the import lines — which is exactly what P7, P8 and P9 did, and
-//     what adding plate_palestine and plate_yemen since has cost.
+//     what adding palestine_plate and yemen_plate since has cost.
 //
 // The libraries are wired as path dependencies in pubspec.yaml — see the
 // comment block there for the expected folder layout.
