@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:iran_plate/iran_plate.dart';
-import 'package:plate_palestine/plate_palestine.dart';
-import 'package:plate_yemen/plate_yemen.dart';
+import 'package:palestine_plate/palestine_plate.dart';
+import 'package:yemen_plate/yemen_plate.dart';
 import 'package:core_plate/core_plate.dart';
 
 import '../device_preview/device_config.dart';
@@ -140,7 +140,7 @@ const Map<DeviceType, DemoConfig> demoConfigs = {
   DeviceType.tablet: DemoConfig(
     spec: PSWestBankPlates.legacyCar,
     theme: PSThemes.greenOnWhite,
-    secondarySpec: PSGazaPlates.car2021,
+    secondarySpec: PSGazaPlates.car2012,
     secondaryTheme: PSThemes.gazaBlue,
     mirrorPairs: palestineWestBankToGaza,
     script: palestineLegacyCarScript,
