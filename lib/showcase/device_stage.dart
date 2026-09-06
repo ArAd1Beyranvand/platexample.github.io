@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:iran_plate/iran_plate.dart';
 import 'package:plate_keypad/plate_keypad.dart';
@@ -55,37 +53,42 @@ class _DeviceStageState extends State<DeviceStage> {
   /// shell begins reshaping toward the incoming device.
   DeviceType _frameDevice = DeviceType.desktop;
 
-  /// Drives the plate type shown and its backing bloc; lags [_frameDevice],
+  /// Drives the plate type shown and its backing controller; lags
+  /// [_frameDevice],
   /// only catching up during the blank hold once the outgoing plate has faded
   /// out (see [_onContentSwap]).
   DeviceType _contentDevice = DeviceType.desktop;
 
-  /// Bloc for the content device, recreated on every content swap so each plate
-  /// starts blank. [PlateDisplay] renders from it via its `bloc` param.
-  late PlateCardBloc _bloc = PlateCardBloc(specFor(_contentDevice));
+  /// The plate's characters for the content device, recreated on every content
+  /// swap so each plate starts blank. It is also the handle the tablet's keypad,
+  /// the laptop's deck keys and the auto-typist drive entry through: one object
+  /// where there used to be a bloc for the value and a controller for the focus.
+  /// [PlateDisplay] hands it straight to its [PlateCanvas].
+  late PlateController _plate = PlateController(spec: specFor(_contentDevice));
 
-  /// Bloc for the read-only second plate, on the devices that show two — the
+  /// The read-only second plate's value, on the devices that show two — the
   /// laptop, stacking Yemen's 2026 unified plate over the 1993 northern one,
   /// and the tablet, stacking a legacy West Bank plate over a Gaza plate. Null
   /// on the phone, which shows one.
-  PlateCardBloc? _secondaryBloc;
+  PlateController? _secondary;
 
-  /// Copies each committed value from [_bloc] onto [_secondaryBloc]. Live for
+  /// Copies each committed value from [_plate] onto [_secondary]. Live for
   /// as long as a two-plate device is on screen.
-  StreamSubscription<PlateCardState>? _mirror;
+  VoidCallback? _mirror;
 
-  /// Points [_secondaryBloc] and [_mirror] at the content device, discarding
+  /// Points [_secondary] and [_mirror] at the content device, discarding
   /// whatever the outgoing device left behind.
   ///
-  /// The mirror is a subscription rather than a `BlocListener` in the tree
-  /// because the second plate has to keep up with the auto-typist even while
-  /// the stage itself is not rebuilding — keystrokes deliberately do not
+  /// The mirror is a listener on the controller rather than anything in the
+  /// tree because the second plate has to keep up with the auto-typist even
+  /// while the stage itself is not rebuilding — keystrokes deliberately do not
   /// rebuild this subtree (see [_pressedKey]).
   void _installMirror() {
-    _mirror?.cancel();
+    final previous = _mirror;
+    if (previous != null) _plate.removeListener(previous);
     _mirror = null;
-    _secondaryBloc?.close();
-    _secondaryBloc = null;
+    _secondary?.dispose();
+    _secondary = null;
 
     final config = demoConfigs[_contentDevice]!;
     final secondarySpec = config.secondarySpec;
@@ -95,35 +98,31 @@ class _DeviceStageState extends State<DeviceStage> {
     assert((secondarySpec == null) == (pairs == null));
     if (secondarySpec == null || pairs == null) return;
 
-    final secondary = PlateCardBloc(secondarySpec);
-    _secondaryBloc = secondary;
+    final secondary = PlateController(spec: secondarySpec);
+    _secondary = secondary;
 
-    void write(PlateCardState state) {
-      final mirrored = mirrorByGroup(
-        from: config.spec,
-        to: secondarySpec,
-        values: state.plateNumber.values,
-        pairs: pairs,
+    void write() {
+      // The whole value at once: `setValues` notifies once for the write, so
+      // replaying every slot on each keystroke costs one rebuild pass, not
+      // seven.
+      secondary.setValues(
+        mirrorByGroup(
+          from: config.spec,
+          to: secondarySpec,
+          values: _plate.values,
+          pairs: pairs,
+        ),
       );
-      for (var i = 0; i < mirrored.length; i++) {
-        // The bloc drops a ValueIsChanged that changes nothing, so replaying
-        // the whole value on every keystroke costs one emission, not seven.
-        secondary.add(ValueIsChanged(index: i, value: mirrored[i]));
-      }
     }
 
-    // Once up front, then on every change. The stream only reports changes, so
+    // Once up front, then on every change. A listener only fires on changes, so
     // without this pass the slots a spec fills from a one-character alphabet —
     // Gaza's leading `3`, printed on every Gaza plate ever issued — would sit
     // blank until the first keystroke arrived to trigger them.
-    write(_bloc.state);
-    _mirror = _bloc.stream.listen(write);
+    write();
+    _mirror = write;
+    _plate.addListener(write);
   }
-
-  /// Drives character entry from the tablet's [VirtualKeypad] into the
-  /// attached [PlateCanvas], without either side knowing the active slot's
-  /// index.
-  final PlateInputController _plateInput = PlateInputController();
 
   /// A tapped laptop keycap, routed through the attached plate's active slot.
   /// PlateInputController.submit is a no-op when the character isn't in the
@@ -133,10 +132,10 @@ class _DeviceStageState extends State<DeviceStage> {
   void _onDeckKey(String label) {
     if (_typist.isRunning) return; // never fight the auto-typist
     if (label == kPlateBackspaceKey) {
-      _plateInput.backspace();
+      _plate.backspace();
       return;
     }
-    _plateInput.submit(label);
+    _plate.submit(label);
   }
 
   /// Bumped on every device hop; captured by pending awaits so a stale run
@@ -171,18 +170,18 @@ class _DeviceStageState extends State<DeviceStage> {
     _typist.removeListener(_syncPressedKey);
     _typist.dispose();
     _pressedKey.dispose();
-    _mirror?.cancel();
-    _secondaryBloc?.close();
-    _bloc.close();
+    final mirror = _mirror;
+    if (mirror != null) _plate.removeListener(mirror);
+    _secondary?.dispose();
+    _plate.dispose();
     _controller.dispose();
-    _plateInput.dispose();
     super.dispose();
   }
 
   void _onDeviceChanged(DeviceType device) {
     _generation++;
     _typist.cancel();
-    // Only the frame starts reshaping now. The plate + its bloc stay on the
+    // Only the frame starts reshaping now. The plate + its controller stay on the
     // outgoing device until it has faded out; _onContentSwap does the hand-off.
     // DeviceCycle rebuilds its builder as part of the same advance, so the new
     // frame device is picked up without a setState here.
@@ -191,13 +190,16 @@ class _DeviceStageState extends State<DeviceStage> {
   }
 
   /// Fired by [DeviceFrame] the moment content opacity hits zero, as the frame
-  /// starts morphing — the outgoing plate is already invisible, so its bloc can
-  /// be closed and replaced without a visible flash.
+  /// starts morphing — the outgoing plate is already invisible, so its
+  /// controller can be disposed and replaced without a visible flash.
   void _onContentSwap() {
     if (!mounted) return;
-    _bloc.close();
+    final mirror = _mirror;
+    if (mirror != null) _plate.removeListener(mirror);
+    _mirror = null;
+    _plate.dispose();
     _contentDevice = _frameDevice;
-    _bloc = PlateCardBloc(specFor(_contentDevice));
+    _plate = PlateController(spec: specFor(_contentDevice));
     _installMirror();
     _activeIndex = null;
     setState(() {});
@@ -222,9 +224,8 @@ class _DeviceStageState extends State<DeviceStage> {
     final device = _contentDevice;
     final config = demoConfigs[device]!;
     await _typist.run(
-      bloc: _bloc,
       spec: config.spec,
-      controller: _plateInput,
+      controller: _plate,
       steps: config.script,
       useLetterPicker: false,
       onSlotChanged: config.showsValidation ? _setActiveIndex : null,
@@ -292,17 +293,16 @@ class _DeviceStageState extends State<DeviceStage> {
         // device rather than a claim about a vehicle.
         secondarySpec: config.secondarySpec,
         secondaryTheme: config.secondaryTheme,
-        secondaryBloc: _secondaryBloc,
+        secondaryController: _secondary,
         activeColor: PosterTokens.accent,
         // The plate judges itself now: with a validator and autoValidate on, it
         // paints its own completed-field underline red when the typed value is
-        // invalid. The stage neither subscribes to the bloc nor holds a verdict
-        // — a host that wants its own timing would read
+        // invalid. The stage neither watches the value nor holds a verdict — a
+        // host that wants its own timing would read
         // PlateInputController.validation instead.
         alertColor: PosterTokens.invalid,
         validator: config.validator,
         autoValidate: config.showsValidation,
-        bloc: _bloc,
         // The laptop deck already carries letter keys, so its letter comes in
         // through the library's on-screen-keypad mode instead of the modal
         // picker. Other devices keep their platform default.
@@ -312,7 +312,11 @@ class _DeviceStageState extends State<DeviceStage> {
         onChooseCharacter: (alphabet) =>
             PlateCharacterPicker.show(context, alphabet),
         onActiveIndexChanged: config.showsValidation ? _setActiveIndex : null,
-        controller: config.usesController ? _plateInput : null,
+        // Always passed now, on every device: this is where the plate's
+        // characters live, not just a focus handle, so the canvas has to render
+        // from it. `usesController` still says which devices drive entry from
+        // an app-supplied pad.
+        controller: _plate,
         showBackdrop: true,
         plateWidthFactor: config.plateWidthFactor,
         // The pad watches the pressed key itself, so the twice-per-keystroke
@@ -343,8 +347,8 @@ class _DeviceStageState extends State<DeviceStage> {
                   keyBorder: PosterTokens.hairline,
                 ),
                 onKey: (key) => key == kPlateBackspaceKey
-                    ? _plateInput.backspace()
-                    : _plateInput.submit(key),
+                    ? _plate.backspace()
+                    : _plate.submit(key),
               )
             : PlateKeypad(
                 highlightedKey: null,

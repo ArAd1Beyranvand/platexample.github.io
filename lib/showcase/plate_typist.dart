@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:plate_keypad/plate_keypad.dart';
 import 'package:core_plate/core_plate.dart';
 
-
 /// One step in a typing script: either a keystroke into a slot, or a
 /// backspace. `pauseAfter: true` marks a natural break (a burst just
 /// finished, or a letter was just entered) — the typist waits the slower
@@ -147,16 +146,18 @@ class PlateTypist extends ChangeNotifier {
 
   bool get isRunning => _running;
 
-  /// Walks [steps] in order against [bloc], flashing each key for [flash].
-  /// [spec] resolves each [KeyStep.index] to its [PlateSlot] so a letter slot
-  /// (non-numeric alphabet) is detected the same way the keypad decides
-  /// whether to show its letters pad, rather than by a hardcoded index/char.
-  /// [controller] drives [BackspaceStep]s the same way the on-screen keypad's
-  /// backspace key does.
+  /// Walks [steps] in order against [controller], flashing each key for
+  /// [flash]. [spec] resolves each [KeyStep.index] to its [PlateSlot] so a
+  /// letter slot (non-numeric alphabet) is detected the same way the keypad
+  /// decides whether to show its letters pad, rather than by a hardcoded
+  /// index/char.
+  ///
+  /// One [PlateController] does both jobs: it writes the characters and it
+  /// drives focus, so [BackspaceStep]s go through the same handle the on-screen
+  /// keypad's backspace key uses.
   Future<void> run({
-    required PlateCardBloc bloc,
     required PlateSpec spec,
-    required PlateInputController controller,
+    required PlateController controller,
     required List<TypistStep> steps,
     required bool useLetterPicker,
     required BuildContext context,
@@ -177,7 +178,6 @@ class PlateTypist extends ChangeNotifier {
       if (_cancelled) break;
       final keepGoing = await _runStep(
         step,
-        bloc: bloc,
         spec: spec,
         controller: controller,
         useLetterPicker: useLetterPicker,
@@ -201,9 +201,8 @@ class PlateTypist extends ChangeNotifier {
   /// disposed mid-step).
   Future<bool> _runStep(
     TypistStep step, {
-    required PlateCardBloc bloc,
     required PlateSpec spec,
-    required PlateInputController controller,
+    required PlateController controller,
     required bool useLetterPicker,
     required BuildContext context,
     required Duration gap,
@@ -217,7 +216,7 @@ class PlateTypist extends ChangeNotifier {
       _notify();
       if (!await _sleep(flash)) return false;
 
-      // Keystrokes land straight on the bloc (see below), bypassing the real
+      // Keystrokes land straight on the controller (see below), bypassing the real
       // focus chain PlateCanvas tracks its active slot through — so unless
       // something has already focused a slot, seed it before backspacing,
       // the same way re-entering the plate programmatically would.
@@ -231,12 +230,16 @@ class PlateTypist extends ChangeNotifier {
 
     final keyStep = step as KeyStep;
     final slot = spec.slotAt(keyStep.index);
-    final isLetterSlot =
-        slot != null && !slot.alphabet.isNumeric;
+    final isLetterSlot = slot != null && !slot.alphabet.isNumeric;
 
     if (isLetterSlot) {
       if (useLetterPicker) {
-        await _pickLetter(bloc: bloc, context: context, spec: spec, step: keyStep);
+        await _pickLetter(
+          controller: controller,
+          context: context,
+          spec: spec,
+          step: keyStep,
+        );
         if (_cancelled) return false;
         return _sleep(keyStep.holdAfter ?? gap);
       }
@@ -257,7 +260,7 @@ class PlateTypist extends ChangeNotifier {
         activeKey = keyStep.char;
         _notify();
         if (!await _sleep(flash)) return false;
-        bloc.add(ValueIsChanged(index: keyStep.index, value: keyStep.char));
+        controller.setAt(keyStep.index, keyStep.char);
         activeKey = null;
         _notify();
         return _sleep(keyStep.holdAfter ?? gap);
@@ -276,7 +279,7 @@ class PlateTypist extends ChangeNotifier {
     _notify();
     if (!await _sleep(flash)) return false;
 
-    bloc.add(ValueIsChanged(index: keyStep.index, value: keyStep.char));
+    controller.setAt(keyStep.index, keyStep.char);
 
     // Release it.
     activeKey = null;
@@ -287,7 +290,7 @@ class PlateTypist extends ChangeNotifier {
   /// Opens [PlateCharacterPicker] and scrolls it to [step]'s character
   /// before committing the value.
   Future<void> _pickLetter({
-    required PlateCardBloc bloc,
+    required PlateController controller,
     required BuildContext context,
     required PlateSpec spec,
     required KeyStep step,
@@ -323,7 +326,7 @@ class PlateTypist extends ChangeNotifier {
         navigator.pop();
         sheetOpen = false;
       }
-      bloc.add(ValueIsChanged(index: step.index, value: step.char));
+      controller.setAt(step.index, step.char);
     } finally {
       if (sheetOpen && navigator.canPop()) navigator.pop();
       scroll.dispose();

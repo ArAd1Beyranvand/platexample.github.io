@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:core_plate/core_plate.dart';
 
 import '../poster/plate_backdrop.dart';
@@ -15,7 +14,6 @@ class PlateDisplay extends StatelessWidget {
     this.validator,
     this.autoValidate = false,
     this.keyboard,
-    this.bloc,
     this.inputSource,
     required this.onChooseCharacter,
     this.onActiveIndexChanged,
@@ -25,15 +23,18 @@ class PlateDisplay extends StatelessWidget {
     this.baseTheme,
     this.secondarySpec,
     this.secondaryTheme,
-    this.secondaryBloc,
+    this.secondaryController,
   });
 
   final PlateSpec spec;
   final PlateMode mode;
 
-  /// Lets a host drive character entry from outside the plate (e.g. a custom
-  /// on-screen keypad). Forwarded straight to [PlateCanvas].
-  final PlateInputController? controller;
+  /// The plate's characters, and the handle a host drives entry through from
+  /// outside the plate (e.g. a custom on-screen keypad). Forwarded straight to
+  /// [PlateCanvas]. Null lets the canvas own its own, keeping today's
+  /// self-contained behaviour for a caller that neither reads nor writes the
+  /// value.
+  final PlateController? controller;
 
   /// How characters get into the plate. Null lets the plate resolve the
   /// platform default; pass [PlateInputSource.host] when an app-supplied pad
@@ -49,10 +50,6 @@ class PlateDisplay extends StatelessWidget {
   /// [spec]'s slots, or null when focus leaves the plate. Resolve it against
   /// [spec] for the slot itself. Forwarded straight to [PlateCanvas].
   final ValueChanged<int?>? onActiveIndexChanged;
-
-  /// An externally-owned bloc to drive the plate. When null, this widget
-  /// creates and owns its own, keeping today's self-contained behaviour.
-  final PlateCardBloc? bloc;
 
   /// Optional fake soft keyboard rendered flush at the bottom of the screen,
   /// below the plate. Null (default) keeps today's behaviour.
@@ -91,7 +88,7 @@ class PlateDisplay extends StatelessWidget {
   final PlateTheme? baseTheme;
 
   /// A second plate stacked beneath [spec], rendered read-only from
-  /// [secondaryBloc]. Null (the default) keeps the single-plate layout.
+  /// [secondaryController]. Null (the default) keeps the single-plate layout.
   ///
   /// It is a whole second plate rather than a second value on one, because the
   /// two plates it exists for — Yemen's 2026 unified plate and the 1993
@@ -102,13 +99,13 @@ class PlateDisplay extends StatelessWidget {
   /// The printed colours of [secondarySpec].
   final PlateTheme? secondaryTheme;
 
-  /// The bloc [secondarySpec] renders from. The host owns it and writes the
-  /// mirrored value into it; nothing here types into it.
-  final PlateCardBloc? secondaryBloc;
+  /// The controller [secondarySpec] renders from. The host owns it and writes
+  /// the mirrored value into it; nothing here types into it.
+  final PlateController? secondaryController;
 
   @override
   Widget build(BuildContext context) {
-    final child = _PlateDisplayBody(
+    return _PlateDisplayBody(
       mode: mode,
       spec: spec,
       keyboard: keyboard,
@@ -126,14 +123,7 @@ class PlateDisplay extends StatelessWidget {
       baseTheme: baseTheme,
       secondarySpec: secondarySpec,
       secondaryTheme: secondaryTheme,
-      secondaryBloc: secondaryBloc,
-    );
-    if (bloc != null) {
-      return BlocProvider.value(value: bloc!, child: child);
-    }
-    return BlocProvider(
-      create: (_) => PlateCardBloc(spec),
-      child: child,
+      secondaryController: secondaryController,
     );
   }
 }
@@ -157,7 +147,7 @@ class _PlateDisplayBody extends StatelessWidget {
     required this.baseTheme,
     required this.secondarySpec,
     required this.secondaryTheme,
-    required this.secondaryBloc,
+    required this.secondaryController,
   });
 
   final PlateMode mode;
@@ -173,11 +163,11 @@ class _PlateDisplayBody extends StatelessWidget {
   final PlateInputSource? inputSource;
   final Future<String?> Function(PlateAlphabet alphabet) onChooseCharacter;
   final ValueChanged<int?>? onActiveIndexChanged;
-  final PlateInputController? controller;
+  final PlateController? controller;
   final PlateTheme? baseTheme;
   final PlateSpec? secondarySpec;
   final PlateTheme? secondaryTheme;
-  final PlateCardBloc? secondaryBloc;
+  final PlateController? secondaryController;
 
   @override
   Widget build(BuildContext context) {
@@ -198,7 +188,7 @@ class _PlateDisplayBody extends StatelessWidget {
       baseTheme: baseTheme,
       secondarySpec: secondarySpec,
       secondaryTheme: secondaryTheme,
-      secondaryBloc: secondaryBloc,
+      secondaryController: secondaryController,
     );
 
     // Boundaried against each other: the two change on completely different
@@ -217,7 +207,10 @@ class _PlateDisplayBody extends StatelessWidget {
     if (!showBackdrop) return body;
     return Stack(
       fit: StackFit.expand,
-      children: [const Positioned.fill(child: PlateBackdrop()), body],
+      children: [
+        const Positioned.fill(child: PlateBackdrop()),
+        body,
+      ],
     );
   }
 }
@@ -240,7 +233,7 @@ class _PlateInputSurface extends StatelessWidget {
     required this.baseTheme,
     required this.secondarySpec,
     required this.secondaryTheme,
-    required this.secondaryBloc,
+    required this.secondaryController,
   });
 
   final PlateSpec spec;
@@ -253,11 +246,11 @@ class _PlateInputSurface extends StatelessWidget {
   final PlateInputSource? inputSource;
   final Future<String?> Function(PlateAlphabet alphabet) onChooseCharacter;
   final ValueChanged<int?>? onActiveIndexChanged;
-  final PlateInputController? controller;
+  final PlateController? controller;
   final PlateTheme? baseTheme;
   final PlateSpec? secondarySpec;
   final PlateTheme? secondaryTheme;
-  final PlateCardBloc? secondaryBloc;
+  final PlateController? secondaryController;
 
   @override
   Widget build(BuildContext context) {
@@ -279,12 +272,12 @@ class _PlateInputSurface extends StatelessWidget {
     );
 
     final secondary = secondarySpec;
-    final secondaryBlocOrNull = secondaryBloc;
+    final secondaryValue = secondaryController;
 
     return Center(
       child: FractionallySizedBox(
         widthFactor: plateWidthFactor,
-        child: secondary == null || secondaryBlocOrNull == null
+        child: secondary == null || secondaryValue == null
             ? PlateThemeScope(theme: theme, child: plate)
             : Column(
                 mainAxisSize: MainAxisSize.min,
@@ -293,10 +286,15 @@ class _PlateInputSurface extends StatelessWidget {
                   // Roughly a tenth of a plate's height, so the pair reads as
                   // two plates rather than one tall object.
                   const SizedBox(height: 18),
+                  // Read-only, and a [PlateView] rather than a `ShowPlate`
+                  // because it takes a [PlateTheme]: for the northern Yemeni
+                  // plate the colour is the vehicle class, so the standard
+                  // black-on-white would be the wrong plate. It renders blank
+                  // until the mirror writes into it, which is what the stacked
+                  // pair should look like before the first keystroke.
                   _SecondaryPlate(
-                    spec: secondary,
                     theme: secondaryTheme ?? PlateTheme.standard(),
-                    bloc: secondaryBlocOrNull,
+                    controller: secondaryValue,
                   ),
                 ],
               ),
@@ -306,37 +304,17 @@ class _PlateInputSurface extends StatelessWidget {
 }
 
 /// The read-only plate stacked under the one being typed into.
-///
-/// [PlateMode.display] rather than input: it carries a mirrored value, so it
-/// has nothing to focus and no keystroke to accept, and display mode draws bare
-/// glyphs on the face instead of live text fields. It is not `ShowPlate`
-/// because `ShowPlate` takes no [PlateTheme] and would paint the standard
-/// black-on-white plate — which for the northern Yemeni plate would be the
-/// wrong colour, and on that system the colour is the vehicle class.
 class _SecondaryPlate extends StatelessWidget {
-  const _SecondaryPlate({
-    required this.spec,
-    required this.theme,
-    required this.bloc,
-  });
+  const _SecondaryPlate({required this.theme, required this.controller});
 
-  final PlateSpec spec;
   final PlateTheme theme;
-  final PlateCardBloc bloc;
+
+  /// The host's mirrored value. Nothing here types into it.
+  final PlateController controller;
 
   @override
-  Widget build(BuildContext context) => BlocProvider.value(
-    value: bloc,
-    child: PlateThemeScope(
-      theme: theme,
-      child: PlateCanvas(
-        spec: spec,
-        mode: PlateMode.display,
-        theme: theme,
-        // Display mode never opens a chooser; the parameter is required, so
-        // satisfy it with one that is never called.
-        onChooseCharacter: (alphabet) async => null,
-      ),
-    ),
+  Widget build(BuildContext context) => PlateThemeScope(
+    theme: theme,
+    child: PlateView(controller: controller, theme: theme),
   );
 }
