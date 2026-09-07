@@ -133,22 +133,27 @@ class _DashedLPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     if (dash <= 0) return;
+    // Rounded caps read as a soft, friendly stitch instead of hard machined
+    // ticks.
     final Paint paint = Paint()
       ..color = color
-      ..isAntiAlias = false;
+      ..strokeWidth = thickness
+      ..strokeCap = StrokeCap.round
+      ..isAntiAlias = true;
     final double period = dash + gap;
-    final double right = size.width - thickness;
-    final double bottom = size.height - thickness;
+    final double right = size.width - thickness / 2;
+    final double bottom = size.height - thickness / 2;
+    final double half = thickness / 2;
 
     // Vertical leg, down the right edge to the corner.
-    for (double y = 0; y < size.height; y += period) {
-      final double end = math.min(y + dash, size.height);
-      canvas.drawRect(Rect.fromLTRB(right, y, size.width, end), paint);
+    for (double y = half; y < size.height; y += period) {
+      final double end = math.min(y + dash, size.height - half);
+      canvas.drawLine(Offset(right, y), Offset(right, end), paint);
     }
     // Horizontal leg, along the bottom up to the same corner.
-    for (double x = 0; x < size.width; x += period) {
-      final double end = math.min(x + dash, size.width);
-      canvas.drawRect(Rect.fromLTRB(x, bottom, end, size.height), paint);
+    for (double x = half; x < size.width; x += period) {
+      final double end = math.min(x + dash, size.width - half);
+      canvas.drawLine(Offset(x, bottom), Offset(end, bottom), paint);
     }
   }
 
@@ -175,13 +180,19 @@ class _DashedRulePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     if (dash <= 0 || size.width <= 0) return;
+    // Rounded caps soften the rule into a row of gentle pills rather than
+    // hard machined ticks.
     final Paint paint = Paint()
       ..color = color
-      ..isAntiAlias = false;
+      ..strokeWidth = size.height
+      ..strokeCap = StrokeCap.round
+      ..isAntiAlias = true;
     final double period = dash + gap;
-    for (double x = 0; x < size.width; x += period) {
-      final double end = math.min(x + dash, size.width);
-      canvas.drawRect(Rect.fromLTRB(x, 0, end, size.height), paint);
+    final double y = size.height / 2;
+    final double half = size.height / 2;
+    for (double x = half; x < size.width; x += period) {
+      final double end = math.min(x + dash, size.width - half);
+      canvas.drawLine(Offset(x, y), Offset(end, y), paint);
     }
   }
 

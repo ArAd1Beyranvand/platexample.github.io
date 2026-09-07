@@ -150,7 +150,9 @@ class _WidePoster extends StatelessWidget {
             isHopping: phase == DeviceTransitionPhase.frameTransform,
           ),
         ),
-        RepaintBoundary(child: GroundShadowLayer(device: device)),
+        RepaintBoundary(
+          child: GroundShadowLayer(device: slotDevice, deviceBounds: bounds),
+        ),
         _AnimatedDeviceSlot(
           bounds: bounds,
           device: device,
@@ -215,7 +217,9 @@ class _MediumPoster extends StatelessWidget {
             isHopping: phase == DeviceTransitionPhase.frameTransform,
           ),
         ),
-        RepaintBoundary(child: GroundShadowLayer(device: device)),
+        RepaintBoundary(
+          child: GroundShadowLayer(device: slotDevice, deviceBounds: bounds),
+        ),
         _AnimatedDeviceSlot(
           bounds: bounds,
           device: device,

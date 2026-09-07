@@ -353,6 +353,14 @@ class PosterType {
         letterSpacing: 0.20 * 13 * f,
         color: PosterColors.flareInk,
       );
+
+  static TextStyle eyebrow(double f) => TextStyle(
+        fontFamily: PosterFonts.martianMono,
+        fontWeight: FontWeight.w600,
+        fontSize: 12 * f,
+        letterSpacing: 0.25 * 12 * f,
+        color: PosterColors.inkDisplay3,
+      );
 }
 
 /// Design tokens shared across the poster widgets, plus the four names the

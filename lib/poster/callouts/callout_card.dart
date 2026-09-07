@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../cards/bevel_panel.dart';
 import '../cards/card_decorations.dart';
 import '../cards/dashed_rule.dart';
+import '../cards/soft_panel.dart';
 import '../poster_scale.dart';
 import '../poster_tokens.dart';
 import 'callout_data.dart';
@@ -13,15 +13,17 @@ class CalloutCard extends StatelessWidget {
   final CalloutSpec spec;
   final double? widthDesignPx;
 
-  BevelKind get _bevelKind {
+  /// A faint tint for the card's own drop shadow, so hero cards throw a
+  /// shadow that reads as "this card", not just generic black.
+  Color? get _shadowTint {
     switch (spec.kind) {
       case CalloutKind.heroIr:
+        return PosterColors.cardHeroIr;
       case CalloutKind.heroDe:
-        return BevelKind.hero;
+        return PosterColors.cardHeroDe;
       case CalloutKind.steel:
-        return BevelKind.steel;
       case CalloutKind.dark:
-        return BevelKind.dark;
+        return null;
     }
   }
 
@@ -77,6 +79,38 @@ class CalloutCard extends StatelessWidget {
     return PosterType.cardBodyEn(f, spec.bodySizeDesignPx);
   }
 
+  Widget _buildEyebrow(PosterMetrics metrics, TextDirection direction) {
+    // A soft pill instead of bare tracked-out caps — a small nod to the
+    // "chip" pattern common to friendly, modern UI cards.
+    return Padding(
+      padding: EdgeInsets.only(bottom: metrics.px(12)),
+      child: Align(
+        alignment: spec.isCentered
+            ? Alignment.center
+            : (direction == TextDirection.rtl
+                ? Alignment.centerRight
+                : Alignment.centerLeft),
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            color: PosterColors.inkDisplay1.withValues(alpha: 0.10),
+            borderRadius: BorderRadius.circular(metrics.px(999)),
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: metrics.px(10),
+              vertical: metrics.px(5),
+            ),
+            child: Text(
+              spec.eyebrow,
+              style: PosterType.eyebrow(metrics.f),
+              textDirection: direction,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _buildTitle(PosterMetrics metrics, TextDirection direction) {
     final baseStyle = _titleStyle(metrics.f);
 
@@ -85,17 +119,36 @@ class CalloutCard extends StatelessWidget {
       if (digitMatch != null) {
         final digit = digitMatch.group(1)!;
         final rest = digitMatch.group(2)!;
+        final double badgeSize = (baseStyle.fontSize ?? 24) * 1.05;
 
+        // A rounded accent chip in front of the number instead of a hard red
+        // digit — reads as a friendly numbered-feature badge.
         return RichText(
           textAlign: spec.isCentered ? TextAlign.center : TextAlign.start,
           text: TextSpan(
             children: [
-              TextSpan(
-                text: digit,
-                style: baseStyle.copyWith(
-                  color: const Color(0xFFE53935),
-                  fontWeight: FontWeight.w900,
-                  fontSize: (baseStyle.fontSize ?? 24) * 1.2,
+              WidgetSpan(
+                alignment: PlaceholderAlignment.middle,
+                child: Padding(
+                  padding: EdgeInsets.only(right: metrics.px(8)),
+                  child: Container(
+                    width: badgeSize,
+                    height: badgeSize,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: PosterColors.accent,
+                      borderRadius: BorderRadius.circular(badgeSize * 0.32),
+                    ),
+                    child: Text(
+                      digit,
+                      style: baseStyle.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w900,
+                        fontSize: badgeSize * 0.62,
+                        height: 1.0,
+                      ),
+                    ),
+                  ),
                 ),
               ),
               TextSpan(text: rest, style: baseStyle),
@@ -131,11 +184,19 @@ class CalloutCard extends StatelessWidget {
   Widget _buildLRuleBody(PosterMetrics metrics, TextDirection direction) {
     final Color ruleColor = _dashedRuleColor(metrics);
     final TextStyle bodyStyle = _bodyStyle(metrics.f);
+    final Widget titleWithEyebrow = Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: direction == TextDirection.rtl ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+      children: [
+        _buildEyebrow(metrics, direction),
+        _buildTitle(metrics, direction),
+      ],
+    );
     final Widget title = DashedLBorder(
       color: ruleColor,
       child: Directionality(
         textDirection: direction,
-        child: _buildTitle(metrics, direction),
+        child: titleWithEyebrow,
       ),
     );
 
@@ -152,7 +213,7 @@ class CalloutCard extends StatelessWidget {
         final double notchWidth =
             titlePainter.width + metrics.px(DashedLBorder.defaultInset + 2);
 
-        final double gap = metrics.px(14);
+        final double gap = metrics.px(18);
         final double trailing = spec.hasEuBadge ? metrics.px(30) : 0;
         final double columnWidth =
             constraints.maxWidth - notchWidth - gap - trailing;
@@ -239,10 +300,10 @@ class CalloutCard extends StatelessWidget {
 
     Widget cardContent = Padding(
       padding: EdgeInsets.fromLTRB(
-        metrics.px(24),
-        spec.isCentered ? metrics.px(18) : metrics.px(22),
-        metrics.px(24),
-        spec.isCentered ? metrics.px(18) : metrics.px(22),
+        metrics.px(28),
+        spec.isCentered ? metrics.px(22) : metrics.px(26),
+        metrics.px(28),
+        spec.isCentered ? metrics.px(22) : metrics.px(26),
       ),
       child: spec.hasLRule
           ? _buildLRuleBody(metrics, direction)
@@ -256,19 +317,24 @@ class CalloutCard extends StatelessWidget {
             ? CrossAxisAlignment.end
             : CrossAxisAlignment.start),
         children: <Widget>[
+          // Eyebrow label
+          Directionality(
+            textDirection: direction,
+            child: _buildEyebrow(metrics, direction),
+          ),
           // Title
           Directionality(
             textDirection: direction,
             child: _buildTitle(metrics, direction),
           ),
-          if (!spec.isCentered) SizedBox(height: metrics.px(14)),
+          if (!spec.isCentered) SizedBox(height: metrics.px(16)),
 
           // Dashed rule
           if (spec.hasDashedRule && !spec.hasDivider)
             DashedRule.thin(color: _dashedRuleColor(metrics)),
           if (spec.hasDivider) const TwoToneDivider(),
 
-          if (!spec.isCentered) SizedBox(height: metrics.px(14)),
+          if (!spec.isCentered) SizedBox(height: metrics.px(16)),
 
           // Body
           if (spec.body != null)
@@ -335,11 +401,17 @@ class CalloutCard extends StatelessWidget {
     }
 
     if (spec.hasFlareTag) {
-      // Card 09
+      // Card 09 — pulled in from the edge now that the tag is a rounded
+      // pill; flush-right read fine for a hard-edged banner but a pill
+      // wants a little breathing room before the card's own rounded corner.
       cardContent = Stack(
         children: <Widget>[
           cardContent,
-          Positioned(right: 0, bottom: metrics.px(14), child: const RedTag()),
+          Positioned(
+            right: metrics.px(16),
+            bottom: metrics.px(16),
+            child: const RedTag(),
+          ),
         ],
       );
     }
@@ -360,11 +432,12 @@ class CalloutCard extends StatelessWidget {
       );
     }
 
-    // Main card with bevel panel
-    final Widget card = BevelPanel(
-      style: BevelStyle.byKind[_bevelKind]!,
+    // Main card — a soft, rounded UI-style panel instead of the machined
+    // bevel-and-screws plaque.
+    final Widget card = SoftPanel(
       groundColor: _groundColor,
       groundGradient: _groundGradient,
+      tintedShadow: _shadowTint,
       child: SizedBox(
         width: metrics.px(widthDesignPx ?? spec.widthFx * 1920),
         child: cardContent,
