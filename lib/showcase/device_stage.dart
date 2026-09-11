@@ -14,11 +14,7 @@ import '../showcase/plate_typist.dart';
 import '../widgets/plate_display.dart';
 
 class DeviceStage extends StatefulWidget {
-  const DeviceStage({
-    super.key,
-    this.onFrameDeviceChanged,
-    this.onPhaseChanged,
-  });
+  const DeviceStage({super.key, this.onFrameDeviceChanged, this.onPhaseChanged});
 
   /// Fired the instant a hop starts, with the incoming device — i.e. the same
   /// moment [_DeviceStageState._frameDevice] flips, before the plate content
@@ -105,14 +101,7 @@ class _DeviceStageState extends State<DeviceStage> {
       // The whole value at once: `setValues` notifies once for the write, so
       // replaying every slot on each keystroke costs one rebuild pass, not
       // seven.
-      secondary.setValues(
-        mirrorByGroup(
-          from: config.spec,
-          to: secondarySpec,
-          values: _plate.values,
-          pairs: pairs,
-        ),
-      );
+      secondary.setValues(mirrorByGroup(from: config.spec, to: secondarySpec, values: _plate.values, pairs: pairs));
     }
 
     // Once up front, then on every change. A listener only fires on changes, so
@@ -270,9 +259,7 @@ class _DeviceStageState extends State<DeviceStage> {
     // tablet's letters pad shows: a digit-only alphabet keeps the digit grid,
     // anything else slides the letters layer in.
     final activeIndex = _activeIndex;
-    final activeAlphabet = activeIndex == null
-        ? null
-        : config.spec.slotAt(activeIndex)?.alphabet;
+    final activeAlphabet = activeIndex == null ? null : config.spec.slotAt(activeIndex)?.alphabet;
     final showLetters = activeAlphabet != null && !activeAlphabet.isNumeric;
     return DeviceFrame(
       device: frameDevice,
@@ -309,8 +296,7 @@ class _DeviceStageState extends State<DeviceStage> {
         inputSource: config.inputSource,
         // Core ships no built-in picker since the keypad split; hand it the
         // one from plate_keypad for any `chosen`-alphabet slot.
-        onChooseCharacter: (alphabet) =>
-            PlateCharacterPicker.show(context, alphabet),
+        onChooseCharacter: (alphabet) => PlateCharacterPicker.show(context, alphabet),
         onActiveIndexChanged: config.showsValidation ? _setActiveIndex : null,
         // Always passed now, on every device: this is where the plate's
         // characters live, not just a focus handle, so the canvas has to render
@@ -346,9 +332,7 @@ class _DeviceStageState extends State<DeviceStage> {
                   highlight: PosterTokens.keypadHighlight,
                   keyBorder: PosterTokens.hairline,
                 ),
-                onKey: (key) => key == kPlateBackspaceKey
-                    ? _plate.backspace()
-                    : _plate.submit(key),
+                onKey: (key) => key == kPlateBackspaceKey ? _plate.backspace() : _plate.submit(key),
               )
             : PlateKeypad(
                 highlightedKey: null,

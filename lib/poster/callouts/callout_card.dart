@@ -43,9 +43,9 @@ class CalloutCard extends StatelessWidget {
     switch (spec.kind) {
       case CalloutKind.steel:
       case CalloutKind.dark:
-      // Each numbered card gets its own plate-face colour so they don't read
-      // as one repeated slab — blues echo the hero cards, 07/08/11 are a
-      // green family, 02/03 share a slate tone.
+        // Each numbered card gets its own plate-face colour so they don't read
+        // as one repeated slab — blues echo the hero cards, 07/08/11 are a
+        // green family, 02/03 share a slate tone.
         return PosterGradients.calloutFace(spec.index);
       case CalloutKind.heroIr:
       case CalloutKind.heroDe:
@@ -87,24 +87,15 @@ class CalloutCard extends StatelessWidget {
       child: Align(
         alignment: spec.isCentered
             ? Alignment.center
-            : (direction == TextDirection.rtl
-                ? Alignment.centerRight
-                : Alignment.centerLeft),
+            : (direction == TextDirection.rtl ? Alignment.centerRight : Alignment.centerLeft),
         child: DecoratedBox(
           decoration: BoxDecoration(
             color: PosterColors.inkDisplay1.withValues(alpha: 0.10),
             borderRadius: BorderRadius.circular(metrics.px(999)),
           ),
           child: Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: metrics.px(10),
-              vertical: metrics.px(5),
-            ),
-            child: Text(
-              spec.eyebrow,
-              style: PosterType.eyebrow(metrics.f),
-              textDirection: direction,
-            ),
+            padding: EdgeInsets.symmetric(horizontal: metrics.px(10), vertical: metrics.px(5)),
+            child: Text(spec.eyebrow, style: PosterType.eyebrow(metrics.f), textDirection: direction),
           ),
         ),
       ),
@@ -161,7 +152,9 @@ class CalloutCard extends StatelessWidget {
     return Text(
       spec.title,
       style: baseStyle,
-      textAlign: spec.isCentered ? TextAlign.center : (direction == TextDirection.rtl ? TextAlign.right : TextAlign.left),
+      textAlign: spec.isCentered
+          ? TextAlign.center
+          : (direction == TextDirection.rtl ? TextAlign.right : TextAlign.left),
     );
   }
 
@@ -187,17 +180,11 @@ class CalloutCard extends StatelessWidget {
     final Widget titleWithEyebrow = Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: direction == TextDirection.rtl ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-      children: [
-        _buildEyebrow(metrics, direction),
-        _buildTitle(metrics, direction),
-      ],
+      children: [_buildEyebrow(metrics, direction), _buildTitle(metrics, direction)],
     );
     final Widget title = DashedLBorder(
       color: ruleColor,
-      child: Directionality(
-        textDirection: direction,
-        child: titleWithEyebrow,
-      ),
+      child: Directionality(textDirection: direction, child: titleWithEyebrow),
     );
 
     if (spec.body == null) return title;
@@ -210,22 +197,15 @@ class CalloutCard extends StatelessWidget {
           text: TextSpan(text: spec.title, style: _titleStyle(metrics.f)),
           textDirection: direction,
         )..layout();
-        final double notchWidth =
-            titlePainter.width + metrics.px(DashedLBorder.defaultInset + 2);
+        final double notchWidth = titlePainter.width + metrics.px(DashedLBorder.defaultInset + 2);
 
         final double gap = metrics.px(18);
         final double trailing = spec.hasEuBadge ? metrics.px(30) : 0;
-        final double columnWidth =
-            constraints.maxWidth - notchWidth - gap - trailing;
+        final double columnWidth = constraints.maxWidth - notchWidth - gap - trailing;
 
         final int split = columnWidth <= 0
             ? 0
-            : _splitBodyAt(
-          text: spec.body!,
-          style: bodyStyle,
-          direction: direction,
-          width: columnWidth,
-        );
+            : _splitBodyAt(text: spec.body!, style: bodyStyle, direction: direction, width: columnWidth);
         final String beside = spec.body!.substring(0, split).trimRight();
         final String below = spec.body!.substring(split).trimLeft();
 
@@ -288,9 +268,7 @@ class CalloutCard extends StatelessWidget {
     if (besideCount <= 0) return 0;
 
     // End of the last beside line: probe just past its right edge.
-    return painter
-        .getPositionForOffset(Offset(width, lines[besideCount - 1].baseline))
-        .offset;
+    return painter.getPositionForOffset(Offset(width, lines[besideCount - 1].baseline)).offset;
   }
 
   @override
@@ -308,48 +286,38 @@ class CalloutCard extends StatelessWidget {
       child: spec.hasLRule
           ? _buildLRuleBody(metrics, direction)
           : Column(
-        mainAxisAlignment: spec.isCentered
-            ? MainAxisAlignment.center
-            : MainAxisAlignment.start,
-        crossAxisAlignment: spec.isCentered
-            ? CrossAxisAlignment.center
-            : (direction == TextDirection.rtl
-            ? CrossAxisAlignment.end
-            : CrossAxisAlignment.start),
-        children: <Widget>[
-          // Eyebrow label
-          Directionality(
-            textDirection: direction,
-            child: _buildEyebrow(metrics, direction),
-          ),
-          // Title
-          Directionality(
-            textDirection: direction,
-            child: _buildTitle(metrics, direction),
-          ),
-          if (!spec.isCentered) SizedBox(height: metrics.px(16)),
+              mainAxisAlignment: spec.isCentered ? MainAxisAlignment.center : MainAxisAlignment.start,
+              crossAxisAlignment: spec.isCentered
+                  ? CrossAxisAlignment.center
+                  : (direction == TextDirection.rtl ? CrossAxisAlignment.end : CrossAxisAlignment.start),
+              children: <Widget>[
+                // Eyebrow label
+                Directionality(textDirection: direction, child: _buildEyebrow(metrics, direction)),
+                // Title
+                Directionality(textDirection: direction, child: _buildTitle(metrics, direction)),
+                if (!spec.isCentered) SizedBox(height: metrics.px(16)),
 
-          // Dashed rule
-          if (spec.hasDashedRule && !spec.hasDivider)
-            DashedRule.thin(color: _dashedRuleColor(metrics)),
-          if (spec.hasDivider) const TwoToneDivider(),
+                // Dashed rule
+                if (spec.hasDashedRule && !spec.hasDivider) DashedRule.thin(color: _dashedRuleColor(metrics)),
+                if (spec.hasDivider) const TwoToneDivider(),
 
-          if (!spec.isCentered) SizedBox(height: metrics.px(16)),
+                if (!spec.isCentered) SizedBox(height: metrics.px(16)),
 
-          // Body
-          if (spec.body != null)
-            Directionality(
-              textDirection: direction,
-              child: Text(spec.body!, style: _bodyStyle(metrics.f), textAlign: direction == TextDirection.rtl ? TextAlign.right : TextAlign.left),
+                // Body
+                if (spec.body != null)
+                  Directionality(
+                    textDirection: direction,
+                    child: Text(
+                      spec.body!,
+                      style: _bodyStyle(metrics.f),
+                      textAlign: direction == TextDirection.rtl ? TextAlign.right : TextAlign.left,
+                    ),
+                  ),
+
+                // Footer (card 05)
+                if (spec.hasFooter) ...[SizedBox(height: metrics.px(12)), const IrFlagFooter()],
+              ],
             ),
-
-          // Footer (card 05)
-          if (spec.hasFooter) ...[
-            SizedBox(height: metrics.px(12)),
-            const IrFlagFooter(),
-          ],
-        ],
-      ),
     );
 
     // Build decorations
@@ -391,11 +359,7 @@ class CalloutCard extends StatelessWidget {
         clipBehavior: Clip.none,
         children: <Widget>[
           cardContent,
-          Positioned(
-            right: metrics.px(14),
-            top: metrics.px(22),
-            child: const EuBadgeColumn(width: 34),
-          ),
+          Positioned(right: metrics.px(14), top: metrics.px(22), child: const EuBadgeColumn(width: 34)),
         ],
       );
     }
@@ -407,11 +371,7 @@ class CalloutCard extends StatelessWidget {
       cardContent = Stack(
         children: <Widget>[
           cardContent,
-          Positioned(
-            right: metrics.px(16),
-            bottom: metrics.px(16),
-            child: const RedTag(),
-          ),
+          Positioned(right: metrics.px(16), bottom: metrics.px(16), child: const RedTag()),
         ],
       );
     }
@@ -438,10 +398,7 @@ class CalloutCard extends StatelessWidget {
       groundColor: _groundColor,
       groundGradient: _groundGradient,
       tintedShadow: _shadowTint,
-      child: SizedBox(
-        width: metrics.px(widthDesignPx ?? spec.widthFx * 1920),
-        child: cardContent,
-      ),
+      child: SizedBox(width: metrics.px(widthDesignPx ?? spec.widthFx * 1920), child: cardContent),
     );
 
     return card;

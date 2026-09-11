@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 enum CalloutKind { heroIr, heroDe, steel, dark }
+
 enum CalloutSide { left, right }
 
 class CalloutSpec {

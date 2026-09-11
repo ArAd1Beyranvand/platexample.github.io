@@ -75,8 +75,8 @@ class DevicePresets {
   );
 
   static DeviceConfig of(DeviceType type) => switch (type) {
-        DeviceType.mobile => mobile,
-        DeviceType.tablet => tablet,
-        DeviceType.desktop => desktop,
-      };
+    DeviceType.mobile => mobile,
+    DeviceType.tablet => tablet,
+    DeviceType.desktop => desktop,
+  };
 }

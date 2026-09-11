@@ -41,11 +41,7 @@ class PosterChrome extends StatelessWidget {
     return Stack(
       clipBehavior: Clip.none,
       children: <Widget>[
-        Positioned(
-          left: byline.dx,
-          top: byline.dy,
-          child: const PosterMasthead(),
-        ),
+        Positioned(left: byline.dx, top: byline.dy, child: const PosterMasthead()),
         Positioned(
           left: wordmark.dx,
           top: wordmark.dy,
@@ -59,11 +55,7 @@ class PosterChrome extends StatelessWidget {
             ],
           ),
         ),
-        Positioned(
-          left: stamp.dx,
-          top: stamp.dy,
-          child: const InspectionStamp(),
-        ),
+        Positioned(left: stamp.dx, top: stamp.dy, child: const InspectionStamp()),
       ],
     );
   }

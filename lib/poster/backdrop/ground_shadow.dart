@@ -2,8 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-import '../../device_preview/device_config.dart'
-    show DeviceConfig, DevicePresets, DeviceType;
+import '../../device_preview/device_config.dart' show DeviceConfig, DevicePresets, DeviceType;
 import '../../device_preview/device_transition.dart';
 import '../poster_scale.dart';
 import '../poster_tokens.dart';
@@ -83,18 +82,11 @@ class GroundShadow extends StatelessWidget {
     final double fitHeight = hasDeck ? total.height : config.bodySize.height;
     if (total.width <= 0 || fitHeight <= 0 || slot.isEmpty) return slot;
 
-    final double fit = math
-        .min(slot.width / total.width, slot.height / fitHeight)
-        .clamp(0.05, 1.0);
+    final double fit = math.min(slot.width / total.width, slot.height / fitHeight).clamp(0.05, 1.0);
     final double w = total.width * fit;
     final double h = fitHeight * fit;
     // The frame centres itself in the slot (Alignment.center).
-    return Rect.fromLTWH(
-      slot.left + (slot.width - w) / 2,
-      slot.top + (slot.height - h) / 2,
-      w,
-      h,
-    );
+    return Rect.fromLTWH(slot.left + (slot.width - w) / 2, slot.top + (slot.height - h) / 2, w, h);
   }
 
   /// The slab for a device slot: as wide as the device's drawn body, a little
@@ -109,12 +101,7 @@ class GroundShadow extends StatelessWidget {
     // the same 104px slab the laptop does.
     final double height = _slabHeight * (body.width / _referenceWidth);
     final double overhang = body.width * 0.04;
-    return Rect.fromLTWH(
-      body.left - overhang,
-      body.bottom - height * 0.35,
-      body.width + overhang * 2,
-      height,
-    );
+    return Rect.fromLTWH(body.left - overhang, body.bottom - height * 0.35, body.width + overhang * 2, height);
   }
 
   /// The slab's 104px height is authored against the desktop body, so the other
@@ -124,8 +111,7 @@ class GroundShadow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Duration d =
-        duration ?? const DeviceTransitionDurations().frameTransform;
+    final Duration d = duration ?? const DeviceTransitionDurations().frameTransform;
     return TweenAnimationBuilder<double>(
       // No `begin`: the first build lands on the value, every later change
       // eases from wherever the slab currently is.
@@ -142,10 +128,7 @@ class GroundShadow extends StatelessWidget {
           builder: (BuildContext context, Rect? slab, Widget? child) {
             return IgnorePointer(
               child: CustomPaint(
-                painter: _GroundShadowPainter(
-                  skewDegrees: degrees,
-                  slab: slab ?? slabFor(bounds, device),
-                ),
+                painter: _GroundShadowPainter(skewDegrees: degrees, slab: slab ?? slabFor(bounds, device)),
                 child: const SizedBox.expand(),
               ),
             );
@@ -169,10 +152,7 @@ class _GroundShadowPainter extends CustomPainter {
     if (size.isEmpty || slab.isEmpty) return;
 
     canvas.save();
-    canvas.scale(
-      size.width / kBackdropDesignWidth,
-      size.height / kBackdropDesignHeight,
-    );
+    canvas.scale(size.width / kBackdropDesignWidth, size.height / kBackdropDesignHeight);
 
     final double w = slab.width;
     final double h = slab.height;
@@ -182,9 +162,7 @@ class _GroundShadowPainter extends CustomPainter {
     canvas.translate(slab.center.dx, slab.center.dy);
     // CSS skewX(θ) shears x by +tan(θ)·y; Matrix4.skewX takes the shear factor
     // with the opposite sign convention, hence the negation.
-    canvas.transform(
-      Matrix4.skewX(-math.tan(skewDegrees * math.pi / 180)).storage,
-    );
+    canvas.transform(Matrix4.skewX(-math.tan(skewDegrees * math.pi / 180)).storage);
     canvas.translate(-w / 2, -h / 2);
 
     final Rect body = Rect.fromLTWH(0, 0, w, h);
@@ -195,11 +173,7 @@ class _GroundShadowPainter extends CustomPainter {
         ..shader = const LinearGradient(
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
-          colors: <Color>[
-            PosterColors.groundShadowStart,
-            PosterColors.groundShadowMid,
-            Color(0x00000000),
-          ],
+          colors: <Color>[PosterColors.groundShadowStart, PosterColors.groundShadowMid, Color(0x00000000)],
           stops: <double>[0.0, 0.6, 1.0],
         ).createShader(body),
     );
@@ -221,11 +195,7 @@ class _GroundShadowPainter extends CustomPainter {
 /// design coordinates the painter works in. Pass the *slot* device for
 /// [device] so the two agree; see [GroundShadow].
 class GroundShadowLayer extends StatelessWidget {
-  const GroundShadowLayer({
-    super.key,
-    required this.device,
-    required this.deviceBounds,
-  });
+  const GroundShadowLayer({super.key, required this.device, required this.deviceBounds});
 
   final DeviceType device;
   final Rect deviceBounds;

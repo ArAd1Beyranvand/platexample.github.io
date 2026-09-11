@@ -41,10 +41,7 @@ class DeviceBodyPainter extends CustomPainter {
 
   void _paintShadow(Canvas canvas, Rect body) {
     canvas.drawRRect(
-      RRect.fromRectAndRadius(
-        body.shift(Offset(0, config.shadowOffsetY)),
-        Radius.circular(config.bodyRadius),
-      ),
+      RRect.fromRectAndRadius(body.shift(Offset(0, config.shadowOffsetY)), Radius.circular(config.bodyRadius)),
       Paint()
         ..color = const Color(0xFF0B0D14).withValues(alpha: 0.24 * ambient)
         ..maskFilter = MaskFilter.blur(BlurStyle.normal, config.shadowBlur),
@@ -59,10 +56,7 @@ class DeviceBodyPainter extends CustomPainter {
         ..shader = const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
-            _Metal.highlight, _Metal.light, _Metal.mid,
-            _Metal.light, _Metal.shade, _Metal.deep,
-          ],
+          colors: [_Metal.highlight, _Metal.light, _Metal.mid, _Metal.light, _Metal.shade, _Metal.deep],
           stops: [0, .16, .38, .58, .82, 1],
         ).createShader(rect),
     );
@@ -91,10 +85,7 @@ class DeviceBodyPainter extends CustomPainter {
         ..shader = LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomLeft,
-          colors: [
-            Colors.white.withValues(alpha: 0.14),
-            Colors.white.withValues(alpha: 0),
-          ],
+          colors: [Colors.white.withValues(alpha: 0.14), Colors.white.withValues(alpha: 0)],
         ).createShader(Rect.fromLTWH(0, 0, rect.width, rect.height * 0.45)),
     );
     canvas.restore();
@@ -136,6 +127,5 @@ class DeviceBodyPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant DeviceBodyPainter old) =>
-      old.config != config || old.ambient != ambient;
+  bool shouldRepaint(covariant DeviceBodyPainter old) => old.config != config || old.ambient != ambient;
 }

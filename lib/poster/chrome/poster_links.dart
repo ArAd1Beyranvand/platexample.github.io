@@ -106,16 +106,9 @@ class _LinkButtonState extends State<_LinkButton> {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          SizedBox(
-            width: iconSize,
-            height: iconSize,
-            child: widget.iconBuilder(contentColor),
-          ),
+          SizedBox(width: iconSize, height: iconSize, child: widget.iconBuilder(contentColor)),
           SizedBox(width: metrics.px(8)),
-          Text(
-            widget.label,
-            style: PosterType.linkLabel(metrics.f * 1.6).copyWith(color: contentColor),
-          ),
+          Text(widget.label, style: PosterType.linkLabel(metrics.f * 1.6).copyWith(color: contentColor)),
         ],
       ),
     );
@@ -124,10 +117,7 @@ class _LinkButtonState extends State<_LinkButton> {
       cursor: SystemMouseCursors.click,
       onEnter: (_) => setState(() => _hovered = true),
       onExit: (_) => setState(() => _hovered = false),
-      child: GestureDetector(
-        onTap: _onTap,
-        child: panel,
-      ),
+      child: GestureDetector(onTap: _onTap, child: panel),
     );
   }
 }
@@ -243,14 +233,8 @@ class _OctocatPainter extends CustomPainter {
 
     // Body / tentacle sweep below the head.
     cat.moveTo(c.dx - r * 0.55, c.dy + r * 0.55);
-    cat.quadraticBezierTo(
-      c.dx, c.dy + r * 1.5,
-      c.dx + r * 0.55, c.dy + r * 0.55,
-    );
-    cat.quadraticBezierTo(
-      c.dx + r * 0.2, c.dy + r * 1.1,
-      c.dx, c.dy + r * 0.5,
-    );
+    cat.quadraticBezierTo(c.dx, c.dy + r * 1.5, c.dx + r * 0.55, c.dy + r * 0.55);
+    cat.quadraticBezierTo(c.dx + r * 0.2, c.dy + r * 1.1, c.dx, c.dy + r * 0.5);
     cat.close();
 
     canvas.drawPath(cat, fill);
@@ -259,6 +243,5 @@ class _OctocatPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(_OctocatPainter oldDelegate) =>
-      oldDelegate.color != color;
+  bool shouldRepaint(_OctocatPainter oldDelegate) => oldDelegate.color != color;
 }

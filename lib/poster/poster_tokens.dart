@@ -170,10 +170,10 @@ class PosterGradients {
   }
 
   static LinearGradient _face(int top, int bottom) => LinearGradient(
-        begin: const Alignment(-0.62, -0.79),
-        end: const Alignment(0.62, 0.79),
-        colors: <Color>[Color(top), Color(bottom)],
-      );
+    begin: const Alignment(-0.62, -0.79),
+    end: const Alignment(0.62, 0.79),
+    colors: <Color>[Color(top), Color(bottom)],
+  );
 
   /// `linear-gradient(158deg, #1A2032, #0C0E16)`; hover ground → `#EDEFF3`.
   static const LinearGradient linkButton = LinearGradient(
@@ -214,153 +214,153 @@ class PosterType {
   const PosterType._();
 
   static TextStyle wordmark(double f) => TextStyle(
-        fontFamily: PosterFonts.archivo,
-        fontVariations: PosterFonts.wdth79,
-        fontWeight: FontWeight.w900,
-        fontSize: 176 * f,
-        height: 0.86,
-        letterSpacing: -0.045 * 176 * f,
-      );
+    fontFamily: PosterFonts.archivo,
+    fontVariations: PosterFonts.wdth79,
+    fontWeight: FontWeight.w900,
+    fontSize: 176 * f,
+    height: 0.86,
+    letterSpacing: -0.045 * 176 * f,
+  );
 
   static TextStyle bylineName(double f) => TextStyle(
-        fontFamily: PosterFonts.martianMono,
-        fontWeight: FontWeight.w800,
-        fontSize: 17 * f,
-        letterSpacing: 0.16 * 17 * f,
-        color: PosterColors.inkByline,
-      );
+    fontFamily: PosterFonts.martianMono,
+    fontWeight: FontWeight.w800,
+    fontSize: 17 * f,
+    letterSpacing: 0.16 * 17 * f,
+    color: PosterColors.inkByline,
+  );
 
   static TextStyle bylineRole(double f) => TextStyle(
-        fontFamily: PosterFonts.newsreader,
-        fontWeight: FontWeight.w400,
-        fontStyle: FontStyle.italic,
-        fontSize: 15 * f,
-        color: PosterColors.inkMutedItalic,
-      );
+    fontFamily: PosterFonts.newsreader,
+    fontWeight: FontWeight.w400,
+    fontStyle: FontStyle.italic,
+    fontSize: 15 * f,
+    color: PosterColors.inkMutedItalic,
+  );
 
   static TextStyle cardEyebrowHero(double f) => TextStyle(
-        fontFamily: PosterFonts.martianMono,
-        fontWeight: FontWeight.w700,
-        fontSize: 13 * f,
-        letterSpacing: 0.30 * 13 * f,
-      );
+    fontFamily: PosterFonts.martianMono,
+    fontWeight: FontWeight.w700,
+    fontSize: 13 * f,
+    letterSpacing: 0.30 * 13 * f,
+  );
 
   static TextStyle cardEyebrowSteel(double f) => TextStyle(
-        fontFamily: PosterFonts.martianMono,
-        fontWeight: FontWeight.w700,
-        fontSize: 12 * f,
-        letterSpacing: 0.28 * 12 * f,
-        color: const Color(0xFF9FB6E4),
-      );
+    fontFamily: PosterFonts.martianMono,
+    fontWeight: FontWeight.w700,
+    fontSize: 12 * f,
+    letterSpacing: 0.28 * 12 * f,
+    color: const Color(0xFF9FB6E4),
+  );
 
   static TextStyle cardEyebrowDark(double f, {bool alt = false}) => TextStyle(
-        fontFamily: PosterFonts.martianMono,
-        fontWeight: FontWeight.w600,
-        fontSize: 12 * f,
-        letterSpacing: 0.24 * 12 * f,
-        color: alt ? const Color(0xFF8B97AE) : const Color(0xFF8F9BB2),
-      );
+    fontFamily: PosterFonts.martianMono,
+    fontWeight: FontWeight.w600,
+    fontSize: 12 * f,
+    letterSpacing: 0.24 * 12 * f,
+    color: alt ? const Color(0xFF8B97AE) : const Color(0xFF8F9BB2),
+  );
 
   /// Card title EN (hero). [size] must be in the 42–62px design range.
   static TextStyle cardTitleEnHero(double f, double size) => TextStyle(
-        fontFamily: PosterFonts.archivo,
-        fontVariations: PosterFonts.wdth84,
-        fontWeight: FontWeight.w800,
-        fontSize: size * f,
-        height: size <= 50 ? 0.94 : 0.92,
-        letterSpacing: -0.032 * size * f,
-      );
+    fontFamily: PosterFonts.archivo,
+    fontVariations: PosterFonts.wdth84,
+    fontWeight: FontWeight.w800,
+    fontSize: size * f,
+    height: size <= 50 ? 0.94 : 0.92,
+    letterSpacing: -0.032 * size * f,
+  );
 
   /// Card title EN (small). [size] must be in the 34–36px design range.
   static TextStyle cardTitleEnSmall(double f, double size) => TextStyle(
-        fontFamily: PosterFonts.archivo,
-        fontVariations: PosterFonts.wdth86,
-        fontWeight: FontWeight.w800,
-        fontSize: size * f,
-        height: 0.96,
-        letterSpacing: -0.025 * size * f,
-      );
+    fontFamily: PosterFonts.archivo,
+    fontVariations: PosterFonts.wdth86,
+    fontWeight: FontWeight.w800,
+    fontSize: size * f,
+    height: 0.96,
+    letterSpacing: -0.025 * size * f,
+  );
 
   /// Card title FA. [size] must be in the 34–50px design range.
   static TextStyle cardTitleFa(double f, double size) => TextStyle(
-        fontFamily: PosterFonts.vazirmatn,
-        fontWeight: FontWeight.w800,
-        fontSize: size * f,
-        height: size <= 40 ? 1.22 : 1.18,
-      );
+    fontFamily: PosterFonts.vazirmatn,
+    fontWeight: FontWeight.w800,
+    fontSize: size * f,
+    height: size <= 40 ? 1.22 : 1.18,
+  );
 
   /// Card body EN. [size] must be in the 18–24px design range.
   static TextStyle cardBodyEn(double f, double size) => TextStyle(
-        fontFamily: PosterFonts.newsreader,
-        fontWeight: FontWeight.w400,
-        fontSize: size * f,
-        height: size <= 20 ? 1.46 : 1.44,
-      );
+    fontFamily: PosterFonts.newsreader,
+    fontWeight: FontWeight.w400,
+    fontSize: size * f,
+    height: size <= 20 ? 1.46 : 1.44,
+  );
 
   /// Card body FA. [size] must be in the 19–23px design range.
   static TextStyle cardBodyFa(double f, double size) => TextStyle(
-        fontFamily: PosterFonts.vazirmatn,
-        fontWeight: FontWeight.w400,
-        fontSize: size * f,
-        height: size <= 20 ? 1.78 : 1.70,
-      );
+    fontFamily: PosterFonts.vazirmatn,
+    fontWeight: FontWeight.w400,
+    fontSize: size * f,
+    height: size <= 20 ? 1.78 : 1.70,
+  );
 
   /// Index chip. [size] must be in the 44–78px design range.
   static TextStyle indexChip(double f, double size) => TextStyle(
-        fontFamily: PosterFonts.archivo,
-        fontVariations: PosterFonts.wdth104,
-        fontWeight: FontWeight.w800,
-        fontSize: size * f,
-      );
+    fontFamily: PosterFonts.archivo,
+    fontVariations: PosterFonts.wdth104,
+    fontWeight: FontWeight.w800,
+    fontSize: size * f,
+  );
 
   static TextStyle linkLabel(double f) => TextStyle(
-        fontFamily: PosterFonts.martianMono,
-        fontWeight: FontWeight.w700,
-        fontSize: 14 * f,
-        letterSpacing: 0.20 * 14 * f,
-      );
+    fontFamily: PosterFonts.martianMono,
+    fontWeight: FontWeight.w700,
+    fontSize: 14 * f,
+    letterSpacing: 0.20 * 14 * f,
+  );
 
   static TextStyle metaStrong(double f) => TextStyle(
-        fontFamily: PosterFonts.martianMono,
-        fontWeight: FontWeight.w600,
-        fontSize: 17 * f,
-        letterSpacing: 0.14 * 17 * f,
-        color: PosterColors.inkMetaStrong,
-      );
+    fontFamily: PosterFonts.martianMono,
+    fontWeight: FontWeight.w600,
+    fontSize: 17 * f,
+    letterSpacing: 0.14 * 17 * f,
+    color: PosterColors.inkMetaStrong,
+  );
 
   static TextStyle metaWeak(double f) => TextStyle(
-        fontFamily: PosterFonts.martianMono,
-        fontWeight: FontWeight.w500,
-        fontSize: 15 * f,
-        letterSpacing: 0.14 * 15 * f,
-        color: PosterColors.inkMetaWeak,
-      );
+    fontFamily: PosterFonts.martianMono,
+    fontWeight: FontWeight.w500,
+    fontSize: 15 * f,
+    letterSpacing: 0.14 * 15 * f,
+    color: PosterColors.inkMetaWeak,
+  );
 
   static TextStyle stamp(double f) => TextStyle(
-        fontFamily: PosterFonts.martianMono,
-        fontWeight: FontWeight.w700,
-        fontSize: 12 * f,
-        height: 1.55,
-        letterSpacing: 0.20 * 12 * f,
-        color: PosterColors.inkStamp,
-      );
+    fontFamily: PosterFonts.martianMono,
+    fontWeight: FontWeight.w700,
+    fontSize: 12 * f,
+    height: 1.55,
+    letterSpacing: 0.20 * 12 * f,
+    color: PosterColors.inkStamp,
+  );
 
   /// Red tag on card 09.
   static TextStyle redTag(double f) => TextStyle(
-        fontFamily: PosterFonts.martianMono,
-        fontWeight: FontWeight.w700,
-        fontSize: 13 * f,
-        letterSpacing: 0.20 * 13 * f,
-        color: PosterColors.flareInk,
-      );
+    fontFamily: PosterFonts.martianMono,
+    fontWeight: FontWeight.w700,
+    fontSize: 13 * f,
+    letterSpacing: 0.20 * 13 * f,
+    color: PosterColors.flareInk,
+  );
 
   static TextStyle eyebrow(double f) => TextStyle(
-        fontFamily: PosterFonts.martianMono,
-        fontWeight: FontWeight.w600,
-        fontSize: 12 * f,
-        letterSpacing: 0.25 * 12 * f,
-        color: PosterColors.inkDisplay3,
-      );
+    fontFamily: PosterFonts.martianMono,
+    fontWeight: FontWeight.w600,
+    fontSize: 12 * f,
+    letterSpacing: 0.25 * 12 * f,
+    color: PosterColors.inkDisplay3,
+  );
 }
 
 /// Design tokens shared across the poster widgets, plus the four names the

@@ -22,11 +22,7 @@ import 'poster_backdrop.dart';
 /// edge and runs its full 1.5s on its own controller, so it outlives the
 /// shorter phase window that triggered it.
 class SweepLight extends StatefulWidget {
-  const SweepLight({
-    super.key,
-    required this.isHopping,
-    this.rotationOrigin = Alignment.topLeft,
-  });
+  const SweepLight({super.key, required this.isHopping, this.rotationOrigin = Alignment.topLeft});
 
   /// True for any `DeviceTransitionPhase` other than `idle`.
   final bool isHopping;
@@ -40,8 +36,7 @@ class SweepLight extends StatefulWidget {
   State<SweepLight> createState() => _SweepLightState();
 }
 
-class _SweepLightState extends State<SweepLight>
-    with SingleTickerProviderStateMixin {
+class _SweepLightState extends State<SweepLight> with SingleTickerProviderStateMixin {
   static const Duration _travel = Duration(milliseconds: 1500);
 
   /// `cubic-bezier(.42,.02,.6,1)`.
@@ -50,10 +45,7 @@ class _SweepLightState extends State<SweepLight>
   /// `.34s` of the 1.5s travel, at each end.
   static const double _fade = 340 / 1500;
 
-  late final AnimationController _controller = AnimationController(
-    vsync: this,
-    duration: _travel,
-  );
+  late final AnimationController _controller = AnimationController(vsync: this, duration: _travel);
 
   @override
   void initState() {
@@ -111,11 +103,7 @@ class _SweepLightState extends State<SweepLight>
 }
 
 class _SweepPainter extends CustomPainter {
-  const _SweepPainter({
-    required this.travel,
-    required this.opacity,
-    required this.origin,
-  });
+  const _SweepPainter({required this.travel, required this.opacity, required this.origin});
 
   /// Eased 0→1 along the `−560 → 2400` translation.
   final double travel;
@@ -137,10 +125,7 @@ class _SweepPainter extends CustomPainter {
     canvas.save();
     // Same design-space canvas as PosterBackdrop, so the sweep shares the
     // road's perspective exactly.
-    canvas.scale(
-      size.width / kBackdropDesignWidth,
-      size.height / kBackdropDesignHeight,
-    );
+    canvas.scale(size.width / kBackdropDesignWidth, size.height / kBackdropDesignHeight);
 
     final double x = _fromX + (_toX - _fromX) * travel;
     // The band is taller than the stage on purpose; centre it vertically so
@@ -148,10 +133,7 @@ class _SweepPainter extends CustomPainter {
     final double y = (kBackdropDesignHeight - _bandHeight) / 2;
 
     canvas.translate(x, y);
-    final Offset pivot = Offset(
-      (origin.x + 1) / 2 * _bandWidth,
-      (origin.y + 1) / 2 * _bandHeight,
-    );
+    final Offset pivot = Offset((origin.x + 1) / 2 * _bandWidth, (origin.y + 1) / 2 * _bandHeight);
     canvas.translate(pivot.dx, pivot.dy);
     canvas.rotate(_degrees * math.pi / 180);
     canvas.translate(-pivot.dx, -pivot.dy);
@@ -172,11 +154,7 @@ class _SweepPainter extends CustomPainter {
         ..shader = LinearGradient(
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
-          colors: const <Color>[
-            PosterColors.sweepBodyStart,
-            PosterColors.sweepBodyMid,
-            PosterColors.sweepBodyEnd,
-          ],
+          colors: const <Color>[PosterColors.sweepBodyStart, PosterColors.sweepBodyMid, PosterColors.sweepBodyEnd],
           stops: const <double>[0.0, 0.62, 1.0],
         ).createShader(band),
     );
@@ -187,11 +165,7 @@ class _SweepPainter extends CustomPainter {
       ..shader = LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-        colors: const <Color>[
-          PosterColors.sweepEdgeStart,
-          PosterColors.sweepEdgeMid,
-          PosterColors.sweepEdgeEnd,
-        ],
+        colors: const <Color>[PosterColors.sweepEdgeStart, PosterColors.sweepEdgeMid, PosterColors.sweepEdgeEnd],
         stops: const <double>[0.0, 0.5, 1.0],
       ).createShader(edge);
 
@@ -210,8 +184,6 @@ class _SweepPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_SweepPainter oldDelegate) {
-    return oldDelegate.travel != travel ||
-        oldDelegate.opacity != opacity ||
-        oldDelegate.origin != origin;
+    return oldDelegate.travel != travel || oldDelegate.opacity != opacity || oldDelegate.origin != origin;
   }
 }

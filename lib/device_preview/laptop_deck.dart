@@ -46,9 +46,7 @@ class LaptopChassisEdge extends StatelessWidget {
   Widget build(BuildContext context) {
     return const DecoratedBox(
       decoration: BoxDecoration(
-        border: Border.fromBorderSide(
-          BorderSide(color: _edgeColor, width: laptopEdgeWidth),
-        ),
+        border: Border.fromBorderSide(BorderSide(color: _edgeColor, width: laptopEdgeWidth)),
         borderRadius: _edgeRadius,
       ),
     );
@@ -70,10 +68,7 @@ class DeckKey {
 
 List<DeckKey> _row(String spec, {Map<int, double> flex = const {}}) {
   final parts = spec.split('|');
-  return [
-    for (var i = 0; i < parts.length; i++)
-      DeckKey(parts[i], flex: flex[i] ?? 1),
-  ];
+  return [for (var i = 0; i < parts.length; i++) DeckKey(parts[i], flex: flex[i] ?? 1)];
 }
 
 /// A Persian (Farsi) keyboard layout, purely decorative — it dresses the
@@ -88,13 +83,7 @@ final deckRows = <DeckRow>[
 /// keycaps. Laid out at its full physical depth — [DeviceFrame] tilts it
 /// into perspective, so it unfolds out of the body as the frame morphs.
 class LaptopDeck extends StatelessWidget {
-  const LaptopDeck({
-    super.key,
-    required this.frontOpacity,
-    required this.backOpacity,
-    this.onKey,
-    this.pressedKey,
-  });
+  const LaptopDeck({super.key, required this.frontOpacity, required this.backOpacity, this.onKey, this.pressedKey});
 
   /// Keyboard side, facing us while the laptop is open.
   final double frontOpacity;
@@ -119,12 +108,7 @@ class LaptopDeck extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         for (var r = 0; r < deckRows.length; r++) ...[
-          _DeckRowStrip(
-            row: deckRows[r],
-            scale: scale,
-            onKey: onKey,
-            pressedKey: held,
-          ),
+          _DeckRowStrip(row: deckRows[r], scale: scale, onKey: onKey, pressedKey: held),
           if (r < deckRows.length - 1) SizedBox(height: _rowGap * scale),
         ],
       ],
@@ -142,9 +126,7 @@ class LaptopDeck extends StatelessWidget {
           stops: [0, .22, .62, 1],
         ),
         borderRadius: _edgeRadius,
-        boxShadow: [
-          BoxShadow(color: Color(0x9E000000), blurRadius: 40, offset: Offset(0, 26)),
-        ],
+        boxShadow: [BoxShadow(color: Color(0x9E000000), blurRadius: 40, offset: Offset(0, 26))],
       ),
       child: Stack(
         children: [
@@ -154,10 +136,7 @@ class LaptopDeck extends StatelessWidget {
             // whole back reads as milled body, never a frosted pane with the
             // chassis glowing through its lower half. The swap is invisible
             // because at edge-on the deck's projected height is ~0.
-            child: Opacity(
-              opacity: backOpacity <= 0 ? 0 : 1,
-              child: const _BackPanel(),
-            ),
+            child: Opacity(opacity: backOpacity <= 0 ? 0 : 1, child: const _BackPanel()),
           ),
           Opacity(
             // Binary like the back: the keyboard face is either fully present or
@@ -168,59 +147,55 @@ class LaptopDeck extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.fromLTRB(40, 22, 40, 6),
               child: Container(
-                      padding: const EdgeInsets.fromLTRB(20, 18, 20, 6),
-                      // The bottom keycap row sits only 6px inside the well, so
-                      // without this the outer caps paint straight over the
-                      // corner curve and square it off.
-                      clipBehavior: Clip.antiAlias,
-                      decoration: BoxDecoration(
-                        borderRadius: _wellRadius,
-                        gradient: const LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [Color(0xFF0B0D10), Color(0xFF14171C)],
-                        ),
-                        boxShadow: const [
-                          BoxShadow(color: Color(0xB3000000), blurRadius: 14, offset: Offset(0, 4)),
-                        ],
-                      ),
-                      child: LayoutBuilder(
-                        builder: (context, constraints) {
-                          // The deck's box shrinks during fold/unfold beats and
-                          // whenever the frame is scaled down to fit tight
-                          // constraints (e.g. a maximised window mid-resize), so
-                          // the well can be handed less height than the rows'
-                          // natural total — scale every row and gap down to fit
-                          // rather than overflowing, which forces an expensive
-                          // error-render on the busiest possible frame and has
-                          // crashed the GL embedder on Linux. The well is just
-                          // as often handed *more* height than the rows'
-                          // natural total (the deck's resting state), so the
-                          // same scale is also allowed to grow past 1.0 — the
-                          // keyboard fills the well instead of leaving its
-                          // lower portion empty.
-                          final scale = constraints.hasBoundedHeight
-                              ? (constraints.maxHeight / _deckWellHeight)
-                                  .clamp(0.0, double.infinity)
-                              : 1.0;
-                          // Rows now scale up to fill the well (see [scale]
-                          // above), so a fixed fraction of the bottom is no
-                          // longer just the last row's own height — it grows
-                          // with the well and dissolves a wide band of keys to
-                          // transparent, exposing the lighter aluminum body
-                          // behind the well as a blank strip at the deck's
-                          // far edge. The rows already fill the well exactly,
-                          // so no edge fade is needed to hide an overflow.
-                          final held = pressedKey;
-                          if (held == null) return _rows(scale, null);
-                          return ValueListenableBuilder<String?>(
-                            valueListenable: held,
-                            builder: (context, label, _) =>
-                                _rows(scale, label),
-                          );
-                        },
-                      ),
-                    ),
+                padding: const EdgeInsets.fromLTRB(20, 18, 20, 6),
+                // The bottom keycap row sits only 6px inside the well, so
+                // without this the outer caps paint straight over the
+                // corner curve and square it off.
+                clipBehavior: Clip.antiAlias,
+                decoration: BoxDecoration(
+                  borderRadius: _wellRadius,
+                  gradient: const LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [Color(0xFF0B0D10), Color(0xFF14171C)],
+                  ),
+                  boxShadow: const [BoxShadow(color: Color(0xB3000000), blurRadius: 14, offset: Offset(0, 4))],
+                ),
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    // The deck's box shrinks during fold/unfold beats and
+                    // whenever the frame is scaled down to fit tight
+                    // constraints (e.g. a maximised window mid-resize), so
+                    // the well can be handed less height than the rows'
+                    // natural total — scale every row and gap down to fit
+                    // rather than overflowing, which forces an expensive
+                    // error-render on the busiest possible frame and has
+                    // crashed the GL embedder on Linux. The well is just
+                    // as often handed *more* height than the rows'
+                    // natural total (the deck's resting state), so the
+                    // same scale is also allowed to grow past 1.0 — the
+                    // keyboard fills the well instead of leaving its
+                    // lower portion empty.
+                    final scale = constraints.hasBoundedHeight
+                        ? (constraints.maxHeight / _deckWellHeight).clamp(0.0, double.infinity)
+                        : 1.0;
+                    // Rows now scale up to fill the well (see [scale]
+                    // above), so a fixed fraction of the bottom is no
+                    // longer just the last row's own height — it grows
+                    // with the well and dissolves a wide band of keys to
+                    // transparent, exposing the lighter aluminum body
+                    // behind the well as a blank strip at the deck's
+                    // far edge. The rows already fill the well exactly,
+                    // so no edge fade is needed to hide an overflow.
+                    final held = pressedKey;
+                    if (held == null) return _rows(scale, null);
+                    return ValueListenableBuilder<String?>(
+                      valueListenable: held,
+                      builder: (context, label, _) => _rows(scale, label),
+                    );
+                  },
+                ),
+              ),
             ),
           ),
         ],

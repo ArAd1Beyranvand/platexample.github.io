@@ -26,11 +26,11 @@ class ContentDissolve {
 
   /// The at-rest value: content fully present, no hop in flight.
   const ContentDissolve.settled(DeviceType device)
-      : progress = 1.0,
-        appearing = true,
-        from = device,
-        to = device,
-        transitionId = 0;
+    : progress = 1.0,
+      appearing = true,
+      from = device,
+      to = device,
+      transitionId = 0;
 
   /// 0 → 1 across the active phase, linear.
   final double progress;
@@ -70,19 +70,13 @@ class ContentDissolve {
 /// a stable listenable the cached page stays cached and only the few widgets
 /// that actually paint per frame subscribe.
 class ContentDissolveScope extends InheritedWidget {
-  const ContentDissolveScope({
-    super.key,
-    required this.dissolve,
-    required super.child,
-  });
+  const ContentDissolveScope({super.key, required this.dissolve, required super.child});
 
   final ValueListenable<ContentDissolve> dissolve;
 
-  static ValueListenable<ContentDissolve>? maybeOf(BuildContext context) => context
-      .dependOnInheritedWidgetOfExactType<ContentDissolveScope>()
-      ?.dissolve;
+  static ValueListenable<ContentDissolve>? maybeOf(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<ContentDissolveScope>()?.dissolve;
 
   @override
-  bool updateShouldNotify(ContentDissolveScope old) =>
-      !identical(old.dissolve, dissolve);
+  bool updateShouldNotify(ContentDissolveScope old) => !identical(old.dissolve, dissolve);
 }

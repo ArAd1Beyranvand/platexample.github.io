@@ -93,8 +93,7 @@ class DeviceFrame extends StatefulWidget {
   State<DeviceFrame> createState() => _DeviceFrameState();
 }
 
-class _DeviceFrameState extends State<DeviceFrame>
-    with SingleTickerProviderStateMixin {
+class _DeviceFrameState extends State<DeviceFrame> with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
 
   late DeviceConfig _from;
@@ -129,15 +128,13 @@ class _DeviceFrameState extends State<DeviceFrame>
   /// it has fired (or when idle). Reset when a new device arrives.
   bool _contentSwapped = true;
 
-  DeviceConfig _resolve(DeviceType type) =>
-      widget.configResolver?.call(type) ?? DevicePresets.of(type);
+  DeviceConfig _resolve(DeviceType type) => widget.configResolver?.call(type) ?? DevicePresets.of(type);
 
   @override
   void initState() {
     super.initState();
     _from = _to = _resolve(widget.device);
-    _controller = AnimationController(vsync: this, duration: widget.durations.total)
-      ..addListener(_onTick);
+    _controller = AnimationController(vsync: this, duration: widget.durations.total)..addListener(_onTick);
     _buildIntervals();
     _controller.value = 1;
   }
@@ -155,11 +152,14 @@ class _DeviceFrameState extends State<DeviceFrame>
     final inStart = morphEnd + at(d.blankHold);
 
     _fadeOut = CurvedAnimation(
-        parent: _controller, curve: Interval(0, outEnd, curve: widget.fadeOutCurve));
+      parent: _controller,
+      curve: Interval(0, outEnd, curve: widget.fadeOutCurve),
+    );
     _fadeIn = CurvedAnimation(
-        parent: _controller, curve: Interval(inStart, 1, curve: widget.fadeInCurve));
-    _morphRaw =
-        CurvedAnimation(parent: _controller, curve: Interval(morphStart, morphEnd));
+      parent: _controller,
+      curve: Interval(inStart, 1, curve: widget.fadeInCurve),
+    );
+    _morphRaw = CurvedAnimation(parent: _controller, curve: Interval(morphStart, morphEnd));
   }
 
   /// Ticks elapsed since the dissolve wavefront was last reseeded.
@@ -254,8 +254,7 @@ class _DeviceFrameState extends State<DeviceFrame>
       _deckAngle = angle(fold);
       // Linear so the blocks vanish at a steady rate across the ~0.4s beat.
       _deckReveal = 1 - ((mr - 0.34) / 0.28).clamp(0.0, 1.0);
-      _deckT =
-          1 - Curves.easeInOut.transform(((mr - 0.62) / 0.38).clamp(0.0, 1.0));
+      _deckT = 1 - Curves.easeInOut.transform(((mr - 0.62) / 0.38).clamp(0.0, 1.0));
       return widget.curve.transform(((mr - 0.62) / 0.38).clamp(0.0, 1.0));
     }
     if (!wasLaptop && willBeLaptop) {
@@ -278,8 +277,7 @@ class _DeviceFrameState extends State<DeviceFrame>
 
   /// 1 → 0 over the fade-out, pinned at 0 through the morph, 0 → 1 over the
   /// fade-in: the plate is never visible while the geometry is moving.
-  double get _contentOpacity =>
-      _fadeIn.value > 0 ? _fadeIn.value : 1 - _fadeOut.value;
+  double get _contentOpacity => _fadeIn.value > 0 ? _fadeIn.value : 1 - _fadeOut.value;
 
   /// The old layout stays mounted until the morph's midpoint; after it, the
   /// target layout is built and faded in.
@@ -296,10 +294,7 @@ class _DeviceFrameState extends State<DeviceFrame>
     final cached = _cachedContent;
     if (cached != null && identical(_cachedContentConfig, config)) return cached;
     _cachedContentConfig = config;
-    return _cachedContent = _ScreenContent(
-      config: config,
-      builder: widget.builder,
-    );
+    return _cachedContent = _ScreenContent(config: config, builder: widget.builder);
   }
 
   @override
@@ -309,10 +304,8 @@ class _DeviceFrameState extends State<DeviceFrame>
     // AnimatedBuilder inside it rebuilds only the shell on each tick.
     return ClipRect(
       child: LayoutBuilder(
-        builder: (context, constraints) => AnimatedBuilder(
-          animation: _controller,
-          builder: (context, _) => _buildFrame(context, constraints),
-        ),
+        builder: (context, constraints) =>
+            AnimatedBuilder(animation: _controller, builder: (context, _) => _buildFrame(context, constraints)),
       ),
     );
   }
@@ -345,11 +338,7 @@ class _DeviceFrameState extends State<DeviceFrame>
               height: total.height * fit,
               child: FittedBox(
                 fit: BoxFit.fill,
-                child: SizedBox(
-                  width: total.width,
-                  height: total.height,
-                  child: _buildDevice(context, config),
-                ),
+                child: SizedBox(width: total.width, height: total.height, child: _buildDevice(context, config)),
               ),
             ),
           ),
@@ -377,8 +366,7 @@ class _DeviceFrameState extends State<DeviceFrame>
     // face shows) grow the depth to at least the body height, so the shut deck
     // blankets the whole screen for the dissolve.
     final coverT = ((deckAngle - 90) / 90).clamp(0.0, 1.0);
-    final renderDepth =
-        deck.depth + (math.max(deck.depth, body.height) - deck.depth) * coverT;
+    final renderDepth = deck.depth + (math.max(deck.depth, body.height) - deck.depth) * coverT;
     final projected = deck.projectedHeightAt(deckAngle, widget.perspective);
     // cross-fade the faces through edge-on so neither pops in or out.
     const band = 42.0;
@@ -390,55 +378,55 @@ class _DeviceFrameState extends State<DeviceFrame>
     final deckOnTop = deckAngle > 90;
     final deckLayer = <Widget>[
       if (deck.depth > 0.5)
-          Positioned(
-            top: body.height - 1, // hinged on the screen's bottom edge
-            left: 0,
-            width: body.width,
-            height: projected < 0.5 ? 0.5 : projected,
-            child: OverflowBox(
+        Positioned(
+          top: body.height - 1, // hinged on the screen's bottom edge
+          left: 0,
+          width: body.width,
+          height: projected < 0.5 ? 0.5 : projected,
+          child: OverflowBox(
+            alignment: Alignment.topCenter,
+            minHeight: renderDepth,
+            maxHeight: renderDepth,
+            child: Transform(
               alignment: Alignment.topCenter,
-              minHeight: renderDepth,
-              maxHeight: renderDepth,
-              child: Transform(
-                alignment: Alignment.topCenter,
-                transform: Matrix4.identity()
-                  ..setEntry(3, 2, 1 / widget.perspective)
-                  ..rotateX(-deckAngle * 3.1415926535 / 180),
-                child: SizedBox(
-                  width: body.width,
-                  height: renderDepth,
-                  // The chassis rim sits on top of, and outside, the dissolve:
-                  // it reads as opaque body from the first intro frame, rather
-                  // than waiting on the pixel-reveal to glitch it into view.
-                  child: Stack(
-                    children: [
-                      // The dissolve paints square cover blocks across the full
-                      // bounds, so it must be clipped to the deck's own rounded
-                      // bottom corners — unclipped it squares them off for the
-                      // whole fold/unfold beat.
-                      ClipRRect(
-                        borderRadius: laptopEdgeRadius,
-                        child: PixelDissolve(
-                          progress: _deckReveal,
-                          seed: _dissolveSeed,
-                          // Blocks that haven't revealed read as the blank screen
-                          // behind the deck.
-                          coverColor: const Color(0xFF07080A),
-                          child: LaptopDeck(
-                            frontOpacity: frontOpacity,
-                            backOpacity: backOpacity,
-                            pressedKey: widget.deckPressedKey,
-                            onKey: widget.onDeckKey,
-                          ),
+              transform: Matrix4.identity()
+                ..setEntry(3, 2, 1 / widget.perspective)
+                ..rotateX(-deckAngle * 3.1415926535 / 180),
+              child: SizedBox(
+                width: body.width,
+                height: renderDepth,
+                // The chassis rim sits on top of, and outside, the dissolve:
+                // it reads as opaque body from the first intro frame, rather
+                // than waiting on the pixel-reveal to glitch it into view.
+                child: Stack(
+                  children: [
+                    // The dissolve paints square cover blocks across the full
+                    // bounds, so it must be clipped to the deck's own rounded
+                    // bottom corners — unclipped it squares them off for the
+                    // whole fold/unfold beat.
+                    ClipRRect(
+                      borderRadius: laptopEdgeRadius,
+                      child: PixelDissolve(
+                        progress: _deckReveal,
+                        seed: _dissolveSeed,
+                        // Blocks that haven't revealed read as the blank screen
+                        // behind the deck.
+                        coverColor: const Color(0xFF07080A),
+                        child: LaptopDeck(
+                          frontOpacity: frontOpacity,
+                          backOpacity: backOpacity,
+                          pressedKey: widget.deckPressedKey,
+                          onKey: widget.onDeckKey,
                         ),
                       ),
-                      const Positioned.fill(child: LaptopChassisEdge()),
-                    ],
-                  ),
+                    ),
+                    const Positioned.fill(child: LaptopChassisEdge()),
+                  ],
                 ),
               ),
             ),
           ),
+        ),
     ];
 
     return Stack(
@@ -512,10 +500,7 @@ class _ScreenContent extends StatelessWidget {
         child: MediaQuery(
           data: MediaQuery.of(context).copyWith(
             size: logical,
-            padding: EdgeInsets.only(
-              top: config.notchSize.height,
-              bottom: config.homeIndicatorWidth > 0 ? 20 : 0,
-            ),
+            padding: EdgeInsets.only(top: config.notchSize.height, bottom: config.homeIndicatorWidth > 0 ? 20 : 0),
           ),
           child: RepaintBoundary(child: builder(context, config)),
         ),

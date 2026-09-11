@@ -32,6 +32,5 @@ class DeviceTransitionDurations {
   /// hold — so the shell begins reshaping exactly on the swap.
   final Duration blankHold;
 
-  Duration get total =>
-      contentFadeOut + frameTransform + blankHold + contentFadeIn;
+  Duration get total => contentFadeOut + frameTransform + blankHold + contentFadeIn;
 }

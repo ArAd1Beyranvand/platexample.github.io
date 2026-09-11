@@ -30,10 +30,7 @@ typedef MirrorPairs = Map<String, String>;
 /// The side code and the governorate register are the same two digits meaning
 /// the same governorate — `06` is Al Hudaydah on both — which is why this pair
 /// reads as one value in two grammars rather than as two unrelated plates.
-const MirrorPairs yemenUnifiedToNorthern = <String, String>{
-  'number': 'serial',
-  'sideCode': 'governorate',
-};
+const MirrorPairs yemenUnifiedToNorthern = <String, String>{'number': 'serial', 'sideCode': 'governorate'};
 
 /// The tablet pairing: a legacy West Bank plate onto a Gaza plate.
 ///
@@ -46,10 +43,7 @@ const MirrorPairs yemenUnifiedToNorthern = <String, String>{
 /// the two schemes' code spaces are unrelated, and `40` is a private car in the
 /// West Bank and a municipality vehicle in Gaza. The two plates are painted in
 /// different colours from the same typed digits for exactly that reason.
-const MirrorPairs palestineWestBankToGaza = <String, String>{
-  'serial': 'serial',
-  'usage': 'usage',
-};
+const MirrorPairs palestineWestBankToGaza = <String, String>{'serial': 'serial', 'usage': 'usage'};
 
 /// [values], read against [from], rewritten as a value list for [to].
 ///

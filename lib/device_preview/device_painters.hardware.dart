@@ -40,8 +40,7 @@ class DeviceHardwarePainter extends CustomPainter {
     // seat the lens just inside the rim rather than straddling it
     final c = body.topLeft + seatOnEdge(config.cameraEdge, body.size, r * 1.9);
     final o = detailOpacity;
-    canvas.drawCircle(c, r * 1.35,
-        Paint()..color = const Color(0xFF16181D).withValues(alpha: 0.9 * o));
+    canvas.drawCircle(c, r * 1.35, Paint()..color = const Color(0xFF16181D).withValues(alpha: 0.9 * o));
     canvas.drawCircle(
       c,
       r,
@@ -54,15 +53,17 @@ class DeviceHardwarePainter extends CustomPainter {
           ],
         ).createShader(Rect.fromCircle(center: c, radius: r)),
     );
-    canvas.drawCircle(c.translate(-r * 0.32, -r * 0.34), math.max(r * 0.22, 0.6),
-        Paint()..color = Colors.white.withValues(alpha: 0.75 * o));
+    canvas.drawCircle(
+      c.translate(-r * 0.32, -r * 0.34),
+      math.max(r * 0.22, 0.6),
+      Paint()..color = Colors.white.withValues(alpha: 0.75 * o),
+    );
   }
 
   void _paintSpeaker(Canvas canvas, Rect body) {
     final s = config.speakerSize;
     if (s.width < 2 || s.height < 0.6) return;
-    final c = body.topLeft +
-        seatOnEdge(config.speakerEdge, body.size, math.max(s.height, 1) * 1.4);
+    final c = body.topLeft + seatOnEdge(config.speakerEdge, body.size, math.max(s.height, 1) * 1.4);
     final rect = Rect.fromCenter(center: c, width: s.width, height: s.height);
     canvas.drawRRect(
       RRect.fromRectAndRadius(rect, Radius.circular(s.height)),
@@ -71,8 +72,7 @@ class DeviceHardwarePainter extends CustomPainter {
     final dotR = math.min(s.height * 0.22, 0.9);
     if (dotR > 0.35) {
       final count = (s.width / (dotR * 4)).floor();
-      final paint = Paint()
-        ..color = const Color(0xFF3C424C).withValues(alpha: 0.7 * detailOpacity);
+      final paint = Paint()..color = const Color(0xFF3C424C).withValues(alpha: 0.7 * detailOpacity);
       for (var i = 0; i < count; i++) {
         canvas.drawCircle(Offset(rect.left + dotR * 2 + i * dotR * 4, c.dy), dotR, paint);
       }
@@ -84,8 +84,7 @@ class DeviceHardwarePainter extends CustomPainter {
     if (w < 4) return;
     canvas.drawRRect(
       RRect.fromRectAndRadius(
-        Rect.fromCenter(
-            center: Offset(screen.center.dx, screen.bottom - 9), width: w, height: 5),
+        Rect.fromCenter(center: Offset(screen.center.dx, screen.bottom - 9), width: w, height: 5),
         const Radius.circular(3),
       ),
       Paint()..color = Colors.white.withValues(alpha: 0.55 * detailOpacity),
@@ -93,8 +92,7 @@ class DeviceHardwarePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant DeviceHardwarePainter old) =>
-      old.config != config || old.detailOpacity != detailOpacity;
+  bool shouldRepaint(covariant DeviceHardwarePainter old) => old.config != config || old.detailOpacity != detailOpacity;
 }
 
 /// Clips page content to the glass: a rounded rect with the notch cut out.
@@ -107,8 +105,7 @@ class DeviceScreenClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     final rect = Offset.zero & size;
-    final screen = Path()
-      ..addRRect(RRect.fromRectAndRadius(rect, Radius.circular(config.screenRadius)));
+    final screen = Path()..addRRect(RRect.fromRectAndRadius(rect, Radius.circular(config.screenRadius)));
     final n = config.notchSize;
     if (n.width < 2 || n.height < 1) return screen;
     final notch = Path()

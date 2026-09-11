@@ -234,12 +234,7 @@ class PlateTypist extends ChangeNotifier {
 
     if (isLetterSlot) {
       if (useLetterPicker) {
-        await _pickLetter(
-          controller: controller,
-          context: context,
-          spec: spec,
-          step: keyStep,
-        );
+        await _pickLetter(controller: controller, context: context, spec: spec, step: keyStep);
         if (_cancelled) return false;
         return _sleep(keyStep.holdAfter ?? gap);
       }
@@ -249,9 +244,7 @@ class PlateTypist extends ChangeNotifier {
           onSlotChanged(keyStep.index);
           padState.shown = keyStep.index;
           if (!padAlreadyUp) {
-            if (!await _sleep(
-              kPlateKeypadSlide + const Duration(milliseconds: 80),
-            )) {
+            if (!await _sleep(kPlateKeypadSlide + const Duration(milliseconds: 80))) {
               return false;
             }
           }
@@ -305,19 +298,13 @@ class PlateTypist extends ChangeNotifier {
 
     try {
       // Fire-and-forget: the sheet stays up until we pop it below.
-      unawaited(
-        PlateCharacterPicker.show(context, alphabet, scrollController: scroll),
-      );
+      unawaited(PlateCharacterPicker.show(context, alphabet, scrollController: scroll));
       sheetOpen = true;
 
       // Let the picker mount so the controller is attached before we scroll.
       if (!await _sleep(const Duration(milliseconds: 220))) return;
       if (scroll.hasClients) {
-        await scroll.animateToItem(
-          target,
-          duration: const Duration(milliseconds: 500),
-          curve: Curves.easeInOut,
-        );
+        await scroll.animateToItem(target, duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
       }
       if (_cancelled) return;
       if (!await _sleep(const Duration(milliseconds: 400))) return;

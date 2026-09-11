@@ -20,9 +20,9 @@ class SoftPanel extends StatelessWidget {
     this.height,
     this.child,
   }) : assert(
-          groundColor != null || groundGradient != null,
-          'SoftPanel needs a ground: pass groundColor or groundGradient.',
-        );
+         groundColor != null || groundGradient != null,
+         'SoftPanel needs a ground: pass groundColor or groundGradient.',
+       );
 
   /// Flat ground colour (hero cards).
   final Color? groundColor;
@@ -56,17 +56,9 @@ class SoftPanel extends StatelessWidget {
         borderRadius: borderRadius,
         boxShadow: <BoxShadow>[
           // Soft, wide ambient shadow — the "it's floating" cue.
-          BoxShadow(
-            color: ambient,
-            blurRadius: metrics.px(28),
-            offset: Offset(0, metrics.px(14)),
-          ),
+          BoxShadow(color: ambient, blurRadius: metrics.px(28), offset: Offset(0, metrics.px(14))),
           // Tighter contact shadow, close under the card.
-          BoxShadow(
-            color: contact,
-            blurRadius: metrics.px(6),
-            offset: Offset(0, metrics.px(2)),
-          ),
+          BoxShadow(color: contact, blurRadius: metrics.px(6), offset: Offset(0, metrics.px(2))),
         ],
       ),
       child: ClipRRect(
@@ -76,10 +68,7 @@ class SoftPanel extends StatelessWidget {
             color: groundColor,
             gradient: groundGradient,
             borderRadius: borderRadius,
-            border: Border.all(
-              color: PosterColors.inkDisplay1.withValues(alpha: 0.10),
-              width: metrics.px(1),
-            ),
+            border: Border.all(color: PosterColors.inkDisplay1.withValues(alpha: 0.10), width: metrics.px(1)),
           ),
           child: Stack(
             fit: StackFit.passthrough,
@@ -99,10 +88,7 @@ class SoftPanel extends StatelessWidget {
                       gradient: LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
-                        colors: <Color>[
-                          PosterColors.inkDisplay1.withValues(alpha: 0.06),
-                          Colors.transparent,
-                        ],
+                        colors: <Color>[PosterColors.inkDisplay1.withValues(alpha: 0.06), Colors.transparent],
                         stops: const <double>[0.0, 0.30],
                       ),
                     ),

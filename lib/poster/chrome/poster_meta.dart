@@ -30,10 +30,7 @@ class PosterMeta extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: metrics.px(20),
-          vertical: metrics.px(12),
-        ),
+        padding: EdgeInsets.symmetric(horizontal: metrics.px(20), vertical: metrics.px(12)),
         child: const SizedBox.shrink(),
       ),
     );

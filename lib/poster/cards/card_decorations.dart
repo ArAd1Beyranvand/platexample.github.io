@@ -13,13 +13,7 @@ import '../poster_tokens.dart';
 /// bottom 22`, with `inset 0 0 0 2px rgba(0,8,26,.55)` and a
 /// `0 0 0 1px rgba(226,238,255,.30)` outline.
 class IrFlagStrip extends StatelessWidget {
-  const IrFlagStrip({
-    super.key,
-    this.width = 26,
-    this.muted = false,
-    this.opacity = 1,
-    this.innerRing = true,
-  });
+  const IrFlagStrip({super.key, this.width = 26, this.muted = false, this.opacity = 1, this.innerRing = true});
 
   /// Strip width in DESIGN px.
   final double width;
@@ -36,16 +30,8 @@ class IrFlagStrip extends StatelessWidget {
   Widget build(BuildContext context) {
     final PosterMetrics metrics = PosterMetrics.of(context);
     final List<Color> bands = muted
-        ? const <Color>[
-            PosterColors.flagMutedGreen,
-            PosterColors.flagMutedWhite,
-            PosterColors.flagMutedRed,
-          ]
-        : const <Color>[
-            PosterColors.flagBrightGreen,
-            PosterColors.flagBrightWhite,
-            PosterColors.flagBrightRed,
-          ];
+        ? const <Color>[PosterColors.flagMutedGreen, PosterColors.flagMutedWhite, PosterColors.flagMutedRed]
+        : const <Color>[PosterColors.flagBrightGreen, PosterColors.flagBrightWhite, PosterColors.flagBrightRed];
 
     final BorderRadius radius = BorderRadius.circular(metrics.px(width * 0.32));
 
@@ -54,10 +40,7 @@ class IrFlagStrip extends StatelessWidget {
       child: SizedBox(
         width: metrics.px(width),
         child: Column(
-          children: <Widget>[
-            for (final Color band in bands)
-              Expanded(child: ColoredBox(color: band)),
-          ],
+          children: <Widget>[for (final Color band in bands) Expanded(child: ColoredBox(color: band))],
         ),
       ),
     );
@@ -82,7 +65,6 @@ class IrFlagStrip extends StatelessWidget {
   }
 }
 
-
 /// Card 02 — the faded 5px vertical flag strip, `right 20, top 20, bottom 20`,
 /// opacity `.8`.
 class FadedFlagStrip extends StatelessWidget {
@@ -92,12 +74,7 @@ class FadedFlagStrip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IrFlagStrip(
-      width: width,
-      muted: true,
-      opacity: 0.8,
-      innerRing: false,
-    );
+    return IrFlagStrip(width: width, muted: true, opacity: 0.8, innerRing: false);
   }
 }
 
@@ -133,11 +110,7 @@ class TwoToneDivider extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(band / 2),
           gradient: LinearGradient(
-            colors: <Color>[
-              Colors.transparent,
-              light.withValues(alpha: 0.55),
-              Colors.transparent,
-            ],
+            colors: <Color>[Colors.transparent, light.withValues(alpha: 0.55), Colors.transparent],
             stops: const <double>[0.0, 0.5, 1.0],
           ),
         ),
@@ -192,12 +165,7 @@ class IrFlagFooter extends StatelessWidget {
 /// a circle of r 11.5 about the centre of a 34-unit box) over a `D` in
 /// Martian Mono `wght 700` 15px.
 class EuBadgeColumn extends StatelessWidget {
-  const EuBadgeColumn({
-    super.key,
-    this.width = 34,
-    this.letter = 'D',
-    this.ground = PosterColors.cardBlueDe,
-  });
+  const EuBadgeColumn({super.key, this.width = 34, this.letter = 'D', this.ground = PosterColors.cardBlueDe});
 
   final double width;
   final String letter;
@@ -210,38 +178,35 @@ class EuBadgeColumn extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(metrics.px(10)),
       child: ColoredBox(
-      color: ground,
-      child: SizedBox(
-        width: side,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            SizedBox(
-              width: side,
-              height: side,
-              child: CustomPaint(
-                painter: _EuStarsPainter(
-                  starRadius: side * (1.9 / 34),
-                  ringRadius: side * (11.5 / 34),
+        color: ground,
+        child: SizedBox(
+          width: side,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              SizedBox(
+                width: side,
+                height: side,
+                child: CustomPaint(
+                  painter: _EuStarsPainter(starRadius: side * (1.9 / 34), ringRadius: side * (11.5 / 34)),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(bottom: metrics.px(6)),
-              child: Text(
-                letter,
-                style: TextStyle(
-                  fontFamily: PosterFonts.martianMono,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 15 * metrics.f,
-                  height: 1.0,
-                  color: PosterColors.inkDisplay1,
+              Padding(
+                padding: EdgeInsets.only(bottom: metrics.px(6)),
+                child: Text(
+                  letter,
+                  style: TextStyle(
+                    fontFamily: PosterFonts.martianMono,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 15 * metrics.f,
+                    height: 1.0,
+                    color: PosterColors.inkDisplay1,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
       ),
     );
   }
@@ -259,8 +224,7 @@ class _EuStarsPainter extends CustomPainter {
     final Paint paint = Paint()..color = PosterColors.euStar;
     for (int i = 0; i < 12; i++) {
       final double angle = -math.pi / 2 + i * (math.pi / 6);
-      final Offset at = centre +
-          Offset(math.cos(angle) * ringRadius, math.sin(angle) * ringRadius);
+      final Offset at = centre + Offset(math.cos(angle) * ringRadius, math.sin(angle) * ringRadius);
       canvas.drawPath(_star(at, starRadius), paint);
     }
   }
@@ -284,8 +248,7 @@ class _EuStarsPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_EuStarsPainter oldDelegate) {
-    return oldDelegate.starRadius != starRadius ||
-        oldDelegate.ringRadius != ringRadius;
+    return oldDelegate.starRadius != starRadius || oldDelegate.ringRadius != ringRadius;
   }
 }
 
@@ -313,12 +276,7 @@ class RedTag extends StatelessWidget {
         ],
       ),
       child: Padding(
-        padding: EdgeInsets.fromLTRB(
-          metrics.px(16),
-          metrics.px(9),
-          metrics.px(16),
-          metrics.px(9),
-        ),
+        padding: EdgeInsets.fromLTRB(metrics.px(16), metrics.px(9), metrics.px(16), metrics.px(9)),
         child: Text(label, style: PosterType.redTag(metrics.f)),
       ),
     );

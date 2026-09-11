@@ -56,10 +56,7 @@ class InspectionStamp extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Color(0xFF444444),
                           border: Border(
-                            bottom: BorderSide(
-                              color: Color(0xFF888888),
-                              width: metrics.px(0.5),
-                            ),
+                            bottom: BorderSide(color: Color(0xFF888888), width: metrics.px(0.5)),
                           ),
                         ),
                         child: Padding(
@@ -70,36 +67,23 @@ class InspectionStamp extends StatelessWidget {
                               children: [
                                 TextSpan(
                                   text: 'made',
-                                  style: stampStyle.copyWith(
-                                    fontWeight: FontWeight.w900,
-                                    color: Color(0xFF239F40),
-                                  ),
+                                  style: stampStyle.copyWith(fontWeight: FontWeight.w900, color: Color(0xFF239F40)),
                                 ),
                                 TextSpan(
                                   text: ' ',
-                                  style: stampStyle.copyWith(
-                                    fontWeight: FontWeight.w900,
-                                  ),
+                                  style: stampStyle.copyWith(fontWeight: FontWeight.w900),
                                 ),
                                 TextSpan(
                                   text: 'in',
-                                  style: stampStyle.copyWith(
-                                    fontWeight: FontWeight.w900,
-                                    color: Colors.white,
-                                  ),
+                                  style: stampStyle.copyWith(fontWeight: FontWeight.w900, color: Colors.white),
                                 ),
                                 TextSpan(
                                   text: ' ',
-                                  style: stampStyle.copyWith(
-                                    fontWeight: FontWeight.w900,
-                                  ),
+                                  style: stampStyle.copyWith(fontWeight: FontWeight.w900),
                                 ),
                                 TextSpan(
                                   text: 'IRAN',
-                                  style: stampStyle.copyWith(
-                                    fontWeight: FontWeight.w900,
-                                    color: Color(0xFF8B0000),
-                                  ),
+                                  style: stampStyle.copyWith(fontWeight: FontWeight.w900, color: Color(0xFF8B0000)),
                                 ),
                               ],
                             ),

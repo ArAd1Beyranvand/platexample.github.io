@@ -56,22 +56,13 @@ class PosterWordmark extends StatelessWidget {
         children: <Widget>[
           Text(
             'PLATE',
-            style: base.copyWith(
-              color: PosterColors.inkDisplay1,
-              shadows: lineGlow,
-            ),
+            style: base.copyWith(color: PosterColors.inkDisplay1, shadows: lineGlow),
           ),
           Text(
             'INPUT',
-            style: base.copyWith(
-              color: PosterColors.inkDisplay2,
-              shadows: lineGlow,
-            ),
+            style: base.copyWith(color: PosterColors.inkDisplay2, shadows: lineGlow),
           ),
-          Text(
-            'FOR THE',
-            style: base.copyWith(color: PosterColors.inkDisplay3),
-          ),
+          Text('FOR THE', style: base.copyWith(color: PosterColors.inkDisplay3)),
           _RoadLine(base: base),
         ],
       ),
@@ -88,25 +79,15 @@ class _RoadLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Text dark = Text(
-      'ROAD',
-      style: base.copyWith(color: PosterColors.inkDisplay1),
-    );
-    final Text cut = Text(
-      'ROAD',
-      style: base.copyWith(color: PosterColors.inkDisplayCut),
-    );
+    final Text dark = Text('ROAD', style: base.copyWith(color: PosterColors.inkDisplay1));
+    final Text cut = Text('ROAD', style: base.copyWith(color: PosterColors.inkDisplayCut));
 
     return Stack(
       children: <Widget>[
         dark,
         // The bright copy, masked to the diagonal.
         Positioned.fill(
-          child: ShaderMask(
-            blendMode: BlendMode.dstIn,
-            shaderCallback: _cutShader,
-            child: cut,
-          ),
+          child: ShaderMask(blendMode: BlendMode.dstIn, shaderCallback: _cutShader, child: cut),
         ),
       ],
     );
@@ -131,10 +112,7 @@ Shader _cutShader(Rect bounds) {
   // down-right into the transparent side, is (sin θ, cos θ).
   final double rad = _cutAngleDeg * math.pi / 180.0;
   final Offset normal = Offset(math.sin(rad), math.cos(rad));
-  final Offset pivot = Offset(
-    bounds.width * _cutPivotFraction.dx,
-    bounds.height * _cutPivotFraction.dy,
-  );
+  final Offset pivot = Offset(bounds.width * _cutPivotFraction.dx, bounds.height * _cutPivotFraction.dy);
   // Any span that covers the box works; the edge sits at the midpoint.
   final double reach = bounds.longestSide;
   return ui.Gradient.linear(

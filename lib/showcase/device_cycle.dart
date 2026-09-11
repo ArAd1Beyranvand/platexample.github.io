@@ -32,11 +32,7 @@ class DeviceCycle extends StatefulWidget {
     super.key,
     required this.builder,
     required this.controller,
-    this.order = const [
-      DeviceType.desktop,
-      DeviceType.mobile,
-      DeviceType.tablet,
-    ],
+    this.order = const [DeviceType.desktop, DeviceType.mobile, DeviceType.tablet],
     this.onDeviceChanged,
   });
 

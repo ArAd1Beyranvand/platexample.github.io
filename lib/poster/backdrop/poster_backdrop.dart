@@ -84,9 +84,7 @@ class _PosterBackdropState extends State<PosterBackdrop> {
 
   static Future<ui.Image> _decodeAsset(String key) async {
     final ByteData data = await rootBundle.load(key);
-    final ui.Codec codec = await ui.instantiateImageCodec(
-      data.buffer.asUint8List(),
-    );
+    final ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List());
     final ui.FrameInfo frame = await codec.getNextFrame();
     return frame.image;
   }
@@ -122,8 +120,7 @@ class _PosterBackdropState extends State<PosterBackdrop> {
           ),
           // Layer 10 — P5's sweep, on its own boundary so its 1.5s rake never
           // drags the road back into the dirty set.
-          if (widget.sweep != null)
-            Positioned.fill(child: RepaintBoundary(child: widget.sweep!)),
+          if (widget.sweep != null) Positioned.fill(child: RepaintBoundary(child: widget.sweep!)),
         ],
       ),
     );
@@ -143,17 +140,9 @@ class _BackdropPainter extends CustomPainter {
     canvas.save();
     // Work in design space for the whole backdrop: the wedge percentages, the
     // rails and the dashes then deform together with the stage box.
-    canvas.scale(
-      size.width / kBackdropDesignWidth,
-      size.height / kBackdropDesignHeight,
-    );
+    canvas.scale(size.width / kBackdropDesignWidth, size.height / kBackdropDesignHeight);
 
-    const Rect stage = Rect.fromLTWH(
-      0,
-      0,
-      kBackdropDesignWidth,
-      kBackdropDesignHeight,
-    );
+    const Rect stage = Rect.fromLTWH(0, 0, kBackdropDesignWidth, kBackdropDesignHeight);
     // The rails and the wedge overhang the stage; give every full-bleed fill
     // enough slack that nothing shows a seam at the edges.
     final Rect bleed = stage.inflate(kBackdropDesignHeight * 0.5);
@@ -212,11 +201,7 @@ class _BackdropPainter extends CustomPainter {
       rx,
       Paint()
         ..shader = const RadialGradient(
-          colors: <Color>[
-            PosterColors.groundRadialCore,
-            PosterColors.groundRadialMid,
-            PosterColors.groundRadialEdge,
-          ],
+          colors: <Color>[PosterColors.groundRadialCore, PosterColors.groundRadialMid, PosterColors.groundRadialEdge],
           stops: <double>[0.0, 0.55, 1.0],
         ).createShader(circle),
     );
@@ -230,28 +215,11 @@ class _BackdropPainter extends CustomPainter {
   /// `ColorFilter.mode(Colors.white, blend)` recolours the tile instead of
   /// blending it, and `DecorationImage` has no blend-against-destination at
   /// all. An `ImageShader` plus a `saveLayer` does both correctly.
-  void _paintGrain(
-    Canvas canvas,
-    Rect rect,
-    ui.Image? image,
-    double tileDesignPx,
-    double opacity,
-    BlendMode blend,
-  ) {
+  void _paintGrain(Canvas canvas, Rect rect, ui.Image? image, double tileDesignPx, double opacity, BlendMode blend) {
     if (image == null) return;
     final Matrix4 tile = Matrix4.identity()
-      ..scaleByDouble(
-        tileDesignPx / image.width,
-        tileDesignPx / image.height,
-        1,
-        1,
-      );
-    final ui.ImageShader shader = ui.ImageShader(
-      image,
-      TileMode.repeated,
-      TileMode.repeated,
-      tile.storage,
-    );
+      ..scaleByDouble(tileDesignPx / image.width, tileDesignPx / image.height, 1, 1);
+    final ui.ImageShader shader = ui.ImageShader(image, TileMode.repeated, TileMode.repeated, tile.storage);
     canvas.saveLayer(
       rect,
       Paint()
@@ -271,8 +239,7 @@ class _BackdropPainter extends CustomPainter {
     const double rad99 = 99 * math.pi / 180;
     final Offset dir = Offset(math.sin(rad99), -math.cos(rad99));
     final Offset centre = wedgeBounds.center;
-    final double reach =
-        (wedgeBounds.width * dir.dx).abs() + (wedgeBounds.height * dir.dy).abs();
+    final double reach = (wedgeBounds.width * dir.dx).abs() + (wedgeBounds.height * dir.dy).abs();
     canvas.drawRect(
       wedgeBounds,
       Paint()
@@ -280,11 +247,7 @@ class _BackdropPainter extends CustomPainter {
         ..shader = ui.Gradient.linear(
           centre - dir * (reach / 2),
           centre + dir * (reach / 2),
-          <Color>[
-            const Color(0x00000000),
-            PosterColors.beamMid,
-            const Color(0x00000000),
-          ],
+          <Color>[const Color(0x00000000), PosterColors.beamMid, const Color(0x00000000)],
           <double>[0.0, 0.52, 1.0],
         ),
     );
@@ -404,10 +367,7 @@ class _BackdropPainter extends CustomPainter {
     canvas.rotate(11.8 * math.pi / 180);
     final Paint paint = Paint()..color = PosterColors.roadStripe;
     for (double x = 0; x < width; x += period) {
-      canvas.drawRect(
-        Rect.fromLTWH(x, 0, math.min(dash, width - x), thickness),
-        paint,
-      );
+      canvas.drawRect(Rect.fromLTWH(x, 0, math.min(dash, width - x), thickness), paint);
     }
     canvas.restore();
   }

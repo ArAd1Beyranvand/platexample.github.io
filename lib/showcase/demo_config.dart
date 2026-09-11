@@ -108,14 +108,14 @@ class DemoConfig {
 
 /// The variation-as-data table behind the showcase: one [DemoConfig] per
 /// [DeviceType], holding exactly what `device_stage.dart` used to inline.
-const Map<DeviceType, DemoConfig> demoConfigs = {
+final Map<DeviceType, DemoConfig> demoConfigs = {
   // Yemen has two systems in force at once: the deck's keys type into the 2026
   // unified plate, and `plate_mirror.dart` writes the same digits onto the 1993
   // northern plate below it, so both fill in together.
   DeviceType.desktop: DemoConfig(
-    spec: YemenUnifiedPlates.car5Private,
+    spec: YemenUnifiedPlates.car5,
     theme: YemenThemes.unified,
-    secondarySpec: YemenNorthernPlates.carGov2Serial5Private,
+    secondarySpec: YemenNorthernPlates.carGov2Serial5,
     secondaryTheme: YemenThemes.northernPrivate,
     mirrorPairs: yemenUnifiedToNorthern,
     script: yemenUnifiedCarScript,

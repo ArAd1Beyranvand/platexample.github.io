@@ -26,8 +26,7 @@ class MinimalApp extends StatelessWidget {
                 spec: IranPlates.car,
                 // The Iran car plate has a `chosen`-alphabet letter slot;
                 // core no longer ships a picker, so supply one.
-                onChooseCharacter: (alphabet) =>
-                    PlateCharacterPicker.show(context, alphabet),
+                onChooseCharacter: (alphabet) => PlateCharacterPicker.show(context, alphabet),
               ),
             ),
           ),

@@ -29,11 +29,7 @@ DecorationImage textureDecoration({
 }) {
   final tileSize = metrics.px(tileDesignPx).round().clamp(1, 4096);
   return DecorationImage(
-    image: ResizeImage(
-      AssetImage(_assetFor[texture]!),
-      width: tileSize,
-      height: tileSize,
-    ),
+    image: ResizeImage(AssetImage(_assetFor[texture]!), width: tileSize, height: tileSize),
     repeat: ImageRepeat.repeat,
     fit: BoxFit.none,
     alignment: Alignment.topLeft,
