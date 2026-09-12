@@ -85,6 +85,10 @@ class _GalleryShellScreenState extends State<GalleryShellScreen> {
                 onDestinationSelected: (int index) => setState(() => _selectedTab = index),
                 labelType: NavigationRailLabelType.all,
                 backgroundColor: Colors.grey.shade900,
+                selectedIconTheme: const IconThemeData(color: Colors.white, size: 24),
+                unselectedIconTheme: IconThemeData(color: Colors.grey.shade600, size: 24),
+                selectedLabelTextStyle: const TextStyle(color: Colors.white, fontSize: 12),
+                unselectedLabelTextStyle: TextStyle(color: Colors.grey.shade600, fontSize: 12),
                 destinations: <NavigationRailDestination>[
                   for (final (:IconData icon, :IconData selected, :String label) in destinations)
                     NavigationRailDestination(icon: Icon(icon), selectedIcon: Icon(selected), label: Text(label)),
