@@ -64,47 +64,54 @@ class _GalleryShellScreenState extends State<GalleryShellScreen> {
       (icon: Icons.info_outline, selected: Icons.info, label: 'About'),
     ];
 
-    final Widget body = IndexedStack(
-      index: _selectedTab,
-      children: <Widget>[
-        const ShowcaseScreen(),
-        DiscoverScreen(onOpenPlate: _openPlate, onOpenCountry: _openCountry),
-        BrowseScreen(onOpenPlate: _openPlate),
-        PlaygroundScreen(entry: _entry, onEntryChanged: (GalleryEntry entry) => setState(() => _entry = entry)),
-        const AboutScreen(),
-      ],
-    );
-
-    return Scaffold(
-      body: SafeArea(
-        child: wide
-            ? Row(
-                children: <Widget>[
-                  NavigationRail(
-                    selectedIndex: _selectedTab,
-                    onDestinationSelected: (int index) => setState(() => _selectedTab = index),
-                    labelType: NavigationRailLabelType.all,
-                    destinations: <NavigationRailDestination>[
-                      for (final (:IconData icon, :IconData selected, :String label) in destinations)
-                        NavigationRailDestination(icon: Icon(icon), selectedIcon: Icon(selected), label: Text(label)),
-                    ],
-                  ),
-                  const VerticalDivider(width: 1),
-                  Expanded(child: body),
-                ],
-              )
-            : body,
-      ),
-      bottomNavigationBar: wide
-          ? null
-          : NavigationBar(
-              selectedIndex: _selectedTab,
-              onDestinationSelected: (int index) => setState(() => _selectedTab = index),
-              destinations: <Widget>[
-                for (final (:IconData icon, :IconData selected, :String label) in destinations)
-                  NavigationDestination(icon: Icon(icon), selectedIcon: Icon(selected), label: label),
+    if (wide) {
+      return Row(
+        children: <Widget>[
+          NavigationRail(
+            selectedIndex: _selectedTab,
+            onDestinationSelected: (int index) => setState(() => _selectedTab = index),
+            labelType: NavigationRailLabelType.all,
+            destinations: <NavigationRailDestination>[
+              for (final (:IconData icon, :IconData selected, :String label) in destinations)
+                NavigationRailDestination(icon: Icon(icon), selectedIcon: Icon(selected), label: Text(label)),
+            ],
+          ),
+          const VerticalDivider(width: 1),
+          Expanded(
+            child: IndexedStack(
+              index: _selectedTab,
+              children: <Widget>[
+                const ShowcaseScreen(),
+                DiscoverScreen(onOpenPlate: _openPlate, onOpenCountry: _openCountry),
+                BrowseScreen(onOpenPlate: _openPlate),
+                PlaygroundScreen(entry: _entry, onEntryChanged: (GalleryEntry entry) => setState(() => _entry = entry)),
+                const AboutScreen(),
               ],
             ),
+          ),
+        ],
+      );
+    }
+
+    return Scaffold(
+      body: IndexedStack(
+        index: _selectedTab,
+        children: <Widget>[
+          const ShowcaseScreen(),
+          DiscoverScreen(onOpenPlate: _openPlate, onOpenCountry: _openCountry),
+          BrowseScreen(onOpenPlate: _openPlate),
+          PlaygroundScreen(entry: _entry, onEntryChanged: (GalleryEntry entry) => setState(() => _entry = entry)),
+          const AboutScreen(),
+        ],
+      ),
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: _selectedTab,
+        onDestinationSelected: (int index) => setState(() => _selectedTab = index),
+        destinations: <Widget>[
+          for (final (:IconData icon, :IconData selected, :String label) in destinations)
+            NavigationDestination(icon: Icon(icon), selectedIcon: Icon(selected), label: label),
+        ],
+      ),
     );
   }
 }
