@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../poster/poster_tokens.dart';
-import '../screens/showcase_screen.dart';
+import '../screens/gallery_shell_screen.dart';
 
 class PlateNumberShowcaseApp extends StatelessWidget {
   const PlateNumberShowcaseApp({super.key});
@@ -9,7 +9,7 @@ class PlateNumberShowcaseApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Plate Number Showcase',
+      title: 'Plate Gallery',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorSchemeSeed: PosterTokens.accent,
@@ -18,7 +18,7 @@ class PlateNumberShowcaseApp extends StatelessWidget {
         canvasColor: PosterColors.pageBlack,
         useMaterial3: true,
       ),
-      home: const ShowcaseScreen(),
+      home: const GalleryShellScreen(),
     );
   }
 }

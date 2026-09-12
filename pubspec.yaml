@@ -45,6 +45,8 @@ dependencies:
   # and nothing else — not on the keypad, and not on each other.
   iran_plate:
     path: ../iran_plate
+  germany_plate:
+    path: ../germany_plate
 
   # The two countries the showcase draws a *pair* of plates for, because
   # neither has one plate: Palestine's West Bank and Gaza designs (the tablet),
@@ -75,6 +77,8 @@ dependency_overrides:
     path: ../plate_keypad
   iran_plate:
     path: ../iran_plate
+  germany_plate:
+    path: ../germany_plate
   palestine_plate:
     path: ../palestine_plate
   yemen_plate:
