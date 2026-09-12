@@ -80,18 +80,20 @@ class _GalleryShellScreenState extends State<GalleryShellScreen> {
             Container(
               width: 80,
               color: Colors.grey.shade900,
-              child: NavigationRail(
-                selectedIndex: _selectedTab,
-                onDestinationSelected: (int index) => setState(() => _selectedTab = index),
-                labelType: NavigationRailLabelType.all,
-                backgroundColor: Colors.grey.shade900,
-                selectedIconTheme: const IconThemeData(color: Colors.white, size: 24),
-                unselectedIconTheme: IconThemeData(color: Colors.grey.shade600, size: 24),
-                selectedLabelTextStyle: const TextStyle(color: Colors.white, fontSize: 12),
-                unselectedLabelTextStyle: TextStyle(color: Colors.grey.shade600, fontSize: 12),
-                destinations: <NavigationRailDestination>[
-                  for (final (:IconData icon, :IconData selected, :String label) in destinations)
-                    NavigationRailDestination(icon: Icon(icon), selectedIcon: Icon(selected), label: Text(label)),
+              child: Column(
+                children: <Widget>[
+                  const SizedBox(height: 16),
+                  for (int i = 0; i < destinations.length; i++)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: _NavButton(
+                        icon: destinations[i].icon,
+                        selectedIcon: destinations[i].selected,
+                        label: destinations[i].label,
+                        isSelected: _selectedTab == i,
+                        onTap: () => setState(() => _selectedTab = i),
+                      ),
+                    ),
                 ],
               ),
             ),
@@ -110,6 +112,55 @@ class _GalleryShellScreenState extends State<GalleryShellScreen> {
           for (final (:IconData icon, :IconData selected, :String label) in destinations)
             NavigationDestination(icon: Icon(icon), selectedIcon: Icon(selected), label: label),
         ],
+      ),
+    );
+  }
+}
+
+class _NavButton extends StatelessWidget {
+  const _NavButton({
+    required this.icon,
+    required this.selectedIcon,
+    required this.label,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  final IconData icon;
+  final IconData selectedIcon;
+  final String label;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+        decoration: BoxDecoration(
+          color: isSelected ? Colors.blue.shade600 : Colors.transparent,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Icon(
+              isSelected ? selectedIcon : icon,
+              color: isSelected ? Colors.white : Colors.grey.shade400,
+              size: 24,
+            ),
+            const SizedBox(height: 4),
+            Text(
+              label,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: isSelected ? Colors.white : Colors.grey.shade400,
+                fontSize: 11,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
