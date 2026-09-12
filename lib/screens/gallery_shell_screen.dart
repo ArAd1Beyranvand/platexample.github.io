@@ -67,14 +67,18 @@ class _GalleryShellScreenState extends State<GalleryShellScreen> {
     if (wide) {
       return Row(
         children: <Widget>[
-          NavigationRail(
-            selectedIndex: _selectedTab,
-            onDestinationSelected: (int index) => setState(() => _selectedTab = index),
-            labelType: NavigationRailLabelType.all,
-            destinations: <NavigationRailDestination>[
-              for (final (:IconData icon, :IconData selected, :String label) in destinations)
-                NavigationRailDestination(icon: Icon(icon), selectedIcon: Icon(selected), label: Text(label)),
-            ],
+          Container(
+            color: Colors.grey.shade900,
+            child: NavigationRail(
+              selectedIndex: _selectedTab,
+              onDestinationSelected: (int index) => setState(() => _selectedTab = index),
+              labelType: NavigationRailLabelType.all,
+              backgroundColor: Colors.grey.shade900,
+              destinations: <NavigationRailDestination>[
+                for (final (:IconData icon, :IconData selected, :String label) in destinations)
+                  NavigationRailDestination(icon: Icon(icon), selectedIcon: Icon(selected), label: Text(label)),
+              ],
+            ),
           ),
           const VerticalDivider(width: 1),
           Expanded(
