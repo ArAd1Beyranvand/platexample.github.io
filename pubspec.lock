@@ -55,7 +55,7 @@ packages:
       path: "../core_plate"
       relative: true
     source: path
-    version: "0.5.0"
+    version: "0.9.0"
   fake_async:
     dependency: transitive
     description:
@@ -95,6 +95,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  germany_plate:
+    dependency: "direct main"
+    description:
+      path: "../germany_plate"
+      relative: true
+    source: path
+    version: "0.2.0"
   http:
     dependency: transitive
     description:
@@ -117,7 +124,7 @@ packages:
       path: "../iran_plate"
       relative: true
     source: path
-    version: "0.1.0"
+    version: "0.2.0"
   leak_tracker:
     dependency: transitive
     description:
@@ -180,7 +187,7 @@ packages:
       path: "../palestine_plate"
       relative: true
     source: path
-    version: "0.1.0"
+    version: "0.3.0"
   path:
     dependency: transitive
     description:
@@ -211,7 +218,7 @@ packages:
       path: "../plate_keypad"
       relative: true
     source: path
-    version: "0.1.0"
+    version: "0.1.1"
   plugin_platform_interface:
     dependency: transitive
     description:
@@ -407,7 +414,7 @@ packages:
       path: "../yemen_plate"
       relative: true
     source: path
-    version: "0.2.0"
+    version: "0.3.0"
 sdks:
   dart: ">=3.12.0 <4.0.0"
   flutter: ">=3.44.0"

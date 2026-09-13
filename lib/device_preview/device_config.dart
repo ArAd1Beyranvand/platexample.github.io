@@ -153,8 +153,6 @@ class DeviceConfig {
     this.homeIndicatorWidth = 0,
     this.sideButtons = const <SideButton>[],
     this.deck = DeviceDeck.none,
-    this.shadowBlur = 40,
-    this.shadowOffsetY = 18,
   });
 
   final DeviceType type;
@@ -182,9 +180,6 @@ class DeviceConfig {
 
   final List<SideButton> sideButtons;
   final DeviceDeck deck;
-
-  final double shadowBlur;
-  final double shadowOffsetY;
 
   /// Logical size of the glass — the size the page is laid out at.
   Size get screenSize => Size(bodySize.width - bezel.horizontal, bodySize.height - bezel.vertical);
@@ -226,8 +221,6 @@ class DeviceConfig {
       homeIndicatorWidth: lerpDouble(a.homeIndicatorWidth, b.homeIndicatorWidth, t)!,
       sideButtons: buttons,
       deck: DeviceDeck.lerp(a.deck, b.deck, t),
-      shadowBlur: lerpDouble(a.shadowBlur, b.shadowBlur, t)!,
-      shadowOffsetY: lerpDouble(a.shadowOffsetY, b.shadowOffsetY, t)!,
     );
   }
 }

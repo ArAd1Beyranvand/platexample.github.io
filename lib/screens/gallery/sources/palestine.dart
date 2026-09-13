@@ -100,6 +100,12 @@ class PalestineSource extends GallerySource {
   List<GallerySection>? _sections;
 
   @override
+  List<GalleryEntry> get highlights => <GalleryEntry>[
+    sections[0].entries.first,
+    sections[2].entries.first,
+  ];
+
+  @override
   List<GallerySection> get sections => _sections ??= <GallerySection>[
     GallerySection(
       title: 'West Bank — modern, since July 2018',

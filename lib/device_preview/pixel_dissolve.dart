@@ -39,7 +39,12 @@ class PixelDissolve extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (progress >= 0.999) return child;
+    // Boundaried even when the dissolve is a no-op. The deck spends the whole
+    // unfold beat inside a per-frame perspective Transform, and without a
+    // boundary here every one of those frames re-records the deck's paint —
+    // 41 keycaps, three box shadows each, the well's clip and its own drop
+    // shadow — to change nothing but the matrix above it.
+    if (progress >= 0.999) return RepaintBoundary(child: child);
     return Stack(
       clipBehavior: Clip.none,
       children: [

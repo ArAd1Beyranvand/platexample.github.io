@@ -16,7 +16,7 @@ export 'yemen.dart';
 /// list per read would reshuffle the catalogue on every frame.
 final List<GallerySource> gallerySources = <GallerySource>[
   const IranSource(),
-  const GermanySource(),
   PalestineSource(),
   YemenSource(),
+  const GermanySource(),
 ];

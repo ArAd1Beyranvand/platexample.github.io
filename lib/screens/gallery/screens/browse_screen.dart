@@ -117,6 +117,7 @@ class _BrowseScreenState extends State<BrowseScreen> {
           SliverPadding(
             padding: const EdgeInsets.fromLTRB(Gap.lg, 0, Gap.lg, Gap.xl),
             sliver: PlateSliverGrid(
+              stageHeight: 320,
               itemCount: results.length,
               itemBuilder: (BuildContext context, int index) {
                 final CatalogueItem item = results[index];
@@ -125,6 +126,7 @@ class _BrowseScreenState extends State<BrowseScreen> {
                   key: ValueKey<String>(item.entry.id),
                   entry: item.entry,
                   heroTag: tag,
+                  stageHeight: 320,
                   // In a mixed grid the country is the missing fact; the
                   // system qualifies it where a country has more than one.
                   subtitle: '${item.source.countryName} · ${item.entry.spec.id}',

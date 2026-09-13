@@ -33,19 +33,9 @@ class DeviceBodyPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final body = Offset.zero & size;
     final bodyRR = RRect.fromRectAndRadius(body, Radius.circular(config.bodyRadius));
-    _paintShadow(canvas, body);
     _paintSideButtons(canvas, body);
     _paintLid(canvas, bodyRR);
     _paintScreenWell(canvas, body);
-  }
-
-  void _paintShadow(Canvas canvas, Rect body) {
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(body.shift(Offset(0, config.shadowOffsetY)), Radius.circular(config.bodyRadius)),
-      Paint()
-        ..color = const Color(0xFF0B0D14).withValues(alpha: 0.24 * ambient)
-        ..maskFilter = MaskFilter.blur(BlurStyle.normal, config.shadowBlur),
-    );
   }
 
   void _paintLid(Canvas canvas, RRect bodyRR) {

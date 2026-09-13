@@ -29,8 +29,6 @@ class DevicePresets {
       SideButton(side: -1, start: 0.315, length: 0.065),
       SideButton(side: 1, start: 0.26, length: 0.10),
     ],
-    shadowBlur: 46,
-    shadowOffsetY: 20,
   );
 
   /// Landscape tablet — wider than tall.
@@ -52,8 +50,6 @@ class DevicePresets {
       SideButton(side: -1, start: 0.30, length: 0.07),
       SideButton(side: 1, start: 0.06, length: 0.06),
     ],
-    shadowBlur: 54,
-    shadowOffsetY: 22,
   );
 
   static const desktop = DeviceConfig(
@@ -70,8 +66,6 @@ class DevicePresets {
     cameraEdge: 0.125,
     cameraRadius: 3.5,
     deck: DeviceDeck(depth: 210, angleDeg: 45, hingeHeight: 9, opacity: 1),
-    shadowBlur: 60,
-    shadowOffsetY: 26,
   );
 
   static DeviceConfig of(DeviceType type) => switch (type) {

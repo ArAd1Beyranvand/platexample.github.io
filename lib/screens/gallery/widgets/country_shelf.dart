@@ -65,7 +65,7 @@ class CountryShelf extends StatelessWidget {
         ),
         const SizedBox(height: Gap.md),
         SizedBox(
-          height: 112 + 56,
+          height: 320 + 56,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             // Bleeds to the window edge so a partly-visible tile at the right
@@ -77,7 +77,7 @@ class CountryShelf extends StatelessWidget {
               final CatalogueItem item = items[index];
               final String tag = 'discover:${item.entry.id}';
               return SizedBox(
-                width: 260,
+                width: 500,
                 child: PlateTile(
                   entry: item.entry,
                   heroTag: tag,
@@ -85,6 +85,7 @@ class CountryShelf extends StatelessWidget {
                   // you cannot otherwise tell — the opposite of the browse
                   // grid, where the country is.
                   subtitle: item.section.title,
+                  stageHeight: 320,
                   onTap: () => onOpenPlate(item, tag),
                 ),
               );

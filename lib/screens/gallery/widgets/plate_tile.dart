@@ -87,7 +87,7 @@ class PlateSliverGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) => SliverGrid(
     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-      maxCrossAxisExtent: 300,
+      maxCrossAxisExtent: 500,
       mainAxisSpacing: Gap.lg,
       crossAxisSpacing: Gap.md,
       // Fixed, not an aspect ratio: the tile is a frame of known height plus

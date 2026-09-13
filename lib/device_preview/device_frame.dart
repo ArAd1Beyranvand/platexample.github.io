@@ -457,14 +457,30 @@ class _DeviceFrameState extends State<DeviceFrame> with SingleTickerProviderStat
                       color: const Color(0xFF07080A),
                       child: opacity <= 0.001
                           ? const SizedBox.expand()
+                          // At rest the page is painted straight into the
+                          // frame's own layer — no Opacity, no boundary.
+                          //
+                          // A boundary here is a raster-cache candidate, and
+                          // the engine takes it: after a few still frames the
+                          // page becomes a texture, recorded once and then
+                          // resampled through the FittedBox that scales the
+                          // device into its slot. Vector detail drawn at plate
+                          // scale — a flag's emblem, the slot dividers — comes
+                          // back soft, and snaps sharp the moment an animation
+                          // starts and the cache is abandoned. Not caching a
+                          // still frame costs nothing: nothing is repainting.
+                          : opacity >= 0.999
+                          ? _screenContent()
                           : Opacity(
                               opacity: opacity.clamp(0.0, 1.0),
-                              // The boundary is what makes this fade cheap:
+                              // Mid-fade the boundary is what makes this cheap:
                               // with a composited child, RenderOpacity pushes
                               // an OpacityLayer and the GPU blends a cached
                               // texture. Without it, the whole page — plate,
                               // backdrop, keypad — is re-rasterised into a
                               // saveLayer on all ~180 frames of the two fades.
+                              // Softness during a 300 ms fade is invisible; at
+                              // rest it is the only thing you can see.
                               child: RepaintBoundary(child: _screenContent()),
                             ),
                     ),
@@ -502,7 +518,13 @@ class _ScreenContent extends StatelessWidget {
             size: logical,
             padding: EdgeInsets.only(top: config.notchSize.height, bottom: config.homeIndicatorWidth > 0 ? 20 : 0),
           ),
-          child: RepaintBoundary(child: builder(context, config)),
+          // No boundary here. This one sits *under* the FittedBox, so a
+          // cached raster of it is recorded in the page's own logical
+          // coordinates and then scaled to the glass — the same softness as
+          // above, and worse, because the scale factor here is the whole
+          // device-fit. The page's own expensive pieces carry their own
+          // boundaries (see PlateDisplay); this blanket one only cost sharpness.
+          child: builder(context, config),
         ),
       ),
     );

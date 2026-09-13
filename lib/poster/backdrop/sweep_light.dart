@@ -118,6 +118,38 @@ class _SweepPainter extends CustomPainter {
   static const double _toX = 2400;
   static const double _degrees = 11.8;
 
+  /// Half-width of the band that replaces the edge glow's `MaskFilter.blur`,
+  /// in design px: 3.3σ of the original 18px blur, past which the profile
+  /// below is under 1/500 and invisible.
+  static const double _glowHalfWidth = 60;
+
+  /// The original glow was a 17px-wide rect under `MaskFilter.blur(normal, 18)`
+  /// — a gaussian blur re-run on every one of the rake's ~90 frames, inside a
+  /// full-band `saveLayer` that was itself allocated per frame. Both are gone:
+  /// the blur of a box is an analytic profile,
+  ///
+  ///     a(x) = ½·(erf((x−390)/σ√2) − erf((x−407)/σ√2)),   σ = 18
+  ///
+  /// sampled here at 13 even stops across [_glowHalfWidth] either side of the
+  /// edge's centre and handed to a `LinearGradient` instead. Same picture, no
+  /// offscreen and no per-frame blur.
+  ///
+  /// The `saveLayer` went with it because `screen` is associative: screening
+  /// the three draws onto the road one at a time gives the same result as
+  /// screening their composite, so the layer was only ever paying for a uniform
+  /// opacity that each draw can apply to its own colours.
+  static const List<double> _glowStops = <double>[
+    0.0000, 0.0833, 0.1667, 0.2500, 0.3333, 0.4167, 0.5000,
+    0.5833, 0.6667, 0.7500, 0.8333, 0.9167, 1.0000, //
+  ];
+
+  static const List<double> _glowProfile = <double>[
+    0.0020, 0.0100, 0.0365, 0.0999, 0.2048, 0.3148, 0.3632,
+    0.3148, 0.2048, 0.0999, 0.0365, 0.0100, 0.0020, //
+  ];
+
+  static Color _scaled(Color c, double o) => c.withValues(alpha: c.a * o);
+
   @override
   void paint(Canvas canvas, Size size) {
     if (size.isEmpty || opacity <= 0) return;
@@ -138,47 +170,70 @@ class _SweepPainter extends CustomPainter {
     canvas.rotate(_degrees * math.pi / 180);
     canvas.translate(-pivot.dx, -pivot.dy);
 
-    // Whole sweep at one opacity, screen-blended against the road.
+    // Every draw carries the rake's own opacity and screen-blends straight onto
+    // the road — see [_glowStops] for why there is no enclosing saveLayer.
+    final double o = opacity.clamp(0.0, 1.0);
     final Rect band = const Rect.fromLTWH(0, 0, _bandWidth, _bandHeight);
-    canvas.saveLayer(
-      band.inflate(80),
-      Paint()
-        ..blendMode = BlendMode.screen
-        ..color = Color.fromRGBO(255, 255, 255, opacity.clamp(0.0, 1.0).toDouble()),
-    );
 
     // The body: a soft gradient across the band's width.
     canvas.drawRect(
       band,
       Paint()
+        ..blendMode = BlendMode.screen
         ..shader = LinearGradient(
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
-          colors: const <Color>[PosterColors.sweepBodyStart, PosterColors.sweepBodyMid, PosterColors.sweepBodyEnd],
+          colors: <Color>[
+            _scaled(PosterColors.sweepBodyStart, o),
+            _scaled(PosterColors.sweepBodyMid, o),
+            _scaled(PosterColors.sweepBodyEnd, o),
+          ],
           stops: const <double>[0.0, 0.62, 1.0],
         ).createShader(band),
     );
 
-    // The 5px bright edge at x 396, brightest at its middle.
     final Rect edge = const Rect.fromLTWH(_edgeX, 0, _edgeWidth, _bandHeight);
-    final Paint edgePaint = Paint()
-      ..shader = LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: const <Color>[PosterColors.sweepEdgeStart, PosterColors.sweepEdgeMid, PosterColors.sweepEdgeEnd],
-        stops: const <double>[0.0, 0.5, 1.0],
-      ).createShader(edge);
 
     // Its glow first, then the hard edge over it.
-    canvas.drawRect(
-      edge.inflate(6),
-      Paint()
-        ..color = PosterColors.sweepEdgeGlow
-        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 18),
+    final double glowCentre = _edgeX + _edgeWidth / 2;
+    final Rect glow = Rect.fromLTRB(
+      glowCentre - _glowHalfWidth,
+      0,
+      glowCentre + _glowHalfWidth,
+      _bandHeight,
     );
-    canvas.drawRect(edge, edgePaint);
+    final double glowAlpha = PosterColors.sweepEdgeGlow.a * o;
+    canvas.drawRect(
+      glow,
+      Paint()
+        ..blendMode = BlendMode.screen
+        ..shader = LinearGradient(
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+          colors: <Color>[
+            for (final double p in _glowProfile) PosterColors.sweepEdgeGlow.withValues(alpha: glowAlpha * p),
+          ],
+          stops: _glowStops,
+        ).createShader(glow),
+    );
 
-    canvas.restore();
+    // The 5px bright edge at x 396, brightest at its middle.
+    canvas.drawRect(
+      edge,
+      Paint()
+        ..blendMode = BlendMode.screen
+        ..shader = LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: <Color>[
+            _scaled(PosterColors.sweepEdgeStart, o),
+            _scaled(PosterColors.sweepEdgeMid, o),
+            _scaled(PosterColors.sweepEdgeEnd, o),
+          ],
+          stops: const <double>[0.0, 0.5, 1.0],
+        ).createShader(edge),
+    );
+
     canvas.restore();
   }
 

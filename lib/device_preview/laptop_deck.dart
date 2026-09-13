@@ -130,21 +130,24 @@ class LaptopDeck extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          Positioned.fill(
-            // The underside is a single solid slab, not a cross-faded face: the
-            // moment the deck tips past edge-on it snaps to fully opaque so the
-            // whole back reads as milled body, never a frosted pane with the
-            // chassis glowing through its lower half. The swap is invisible
-            // because at edge-on the deck's projected height is ~0.
-            child: Opacity(opacity: backOpacity <= 0 ? 0 : 1, child: const _BackPanel()),
-          ),
-          Opacity(
-            // Binary like the back: the keyboard face is either fully present or
-            // gone, never a half-lit pane you can see the chassis through while
-            // the deck swings open. Both faces flip at edge-on, where the deck's
-            // projected height is ~0, so the swap can't be seen.
-            opacity: frontOpacity <= 0 ? 0 : 1,
-            child: Padding(
+          // The underside is a single solid slab, not a cross-faded face: the
+          // moment the deck tips past edge-on it snaps to fully opaque so the
+          // whole back reads as milled body, never a frosted pane with the
+          // chassis glowing through its lower half. The swap is invisible
+          // because at edge-on the deck's projected height is ~0.
+          //
+          // Mounted rather than faded: an Opacity at 0 skips painting but is
+          // still laid out, and the frame grows the deck's render depth to the
+          // body's full height for the fold, so a mounted-but-invisible face
+          // was relaid out at ~4x scale on every frame of a beat where nothing
+          // of it can be seen.
+          if (backOpacity > 0) const Positioned.fill(child: _BackPanel()),
+          // Binary like the back: the keyboard face is either fully present or
+          // gone, never a half-lit pane you can see the chassis through while
+          // the deck swings open. Both faces flip at edge-on, where the deck's
+          // projected height is ~0, so the swap can't be seen.
+          if (frontOpacity > 0)
+            Padding(
               padding: const EdgeInsets.fromLTRB(40, 22, 40, 6),
               child: Container(
                 padding: const EdgeInsets.fromLTRB(20, 18, 20, 6),
@@ -197,7 +200,6 @@ class LaptopDeck extends StatelessWidget {
                 ),
               ),
             ),
-          ),
         ],
       ),
     );

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 import '../device_preview/device_config.dart';
 import '../device_preview/device_transition.dart';
-import '../poster/backdrop/ground_shadow.dart';
 import '../poster/backdrop/poster_backdrop.dart';
 import '../poster/backdrop/sweep_light.dart';
 import '../poster/callout_motion.dart' as motion;
@@ -147,9 +146,6 @@ class _WidePoster extends StatelessWidget {
           // frame the device's content opacity reaches zero.
           sweep: SweepLight(isHopping: phase == DeviceTransitionPhase.frameTransform),
         ),
-        RepaintBoundary(
-          child: GroundShadowLayer(device: slotDevice, deviceBounds: bounds),
-        ),
         _AnimatedDeviceSlot(
           bounds: bounds,
           device: device,
@@ -205,9 +201,6 @@ class _MediumPoster extends StatelessWidget {
           // Fires on the rising edge of frameTransform, which is the exact
           // frame the device's content opacity reaches zero.
           sweep: SweepLight(isHopping: phase == DeviceTransitionPhase.frameTransform),
-        ),
-        RepaintBoundary(
-          child: GroundShadowLayer(device: slotDevice, deviceBounds: bounds),
         ),
         _AnimatedDeviceSlot(
           bounds: bounds,

@@ -191,15 +191,23 @@ class _PlateDisplayBody extends StatelessWidget {
       secondaryController: secondaryController,
     );
 
-    // Boundaried against each other: the two change on completely different
-    // clocks — a key lights and unlights twice per keystroke, the plate's
-    // glyphs change once — and sharing a layer meant each flash re-rasterised
-    // the plate, and each typed character re-rasterised all 42 keys.
+    // The keypad is boundaried, the plate is NOT, and the asymmetry is the
+    // point: the two change on completely different clocks — a key lights and
+    // unlights twice per keystroke, the plate's glyphs change once — so
+    // isolating the keypad still spares the plate all 42 keys' flashes.
+    //
+    // A boundary around the plate cost sharpness. This whole page is scaled
+    // into the device glass and then carried through the frame's perspective
+    // transform; a layer that is repainting (which the plate is, on every
+    // keystroke) is rasterised at its own bounds and resampled through that
+    // transform, so the plate went soft for exactly as long as typing lasted
+    // and snapped sharp when it stopped and the layer went static. Painting
+    // the plate into its parent's layer keeps it in the vector pass.
     final body = keyboard == null
         ? inputSurface
         : Column(
             children: [
-              Expanded(child: RepaintBoundary(child: inputSurface)),
+              Expanded(child: inputSurface),
               RepaintBoundary(child: keyboard!),
             ],
           );

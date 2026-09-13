@@ -78,6 +78,7 @@ class CountryDetailScreen extends StatelessWidget {
             SliverPadding(
               padding: const EdgeInsets.symmetric(horizontal: Gap.lg),
               sliver: PlateSliverGrid(
+                stageHeight: 320,
                 itemCount: section.entries.length,
                 itemBuilder: (BuildContext context, int index) {
                   final GalleryEntry entry = section.entries[index];
@@ -86,6 +87,7 @@ class CountryDetailScreen extends StatelessWidget {
                     key: ValueKey<String>(entry.id),
                     entry: entry,
                     heroTag: tag,
+                    stageHeight: 320,
                     onTap: () => onOpenPlate(CatalogueItem(source: source, section: section, entry: entry), tag),
                   );
                 },
