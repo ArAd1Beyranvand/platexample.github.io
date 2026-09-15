@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="300">
+<desc>The flag of Bahrain: a white hoist band, a red field, and the five-pointed serration between them - one point per pillar of Islam. Official ratio 3:5, which is what PlateCountry.flagAspectRatio carries as 5 / 3. Written out as plain rect and polygon elements, with no use or xlink href: flutter_svg does not resolve those, and a flag that silently loses half its artwork at plate scale is not obviously wrong to look at.</desc>
+<rect width="500" height="300" fill="#ffffff"/>
+<rect x="180" width="320" height="300" fill="#ce1126"/>
+<polygon fill="#ce1126" points="120,0 180,30 120,60 180,90 120,120 180,150 120,180 180,210 120,240 180,270 120,300 180,300 180,0"/>
+</svg>
