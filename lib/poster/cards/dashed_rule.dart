@@ -11,26 +11,13 @@ import '../poster_scale.dart';
 /// two named constructors. All lengths are DESIGN px, scaled through
 /// [PosterMetrics].
 class DashedRule extends StatelessWidget {
-  const DashedRule({
-    super.key,
-    required this.color,
-    this.dash = 8,
-    this.gap = 8,
-    this.thickness = 2,
-    this.width,
-  });
+  const DashedRule({super.key, required this.color, this.dash = 8, this.gap = 8, this.thickness = 2, this.width});
 
   /// 8px dash, 8px gap (a 16px period), 2px high.
-  const DashedRule.thin({super.key, required this.color, this.width})
-    : dash = 8,
-      gap = 8,
-      thickness = 2;
+  const DashedRule.thin({super.key, required this.color, this.width}) : dash = 8, gap = 8, thickness = 2;
 
   /// 10px dash, 10px gap (a 20px period), 3px high.
-  const DashedRule.thick({super.key, required this.color, this.width})
-    : dash = 10,
-      gap = 10,
-      thickness = 3;
+  const DashedRule.thick({super.key, required this.color, this.width}) : dash = 10, gap = 10, thickness = 3;
 
   final Color color;
 
@@ -53,11 +40,7 @@ class DashedRule extends StatelessWidget {
       width: width == null ? double.infinity : metrics.px(width!),
       height: metrics.px(thickness),
       child: CustomPaint(
-        painter: _DashedRulePainter(
-          color: color,
-          dash: metrics.px(dash),
-          gap: metrics.px(gap),
-        ),
+        painter: _DashedRulePainter(color: color, dash: metrics.px(dash), gap: metrics.px(gap)),
       ),
     );
   }
@@ -107,10 +90,7 @@ class DashedLBorder extends StatelessWidget {
         thickness: metrics.px(thickness),
       ),
       child: Padding(
-        padding: EdgeInsets.only(
-          right: metrics.px(inset + thickness),
-          bottom: metrics.px(inset + thickness),
-        ),
+        padding: EdgeInsets.only(right: metrics.px(inset + thickness), bottom: metrics.px(inset + thickness)),
         child: child,
       ),
     );
@@ -118,12 +98,7 @@ class DashedLBorder extends StatelessWidget {
 }
 
 class _DashedLPainter extends CustomPainter {
-  const _DashedLPainter({
-    required this.color,
-    required this.dash,
-    required this.gap,
-    required this.thickness,
-  });
+  const _DashedLPainter({required this.color, required this.dash, required this.gap, required this.thickness});
 
   final Color color;
   final double dash;
@@ -133,22 +108,27 @@ class _DashedLPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     if (dash <= 0) return;
+    // Rounded caps read as a soft, friendly stitch instead of hard machined
+    // ticks.
     final Paint paint = Paint()
       ..color = color
-      ..isAntiAlias = false;
+      ..strokeWidth = thickness
+      ..strokeCap = StrokeCap.round
+      ..isAntiAlias = true;
     final double period = dash + gap;
-    final double right = size.width - thickness;
-    final double bottom = size.height - thickness;
+    final double right = size.width - thickness / 2;
+    final double bottom = size.height - thickness / 2;
+    final double half = thickness / 2;
 
     // Vertical leg, down the right edge to the corner.
-    for (double y = 0; y < size.height; y += period) {
-      final double end = math.min(y + dash, size.height);
-      canvas.drawRect(Rect.fromLTRB(right, y, size.width, end), paint);
+    for (double y = half; y < size.height; y += period) {
+      final double end = math.min(y + dash, size.height - half);
+      canvas.drawLine(Offset(right, y), Offset(right, end), paint);
     }
     // Horizontal leg, along the bottom up to the same corner.
-    for (double x = 0; x < size.width; x += period) {
-      final double end = math.min(x + dash, size.width);
-      canvas.drawRect(Rect.fromLTRB(x, bottom, end, size.height), paint);
+    for (double x = half; x < size.width; x += period) {
+      final double end = math.min(x + dash, size.width - half);
+      canvas.drawLine(Offset(x, bottom), Offset(end, bottom), paint);
     }
   }
 
@@ -162,11 +142,7 @@ class _DashedLPainter extends CustomPainter {
 }
 
 class _DashedRulePainter extends CustomPainter {
-  const _DashedRulePainter({
-    required this.color,
-    required this.dash,
-    required this.gap,
-  });
+  const _DashedRulePainter({required this.color, required this.dash, required this.gap});
 
   final Color color;
   final double dash;
@@ -175,20 +151,24 @@ class _DashedRulePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     if (dash <= 0 || size.width <= 0) return;
+    // Rounded caps soften the rule into a row of gentle pills rather than
+    // hard machined ticks.
     final Paint paint = Paint()
       ..color = color
-      ..isAntiAlias = false;
+      ..strokeWidth = size.height
+      ..strokeCap = StrokeCap.round
+      ..isAntiAlias = true;
     final double period = dash + gap;
-    for (double x = 0; x < size.width; x += period) {
-      final double end = math.min(x + dash, size.width);
-      canvas.drawRect(Rect.fromLTRB(x, 0, end, size.height), paint);
+    final double y = size.height / 2;
+    final double half = size.height / 2;
+    for (double x = half; x < size.width; x += period) {
+      final double end = math.min(x + dash, size.width - half);
+      canvas.drawLine(Offset(x, y), Offset(end, y), paint);
     }
   }
 
   @override
   bool shouldRepaint(_DashedRulePainter oldDelegate) {
-    return oldDelegate.color != color ||
-        oldDelegate.dash != dash ||
-        oldDelegate.gap != gap;
+    return oldDelegate.color != color || oldDelegate.dash != dash || oldDelegate.gap != gap;
   }
 }

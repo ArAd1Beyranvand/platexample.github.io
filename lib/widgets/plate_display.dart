@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:plate_number/plate_number.dart';
+import 'package:core_plate/core_plate.dart';
 
 import '../poster/plate_backdrop.dart';
 
@@ -11,43 +10,46 @@ class PlateDisplay extends StatelessWidget {
     required this.mode,
     this.activeColor,
     this.inactiveColor,
+    this.alertColor,
+    this.validator,
+    this.autoValidate = false,
     this.keyboard,
-    this.bloc,
-    @Deprecated('Use inputSource') this.letterInputMode,
     this.inputSource,
+    required this.onChooseCharacter,
     this.onActiveIndexChanged,
     this.controller,
     this.showBackdrop = false,
     this.plateWidthFactor = 0.62,
+    this.baseTheme,
+    this.secondarySpec,
+    this.secondaryTheme,
+    this.secondaryController,
   });
 
   final PlateSpec spec;
   final PlateMode mode;
 
-  /// Lets a host drive character entry from outside the plate (e.g. a custom
-  /// on-screen keypad). Forwarded straight to [PlateCanvas].
-  final PlateInputController? controller;
-
-  /// How the car plate letter is entered. Null lets the plate resolve the
-  /// platform default; pass [LetterInputMode.hostKeypad] when an app-supplied
-  /// pad (e.g. the laptop deck's letter keys) feeds the letter in.
-  @Deprecated('Use inputSource')
-  final LetterInputMode? letterInputMode;
+  /// The plate's characters, and the handle a host drives entry through from
+  /// outside the plate (e.g. a custom on-screen keypad). Forwarded straight to
+  /// [PlateCanvas]. Null lets the canvas own its own, keeping today's
+  /// self-contained behaviour for a caller that neither reads nor writes the
+  /// value.
+  final PlateController? controller;
 
   /// How characters get into the plate. Null lets the plate resolve the
   /// platform default; pass [PlateInputSource.host] when an app-supplied pad
-  /// (e.g. the laptop deck's letter keys or the tablet's [PlateKeypad]) feeds
+  /// (e.g. the laptop deck's letter keys or the tablet's `PlateKeypad`) feeds
   /// characters in. Forwarded straight to [PlateCanvas].
   final PlateInputSource? inputSource;
+
+  /// Presents a chooser for a `chosen`-alphabet slot. Required since the keypad
+  /// split — core ships no built-in picker. Forwarded straight to [PlateCanvas].
+  final Future<String?> Function(PlateAlphabet alphabet) onChooseCharacter;
 
   /// Fires when the focused plate slot changes, reporting its position in
   /// [spec]'s slots, or null when focus leaves the plate. Resolve it against
   /// [spec] for the slot itself. Forwarded straight to [PlateCanvas].
   final ValueChanged<int?>? onActiveIndexChanged;
-
-  /// An externally-owned bloc to drive the plate. When null, this widget
-  /// creates and owns its own, keeping today's self-contained behaviour.
-  final PlateCardBloc? bloc;
 
   /// Optional fake soft keyboard rendered flush at the bottom of the screen,
   /// below the plate. Null (default) keeps today's behaviour.
@@ -60,6 +62,18 @@ class PlateDisplay extends StatelessWidget {
   /// Accent for an empty/in-progress input-field underline.
   final Color? inactiveColor;
 
+  /// Underline colour the plate paints itself when [autoValidate] is on and
+  /// [validator] judges the typed value invalid.
+  final Color? alertColor;
+
+  /// The rule the plate is judged against. Never prevents input. Forwarded
+  /// straight to [PlateCanvas].
+  final PlateValidator? validator;
+
+  /// Whether the plate validates every committed value and paints the alert
+  /// itself. Forwarded straight to [PlateCanvas].
+  final bool autoValidate;
+
   /// Paints an ambient [PlateBackdrop] behind the plate content. Off by
   /// default, so existing call sites keep today's plain-glass look.
   final bool showBackdrop;
@@ -68,9 +82,30 @@ class PlateDisplay extends StatelessWidget {
   /// own FittedBox would otherwise fill the whole glass.
   final double plateWidthFactor;
 
+  /// The plate's printed colours, before the input-field accents below are
+  /// layered on. Null keeps the black-on-white `PlateTheme.standard()`; a
+  /// plate that ships its own (the Palestinian green-on-white) passes it here.
+  final PlateTheme? baseTheme;
+
+  /// A second plate stacked beneath [spec], rendered read-only from
+  /// [secondaryController]. Null (the default) keeps the single-plate layout.
+  ///
+  /// It is a whole second plate rather than a second value on one, because the
+  /// two plates it exists for — Yemen's 2026 unified plate and the 1993
+  /// northern one still current across the north — have different slot counts,
+  /// different registers and different colours. One `PlateSpec` cannot be both.
+  final PlateSpec? secondarySpec;
+
+  /// The printed colours of [secondarySpec].
+  final PlateTheme? secondaryTheme;
+
+  /// The controller [secondarySpec] renders from. The host owns it and writes
+  /// the mirrored value into it; nothing here types into it.
+  final PlateController? secondaryController;
+
   @override
   Widget build(BuildContext context) {
-    final child = _PlateDisplayBody(
+    return _PlateDisplayBody(
       mode: mode,
       spec: spec,
       keyboard: keyboard,
@@ -78,17 +113,17 @@ class PlateDisplay extends StatelessWidget {
       plateWidthFactor: plateWidthFactor,
       activeColor: activeColor,
       inactiveColor: inactiveColor,
-      letterInputMode: letterInputMode,
+      alertColor: alertColor,
+      validator: validator,
+      autoValidate: autoValidate,
       inputSource: inputSource,
+      onChooseCharacter: onChooseCharacter,
       onActiveIndexChanged: onActiveIndexChanged,
       controller: controller,
-    );
-    if (bloc != null) {
-      return BlocProvider.value(value: bloc!, child: child);
-    }
-    return BlocProvider(
-      create: (_) => PlateCardBloc(spec),
-      child: child,
+      baseTheme: baseTheme,
+      secondarySpec: secondarySpec,
+      secondaryTheme: secondaryTheme,
+      secondaryController: secondaryController,
     );
   }
 }
@@ -102,10 +137,17 @@ class _PlateDisplayBody extends StatelessWidget {
     required this.plateWidthFactor,
     required this.activeColor,
     required this.inactiveColor,
-    required this.letterInputMode,
+    required this.alertColor,
+    required this.validator,
+    required this.autoValidate,
     required this.inputSource,
+    required this.onChooseCharacter,
     required this.onActiveIndexChanged,
     required this.controller,
+    required this.baseTheme,
+    required this.secondarySpec,
+    required this.secondaryTheme,
+    required this.secondaryController,
   });
 
   final PlateMode mode;
@@ -115,10 +157,17 @@ class _PlateDisplayBody extends StatelessWidget {
   final double plateWidthFactor;
   final Color? activeColor;
   final Color? inactiveColor;
-  final LetterInputMode? letterInputMode;
+  final Color? alertColor;
+  final PlateValidator? validator;
+  final bool autoValidate;
   final PlateInputSource? inputSource;
+  final Future<String?> Function(PlateAlphabet alphabet) onChooseCharacter;
   final ValueChanged<int?>? onActiveIndexChanged;
-  final PlateInputController? controller;
+  final PlateController? controller;
+  final PlateTheme? baseTheme;
+  final PlateSpec? secondarySpec;
+  final PlateTheme? secondaryTheme;
+  final PlateController? secondaryController;
 
   @override
   Widget build(BuildContext context) {
@@ -129,25 +178,47 @@ class _PlateDisplayBody extends StatelessWidget {
       plateWidthFactor: plateWidthFactor,
       activeColor: activeColor,
       inactiveColor: inactiveColor,
-      letterInputMode: letterInputMode,
+      alertColor: alertColor,
+      validator: validator,
+      autoValidate: autoValidate,
       inputSource: inputSource,
+      onChooseCharacter: onChooseCharacter,
       onActiveIndexChanged: onActiveIndexChanged,
       controller: controller,
+      baseTheme: baseTheme,
+      secondarySpec: secondarySpec,
+      secondaryTheme: secondaryTheme,
+      secondaryController: secondaryController,
     );
 
+    // The keypad is boundaried, the plate is NOT, and the asymmetry is the
+    // point: the two change on completely different clocks — a key lights and
+    // unlights twice per keystroke, the plate's glyphs change once — so
+    // isolating the keypad still spares the plate all 42 keys' flashes.
+    //
+    // A boundary around the plate cost sharpness. This whole page is scaled
+    // into the device glass and then carried through the frame's perspective
+    // transform; a layer that is repainting (which the plate is, on every
+    // keystroke) is rasterised at its own bounds and resampled through that
+    // transform, so the plate went soft for exactly as long as typing lasted
+    // and snapped sharp when it stopped and the layer went static. Painting
+    // the plate into its parent's layer keeps it in the vector pass.
     final body = keyboard == null
         ? inputSurface
         : Column(
             children: [
               Expanded(child: inputSurface),
-              keyboard!,
+              RepaintBoundary(child: keyboard!),
             ],
           );
 
     if (!showBackdrop) return body;
     return Stack(
       fit: StackFit.expand,
-      children: [const Positioned.fill(child: PlateBackdrop()), body],
+      children: [
+        const Positioned.fill(child: PlateBackdrop()),
+        body,
+      ],
     );
   }
 }
@@ -160,42 +231,95 @@ class _PlateInputSurface extends StatelessWidget {
     required this.plateWidthFactor,
     required this.activeColor,
     required this.inactiveColor,
-    required this.letterInputMode,
+    required this.alertColor,
+    required this.validator,
+    required this.autoValidate,
     required this.inputSource,
+    required this.onChooseCharacter,
     required this.onActiveIndexChanged,
     required this.controller,
+    required this.baseTheme,
+    required this.secondarySpec,
+    required this.secondaryTheme,
+    required this.secondaryController,
   });
 
   final PlateSpec spec;
   final double plateWidthFactor;
   final Color? activeColor;
   final Color? inactiveColor;
-  final LetterInputMode? letterInputMode;
+  final Color? alertColor;
+  final PlateValidator? validator;
+  final bool autoValidate;
   final PlateInputSource? inputSource;
+  final Future<String?> Function(PlateAlphabet alphabet) onChooseCharacter;
   final ValueChanged<int?>? onActiveIndexChanged;
-  final PlateInputController? controller;
+  final PlateController? controller;
+  final PlateTheme? baseTheme;
+  final PlateSpec? secondarySpec;
+  final PlateTheme? secondaryTheme;
+  final PlateController? secondaryController;
 
   @override
   Widget build(BuildContext context) {
-    final base = PlateTheme.standard();
+    final base = baseTheme ?? PlateTheme.standard();
     final theme = base.copyWith(
       activeColor: activeColor ?? base.activeColor,
       inactiveColor: inactiveColor ?? base.inactiveColor,
+      alertColor: alertColor ?? base.alertColor,
     );
 
     final plate = PlateCanvas(
       spec: spec,
-      letterInputMode: letterInputMode,
+      validator: validator,
+      autoValidate: autoValidate,
       inputSource: inputSource,
+      onChooseCharacter: onChooseCharacter,
       onActiveIndexChanged: onActiveIndexChanged,
       controller: controller,
     );
 
+    final secondary = secondarySpec;
+    final secondaryValue = secondaryController;
+
     return Center(
       child: FractionallySizedBox(
         widthFactor: plateWidthFactor,
-        child: PlateThemeScope(theme: theme, child: plate),
+        child: secondary == null || secondaryValue == null
+            ? PlateThemeScope(theme: theme, child: plate)
+            : Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  PlateThemeScope(theme: theme, child: plate),
+                  // Roughly a tenth of a plate's height, so the pair reads as
+                  // two plates rather than one tall object.
+                  const SizedBox(height: 18),
+                  // Read-only, and a [PlateView] rather than a `ShowPlate`
+                  // because it takes a [PlateTheme]: for the northern Yemeni
+                  // plate the colour is the vehicle class, so the standard
+                  // black-on-white would be the wrong plate. It renders blank
+                  // until the mirror writes into it, which is what the stacked
+                  // pair should look like before the first keystroke.
+                  _SecondaryPlate(theme: secondaryTheme ?? PlateTheme.standard(), controller: secondaryValue),
+                ],
+              ),
       ),
     );
   }
+}
+
+/// The read-only plate stacked under the one being typed into.
+class _SecondaryPlate extends StatelessWidget {
+  const _SecondaryPlate({required this.theme, required this.controller});
+
+  final PlateTheme theme;
+
+  /// The host's mirrored value. Nothing here types into it.
+  final PlateController controller;
+
+  @override
+  Widget build(BuildContext context) => PlateThemeScope(
+    theme: theme,
+    child: PlateView(controller: controller, theme: theme),
+  );
 }

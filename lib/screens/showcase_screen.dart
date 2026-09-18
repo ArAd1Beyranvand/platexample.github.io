@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 import '../device_preview/device_config.dart';
 import '../device_preview/device_transition.dart';
-import '../poster/backdrop/ground_shadow.dart';
 import '../poster/backdrop/poster_backdrop.dart';
 import '../poster/backdrop/sweep_light.dart';
 import '../poster/callout_motion.dart' as motion;
@@ -47,8 +46,7 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
     if (!mounted) return;
     setState(() {
       _phase = phase;
-      if (phase == DeviceTransitionPhase.frameTransform ||
-          phase == DeviceTransitionPhase.idle) {
+      if (phase == DeviceTransitionPhase.frameTransform || phase == DeviceTransitionPhase.idle) {
         _slotDevice = _device;
       }
     });
@@ -146,11 +144,8 @@ class _WidePoster extends StatelessWidget {
         PosterBackdrop(
           // Fires on the rising edge of frameTransform, which is the exact
           // frame the device's content opacity reaches zero.
-          sweep: SweepLight(
-            isHopping: phase == DeviceTransitionPhase.frameTransform,
-          ),
+          sweep: SweepLight(isHopping: phase == DeviceTransitionPhase.frameTransform),
         ),
-        RepaintBoundary(child: GroundShadowLayer(device: device)),
         _AnimatedDeviceSlot(
           bounds: bounds,
           device: device,
@@ -162,7 +157,9 @@ class _WidePoster extends StatelessWidget {
             child: _CalloutLayer(device: device, layout: _CalloutLayout.wide),
           ),
         ),
-        Positioned.fill(child: RepaintBoundary(child: _WideChrome(device: device))),
+        Positioned.fill(
+          child: RepaintBoundary(child: _WideChrome(device: device)),
+        ),
       ],
     );
   }
@@ -192,16 +189,8 @@ class _MediumPoster extends StatelessWidget {
     final areaHeight = math.max(1.0, metrics.size.height - topBand - bottomBar);
     final railWidth = math.max(220.0, metrics.size.width * 0.29);
     final railGap = 16.0;
-    final centerWidth = math.max(
-      1.0,
-      metrics.size.width - railWidth * 2 - railGap * 2,
-    );
-    final stageArea = Rect.fromLTWH(
-      railWidth + railGap,
-      areaTop,
-      centerWidth,
-      areaHeight,
-    );
+    final centerWidth = math.max(1.0, metrics.size.width - railWidth * 2 - railGap * 2);
+    final stageArea = Rect.fromLTWH(railWidth + railGap, areaTop, centerWidth, areaHeight);
     final bounds = _mediumDeviceBounds(stageArea, slotDevice);
 
     return Stack(
@@ -211,11 +200,8 @@ class _MediumPoster extends StatelessWidget {
         PosterBackdrop(
           // Fires on the rising edge of frameTransform, which is the exact
           // frame the device's content opacity reaches zero.
-          sweep: SweepLight(
-            isHopping: phase == DeviceTransitionPhase.frameTransform,
-          ),
+          sweep: SweepLight(isHopping: phase == DeviceTransitionPhase.frameTransform),
         ),
-        RepaintBoundary(child: GroundShadowLayer(device: device)),
         _AnimatedDeviceSlot(
           bounds: bounds,
           device: device,
@@ -228,11 +214,7 @@ class _MediumPoster extends StatelessWidget {
           width: railWidth,
           height: areaHeight,
           child: RepaintBoundary(
-            child: _CalloutLayer(
-              device: device,
-              layout: _CalloutLayout.medium,
-              side: callouts.CalloutSide.left,
-            ),
+            child: _CalloutLayer(device: device, layout: _CalloutLayout.medium, side: callouts.CalloutSide.left),
           ),
         ),
         Positioned(
@@ -241,20 +223,12 @@ class _MediumPoster extends StatelessWidget {
           width: railWidth,
           height: areaHeight,
           child: RepaintBoundary(
-            child: _CalloutLayer(
-              device: device,
-              layout: _CalloutLayout.medium,
-              side: callouts.CalloutSide.right,
-            ),
+            child: _CalloutLayer(device: device, layout: _CalloutLayout.medium, side: callouts.CalloutSide.right),
           ),
         ),
         Positioned.fill(
           child: RepaintBoundary(
-            child: _MediumChrome(
-              device: device,
-              topBand: topBand,
-              bottomBar: bottomBar,
-            ),
+            child: _MediumChrome(device: device, topBand: topBand, bottomBar: bottomBar),
           ),
         ),
       ],
@@ -277,45 +251,40 @@ class _CompactPoster extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: PosterColors.stageBlack,
-        gradient: RadialGradient(
-          center: Alignment(0.55, -0.15),
-          radius: 1.2,
-          colors: <Color>[
-            PosterColors.groundRadialCore,
-            PosterColors.stageBlack,
-          ],
-        ),
-      ),
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(16, 20, 16, 28),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            const PosterMasthead(),
-            const SizedBox(height: 18),
-            const _CompactWordmark(),
-            const SizedBox(height: 20),
-            AspectRatio(
-              aspectRatio: 832 / 486,
-              child: RepaintBoundary(
-                child: DeviceStage(
-                  onFrameDeviceChanged: onFrameDeviceChanged,
-                  onPhaseChanged: onPhaseChanged,
+    return Stack(
+      fit: StackFit.expand,
+      children: <Widget>[
+        PosterBackdrop(sweep: SweepLight(isHopping: phase == DeviceTransitionPhase.frameTransform)),
+        GestureDetector(
+          onHorizontalDragUpdate: (_) {},
+          onVerticalDragUpdate: (_) {},
+          onScaleUpdate: (_) {},
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 20, 16, 28),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const PosterMasthead(),
+                const SizedBox(height: 18),
+                const _CompactWordmark(),
+                const SizedBox(height: 20),
+                AspectRatio(
+                  aspectRatio: 832 / 486,
+                  child: RepaintBoundary(
+                    child: DeviceStage(onFrameDeviceChanged: onFrameDeviceChanged, onPhaseChanged: onPhaseChanged),
+                  ),
                 ),
-              ),
+                const SizedBox(height: 24),
+                _CompactCallouts(device: device),
+                const SizedBox(height: 28),
+                const _CompactLinks(),
+                const SizedBox(height: 16),
+                const _CompactMeta(),
+              ],
             ),
-            const SizedBox(height: 24),
-            _CompactCallouts(device: device),
-            const SizedBox(height: 28),
-            const _CompactLinks(),
-            const SizedBox(height: 16),
-            const _CompactMeta(),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }
@@ -342,10 +311,7 @@ class _AnimatedDeviceSlot extends StatelessWidget {
       top: bounds.top,
       width: bounds.width,
       height: bounds.height,
-      child: DeviceStage(
-        onFrameDeviceChanged: onFrameDeviceChanged,
-        onPhaseChanged: onPhaseChanged,
-      ),
+      child: DeviceStage(onFrameDeviceChanged: onFrameDeviceChanged, onPhaseChanged: onPhaseChanged),
     );
   }
 }
@@ -362,11 +328,7 @@ class _WideChrome extends StatelessWidget {
 }
 
 class _MediumChrome extends StatelessWidget {
-  const _MediumChrome({
-    required this.device,
-    required this.topBand,
-    required this.bottomBar,
-  });
+  const _MediumChrome({required this.device, required this.topBand, required this.bottomBar});
 
   final DeviceType device;
   final double topBand;
@@ -375,10 +337,7 @@ class _MediumChrome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final metrics = PosterMetrics.of(context);
-    final double wordmarkWidth = math.min(
-      metrics.size.width * 0.48,
-      metrics.px(760),
-    );
+    final double wordmarkWidth = math.min(metrics.size.width * 0.48, metrics.px(760));
 
     return Stack(
       clipBehavior: Clip.none,
@@ -389,23 +348,11 @@ class _MediumChrome extends StatelessWidget {
           top: 54,
           width: wordmarkWidth,
           height: math.max(1.0, topBand - 58),
-          child: const FittedBox(
-            alignment: Alignment.topLeft,
-            fit: BoxFit.contain,
-            child: PosterWordmark(),
-          ),
+          child: const FittedBox(alignment: Alignment.topLeft, fit: BoxFit.contain, child: PosterWordmark()),
         ),
-        Positioned(
-          left: 16,
-          bottom: bottomBar - 2,
-          child: const _ScaledLinks(),
-        ),
+        Positioned(left: 16, bottom: bottomBar - 2, child: const _ScaledLinks()),
         Positioned(left: 16, bottom: 10, child: const _ScaledMeta()),
-        Positioned(
-          right: 66,
-          bottom: 8,
-          child: const InspectionStamp(),
-        ),
+        Positioned(right: 66, bottom: 8, child: const InspectionStamp()),
       ],
     );
   }
@@ -418,11 +365,7 @@ class _CompactWordmark extends StatelessWidget {
   Widget build(BuildContext context) {
     return const SizedBox(
       width: double.infinity,
-      child: FittedBox(
-        alignment: Alignment.topLeft,
-        fit: BoxFit.scaleDown,
-        child: PosterWordmark(),
-      ),
+      child: FittedBox(alignment: Alignment.topLeft, fit: BoxFit.scaleDown, child: PosterWordmark()),
     );
   }
 }
@@ -434,11 +377,7 @@ class _CompactLinks extends StatelessWidget {
   Widget build(BuildContext context) {
     return const SizedBox(
       width: double.infinity,
-      child: FittedBox(
-        alignment: Alignment.centerLeft,
-        fit: BoxFit.scaleDown,
-        child: PosterLinks(),
-      ),
+      child: FittedBox(alignment: Alignment.centerLeft, fit: BoxFit.scaleDown, child: PosterLinks()),
     );
   }
 }
@@ -450,11 +389,7 @@ class _CompactMeta extends StatelessWidget {
   Widget build(BuildContext context) {
     return const SizedBox(
       width: double.infinity,
-      child: FittedBox(
-        alignment: Alignment.centerLeft,
-        fit: BoxFit.scaleDown,
-        child: PosterMeta(),
-      ),
+      child: FittedBox(alignment: Alignment.centerLeft, fit: BoxFit.scaleDown, child: PosterMeta()),
     );
   }
 }
@@ -466,11 +401,7 @@ class _ScaledLinks extends StatelessWidget {
   Widget build(BuildContext context) {
     return const SizedBox(
       width: 260,
-      child: FittedBox(
-        alignment: Alignment.centerLeft,
-        fit: BoxFit.scaleDown,
-        child: PosterLinks(),
-      ),
+      child: FittedBox(alignment: Alignment.centerLeft, fit: BoxFit.scaleDown, child: PosterLinks()),
     );
   }
 }
@@ -482,11 +413,7 @@ class _ScaledMeta extends StatelessWidget {
   Widget build(BuildContext context) {
     return const SizedBox(
       width: 230,
-      child: FittedBox(
-        alignment: Alignment.centerLeft,
-        fit: BoxFit.scaleDown,
-        child: PosterMeta(),
-      ),
+      child: FittedBox(alignment: Alignment.centerLeft, fit: BoxFit.scaleDown, child: PosterMeta()),
     );
   }
 }
@@ -506,33 +433,17 @@ class _CalloutLayer extends StatelessWidget {
       return Stack(
         clipBehavior: Clip.none,
         children: <Widget>[
-          _CalloutSideLayer(
-            device: device,
-            layout: layout,
-            side: callouts.CalloutSide.left,
-          ),
-          _CalloutSideLayer(
-            device: device,
-            layout: layout,
-            side: callouts.CalloutSide.right,
-          ),
+          _CalloutSideLayer(device: device, layout: layout, side: callouts.CalloutSide.left),
+          _CalloutSideLayer(device: device, layout: layout, side: callouts.CalloutSide.right),
         ],
       );
     }
-    return _CalloutSideLayer(
-      device: device,
-      layout: layout,
-      side: side ?? callouts.CalloutSide.left,
-    );
+    return _CalloutSideLayer(device: device, layout: layout, side: side ?? callouts.CalloutSide.left);
   }
 }
 
 class _CalloutSideLayer extends StatefulWidget {
-  const _CalloutSideLayer({
-    required this.device,
-    required this.layout,
-    required this.side,
-  });
+  const _CalloutSideLayer({required this.device, required this.layout, required this.side});
 
   final DeviceType device;
   final _CalloutLayout layout;
@@ -542,12 +453,15 @@ class _CalloutSideLayer extends StatefulWidget {
   State<_CalloutSideLayer> createState() => _CalloutSideLayerState();
 }
 
-class _CalloutSideLayerState extends State<_CalloutSideLayer>
-    with SingleTickerProviderStateMixin {
+class _CalloutSideLayerState extends State<_CalloutSideLayer> with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<double> _exit;
   late final Animation<double> _entry;
   DeviceType? _outgoing;
+
+  /// Counts hops, so the tiles motif reseeds its per-tile speeds each time
+  /// instead of taking the card apart in the same order every lap.
+  int _hop = 0;
 
   @override
   void initState() {
@@ -559,14 +473,8 @@ class _CalloutSideLayerState extends State<_CalloutSideLayer>
       // sentence out of.
       duration: _kCalloutSwap,
     );
-    _exit = CurvedAnimation(
-      parent: _controller,
-      curve: const Interval(0, 0.46),
-    );
-    _entry = CurvedAnimation(
-      parent: _controller,
-      curve: const Interval(0.54, 1),
-    );
+    _exit = CurvedAnimation(parent: _controller, curve: const Interval(0, 0.46));
+    _entry = CurvedAnimation(parent: _controller, curve: const Interval(0.54, 1));
   }
 
   @override
@@ -574,6 +482,7 @@ class _CalloutSideLayerState extends State<_CalloutSideLayer>
     super.didUpdateWidget(oldWidget);
     if (oldWidget.device != widget.device) {
       _outgoing = oldWidget.device;
+      _hop++;
       _controller.forward(from: 0);
     }
   }
@@ -589,56 +498,36 @@ class _CalloutSideLayerState extends State<_CalloutSideLayer>
     return AnimatedBuilder(
       animation: _controller,
       builder: (context, _) {
-        final settled =
-            _outgoing == null ||
-            _controller.status == AnimationStatus.completed;
+        final settled = _outgoing == null || _controller.status == AnimationStatus.completed;
         if (settled) {
           return _buildCalloutSet(context, widget.device);
         }
 
         final bool showingOutgoing = _controller.value < 0.5;
-        final DeviceType shownDevice = showingOutgoing
-            ? _outgoing!
-            : widget.device;
+        final DeviceType shownDevice = showingOutgoing ? _outgoing! : widget.device;
         final Animation<double> transition = showingOutgoing ? _exit : _entry;
-        final motion.CalloutMotif motif = _motifFor(shownDevice);
-
-        return motion.CalloutTransition(
-          motif: motif,
+        // Every hop dissolves: the callouts do not travel between sets, they
+        // come apart where they stand and the next set assembles in place.
+        return motion.TileTransition(
           animation: transition,
           entering: !showingOutgoing,
-          side: _motionSide(widget.side),
-          child: _buildCalloutSet(
-            context,
-            shownDevice,
-          ),
+          seed: _hop,
+          child: _buildCalloutSet(context, shownDevice),
         );
       },
     );
   }
 
-  Widget _buildCalloutSet(
-    BuildContext context,
-    DeviceType device,
-  ) {
+  Widget _buildCalloutSet(BuildContext context, DeviceType device) {
     final set = callouts.calloutSets[_calloutDevice(device)]!;
-    final specs = set.where(
-      (spec) =>
-          _visibleIndexes(widget.layout).contains(spec.index) &&
-          spec.side == widget.side,
-    );
+    final specs = set.where((spec) => _visibleIndexes(widget.layout).contains(spec.index) && spec.side == widget.side);
     if (widget.layout == _CalloutLayout.wide) {
       return Stack(
         clipBehavior: Clip.none,
-        children: <Widget>[
-          for (final spec in specs)
-            _WideCalloutItem(spec: spec),
-        ],
+        children: <Widget>[for (final spec in specs) _WideCalloutItem(spec: spec)],
       );
     }
-    return _MediumCalloutSet(
-      specs: specs.toList(growable: false),
-    );
+    return _MediumCalloutSet(specs: specs.toList(growable: false));
   }
 
   List<int> _visibleIndexes(_CalloutLayout layout) {
@@ -668,9 +557,7 @@ class _WideCalloutItem extends StatelessWidget {
       top: spec.anchorFy * metrics.size.height,
       child: Stack(
         clipBehavior: Clip.none,
-        children: <Widget>[
-          CalloutCard(spec: spec),
-        ],
+        children: <Widget>[CalloutCard(spec: spec)],
       ),
     );
   }
@@ -690,17 +577,11 @@ class _MediumCalloutSet extends StatelessWidget {
         for (final spec in specs)
           Expanded(
             child: Align(
-              alignment: spec.side == callouts.CalloutSide.left
-                  ? Alignment.centerRight
-                  : Alignment.centerLeft,
+              alignment: spec.side == callouts.CalloutSide.left ? Alignment.centerRight : Alignment.centerLeft,
               child: FittedBox(
-                alignment: spec.side == callouts.CalloutSide.left
-                    ? Alignment.centerRight
-                    : Alignment.centerLeft,
+                alignment: spec.side == callouts.CalloutSide.left ? Alignment.centerRight : Alignment.centerLeft,
                 fit: BoxFit.scaleDown,
-                child: _MediumCalloutItem(
-                  spec: spec,
-                ),
+                child: _MediumCalloutItem(spec: spec),
               ),
             ),
           ),
@@ -718,9 +599,7 @@ class _MediumCalloutItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       clipBehavior: Clip.none,
-      children: <Widget>[
-        CalloutCard(spec: spec),
-      ],
+      children: <Widget>[CalloutCard(spec: spec)],
     );
   }
 }
@@ -732,48 +611,66 @@ class _MediumCalloutItem extends StatelessWidget {
 /// share it.
 final Duration _kCalloutSwap = const DeviceTransitionDurations().total;
 
-class _CompactCallouts extends StatelessWidget {
+class _CompactCallouts extends StatefulWidget {
   const _CompactCallouts({required this.device});
 
   final DeviceType device;
 
   @override
+  State<_CompactCallouts> createState() => _CompactCalloutsState();
+}
+
+class _CompactCalloutsState extends State<_CompactCallouts> with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final Animation<double> _exit;
+  late final Animation<double> _entry;
+  DeviceType? _outgoing;
+  int _hop = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(vsync: this, duration: _kCalloutSwap);
+    _exit = CurvedAnimation(parent: _controller, curve: const Interval(0, 0.46));
+    _entry = CurvedAnimation(parent: _controller, curve: const Interval(0.54, 1));
+  }
+
+  @override
+  void didUpdateWidget(covariant _CompactCallouts oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.device != widget.device) {
+      _outgoing = oldWidget.device;
+      _hop++;
+      _controller.forward(from: 0);
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return AnimatedSwitcher(
-      // Deliberately not the frame morph's duration: the callouts are prose and
-      // need to stay readable on the way out, so they cross-fade on their own,
-      // slower clock while the shell reshapes underneath them.
-      duration: _kCalloutSwap,
-      switchInCurve: Curves.easeOutCubic,
-      switchOutCurve: Curves.easeInCubic,
-      layoutBuilder: (currentChild, previousChildren) {
-        return Stack(
-          alignment: Alignment.topCenter,
-          children: <Widget>[
-            ...previousChildren,
-            if (currentChild != null) currentChild,
-          ],
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, _) {
+        final settled = _outgoing == null || _controller.status == AnimationStatus.completed;
+        if (settled) {
+          return _CompactCalloutSet(key: ValueKey<DeviceType>(widget.device), device: widget.device);
+        }
+
+        final bool showingOutgoing = _controller.value < 0.5;
+        final DeviceType shownDevice = showingOutgoing ? _outgoing! : widget.device;
+        final Animation<double> transition = showingOutgoing ? _exit : _entry;
+        return motion.TileTransition(
+          animation: transition,
+          entering: !showingOutgoing,
+          seed: _hop,
+          child: _CompactCalloutSet(key: ValueKey<DeviceType>(shownDevice), device: shownDevice),
         );
       },
-      transitionBuilder: (child, animation) {
-        return AnimatedBuilder(
-          animation: animation,
-          child: child,
-          builder: (context, child) {
-            return Opacity(
-              opacity: animation.value,
-              child: Transform.translate(
-                offset: Offset(0, 24 * (1 - animation.value)),
-                child: child,
-              ),
-            );
-          },
-        );
-      },
-      child: _CompactCalloutSet(
-        key: ValueKey<DeviceType>(device),
-        device: device,
-      ),
     );
   }
 }
@@ -787,40 +684,36 @@ class _CompactCalloutSet extends StatelessWidget {
   Widget build(BuildContext context) {
     final metrics = PosterMetrics.of(context);
     final specs = callouts.calloutSets[_calloutDevice(device)]!;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        for (int index = 0; index < specs.length; index++) ...<Widget>[
-          if (index > 0) const SizedBox(height: 18),
-          _CompactCalloutRow(spec: specs[index], metrics: metrics),
-        ],
-      ],
-    );
-  }
-}
-
-class _CompactCalloutRow extends StatelessWidget {
-  const _CompactCalloutRow({required this.spec, required this.metrics});
-
-  final callouts.CalloutSpec spec;
-  final PosterMetrics metrics;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Expanded(
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              return CalloutCard(
-                spec: spec,
-                widthDesignPx: constraints.maxWidth / metrics.f,
-              );
-            },
-          ),
-        ),
-      ],
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final scale = metrics.f;
+        final fullPx = constraints.maxWidth / scale;
+        final halfPx = (constraints.maxWidth - 12) / 2 / scale;
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            CalloutCard(spec: specs[0], widthDesignPx: fullPx),
+            const SizedBox(height: 18),
+            if (specs.length > 1)
+              IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Expanded(
+                      child: CalloutCard(spec: specs[1], widthDesignPx: halfPx),
+                    ),
+                    if (specs.length > 2) ...[
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: CalloutCard(spec: specs[2], widthDesignPx: halfPx),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+          ],
+        );
+      },
     );
   }
 }
@@ -851,11 +744,7 @@ Rect _mediumDeviceBounds(Rect stageArea, DeviceType device) {
   );
 }
 
-double _wideCalloutLeft(
-  Size size,
-  callouts.CalloutSpec spec,
-  double cardWidth,
-) {
+double _wideCalloutLeft(Size size, callouts.CalloutSpec spec, double cardWidth) {
   final desired = spec.anchorFx * size.width;
   final chipOverflow = size.width / 1920 * 28;
   final minimum = chipOverflow;
@@ -868,20 +757,6 @@ _DeviceGeometry _geometryFor(DeviceType device) {
     DeviceType.desktop => const _DeviceGeometry(0.527, 0.243, 0.433, 0.450),
     DeviceType.mobile => const _DeviceGeometry(0.677, 0.191, 0.190, 0.646),
     DeviceType.tablet => const _DeviceGeometry(0.523, 0.231, 0.454, 0.556),
-  };
-}
-
-motion.CalloutSide _motionSide(callouts.CalloutSide side) {
-  return side == callouts.CalloutSide.left
-      ? motion.CalloutSide.left
-      : motion.CalloutSide.right;
-}
-
-motion.CalloutMotif _motifFor(DeviceType device) {
-  return switch (device) {
-    DeviceType.desktop => motion.CalloutMotif.sweep,
-    DeviceType.mobile => motion.CalloutMotif.trapdoor,
-    DeviceType.tablet => motion.CalloutMotif.siphon,
   };
 }
 

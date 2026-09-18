@@ -39,7 +39,12 @@ class PixelDissolve extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (progress >= 0.999) return child;
+    // Boundaried even when the dissolve is a no-op. The deck spends the whole
+    // unfold beat inside a per-frame perspective Transform, and without a
+    // boundary here every one of those frames re-records the deck's paint —
+    // 41 keycaps, three box shadows each, the well's clip and its own drop
+    // shadow — to change nothing but the matrix above it.
+    if (progress >= 0.999) return RepaintBoundary(child: child);
     return Stack(
       clipBehavior: Clip.none,
       children: [
@@ -52,12 +57,7 @@ class PixelDissolve extends StatelessWidget {
           child: IgnorePointer(
             child: RepaintBoundary(
               child: CustomPaint(
-                painter: _DissolvePainter(
-                  progress: progress,
-                  seed: seed,
-                  cover: coverColor,
-                  blockSize: blockSize,
-                ),
+                painter: _DissolvePainter(progress: progress, seed: seed, cover: coverColor, blockSize: blockSize),
                 child: const SizedBox.expand(),
               ),
             ),
@@ -69,12 +69,7 @@ class PixelDissolve extends StatelessWidget {
 }
 
 class _DissolvePainter extends CustomPainter {
-  const _DissolvePainter({
-    required this.progress,
-    required this.seed,
-    required this.cover,
-    required this.blockSize,
-  });
+  const _DissolvePainter({required this.progress, required this.seed, required this.cover, required this.blockSize});
 
   final double progress;
   final int seed;
@@ -109,23 +104,19 @@ class _DissolvePainter extends CustomPainter {
         // progress 1 every block is fully present and at progress 0 every block
         // has fully faded — the dissolve is complete exactly when progress
         // hits 0, with nothing left mid-fade for the resize to start over.
-        final threshold =
-            _fadeBand + _rand(c * 92821 + r * 68917) * (1 - _fadeBand);
+        final threshold = _fadeBand + _rand(c * 92821 + r * 68917) * (1 - _fadeBand);
         // A small per-frame wobble so the fading wavefront fizzes instead of
         // marching cleanly.
-        final wobble =
-            (_rand(c * 40503 + r * 51787 + seed * 15485863) - 0.5) * 0.05;
+        final wobble = (_rand(c * 40503 + r * 51787 + seed * 15485863) - 0.5) * 0.05;
         final t = threshold + wobble;
         // Block is fully present while progress >= t, fully gone once progress
         // drops to t - _fadeBand, its opacity animating across that window.
-        final coverAlpha =
-            1 - ((progress - (t - _fadeBand)) / _fadeBand).clamp(0.0, 1.0);
+        final coverAlpha = 1 - ((progress - (t - _fadeBand)) / _fadeBand).clamp(0.0, 1.0);
         if (coverAlpha <= 0.001) continue;
         final bucket = (coverAlpha.clamp(0.0, 1.0) * _buckets).round();
         if (bucket <= 0) continue;
         // +1 to close the seams between neighbouring blocks.
-        (bucketPaths[bucket] ??= Path())
-            .addRect(Rect.fromLTWH(c * bw, r * bh, bw + 1, bh + 1));
+        (bucketPaths[bucket] ??= Path()).addRect(Rect.fromLTWH(c * bw, r * bh, bw + 1, bh + 1));
       }
     }
 
@@ -147,6 +138,5 @@ class _DissolvePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(_DissolvePainter old) =>
-      old.progress != progress || old.seed != seed || old.cover != cover;
+  bool shouldRepaint(_DissolvePainter old) => old.progress != progress || old.seed != seed || old.cover != cover;
 }

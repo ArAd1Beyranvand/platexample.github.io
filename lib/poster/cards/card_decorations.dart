@@ -13,13 +13,7 @@ import '../poster_tokens.dart';
 /// bottom 22`, with `inset 0 0 0 2px rgba(0,8,26,.55)` and a
 /// `0 0 0 1px rgba(226,238,255,.30)` outline.
 class IrFlagStrip extends StatelessWidget {
-  const IrFlagStrip({
-    super.key,
-    this.width = 26,
-    this.muted = false,
-    this.opacity = 1,
-    this.innerRing = true,
-  });
+  const IrFlagStrip({super.key, this.width = 26, this.muted = false, this.opacity = 1, this.innerRing = true});
 
   /// Strip width in DESIGN px.
   final double width;
@@ -36,34 +30,31 @@ class IrFlagStrip extends StatelessWidget {
   Widget build(BuildContext context) {
     final PosterMetrics metrics = PosterMetrics.of(context);
     final List<Color> bands = muted
-        ? const <Color>[
-            PosterColors.flagMutedGreen,
-            PosterColors.flagMutedWhite,
-            PosterColors.flagMutedRed,
-          ]
-        : const <Color>[
-            PosterColors.flagBrightGreen,
-            PosterColors.flagBrightWhite,
-            PosterColors.flagBrightRed,
-          ];
+        ? const <Color>[PosterColors.flagMutedGreen, PosterColors.flagMutedWhite, PosterColors.flagMutedRed]
+        : const <Color>[PosterColors.flagBrightGreen, PosterColors.flagBrightWhite, PosterColors.flagBrightRed];
 
-    Widget strip = SizedBox(
-      width: metrics.px(width),
-      child: Column(
-        children: <Widget>[
-          for (final Color band in bands)
-            Expanded(child: ColoredBox(color: band)),
-        ],
+    final BorderRadius radius = BorderRadius.circular(metrics.px(width * 0.32));
+
+    Widget strip = ClipRRect(
+      borderRadius: radius,
+      child: SizedBox(
+        width: metrics.px(width),
+        child: Column(
+          children: <Widget>[for (final Color band in bands) Expanded(child: ColoredBox(color: band))],
+        ),
       ),
     );
 
     if (innerRing) {
-      strip = CustomPaint(
-        foregroundPainter: _FlagRingPainter(
-          inner: const Color(0x8C00081A), // rgba(0,8,26,.55)
-          innerWidth: metrics.px(2),
-          outline: const Color(0x4DE2EEFF), // rgba(226,238,255,.30)
-          outlineWidth: metrics.px(1),
+      // A single soft outline instead of the hard inset ring + outline pair —
+      // reads as a gently rounded pill rather than a machined edge.
+      strip = DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: radius,
+          border: Border.all(
+            color: const Color(0x33E2EEFF), // rgba(226,238,255,.20)
+            width: metrics.px(1.25),
+          ),
         ),
         child: strip,
       );
@@ -71,47 +62,6 @@ class IrFlagStrip extends StatelessWidget {
 
     if (opacity >= 1) return strip;
     return Opacity(opacity: opacity, child: strip);
-  }
-}
-
-class _FlagRingPainter extends CustomPainter {
-  const _FlagRingPainter({
-    required this.inner,
-    required this.innerWidth,
-    required this.outline,
-    required this.outlineWidth,
-  });
-
-  final Color inner;
-  final double innerWidth;
-  final Color outline;
-  final double outlineWidth;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final Rect rect = Offset.zero & size;
-    canvas.drawRect(
-      rect.deflate(innerWidth / 2),
-      Paint()
-        ..color = inner
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = innerWidth,
-    );
-    canvas.drawRect(
-      rect.inflate(outlineWidth / 2),
-      Paint()
-        ..color = outline
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = outlineWidth,
-    );
-  }
-
-  @override
-  bool shouldRepaint(_FlagRingPainter oldDelegate) {
-    return oldDelegate.inner != inner ||
-        oldDelegate.innerWidth != innerWidth ||
-        oldDelegate.outline != outline ||
-        oldDelegate.outlineWidth != outlineWidth;
   }
 }
 
@@ -124,17 +74,13 @@ class FadedFlagStrip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IrFlagStrip(
-      width: width,
-      muted: true,
-      opacity: 0.8,
-      innerRing: false,
-    );
+    return IrFlagStrip(width: width, muted: true, opacity: 0.8, innerRing: false);
   }
 }
 
-/// Card 05 — the two-tone divider bar: 6px total, 3px dark
-/// `rgba(0,8,26,.6)` over 3px light `rgba(226,238,255,.46)`.
+/// Card 05 — the divider between title and body. Softened from a hard
+/// two-tone bar into a single rounded rule that fades at both ends, the way
+/// a modern UI card separates a header from its content.
 class TwoToneDivider extends StatelessWidget {
   const TwoToneDivider({
     super.key,
@@ -147,21 +93,27 @@ class TwoToneDivider extends StatelessWidget {
   /// Length in DESIGN px. Null stretches to the parent.
   final double? width;
   final double bandThickness;
+
+  /// Kept for API compatibility; unused by the softened rule (a single tone
+  /// reads calmer than a light/dark split).
   final Color dark;
   final Color light;
 
   @override
   Widget build(BuildContext context) {
     final PosterMetrics metrics = PosterMetrics.of(context);
-    final double band = metrics.px(bandThickness);
+    final double band = metrics.px(bandThickness * 0.7);
     return SizedBox(
       width: width == null ? double.infinity : metrics.px(width!),
-      height: band * 2,
-      child: Column(
-        children: <Widget>[
-          SizedBox(height: band, child: ColoredBox(color: dark)),
-          SizedBox(height: band, child: ColoredBox(color: light)),
-        ],
+      height: band,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(band / 2),
+          gradient: LinearGradient(
+            colors: <Color>[Colors.transparent, light.withValues(alpha: 0.55), Colors.transparent],
+            stops: const <double>[0.0, 0.5, 1.0],
+          ),
+        ),
       ),
     );
   }
@@ -188,15 +140,18 @@ class IrFlagFooter extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        SizedBox(
-          width: metrics.px(flagWidth),
-          height: metrics.px(flagHeight),
-          child: Column(
-            children: const <Widget>[
-              Expanded(child: ColoredBox(color: PosterColors.flagBrightGreen)),
-              Expanded(child: ColoredBox(color: PosterColors.flagBrightWhite)),
-              Expanded(child: ColoredBox(color: PosterColors.flagBrightRed)),
-            ],
+        ClipRRect(
+          borderRadius: BorderRadius.circular(metrics.px(5)),
+          child: SizedBox(
+            width: metrics.px(flagWidth),
+            height: metrics.px(flagHeight),
+            child: Column(
+              children: const <Widget>[
+                Expanded(child: ColoredBox(color: PosterColors.flagBrightGreen)),
+                Expanded(child: ColoredBox(color: PosterColors.flagBrightWhite)),
+                Expanded(child: ColoredBox(color: PosterColors.flagBrightRed)),
+              ],
+            ),
           ),
         ),
         SizedBox(width: metrics.px(gap)),
@@ -210,12 +165,7 @@ class IrFlagFooter extends StatelessWidget {
 /// a circle of r 11.5 about the centre of a 34-unit box) over a `D` in
 /// Martian Mono `wght 700` 15px.
 class EuBadgeColumn extends StatelessWidget {
-  const EuBadgeColumn({
-    super.key,
-    this.width = 34,
-    this.letter = 'D',
-    this.ground = PosterColors.cardBlueDe,
-  });
+  const EuBadgeColumn({super.key, this.width = 34, this.letter = 'D', this.ground = PosterColors.cardBlueDe});
 
   final double width;
   final String letter;
@@ -225,37 +175,37 @@ class EuBadgeColumn extends StatelessWidget {
   Widget build(BuildContext context) {
     final PosterMetrics metrics = PosterMetrics.of(context);
     final double side = metrics.px(width);
-    return ColoredBox(
-      color: ground,
-      child: SizedBox(
-        width: side,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            SizedBox(
-              width: side,
-              height: side,
-              child: CustomPaint(
-                painter: _EuStarsPainter(
-                  starRadius: side * (1.9 / 34),
-                  ringRadius: side * (11.5 / 34),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(metrics.px(10)),
+      child: ColoredBox(
+        color: ground,
+        child: SizedBox(
+          width: side,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              SizedBox(
+                width: side,
+                height: side,
+                child: CustomPaint(
+                  painter: _EuStarsPainter(starRadius: side * (1.9 / 34), ringRadius: side * (11.5 / 34)),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(bottom: metrics.px(6)),
-              child: Text(
-                letter,
-                style: TextStyle(
-                  fontFamily: PosterFonts.martianMono,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 15 * metrics.f,
-                  height: 1.0,
-                  color: PosterColors.inkDisplay1,
+              Padding(
+                padding: EdgeInsets.only(bottom: metrics.px(6)),
+                child: Text(
+                  letter,
+                  style: TextStyle(
+                    fontFamily: PosterFonts.martianMono,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 15 * metrics.f,
+                    height: 1.0,
+                    color: PosterColors.inkDisplay1,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -274,8 +224,7 @@ class _EuStarsPainter extends CustomPainter {
     final Paint paint = Paint()..color = PosterColors.euStar;
     for (int i = 0; i < 12; i++) {
       final double angle = -math.pi / 2 + i * (math.pi / 6);
-      final Offset at = centre +
-          Offset(math.cos(angle) * ringRadius, math.sin(angle) * ringRadius);
+      final Offset at = centre + Offset(math.cos(angle) * ringRadius, math.sin(angle) * ringRadius);
       canvas.drawPath(_star(at, starRadius), paint);
     }
   }
@@ -299,14 +248,13 @@ class _EuStarsPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_EuStarsPainter oldDelegate) {
-    return oldDelegate.starRadius != starRadius ||
-        oldDelegate.ringRadius != ringRadius;
+    return oldDelegate.starRadius != starRadius || oldDelegate.ringRadius != ringRadius;
   }
 }
 
-/// Card 09 — the red `FLARE — SERIAL FIELD` tag: ground `#F02C1E`, padding
-/// `9 14 10`, `inset 0 2px 0 rgba(230,224,244,.6)` and
-/// `inset 0 -2px 0 rgba(50,10,30,.5)`.
+/// Card 09 — the `SERIAL FIELD` flag, softened from a hard-edged banner into
+/// a small rounded pill with a gentle shadow, the way a UI would badge a
+/// validation state.
 class RedTag extends StatelessWidget {
   const RedTag({super.key, this.label = 'SERIAL FIELD'});
 
@@ -315,62 +263,28 @@ class RedTag extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final PosterMetrics metrics = PosterMetrics.of(context);
-    return CustomPaint(
-      foregroundPainter: _RedTagEdgesPainter(
-        top: const Color(0x99E6E0F4), // rgba(230,224,244,.6)
-        bottom: const Color(0x80320A1E), // rgba(50,10,30,.5)
-        thickness: metrics.px(2),
-      ),
-      child: ColoredBox(
+    return DecoratedBox(
+      decoration: BoxDecoration(
         color: PosterColors.flareRed,
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(
-            metrics.px(14),
-            metrics.px(9),
-            metrics.px(14),
-            metrics.px(10),
+        borderRadius: BorderRadius.circular(metrics.px(999)),
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: PosterColors.flareRed.withValues(alpha: 0.45),
+            blurRadius: metrics.px(12),
+            offset: Offset(0, metrics.px(4)),
           ),
-          child: Text(label, style: PosterType.redTag(metrics.f)),
-        ),
+        ],
+      ),
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(metrics.px(16), metrics.px(9), metrics.px(16), metrics.px(9)),
+        child: Text(label, style: PosterType.redTag(metrics.f)),
       ),
     );
   }
 }
 
-class _RedTagEdgesPainter extends CustomPainter {
-  const _RedTagEdgesPainter({
-    required this.top,
-    required this.bottom,
-    required this.thickness,
-  });
-
-  final Color top;
-  final Color bottom;
-  final double thickness;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final Paint paint = Paint()..isAntiAlias = false;
-    canvas.drawRect(
-      Rect.fromLTWH(0, 0, size.width, thickness),
-      paint..color = top,
-    );
-    canvas.drawRect(
-      Rect.fromLTWH(0, size.height - thickness, size.width, thickness),
-      paint..color = bottom,
-    );
-  }
-
-  @override
-  bool shouldRepaint(_RedTagEdgesPainter oldDelegate) {
-    return oldDelegate.top != top ||
-        oldDelegate.bottom != bottom ||
-        oldDelegate.thickness != thickness;
-  }
-}
-
-/// Card 10 — the `#003399` vertical strip, 8px wide, `right 16, top 16,
-/// bottom 16`.
+/// Card 10 — the `#003399` accent strip, now a rounded capsule instead of a
+/// hard-edged bar.
 class DeStrip extends StatelessWidget {
   const DeStrip({super.key, this.width = 8});
 
@@ -379,9 +293,12 @@ class DeStrip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final PosterMetrics metrics = PosterMetrics.of(context);
-    return SizedBox(
-      width: metrics.px(width),
-      child: const ColoredBox(color: PosterColors.cardBlueDe),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(metrics.px(width / 2)),
+      child: SizedBox(
+        width: metrics.px(width),
+        child: const ColoredBox(color: PosterColors.cardBlueDe),
+      ),
     );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:plate_number/model/plate_spec.dart';
+import 'package:core_plate/core_plate.dart';
 
 import '../device_preview/device_config.dart';
 import 'demo_config.dart';
@@ -13,9 +13,12 @@ class DeviceCycleController extends ChangeNotifier {
   void advance() => notifyListeners();
 }
 
-/// The [PlateSpec] a given [device] should show: mobile demos the Iranian
-/// bicycle plate, the tablet demos the German car plate, and the laptop demos
-/// the Iranian car plate.
+/// The [PlateSpec] a given [device] should show: the phone demos the Iranian
+/// bicycle plate, the tablet a legacy West Bank plate over its Gaza pair, and
+/// the laptop Yemen's 2026 unified plate over the 1993 northern one.
+///
+/// This is the *typed* spec only. A device that shows two plates carries the
+/// second as [DemoConfig.secondarySpec]; nothing here reports it.
 PlateSpec specFor(DeviceType device) => demoConfigs[device]!.spec;
 
 /// Cycles through a sequence of [DeviceType]s on demand, rebuilding [builder]
@@ -29,11 +32,7 @@ class DeviceCycle extends StatefulWidget {
     super.key,
     required this.builder,
     required this.controller,
-    this.order = const [
-      DeviceType.desktop,
-      DeviceType.mobile,
-      DeviceType.tablet,
-    ],
+    this.order = const [DeviceType.desktop, DeviceType.mobile, DeviceType.tablet],
     this.onDeviceChanged,
   });
 

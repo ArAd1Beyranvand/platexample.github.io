@@ -1,6 +1,6 @@
 name: plate_number_holder
 description: >-
-  Showcase / poster app for the plate_number package. Lives outside the
+  Showcase / poster app for the core_plate library. Lives outside the
   package repo so the library stays free of demo-only assets (fonts,
   textures, device-frame art) and demo-only dependencies.
 publish_to: 'none'
@@ -13,42 +13,100 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # Web-only, and imported only behind a `dart.library.js_interop` conditional
+  # export (lib/app/url_strategy/): it supplies `usePathUrlStrategy()`, which
+  # is what makes the tabs plain paths instead of `#` fragments.
+  flutter_web_plugins:
+    sdk: flutter
+
   # ---------------------------------------------------------------------------
   # The library under demonstration.
   #
-  # This is a PATH dependency on the sibling checkout, so editing the library
-  # and hot-reloading this app is a single loop — no publish, no `pub get`
-  # between the two. It assumes the two repos sit side by side:
+  # PATH dependencies on sibling checkouts, so editing a library and
+  # hot-reloading this app is a single loop — no publish, no `pub get` between
+  # them. The split makes the libraries siblings of each other, not a
+  # `packages/` directory inside one repo (see core_plate/docs/split/PLAN.md
+  # §0). Path-only, not published (PLAN.md §6.6). Layout:
   #
-  #   StudioProjects/
-  #     plate-number-upgrade/   <- the package (this dependency)
-  #     plate_number_holder/    <- this app
+  #   StudioProjects/plate/
+  #     core_plate/             package `core_plate`   (the engine)
+  #     plate_keypad/           package `plate_keypad`  (extracted in P7)
+  #     iran_plate/             package `iran_plate`    (extracted in P8)
+  #     palestine_plate/        package `palestine_plate`
+  #     yemen_plate/            package `yemen_plate`
+#     lebanon_plate/          package `lebanon_plate`
+  #     plate_number_holder/    this app (keeps its name — it is an app, not a package)
   #
-  # When the library is split into core_plate / iran_plate / germany_plate,
-  # this single entry is replaced by the country packages the demo actually
-  # shows, each of which pulls core_plate in transitively:
-  #
-  #   iran_plate:
-  #     path: ../plate-core/packages/iran_plate
-  #   germany_plate:
-  #     path: ../plate-core/packages/germany_plate
+  # core_plate ships no country and no assets, so this app names every country
+  # it draws. An app that draws one country depends on one.
   # ---------------------------------------------------------------------------
-  plate_number:
-    path: ../plate-core
+  core_plate: ^0.1.0
+
+  # The optional on-screen keypad + slot picker, extracted from core_plate
+  # in P7. Depends on core_plate for PlateAlphabet.
+  plate_keypad:
+    path: ../plate_keypad
+
+  # The country packages, extracted from core_plate in P8. Each owns its own
+  # plate specs, alphabets and flag/sticker assets, and depends on core_plate
+  # and nothing else — not on the keypad, and not on each other.
+  iran_plate:
+    path: ../iran_plate
+  germany_plate:
+    path: ../germany_plate
+
+  # The two countries the showcase draws a *pair* of plates for, because
+  # neither has one plate: Palestine's West Bank and Gaza designs (the tablet),
+  # and Yemen's 2026 unified and 1993 northern systems (the laptop).
+  #
+  palestine_plate:
+    path: ../palestine_plate
+  yemen_plate:
+    path: ../yemen_plate
+
+  # Gallery-only, like germany_plate. Lebanon is the inverse of the packages
+  # above — two geometries and eight liveries, where they are many geometries
+  # and few — so it earns a catalogue block and not a showcase device: the
+  # three devices are claimed, and the thing worth seeing here is nine cards
+  # sharing one spec, which is a page and not a prop.
+  lebanon_plate:
+    path: ../lebanon_plate
 
   # Used directly by the showcase to drive PlateCardBloc from the demo screen.
-  flutter_bloc: ^8.1.4
+  url_launcher: ^6.3.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.0
+  flutter_lints: ^6.0.0
+
+# Local development only: plate_keypad, iran_plate, palestine_plate,
+# yemen_plate and lebanon_plate still use path dependencies until they are published on
+# pub.dev. core_plate is now published and uses the versioned dependency above.
+dependency_overrides:
+  # Local development only: this stage's PlateController/PlateView API is not
+  # published yet, so core_plate resolves to the sibling checkout.
+  core_plate:
+    path: ../core_plate
+  plate_keypad:
+    path: ../plate_keypad
+  iran_plate:
+    path: ../iran_plate
+  germany_plate:
+    path: ../germany_plate
+  palestine_plate:
+    path: ../palestine_plate
+  yemen_plate:
+    path: ../yemen_plate
+  lebanon_plate:
+    path: ../lebanon_plate
 
 flutter:
   uses-material-design: true
 
-  # Poster-only artwork. These belong to the demo, not to the library — the
-  # library ships only the assets a real plate needs (flag SVG, EU stickers).
+  # Poster-only artwork. These belong to the demo, not to the library — core
+  # ships no assets at all since P8, and the assets a real plate needs (flag
+  # SVGs, stickers) ship in the country package that needs them.
   assets:
     - assets/textures/bg_grain_a.png
     - assets/textures/bg_grain_b.png
@@ -79,3 +137,4 @@ flutter:
         - asset: assets/fonts/Vazirmatn-arabic.ttf
         - asset: assets/fonts/Vazirmatn-latin.ttf
         - asset: assets/fonts/Vazirmatn-latin-ext.ttf
+

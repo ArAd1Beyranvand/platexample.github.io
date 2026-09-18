@@ -27,13 +27,7 @@ class BevelShadow {
   final double bottom;
   final Color color;
 
-  static const BevelShadow none = BevelShadow(
-    left: 0,
-    top: 0,
-    right: 0,
-    bottom: 0,
-    color: Color(0x00000000),
-  );
+  static const BevelShadow none = BevelShadow(left: 0, top: 0, right: 0, bottom: 0, color: Color(0x00000000));
 }
 
 /// Screw dots — §4.8. Two circles near the top edge, measured from the panel's
@@ -252,9 +246,9 @@ class BevelPanel extends StatelessWidget {
     this.height,
     this.child,
   }) : assert(
-          groundColor != null || groundGradient != null,
-          'BevelPanel needs a ground: pass groundColor or groundGradient.',
-        );
+         groundColor != null || groundGradient != null,
+         'BevelPanel needs a ground: pass groundColor or groundGradient.',
+       );
 
   final BevelStyle style;
 
@@ -296,29 +290,19 @@ class BevelPanel extends StatelessWidget {
     // Layers 2–8, isolated in one composited layer so the grain and sheen
     // blend against this panel's ground instead of whatever is behind it.
     final Widget body = ColorFiltered(
-      colorFilter: const ColorFilter.mode(
-        Color(0x00000000),
-        BlendMode.srcOver,
-      ),
+      colorFilter: const ColorFilter.mode(Color(0x00000000), BlendMode.srcOver),
       child: Stack(
         fit: StackFit.passthrough,
         children: <Widget>[
           // 2 — ground.
           DecoratedBox(
-            decoration: BoxDecoration(
-              color: groundColor,
-              gradient: groundGradient,
-            ),
+            decoration: BoxDecoration(color: groundColor, gradient: groundGradient),
             child: SizedBox(
               width: width == null ? null : metrics.px(width!),
               height: height == null ? null : metrics.px(height!),
-              child: Padding(
-                padding: resolvedPadding,
-                child: child ?? const SizedBox.shrink(),
-              ),
+              child: Padding(padding: resolvedPadding, child: child ?? const SizedBox.shrink()),
             ),
           ),
-
 
           // 5 — the 103° diagonal sheen.
           Positioned.fill(
@@ -330,11 +314,7 @@ class BevelPanel extends StatelessWidget {
                   // "to top" points right and slightly down.
                   begin: const Alignment(-0.97, -0.23),
                   end: const Alignment(0.97, 0.23),
-                  colors: <Color>[
-                    style.sheenStrong,
-                    style.sheenFaint,
-                    const Color(0x00000000),
-                  ],
+                  colors: <Color>[style.sheenStrong, style.sheenFaint, const Color(0x00000000)],
                   stops: const <double>[0.0, 0.45, 0.63],
                 ),
               ),
@@ -345,12 +325,7 @@ class BevelPanel extends StatelessWidget {
           // cleanly instead of seaming the way nested borders do.
           Positioned.fill(
             child: CustomPaint(
-              painter: _BevelPainter(
-                style: style,
-                metrics: metrics,
-                screws: screws,
-                direction: direction,
-              ),
+              painter: _BevelPainter(style: style, metrics: metrics, screws: screws, direction: direction),
             ),
           ),
         ],
@@ -375,14 +350,8 @@ class BevelPanel extends StatelessWidget {
   }
 }
 
-
 class _BevelPainter extends CustomPainter {
-  const _BevelPainter({
-    required this.style,
-    required this.metrics,
-    required this.screws,
-    required this.direction,
-  });
+  const _BevelPainter({required this.style, required this.metrics, required this.screws, required this.direction});
 
   final BevelStyle style;
   final PosterMetrics metrics;
@@ -437,30 +406,14 @@ class _BevelPainter extends CustomPainter {
     if (rect.width <= width * 2 || rect.height <= width * 2) return;
     final Paint paint = Paint()..isAntiAlias = false;
 
+    canvas.drawRect(Rect.fromLTWH(rect.left, rect.top, rect.width, width), paint..color = topColor);
+    canvas.drawRect(Rect.fromLTWH(rect.left, rect.bottom - width, rect.width, width), paint..color = bottomColor);
     canvas.drawRect(
-      Rect.fromLTWH(rect.left, rect.top, rect.width, width),
-      paint..color = topColor,
-    );
-    canvas.drawRect(
-      Rect.fromLTWH(rect.left, rect.bottom - width, rect.width, width),
-      paint..color = bottomColor,
-    );
-    canvas.drawRect(
-      Rect.fromLTWH(
-        rect.left,
-        rect.top + width,
-        width,
-        rect.height - width * 2,
-      ),
+      Rect.fromLTWH(rect.left, rect.top + width, width, rect.height - width * 2),
       paint..color = leftColor,
     );
     canvas.drawRect(
-      Rect.fromLTWH(
-        rect.right - width,
-        rect.top + width,
-        width,
-        rect.height - width * 2,
-      ),
+      Rect.fromLTWH(rect.right - width, rect.top + width, width, rect.height - width * 2),
       paint..color = rightColor,
     );
   }
@@ -518,13 +471,9 @@ Gradient? bevelGroundGradient(BevelKind kind, {bool variant = false}) {
     case BevelKind.steel:
       return PosterGradients.cardSteel;
     case BevelKind.dark:
-      return variant
-          ? PosterGradients.cardDarkVariant
-          : PosterGradients.cardDark;
+      return variant ? PosterGradients.cardDarkVariant : PosterGradients.cardDark;
     case BevelKind.chipDark:
-      return variant
-          ? PosterGradients.cardChipDarkVariant
-          : PosterGradients.cardChipDark;
+      return variant ? PosterGradients.cardChipDarkVariant : PosterGradients.cardChipDark;
     case BevelKind.hero:
     case BevelKind.chipWhite:
       return null;

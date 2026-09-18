@@ -9,27 +9,20 @@ const _rowGap = 10.0;
 /// The inner height of the main keyboard well: every deck row plus the gap
 /// that follows it. Used to shrink-to-fit the well when the deck is handed
 /// less height than its natural total.
-double get _deckWellHeight =>
-    deckRows.fold<double>(0, (h, r) => h + r.height) +
-    _rowGap * deckRows.length;
+double get _deckWellHeight => deckRows.fold<double>(0, (h, r) => h + r.height) + _rowGap * deckRows.length;
 
 /// The Material icon a keycap renders in place of its glyph label, if any.
 /// The label itself stays the reporting identity, so highlighting and the
 /// [_report] contract are unaffected.
 IconData? _iconFor(String label) => switch (label) {
-      '⌫' => Icons.backspace_outlined,
-      '⌧' => Icons.calculate_outlined,
-      _ => null,
-    };
+  '⌫' => Icons.backspace_outlined,
+  '⌧' => Icons.calculate_outlined,
+  _ => null,
+};
 
 /// A single keyboard row of keycaps, scaled by [scale] to fit the well.
 class _DeckRowStrip extends StatelessWidget {
-  const _DeckRowStrip({
-    required this.row,
-    required this.scale,
-    this.onKey,
-    this.pressedKey,
-  });
+  const _DeckRowStrip({required this.row, required this.scale, this.onKey, this.pressedKey});
 
   final DeckRow row;
   final double scale;
@@ -80,27 +73,23 @@ class _BackPanel extends StatelessWidget {
       child: LayoutBuilder(
         builder: (context, c) {
           final w = c.maxWidth, h = c.maxHeight;
-          Widget vent(double left, double top, double width, double height) =>
-              Positioned(
-                left: left,
-                top: top,
-                width: width,
-                height: height,
-                child: CustomPaint(painter: const _VentPainter()),
-              );
+          Widget vent(double left, double top, double width, double height) => Positioned(
+            left: left,
+            top: top,
+            width: width,
+            height: height,
+            child: CustomPaint(painter: const _VentPainter()),
+          );
           Widget foot(double? left, double? right, double top) => Positioned(
-                left: left,
-                right: right,
-                top: top,
-                width: w * .032,
-                height: h * .06,
-                child: const DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: Color(0xFF07080A),
-                    borderRadius: BorderRadius.all(Radius.circular(99)),
-                  ),
-                ),
-              );
+            left: left,
+            right: right,
+            top: top,
+            width: w * .032,
+            height: h * .06,
+            child: const DecoratedBox(
+              decoration: BoxDecoration(color: Color(0xFF07080A), borderRadius: BorderRadius.all(Radius.circular(99))),
+            ),
+          );
 
           return Stack(
             children: [
@@ -129,11 +118,7 @@ class _BackPanel extends StatelessWidget {
                 child: const Center(
                   child: Text(
                     'DESIGNED FOR PLATE OS',
-                    style: TextStyle(
-                      color: Color(0x29FFFFFF),
-                      fontSize: 5,
-                      letterSpacing: 1.6,
-                    ),
+                    style: TextStyle(color: Color(0x29FFFFFF), fontSize: 5, letterSpacing: 1.6),
                   ),
                 ),
               ),
@@ -153,10 +138,7 @@ class _VentPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final slot = Paint()..color = const Color(0xB8000000);
     final gap = Paint()..color = const Color(0x0DFFFFFF);
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(Offset.zero & size, const Radius.circular(3)),
-      gap,
-    );
+    canvas.drawRRect(RRect.fromRectAndRadius(Offset.zero & size, const Radius.circular(3)), gap);
     for (var x = 0.0; x < size.width; x += 5) {
       canvas.drawRect(Rect.fromLTWH(x, 0, 2, size.height), slot);
     }
@@ -168,9 +150,32 @@ class _VentPainter extends CustomPainter {
 
 /// Keys that don't report a character — modifiers, function row, arrows.
 const _nonReportingKeys = <String>{
-  'esc', '⇧', '⇪', '⇥', 'fn', '⌃', '⌥', '⌘', '⏻', '⌧',
-  '◂', '▴', '▾', '▸',
-  'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12',
+  'esc',
+  '⇧',
+  '⇪',
+  '⇥',
+  'fn',
+  '⌃',
+  '⌥',
+  '⌘',
+  '⏻',
+  '⌧',
+  '◂',
+  '▴',
+  '▾',
+  '▸',
+  'F1',
+  'F2',
+  'F3',
+  'F4',
+  'F5',
+  'F6',
+  'F7',
+  'F8',
+  'F9',
+  'F10',
+  'F11',
+  'F12',
 };
 
 /// A tappable keycap: presses down and springs back, reporting its label.
@@ -210,8 +215,7 @@ class _KeyState extends State<_Key> {
 
   @override
   Widget build(BuildContext context) {
-    final pressed = _pressed ||
-        (widget.pressedLabel != null && widget.pressedLabel == widget.label);
+    final pressed = _pressed || (widget.pressedLabel != null && widget.pressedLabel == widget.label);
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTapDown: (_) => _setPressed(true),
@@ -231,13 +235,9 @@ class _KeyState extends State<_Key> {
               colors: [Color(0xFF23262B), Color(0xFF141619), Color(0xFF050607)],
               stops: [0, .45, 1],
             ),
-            border: const Border(
-              top: BorderSide(color: Color(0x33FFFFFF)),
-            ),
+            border: const Border(top: BorderSide(color: Color(0x33FFFFFF))),
             boxShadow: pressed
-                ? const [
-                    BoxShadow(color: Color(0x99000000), blurRadius: 10, offset: Offset(0, 4)),
-                  ]
+                ? const [BoxShadow(color: Color(0x99000000), blurRadius: 10, offset: Offset(0, 4))]
                 : const [
                     BoxShadow(color: Color(0xFF34373C), offset: Offset(0, 5)),
                     BoxShadow(color: Color(0xFF1A1C20), offset: Offset(0, 7)),

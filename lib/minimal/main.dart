@@ -1,7 +1,8 @@
 // Run with: flutter run -t lib/minimal/main.dart
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:plate_number/plate_number.dart';
+import 'package:iran_plate/iran_plate.dart';
+import 'package:plate_keypad/plate_keypad.dart';
+import 'package:core_plate/core_plate.dart';
 
 void main() {
   runApp(const MinimalApp());
@@ -14,13 +15,19 @@ class MinimalApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: BlocProvider(
-          create: (_) => PlateCardBloc(PlateSpecs.irCar),
-          child: Center(
+        body: Builder(
+          builder: (context) => Center(
             child: Padding(
               padding: const EdgeInsets.all(16),
+              // A spec and the widget: the plate owns its own characters, so
+              // there is nothing to provide above it.
               // inputSource defaults per platform and can be overridden
-              child: PlateCanvas(spec: PlateSpecs.irCar),
+              child: PlateCanvas(
+                spec: IranPlates.car,
+                // The Iran car plate has a `chosen`-alphabet letter slot;
+                // core no longer ships a picker, so supply one.
+                onChooseCharacter: (alphabet) => PlateCharacterPicker.show(context, alphabet),
+              ),
             ),
           ),
         ),
