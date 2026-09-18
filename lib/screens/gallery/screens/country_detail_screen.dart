@@ -22,6 +22,7 @@ class CountryDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     final Color accent = source.accent ?? theme.colorScheme.primary;
+    final PlateSizes sizes = PlateSizes.of(context);
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
@@ -78,7 +79,8 @@ class CountryDetailScreen extends StatelessWidget {
             SliverPadding(
               padding: const EdgeInsets.symmetric(horizontal: Gap.lg),
               sliver: PlateSliverGrid(
-                stageHeight: 320,
+                stageHeight: sizes.gridStageHeight,
+                maxCrossAxisExtent: sizes.gridMaxCrossAxisExtent,
                 itemCount: section.entries.length,
                 itemBuilder: (BuildContext context, int index) {
                   final GalleryEntry entry = section.entries[index];
@@ -87,7 +89,7 @@ class CountryDetailScreen extends StatelessWidget {
                     key: ValueKey<String>(entry.id),
                     entry: entry,
                     heroTag: tag,
-                    stageHeight: 320,
+                    stageHeight: sizes.gridStageHeight,
                     onTap: () => onOpenPlate(CatalogueItem(source: source, section: section, entry: entry), tag),
                   );
                 },

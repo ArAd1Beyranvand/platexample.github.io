@@ -19,9 +19,10 @@ class AboutScreen extends StatelessWidget {
     _PackageInfo('core_plate_bloc', '0.1.0', 'https://github.com/ArAd1Beyranvand/core-plate-bloc'),
     _PackageInfo('plate_keypad', '0.1.0', 'https://github.com/ArAd1Beyranvand/keypad-plate'),
     _PackageInfo('iran_plate', '0.1.0', 'https://github.com/ArAd1Beyranvand/iran-plate'),
-    _PackageInfo('germany_plate', '0.1.0', 'https://github.com/ArAd1Beyranvand/germany-plate'),
+    _PackageInfo('germany_plate', '0.2.0', 'https://github.com/ArAd1Beyranvand/germany-plate'),
     _PackageInfo('palestine_plate', '0.2.0', 'https://github.com/ArAd1Beyranvand/plate-palestine'),
     _PackageInfo('yemen_plate', '0.3.0', 'https://github.com/ArAd1Beyranvand/plate-yemen'),
+    _PackageInfo('lebanon_plate', '0.1.0', 'https://github.com/ArAd1Beyranvand/lebanon-plate'),
   ];
 
   @override

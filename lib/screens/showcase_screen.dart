@@ -255,28 +255,33 @@ class _CompactPoster extends StatelessWidget {
       fit: StackFit.expand,
       children: <Widget>[
         PosterBackdrop(sweep: SweepLight(isHopping: phase == DeviceTransitionPhase.frameTransform)),
-        SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(16, 20, 16, 28),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              const PosterMasthead(),
-              const SizedBox(height: 18),
-              const _CompactWordmark(),
-              const SizedBox(height: 20),
-              AspectRatio(
-                aspectRatio: 832 / 486,
-                child: RepaintBoundary(
-                  child: DeviceStage(onFrameDeviceChanged: onFrameDeviceChanged, onPhaseChanged: onPhaseChanged),
+        GestureDetector(
+          onHorizontalDragUpdate: (_) {},
+          onVerticalDragUpdate: (_) {},
+          onScaleUpdate: (_) {},
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 20, 16, 28),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const PosterMasthead(),
+                const SizedBox(height: 18),
+                const _CompactWordmark(),
+                const SizedBox(height: 20),
+                AspectRatio(
+                  aspectRatio: 832 / 486,
+                  child: RepaintBoundary(
+                    child: DeviceStage(onFrameDeviceChanged: onFrameDeviceChanged, onPhaseChanged: onPhaseChanged),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 24),
-              _CompactCallouts(device: device),
-              const SizedBox(height: 28),
-              const _CompactLinks(),
-              const SizedBox(height: 16),
-              const _CompactMeta(),
-            ],
+                const SizedBox(height: 24),
+                _CompactCallouts(device: device),
+                const SizedBox(height: 28),
+                const _CompactLinks(),
+                const SizedBox(height: 16),
+                const _CompactMeta(),
+              ],
+            ),
           ),
         ),
       ],

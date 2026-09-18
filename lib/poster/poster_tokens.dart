@@ -53,6 +53,21 @@ class PosterColors {
   /// On-screen keypad key highlight — a lighter cast of hero card 01
   /// (`#16479D`), keeping the pad in the project's blue family.
   static const Color keypadHighlight = Color(0xFF3160B0);
+  /// The navigation chrome's accent. The poster keeps its violet [accent],
+  /// but the nav is app furniture rather than poster art, and violet made it
+  /// read as a different product than the rest of the blue-family UI. This is
+  /// hero card 01 (`#16479D`) opened up to the luminance the violet had, so
+  /// the indicator still lights the near-black rail instead of sinking into it.
+  static const Color navAccent = Color(0xFF2E5AB0);
+
+  /// Glow cast behind the selected nav pill — [navAccent] at full strength.
+  static const Color navAccentGlow = Color(0xF22E5AB0); // rgba(46,90,176,.95)
+
+  /// The nav bar's own fill. Was a violet-tinted near-black (`#241C42`),
+  /// which tinted the whole capsule purple no matter what the pill did.
+  static const Color navSurfaceTop = Color(0xFF16213A);
+  static const Color navSurfaceBottom = Color(0xFF0D1422);
+
   static const Color accentRail = Color(0x8C7C5CFF); // rgba(124,92,255,.55)
   static const Color accentRailGlow = Color(0xF27C5CFF); // rgba(124,92,255,.95)
   static const Color accentPipGlow = Color(0xF27C5CFF); // rgba(124,92,255,.95)

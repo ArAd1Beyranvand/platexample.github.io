@@ -75,19 +75,30 @@ class PlateFrame extends StatelessWidget {
 /// grid could not be: it sized every card off its plate's aspect ratio, so
 /// tiles had no common height and nothing could be virtualised. Now that
 /// [PlateFrame] makes all tiles one size, the grid builds only what is on
-/// screen — which is what lets the browse screen hold the whole catalogue at
+/// screen — which is what lets a grid hold a whole country's catalogue at
 /// once without dropping frames.
 class PlateSliverGrid extends StatelessWidget {
-  const PlateSliverGrid({super.key, required this.itemCount, required this.itemBuilder, this.stageHeight = 112});
+  const PlateSliverGrid({
+    super.key,
+    required this.itemCount,
+    required this.itemBuilder,
+    this.stageHeight = 112,
+    this.maxCrossAxisExtent = 500,
+  });
 
   final int itemCount;
   final Widget Function(BuildContext context, int index) itemBuilder;
   final double stageHeight;
 
+  /// Passed straight through to [SliverGridDelegateWithMaxCrossAxisExtent] —
+  /// a caller on a narrow window shrinks this along with [stageHeight] so
+  /// mobile gets smaller tiles rather than one desktop-sized column.
+  final double maxCrossAxisExtent;
+
   @override
   Widget build(BuildContext context) => SliverGrid(
     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-      maxCrossAxisExtent: 500,
+      maxCrossAxisExtent: maxCrossAxisExtent,
       mainAxisSpacing: Gap.lg,
       crossAxisSpacing: Gap.md,
       // Fixed, not an aspect ratio: the tile is a frame of known height plus
@@ -113,8 +124,8 @@ class PlateTile extends StatefulWidget {
   final GalleryEntry entry;
 
   /// Unique *per screen*, not per entry: the same plate appears on the
-  /// discover shelf and in the browse grid, and both are alive at once inside
-  /// the shell's [IndexedStack]. Two heroes sharing a tag in one subtree is
+  /// discover shelf and in a country's grid, and more than one can be alive
+  /// at once. Two heroes sharing a tag in one subtree is
   /// an error, so callers prefix with the screen's name.
   final String heroTag;
 
@@ -122,8 +133,8 @@ class PlateTile extends StatefulWidget {
   final double stageHeight;
 
   /// Overrides the small print, which is otherwise the entry's note or the
-  /// spec id. The browse grid uses it to name the country, which in that
-  /// context is the thing you cannot otherwise tell.
+  /// spec id. A shelf uses it to name the system, which in that context is
+  /// the thing you cannot otherwise tell.
   final String? subtitle;
 
   @override

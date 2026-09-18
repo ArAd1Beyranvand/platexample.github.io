@@ -102,11 +102,21 @@ class PalestineSource extends GallerySource {
   @override
   List<GalleryEntry> get highlights => <GalleryEntry>[
     sections[0].entries.first,
-    sections[2].entries.first,
+    sections[1].entries.first,
   ];
 
   @override
   List<GallerySection> get sections => _sections ??= <GallerySection>[
+    GallerySection(
+      title: 'Gaza',
+      note:
+          'A different design, not a recoloured West Bank plate: the field is '
+          'always white and only the glyphs, the border and the rules change. '
+          'Usage is the last two digits, so these recolour as you type.',
+      entries: <GalleryEntry>[
+        for (final (String id, String label, PlateSpec spec) in _gazaPlates) _gaza(id, label, spec),
+      ],
+    ),
     GallerySection(
       title: 'West Bank — modern, since July 2018',
       note:
@@ -130,16 +140,6 @@ class PalestineSource extends GallerySource {
         for (final (String name, PSUsage usage) in _liveries)
           _legacy('car.${usage.name}', name, PSWestBankPlates.legacyCar, usage),
         _legacy('car2l', 'Two-line', PSWestBankPlates.legacyCarTwoLine, PSUsage.private, recolourBlock: false),
-      ],
-    ),
-    GallerySection(
-      title: 'Gaza',
-      note:
-          'A different design, not a recoloured West Bank plate: the field is '
-          'always white and only the glyphs, the border and the rules change. '
-          'Usage is the last two digits, so these recolour as you type.',
-      entries: <GalleryEntry>[
-        for (final (String id, String label, PlateSpec spec) in _gazaPlates) _gaza(id, label, spec),
       ],
     ),
   ];

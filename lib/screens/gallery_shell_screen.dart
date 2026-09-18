@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../app/app_routes.dart';
 import '../poster/poster_tokens.dart';
 import 'showcase_screen.dart';
 import 'gallery/screens/about_screen.dart';
@@ -18,14 +19,22 @@ typedef _Destination = ({IconData icon, IconData selected, String label});
 const double _kSideNavGutter = _SideNavBar.totalWidth;
 
 class GalleryShellScreen extends StatefulWidget {
-  const GalleryShellScreen({super.key});
+  const GalleryShellScreen({super.key, required this.tab, required this.onTabSelected});
+
+  /// The tab the URL currently names. The shell does not own this — the router
+  /// does, so that the address bar and the highlighted rail row can never
+  /// disagree.
+  final AppTab tab;
+
+  /// Selecting a destination asks the router to navigate; the new tab comes
+  /// back down through [tab] on the next build.
+  final ValueChanged<AppTab> onTabSelected;
 
   @override
   State<GalleryShellScreen> createState() => _GalleryShellScreenState();
 }
 
 class _GalleryShellScreenState extends State<GalleryShellScreen> {
-  int _selectedTab = 0;
 
   void _openPlate(CatalogueItem item, String heroTag) => Navigator.of(context).push(
     MaterialPageRoute<void>(
@@ -39,18 +48,26 @@ class _GalleryShellScreenState extends State<GalleryShellScreen> {
     ),
   );
 
-  static const List<_Destination> _destinations = <_Destination>[
-    (icon: Icons.photo_library_outlined, selected: Icons.photo_library, label: 'Showcase'),
-    (icon: Icons.auto_awesome_outlined, selected: Icons.auto_awesome, label: 'Discover'),
-    (icon: Icons.info_outline, selected: Icons.info, label: 'About'),
+  /// One entry per [AppTab], in enum order — the nav bar's indexes *are* the
+  /// enum's indexes, so a tab added to [AppTab] shows up here and nowhere else
+  /// needs touching.
+  static const Map<AppTab, _Destination> _destinationsByTab = <AppTab, _Destination>{
+    AppTab.showcase: (icon: Icons.photo_library_outlined, selected: Icons.photo_library, label: 'Showcase'),
+    AppTab.discover: (icon: Icons.auto_awesome_outlined, selected: Icons.auto_awesome, label: 'Discover'),
+    AppTab.about: (icon: Icons.info_outline, selected: Icons.info, label: 'About'),
+  };
+
+  static final List<_Destination> _destinations = <_Destination>[
+    for (final AppTab tab in AppTab.values) _destinationsByTab[tab]!,
   ];
 
   @override
   Widget build(BuildContext context) {
     final bool wide = MediaQuery.sizeOf(context).width >= 840;
+    final int selected = widget.tab.index;
 
     final Widget body = IndexedStack(
-      index: _selectedTab,
+      index: selected,
       children: <Widget>[
         const ShowcaseScreen(),
         DiscoverScreen(onOpenPlate: _openPlate, onOpenCountry: _openCountry),
@@ -82,8 +99,8 @@ class _GalleryShellScreenState extends State<GalleryShellScreen> {
               right: 0,
               child: _SideNavBar(
                 destinations: _destinations,
-                selectedIndex: _selectedTab,
-                onSelected: (int index) => setState(() => _selectedTab = index),
+                selectedIndex: selected,
+                onSelected: (int index) => widget.onTabSelected(AppTab.values[index]),
               ),
             ),
           ],
@@ -107,8 +124,8 @@ class _GalleryShellScreenState extends State<GalleryShellScreen> {
             right: 0,
             child: _BottomNavBar(
               destinations: _destinations,
-              selectedIndex: _selectedTab,
-              onSelected: (int index) => setState(() => _selectedTab = index),
+              selectedIndex: selected,
+              onSelected: (int index) => widget.onTabSelected(AppTab.values[index]),
             ),
           ),
         ],

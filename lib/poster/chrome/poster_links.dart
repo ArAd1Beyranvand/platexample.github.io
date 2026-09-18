@@ -23,32 +23,7 @@ class PosterLinks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PosterMetrics metrics = PosterMetrics.of(context);
-
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        _LinkButton(
-          label: 'PUB.DEV',
-          url: pubDevUrl,
-          iconBuilder: (Color color) => _CubeIcon(color: color),
-          // pub.dev / Dart brand blue.
-          ground: const Color(0xFF0175C2),
-          groundHover: const Color(0xFF0161A8),
-          content: Colors.white,
-        ),
-        SizedBox(height: metrics.px(8)),
-        _LinkButton(
-          label: 'GITHUB',
-          url: githubUrl,
-          iconBuilder: (Color color) => _OctocatIcon(color: color),
-          // GitHub brand near-black.
-          ground: const Color(0xFF1F2328),
-          groundHover: const Color(0xFF32383F),
-          content: Colors.white,
-        ),
-      ],
-    );
+    return const SizedBox.shrink();
   }
 }
 

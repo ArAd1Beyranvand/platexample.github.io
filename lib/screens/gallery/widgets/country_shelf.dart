@@ -26,6 +26,7 @@ class CountryShelf extends StatelessWidget {
     final ThemeData theme = Theme.of(context);
     final List<CatalogueItem> items = source.highlightItems;
     final Color accent = source.accent ?? theme.colorScheme.primary;
+    final PlateSizes sizes = PlateSizes.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -65,7 +66,7 @@ class CountryShelf extends StatelessWidget {
         ),
         const SizedBox(height: Gap.md),
         SizedBox(
-          height: 320 + 56,
+          height: sizes.shelfStageHeight + 56,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             // Bleeds to the window edge so a partly-visible tile at the right
@@ -77,15 +78,15 @@ class CountryShelf extends StatelessWidget {
               final CatalogueItem item = items[index];
               final String tag = 'discover:${item.entry.id}';
               return SizedBox(
-                width: 500,
+                width: sizes.shelfTileWidth,
                 child: PlateTile(
                   entry: item.entry,
                   heroTag: tag,
                   // On a shelf the label is the plate and the system is what
-                  // you cannot otherwise tell — the opposite of the browse
-                  // grid, where the country is.
+                  // you cannot otherwise tell — the opposite of a country
+                  // grid, where the plate is.
                   subtitle: item.section.title,
-                  stageHeight: 320,
+                  stageHeight: sizes.shelfStageHeight,
                   onTap: () => onOpenPlate(item, tag),
                 ),
               );

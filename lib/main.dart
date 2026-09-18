@@ -22,6 +22,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 
 import 'app/app.dart';
+import 'app/url_strategy/url_strategy.dart';
 
 /// One line per frame that missed a 60Hz budget, split between the UI thread
 /// (Dart: build, layout, paint recording) and the raster thread (the GPU
@@ -46,6 +47,7 @@ void _installJankLog() {
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  configureUrlStrategy();
   if (kProfileMode) _installJankLog();
   SystemChrome.setPreferredOrientations(const [
     DeviceOrientation.portraitUp,
