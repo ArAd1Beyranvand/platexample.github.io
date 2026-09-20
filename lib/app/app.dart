@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../shell/mobile_panel.dart';
 import '../theme/nocturne_theme.dart';
 import 'app_router.dart';
 
@@ -15,9 +16,14 @@ class _PlateNumberShowcaseAppState extends State<PlateNumberShowcaseApp> {
   // would drop the tab it is holding.
   final AppRouterDelegate _routerDelegate = AppRouterDelegate();
 
+  // The `MOBILE VIEW` toggle. Lives above the Router so it survives tab
+  // switches and detail pushes untouched.
+  final ValueNotifier<bool> _forceMobilePanel = ValueNotifier<bool>(false);
+
   @override
   void dispose() {
     _routerDelegate.dispose();
+    _forceMobilePanel.dispose();
     super.dispose();
   }
 
@@ -32,6 +38,19 @@ class _PlateNumberShowcaseAppState extends State<PlateNumberShowcaseApp> {
       scrollBehavior: NocturneScrollBehavior(),
       routerDelegate: _routerDelegate,
       routeInformationParser: const AppRouteParser(),
+      builder: (BuildContext context, Widget? child) {
+        return MobilePanelScope(
+          notifier: _forceMobilePanel,
+          child: ValueListenableBuilder<bool>(
+            valueListenable: _forceMobilePanel,
+            builder: (BuildContext context, bool forced, Widget? routedChild) {
+              if (!forced) return routedChild!;
+              return MobilePanelChrome(child: routedChild!);
+            },
+            child: child,
+          ),
+        );
+      },
     );
   }
 }

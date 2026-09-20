@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../app/app_routes.dart';
 import '../poster/poster_tokens.dart';
+import '../shell/mobile_panel.dart';
+import '../shell/nocturne_bottom_bar.dart';
+import '../shell/nocturne_mobile_header.dart';
 import '../shell/nocturne_rail.dart';
 import '../theme/nocturne.dart';
 import 'showcase_screen.dart';
@@ -31,6 +34,13 @@ class GalleryShellScreen extends StatefulWidget {
 }
 
 class _GalleryShellScreenState extends State<GalleryShellScreen> {
+  /// The mobile header's trailing `01 / SHOWCASE` text, one entry per
+  /// [AppTab] in enum order — the leading number is the enum index.
+  static const Map<AppTab, String> _screenLabels = <AppTab, String>{
+    AppTab.showcase: 'SHOWCASE',
+    AppTab.discover: 'DISCOVER',
+    AppTab.about: 'ABOUT',
+  };
 
   void _openPlate(CatalogueItem item, String heroTag) => Navigator.of(context).push(
     MaterialPageRoute<void>(
@@ -44,22 +54,9 @@ class _GalleryShellScreenState extends State<GalleryShellScreen> {
     ),
   );
 
-  /// One entry per [AppTab], in enum order — the nav bar's indexes *are* the
-  /// enum's indexes, so a tab added to [AppTab] shows up here and nowhere else
-  /// needs touching.
-  static const Map<AppTab, _Destination> _destinationsByTab = <AppTab, _Destination>{
-    AppTab.showcase: (icon: Icons.photo_library_outlined, selected: Icons.photo_library, label: 'Showcase'),
-    AppTab.discover: (icon: Icons.auto_awesome_outlined, selected: Icons.auto_awesome, label: 'Discover'),
-    AppTab.about: (icon: Icons.info_outline, selected: Icons.info, label: 'About'),
-  };
-
-  static final List<_Destination> _destinations = <_Destination>[
-    for (final AppTab tab in AppTab.values) _destinationsByTab[tab]!,
-  ];
-
   @override
   Widget build(BuildContext context) {
-    final bool wide = MediaQuery.sizeOf(context).width >= NBreak.shell;
+    final ValueNotifier<bool> forceMobilePanel = MobilePanelScope.of(context);
     final int selected = widget.tab.index;
 
     final Widget body = IndexedStack(
@@ -71,56 +68,62 @@ class _GalleryShellScreenState extends State<GalleryShellScreen> {
       ],
     );
 
-    if (wide) {
-      // The page and the rail are two columns of one Row, as the design's
-      // `grid-template-columns: minmax(0,1fr) 208px` has them.
-      //
-      // The page column must be clipped. ShowcaseScreen's poster paints
-      // full-bleed backdrop layers with `clipBehavior: Clip.none`, sized off
-      // the whole window; unclipped they bleed straight across the rail's
-      // column. An earlier pass floated the rail in a Stack painted on top to
-      // dodge that, but the new rail has no fill of its own — only a
-      // `border-left` — so bleed would still show through it. Clipping is
-      // also what the export does: `<main>` carries `overflow: hidden`.
-      return Scaffold(
-        backgroundColor: PosterColors.pageBlack,
-        body: Row(
-          children: <Widget>[
-            Expanded(child: ClipRect(child: body)),
-            NocturneRail(
-              tab: widget.tab,
-              onTabSelected: widget.onTabSelected,
-              // TODO(sk5): swap the app into the mobile-panel presentation.
-              // The button renders and hovers now; sk5 makes it do something.
-              onToggleView: () {},
-            ),
-          ],
-        ),
-      );
-    }
+    // A [LayoutBuilder], not [MediaQuery]: the showcase renders this shell
+    // again inside its simulated device frames, and those frames need the
+    // layout their own narrow width calls for, not the window's. Forcing the
+    // mobile panel (below) relies on the same thing — [MobilePanelChrome]
+    // narrows the constraints this builder sees, and that alone is what
+    // switches the layout, with no need for this widget to read the toggle.
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        final bool wide = constraints.maxWidth >= NBreak.shell;
 
-    return Scaffold(
-      backgroundColor: PosterColors.pageBlack,
-      body: Stack(
-        children: <Widget>[
-          Positioned.fill(
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 68),
-              child: body,
+        if (wide) {
+          // The page and the rail are two columns of one Row, as the design's
+          // `grid-template-columns: minmax(0,1fr) 208px` has them.
+          //
+          // The page column must be clipped. ShowcaseScreen's poster paints
+          // full-bleed backdrop layers with `clipBehavior: Clip.none`, sized off
+          // the whole window; unclipped they bleed straight across the rail's
+          // column. An earlier pass floated the rail in a Stack painted on top to
+          // dodge that, but the new rail has no fill of its own — only a
+          // `border-left` — so bleed would still show through it. Clipping is
+          // also what the export does: `<main>` carries `overflow: hidden`.
+          return Scaffold(
+            backgroundColor: PosterColors.pageBlack,
+            body: Row(
+              children: <Widget>[
+                Expanded(child: ClipRect(child: body)),
+                ValueListenableBuilder<bool>(
+                  valueListenable: forceMobilePanel,
+                  builder: (BuildContext context, bool forced, _) => NocturneRail(
+                    tab: widget.tab,
+                    onTabSelected: widget.onTabSelected,
+                    onToggleView: () => forceMobilePanel.value = !forceMobilePanel.value,
+                    viewLabel: forced ? 'DESKTOP VIEW' : 'MOBILE VIEW',
+                  ),
+                ),
+              ],
             ),
+          );
+        }
+
+        return Scaffold(
+          backgroundColor: PosterColors.pageBlack,
+          body: Column(
+            children: <Widget>[
+              NocturneMobileHeader(
+                trailing: Text(
+                  '${(widget.tab.index + 1).toString().padLeft(2, '0')} / ${_screenLabels[widget.tab]!}',
+                  style: NType.pill.copyWith(color: N.n600),
+                ),
+              ),
+              Expanded(child: body),
+              NocturneBottomBar(tab: widget.tab, onTabSelected: widget.onTabSelected),
+            ],
           ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: _BottomNavBar(
-              destinations: _destinations,
-              selectedIndex: selected,
-              onSelected: (int index) => widget.onTabSelected(AppTab.values[index]),
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
@@ -347,6 +350,11 @@ class _NavItemState extends State<_NavItem> {
 
 /// The narrow-layout nav: a horizontal rail docked flush to the bottom of
 /// the window, with the same visual treatment as [_SideNavBar] but rotated.
+///
+/// Out of the widget tree as of sk5 — [NocturneBottomBar] replaced it — but
+/// kept, like [_SideNavBar], because it still shares [_NavItem] and
+/// [_IndicatorBand] with it. sk15 deletes the lot.
+// ignore: unused_element
 class _BottomNavBar extends StatelessWidget {
   const _BottomNavBar({required this.destinations, required this.selectedIndex, required this.onSelected});
 
