@@ -18,6 +18,11 @@ class IranSource extends GallerySource {
   @override
   String get countryName => 'Iran';
 
+  /// Iran, Bahrain and Azerbaijan — the three country blocks below, not just
+  /// the one this source is named after.
+  @override
+  List<String> get countryNames => const <String>['Iran', 'Bahrain', 'Azerbaijan'];
+
   @override
   String get packageName => 'iran_plate';
 

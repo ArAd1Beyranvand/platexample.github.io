@@ -92,6 +92,15 @@ abstract class GallerySource {
   /// The country, as the catalogue heads its block.
   String get countryName;
 
+  /// The distinct countries this source actually draws, for anything that
+  /// counts countries rather than sources — the Showcase stat band's
+  /// COUNTRIES tile.
+  ///
+  /// Defaults to one-country-per-source, which is right for every source but
+  /// `IranSource`: `iran_plate` also ships Bahrain and Azerbaijan behind their
+  /// own sections, and [countryName] alone would undercount by two.
+  List<String> get countryNames => <String>[countryName];
+
   /// The package that ships it.
   String get packageName;
 

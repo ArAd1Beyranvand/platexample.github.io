@@ -9,7 +9,14 @@ import '../poster/poster_scale.dart';
 import '../showcase/device_cycle.dart';
 import '../showcase/device_stage.dart';
 import '../theme/nocturne.dart';
+import 'gallery/catalogue_stats.dart';
+import 'gallery/sources/sources.dart';
 import 'showcase/hero.dart';
+import 'showcase/stat_band.dart';
+
+/// Computed once: [gallerySources] never changes at runtime, and the build
+/// method below re-runs on every device hop and phase change.
+final CatalogueStats _catalogueStats = CatalogueStats.of(gallerySources);
 
 /// `01 — Showcase`, the page the migration is judged by.
 ///
@@ -19,7 +26,6 @@ import 'showcase/hero.dart';
 /// widget is only that composition — backdrop, hero, stat band, callouts —
 /// with the pieces it does not own yet left as empty slots:
 ///
-/// - the **stat band** is sk7, and reads live registry numbers;
 /// - the **callouts** are sk8, and float over the device stage;
 /// - the **device frames** are sk9 and the **backdrop** sk10, so both are
 ///   still the old poster's, deliberately.
@@ -113,7 +119,7 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
             Column(
               children: <Widget>[
                 Expanded(child: hero),
-                const _StatBandSlot(),
+                StatBand(stats: _catalogueStats),
               ],
             ),
           ],
@@ -121,13 +127,4 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
       ),
     );
   }
-}
-
-/// Where sk7's live-registry stat band goes: `grid-template-rows: 1fr auto`'s
-/// `auto` row, a divider across the top of it.
-class _StatBandSlot extends StatelessWidget {
-  const _StatBandSlot();
-
-  @override
-  Widget build(BuildContext context) => const SizedBox(width: double.infinity);
 }
