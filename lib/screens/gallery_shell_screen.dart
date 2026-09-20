@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../app/app_routes.dart';
 import '../poster/poster_tokens.dart';
+import '../shell/nocturne_rail.dart';
+import '../theme/nocturne.dart';
 import 'showcase_screen.dart';
 import 'gallery/screens/about_screen.dart';
 import 'gallery/screens/country_detail_screen.dart';
@@ -11,12 +13,6 @@ import 'gallery/catalogue_index.dart';
 import 'gallery/sources/sources.dart';
 
 typedef _Destination = ({IconData icon, IconData selected, String label});
-
-/// The horizontal band the side rail claims. The rail is docked flush to the
-/// right edge and spans the full window height, so this is simply its width.
-/// Wide-layout content is padded by it so the poster lays itself out in the
-/// space left over rather than underneath the rail.
-const double _kSideNavGutter = _SideNavBar.totalWidth;
 
 class GalleryShellScreen extends StatefulWidget {
   const GalleryShellScreen({super.key, required this.tab, required this.onTabSelected});
@@ -63,7 +59,7 @@ class _GalleryShellScreenState extends State<GalleryShellScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final bool wide = MediaQuery.sizeOf(context).width >= 840;
+    final bool wide = MediaQuery.sizeOf(context).width >= NBreak.shell;
     final int selected = widget.tab.index;
 
     final Widget body = IndexedStack(
@@ -76,32 +72,27 @@ class _GalleryShellScreenState extends State<GalleryShellScreen> {
     );
 
     if (wide) {
-      // A Row with the bar in its own column looks right on paper, but
-      // ShowcaseScreen's poster paints itself with `clipBehavior: Clip.none`
-      // full-bleed backdrop layers sized off the whole window — sharing a
-      // Row with them means their sibling paints (later in the list) bleed
-      // straight over the bar's column and hide it completely. Floating the
-      // bar in its own Stack, painted after the poster, keeps it on top no
-      // matter what the content underneath decides to bleed into.
+      // The page and the rail are two columns of one Row, as the design's
+      // `grid-template-columns: minmax(0,1fr) 208px` has them.
+      //
+      // The page column must be clipped. ShowcaseScreen's poster paints
+      // full-bleed backdrop layers with `clipBehavior: Clip.none`, sized off
+      // the whole window; unclipped they bleed straight across the rail's
+      // column. An earlier pass floated the rail in a Stack painted on top to
+      // dodge that, but the new rail has no fill of its own — only a
+      // `border-left` — so bleed would still show through it. Clipping is
+      // also what the export does: `<main>` carries `overflow: hidden`.
       return Scaffold(
         backgroundColor: PosterColors.pageBlack,
-        body: Stack(
+        body: Row(
           children: <Widget>[
-            Positioned.fill(
-              child: Padding(
-                padding: const EdgeInsets.only(right: _kSideNavGutter),
-                child: body,
-              ),
-            ),
-            Positioned(
-              top: 0,
-              bottom: 0,
-              right: 0,
-              child: _SideNavBar(
-                destinations: _destinations,
-                selectedIndex: selected,
-                onSelected: (int index) => widget.onTabSelected(AppTab.values[index]),
-              ),
+            Expanded(child: ClipRect(child: body)),
+            NocturneRail(
+              tab: widget.tab,
+              onTabSelected: widget.onTabSelected,
+              // TODO(sk5): swap the app into the mobile-panel presentation.
+              // The button renders and hovers now; sk5 makes it do something.
+              onToggleView: () {},
             ),
           ],
         ),
@@ -144,6 +135,11 @@ class _GalleryShellScreenState extends State<GalleryShellScreen> {
 /// small centred capsule and tried to stretch a pill inside it, which could
 /// never read as more than a button: the capsule was the ceiling. Making the
 /// rail itself full height removes the ceiling.
+///
+/// Out of the widget tree as of sk4 — [NocturneRail] replaced it — but kept
+/// here because [_BottomNavBar] still shares [_NavItem] and [_IndicatorBand]
+/// with it. sk15 deletes the lot.
+// ignore: unused_element
 class _SideNavBar extends StatelessWidget {
   const _SideNavBar({required this.destinations, required this.selectedIndex, required this.onSelected});
 
