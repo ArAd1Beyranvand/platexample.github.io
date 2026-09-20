@@ -1,406 +1,223 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
-import '../cards/card_decorations.dart';
-import '../cards/dashed_rule.dart';
-import '../cards/soft_panel.dart';
-import '../poster_scale.dart';
-import '../poster_tokens.dart';
+import '../../theme/nocturne.dart';
 import 'callout_data.dart';
 
+/// The type sizes and rhythm of a callout at one of its two presentations.
+///
+/// Two sets rather than one scaled pair: the design draws these cards twice,
+/// once floating over the desktop stage (`Plate Gallery.dc.html` line 140) and
+/// once as a stacked `.pg-feat` list in the phone panel (line 419), and it
+/// gives each its own sizes. A 16px title is what fits a card a quarter of the
+/// stage wide; an 18px one is what the full-width list wants.
+@immutable
+class CalloutStyle {
+  const CalloutStyle({
+    required this.title,
+    required this.titleHeight,
+    required this.body,
+    required this.bodyHeight,
+    required this.afterKicker,
+    required this.afterTitle,
+  });
+
+  /// The floating cards: title 16/1.2, body 12/1.4.
+  static const CalloutStyle floating = CalloutStyle(
+    title: 16,
+    titleHeight: 1.2,
+    body: 12,
+    bodyHeight: 1.4,
+    afterKicker: 6,
+    afterTitle: 8,
+  );
+
+  /// `.pg-feat-card`: title 18/1.22, body 13/1.45.
+  static const CalloutStyle stacked = CalloutStyle(
+    title: 18,
+    titleHeight: 1.22,
+    body: 13,
+    bodyHeight: 1.45,
+    afterKicker: 8,
+    afterTitle: 6,
+  );
+
+  final double title;
+  final double titleHeight;
+  final double body;
+  final double bodyHeight;
+  final double afterKicker;
+  final double afterTitle;
+}
+
+/// One callout: a hairline panel over a dark diagonal gradient, holding a
+/// kicker, a title and an optional paragraph.
+///
+/// `.pg-feat-card` — `border: 1px n800; radius: lg; padding: 16px 18px;
+/// background: linear-gradient(158deg, #1C2233, #0D1017)`. No shadow: the
+/// device mockup is what casts one on this page, not the cards.
 class CalloutCard extends StatelessWidget {
-  const CalloutCard({super.key, required this.spec, this.widthDesignPx});
+  const CalloutCard({super.key, required this.spec, this.style = CalloutStyle.floating});
 
   final CalloutSpec spec;
-  final double? widthDesignPx;
+  final CalloutStyle style;
 
-  /// A faint tint for the card's own drop shadow, so hero cards throw a
-  /// shadow that reads as "this card", not just generic black.
-  Color? get _shadowTint {
-    switch (spec.kind) {
-      case CalloutKind.heroIr:
-        return PosterColors.cardHeroIr;
-      case CalloutKind.heroDe:
-        return PosterColors.cardHeroDe;
-      case CalloutKind.steel:
-      case CalloutKind.dark:
-        return null;
-    }
-  }
+  /// `linear-gradient(158deg, …)`. CSS measures the gradient line clockwise
+  /// from "to top", so 158° points down and slightly right: `(sin θ, -cos θ)`
+  /// in a y-down space, taken from `-v` to `+v`.
+  static const LinearGradient _ground = LinearGradient(
+    begin: Alignment(-0.37, -0.93),
+    end: Alignment(0.37, 0.93),
+    colors: <Color>[Color(0xFF1C2233), Color(0xFF0D1017)],
+  );
 
-  Color? get _groundColor {
-    switch (spec.kind) {
-      case CalloutKind.heroIr:
-        return PosterColors.cardHeroIr;
-      case CalloutKind.heroDe:
-        return PosterColors.cardHeroDe;
-      case CalloutKind.steel:
-      case CalloutKind.dark:
-        return null;
-    }
-  }
-
-  Gradient? get _groundGradient {
-    switch (spec.kind) {
-      case CalloutKind.steel:
-      case CalloutKind.dark:
-        // Each numbered card gets its own plate-face colour so they don't read
-        // as one repeated slab — blues echo the hero cards, 07/08/11 are a
-        // green family, 02/03 share a slate tone.
-        return PosterGradients.calloutFace(spec.index);
-      case CalloutKind.heroIr:
-      case CalloutKind.heroDe:
-        return null;
-    }
-  }
-
-  TextStyle _titleStyle(double f) {
-    final size = spec.titleSizeDesignPx;
-    if (spec.textDirection == TextDirection.rtl) {
-      return PosterType.cardTitleFa(f, size);
-    }
-    switch (spec.kind) {
-      case CalloutKind.heroIr:
-      case CalloutKind.heroDe:
-        if (size >= 40) {
-          return PosterType.cardTitleEnHero(f, size);
-        } else {
-          return PosterType.cardTitleEnSmall(f, size);
-        }
-      case CalloutKind.steel:
-      case CalloutKind.dark:
-        return PosterType.cardTitleEnSmall(f, size);
-    }
-  }
-
-  TextStyle _bodyStyle(double f) {
-    if (spec.textDirection == TextDirection.rtl) {
-      return PosterType.cardBodyFa(f, spec.bodySizeDesignPx);
-    }
-    return PosterType.cardBodyEn(f, spec.bodySizeDesignPx);
-  }
-
-  Widget _buildEyebrow(PosterMetrics metrics, TextDirection direction) {
-    // A soft pill instead of bare tracked-out caps — a small nod to the
-    // "chip" pattern common to friendly, modern UI cards.
-    return Padding(
-      padding: EdgeInsets.only(bottom: metrics.px(12)),
-      child: Align(
-        alignment: spec.isCentered
-            ? Alignment.center
-            : (direction == TextDirection.rtl ? Alignment.centerRight : Alignment.centerLeft),
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            color: PosterColors.inkDisplay1.withValues(alpha: 0.10),
-            borderRadius: BorderRadius.circular(metrics.px(999)),
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
+      decoration: BoxDecoration(
+        gradient: _ground,
+        border: Border.all(color: N.n800),
+        borderRadius: BorderRadius.circular(NRadius.lg),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            spec.kicker.toUpperCase(),
+            style: NType.kicker.copyWith(
+              fontSize: 9,
+              letterSpacing: 0.10 * 9,
+              color: N.accent300,
+            ),
           ),
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: metrics.px(10), vertical: metrics.px(5)),
-            child: Text(spec.eyebrow, style: PosterType.eyebrow(metrics.f), textDirection: direction),
+          SizedBox(height: style.afterKicker),
+          Text(
+            spec.title,
+            style: TextStyle(
+              fontFamily: NType.archivo,
+              fontWeight: FontWeight.w800,
+              fontSize: style.title,
+              height: style.titleHeight,
+              letterSpacing: -0.02 * style.title,
+              color: N.n100,
+            ),
           ),
+          if (spec.body != null) ...<Widget>[
+            SizedBox(height: style.afterTitle),
+            Text(
+              spec.body!,
+              style: TextStyle(
+                fontFamily: NType.archivo,
+                fontSize: style.body,
+                height: style.bodyHeight,
+                color: N.n400,
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+/// The design's `pg-rise` entrance: 10px up and transparent, to place and
+/// opaque, over 0.45s of `ease`.
+///
+/// A [TweenAnimationBuilder] rather than a controller because it plays once,
+/// when the cards are first built, and nothing ever replays it: the callouts
+/// no longer change with the device the stage is showing.
+class CalloutRise extends StatelessWidget {
+  const CalloutRise({super.key, required this.child});
+
+  final Widget child;
+
+  static const Duration _duration = Duration(milliseconds: 450);
+
+  @override
+  Widget build(BuildContext context) {
+    return TweenAnimationBuilder<double>(
+      tween: Tween<double>(begin: 0, end: 1),
+      duration: _duration,
+      curve: Curves.ease,
+      builder: (BuildContext context, double t, Widget? child) => Opacity(
+        opacity: t.clamp(0.0, 1.0),
+        child: Transform.translate(offset: Offset(0, 10 * (1 - t)), child: child),
+      ),
+      child: child,
+    );
+  }
+}
+
+/// The three cards floating over the device stage, each placed by its
+/// fractions of this box — the design's `position: absolute; left: {{c.x}}%`.
+///
+/// Unclipped on purpose: the top card hangs a little above the stage and the
+/// bottom one below it, exactly as the reference render has them. Also
+/// non-interactive — the stage underneath carries a live keypad and a laptop
+/// deck, and a decorative card must not eat their taps.
+class CalloutLayer extends StatelessWidget {
+  const CalloutLayer({super.key, this.specs = calloutSpecs});
+
+  final List<CalloutSpec> specs;
+
+  @override
+  Widget build(BuildContext context) {
+    return IgnorePointer(
+      child: CalloutRise(
+        child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
+            final double width = constraints.maxWidth;
+            final double height = constraints.maxHeight;
+            return Stack(
+              clipBehavior: Clip.none,
+              children: <Widget>[
+                for (final CalloutSpec spec in specs)
+                  Positioned(
+                    left: width * spec.anchorFx,
+                    top: height * spec.anchorFy,
+                    width: width * spec.widthFx,
+                    child: CalloutCard(spec: spec),
+                  ),
+              ],
+            );
+          },
         ),
       ),
     );
   }
+}
 
-  Widget _buildTitle(PosterMetrics metrics, TextDirection direction) {
-    final baseStyle = _titleStyle(metrics.f);
+/// `.pg-feat`: the same three cards as a plain stacked list, `gap: 10px`.
+///
+/// What the design does with them below the hero breakpoint, where there is no
+/// stage beside the text to float over and an absolutely-placed card would
+/// land on the headline.
+class CalloutList extends StatelessWidget {
+  const CalloutList({super.key, this.specs = calloutSpecs, this.padding = EdgeInsets.zero});
 
-    if (spec.title.startsWith(RegExp(r'\d'))) {
-      final digitMatch = RegExp(r'^(\d+)(.*)').firstMatch(spec.title);
-      if (digitMatch != null) {
-        final digit = digitMatch.group(1)!;
-        final rest = digitMatch.group(2)!;
-        final double badgeSize = (baseStyle.fontSize ?? 24) * 1.05;
+  final List<CalloutSpec> specs;
 
-        // A rounded accent chip in front of the number instead of a hard red
-        // digit — reads as a friendly numbered-feature badge.
-        return RichText(
-          textAlign: spec.isCentered ? TextAlign.center : TextAlign.start,
-          text: TextSpan(
-            children: [
-              WidgetSpan(
-                alignment: PlaceholderAlignment.middle,
-                child: Padding(
-                  padding: EdgeInsets.only(right: metrics.px(8)),
-                  child: Container(
-                    width: badgeSize,
-                    height: badgeSize,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: PosterColors.accent,
-                      borderRadius: BorderRadius.circular(badgeSize * 0.32),
-                    ),
-                    child: Text(
-                      digit,
-                      style: baseStyle.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w900,
-                        fontSize: badgeSize * 0.62,
-                        height: 1.0,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              TextSpan(text: rest, style: baseStyle),
-            ],
-          ),
-        );
-      }
-    }
-
-    return Text(
-      spec.title,
-      style: baseStyle,
-      textAlign: spec.isCentered
-          ? TextAlign.center
-          : (direction == TextDirection.rtl ? TextAlign.right : TextAlign.left),
-    );
-  }
-
-  Color _dashedRuleColor(PosterMetrics metrics) {
-    switch (spec.kind) {
-      case CalloutKind.heroIr:
-      case CalloutKind.heroDe:
-        return PosterColors.inkDisplay3.withValues(alpha: 0.5);
-      case CalloutKind.steel:
-        return PosterColors.inkDisplay3.withValues(alpha: 0.5);
-      case CalloutKind.dark:
-        return PosterColors.inkDisplay3.withValues(alpha: 0.4);
-    }
-  }
-
-  /// Title boxed by an L of dashed rule — vertical leg down its right edge,
-  /// horizontal leg along its bottom — with the body flowing around it: the
-  /// first lines sit in the column right of the vertical leg, the rest run
-  /// full width under the horizontal one.
-  Widget _buildLRuleBody(PosterMetrics metrics, TextDirection direction) {
-    final Color ruleColor = _dashedRuleColor(metrics);
-    final TextStyle bodyStyle = _bodyStyle(metrics.f);
-    final Widget titleWithEyebrow = Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: direction == TextDirection.rtl ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-      children: [_buildEyebrow(metrics, direction), _buildTitle(metrics, direction)],
-    );
-    final Widget title = DashedLBorder(
-      color: ruleColor,
-      child: Directionality(textDirection: direction, child: titleWithEyebrow),
-    );
-
-    if (spec.body == null) return title;
-
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) {
-        // The L sizes itself to the title, so measure the title to learn how
-        // wide the notch the body has to flow around is.
-        final TextPainter titlePainter = TextPainter(
-          text: TextSpan(text: spec.title, style: _titleStyle(metrics.f)),
-          textDirection: direction,
-        )..layout();
-        final double notchWidth = titlePainter.width + metrics.px(DashedLBorder.defaultInset + 2);
-
-        final double gap = metrics.px(18);
-        final double trailing = spec.hasEuBadge ? metrics.px(30) : 0;
-        final double columnWidth = constraints.maxWidth - notchWidth - gap - trailing;
-
-        final int split = columnWidth <= 0
-            ? 0
-            : _splitBodyAt(text: spec.body!, style: bodyStyle, direction: direction, width: columnWidth);
-        final String beside = spec.body!.substring(0, split).trimRight();
-        final String below = spec.body!.substring(split).trimLeft();
-
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            // Stretched so the L's legs run to the bottom of whichever is
-            // taller, title or the lines beside it — no dead space under the
-            // short side before the full-width block picks up.
-            IntrinsicHeight(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  title,
-                  SizedBox(width: gap),
-                  if (beside.isNotEmpty)
-                    SizedBox(
-                      width: columnWidth,
-                      child: Directionality(
-                        textDirection: direction,
-                        child: Text(beside, style: bodyStyle),
-                      ),
-                    ),
-                ],
-              ),
-            ),
-            if (below.isNotEmpty)
-              Padding(
-                padding: EdgeInsets.only(top: metrics.px(6), right: trailing),
-                child: Directionality(
-                  textDirection: direction,
-                  child: Text(below, style: bodyStyle),
-                ),
-              ),
-          ],
-        );
-      },
-    );
-  }
-
-  /// Number of lines of the full-width block under the L, regardless of how
-  /// tall the L's notch is.
-  static const int _linesBelow = 2;
-
-  /// Index in [text] where the body has to drop below the L, keeping the
-  /// last [_linesBelow] lines (as wrapped at [width]) full width.
-  int _splitBodyAt({
-    required String text,
-    required TextStyle style,
-    required TextDirection direction,
-    required double width,
-  }) {
-    final TextPainter painter = TextPainter(
-      text: TextSpan(text: text, style: style),
-      textDirection: direction,
-    )..layout(maxWidth: width);
-
-    final List<LineMetrics> lines = painter.computeLineMetrics();
-    final int besideCount = lines.length - _linesBelow;
-    if (besideCount <= 0) return 0;
-
-    // End of the last beside line: probe just past its right edge.
-    return painter.getPositionForOffset(Offset(width, lines[besideCount - 1].baseline)).offset;
-  }
+  /// `padding: 0 18px 8px` in the phone panel; the wider stacked hero already
+  /// has its own 48px gutter and passes only the 8px bottom.
+  final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context) {
-    final metrics = PosterMetrics.of(context);
-    final direction = spec.textDirection;
-
-    Widget cardContent = Padding(
-      padding: EdgeInsets.fromLTRB(
-        metrics.px(28),
-        spec.isCentered ? metrics.px(22) : metrics.px(26),
-        metrics.px(28),
-        spec.isCentered ? metrics.px(22) : metrics.px(26),
+    return Padding(
+      padding: padding,
+      child: CalloutRise(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            for (final CalloutSpec spec in specs) ...<Widget>[
+              if (spec != specs.first) const SizedBox(height: 10),
+              CalloutCard(spec: spec, style: CalloutStyle.stacked),
+            ],
+          ],
+        ),
       ),
-      child: spec.hasLRule
-          ? _buildLRuleBody(metrics, direction)
-          : Column(
-              mainAxisAlignment: spec.isCentered ? MainAxisAlignment.center : MainAxisAlignment.start,
-              crossAxisAlignment: spec.isCentered
-                  ? CrossAxisAlignment.center
-                  : (direction == TextDirection.rtl ? CrossAxisAlignment.end : CrossAxisAlignment.start),
-              children: <Widget>[
-                // Eyebrow label
-                Directionality(textDirection: direction, child: _buildEyebrow(metrics, direction)),
-                // Title
-                Directionality(textDirection: direction, child: _buildTitle(metrics, direction)),
-                if (!spec.isCentered) SizedBox(height: metrics.px(16)),
-
-                // Dashed rule
-                if (spec.hasDashedRule && !spec.hasDivider) DashedRule.thin(color: _dashedRuleColor(metrics)),
-                if (spec.hasDivider) const TwoToneDivider(),
-
-                if (!spec.isCentered) SizedBox(height: metrics.px(16)),
-
-                // Body
-                if (spec.body != null)
-                  Directionality(
-                    textDirection: direction,
-                    child: Text(
-                      spec.body!,
-                      style: _bodyStyle(metrics.f),
-                      textAlign: direction == TextDirection.rtl ? TextAlign.right : TextAlign.left,
-                    ),
-                  ),
-
-                // Footer (card 05)
-                if (spec.hasFooter) ...[SizedBox(height: metrics.px(12)), const IrFlagFooter()],
-              ],
-            ),
     );
-
-    // Build decorations
-    if (spec.hasIrFlag) {
-      // Card 01
-      cardContent = Stack(
-        clipBehavior: Clip.none,
-        children: <Widget>[
-          cardContent,
-          Positioned(
-            left: metrics.px(22),
-            top: metrics.px(22),
-            bottom: metrics.px(22),
-            child: const IrFlagStrip(width: 26),
-          ),
-        ],
-      );
-    }
-
-    if (spec.hasFadedFlag) {
-      // Card 02
-      cardContent = Stack(
-        clipBehavior: Clip.none,
-        children: <Widget>[
-          cardContent,
-          Positioned(
-            right: metrics.px(20),
-            top: metrics.px(20),
-            bottom: metrics.px(20),
-            child: const FadedFlagStrip(width: 5),
-          ),
-        ],
-      );
-    }
-
-    if (spec.hasEuBadge) {
-      // Card 09
-      cardContent = Stack(
-        clipBehavior: Clip.none,
-        children: <Widget>[
-          cardContent,
-          Positioned(right: metrics.px(14), top: metrics.px(22), child: const EuBadgeColumn(width: 34)),
-        ],
-      );
-    }
-
-    if (spec.hasFlareTag) {
-      // Card 09 — pulled in from the edge now that the tag is a rounded
-      // pill; flush-right read fine for a hard-edged banner but a pill
-      // wants a little breathing room before the card's own rounded corner.
-      cardContent = Stack(
-        children: <Widget>[
-          cardContent,
-          Positioned(right: metrics.px(16), bottom: metrics.px(16), child: const RedTag()),
-        ],
-      );
-    }
-
-    if (spec.hasDeBranding) {
-      // Card 10
-      cardContent = Stack(
-        clipBehavior: Clip.none,
-        children: <Widget>[
-          cardContent,
-          Positioned(
-            right: metrics.px(16),
-            top: metrics.px(16),
-            bottom: metrics.px(16),
-            child: const DeStrip(width: 8),
-          ),
-        ],
-      );
-    }
-
-    // Main card — a soft, rounded UI-style panel instead of the machined
-    // bevel-and-screws plaque.
-    final Widget card = SoftPanel(
-      groundColor: _groundColor,
-      groundGradient: _groundGradient,
-      tintedShadow: _shadowTint,
-      child: SizedBox(width: metrics.px(widthDesignPx ?? spec.widthFx * 1920), child: cardContent),
-    );
-
-    return card;
   }
 }

@@ -1,207 +1,73 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
-enum CalloutKind { heroIr, heroDe, steel, dark }
-
-enum CalloutSide { left, right }
-
+/// One of the three cards that float over the showcase's device stage.
+///
+/// The old poster carried nine of these across three per-device sets, each
+/// with its own flag strip, EU badge, tag and bevel. Nocturne has three cards
+/// and one panel: a kicker, a title, an optional body (see [CalloutCard]).
+@immutable
 class CalloutSpec {
   const CalloutSpec({
-    required this.index,
-    required this.kind,
-    required this.side,
-    required this.textDirection,
+    required this.kicker,
+    required this.title,
+    this.body,
     required this.anchorFx,
     required this.anchorFy,
     required this.widthFx,
-    required this.eyebrow,
-    required this.title,
-    this.body,
-    required this.titleSizeDesignPx,
-    required this.bodySizeDesignPx,
-    this.hasIrFlag = false,
-    this.hasFadedFlag = false,
-    this.hasEuBadge = false,
-    this.hasFlareTag = false,
-    this.hasDivider = false,
-    this.hasFooter = false,
-    this.hasDeBranding = false,
-    this.hasDashedRule = true,
-    this.hasLRule = false,
-    this.isCentered = false,
   });
 
-  final int index;
-  final CalloutKind kind;
-  final CalloutSide side;
-  final TextDirection textDirection;
+  /// The MartianMono line above the title. Uppercased at paint time, the way
+  /// `text-transform: uppercase` would.
+  final String kicker;
+
+  final String title;
+
+  /// Only the first card has one; the design's `sc-if` drops the paragraph on
+  /// the other two.
+  final String? body;
+
+  /// The card's left edge and top edge as fractions of the device stage, and
+  /// its width as a fraction of the stage's — the design's
+  /// `position:absolute; left:{{c.x}}%; top:{{c.y}}%; width:{{c.w}}%`
+  /// (`Plate Gallery.dc.html` line 140).
+  ///
+  /// Fractions rather than pixels so the cards keep their place against the
+  /// device as the stage grows with the window, and so the stacked layouts can
+  /// ignore them entirely.
   final double anchorFx;
   final double anchorFy;
   final double widthFx;
-  final String eyebrow;
-  final String title;
-  final String? body;
-  final double titleSizeDesignPx;
-  final double bodySizeDesignPx;
-  final bool hasIrFlag;
-  final bool hasFadedFlag;
-  final bool hasEuBadge;
-  final bool hasFlareTag;
-  final bool hasDivider;
-  final bool hasFooter;
-  final bool hasDeBranding;
-  final bool hasDashedRule;
-
-  /// Wraps the title in an L-shaped dashed rule — down its right edge and
-  /// along its bottom — with the body set to the right of the vertical leg.
-  final bool hasLRule;
-  final bool isCentered;
 }
 
-const Map<DeviceType, List<CalloutSpec>> calloutSets = {
-  DeviceType.desktop: [
-    CalloutSpec(
-      index: 1,
-      kind: CalloutKind.heroIr,
-      side: CalloutSide.left,
-      textDirection: TextDirection.ltr,
-      anchorFx: 0.402,
-      anchorFy: 0.122,
-      widthFx: 0.279,
-      eyebrow: 'COUNTRIES',
-      title: '5 countries\none widget',
-      body: 'Iranian, Palestinian, Yemeni, Lebanese and German plates all ship — same widget, one const swapped.',
-      titleSizeDesignPx: 62,
-      bodySizeDesignPx: 24,
-      hasIrFlag: true,
-    ),
-    CalloutSpec(
-      index: 3,
-      kind: CalloutKind.steel,
-      side: CalloutSide.left,
-      textDirection: TextDirection.ltr,
-      anchorFx: 0.862,
-      anchorFy: 0.122,
-      widthFx: 0.182,
-      eyebrow: 'VARIANTS',
-      title: 'Cars and motorbikes',
-      body: null,
-      titleSizeDesignPx: 36,
-      bodySizeDesignPx: 20,
-      hasDashedRule: false,
-    ),
-    CalloutSpec(
-      index: 4,
-      kind: CalloutKind.dark,
-      side: CalloutSide.left,
-      textDirection: TextDirection.ltr,
-      anchorFx: 0.560,
-      anchorFy: 0.760,
-      widthFx: 0.197,
-      eyebrow: 'OPEN SOURCE',
-      title: 'Iran Made\nOpen Source',
-      body: null,
-      titleSizeDesignPx: 34,
-      bodySizeDesignPx: 0,
-      hasDashedRule: false,
-      isCentered: true,
-    ),
-  ],
-  DeviceType.mobile: [
-    CalloutSpec(
-      index: 5,
-      kind: CalloutKind.heroIr,
-      side: CalloutSide.left,
-      textDirection: TextDirection.ltr,
-      anchorFx: 0.505,
-      anchorFy: 0.420,
-      widthFx: 0.201,
-      eyebrow: 'SETTINGS',
-      title: 'Every part of the plate\nis customizable',
-      body: 'Color, size, flag, and keyboard behavior are all in your hands.',
-      titleSizeDesignPx: 50,
-      bodySizeDesignPx: 23,
-      hasDivider: true,
-      hasFooter: true,
-    ),
-    CalloutSpec(
-      index: 6,
-      kind: CalloutKind.steel,
-      side: CalloutSide.right,
-      textDirection: TextDirection.ltr,
-      anchorFx: 0.863,
-      anchorFy: 0.320,
-      widthFx: 0.127,
-      eyebrow: 'VALIDATION',
-      title: 'Checks as\nyou type',
-      body: 'Plate rules are verified field by field.',
-      titleSizeDesignPx: 34,
-      bodySizeDesignPx: 19,
-    ),
-    CalloutSpec(
-      index: 7,
-      kind: CalloutKind.dark,
-      side: CalloutSide.right,
-      textDirection: TextDirection.ltr,
-      anchorFx: 0.521,
-      anchorFy: 0.150,
-      widthFx: 0.159,
-      eyebrow: 'SPECIAL CASES',
-      title: 'Special Cases Handled',
-      body: 'Those commonly overlooked.',
-      titleSizeDesignPx: 34,
-      bodySizeDesignPx: 19,
-    ),
-  ],
-  DeviceType.tablet: [
-    CalloutSpec(
-      index: 9,
-      kind: CalloutKind.heroDe,
-      side: CalloutSide.left,
-      textDirection: TextDirection.ltr,
-      anchorFx: 0.26,
-      anchorFy: 0.18,
-      widthFx: 0.37,
-      eyebrow: 'RULES',
-      title: 'Live\nvalidation',
-      body: 'Forbidden district and serial combinations flare red as you type: before submit, not after.',
-      titleSizeDesignPx: 64,
-      bodySizeDesignPx: 30,
-      hasEuBadge: true,
-      hasFlareTag: true,
-    ),
-    CalloutSpec(
-      index: 11,
-      kind: CalloutKind.dark,
-      side: CalloutSide.left,
-      textDirection: TextDirection.ltr,
-      anchorFx: 0.660,
-      anchorFy: 0.070,
-      widthFx: 0.191,
-      eyebrow: 'FEATURE',
-      title: 'Both plate input\nand its display',
-      body: null,
-      titleSizeDesignPx: 34,
-      bodySizeDesignPx: 0,
-      hasDashedRule: false,
-      isCentered: true,
-    ),
-    CalloutSpec(
-      index: 12,
-      kind: CalloutKind.dark,
-      side: CalloutSide.left,
-      textDirection: TextDirection.ltr,
-      anchorFx: 0.560,
-      anchorFy: 0.830,
-      widthFx: 0.191,
-      eyebrow: 'SCALE',
-      title: 'Everything is customizable',
-      body: null,
-      titleSizeDesignPx: 34,
-      bodySizeDesignPx: 0,
-      hasDashedRule: false,
-      isCentered: true,
-    ),
-  ],
-};
-
-enum DeviceType { desktop, mobile, tablet }
+/// The three cards, in the design's order.
+///
+/// The percentages are read off the reference render of the showcase at
+/// 1440×900 (`newdesign_migration/pictures/target/desktop`), measured against
+/// the `.pg-stage` box: the first card sits on the stage's left edge level
+/// with the laptop's screen, and the other two stack down its right edge,
+/// clearing the device between them.
+const List<CalloutSpec> calloutSpecs = <CalloutSpec>[
+  CalloutSpec(
+    kicker: 'RULES',
+    title: 'Live validation',
+    body: 'Forbidden district and serial combinations flare red as you type: '
+        'before submit, not after.',
+    anchorFx: 0.01,
+    anchorFy: 0.16,
+    widthFx: 0.27,
+  ),
+  CalloutSpec(
+    kicker: 'FEATURE',
+    title: 'Both plate input and its display',
+    anchorFx: 0.74,
+    anchorFy: 0.08,
+    widthFx: 0.19,
+  ),
+  CalloutSpec(
+    kicker: 'SCALE',
+    title: 'Everything is customizable',
+    anchorFx: 0.72,
+    anchorFy: 0.80,
+    widthFx: 0.19,
+  ),
+];

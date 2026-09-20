@@ -23,10 +23,9 @@ final CatalogueStats _catalogueStats = CatalogueStats.of(gallerySources);
 /// The design's outer section is `min-height: 100vh` over
 /// `grid-template-rows: 1fr auto` (`Plate Gallery.dc.html` line 85): the hero
 /// takes whatever height is left and the stat band is pinned under it. This
-/// widget is only that composition — backdrop, hero, stat band, callouts —
-/// with the pieces it does not own yet left as empty slots:
+/// widget is only that composition — backdrop, hero, stat band — with the
+/// pieces it does not own yet left as they were:
 ///
-/// - the **callouts** are sk8, and float over the device stage;
 /// - the **device frames** are sk9 and the **backdrop** sk10, so both are
 ///   still the old poster's, deliberately.
 class ShowcaseScreen extends StatefulWidget {
@@ -72,20 +71,14 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // The stage keeps its own RepaintBoundary inside; this Stack is where
-    // sk8's callouts land, floating over it the way the design's
-    // `position:absolute; left:{{c.x}}%` cards do.
-    final Widget stage = Stack(
-      fit: StackFit.expand,
-      clipBehavior: Clip.none,
-      children: <Widget>[
-        DeviceStage(
-          cycleController: _cycle,
-          onFrameDeviceChanged: _onFrameDeviceChanged,
-          onPhaseChanged: _onPhaseChanged,
-        ),
-        // Callouts slot — sk8.
-      ],
+    // Just the stage. The callouts float over the whole `.pg-stage` box —
+    // picker and stamp included — and turn into a stacked list when the hero
+    // collapses, so the hero owns them rather than this screen wrapping them
+    // into `stage`.
+    final Widget stage = DeviceStage(
+      cycleController: _cycle,
+      onFrameDeviceChanged: _onFrameDeviceChanged,
+      onPhaseChanged: _onPhaseChanged,
     );
 
     final Widget hero = ShowcaseHero(
