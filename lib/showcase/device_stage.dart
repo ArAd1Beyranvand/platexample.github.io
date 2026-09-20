@@ -14,7 +14,12 @@ import '../showcase/plate_typist.dart';
 import '../widgets/plate_display.dart';
 
 class DeviceStage extends StatefulWidget {
-  const DeviceStage({super.key, this.onFrameDeviceChanged, this.onPhaseChanged});
+  const DeviceStage({super.key, this.cycleController, this.onFrameDeviceChanged, this.onPhaseChanged});
+
+  /// The handle the hero's segmented control pins a device with. Supplying one
+  /// hands its lifetime to the caller; omitting it leaves the stage cycling on
+  /// its own with a controller it creates and disposes itself.
+  final DeviceCycleController? cycleController;
 
   /// Fired the instant a hop starts, with the incoming device — i.e. the same
   /// moment [_DeviceStageState._frameDevice] flips, before the plate content
@@ -30,7 +35,7 @@ class DeviceStage extends StatefulWidget {
 }
 
 class _DeviceStageState extends State<DeviceStage> {
-  final DeviceCycleController _controller = DeviceCycleController();
+  late final DeviceCycleController _controller = widget.cycleController ?? DeviceCycleController();
   final PlateTypist _typist = PlateTypist();
 
   /// Mirrors [PlateTypist.activeKey] as a value the keycaps and the keypad can
@@ -163,7 +168,10 @@ class _DeviceStageState extends State<DeviceStage> {
     if (mirror != null) _plate.removeListener(mirror);
     _secondary?.dispose();
     _plate.dispose();
-    _controller.dispose();
+    // Only the one this stage made: a caller-supplied controller outlives the
+    // stage (the hero rebuilds this subtree on every resize) and is disposed
+    // by whoever created it.
+    if (widget.cycleController == null) _controller.dispose();
     _generation++;
     super.dispose();
   }

@@ -62,7 +62,7 @@ class _GalleryShellScreenState extends State<GalleryShellScreen> {
     final Widget body = IndexedStack(
       index: selected,
       children: <Widget>[
-        const ShowcaseScreen(),
+        ShowcaseScreen(onOpenTab: widget.onTabSelected),
         DiscoverScreen(onOpenPlate: _openPlate, onOpenCountry: _openCountry),
         const AboutScreen(),
       ],

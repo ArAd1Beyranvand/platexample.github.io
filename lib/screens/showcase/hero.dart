@@ -1,0 +1,441 @@
+import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import '../../device_preview/device_config.dart';
+import '../../poster/chrome/poster_links.dart';
+import '../../theme/nocturne.dart';
+import '../../widgets/nocturne/n_button.dart';
+import '../../widgets/nocturne/n_pill.dart';
+import '../../widgets/nocturne/n_segmented.dart';
+
+/// The showcase's hero block: the masthead line, the headline, the paragraph,
+/// the two calls to action, and the device stage with its picker and stamp.
+///
+/// Transcribed from the `.pg-hero` block in `design_ref/Plate Gallery.dc.html`
+/// (lines 92–161) and its `max-width: 1180px` media query (lines 58–62). Two
+/// columns — `minmax(0,1.05fr) minmax(0,1fr)` with a 56px gap — collapsing to
+/// one under [NBreak.hero], text above the stage.
+///
+/// **The hero never grows past the height it is given.** The design's section
+/// is `min-height: 100vh` over `grid-template-rows: 1fr auto`, so the hero is
+/// the `1fr` row: it takes the space left over and the stage fills whatever
+/// remains inside it. An earlier pass let the column run to its natural height
+/// inside a scroll view, which turned the page into a long ribbon and pushed
+/// the device below the fold — the one thing every reference render of this
+/// screen shows *not* happening.
+///
+/// The device stage arrives as [stage] rather than being built here: sk9 owns
+/// the frames and sk10 the backdrop, and this prompt only gives the existing
+/// stage the column proportion and the chrome the design asks for.
+class ShowcaseHero extends StatelessWidget {
+  const ShowcaseHero({
+    super.key,
+    required this.device,
+    required this.onPickDevice,
+    required this.onOpenArchive,
+    required this.stage,
+  });
+
+  /// The device the stage is currently showing, which is what the picker
+  /// renders as selected. The hero owns none of it — the stage reports the
+  /// device back up as each hop starts.
+  final DeviceType device;
+
+  /// Picking a cell pins the stage to that device and stops the auto-cycle.
+  final ValueChanged<DeviceType> onPickDevice;
+
+  /// `Open the archive` — navigates to `/discover`.
+  final VoidCallback onOpenArchive;
+
+  /// The right column's content: the device stage, plus whatever floats over
+  /// it (sk8's callouts).
+  final Widget stage;
+
+  /// The design's own sentence, verbatim from line 99.
+  ///
+  /// Not derived from `gallerySources`: the registry carries country *names*
+  /// (`Iran`, `Palestine`), and this line wants demonyms. Deriving it would
+  /// mean shipping a demonym table, which is a hardcoded country list wearing
+  /// a lookup — so the design's wording stands, as the prompt allows.
+  static const String _paragraph =
+      'One widget, one const swapped: licence-plate fields that look and behave '
+      'like the real thing. Iranian, Palestinian, Yemeni, Lebanese and German '
+      'plates ship today, for cars and for motorbikes.';
+
+  /// Below this the hero is inside the design's 390×812 phone panel (or a
+  /// window no wider than one), and the stacked desktop metrics stop working:
+  /// a 56px headline wraps to three lines and a 48px gutter eats a quarter of
+  /// the column. The CSS has no rule for it because its media queries measure
+  /// the viewport, and the panel narrows a box inside one — so the panel's
+  /// proportions come from the reference render instead.
+  static const double _compactBreak = 560;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        // The media query measures the viewport; this measures the page
+        // column, which on a desktop window is the viewport less the 208px
+        // rail. Using the local width instead keeps the hero correct inside
+        // the forced mobile panel, which narrows its constraints without
+        // touching the window.
+        final double width = constraints.maxWidth;
+
+        final Widget content = switch (width) {
+          >= NBreak.hero => _wide(width),
+          >= _compactBreak => _stacked(),
+          _ => _compact(),
+        };
+
+        // `min-height: 100vh`, and nothing more: fill the height given, and
+        // grow past it only when the *text* genuinely does not fit — a window
+        // barely taller than the headline. The old gate scrolled on width
+        // instead, so every layout under 1180px became a ribbon with the
+        // device somewhere below the fold.
+        //
+        // [IntrinsicHeight] is what makes the distinction, and it is cheap
+        // here: the stage columns are [Stack]s of positioned children, whose
+        // intrinsic height is zero, so the measurement never descends into the
+        // device frames. Their floors are stated as constraints instead.
+        return SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: constraints.maxHeight),
+            child: IntrinsicHeight(child: content),
+          ),
+        );
+      },
+    );
+  }
+
+  /// `grid-template-columns: minmax(0,1.05fr) minmax(0,1fr); gap: 56px;
+  /// padding: 88px 0 56px 72px; align-items: center`.
+  Widget _wide(double width) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(72, 88, 0, 56),
+      child: Row(
+        // `align-items: center` is done by the [Align] below rather than by
+        // the Row: the stage column has to receive the row's full height —
+        // `.pg-stage` centres the device inside itself — and a centred Row
+        // would hand it a loose one and let it shrink to the device.
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Expanded(
+            flex: 105,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              // `max-width: 620px` on the left column.
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 620),
+                child: _HeroText(
+                  metrics: _HeroMetrics.wide(width),
+                  onOpenArchive: onOpenArchive,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: 56),
+          Expanded(
+            flex: 100,
+            // `.pg-hero-r { padding-right: 56px }`.
+            child: Padding(
+              padding: const EdgeInsets.only(right: 56),
+              // `.pg-stage { min-height: 420px }`. A floor, not a height: the
+              // row's own height wins wherever it is larger, which is every
+              // window the design is drawn at.
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(minHeight: _stageMin),
+                child: _Stage(stage: stage, device: device, onPickDevice: onPickDevice),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// `@media (max-width: 1180px)`: one column, `padding: 64px 48px 48px`,
+  /// `gap: 48px`, `align-items: start`, h1 56px.
+  Widget _stacked() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(48, 64, 48, 48),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          _HeroText(metrics: _HeroMetrics.stacked(), onOpenArchive: onOpenArchive),
+          const SizedBox(height: 48),
+          Expanded(
+            // Tight, so the measurement above reads [_stageMin] and stops
+            // there; [Expanded]'s own tight height overrides it in layout.
+            child: SizedBox(
+              height: _stageMin,
+              child: _Stage(stage: stage, device: device, onPickDevice: onPickDevice),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// The phone panel: text at panel scale, a rule edge to edge, and the device
+  /// taking every pixel left under it — cropped by the panel's bottom bar
+  /// rather than pushing the page taller, which is what the reference render
+  /// of this width shows.
+  ///
+  /// The picker and the stamp are dropped here, as they are in that render:
+  /// three cells and a 200px pill do not fit beside anything at 390px, and the
+  /// auto-cycle still walks the devices on its own.
+  Widget _compact() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.fromLTRB(18, 24, 18, 20),
+          child: _HeroText(metrics: _HeroMetrics.compact(), onOpenArchive: onOpenArchive),
+        ),
+        // Sized, so the intrinsic measurement does not descend into the rule's
+        // own LayoutBuilder, which has no intrinsics to give.
+        const SizedBox(height: 1, child: NRule()),
+        Expanded(child: SizedBox(height: _compactStageMin, child: ClipRect(child: stage))),
+      ],
+    );
+  }
+}
+
+/// `.pg-stage { min-height: 420px }`, and the phone panel's share of it.
+///
+/// Floors rather than heights: the stage takes the row it is in, and these
+/// only decide how short a window has to get before the hero stops shrinking
+/// the device and starts scrolling instead.
+const double _stageMin = 420;
+const double _compactStageMin = 220;
+
+/// `.pg-stage`: the device centred in its column, the device picker 22px under
+/// it, and the `IRAN MADE · OPEN SOURCE` stamp pinned to the column's
+/// bottom-left corner (`position: absolute; bottom: -6px; left: 16px`).
+class _Stage extends StatelessWidget {
+  const _Stage({required this.stage, required this.device, required this.onPickDevice});
+
+  final Widget stage;
+  final DeviceType device;
+  final ValueChanged<DeviceType> onPickDevice;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      // sk8's callouts hang outside this box on purpose.
+      clipBehavior: Clip.none,
+      children: <Widget>[
+        Positioned.fill(
+          // `padding: 56px 0 30px` — the 30px is what the stamp sits in.
+          child: Padding(
+            padding: const EdgeInsets.only(top: 56, bottom: 30),
+            child: Column(
+              children: <Widget>[
+                Expanded(child: stage),
+                const SizedBox(height: 22),
+                // `.pg-devdots`. The design renders these as three separate
+                // `radius: 999` buttons with no selected state; sk6 asks for
+                // the DS `.seg` instead, which is the same control with the
+                // selection the dots lack — and the widget sk11–sk14 reuse.
+                NSegmented<DeviceType>(
+                  value: device,
+                  onChanged: onPickDevice,
+                  options: const <NSegmentedOption<DeviceType>>[
+                    NSegmentedOption<DeviceType>(value: DeviceType.mobile, label: 'Mobile'),
+                    NSegmentedOption<DeviceType>(value: DeviceType.tablet, label: 'Tablet'),
+                    NSegmentedOption<DeviceType>(value: DeviceType.desktop, label: 'Desktop'),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+        const Positioned(
+          left: 16,
+          bottom: 0,
+          child: NPill(label: 'Iran made · open source'),
+        ),
+      ],
+    );
+  }
+}
+
+/// The type sizes and rhythm of the hero's text column at one width.
+///
+/// Three sets rather than one interpolated scale: the design gives exact
+/// values at two of them and the reference render gives the third, and a
+/// curve fitted through the lot would match none of them.
+@immutable
+class _HeroMetrics {
+  const _HeroMetrics({
+    required this.heading,
+    required this.masthead,
+    required this.paragraph,
+    required this.buttonsFillWidth,
+    required this.showMastheadRule,
+    required this.mastheadColor,
+    required this.afterMasthead,
+    required this.afterHeading,
+    required this.afterParagraph,
+  });
+
+  /// `font-size: clamp(52px, 5.6vw, 80px)`.
+  factory _HeroMetrics.wide(double width) => _HeroMetrics(
+        heading: (width * 0.056).clamp(52.0, 80.0),
+        masthead: 11,
+        paragraph: 20,
+        buttonsFillWidth: false,
+        showMastheadRule: true,
+        mastheadColor: N.n400,
+        afterMasthead: 40,
+        afterHeading: 28,
+        afterParagraph: 36,
+      );
+
+  factory _HeroMetrics.stacked() => const _HeroMetrics(
+        heading: 56,
+        masthead: 11,
+        paragraph: 20,
+        buttonsFillWidth: false,
+        showMastheadRule: true,
+        mastheadColor: N.n400,
+        afterMasthead: 40,
+        afterHeading: 28,
+        afterParagraph: 36,
+      );
+
+  factory _HeroMetrics.compact() => const _HeroMetrics(
+        heading: 40,
+        masthead: 10,
+        paragraph: 17,
+        buttonsFillWidth: true,
+        // The panel render drops the accent rule and tints the credit itself
+        // instead — there is no room for a 28px rule plus a 12px gap in a
+        // 354px column that the credit already fills.
+        showMastheadRule: false,
+        mastheadColor: N.accent300,
+        afterMasthead: 22,
+        afterHeading: 18,
+        afterParagraph: 24,
+      );
+
+  final double heading;
+  final double masthead;
+  final double paragraph;
+  final bool buttonsFillWidth;
+  final bool showMastheadRule;
+  final Color mastheadColor;
+  final double afterMasthead;
+  final double afterHeading;
+  final double afterParagraph;
+}
+
+/// The hero's left column, top to bottom: masthead, headline, paragraph,
+/// actions. Nothing else — the device picker and the stamp belong to the
+/// stage column, where the design puts them.
+class _HeroText extends StatelessWidget {
+  const _HeroText({required this.metrics, required this.onOpenArchive});
+
+  final _HeroMetrics metrics;
+  final VoidCallback onOpenArchive;
+
+  /// `Read the docs` goes to the package's pub.dev page — the docs this app
+  /// has always linked. The URL lives in [PosterLinks] and is read, not
+  /// restated.
+  Future<void> _openDocs() => launchUrl(
+    Uri.parse(PosterLinks.pubDevUrl),
+    mode: LaunchMode.externalApplication,
+  );
+
+  /// `.pg-actions`: `display: flex; gap: 12px; align-items: center`.
+  ///
+  /// A [Row] at every width the design draws two columns at, because that is
+  /// what the design does — it never wraps this pair, it stacks the hero
+  /// instead. In the phone panel the pair goes full-width and stacks, which is
+  /// what the render of that width shows and what a Row there cannot do: the
+  /// two buttons are together wider than the column they sit in.
+  Widget _actions() {
+    final NButton primary = NButton(
+      label: 'Open the archive',
+      variant: NButtonVariant.primary,
+      fontSize: 15,
+      padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 11),
+      onPressed: onOpenArchive,
+    );
+    final NButton secondary = NButton(
+      label: 'Read the docs',
+      fontSize: 15,
+      padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 11),
+      onPressed: _openDocs,
+    );
+
+    if (metrics.buttonsFillWidth) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[primary, const SizedBox(height: 12), secondary],
+      );
+    }
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[primary, const SizedBox(width: 12), secondary],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Row(
+          children: <Widget>[
+            // A 28×1px accent rule, then the credit in mono at +0.13em.
+            if (metrics.showMastheadRule) ...<Widget>[
+              Container(width: 28, height: 1, color: N.accent),
+              const SizedBox(width: 12),
+            ],
+            Flexible(
+              child: Text(
+                'ARAD BEYRANVAND — SOLE AUTHOR',
+                style: NType.kicker.copyWith(
+                  fontSize: metrics.masthead,
+                  letterSpacing: 0.13 * metrics.masthead,
+                  color: metrics.mastheadColor,
+                ),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: metrics.afterMasthead),
+        Text(
+          'Plate input\nfor the road.',
+          style: TextStyle(
+            fontFamily: NType.archivo,
+            fontWeight: FontWeight.w800,
+            fontSize: metrics.heading,
+            height: 0.92,
+            letterSpacing: -0.04 * metrics.heading,
+            color: N.n100,
+          ),
+        ),
+        SizedBox(height: metrics.afterHeading),
+        ConstrainedBox(
+          // `max-width: 46ch` at 20px Newsreader.
+          constraints: const BoxConstraints(maxWidth: 460),
+          child: Text(
+            ShowcaseHero._paragraph,
+            style: TextStyle(
+              // The one place the design leaves Archivo for the serif.
+              fontFamily: NType.serif,
+              fontSize: metrics.paragraph,
+              height: 1.5,
+              color: N.n300,
+            ),
+          ),
+        ),
+        SizedBox(height: metrics.afterParagraph),
+        _actions(),
+      ],
+    );
+  }
+}

@@ -4,13 +4,41 @@ import 'package:core_plate/core_plate.dart';
 import '../device_preview/device_config.dart';
 import 'demo_config.dart';
 
-/// Drives a [DeviceCycle] forward one device at a time.
+/// Drives a [DeviceCycle], either forward one device at a time or straight to
+/// a device the viewer asked for.
 ///
 /// Call [advance] to move the cycle to the next device; each call notifies
-/// listeners exactly once.
+/// listeners exactly once. Call [pin] to jump to a device *and* stop the
+/// automatic advance — the showcase hero's segmented control does this, and
+/// once a viewer has picked a form factor the cycle must not take it away
+/// again a few seconds later.
 class DeviceCycleController extends ChangeNotifier {
-  /// Advances the cycle to the next device.
-  void advance() => notifyListeners();
+  DeviceType? _pinned;
+  DeviceType? _target;
+
+  /// The device the cycle has been pinned to, or null while it is still
+  /// cycling on its own.
+  DeviceType? get pinned => _pinned;
+
+  /// The device the pending notification asks for, or null when it asks for
+  /// "whatever comes next". Read by [DeviceCycle] from inside the listener.
+  DeviceType? get target => _target;
+
+  /// Advances the cycle to the next device. A no-op once [pin] has been
+  /// called: the pin is the viewer's choice and outlives the demo's own
+  /// timing.
+  void advance() {
+    if (_pinned != null) return;
+    _target = null;
+    notifyListeners();
+  }
+
+  /// Jumps the cycle to [device] and stops it advancing on its own.
+  void pin(DeviceType device) {
+    _pinned = device;
+    _target = device;
+    notifyListeners();
+  }
 }
 
 /// The [PlateSpec] a given [device] should show: the phone demos the Iranian
@@ -63,9 +91,14 @@ class _DeviceCycleState extends State<DeviceCycle> {
 
   void _advance() {
     if (!mounted) return;
-    setState(() {
-      _index = (_index + 1) % widget.order.length;
-    });
+    final DeviceType? target = widget.controller.target;
+    final int next = target == null ? (_index + 1) % widget.order.length : widget.order.indexOf(target);
+    // A pin onto the device already showing, or onto one this cycle does not
+    // carry, leaves the cycle where it is. The pin itself has still taken
+    // effect — the controller stops advancing — so there is nothing to
+    // rebuild and no hop to report.
+    if (next < 0 || next == _index) return;
+    setState(() => _index = next);
     widget.onDeviceChanged?.call(widget.order[_index]);
   }
 

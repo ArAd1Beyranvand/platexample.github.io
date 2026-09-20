@@ -98,6 +98,10 @@ class _LinkButtonState extends State<_LinkButton> {
 }
 
 /// A wireframe cube — the pub.dev mark, redrawn per §6 (icon 18px).
+///
+/// Out of the widget tree since sk4 emptied [PosterLinks], like [_LinkButton]
+/// and [_OctocatIcon] below. sk15 deletes the lot.
+// ignore: unused_element
 class _CubeIcon extends StatelessWidget {
   const _CubeIcon({required this.color});
 
@@ -160,6 +164,7 @@ class _CubePainter extends CustomPainter {
 }
 
 /// A circled octocat — the GitHub mark, redrawn per §6 (icon 18px).
+// ignore: unused_element
 class _OctocatIcon extends StatelessWidget {
   const _OctocatIcon({required this.color});
 
