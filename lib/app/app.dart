@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../poster/poster_tokens.dart';
+import '../theme/nocturne_theme.dart';
 import 'app_router.dart';
 
 class PlateNumberShowcaseApp extends StatefulWidget {
@@ -26,17 +26,10 @@ class _PlateNumberShowcaseAppState extends State<PlateNumberShowcaseApp> {
     return MaterialApp.router(
       title: 'Plate Gallery',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        // Seeded from the nav accent, not the poster's violet: this scheme
-        // colours app chrome (ripples, selection, default Material widgets),
-        // which should sit in the project's blue family. The poster keeps
-        // PosterColors.accent for its own art.
-        colorSchemeSeed: PosterColors.navAccent,
-        brightness: Brightness.dark,
-        scaffoldBackgroundColor: PosterColors.pageBlack,
-        canvasColor: PosterColors.pageBlack,
-        useMaterial3: true,
-      ),
+      theme: nocturneTheme(),
+      darkTheme: nocturneTheme(),
+      themeMode: ThemeMode.dark,
+      scrollBehavior: NocturneScrollBehavior(),
       routerDelegate: _routerDelegate,
       routeInformationParser: const AppRouteParser(),
     );
