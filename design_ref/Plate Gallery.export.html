@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/nocturne-3f3a99e9-4727-4100-a8c9-4ab51064b2b5/styles.css">
+<script src="_ds/nocturne-3f3a99e9-4727-4100-a8c9-4ab51064b2b5/_ds_bundle.js"></script>
+<style>
+  @font-face { font-family: "Archivo"; src: url("assets/fonts/Archivo-latin.ttf") format("truetype"); font-weight: 100 900; font-display: swap; }
+  @font-face { font-family: "MartianMono"; src: url("assets/fonts/MartianMono-latin.ttf") format("truetype"); font-weight: 100 800; font-display: swap; }
+  @font-face { font-family: "Newsreader"; src: url("assets/fonts/Newsreader-latin.ttf") format("truetype"); font-weight: 200 800; font-display: swap; }
+  @font-face { font-family: "Vazirmatn"; src: url("assets/fonts/Vazirmatn-arabic.ttf") format("truetype"); font-weight: 100 900; font-display: swap; }
+  :root {
+    --color-bg: #050608;
+    --color-surface: #141926;
+    --color-text: #EAF0FB;
+    --color-divider: rgba(255,255,255,.10);
+    --color-neutral-100: #EAF0FB;
+    --color-neutral-200: #D6E1F1;
+    --color-neutral-300: #C4D0E2;
+    --color-neutral-400: #A5B4C7;
+    --color-neutral-500: #8592A3;
+    --color-neutral-600: #6A7484;
+    --color-neutral-700: #39414F;
+    --color-neutral-800: #232C42;
+    --color-neutral-900: #0E1219;
+    --color-accent: #7C5CFF;
+    --color-accent-300: #B9A7FF;
+    --color-accent-700: #4A3A93;
+    --color-accent-800: #2E2560;
+    --color-accent-900: #1A1540;
+    --font-heading: "Archivo", system-ui, sans-serif;
+    --font-body: "Archivo", system-ui, sans-serif;
+    --font-heading-weight: 800;
+    --shadow-sm: 0 0 0 1px rgba(255,255,255,.08);
+    --shadow-md: 0 0 0 1px rgba(255,255,255,.10), 0 10px 26px rgba(0,0,0,.70);
+    --shadow-lg: 0 0 0 1px rgba(255,255,255,.14), 0 26px 60px rgba(0,0,0,.80);
+  }
+  @keyframes pg-rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  @keyframes pg-tile { from { opacity: 0; } to { opacity: 1; } }
+  /* mobile is its own layout, not the desktop one squeezed */
+  .pg-main.pg-m { width: 390px; justify-self: center; margin: 0 auto; border-inline: 1px solid var(--color-divider); height: 100vh; }
+  .pg-scroll { scrollbar-width: none; -ms-overflow-style: none; }
+  .pg-scroll::-webkit-scrollbar { display: none; }
+  body { margin: 0; }
+  a { color: var(--color-accent); text-decoration: none; }
+  a:hover { color: var(--color-accent-300); }
+  @media (max-width: 1180px) {
+    .pg-hero { grid-template-columns: minmax(0,1fr) !important; padding: 64px 48px 48px 48px !important; gap: 48px !important; align-items: start !important; }
+    .pg-hero-r { padding-right: 0 !important; }
+    .pg-hero h1 { font-size: 56px !important; }
+  }
+  @media (max-width: 1040px) {
+    .pg-detail { grid-template-columns: minmax(0,1fr) !important; }
+    .pg-detail-main { padding: 48px 40px !important; }
+    .pg-aside { border-left: 0 !important; border-top: 1px solid var(--color-divider) !important; }
+    .pg-dhead { grid-template-columns: minmax(0,1fr) !important; align-items: start !important; }
+    .pg-group { grid-template-columns: minmax(0,1fr) !important; gap: 24px !important; }
+    .pg-discover { padding: 56px 40px 72px !important; }
+  }
+  @media (max-width: 760px) {
+    .pg-statband { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+  }
+</style>
+</helmet>
+<div style="display:grid;grid-template-columns:minmax(0,1fr) 208px;min-height:100vh;background:var(--color-bg);color:var(--color-text);font-family:var(--font-body);font-size:15px">
+
+  <main class="pg-main {{ mobileClass }}" style="min-width:0;position:relative;overflow:hidden">
+
+    <sc-if value="{{ onShowcaseD }}" hint-placeholder-val="{{ true }}">
+    <section data-screen-label="Showcase" style="min-height:100vh;display:grid;grid-template-rows:1fr auto;animation:pg-rise .5s ease both">
+      <div style="position:absolute;inset:0;overflow:hidden;pointer-events:none">
+        <div style="position:absolute;left:-14%;right:-14%;top:16%;height:62%;transform:rotate(-14deg);background:linear-gradient(180deg,#1b1d28 0%,#0d0e15 55%,#0a0b10 100%);box-shadow:0 -1px 0 rgba(233,233,237,.10), 0 1px 0 rgba(233,233,237,.06)"></div>
+        <div style="position:absolute;left:-14%;right:-14%;top:44%;height:2px;transform:rotate(-14deg);background:repeating-linear-gradient(to right, rgba(233,233,237,.30) 0 68px, transparent 68px 132px);opacity:.55"></div>
+        <div style="position:absolute;inset:0;background:radial-gradient(70% 52% at 62% 40%, color-mix(in srgb, var(--color-accent) 9%, transparent), transparent 74%)"></div>
+        <div style="position:absolute;inset:0;background:linear-gradient(180deg, transparent 40%, var(--color-bg) 96%)"></div>
+      </div>
+      <div class="pg-hero" style="position:relative;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:56px;padding:88px 0 56px 72px;align-items:center">
+        <div style="min-width:0;max-width:620px">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:40px">
+            <span style="width:28px;height:1px;background:var(--color-accent)"></span>
+            <span style="font-family:'MartianMono',ui-monospace,monospace;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--color-neutral-400)">Arad Beyranvand — sole author</span>
+          </div>
+          <h1 style="font-size:clamp(52px,5.6vw,80px);line-height:.92;letter-spacing:-.04em;font-weight:800;margin:0 0 28px">Plate input<br>for the road.</h1>
+          <p style="font-family:'Newsreader',Georgia,serif;font-size:20px;line-height:1.5;color:var(--color-neutral-300);max-width:46ch;margin:0 0 36px;text-wrap:pretty">One widget, one const swapped: licence-plate fields that look and behave like the real thing. Iranian, Palestinian, Yemeni, Lebanese and German plates ship today, for cars and for motorbikes.</p>
+          <div class="pg-actions" style="display:flex;gap:12px;align-items:center">
+            <button type="button" class="btn btn-primary" style="font-size:15px;padding:11px 22px" onClick="{{ goDiscover }}">Open the archive</button>
+            <button type="button" class="btn btn-secondary" style="font-size:15px;padding:11px 22px">Read the docs</button>
+          </div>
+        </div>
+
+        <div class="pg-hero-r" style="min-width:0;padding-right:56px;position:relative">
+          <div class="pg-stage" style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:420px;padding:56px 0 30px">
+            <div style="position:relative;display:flex;flex-direction:column;align-items:center">
+              <div style="width:{{ deviceW }}px;height:{{ deviceH }}px;border-radius:{{ deviceR }};padding:{{ deviceBezel }};background:linear-gradient(160deg,#1a1c24,#0a0b10);box-shadow:var(--shadow-md);transition:width .7s cubic-bezier(.2,.8,.2,1),height .7s cubic-bezier(.2,.8,.2,1),border-radius .7s cubic-bezier(.2,.8,.2,1);position:relative">
+                <div style="width:100%;height:100%;border-radius:{{ deviceSR }};background:#05060a;position:relative;overflow:hidden;transition:border-radius .7s cubic-bezier(.2,.8,.2,1)">
+                  <sc-if value="{{ hasNotch }}" hint-placeholder-val="{{ true }}">
+                    <span style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:{{ notchW }}px;height:{{ notchH }}px;border-radius:0 0 {{ notchR }} {{ notchR }};background:#0a0b10"></span>
+                  </sc-if>
+                </div>
+              </div>
+              <div style="width:{{ deviceDeckW }}px;height:{{ deviceDeckH }}px;border-radius:0 0 9px 9px;background:linear-gradient(180deg,#22242e,#101119);transition:width .7s cubic-bezier(.2,.8,.2,1),height .7s cubic-bezier(.2,.8,.2,1)"></div>
+            </div>
+
+            <div class="pg-devdots" style="display:flex;gap:6px;margin-top:22px">
+              <sc-for list="{{ deviceDots }}" as="d" hint-placeholder-count="3">
+                <button type="button" onClick="{{ d.pick }}" style="cursor:pointer;background:transparent;border:1px solid var(--color-neutral-800);border-radius:999px;padding:5px 12px;font-family:'MartianMono',ui-monospace,monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-500)" style-hover="color:var(--color-neutral-200)">{{ d.label }}</button>
+              </sc-for>
+            </div>
+
+            <div key="{{ deviceKey }}" class="pg-callout" style="position:absolute;top:14px;left:-28px;width:212px;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-md)">
+              <span class="pg-tiles" style="position:absolute;inset:0;display:block">{{ tilesA }}</span>
+              <div style="position:relative;padding:14px 16px;animation:pg-rise .45s ease .35s both">
+                <div style="font-family:'MartianMono',ui-monospace,monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-accent-300)">Countries</div>
+                <div style="font-size:17px;margin-top:8px;color:var(--color-neutral-100)">5 packages</div>
+                <p style="margin:6px 0 0;font-family:'Newsreader',Georgia,serif;font-size:14px;line-height:1.45;color:var(--color-neutral-400)">Iran, Palestine, Yemen, Lebanon and Germany — plus Bahrain and Azerbaijan inside iran_plate.</p>
+              </div>
+            </div>
+            <div key="{{ deviceKey }}" class="pg-callout" style="position:absolute;top:130px;right:-44px;width:172px;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-md)">
+              <span class="pg-tiles" style="position:absolute;inset:0;display:block">{{ tilesB }}</span>
+              <div style="position:relative;padding:14px 16px;animation:pg-rise .45s ease .4s both">
+                <div style="font-family:'MartianMono',ui-monospace,monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-neutral-500)">Now showing</div>
+                <div style="font-size:16px;margin-top:8px;line-height:1.3;color:var(--color-neutral-100)">{{ device.label }}</div>
+              </div>
+            </div>
+            <div class="pg-stamp" style="position:absolute;bottom:-6px;left:16px;display:flex;align-items:center;gap:10px;border:1px solid var(--color-neutral-800);border-radius:999px;padding:8px 14px;background:rgba(18,20,30,.92)">
+              <span style="width:6px;height:6px;border-radius:999px;background:var(--color-accent)"></span>
+              <span style="font-family:'MartianMono',ui-monospace,monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-300)">Iran made · open source</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pg-statband" style="position:relative;z-index:1;border-top:1px solid var(--color-divider);display:grid;grid-template-columns:repeat(4,minmax(0,1fr))">
+        <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+          <div style="padding:26px 32px 30px 0;margin-left:72px;border-left:1px solid var(--color-divider);padding-left:24px">
+            <div style="font-size:34px;font-weight:800;letter-spacing:-.025em;line-height:1">{{ s.n }}</div>
+            <div style="font-family:'MartianMono',ui-monospace,monospace;font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--color-neutral-500);margin-top:8px">{{ s.label }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+    </sc-if>
+
+    <sc-if value="{{ onDiscoverD }}" hint-placeholder-val="{{ false }}">
+    <section data-screen-label="Discover" class="pg-discover" style="padding:72px 64px 96px 72px;animation:pg-rise .4s ease both">
+      <header class="pg-dhead" style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:32px 48px;align-items:end;padding-bottom:28px;border-bottom:1px solid var(--color-divider)">
+        <div style="min-width:0;max-width:640px">
+          <div style="font-family:'MartianMono',ui-monospace,monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-accent-300);margin-bottom:18px">02 — Discover</div>
+          <h2 style="font-size:clamp(34px,3.6vw,48px);line-height:.95;letter-spacing:-.035em;font-weight:800;margin:0 0 16px">Plate archive</h2>
+          <p style="font-family:'Newsreader',Georgia,serif;font-size:18px;line-height:1.5;color:var(--color-neutral-400);margin:0;text-wrap:pretty">Every licence plate the packages in this repo can draw. A plate is a geometry, a livery and a country block — so two of these can share a spec and still be different plates.</p>
+        </div>
+        <div style="display:flex;gap:36px;padding-bottom:6px;flex-wrap:wrap">
+          <sc-for list="{{ stats }}" as="s" hint-placeholder-count="3">
+            <div>
+              <div style="font-size:26px;font-weight:800;line-height:1;letter-spacing:-.025em">{{ s.n }}</div>
+              <div style="font-family:'MartianMono',ui-monospace,monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-500);margin-top:7px">{{ s.label }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </header>
+
+      <sc-for list="{{ groups }}" as="g" hint-placeholder-count="2">
+        <div class="pg-group" style="display:grid;grid-template-columns:220px minmax(0,1fr);gap:48px;padding:44px 0;border-bottom:1px solid var(--color-divider)">
+          <div>
+            <h3 style="font-size:24px;font-weight:800;letter-spacing:-.025em;margin:0 0 10px">{{ g.country }}</h3>
+            <div style="font-family:'MartianMono',ui-monospace,monospace;font-size:11px;letter-spacing:.1em;color:var(--color-neutral-500);line-height:1.9">{{ g.pkg }}<br>{{ g.count }}</div>
+            <div style="font-family:'Newsreader',Georgia,serif;font-size:15px;line-height:1.5;color:var(--color-neutral-600);margin-top:10px">{{ g.sections }}</div>
+            <button type="button" class="btn btn-ghost" style="margin-top:18px;padding-inline:0;white-space:nowrap">All plates →</button>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px;min-width:0">
+            <sc-for list="{{ g.plates }}" as="p" hint-placeholder-count="3">
+              <button type="button" onClick="{{ p.open }}" style="text-align:left;cursor:pointer;background:linear-gradient(180deg, var(--color-surface), var(--color-neutral-900));border:1px solid var(--color-neutral-800);border-radius:var(--radius-lg);padding:22px 20px 16px;display:flex;flex-direction:column;gap:20px;font-family:var(--font-body);color:var(--color-text)" style-hover="border-color:var(--color-accent-700);background:linear-gradient(180deg, var(--color-neutral-900), var(--color-surface))">
+                <div style="display:flex;justify-content:center;padding:10px 0 4px">
+                  <div style="display:flex;align-items:stretch;background:{{ p.bg }};border-radius:5px;box-shadow:var(--shadow-md);max-width:100%;overflow:hidden">
+                    <div style="display:flex;align-items:center;padding:0 7px;background:{{ p.panelBg }}">
+                      <span style="font-family:'MartianMono',ui-monospace,monospace;font-size:9px;font-weight:700;letter-spacing:.02em;color:{{ p.panelInk }}">{{ p.code }}</span>
+                    </div>
+                    <div style="padding:9px 14px;font-family:'MartianMono',ui-monospace,monospace;font-size:19px;font-weight:700;letter-spacing:.06em;white-space:nowrap;color:{{ p.ink }}">{{ p.text }}</div>
+                    <sc-if value="{{ p.flag }}" hint-placeholder-val="{{ false }}">
+                      <span style="width:16px;display:grid;grid-template-rows:repeat(3,1fr)">
+                        <span style="background:#149954"></span><span style="background:#FFFFFF"></span><span style="background:#12141B"></span>
+                      </span>
+                    </sc-if>
+                  </div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-top:1px solid var(--color-neutral-800);padding-top:12px">
+                  <span style="font-size:13.5px;color:var(--color-neutral-200)">{{ p.label }}</span>
+                  <span style="font-family:'MartianMono',ui-monospace,monospace;font-size:10px;letter-spacing:.04em;color:var(--color-neutral-500);text-align:right">{{ p.spec }}</span>
+                </div>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </section>
+    </sc-if>
+
+    <sc-if value="{{ onAboutD }}" hint-placeholder-val="{{ false }}">
+    <section data-screen-label="About" class="pg-discover" style="padding:72px 64px 96px 72px;animation:pg-rise .4s ease both">
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:56px;align-items:start;padding-bottom:40px;border-bottom:1px solid var(--color-divider)" class="pg-dhead">
+        <div>
+          <div style="font-family:'MartianMono',ui-monospace,monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-accent-300);margin-bottom:18px">03 — About</div>
+          <h2 style="font-size:clamp(34px,3.6vw,48px);line-height:.95;letter-spacing:-.035em;font-weight:800;margin:0">One app for every country package.</h2>
+        </div>
+        <div style="max-width:64ch">
+          <p style="font-family:'Newsreader',Georgia,serif;font-size:18.5px;line-height:1.55;color:var(--color-neutral-300);margin:0 0 18px;text-wrap:pretty">Each package ships a ~30-line example that draws one plate; the catalogue lives here instead, so no publishable package carries a showcase.</p>
+          <p style="font-family:'Newsreader',Georgia,serif;font-size:18.5px;line-height:1.55;color:var(--color-neutral-400);margin:0;text-wrap:pretty">A plate is three independent render-time inputs: a PlateSpec for geometry, a PlateTheme for colour and a PlateCountry for the panel block. Nothing in this app depends on a country package knowing about any other, and no country package depends on this app.</p>
+        </div>
+      </div>
+
+      <div style="padding-top:44px">
+        <div style="font-family:'MartianMono',ui-monospace,monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-neutral-500);margin-bottom:8px">Countries</div>
+        <sc-for list="{{ aboutCountries }}" as="c" hint-placeholder-count="5">
+          <div style="display:grid;grid-template-columns:230px minmax(0,1fr) 84px;gap:28px;align-items:baseline;padding:20px 0;border-bottom:1px solid var(--color-neutral-900)">
+            <div style="display:flex;align-items:baseline;gap:10px;min-width:0">
+              <span style="font-size:17px;color:var(--color-neutral-100)">{{ c.name }}</span>
+              <span style="font-family:'MartianMono',ui-monospace,monospace;font-size:11px;letter-spacing:.06em;color:var(--color-neutral-600)">{{ c.pkg }}</span>
+            </div>
+            <p style="margin:0;font-family:'Newsreader',Georgia,serif;font-size:16.5px;line-height:1.5;color:var(--color-neutral-400);text-wrap:pretty">{{ c.text }}</p>
+            <span style="font-family:'MartianMono',ui-monospace,monospace;font-size:11px;letter-spacing:.1em;color:var(--color-accent-300);text-align:right">{{ c.specs }}</span>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="padding-top:52px">
+        <div style="font-family:'MartianMono',ui-monospace,monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-neutral-500);margin-bottom:16px">Built against</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px">
+          <sc-for list="{{ deps }}" as="d" hint-placeholder-count="3">
+            <div style="border:1px solid var(--color-neutral-800);border-radius:var(--radius-lg);padding:18px 20px;display:flex;flex-direction:column;gap:16px;background:linear-gradient(180deg, var(--color-surface), var(--color-neutral-900))">
+              <div>
+                <div style="font-family:'MartianMono',ui-monospace,monospace;font-size:14px;color:var(--color-neutral-100);letter-spacing:.02em">{{ d.name }}</div>
+                <div style="font-family:'MartianMono',ui-monospace,monospace;font-size:11px;color:var(--color-neutral-500);margin-top:5px">{{ d.version }}</div>
+              </div>
+              <div style="display:flex;gap:8px">
+                <button type="button" class="btn btn-secondary" style="font-size:12px;padding:6px 12px">pub.dev</button>
+                <button type="button" class="btn btn-secondary" style="font-size:12px;padding:6px 12px">GitHub</button>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+    </sc-if>
+
+    <sc-if value="{{ onPlateD }}" hint-placeholder-val="{{ false }}">
+    <section data-screen-label="Plate detail" class="pg-detail" style="min-height:100vh;display:grid;grid-template-columns:minmax(0,1.15fr) 380px;animation:pg-rise .4s ease both">
+      <div class="pg-detail-main" style="min-width:0;padding:56px 56px 40px 72px;display:grid;grid-template-rows:auto 1fr;background:radial-gradient(70% 55% at 50% 42%, rgba(233,233,237,.045), transparent 72%)">
+        <div style="display:flex;align-items:center;gap:14px">
+          <button type="button" class="btn btn-secondary btn-icon" onClick="{{ goDiscover }}" style="border-radius:999px">←</button>
+          <span style="font-family:'MartianMono',ui-monospace,monospace;font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--color-neutral-500)">{{ detail.crumb }}</span>
+        </div>
+        <div style="display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:38px">
+          <div>
+            <h2 style="font-size:42px;font-weight:800;letter-spacing:-.035em;margin:0 0 8px">{{ detail.label }}</h2>
+            <div style="font-size:16px;color:var(--color-neutral-400)">{{ detail.country }} · {{ detail.pkg }}</div>
+          </div>
+          <div style="display:flex;align-items:stretch;background:{{ detail.bg }};border-radius:10px;box-shadow:var(--shadow-lg);overflow:hidden;max-width:100%">
+            <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2px;padding:0 16px;background:{{ detail.panelBg }}">
+              <span style="font-family:'MartianMono',ui-monospace,monospace;font-size:15px;font-weight:700;letter-spacing:.04em;color:{{ detail.panelInk }}">{{ detail.code }}</span>
+            </div>
+            <div style="padding:26px 36px;font-family:'MartianMono',ui-monospace,monospace;font-size:clamp(26px,5vw,58px);font-weight:700;letter-spacing:.07em;line-height:1;white-space:nowrap;color:{{ detail.ink }}">{{ detail.text }}</div>
+            <sc-if value="{{ detail.flag }}" hint-placeholder-val="{{ false }}">
+              <span style="width:34px;display:grid;grid-template-rows:repeat(3,1fr)">
+                <span style="background:#149954"></span><span style="background:#FFFFFF"></span><span style="background:#12141B"></span>
+              </span>
+            </sc-if>
+          </div>
+          <div style="font-family:'MartianMono',ui-monospace,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--color-neutral-600)">{{ detail.slots }} slots filled · {{ detail.spec }}</div>
+        </div>
+      </div>
+
+      <aside class="pg-aside" style="min-width:0;border-left:1px solid var(--color-divider);padding:56px 40px 32px;display:flex;flex-direction:column;gap:40px">
+        <div>
+          <div style="font-family:'MartianMono',ui-monospace,monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-neutral-500);margin-bottom:16px">Input</div>
+          <div style="display:flex;flex-direction:column;gap:2px">
+            <sc-for list="{{ modes }}" as="m" hint-placeholder-count="3">
+              <button type="button" onClick="{{ m.pick }}" style="display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:start;text-align:left;cursor:pointer;background:transparent;border:0;border-radius:var(--radius-md);padding:12px 12px;font-family:var(--font-body);color:var(--color-text)" style-hover="background:color-mix(in srgb, var(--color-text) 6%, transparent)">
+                <span style="width:9px;height:9px;border-radius:999px;border:1px solid var(--color-neutral-600);margin-top:6px"></span>
+                <span>
+                  <span style="display:block;font-size:15px">{{ m.label }}</span>
+                  <span style="display:block;font-size:12.5px;color:var(--color-neutral-500);margin-top:3px">{{ m.note }}</span>
+                </span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-family:'MartianMono',ui-monospace,monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-neutral-500);margin-bottom:8px">Details</div>
+          <sc-for list="{{ facts }}" as="f" hint-placeholder-count="5">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:13px 0;border-bottom:1px solid var(--color-neutral-900)">
+              <span style="font-family:'MartianMono',ui-monospace,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--color-neutral-500)">{{ f.k }}</span>
+              <span style="font-size:14.5px;color:var(--color-neutral-200)">{{ f.v }}</span>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="margin-top:auto;display:flex;flex-direction:column;gap:12px">
+          <button type="button" class="btn btn-primary btn-block" style="font-size:15px;padding:12px">Submit plate</button>
+          <span style="font-family:'MartianMono',ui-monospace,monospace;font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--color-neutral-600);text-align:center">Nothing leaves the page</span>
+        </div>
+      </aside>
+    </section>
+    </sc-if>
+
+    <sc-if value="{{ mobileView }}" hint-placeholder-val="{{ false }}">
+    <div style="height:100vh;display:grid;grid-template-rows:auto minmax(0,1fr) auto;background:var(--color-bg)">
+
+      <header style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 18px;border-bottom:1px solid var(--color-divider)">
+        <span style="display:flex;align-items:center;gap:10px">
+          <span style="width:16px;height:1px;background:var(--color-accent)"></span>
+          <span style="font-family:'MartianMono',ui-monospace,monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-neutral-100)">Plate Gallery</span>
+        </span>
+        <span style="font-family:'MartianMono',ui-monospace,monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-neutral-600)">{{ screenLabel }}</span>
+      </header>
+
+      <div class="pg-scroll" ref="{{ scrollRef }}" style="min-width:0;overflow-y:auto;overflow-x:hidden">
+
+        <sc-if value="{{ onShowcaseM }}" hint-placeholder-val="{{ false }}">
+        <section data-screen-label="Showcase" style="animation:pg-rise .4s ease both">
+          <div style="position:relative;overflow:hidden;padding:32px 18px 30px">
+            <span style="position:absolute;inset:0;display:block;background:radial-gradient(95% 62% at 12% 0%, color-mix(in srgb, var(--color-accent) 16%, transparent), transparent 72%);pointer-events:none"></span>
+            <div style="position:relative">
+              <div style="font-family:'MartianMono',ui-monospace,monospace;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--color-accent-300)">Arad Beyranvand — sole author</div>
+              <h1 style="font-size:40px;line-height:.94;letter-spacing:-.04em;font-weight:800;margin:16px 0 14px">Plate input<br>for the road.</h1>
+              <p style="font-family:'Newsreader',Georgia,serif;font-size:17px;line-height:1.48;color:var(--color-neutral-300);margin:0;text-wrap:pretty">One widget, one const swapped: licence-plate fields that look and behave like the real thing. Five country packages ship today, for cars and for motorbikes.</p>
+              <div style="display:grid;gap:10px;margin-top:24px">
+                <button type="button" class="btn btn-primary" onClick="{{ goDiscover }}" style="width:100%;font-size:15px;padding:14px">Open the archive</button>
+                <button type="button" class="btn btn-secondary" style="width:100%;font-size:15px;padding:14px">Read the docs</button>
+              </div>
+            </div>
+          </div>
+
+          <div style="border-top:1px solid var(--color-divider);padding:24px 0 20px">
+            <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:0 18px 16px">
+              <span style="font-family:'MartianMono',ui-monospace,monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-neutral-400)">One plate per package</span>
+              <span style="font-family:'MartianMono',ui-monospace,monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-600)">swipe →</span>
+            </div>
+            <div class="pg-scroll" style="display:flex;gap:12px;overflow-x:auto;padding:0 18px 6px;scroll-snap-type:x mandatory">
+              <sc-for list="{{ featured }}" as="f" hint-placeholder-count="3">
+                <button type="button" onClick="{{ f.open }}" style="flex:0 0 262px;scroll-snap-align:start;text-align:left;cursor:pointer;background:linear-gradient(180deg, var(--color-surface), var(--color-neutral-900));border:1px solid var(--color-neutral-800);border-radius:var(--radius-lg);padding:16px 16px 14px;display:grid;gap:16px;font-family:var(--font-body);color:var(--color-text)" style-hover="border-color:var(--color-accent-700)">
+                  <span style="display:flex;align-items:stretch;background:{{ f.bg }};border-radius:6px;overflow:hidden;box-shadow:var(--shadow-md)">
+                    <span style="display:flex;align-items:center;padding:0 9px;background:{{ f.panelBg }}">
+                      <span style="font-family:'MartianMono',ui-monospace,monospace;font-size:10px;font-weight:700;color:{{ f.panelInk }}">{{ f.code }}</span>
+                    </span>
+                    <span style="flex:1;padding:14px 12px;text-align:center;font-family:'MartianMono',ui-monospace,monospace;font-size:21px;font-weight:700;letter-spacing:.05em;white-space:nowrap;color:{{ f.ink }}">{{ f.text }}</span>
+                    <sc-if value="{{ f.flag }}" hint-placeholder-val="{{ false }}">
+                      <span style="width:16px;display:grid;grid-template-rows:repeat(3,1fr)">
+                        <span style="background:#149954"></span><span style="background:#FFFFFF"></span><span style="background:#12141B"></span>
+                      </span>
+                    </sc-if>
+                  </span>
+                  <span style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;border-top:1px solid var(--color-neutral-800);padding-top:12px">
+                    <span style="font-size:14px;color:var(--color-neutral-100)">{{ f.country }}</span>
+                    <span style="font-family:'MartianMono',ui-monospace,monospace;font-size:9.5px;letter-spacing:.06em;color:var(--color-neutral-500)">{{ f.spec }}</span>
+                  </span>
+                </button>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--color-divider)">
+            <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+              <div style="padding:20px 18px 22px;border-bottom:1px solid var(--color-neutral-900);border-right:1px solid var(--color-neutral-900)">
+                <div style="font-size:30px;font-weight:800;letter-spacing:-.03em;line-height:1">{{ s.n }}</div>
+                <div style="font-family:'MartianMono',ui-monospace,monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-neutral-500);margin-top:8px">{{ s.label }}</div>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:10px;padding:22px 18px 34px">
+            <span style="width:6px;height:6px;border-radius:999px;background:var(--color-accent)"></span>
+            <span style="font-family:'MartianMono',ui-monospace,monospace;font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--color-neutral-400)">Iran made · open source · MIT</span>
+          </div>
+        </section>
+        </sc-if>
+
+        <sc-if value="{{ onDiscoverM }}" hint-placeholder-val="{{ false }}">
+        <section data-screen-label="Discover" style="animation:pg-rise .4s ease both">
+          <div style="padding:28px 18px 20px">
+            <div style="font-family:'MartianMono',ui-monospace,monospace;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--color-accent-300)">02 — Discover</div>
+            <h2 style="font-size:34px;line-height:.95;letter-spacing:-.035em;font-weight:800;margin:14px 0 12px">Plate archive</h2>
+            <p style="font-family:'Newsreader',Georgia,serif;font-size:16.5px;line-height:1.48;color:var(--color-neutral-400);margin:0;text-wrap:pretty">A plate is a geometry, a livery and a country block — so two of these can share a spec and still be different plates.</p>
+          </div>
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:16px 18px;border-top:1px solid var(--color-divider);border-bottom:1px solid var(--color-divider);background:var(--color-neutral-900)">
+            <span style="min-width:0">
+              <span style="display:block;font-size:24px;font-weight:800;letter-spacing:-.03em">{{ mGroup.country }}</span>
+              <span style="display:block;font-family:'MartianMono',ui-monospace,monospace;font-size:10px;letter-spacing:.08em;color:var(--color-neutral-500);margin-top:6px">{{ mGroup.pkg }} · {{ mGroup.count }}</span>
+            </span>
+            <span style="flex:0 0 auto;width:20px;height:1px;background:var(--color-accent)"></span>
+          </div>
+
+          <div style="padding:20px 18px 28px">
+            <div style="font-family:'Newsreader',Georgia,serif;font-size:15px;line-height:1.5;color:var(--color-neutral-600);margin-bottom:18px">{{ mGroup.sections }}</div>
+            <div style="display:grid;gap:12px">
+              <sc-for list="{{ mGroup.plates }}" as="p" hint-placeholder-count="4">
+                <button type="button" onClick="{{ p.open }}" style="width:100%;text-align:left;cursor:pointer;background:linear-gradient(180deg, var(--color-surface), var(--color-neutral-900));border:1px solid var(--color-neutral-800);border-radius:var(--radius-lg);padding:16px;display:grid;gap:14px;font-family:var(--font-body);color:var(--color-text)" style-hover="border-color:var(--color-accent-700)">
+                  <span style="display:flex;align-items:stretch;background:{{ p.bg }};border-radius:6px;overflow:hidden;box-shadow:var(--shadow-md)">
+                    <span style="display:flex;align-items:center;padding:0 9px;background:{{ p.panelBg }}">
+                      <span style="font-family:'MartianMono',ui-monospace,monospace;font-size:10px;font-weight:700;color:{{ p.panelInk }}">{{ p.code }}</span>
+                    </span>
+                    <span style="flex:1;padding:14px 12px;text-align:center;font-family:'MartianMono',ui-monospace,monospace;font-size:21px;font-weight:700;letter-spacing:.05em;white-space:nowrap;color:{{ p.ink }}">{{ p.text }}</span>
+                    <sc-if value="{{ p.flag }}" hint-placeholder-val="{{ false }}">
+                      <span style="width:16px;display:grid;grid-template-rows:repeat(3,1fr)">
+                        <span style="background:#149954"></span><span style="background:#FFFFFF"></span><span style="background:#12141B"></span>
+                      </span>
+                    </sc-if>
+                  </span>
+                  <span style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;border-top:1px solid var(--color-neutral-800);padding-top:12px">
+                    <span style="font-size:14px;color:var(--color-neutral-200)">{{ p.label }}</span>
+                    <span style="font-family:'MartianMono',ui-monospace,monospace;font-size:9.5px;letter-spacing:.05em;color:var(--color-neutral-500);text-align:right">{{ p.spec }}</span>
+                  </span>
+                </button>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="border-top:1px solid var(--color-divider);padding:24px 18px 34px">
+            <div style="font-family:'MartianMono',ui-monospace,monospace;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--color-neutral-500);margin-bottom:14px">Other countries</div>
+            <div style="display:grid;gap:10px">
+              <sc-for list="{{ otherGroups }}" as="o" hint-placeholder-count="4">
+                <button type="button" onClick="{{ o.pick }}" style="width:100%;min-height:76px;text-align:left;cursor:pointer;background:linear-gradient(120deg, var(--color-surface), var(--color-neutral-900));border:1px solid var(--color-neutral-800);border-radius:var(--radius-lg);padding:14px 16px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:14px;font-family:var(--font-body);color:var(--color-text)" style-hover="border-color:var(--color-accent-700);background:linear-gradient(120deg, var(--color-neutral-900), var(--color-surface))">
+                  <span style="min-width:0">
+                    <span style="display:block;font-size:19px;letter-spacing:-.02em;color:var(--color-neutral-100)">{{ o.country }}</span>
+                    <span style="display:block;font-family:'MartianMono',ui-monospace,monospace;font-size:9.5px;letter-spacing:.09em;color:var(--color-neutral-500);margin-top:6px">{{ o.pkg }}</span>
+                    <span style="display:block;font-family:'MartianMono',ui-monospace,monospace;font-size:9.5px;letter-spacing:.09em;color:var(--color-neutral-600);margin-top:4px">{{ o.count }}</span>
+                  </span>
+                  <span style="flex:0 0 auto;display:flex;align-items:center;gap:12px">
+                    <span style="display:flex;align-items:stretch;background:{{ o.lead.bg }};border-radius:4px;overflow:hidden;box-shadow:var(--shadow-sm)">
+                      <span style="display:flex;align-items:center;padding:0 5px;background:{{ o.lead.panelBg }}">
+                        <span style="font-family:'MartianMono',ui-monospace,monospace;font-size:6.5px;font-weight:700;color:{{ o.lead.panelInk }}">{{ o.lead.code }}</span>
+                      </span>
+                      <span style="padding:8px 8px;font-family:'MartianMono',ui-monospace,monospace;font-size:11px;font-weight:700;letter-spacing:.03em;white-space:nowrap;color:{{ o.lead.ink }}">{{ o.lead.text }}</span>
+                    </span>
+                    <span style="font-size:16px;color:var(--color-neutral-500)">→</span>
+                  </span>
+                </button>
+              </sc-for>
+            </div>
+          </div>
+        </section>
+        </sc-if>
+
+        <sc-if value="{{ onAboutM }}" hint-placeholder-val="{{ false }}">
+        <section data-screen-label="About" style="animation:pg-rise .4s ease both">
+          <div style="padding:28px 18px 26px;border-bottom:1px solid var(--color-divider)">
+            <div style="font-family:'MartianMono',ui-monospace,monospace;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--color-accent-300)">03 — About</div>
+            <h2 style="font-size:32px;line-height:.98;letter-spacing:-.035em;font-weight:800;margin:14px 0 16px">One app for every country package.</h2>
+            <p style="font-family:'Newsreader',Georgia,serif;font-size:17px;line-height:1.52;color:var(--color-neutral-300);margin:0 0 14px;text-wrap:pretty">Each package ships a ~30-line example that draws one plate; the catalogue lives here instead, so no publishable package carries a showcase.</p>
+            <p style="font-family:'Newsreader',Georgia,serif;font-size:17px;line-height:1.52;color:var(--color-neutral-400);margin:0;text-wrap:pretty">A plate is three independent render-time inputs: a PlateSpec for geometry, a PlateTheme for colour and a PlateCountry for the panel block.</p>
+          </div>
+
+          <div style="padding:24px 18px 8px">
+            <div style="font-family:'MartianMono',ui-monospace,monospace;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--color-neutral-500)">Countries</div>
+          </div>
+          <sc-for list="{{ aboutCountries }}" as="c" hint-placeholder-count="5">
+            <div style="padding:18px 18px 20px;border-bottom:1px solid var(--color-neutral-900)">
+              <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
+                <span style="font-size:19px;color:var(--color-neutral-100)">{{ c.name }}</span>
+                <span style="font-family:'MartianMono',ui-monospace,monospace;font-size:10px;letter-spacing:.1em;color:var(--color-accent-300)">{{ c.specs }}</span>
+              </div>
+              <div style="font-family:'MartianMono',ui-monospace,monospace;font-size:10px;letter-spacing:.07em;color:var(--color-neutral-600);margin:6px 0 10px">{{ c.pkg }}</div>
+              <p style="margin:0;font-family:'Newsreader',Georgia,serif;font-size:16px;line-height:1.5;color:var(--color-neutral-400);text-wrap:pretty">{{ c.text }}</p>
+            </div>
+          </sc-for>
+
+          <div style="padding:26px 18px 34px">
+            <div style="font-family:'MartianMono',ui-monospace,monospace;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--color-neutral-500);margin-bottom:14px">Built against</div>
+            <div style="display:grid;gap:10px">
+              <sc-for list="{{ deps }}" as="d" hint-placeholder-count="3">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--color-neutral-800);border-radius:var(--radius-lg);padding:14px 16px;background:linear-gradient(180deg, var(--color-surface), var(--color-neutral-900))">
+                  <span style="min-width:0">
+                    <span style="display:block;font-family:'MartianMono',ui-monospace,monospace;font-size:13px;color:var(--color-neutral-100)">{{ d.name }}</span>
+                    <span style="display:block;font-family:'MartianMono',ui-monospace,monospace;font-size:10px;color:var(--color-neutral-500);margin-top:4px">{{ d.version }}</span>
+                  </span>
+                  <span style="display:flex;gap:8px;flex:0 0 auto">
+                    <button type="button" class="btn btn-secondary" style="font-size:11px;padding:8px 12px;min-height:36px">pub.dev</button>
+                    <button type="button" class="btn btn-secondary" style="font-size:11px;padding:8px 12px;min-height:36px">GitHub</button>
+                  </span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </section>
+        </sc-if>
+
+        <sc-if value="{{ onPlateM }}" hint-placeholder-val="{{ false }}">
+        <section data-screen-label="Plate detail" style="animation:pg-rise .35s ease both">
+          <div style="display:flex;align-items:center;gap:12px;padding:12px 18px;border-bottom:1px solid var(--color-divider)">
+            <button type="button" class="btn btn-secondary btn-icon" onClick="{{ goDiscover }}" style="border-radius:999px;min-width:40px;min-height:40px">←</button>
+            <span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:'MartianMono',ui-monospace,monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-500)">{{ detail.crumb }}</span>
+          </div>
+
+          <div style="padding:30px 18px 28px;background:radial-gradient(80% 60% at 50% 38%, rgba(233,233,237,.06), transparent 72%)">
+            <div style="display:flex;justify-content:center">
+              <span style="display:flex;align-items:stretch;background:{{ detail.bg }};border-radius:9px;overflow:hidden;box-shadow:var(--shadow-lg);max-width:100%">
+                <span style="display:flex;align-items:center;padding:0 12px;background:{{ detail.panelBg }}">
+                  <span style="font-family:'MartianMono',ui-monospace,monospace;font-size:12px;font-weight:700;letter-spacing:.04em;color:{{ detail.panelInk }}">{{ detail.code }}</span>
+                </span>
+                <span style="padding:22px 18px;font-family:'MartianMono',ui-monospace,monospace;font-size:30px;font-weight:700;letter-spacing:.05em;line-height:1;white-space:nowrap;color:{{ detail.ink }}">{{ detail.text }}</span>
+                <sc-if value="{{ detail.flag }}" hint-placeholder-val="{{ false }}">
+                  <span style="width:22px;display:grid;grid-template-rows:repeat(3,1fr)">
+                    <span style="background:#149954"></span><span style="background:#FFFFFF"></span><span style="background:#12141B"></span>
+                  </span>
+                </sc-if>
+              </span>
+            </div>
+            <h2 style="font-size:30px;font-weight:800;letter-spacing:-.03em;margin:28px 0 8px">{{ detail.label }}</h2>
+            <div style="font-size:15px;color:var(--color-neutral-400)">{{ detail.country }} · {{ detail.pkg }}</div>
+            <div style="font-family:'MartianMono',ui-monospace,monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-600);margin-top:14px">{{ detail.slots }} slots filled · {{ detail.spec }}</div>
+          </div>
+
+          <div style="border-top:1px solid var(--color-divider);padding:22px 18px 4px">
+            <div style="font-family:'MartianMono',ui-monospace,monospace;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--color-neutral-500);margin-bottom:12px">Input</div>
+            <div style="display:grid;gap:8px">
+              <sc-for list="{{ modes }}" as="m" hint-placeholder-count="3">
+                <button type="button" onClick="{{ m.pick }}" style="display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;min-height:56px;text-align:left;cursor:pointer;background:var(--color-neutral-900);border:1px solid var(--color-neutral-800);border-radius:var(--radius-md);padding:12px 16px;font-family:var(--font-body);color:var(--color-text)" style-hover="border-color:var(--color-accent-700)">
+                  <span style="min-width:0">
+                    <span style="display:block;font-size:15px">{{ m.label }}</span>
+                    <span style="display:block;font-size:12.5px;color:var(--color-neutral-500);margin-top:3px">{{ m.note }}</span>
+                  </span>
+                  <sc-if value="{{ m.on }}" hint-placeholder-val="{{ false }}">
+                    <span style="width:18px;height:2px;background:var(--color-accent)"></span>
+                  </sc-if>
+                </button>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="padding:26px 18px 30px">
+            <div style="font-family:'MartianMono',ui-monospace,monospace;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--color-neutral-500)">Details</div>
+            <sc-for list="{{ facts }}" as="f" hint-placeholder-count="5">
+              <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid var(--color-neutral-900)">
+                <span style="font-family:'MartianMono',ui-monospace,monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-500)">{{ f.k }}</span>
+                <span style="font-size:14px;color:var(--color-neutral-200);text-align:right">{{ f.v }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </section>
+        </sc-if>
+      </div>
+
+      <sc-if value="{{ tabsShown }}" hint-placeholder-val="{{ true }}">
+      <nav style="display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--color-divider);background:var(--color-neutral-900)">
+        <sc-for list="{{ navItems }}" as="it" hint-placeholder-count="3">
+          <button type="button" onClick="{{ it.go }}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;min-height:60px;cursor:pointer;background:transparent;border:0;border-right:1px solid var(--color-neutral-800);font-family:var(--font-body);color:var(--color-neutral-500)" style-hover="color:var(--color-neutral-200)">
+            <span style="display:block;height:2px;width:18px;background:transparent">
+              <sc-if value="{{ it.on }}" hint-placeholder-val="{{ false }}">
+                <span style="display:block;height:2px;width:18px;background:var(--color-accent)"></span>
+              </sc-if>
+            </span>
+            <span style="font-family:'MartianMono',ui-monospace,monospace;font-size:10px;letter-spacing:.11em;text-transform:uppercase">{{ it.label }}</span>
+          </button>
+        </sc-for>
+      </nav>
+      </sc-if>
+
+      <sc-if value="{{ onPlateM }}" hint-placeholder-val="{{ false }}">
+      <div style="display:grid;gap:10px;padding:12px 18px 16px;border-top:1px solid var(--color-divider);background:var(--color-neutral-900)">
+        <button type="button" class="btn btn-primary" style="width:100%;font-size:15px;padding:14px">Submit plate</button>
+        <span style="text-align:center;font-family:'MartianMono',ui-monospace,monospace;font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--color-neutral-600);white-space:nowrap">Nothing leaves the page</span>
+      </div>
+      </sc-if>
+    </div>
+    </sc-if>
+  </main>
+
+  <nav style="border-left:1px solid var(--color-divider);padding:44px 0;display:flex;flex-direction:column;gap:64px;position:sticky;top:0;align-self:start;height:100vh">
+    <div style="padding:0 24px">
+      <div style="font-family:'MartianMono',ui-monospace,monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-neutral-100)">Plate<br>Gallery</div>
+      <div style="width:20px;height:1px;background:var(--color-accent);margin-top:14px"></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:2px">
+      <sc-for list="{{ navItems }}" as="it" hint-placeholder-count="3">
+        <button type="button" onClick="{{ it.go }}" style="display:flex;align-items:baseline;gap:12px;background:transparent;border:0;border-left:2px solid transparent;padding:14px 24px;cursor:pointer;font-family:var(--font-body);text-align:left;color:var(--color-neutral-500)" style-hover="color:var(--color-neutral-200)">
+          <span style="font-family:'MartianMono',ui-monospace,monospace;font-size:10px;letter-spacing:.1em">{{ it.num }}</span>
+          <span style="font-size:15px">{{ it.label }}</span>
+          <sc-if value="{{ it.on }}" hint-placeholder-val="{{ false }}">
+            <span style="width:14px;height:1px;background:var(--color-accent);margin-left:auto;align-self:center"></span>
+          </sc-if>
+        </button>
+      </sc-for>
+    </div>
+    <div style="margin-top:auto;display:flex;flex-direction:column;gap:18px;padding:0 24px">
+      <button type="button" onClick="{{ toggleView }}" style="cursor:pointer;background:transparent;border:1px solid var(--color-neutral-800);border-radius:999px;padding:8px 12px;font-family:'MartianMono',ui-monospace,monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-300);white-space:nowrap" style-hover="border-color:var(--color-accent-700);color:var(--color-neutral-100)">{{ viewLabel }}</button>
+      <div style="font-family:'MartianMono',ui-monospace,monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-600);line-height:1.8">Iran made<br>Open source<br>MIT</div>
+    </div>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { screen: 'showcase', mode: 'System', selected: 0, device: 0, mobile: false, country: 'Iran' };
+
+  componentDidMount() {
+    this._t = setInterval(() => this.setState(s => ({ device: (s.device + 1) % 3 })), 5200);
+  }
+  componentWillUnmount() { clearInterval(this._t); }
+
+  // lib/device_preview/device_presets.dart — bodySize / bodyRadius / screenRadius / notchSize
+  devicePresets() {
+    return [
+      { id: 'mobile', label: 'Mobile', w: 390, h: 844, r: 54, sr: 42, bezel: 12, notch: { w: 126, h: 32, r: 16 }, deck: 0, scale: 0.44 },
+      { id: 'tablet', label: 'Tablet', w: 1194, h: 834, r: 38, sr: 24, bezel: 16, notch: null, deck: 0, scale: 0.34 },
+      { id: 'desktop', label: 'Desktop', w: 1180, h: 740, r: 38, sr: 24, bezel: 22, notch: { w: 180, h: 22, r: 8 }, deck: 210, scale: 0.34 }
+    ];
+  }
+
+  // lib/poster/callout_motion.dart — 7 rows, cols from aspect, each tile's
+  // finish line uniform in [earliest, 1] so its speed is 1/finish.
+  tiles(seed, grad) {
+    const rows = 7, cols = 9, earliest = 0.5, win = 620;
+    const rand = n => { let x = n & 0x7fffffff; x = ((x ^ (x >> 13)) * 1274126177) & 0x7fffffff; return (x % 100000) / 100000; };
+    const out = [];
+    for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+      const finish = earliest + (1 - earliest) * rand(r * 92821 + c * 68917 + seed * 15485863);
+      out.push(React.createElement('span', {
+        key: r + '-' + c,
+        style: {
+          position: 'absolute', left: (c / cols * 100) + '%', top: (r / rows * 100) + '%',
+          width: (100 / cols + 0.2) + '%', height: (100 / rows + 0.2) + '%',
+          background: grad, backgroundSize: (cols * 100) + '% ' + (rows * 100) + '%',
+          backgroundPosition: (cols > 1 ? c / (cols - 1) * 100 : 0) + '% ' + (rows > 1 ? r / (rows - 1) * 100 : 0) + '%',
+          opacity: 0, animation: 'pg-tile ' + Math.round(win * finish) + 'ms linear both'
+        }
+      }));
+    }
+    return out;
+  }
+  go(screen) { return () => this.setState({ screen }); }
+  open(group, p) { return () => this.setState({ screen: 'plate', pick: { group, p } }); }
+  renderVals() {
+    const s = this.state.screen;
+    const plate = (code, text, spec) => ({ code, text, spec });
+    // lib/screens/gallery/sources/*.dart — sections, entry ids and sample values
+    const P = (code, text, spec, label, o) => Object.assign({
+      code, text, spec, label, bg: '#F2F3F5', ink: '#12141B',
+      panelBg: '#16479D', panelInk: '#FFFFFF'
+    }, o || {});
+    const groups = [
+      { country: 'Iran', pkg: 'iran_plate', count: '12 entries · 11 specs',
+        sections: 'Iran · Bahrain · Azerbaijan', plates: [
+          P('ایران', '۱۲ ب ۳۴۵ | ۱۱', 'ir.car', 'Car'),
+          P('ایران', '۱۲۳ ۴۵۶۷۸', 'ir.bicycle', 'Bicycle'),
+          P('BH', '123456', 'bh.eu', 'Civilian (EU size)', { panelBg: '#CE1126' }),
+          P('AZ', '88-BE-114', 'az.car', 'Car', { panelBg: '#EDEFF3', panelInk: '#12141B' })
+        ] },
+      { country: 'Palestine', pkg: 'palestine_plate', count: '15 entries · 11 specs',
+        sections: 'Gaza · West Bank modern · West Bank legacy', plates: [
+          P('PS', '3-7259-15', 'ps.gaza.car2012', '2012 · colour read from the plate', { ink: '#0E7A34', panelBg: '#149954', flag: true }),
+          P('ف P', '1-2345-40', 'ps.wb.legacy.car.private', 'Private', { ink: '#0E7A34', panelBg: '#F2F3F5', panelInk: '#0E7A34' }),
+          P('ف P', '4-8812-07', 'ps.wb.legacy.car.publicTransport', 'Public transport', { bg: '#0E7A34', ink: '#F2F3F5', panelBg: '#0E7A34', panelInk: '#F2F3F5' }),
+          P('ف P', '2-9471-B', 'ps.wb.modern.car.private', 'Private · modern', { ink: '#0E7A34', panelBg: '#F2F3F5', panelInk: '#0E7A34' })
+        ] },
+      { country: 'Yemen', pkg: 'yemen_plate', count: '11 specs · two live systems',
+        sections: 'System A 2026 unified · System B 1993 northern', plates: [
+          P('خصوصي', '34719', 'ye.unified.car.private.5', 'Private · 5 digits', { panelBg: '#1B4CA1' }),
+          P('خصوصي', '12 · 3456', 'ye.northern.car.private.2+4', 'Private · 2 + 4', { bg: '#1B4CA1', ink: '#F2F3F5', panelBg: '#1B4CA1', panelInk: '#F2F3F5' }),
+          P('خصوصي', '21 · 884', 'ye.northern.moto.private.2+3', 'Private · motorcycle', { bg: '#1B4CA1', ink: '#F2F3F5', panelBg: '#1B4CA1', panelInk: '#F2F3F5' })
+        ] },
+      { country: 'Lebanon', pkg: 'lebanon_plate', count: '4 specs · nine liveries',
+        sections: 'One-line · Two-line · Short numbers', plates: [
+          P('لبنان', 'B 204815', 'lb.oneLine.private', 'Private · white · Beirut'),
+          P('لبنان', 'C 100427', 'lb.oneLine.consular', 'Consular · purple · C', { bg: '#6C3EA8', ink: '#F2F3F5' }),
+          P('لبنان', 'MP 0 4 2', 'lb.short.mp', 'Parliament · MP · 3 digits')
+        ] },
+      { country: 'Germany', pkg: 'germany_plate', count: '14 specs',
+        sections: 'Car shapes · variants · 06/07 · expiring · Bundeswehr', plates: [
+          P('D', 'B · MX 2481', 'de.car', 'Car — the shapes', { panelBg: '#003399' }),
+          P('D', 'M · 07 199', 'de.oldtimer07', 'The 07 number', { panelBg: '#003399' }),
+          P('D', 'Y · 461 208', 'de.bundeswehr', 'Bundeswehr', { panelBg: '#003399' })
+        ] }
+    ];
+    for (const g of groups) for (const p of g.plates) p.open = this.open(g, p);
+    const pick = this.state.pick || { group: groups[0], p: groups[0].plates[0] };
+    const detail = Object.assign({}, pick.p, {
+      country: pick.group.country, pkg: pick.group.pkg,
+      crumb: 'Discover / ' + pick.group.country + ' / ' + pick.p.spec,
+      slots: String(pick.p.text.replace(/[^0-9A-Za-z\u0600-\u06FF\u06F0-\u06F9]/g, '').length)
+    });
+    const mob = this.state.mobile;
+    const cf = this.state.country || 'Iran';
+    const featured = groups.map(g => Object.assign({}, g.plates[0], { country: g.country, pkg: g.pkg }));
+    const mGroup = groups.find(g => g.country === cf) || groups[0];
+    const otherGroups = groups.filter(g => g.country !== mGroup.country).map(g => Object.assign({}, g, {
+      lead: g.plates[0],
+      pick: () => {
+        this.setState({ screen: 'discover', country: g.country });
+        if (this._scroll && this._scroll.current) this._scroll.current.scrollTop = 0;
+      }
+    }));
+    const screenLabels = { showcase: '01 / Showcase', discover: '02 / Discover', about: '03 / About', plate: 'Plate detail' };
+    const dev = this.devicePresets()[this.state.device];
+    const gradA = 'linear-gradient(158deg,#232C42,#0E1219)';
+    const gradB = 'linear-gradient(158deg,#1C2233,#0D1017)';
+    return {
+      device: dev,
+      deviceW: Math.round(dev.w * dev.scale), deviceH: Math.round(dev.h * dev.scale),
+      deviceR: Math.round(dev.r * dev.scale) + 'px', deviceSR: Math.round(dev.sr * dev.scale) + 'px',
+      deviceBezel: Math.round(dev.bezel * dev.scale) + 'px',
+      deviceDeckW: Math.round(dev.w * dev.scale * 1.06), deviceDeckH: Math.round(dev.deck * dev.scale * 0.14) + 8,
+      hasNotch: !!dev.notch,
+      notchW: dev.notch ? Math.round(dev.notch.w * dev.scale) : 0,
+      notchH: dev.notch ? Math.round(dev.notch.h * dev.scale) : 0,
+      notchR: dev.notch ? Math.round(dev.notch.r * dev.scale) + 'px' : '0',
+      deviceKey: dev.id,
+      tilesA: this.tiles(this.state.device + 1, gradA),
+      tilesB: this.tiles(this.state.device + 7, gradB),
+      deviceDots: this.devicePresets().map((d, i) => ({
+        label: d.label, on: i === this.state.device,
+        pick: () => this.setState({ device: i })
+      })),
+      mobileView: this.state.mobile, mobileClass: this.state.mobile ? 'pg-m' : '',
+      viewLabel: this.state.mobile ? 'Desktop view' : 'Mobile view',
+      toggleView: () => this.setState(s => ({ mobile: !s.mobile })),
+      onShowcase: s === 'showcase', onDiscover: s === 'discover', onPlate: s === 'plate', onAbout: s === 'about',
+      onShowcaseD: s === 'showcase' && !mob, onDiscoverD: s === 'discover' && !mob,
+      onPlateD: s === 'plate' && !mob, onAboutD: s === 'about' && !mob,
+      onShowcaseM: s === 'showcase' && mob, onDiscoverM: s === 'discover' && mob,
+      onPlateM: s === 'plate' && mob, onAboutM: s === 'about' && mob,
+      tabsShown: mob && s !== 'plate',
+      screenLabel: screenLabels[s] || '',
+      featured, mGroup, otherGroups,
+      scrollRef: (this._scroll = this._scroll || React.createRef()),
+      aboutCountries: [
+        { name: 'Iran', pkg: 'iran_plate', specs: '11 specs', text: "Two Iranian specs, Persian digits and the chosen-letter slot, plus Bahrain's five designs and Azerbaijan's five from the same package. See iran_plate/README.md." },
+        { name: 'Palestine', pkg: 'palestine_plate', specs: '11 specs', text: "Two designs, not one: the West Bank's ف / P block and Gaza's flag. Colour is derived from usage, never chosen. See palestine_plate/README.md." },
+        { name: 'Yemen', pkg: 'yemen_plate', specs: '11 specs', text: 'Two current systems, not one current and one legacy: the 2026 unified white plate and the 1993 northern format. See yemen_plate/README.md.' },
+        { name: 'Lebanon', pkg: 'lebanon_plate', specs: '4 specs', text: 'Two shapes and many colours — the inverse of the other packages here. The field colour is the usage class and the letter is the town of registration. See lebanon_plate/README.md.' },
+        { name: 'Germany', pkg: 'germany_plate', specs: '14 specs', text: 'One geometry in many lengths, plus the formats that are not registrations: the 06, 07, 04, export and Bundeswehr numbers. The validator follows the format. See germany_plate/README.md.' }
+      ],
+      deps: [
+        { name: 'core_plate', version: '0.5.0' },
+        { name: 'core_plate_bloc', version: '0.1.0' },
+        { name: 'plate_keypad', version: '0.1.0' }
+      ],
+      goDiscover: this.go('discover'),
+      navItems: [
+        { num: '01', label: 'Showcase', go: this.go('showcase'), on: s === 'showcase' },
+        { num: '02', label: 'Discover', go: this.go('discover'), on: s === 'discover' },
+        { num: '03', label: 'About', go: this.go('about'), on: s === 'about' || s === 'plate' }
+      ],
+      heroPlates: [ plate('IR', '۱۲ ب ۳۴۵', 'iran · car'), plate('AZ', '88-BE-114', 'azerbaijan · car'), plate('YE', '34719', 'yemen · private') ],
+      stats: [ { n: '5', label: 'packages' }, { n: '7', label: 'countries' }, { n: '51', label: 'specs' }, { n: '2', label: 'form factors' } ],
+      groups, detail,
+      modes: [
+        { id: 'System', label: 'System', note: 'The platform keyboard.', on: this.state.mode === 'System', pick: () => this.setState({ mode: 'System' }) },
+        { id: 'Hardware', label: 'Hardware', note: 'Physical keys, no overlay.', on: this.state.mode === 'Hardware', pick: () => this.setState({ mode: 'Hardware' }) },
+        { id: 'Keypad', label: 'Keypad', note: 'In-app plate keypad.', on: this.state.mode === 'Keypad', pick: () => this.setState({ mode: 'Keypad' }) }
+      ],
+      facts: [
+        { k: 'package', v: detail.pkg }, { k: 'spec', v: detail.spec },
+        { k: 'country block', v: detail.code }, { k: 'slots', v: detail.slots },
+        { k: 'livery', v: detail.label }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -164,6 +164,7 @@ class _DeviceStageState extends State<DeviceStage> {
     _secondary?.dispose();
     _plate.dispose();
     _controller.dispose();
+    _generation++;
     super.dispose();
   }
 

@@ -66,6 +66,14 @@ example/android/
 example/web/
 example/macos/
 
+# Design reference (mostly ignored except spec files)
+design_ref/*
+!design_ref/MAP.md
+!design_ref/BASELINE.md
+!design_ref/*.html
+!design_ref/_ds
+!design_ref/uploads
+
 # Keep these directories tracked
 !.claude/
 !docs/
