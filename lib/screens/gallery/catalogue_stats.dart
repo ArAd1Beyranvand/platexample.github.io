@@ -54,6 +54,21 @@ class CatalogueStats {
   /// Distinct form factors across every entry.
   final int formFactors;
 
+  /// The four counts in the order every stat row shows them, each with the
+  /// label it is shown under.
+  ///
+  /// Here rather than in one of the two rows that draw them — the Showcase
+  /// stat band and the Discover header's inline row — because the pairing of
+  /// a number with its word is the same fact in both places, and two copies
+  /// of the list is how one of them ends up saying `SPECS` over the package
+  /// count.
+  List<({int value, String label})> get tiles => <({int value, String label})>[
+    (value: packages, label: 'Packages'),
+    (value: countries, label: 'Countries'),
+    (value: specs, label: 'Specs'),
+    (value: formFactors, label: 'Form factors'),
+  ];
+
   /// No package models a form factor as a field — not on `PlateSpec`, not on
   /// [GalleryEntry] — so this reads the same word a person already reads on
   /// the shelf: "motorcycle", "moto" or "bicycle" somewhere in the entry's id,

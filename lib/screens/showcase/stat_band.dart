@@ -30,10 +30,7 @@ class StatBand extends StatelessWidget {
   static const double _compactBreak = 480;
 
   List<_Stat> get _cells => <_Stat>[
-    _Stat(stats.packages, 'Packages'),
-    _Stat(stats.countries, 'Countries'),
-    _Stat(stats.specs, 'Specs'),
-    _Stat(stats.formFactors, 'Form factors'),
+    for (final ({int value, String label}) tile in stats.tiles) _Stat(tile.value, tile.label),
   ];
 
   @override
