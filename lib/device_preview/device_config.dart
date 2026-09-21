@@ -153,6 +153,8 @@ class DeviceConfig {
     this.homeIndicatorWidth = 0,
     this.sideButtons = const <SideButton>[],
     this.deck = DeviceDeck.none,
+    this.stageScale = 1,
+    this.lidTiltDeg = 0,
   });
 
   final DeviceType type;
@@ -180,6 +182,21 @@ class DeviceConfig {
 
   final List<SideButton> sideButtons;
   final DeviceDeck deck;
+
+  /// How large this device sits on the stage, as a fraction of its own logical
+  /// size — the design's `devicePresets()[].scale`. It is a *ceiling*, not a
+  /// fixed scale: the frame still shrinks below it to fit a tight column, so a
+  /// short window narrows the device instead of clipping it. Without it every
+  /// preset filled whatever box it was handed, which made the 390px phone as
+  /// tall on the stage as the 1180px laptop — the one thing the design's
+  /// three-device stage never does.
+  final double stageScale;
+
+  /// Backward tilt of the lid, in degrees about its bottom edge — the design's
+  /// `screenTransform: rotateX(-7deg)`. Only the laptop has one; the phone and
+  /// the tablet are drawn flat on, so this is 0 for them and the morph
+  /// interpolates the tilt away as the laptop folds into either.
+  final double lidTiltDeg;
 
   /// Logical size of the glass — the size the page is laid out at.
   Size get screenSize => Size(bodySize.width - bezel.horizontal, bodySize.height - bezel.vertical);
@@ -221,6 +238,8 @@ class DeviceConfig {
       homeIndicatorWidth: lerpDouble(a.homeIndicatorWidth, b.homeIndicatorWidth, t)!,
       sideButtons: buttons,
       deck: DeviceDeck.lerp(a.deck, b.deck, t),
+      stageScale: lerpDouble(a.stageScale, b.stageScale, t)!,
+      lidTiltDeg: lerpDouble(a.lidTiltDeg, b.lidTiltDeg, t)!,
     );
   }
 }

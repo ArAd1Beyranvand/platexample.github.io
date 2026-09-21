@@ -5,20 +5,25 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import '../theme/nocturne.dart';
 import 'device_config.dart';
 
 part 'device_painters.hardware.dart';
 
-/// Silver ramp used for every metal surface, so lid, deck and buttons read as
-/// one milled aluminium body.
+/// The chassis ramp, so lid, deck and buttons read as one milled body.
+///
+/// Nocturne's own `n700`–`n900` steps ([N.n700], [N.n800], [N.n900]) with two
+/// mixes between them, rather than the old neutral silver: the design's device
+/// is a dark indigo-grey slab, and a lighter, bluer ramp was the loudest thing
+/// left on the stage. [glass] is the screen-off fill the design states outright.
 class _Metal {
-  static const highlight = Color(0xFF3E434C);
-  static const light = Color(0xFF2B2F36);
-  static const mid = Color(0xFF1D2026);
-  static const shade = Color(0xFF262A31);
-  static const deep = Color(0xFF0A0C0F);
+  static const highlight = N.n700; // #39414F
+  static const light = Color(0xFF2E3648); // n700 → n800
+  static const mid = N.n800; // #232C42
+  static const shade = Color(0xFF1A2130); // n800 → n900
+  static const deep = N.n900; // #0E1219
   static const edge = Color(0xFF000000);
-  static const glass = Color(0xFF07080A);
+  static const glass = Color(0xFF0D1017);
 }
 
 /// Paints the body: drop shadow, milled aluminium lid, side buttons and the
@@ -33,9 +38,26 @@ class DeviceBodyPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final body = Offset.zero & size;
     final bodyRR = RRect.fromRectAndRadius(body, Radius.circular(config.bodyRadius));
+    _paintShadow(canvas, bodyRR);
     _paintSideButtons(canvas, body);
     _paintLid(canvas, bodyRR);
     _paintScreenWell(canvas, body);
+  }
+
+  /// The device's drop shadow — [NShadow.lg]'s own values (black at 80%, 26px
+  /// down, 60px blur). The elevation ramp is built for boxes, and this is the
+  /// one surface on the stage heavy enough to earn its top step; everything
+  /// else in Nocturne stops at `md`.
+  void _paintShadow(Canvas canvas, RRect bodyRR) {
+    canvas.drawRRect(
+      bodyRR.shift(const Offset(0, 26)),
+      Paint()
+        ..color = const Color(0xFF000000).withValues(alpha: 0.80 * ambient)
+        // CSS blurs a shadow over its full radius; a Gaussian sigma of half
+        // that is the usual equivalence, and it keeps the falloff from
+        // reaching further than the design's does.
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 30),
+    );
   }
 
   void _paintLid(Canvas canvas, RRect bodyRR) {
@@ -59,9 +81,12 @@ class DeviceBodyPainter extends CustomPainter {
         ..shader = LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
+          // The rim hairline is `--color-divider` (white at 10%), not the old
+          // 42% specular white: on a dark chassis that read as a chrome bead
+          // running round the lid and was the brightest edge in the hero.
           colors: [
-            Colors.white.withValues(alpha: 0.42),
-            Colors.white.withValues(alpha: 0.06),
+            N.divider,
+            N.divider.withValues(alpha: 0.04),
             _Metal.edge.withValues(alpha: 0.55),
           ],
         ).createShader(rect),
@@ -75,7 +100,7 @@ class DeviceBodyPainter extends CustomPainter {
         ..shader = LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomLeft,
-          colors: [Colors.white.withValues(alpha: 0.14), Colors.white.withValues(alpha: 0)],
+          colors: [Colors.white.withValues(alpha: 0.05), Colors.white.withValues(alpha: 0)],
         ).createShader(Rect.fromLTWH(0, 0, rect.width, rect.height * 0.45)),
     );
     canvas.restore();

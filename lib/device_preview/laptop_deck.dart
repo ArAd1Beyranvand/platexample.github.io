@@ -4,12 +4,18 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../theme/nocturne.dart';
+
 part 'laptop_deck.parts.dart';
 
 /// Width of the milled-aluminium chassis edge painted by [LaptopChassisEdge].
 const laptopEdgeWidth = 8.0;
 
-const _edgeColor = Color(0xFF8A909C);
+/// The chassis rim. `n700` — the top of Nocturne's chassis ramp, and the same
+/// colour [DeviceBodyPainter] starts the lid's gradient on, so the base and
+/// the lid read as one milled body. It used to be a near-silver #8A909C, which
+/// on a stage this dark was the brightest object in the hero.
+const _edgeColor = N.n700;
 
 /// Corner rounding shared by the deck and its keyboard well — the desktop
 /// preset's own [DeviceConfig.screenRadius], so the base's corners read at the
@@ -118,15 +124,21 @@ class LaptopDeck extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
+      decoration: BoxDecoration(
+        // Nocturne's chassis ramp, lit from the hinge: the base catches light
+        // at the top edge nearest the screen and falls to n900 at the front
+        // lip. Replaces the brushed-silver ramp, which the tilt made worse —
+        // a flatter plane catches more of the gradient, so a light deck went
+        // from a bright strip to a bright slab.
+        gradient: const LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [Color(0xFF9CA2AE), Color(0xFFAEB4C0), Color(0xFF8E94A0), Color(0xFF767C88)],
+          colors: [N.n700, Color(0xFF2E3648), N.n800, Color(0xFF151A26)],
           stops: [0, .22, .62, 1],
         ),
         borderRadius: _edgeRadius,
-        boxShadow: [BoxShadow(color: Color(0x9E000000), blurRadius: 40, offset: Offset(0, 26))],
+        // [NShadow.lg], the same step the body casts.
+        boxShadow: NShadow.lgShadows,
       ),
       child: Stack(
         children: [
@@ -160,7 +172,9 @@ class LaptopDeck extends StatelessWidget {
                   gradient: const LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [Color(0xFF0B0D10), Color(0xFF14171C)],
+                    // The well is the same screen-off black as the glass
+                    // above it, lifting to n900 at its far edge.
+                    colors: [Color(0xFF0D1017), N.n900],
                   ),
                   boxShadow: const [BoxShadow(color: Color(0xB3000000), blurRadius: 14, offset: Offset(0, 4))],
                 ),

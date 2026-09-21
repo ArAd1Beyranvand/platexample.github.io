@@ -48,8 +48,10 @@ class DeviceHardwarePainter extends CustomPainter {
         ..shader = RadialGradient(
           center: const Alignment(-0.35, -0.45),
           colors: [
-            const Color(0xFF2B3550).withValues(alpha: o),
-            const Color(0xFF0A0C12).withValues(alpha: o),
+            // n800, not the old #2B3550: the lens was the last blue highlight
+            // left on the frame.
+            N.n800.withValues(alpha: o),
+            N.n900.withValues(alpha: o),
           ],
         ).createShader(Rect.fromCircle(center: c, radius: r)),
     );

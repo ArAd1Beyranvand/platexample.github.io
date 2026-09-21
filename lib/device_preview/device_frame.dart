@@ -24,8 +24,8 @@ class DeviceFrame extends StatefulWidget {
     required this.builder,
     this.configResolver,
     this.durations = const DeviceTransitionDurations(),
-    this.perspective = 900,
-    this.hingeAngle = 150,
+    this.perspective = 1400,
+    this.hingeAngle = 122,
     this.scale,
     this.curve = Curves.easeInOutCubic,
     this.fadeOutCurve = Curves.easeIn,
@@ -47,11 +47,13 @@ class DeviceFrame extends StatefulWidget {
 
   final DeviceTransitionDurations durations;
 
-  /// Viewer distance used to tilt the laptop deck and swing the lid.
+  /// Viewer distance used to tilt the laptop deck and swing the lid. 1400 is
+  /// the design's stage `perspective`.
   final double perspective;
 
-  /// Hinge angle of the open laptop, in degrees: 0 is shut, 150 is the rest
-  /// position of a laptop on a desk.
+  /// Hinge angle of the open laptop, in degrees: 0 is shut, 122 is the rest
+  /// position of a laptop on a desk. The deck's tilt off the screen plane is
+  /// `180 - hingeAngle`, so this value is the design's `rotateX(58deg)` base.
   final double hingeAngle;
 
   /// Fixed scale; null fits the frame to its constraints.
@@ -322,7 +324,13 @@ class _DeviceFrameState extends State<DeviceFrame> with SingleTickerProviderStat
     // keyboard isn't clipped; other devices have no deck, so this is just
     // their body height.
     final fitHeight = hasDeck ? total.height : body.height;
-    final fit = widget.scale ?? _fitScale(constraints, total.width, fitHeight);
+    // The preset's own stage scale is a ceiling, not a fixed size: the design
+    // draws each device at a stated fraction of its logical size, so the phone
+    // reads as a phone beside the laptop instead of both filling the column.
+    // A window too short for that still shrinks the device rather than
+    // clipping it, which is what _fitScale keeps doing underneath.
+    final fitted = _fitScale(constraints, total.width, fitHeight);
+    final fit = widget.scale ?? math.min(config.stageScale, fitted);
 
     return Align(
       alignment: Alignment.center,
@@ -411,7 +419,7 @@ class _DeviceFrameState extends State<DeviceFrame> with SingleTickerProviderStat
                         seed: _dissolveSeed,
                         // Blocks that haven't revealed read as the blank screen
                         // behind the deck.
-                        coverColor: const Color(0xFF07080A),
+                        coverColor: const Color(0xFF0D1017),
                         child: LaptopDeck(
                           frontOpacity: frontOpacity,
                           backOpacity: backOpacity,
@@ -422,7 +430,7 @@ class _DeviceFrameState extends State<DeviceFrame> with SingleTickerProviderStat
                     ),
                     const Positioned.fill(child: LaptopChassisEdge()),
                   ],
-                ),
+                  ),
               ),
             ),
           ),
@@ -433,60 +441,74 @@ class _DeviceFrameState extends State<DeviceFrame> with SingleTickerProviderStat
       clipBehavior: Clip.none,
       children: [
         if (!deckOnTop) ...deckLayer,
-        SizedBox(
-          width: body.width,
-          height: body.height,
-          child: CustomPaint(
-            painter: DeviceBodyPainter(config: config),
-            foregroundPainter: DeviceHardwarePainter(config: config),
-            isComplex: true,
-            willChange: _controller.isAnimating,
-            child: Stack(
-              clipBehavior: Clip.none,
-              children: [
-                Positioned(
-                  left: config.bezel.left,
-                  top: config.bezel.top,
-                  width: screen.width,
-                  height: screen.height,
-                  child: ClipPath(
-                    clipper: DeviceScreenClipper(config: config),
-                    // The blank screen behind the content: while the frame
-                    // morphs, this is all that shows.
-                    child: ColoredBox(
-                      color: const Color(0xFF07080A),
-                      child: opacity <= 0.001
-                          ? const SizedBox.expand()
-                          // At rest the page is painted straight into the
-                          // frame's own layer — no Opacity, no boundary.
-                          //
-                          // A boundary here is a raster-cache candidate, and
-                          // the engine takes it: after a few still frames the
-                          // page becomes a texture, recorded once and then
-                          // resampled through the FittedBox that scales the
-                          // device into its slot. Vector detail drawn at plate
-                          // scale — a flag's emblem, the slot dividers — comes
-                          // back soft, and snaps sharp the moment an animation
-                          // starts and the cache is abandoned. Not caching a
-                          // still frame costs nothing: nothing is repainting.
-                          : opacity >= 0.999
-                          ? _screenContent()
-                          : Opacity(
-                              opacity: opacity.clamp(0.0, 1.0),
-                              // Mid-fade the boundary is what makes this cheap:
-                              // with a composited child, RenderOpacity pushes
-                              // an OpacityLayer and the GPU blends a cached
-                              // texture. Without it, the whole page — plate,
-                              // backdrop, keypad — is re-rasterised into a
-                              // saveLayer on all ~180 frames of the two fades.
-                              // Softness during a 300 ms fade is invisible; at
-                              // rest it is the only thing you can see.
-                              child: RepaintBoundary(child: _screenContent()),
-                            ),
+        // The lid leans back off its bottom edge — the design's
+        // `rotateX(-7deg)` on the screen, against the deck's `rotateX(58deg)`
+        // on the base. Both turn about the same hinge line (this widget's
+        // bottom edge is the deck's `top`), so the two faces stay joined
+        // through the fold, and the rotation is purely visual: the body keeps
+        // its full box, so nothing below it moves. The tilt is a lerped config
+        // field, so it unwinds to 0 as the laptop morphs into the phone or the
+        // tablet rather than snapping flat at the halfway mark.
+        Transform(
+          alignment: Alignment.bottomCenter,
+          transform: Matrix4.identity()
+            ..setEntry(3, 2, 1 / widget.perspective)
+            ..rotateX(-config.lidTiltDeg * math.pi / 180),
+          child: SizedBox(
+            width: body.width,
+            height: body.height,
+            child: CustomPaint(
+              painter: DeviceBodyPainter(config: config),
+              foregroundPainter: DeviceHardwarePainter(config: config),
+              isComplex: true,
+              willChange: _controller.isAnimating,
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Positioned(
+                    left: config.bezel.left,
+                    top: config.bezel.top,
+                    width: screen.width,
+                    height: screen.height,
+                    child: ClipPath(
+                      clipper: DeviceScreenClipper(config: config),
+                      // The blank screen behind the content: while the frame
+                      // morphs, this is all that shows.
+                      child: ColoredBox(
+                        color: const Color(0xFF0D1017),
+                        child: opacity <= 0.001
+                            ? const SizedBox.expand()
+                            // At rest the page is painted straight into the
+                            // frame's own layer — no Opacity, no boundary.
+                            //
+                            // A boundary here is a raster-cache candidate, and
+                            // the engine takes it: after a few still frames the
+                            // page becomes a texture, recorded once and then
+                            // resampled through the FittedBox that scales the
+                            // device into its slot. Vector detail drawn at plate
+                            // scale — a flag's emblem, the slot dividers — comes
+                            // back soft, and snaps sharp the moment an animation
+                            // starts and the cache is abandoned. Not caching a
+                            // still frame costs nothing: nothing is repainting.
+                            : opacity >= 0.999
+                            ? _screenContent()
+                            : Opacity(
+                                opacity: opacity.clamp(0.0, 1.0),
+                                // Mid-fade the boundary is what makes this cheap:
+                                // with a composited child, RenderOpacity pushes
+                                // an OpacityLayer and the GPU blends a cached
+                                // texture. Without it, the whole page — plate,
+                                // backdrop, keypad — is re-rasterised into a
+                                // saveLayer on all ~180 frames of the two fades.
+                                // Softness during a 300 ms fade is invisible; at
+                                // rest it is the only thing you can see.
+                                child: RepaintBoundary(child: _screenContent()),
+                              ),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
