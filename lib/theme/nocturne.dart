@@ -186,7 +186,7 @@ abstract final class NShadow {
 /// The page's own media-query breakpoints, in logical pixels.
 ///
 /// [shell] replaces the old `kWideBreakpoint = 900` from
-/// `lib/screens/gallery/theme/tokens.dart` (deleted in sk15) and happens to
+/// `lib/screens/gallery/theme/tokens.dart` (removed in sk15) and happens to
 /// share its value — that's coincidence, not a dependency.
 abstract final class NBreak {
   static const double hero = 1180;

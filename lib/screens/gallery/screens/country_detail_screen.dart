@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../catalogue_index.dart';
 import '../sources/sources.dart';
+import '../plate_sizes.dart';
 import '../theme/tokens.dart';
 import '../widgets/plate_tile.dart';
 import '../widgets/section_header.dart';
