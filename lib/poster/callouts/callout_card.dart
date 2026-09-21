@@ -67,6 +67,8 @@ class CalloutCard extends StatelessWidget {
   static const LinearGradient _ground = LinearGradient(
     begin: Alignment(-0.37, -0.93),
     end: Alignment(0.37, 0.93),
+    // Both stops are the CSS's own, not palette entries: they read between
+    // N.n800 and N.bg and exist only as the two ends of this gradient.
     colors: <Color>[Color(0xFF1C2233), Color(0xFF0D1017)],
   );
 

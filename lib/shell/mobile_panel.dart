@@ -46,6 +46,9 @@ class MobilePanelChrome extends StatelessWidget {
         gradient: RadialGradient(
           center: Alignment.topCenter,
           radius: 1.2,
+          // The lift at the top is a gradient stop from the reference CSS,
+          // a few points above N.bg rather than a palette entry of its own —
+          // it exists only as this gradient's other end.
           colors: <Color>[Color(0xFF0D0F16), N.bg],
           stops: <double>[0.0, 0.6],
         ),

@@ -110,8 +110,6 @@ flutter:
   assets:
     - assets/textures/bg_grain_a.png
     - assets/textures/bg_grain_b.png
-    - assets/textures/tex_screen.png
-    - assets/textures/tex_overlay.png
 
   # Each family ships as per-script subsets, and the `-latin-ext` file holds
   # ONLY the Latin Extended block — it has no A–Z at all. Declaring it alone
