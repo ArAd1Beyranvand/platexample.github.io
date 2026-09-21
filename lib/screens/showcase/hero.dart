@@ -75,7 +75,11 @@ class ShowcaseHero extends StatelessWidget {
   /// the column. The CSS has no rule for it because its media queries measure
   /// the viewport, and the panel narrows a box inside one — so the panel's
   /// proportions come from the reference render instead.
-  static const double _compactBreak = 560;
+  ///
+  /// sk10 moved the value onto [NBreak] rather than leaving a second copy in
+  /// the backdrop: the road has to disappear on the same pixel this column
+  /// changes shape.
+  static const double _compactBreak = NBreak.panel;
 
   @override
   Widget build(BuildContext context) {

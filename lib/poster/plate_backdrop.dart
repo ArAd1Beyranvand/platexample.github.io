@@ -5,12 +5,17 @@ import 'package:flutter/foundation.dart' show ValueListenable;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
-import 'poster_tokens.dart';
+import '../theme/nocturne.dart';
 
-/// Ambient backdrop painted behind the plate on the device glass: the poster's
-/// own ground gradient plus soft orbs tinted with the poster accent
-/// ([PosterColors.accent]) and its steel / slate card tones, so the glass reads
-/// as part of the same palette as the rest of the layout.
+/// Ambient backdrop painted behind the plate on the device glass: a ground
+/// gradient plus soft orbs, all of it on the Nocturne ramp — the steel end of
+/// the neutrals and the dark end of the accent — so the glass reads as part of
+/// the same palette as the road behind it.
+///
+/// The design's device screen is dead black (`#05060a`). Ours is on, which is
+/// the one place this migration keeps something the design does not have, so
+/// the glass needs an ambient of its own; sk10 retuned it off the blue family
+/// the old poster's cards were mixed from.
 ///
 /// Every orb is positioned as a fraction of the glass, so a device morph moves
 /// and resizes all of them. That relayout is animated on a single timeline:
@@ -29,6 +34,13 @@ class PlateBackdrop extends StatelessWidget {
   /// Full fade-out / travel / fade-in cycle. Runs whenever the glass resizes.
   final Duration duration;
 
+  /// The glass's own ground, stated as blends of the ramp because it falls
+  /// between its entries: the page ground half-way to `n900` in the near
+  /// corner, `n900` a quarter of the way to `n800` through the middle, and the
+  /// page ground again at the far corner.
+  static final Color _groundNear = Color.lerp(N.bg, N.n900, 0.5)!;
+  static final Color _groundMid = Color.lerp(N.n900, N.n800, 0.25)!;
+
   @override
   Widget build(BuildContext context) {
     // The orbs repaint continuously (the drift ticker never stops), so they get
@@ -39,12 +51,12 @@ class PlateBackdrop extends StatelessWidget {
     return RepaintBoundary(
       child: IgnorePointer(
         child: DecoratedBox(
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [Color(0xFF0A0B0E), Color(0xFF121620), Color(0xFF050608)],
-              stops: [0.0, 0.55, 1.0],
+              colors: <Color>[_groundNear, _groundMid, N.bg],
+              stops: const <double>[0.0, 0.55, 1.0],
             ),
           ),
           child: LayoutBuilder(
@@ -236,19 +248,21 @@ class _OrbPainter extends CustomPainter {
   /// order as [_orbs].
   final ValueListenable<List<Offset>> drift;
 
-  // Large haloes first, then the small bright balls on top. Tints pulled from
-  // the callout card color scheme to maintain visual consistency.
+  // Large haloes first, then the small bright balls on top. Every tint is a
+  // ramp entry: `n800`/`n700` for the steel ones, the dark end of the accent
+  // for the ones that carry colour. The alphas are the old poster's, which
+  // were tuned against a plate rather than against a palette.
   static const List<_Orb> _orbs = [
-    _Orb(0.14, 0.18, 0.44, Color(0xFF232C42), 0.24),
-    _Orb(0.83, 0.12, 0.34, Color(0xFF3160B0), 0.20),
-    _Orb(0.68, 0.74, 0.50, Color(0xFF20293C), 0.30),
-    _Orb(0.28, 0.88, 0.38, Color(0xFF1B2B3C), 0.34),
-    _Orb(0.50, 0.46, 0.62, Color(0xFF243040), 0.20),
-    _Orb(0.22, 0.62, 0.075, Color(0xFF3C5C97), 0.50, core: 0.60),
-    _Orb(0.88, 0.46, 0.052, Color(0xFF26262B), 0.42, core: 0.58),
-    _Orb(0.62, 0.22, 0.036, Color(0xFF3160B0), 0.38, core: 0.55),
-    _Orb(0.41, 0.13, 0.024, Color(0xFF232C42), 0.48, core: 0.50),
-    _Orb(0.77, 0.91, 0.029, Color(0xFF20293C), 0.34, core: 0.50),
+    _Orb(0.14, 0.18, 0.44, N.n800, 0.24),
+    _Orb(0.83, 0.12, 0.34, N.accent800, 0.20),
+    _Orb(0.68, 0.74, 0.50, N.n800, 0.30),
+    _Orb(0.28, 0.88, 0.38, N.accent900, 0.34),
+    _Orb(0.50, 0.46, 0.62, N.n800, 0.20),
+    _Orb(0.22, 0.62, 0.075, N.accent700, 0.50, core: 0.60),
+    _Orb(0.88, 0.46, 0.052, N.n700, 0.42, core: 0.58),
+    _Orb(0.62, 0.22, 0.036, N.accent800, 0.38, core: 0.55),
+    _Orb(0.41, 0.13, 0.024, N.n800, 0.48, core: 0.50),
+    _Orb(0.77, 0.91, 0.029, N.n700, 0.34, core: 0.50),
   ];
 
   @override

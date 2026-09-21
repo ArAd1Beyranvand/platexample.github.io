@@ -1,38 +1,72 @@
 import 'package:flutter/material.dart';
 
+import '../theme/nocturne.dart';
+
 /// Colour tokens from DESIGN_SPEC.md §1.
 class PosterColors {
   const PosterColors._();
 
   // --- Ground / atmosphere --------------------------------------------------
-  static const Color pageBlack = Color(0xFF050608);
+  // sk10's road. Every value here is the Nocturne ramp — `lib/theme/nocturne.dart`
+  // — read through the design's own alphas, so nothing in the backdrop carries
+  // a colour of its own any more. The old poster's blues went with the layers
+  // that used them: the beam wedge, its colour cast, the two light rails, the
+  // masks that framed them and the 9px lane stripe are all gone.
+  //
+  // Where the design's hex has no ramp entry (its panel sits between `n900`
+  // and `n800`, its lift between `n900` and the page ground) the token is
+  // stated as the blend it is rather than pasted in as a number. That costs
+  // const-ness on a handful of statics, which is why they are `final`.
+
+  /// `--color-bg`: the page ground, and the only opaque fill in the backdrop.
+  static const Color pageBlack = N.bg;
+
+  /// The ground inside a device screen. The design's is `#05060a`; ours keeps
+  /// a hair more lift so the live plate does not float on pure black.
   static const Color stageBlack = Color(0xFF07080B);
 
-  static const Color groundRadialCore = Color(0xFF121620);
-  static const Color groundRadialMid = Color(0xFF0A0B0E);
-  static const Color groundRadialEdge = Color(0xFF050608);
+  /// `.pg-app.pg-m`, line 47: `radial-gradient(120% 100% at 50% 0%, #0d0f16,
+  /// #050608 60%)` — the lift behind the phone panel. Its core is the page
+  /// ground most of the way to `n900`.
+  static final Color groundLiftCore = Color.lerp(N.bg, N.n900, 0.86)!;
+  static const Color groundLiftEdge = N.bg;
 
-  static const Color beamHi = Color(0x99B6CAE8); // rgba(182,202,232,.6)
-  static const Color beamMid = Color(0x2894AFD6); // rgba(148,175,214,.16) @48% combined
-  static const Color beamTint = Color(0x2E465C7C); // rgba(70,92,124,.18)
-  static const Color roadMask = Color(0xB7030201); // rgba(3,2,1,.72)
+  /// The rotated panel, line 87:
+  /// `linear-gradient(180deg,#1b1d28,#0d0e15 55%,#0a0b10)`. `n900` lifted
+  /// toward `n800` at the head, `n900` itself at the knee, and half-way from
+  /// `n900` down to the page ground at the foot.
+  static final Color panelHead = Color.lerp(N.n900, N.n800, 0.45)!;
+  static const Color panelKnee = N.n900;
+  static final Color panelFoot = Color.lerp(N.n900, N.bg, 0.52)!;
 
-  static const Color railLightCore = Color(0xE6CEDCF2); // rgba(206,220,242,.9)
-  static const Color railLightMid = Color(0x3DBED0EC); // rgba(190,208,236,.24)
+  /// The panel's `box-shadow: 0 -1px 0 rgba(233,233,237,.10), 0 1px 0
+  /// rgba(233,233,237,.06)` — a hairline of light along its top edge and a
+  /// fainter one under its bottom. The design's near-white is `n100`.
+  static final Color panelEdgeTop = N.n100.withValues(alpha: 0.10);
+  static final Color panelEdgeBottom = N.n100.withValues(alpha: 0.06);
 
-  static const Color roadStripe = Color(0xEBFFFFFF); // rgba(255,255,255,.92)
+  /// The dash strip, line 88: `rgba(233,233,237,.30)` on an element carrying
+  /// `opacity: .55`, which is `n100` at the product of the two. Over the panel
+  /// that composites to about `n700`, where the brief puts it.
+  static final Color roadStripe = N.n100.withValues(alpha: 0.30 * 0.55);
 
-  static const Color sweepBodyStart = Color(0x05C4D6F0); // rgba(196,214,240,.02)
-  static const Color sweepBodyMid = Color(0x29C6D8F2); // rgba(198,216,242,.16)
-  static const Color sweepBodyEnd = Color(0x4DD2E0F6); // rgba(210,224,246,.3)
+  /// The accent bloom: `accent 9%` behind the desktop section (line 89) and
+  /// `accent 16%` in the phone panel's top-left corner (line 353).
+  static final Color accentBloom = N.accentAt(0.09);
+  static final Color accentBloomPanel = N.accentAt(0.16);
 
-  static const Color sweepEdgeStart = Color(0x66E0EBFA); // rgba(224,235,250,.4)
-  static const Color sweepEdgeMid = Color(0xFAE0EBFA); // rgba(224,235,250,.98)
-  static const Color sweepEdgeEnd = Color(0x66E0EBFA); // rgba(224,235,250,.4)
-  static const Color sweepEdgeGlow = Color(0xBFB8CBE9); // rgba(184,203,233,.75)
+  /// The rake of a device hop — `sweep_light.dart`. A wash of `n700`/`n600`
+  /// with an `n400` leading edge, screen-blended onto the panel: sk10 dropped
+  /// the amplitude roughly fourfold from the old near-white streak, which is
+  /// the whole difference between a headlight and a sheen.
+  static final Color sweepBodyStart = N.n700.withValues(alpha: 0);
+  static final Color sweepBodyMid = N.n700.withValues(alpha: 0.20);
+  static final Color sweepBodyEnd = N.n600.withValues(alpha: 0.30);
 
-  static const Color groundShadowStart = Color(0xF2030201); // rgba(3,2,1,.95)
-  static const Color groundShadowMid = Color(0x80050302); // rgba(5,3,2,.5)
+  static final Color sweepEdgeStart = N.n400.withValues(alpha: 0.18);
+  static final Color sweepEdgeMid = N.n400.withValues(alpha: 0.34);
+  static final Color sweepEdgeEnd = N.n400.withValues(alpha: 0.18);
+  static final Color sweepEdgeGlow = N.n500.withValues(alpha: 0.16);
 
   // --- Text ------------------------------------------------------------------
   static const Color inkDisplay1 = Color(0xFFEAF0FB);

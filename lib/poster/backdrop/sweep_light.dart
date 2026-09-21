@@ -1,36 +1,36 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 
 import '../poster_scale.dart';
 import '../poster_tokens.dart';
 import 'poster_backdrop.dart';
 
-/// Layer 10 of DESIGN_SPEC.md §6 — the headlight that rakes across the road
-/// once per device hop.
+/// The rake that travels down the road once per device hop — the one piece of
+/// the backdrop the design has no equivalent for, kept because the hop needs
+/// something to happen behind it.
 ///
-/// A 400×1500 gradient band plus a 5px bright edge at `x 396`, both rotated
-/// `11.8deg` (the lane-dash angle, so the sweep travels along the road rather
-/// than across it), translating X from `−560` to `2400` over 1.5s
+/// A soft band plus a brighter leading edge, both living inside
+/// [showcasePanelRect] and travelling along it over 1.5s
 /// `cubic-bezier(.42,.02,.6,1)`, screen-blended, with opacity ramping in and
 /// out over `.34s` linear.
 ///
-/// It owns no state machine — §7.2. Derive [isHopping] from
+/// sk10 dropped its amplitude. The old rake was a near-white streak across a
+/// lit road; the design's road is a near-black panel with an `n800`/`n700`
+/// wash over it, so the band is now that wash in motion — see the `sweep*`
+/// tokens. It is also clipped to the panel: off the band the ground is flat
+/// near-black, and a headlight crossing it is exactly the poster look this
+/// migration is removing.
+///
+/// It owns no state machine. Derive [isHopping] from
 /// `DeviceFrame.onPhaseChanged`: pass `phase == frameTransform`, so the rake
 /// starts on the exact frame the device's content opacity reaches zero rather
 /// than back when it only began fading. The sweep fires once on the false→true
 /// edge and runs its full 1.5s on its own controller, so it outlives the
 /// shorter phase window that triggered it.
 class SweepLight extends StatefulWidget {
-  const SweepLight({super.key, required this.isHopping, this.rotationOrigin = Alignment.topLeft});
+  const SweepLight({super.key, required this.isHopping});
 
   /// True for any `DeviceTransitionPhase` other than `idle`.
   final bool isHopping;
-
-  /// §6's blanket rule is `transform-origin: 0 0`, which is the default here.
-  /// P5's brief says "about their centre" — the two differ only by a fixed
-  /// offset along the travel, so this is a knob rather than a fork.
-  final Alignment rotationOrigin;
 
   @override
   State<SweepLight> createState() => _SweepLightState();
@@ -82,11 +82,7 @@ class _SweepLightState extends State<SweepLight> with SingleTickerProviderStateM
             final double t = _controller.value;
             if (t == 0 || t == 1) return const SizedBox.expand();
             return CustomPaint(
-              painter: _SweepPainter(
-                travel: _travelCurve.transform(t),
-                opacity: _opacityAt(t),
-                origin: widget.rotationOrigin,
-              ),
+              painter: _SweepPainter(travel: _travelCurve.transform(t), opacity: _opacityAt(t)),
             );
           },
         ),
@@ -103,25 +99,25 @@ class _SweepLightState extends State<SweepLight> with SingleTickerProviderStateM
 }
 
 class _SweepPainter extends CustomPainter {
-  const _SweepPainter({required this.travel, required this.opacity, required this.origin});
+  const _SweepPainter({required this.travel, required this.opacity});
 
-  /// Eased 0→1 along the `−560 → 2400` translation.
+  /// Eased 0→1 along the panel, from fully off its left end to fully off its
+  /// right one.
   final double travel;
   final double opacity;
-  final Alignment origin;
 
-  static const double _bandWidth = 400;
-  static const double _bandHeight = 1500;
-  static const double _edgeX = 396;
+  /// The band's width, as a fraction of the panel's. The old rake was 400
+  /// design px on a 1920 canvas, which is this much of the panel the design
+  /// draws in its place.
+  static const double _bandWidth = 0.16;
+
+  /// The bright leading edge, in logical px — a line, so it does not scale.
   static const double _edgeWidth = 5;
-  static const double _fromX = -560;
-  static const double _toX = 2400;
-  static const double _degrees = 11.8;
 
   /// Half-width of the band that replaces the edge glow's `MaskFilter.blur`,
-  /// in design px: 3.3σ of the original 18px blur, past which the profile
-  /// below is under 1/500 and invisible.
-  static const double _glowHalfWidth = 60;
+  /// as a fraction of the band: 3.3σ of the original 18px blur, past which the
+  /// profile below is under 1/500 and invisible.
+  static const double _glowHalfWidth = 0.15;
 
   /// The original glow was a 17px-wide rect under `MaskFilter.blur(normal, 18)`
   /// — a gaussian blur re-run on every one of the rake's ~90 frames, inside a
@@ -132,7 +128,8 @@ class _SweepPainter extends CustomPainter {
   ///
   /// sampled here at 13 even stops across [_glowHalfWidth] either side of the
   /// edge's centre and handed to a `LinearGradient` instead. Same picture, no
-  /// offscreen and no per-frame blur.
+  /// offscreen and no per-frame blur. It is a shape rather than a size, so it
+  /// survived the move off the 1920×1080 canvas unchanged.
   ///
   /// The `saveLayer` went with it because `screen` is associative: screening
   /// the three draws onto the road one at a time gives the same result as
@@ -154,28 +151,28 @@ class _SweepPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     if (size.isEmpty || opacity <= 0) return;
 
+    final Rect panel = showcasePanelRect(size);
+    if (panel.isEmpty) return;
+
     canvas.save();
-    // Same design-space canvas as PosterBackdrop, so the sweep shares the
-    // road's perspective exactly.
-    canvas.scale(size.width / kBackdropDesignWidth, size.height / kBackdropDesignHeight);
+    // The panel's own rotated frame, the same one PosterBackdrop draws the
+    // road in, so the rake travels along the band rather than across it — and
+    // so the band is axis-aligned here, which makes the clip below a rect
+    // rather than a path.
+    roadFrame(canvas, size);
+    canvas.clipRect(panel);
 
-    final double x = _fromX + (_toX - _fromX) * travel;
-    // The band is taller than the stage on purpose; centre it vertically so
-    // the rake covers the whole road at any angle.
-    final double y = (kBackdropDesignHeight - _bandHeight) / 2;
-
-    canvas.translate(x, y);
-    final Offset pivot = Offset((origin.x + 1) / 2 * _bandWidth, (origin.y + 1) / 2 * _bandHeight);
-    canvas.translate(pivot.dx, pivot.dy);
-    canvas.rotate(_degrees * math.pi / 180);
-    canvas.translate(-pivot.dx, -pivot.dy);
+    final double bandWidth = panel.width * _bandWidth;
+    final double from = panel.left - bandWidth;
+    final double x = from + (panel.right - from) * travel;
+    final Rect band = Rect.fromLTWH(x, panel.top, bandWidth, panel.height);
 
     // Every draw carries the rake's own opacity and screen-blends straight onto
     // the road — see [_glowStops] for why there is no enclosing saveLayer.
     final double o = opacity.clamp(0.0, 1.0);
-    final Rect band = const Rect.fromLTWH(0, 0, _bandWidth, _bandHeight);
 
-    // The body: a soft gradient across the band's width.
+    // The body: a soft gradient across the band's width, brightest at the
+    // leading edge.
     canvas.drawRect(
       band,
       Paint()
@@ -192,16 +189,9 @@ class _SweepPainter extends CustomPainter {
         ).createShader(band),
     );
 
-    final Rect edge = const Rect.fromLTWH(_edgeX, 0, _edgeWidth, _bandHeight);
-
     // Its glow first, then the hard edge over it.
-    final double glowCentre = _edgeX + _edgeWidth / 2;
-    final Rect glow = Rect.fromLTRB(
-      glowCentre - _glowHalfWidth,
-      0,
-      glowCentre + _glowHalfWidth,
-      _bandHeight,
-    );
+    final double glowHalf = bandWidth * _glowHalfWidth;
+    final Rect glow = Rect.fromLTRB(band.right - glowHalf, band.top, band.right + glowHalf, band.bottom);
     final double glowAlpha = PosterColors.sweepEdgeGlow.a * o;
     canvas.drawRect(
       glow,
@@ -217,7 +207,8 @@ class _SweepPainter extends CustomPainter {
         ).createShader(glow),
     );
 
-    // The 5px bright edge at x 396, brightest at its middle.
+    // The bright edge on the band's leading side, brightest at its middle.
+    final Rect edge = Rect.fromLTWH(band.right - _edgeWidth, band.top, _edgeWidth, band.height);
     canvas.drawRect(
       edge,
       Paint()
@@ -239,6 +230,6 @@ class _SweepPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_SweepPainter oldDelegate) {
-    return oldDelegate.travel != travel || oldDelegate.opacity != opacity || oldDelegate.origin != origin;
+    return oldDelegate.travel != travel || oldDelegate.opacity != opacity;
   }
 }

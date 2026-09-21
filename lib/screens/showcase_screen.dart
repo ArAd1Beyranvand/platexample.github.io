@@ -23,11 +23,7 @@ final CatalogueStats _catalogueStats = CatalogueStats.of(gallerySources);
 /// The design's outer section is `min-height: 100vh` over
 /// `grid-template-rows: 1fr auto` (`Plate Gallery.dc.html` line 85): the hero
 /// takes whatever height is left and the stat band is pinned under it. This
-/// widget is only that composition — backdrop, hero, stat band — with the
-/// pieces it does not own yet left as they were:
-///
-/// - the **device frames** are sk9 and the **backdrop** sk10, so both are
-///   still the old poster's, deliberately.
+/// widget is only that composition — backdrop, hero, stat band.
 class ShowcaseScreen extends StatefulWidget {
   const ShowcaseScreen({super.key, required this.onOpenTab});
 
@@ -95,8 +91,9 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
           fit: StackFit.expand,
           clipBehavior: Clip.none,
           children: <Widget>[
-            // Still the poster's road and sweep — sk10 replaces both with the
-            // design's rotated panel, dash strip and accent bloom.
+            // The design's rotated panel, dash strip, accent bloom and ground
+            // fade. It drops the sweep itself in the phone-panel layout, where
+            // there is no band for the rake to travel along.
             PosterBackdrop(
               // Fires on the rising edge of frameTransform, which is the exact
               // frame the device's content opacity reaches zero.

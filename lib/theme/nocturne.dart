@@ -193,6 +193,16 @@ abstract final class NBreak {
   static const double detail = 1040;
   static const double shell = 900;
   static const double stats = 760;
+
+  /// The phone panel. Not a media query — the design's mobile screens are a
+  /// 390×812 panel inside a desktop viewport rather than a narrow viewport of
+  /// their own, so the CSS has no rule for this width and the reference render
+  /// supplies it.
+  ///
+  /// It lives here because more than one widget has to turn at exactly the
+  /// same place: the showcase hero switches to its panel column here, and the
+  /// backdrop drops the road for the panel's ground here.
+  static const double panel = 560;
 }
 
 /// A horizontal rule that fades to transparent over its first and last 48px
