@@ -226,8 +226,11 @@ class BevelStyle {
 ///  6. outer bevel        — light top+left, dark bottom+right
 ///  7. inner counter-bevel — inverted
 ///  8. screw dots
-///  9. dashed rules       — see `DashedRule`, composed by the caller
-/// 10. index chip         — see `IndexChip`, pinned by the caller
+///  9. dashed rules       — composed by the caller; no caller draws them
+///                          since the Nocturne redesign, so the widget that
+///                          did (`DashedRule`) was deleted in sk15
+/// 10. index chip         — pinned by the caller; likewise no longer drawn,
+///                          and `IndexChip` is already gone
 ///
 /// Layers 3–5 composite against the panel's own ground, not the page: the
 /// whole stack sits inside one `ColorFiltered` layer so `backgroundBlendMode`
