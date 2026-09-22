@@ -108,10 +108,25 @@ class GalleryShellState extends State<GalleryShellScreen> {
     builder: (BuildContext context) => PlateDetailScreen(item: item, heroTag: heroTag),
   );
 
-  void _openCountry(GallerySource source) => _pushDiscover(
-    isPlateDetail: false,
-    builder: (BuildContext context) => CountryDetailScreen(source: source, onOpenPlate: _openPlate),
+  WidgetBuilder _countryBuilder(GallerySource source) => (BuildContext context) => CountryDetailScreen(
+    source: source,
+    onOpenPlate: _openPlate,
+    onOpenDiscover: _resetDiscover,
+    onSwitchCountry: _switchCountry,
   );
+
+  void _openCountry(GallerySource source) =>
+      _pushDiscover(isPlateDetail: false, builder: _countryBuilder(source));
+
+  /// `OTHER COUNTRIES` on the mobile country page: replaces the current
+  /// country page with another one, so the nested stack's depth never grows
+  /// and the back gesture still returns to Discover rather than unwinding
+  /// through every country visited along the way.
+  void _switchCountry(GallerySource source) {
+    final NavigatorState? navigator = _discoverNavigatorKey.currentState;
+    if (navigator == null) return;
+    navigator.pushReplacement<void, void>(PageRiseRoute<void>(builder: _countryBuilder(source)));
+  }
 
   /// Tapping the already-selected Discover destination returns to its index,
   /// the way tapping a selected tab does everywhere else. Tapping a *different*
