@@ -105,7 +105,17 @@ class GalleryShellState extends State<GalleryShellScreen> {
 
   void _openPlate(CatalogueItem item, String heroTag) => _pushDiscover(
     isPlateDetail: true,
-    builder: (BuildContext context) => PlateDetailScreen(item: item, heroTag: heroTag),
+    builder: (BuildContext context) => PlateDetailScreen(
+      item: item,
+      heroTag: heroTag,
+      onOpenDiscover: _resetDiscover,
+      // Pops one level rather than pushing a country page: a plate opened off
+      // a country page already has one underneath it on the stack, and a
+      // plate opened straight from Discover has none to return to, so this
+      // is the same "go back" the circular button offers, just from a second
+      // place in the breadcrumb.
+      onOpenCountry: (GallerySource source) => Navigator.of(context).maybePop(),
+    ),
   );
 
   WidgetBuilder _countryBuilder(GallerySource source) => (BuildContext context) => CountryDetailScreen(
@@ -233,8 +243,20 @@ class GalleryShellState extends State<GalleryShellScreen> {
               final String? label = route.headerLabel;
               return Column(
                 children: <Widget>[
-                  NocturneMobileHeader(
-                    trailing: label == null ? null : Text(label, style: NType.pill.copyWith(color: N.n600)),
+                  ValueListenableBuilder<bool>(
+                    valueListenable: forceMobilePanel,
+                    builder: (BuildContext context, bool forced, _) {
+                      Widget? trailing;
+                      if (forced) {
+                        trailing = GestureDetector(
+                          onTap: () => forceMobilePanel.value = false,
+                          child: Text('DESKTOP VIEW', style: NType.pill.copyWith(color: N.accent)),
+                        );
+                      } else if (label != null) {
+                        trailing = Text(label, style: NType.pill.copyWith(color: N.n600));
+                      }
+                      return NocturneMobileHeader(trailing: trailing);
+                    },
                   ),
                   Expanded(child: tabBodies!),
                   if (route.showsBottomBar) NocturneBottomBar(tab: route.tab, onTabSelected: _onTabSelected),
