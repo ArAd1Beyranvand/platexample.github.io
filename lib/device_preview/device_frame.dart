@@ -291,12 +291,25 @@ class _DeviceFrameState extends State<DeviceFrame> with SingleTickerProviderStat
   DeviceConfig? _cachedContentConfig;
   Widget? _cachedContent;
 
+  /// Keeps the page's element — and every [State] under it — alive as the page
+  /// moves between the three shapes [_buildDevice] wraps it in.
+  ///
+  /// `Widget.canUpdate` matches on runtime type, so crossing the 0.999 opacity
+  /// threshold swaps `_ScreenContent` for `Opacity` under the same `ColoredBox`
+  /// and Flutter would unmount and re-inflate the whole page: the backdrop orbs
+  /// snap home and re-roll their headings, and every field on the plate and the
+  /// keypad rebuilds. A GlobalKey makes those two frames a *reparent* instead.
+  /// Reusing the same widget instance (see [_cachedContent]) is not enough —
+  /// without a key the element is still thrown away when its parent changes
+  /// type.
+  final GlobalKey _screenKey = GlobalKey(debugLabel: 'device-screen');
+
   Widget _screenContent() {
     final config = _contentConfig;
     final cached = _cachedContent;
     if (cached != null && identical(_cachedContentConfig, config)) return cached;
     _cachedContentConfig = config;
-    return _cachedContent = _ScreenContent(config: config, builder: widget.builder);
+    return _cachedContent = _ScreenContent(key: _screenKey, config: config, builder: widget.builder);
   }
 
   @override
@@ -521,7 +534,7 @@ class _DeviceFrameState extends State<DeviceFrame> with SingleTickerProviderStat
 /// Lays the page out at the target device's logical size and scales it into
 /// the current glass, so text and the plate never reflow mid-morph.
 class _ScreenContent extends StatelessWidget {
-  const _ScreenContent({required this.config, required this.builder});
+  const _ScreenContent({super.key, required this.config, required this.builder});
 
   final DeviceConfig config;
   final Widget Function(BuildContext, DeviceConfig) builder;
