@@ -2,25 +2,46 @@ import 'package:core_plate/core_plate.dart';
 import 'package:flutter/material.dart';
 import 'package:plate_keypad/plate_keypad.dart';
 
+import '../../../theme/nocturne.dart';
 import '../catalogue_index.dart';
 import '../sources/sources.dart';
 import '../widgets/plate_binding.dart';
+import '../widgets/plate_detail/input_mode_list.dart';
+import '../widgets/plate_detail/plate_breadcrumb.dart';
+import '../widgets/plate_detail/plate_details_table.dart';
+import '../widgets/plate_detail/plate_title_block.dart';
+import '../widgets/plate_detail/submit_block.dart';
 import '../widgets/section_header.dart';
-import '../theme/tokens.dart';
 
 /// One plate, on its own, at size, and editable — the page a tile opens into.
 ///
-/// The old app jumped a tap on a card straight into a separate playground,
-/// which meant looking closely at a plate and editing one were two different
-/// places. They are one place now: this screen is both. Tap a slot and type,
-/// or switch to the on-screen pad below — the facts about the plate (which
-/// package draws it, which spec, how many slots, whether a validator covers
-/// it) sit right under the thing they describe.
+/// Desktop (`>= NBreak.detail`): two columns, `minmax(0, 1.15fr) | 380px` —
+/// the plate and its title on the left, the input picker and the fact table
+/// pinned in a persistent aside on the right. Below `NBreak.detail`: one
+/// column, the aside moving under the main block. The mobile treatment below
+/// `NBreak.shell` is sk21's.
+///
+/// One state object (this screen's own `State`) drives every extracted part —
+/// [PlateBreadcrumb], [PlateTitleBlock], [InputModeList], [PlateDetailsTable],
+/// [SubmitBlock] — so sk21 can reuse them for the mobile panel without a
+/// second copy of the plate/input-mode state.
 class PlateDetailScreen extends StatefulWidget {
-  const PlateDetailScreen({super.key, required this.item, required this.heroTag});
+  const PlateDetailScreen({
+    super.key,
+    required this.item,
+    required this.heroTag,
+    this.onOpenDiscover,
+    this.onOpenCountry,
+  });
 
   final CatalogueItem item;
   final String heroTag;
+
+  /// `DISCOVER` in the breadcrumb. Null leaves the word inert.
+  final VoidCallback? onOpenDiscover;
+
+  /// The country segment in the breadcrumb. Null leaves it inert.
+  final void Function(GallerySource source)? onOpenCountry;
 
   @override
   State<PlateDetailScreen> createState() => _PlateDetailScreenState();
@@ -54,221 +75,241 @@ class _PlateDetailScreenState extends State<PlateDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-    final ColorScheme colors = theme.colorScheme;
     final CatalogueItem item = widget.item;
     final GalleryEntry entry = _entry;
     final PlateSpec spec = entry.spec;
-    return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          Column(
-            children: <Widget>[
-              Expanded(
-                child: ListView(
-                  padding: const EdgeInsets.fromLTRB(
-                    Gap.lg,
-                    Gap.lg,
-                    Gap.lg,
-                    // Room for the floating dock, plus the usual breathing space.
-                    Gap.xl + 96,
-                  ),
-                  children: <Widget>[
-                    // The transparent app bar is gone — the shell's own header
-                    // stays on screen now and reads `PLATE DETAIL`, so a second
-                    // bar under it was one chrome too many. sk18–sk21 replace
-                    // this placeholder with the design's
-                    // `DISCOVER / IRAN / IR.CAR` breadcrumb row.
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: TextButton(
-                        onPressed: () => Navigator.of(context).maybePop(),
-                        child: const Text('← back'),
-                      ),
-                    ),
-                    const SizedBox(height: Gap.sm),
-                    Text(item.source.countryName, style: theme.textTheme.labelLarge),
-                    const SizedBox(height: Gap.xs),
-                    Text(entry.label, style: theme.textTheme.headlineSmall),
-                    const SizedBox(height: Gap.xs),
-                    Text(
-                      item.section.title,
-                      style: theme.textTheme.bodyMedium?.copyWith(color: colors.onSurfaceVariant),
-                    ),
-                    const SizedBox(height: Gap.lg),
-                    // The stage: taller and darker than a catalogue-grid frame, an
-                    // ambient glow of the plate's own colours behind it, so the
-                    // one plate this page is about reads as the main event
-                    // rather than a bigger version of a catalogue tile.
-                    _Stage(
-                      spec: spec,
-                      heroTag: widget.heroTag,
-                      child: PlateBinding<PlateTheme?>(
-                        controller: _plate,
-                        select: (PlateController c) => entry.themeFor(c.values),
-                        builder: (BuildContext context, PlateTheme? plateTheme) => PlateCanvas(
-                          spec: spec,
-                          theme: plateTheme,
-                          country: entry.country,
-                          inputSource: _inputSource,
-                          validator: entry.validator,
-                          // Paints the underlines red; never bars a keystroke.
-                          autoValidate: true,
-                          controller: _plate,
-                          // A `chosen` slot — Iran's letter, the West Bank's
-                          // governorate — asks the host for a character. This
-                          // is what the dependency on plate_keypad is for.
-                          onChooseCharacter: (PlateAlphabet alphabet) => PlateCharacterPicker.show(context, alphabet),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: Gap.xl),
-                    SettingsSection(
-                      title: 'Input',
-                      child: _InputSourcePicker(
-                        selected: _inputSource,
-                        onChanged: (PlateInputSource s) => setState(() => _inputSource = s),
-                      ),
-                    ),
-                    const SizedBox(height: Gap.xl),
-                    const Eyebrow('Details'),
-                    const SizedBox(height: Gap.sm),
-                    _FactGrid(
-                      facts: <_Fact>[
-                        _Fact(label: 'Package', value: item.source.packageName, icon: Icons.inventory_2_outlined),
-                        _Fact(label: 'Spec', value: spec.id, icon: Icons.fingerprint),
-                        _Fact(label: 'Slots', value: '${spec.slotCount}', icon: Icons.view_column_outlined),
-                        _Fact(
-                          label: 'Proportions',
-                          value: '${(spec.canvasWidth / spec.canvasHeight).toStringAsFixed(2)} : 1',
-                          icon: Icons.aspect_ratio_outlined,
-                        ),
-                        _Fact(
-                          label: 'Validator',
-                          value: entry.validator == null ? 'None in this package' : entry.validator.runtimeType.toString(),
-                          icon: entry.validator == null ? Icons.shield_outlined : Icons.verified_user_outlined,
-                        ),
-                        if (entry.note != null) _Fact(label: 'Note', value: entry.note!, icon: Icons.sticky_note_2_outlined),
-                      ],
-                    ),
-                    const SizedBox(height: Gap.lg),
-                    Text(
-                      item.section.note,
-                      style: theme.textTheme.bodySmall?.copyWith(color: colors.onSurfaceVariant, height: 1.5),
-                    ),
-                  ],
+    final ColorScheme colors = Theme.of(context).colorScheme;
+
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        final bool oneColumn = constraints.maxWidth < NBreak.detail;
+        final EdgeInsets mainPadding = oneColumn
+            ? const EdgeInsets.fromLTRB(40, 24, 40, 24)
+            : const EdgeInsets.fromLTRB(72, 72, 0, 72);
+
+        final Widget main = _MainColumn(
+          item: item,
+          entry: entry,
+          spec: spec,
+          plate: _plate,
+          inputSource: _inputSource,
+          onOpenDiscover: widget.onOpenDiscover,
+          onOpenCountry: widget.onOpenCountry,
+          heroTag: widget.heroTag,
+          padding: mainPadding,
+          center: !oneColumn,
+        );
+
+        final Widget aside = _Aside(
+          item: item,
+          entry: entry,
+          spec: spec,
+          plate: _plate,
+          inputSource: _inputSource,
+          onInputSourceChanged: (PlateInputSource s) => setState(() => _inputSource = s),
+          onSubmit: _onSubmit,
+          borderOnTop: oneColumn,
+        );
+
+        final Widget page = oneColumn
+            ? SingleChildScrollView(
+                child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[main, aside]),
+              )
+            : Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Expanded(flex: 115, child: SingleChildScrollView(child: main)),
+                  SizedBox(width: 380, child: SingleChildScrollView(child: aside)),
+                ],
+              );
+
+        // The pad depends on the value only through the focused slot, which
+        // moves far less often than a character changes. Binding it to the
+        // active slot alone keeps a keystroke that stays in one slot from
+        // rebuilding every key.
+        return Column(
+          children: <Widget>[
+            Expanded(child: page),
+            if (_inputSource == PlateInputSource.packageKeypad)
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  color: colors.surfaceContainerLow,
+                  border: Border(top: BorderSide(color: colors.outlineVariant)),
                 ),
-              ),
-              // The pad depends on the value only through the focused slot, which
-              // moves far less often than a character changes. Binding it to the
-              // active slot alone keeps a keystroke that stays in one slot from
-              // rebuilding every key.
-              if (_inputSource == PlateInputSource.packageKeypad)
-                DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: colors.surfaceContainerLow,
-                    border: Border(top: BorderSide(color: colors.outlineVariant)),
-                  ),
-                  child: SafeArea(
-                    top: false,
-                    child: PlateBinding<PlateSlot?>(
-                      controller: _plate,
-                      select: (PlateController c) => c.activeSlot,
-                      builder: (BuildContext context, PlateSlot? active) => PlateKeypad(
-                        highlightedKey: null,
-                        compact: true,
-                        showLetters: active != null && !active.alphabet.isNumeric,
-                        digitAlphabet: _alphabet(numeric: true),
-                        letterAlphabet: _alphabet(numeric: false),
-                        activeAlphabet: active?.alphabet,
-                        onKey: (String key) => key == kPlateBackspaceKey ? _plate.backspace() : _plate.submit(key),
-                      ),
+                child: SafeArea(
+                  top: false,
+                  child: PlateBinding<PlateSlot?>(
+                    controller: _plate,
+                    select: (PlateController c) => c.activeSlot,
+                    builder: (BuildContext context, PlateSlot? active) => PlateKeypad(
+                      highlightedKey: null,
+                      compact: true,
+                      showLetters: active != null && !active.alphabet.isNumeric,
+                      digitAlphabet: _alphabet(numeric: true),
+                      letterAlphabet: _alphabet(numeric: false),
+                      activeAlphabet: active?.alphabet,
+                      onKey: (String key) => key == kPlateBackspaceKey ? _plate.backspace() : _plate.submit(key),
                     ),
                   ),
                 ),
-            ],
-          ),
-          // Verdict and Submit, docked to the bottom rather than inline in the
-          // scroll: the two things that read the live value stay in the same
-          // place regardless of scroll position, and disappear together with
-          // the pad rather than competing with it for the same strip.
-          if (_inputSource != PlateInputSource.packageKeypad)
-            Positioned(
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: PlateBinding<(PlateValidation?, bool)>(
-                controller: _plate,
-                select: (PlateController c) => (c.validation, c.isCompleted),
-                builder: (BuildContext context, (PlateValidation?, bool) state) {
-                  final (PlateValidation? verdict, bool completed) = state;
-                  return _SubmitDock(
-                    verdict: verdict,
-                    completed: completed,
-                    onSubmit: completed && (verdict?.isValid ?? true) ? _onSubmit : null,
-                  );
-                },
               ),
-            ),
-        ],
-      ),
+          ],
+        );
+      },
     );
   }
 }
 
-/// The plate's stage: a deep, top-lit surface with a soft glow of the plate's
-/// own colours pooled behind it, so the single artefact this page is about
-/// feels lit rather than merely enlarged.
-class _Stage extends StatelessWidget {
-  const _Stage({required this.spec, required this.child, required this.heroTag});
+/// The left column: breadcrumb, title, the plate itself, and the live slot
+/// caption. Scrolls on its own on a short viewport; the aside scrolls
+/// independently beside it, which the design does not forbid — only an aside
+/// that scrolls *without* the page would be wrong, and this is the reverse.
+class _MainColumn extends StatelessWidget {
+  const _MainColumn({
+    required this.item,
+    required this.entry,
+    required this.spec,
+    required this.plate,
+    required this.inputSource,
+    required this.onOpenDiscover,
+    required this.onOpenCountry,
+    required this.heroTag,
+    required this.padding,
+    required this.center,
+  });
+
+  final CatalogueItem item;
+  final GalleryEntry entry;
+  final PlateSpec spec;
+  final PlateController plate;
+  final PlateInputSource inputSource;
+  final VoidCallback? onOpenDiscover;
+  final void Function(GallerySource source)? onOpenCountry;
+  final String heroTag;
+  final EdgeInsets padding;
+
+  /// Whether this column should claim the full viewport height and centre its
+  /// content within it. True on the desktop two-column layout, where this is
+  /// the whole left-hand side beside the aside. False in the one-column
+  /// layout, where this stacks above the aside in the same scroll view and
+  /// centring within the full viewport would push the aside off-screen.
+  final bool center;
+
+  @override
+  Widget build(BuildContext context) {
+    // The content sits in the middle third of the viewport rather than
+    // hugging the top: a bare `minHeight` the size of the available space
+    // (less this column's own padding) plus `mainAxisAlignment.center` on the
+    // column pushes the block toward the middle on a tall window without
+    // pinning it there on a short one, where the padding alone already fills
+    // the space and centring would do nothing. Only done when [center] is
+    // true — see its doc comment.
+    if (!center) {
+      return Padding(
+        padding: padding,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: _children(),
+        ),
+      );
+    }
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        final double minHeight = constraints.hasBoundedHeight
+            ? constraints.maxHeight
+            : MediaQuery.sizeOf(context).height;
+        return ConstrainedBox(
+          constraints: BoxConstraints(minHeight: minHeight),
+          child: Padding(
+            padding: padding,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: _children(),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  List<Widget> _children() => <Widget>[
+    PlateBreadcrumb(
+      countryName: item.source.countryName,
+      specId: spec.id,
+      onOpenDiscover: onOpenDiscover,
+      onOpenCountry: onOpenCountry == null ? null : () => onOpenCountry!(item.source),
+    ),
+    const SizedBox(height: 32),
+    PlateTitleBlock(
+      livery: entry.label,
+      countryName: item.source.countryName,
+      packageName: item.source.packageName,
+    ),
+    const SizedBox(height: 24),
+    _PlateStage(
+      spec: spec,
+      heroTag: heroTag,
+      child: PlateBinding<PlateTheme?>(
+        controller: plate,
+        select: (PlateController c) => entry.themeFor(c.values),
+        builder: (BuildContext context, PlateTheme? plateTheme) => PlateCanvas(
+          spec: spec,
+          theme: plateTheme,
+          country: entry.country,
+          inputSource: inputSource,
+          validator: entry.validator,
+          // Paints the underlines red; never bars a keystroke.
+          autoValidate: true,
+          controller: plate,
+          // A `chosen` slot — Iran's letter, the West Bank's
+          // governorate — asks the host for a character.
+          onChooseCharacter: (PlateAlphabet alphabet) => PlateCharacterPicker.show(context, alphabet),
+        ),
+      ),
+    ),
+    const SizedBox(height: 12),
+    PlateBinding<int>(
+      controller: plate,
+      select: (PlateController c) => c.values.where((String? v) => v != null && v.isNotEmpty).length,
+      builder: (BuildContext context, int filled) => Text(
+        '$filled SLOTS FILLED · ${spec.id}'.toUpperCase(),
+        style: NType.kicker.copyWith(color: N.n500),
+      ),
+    ),
+  ];
+}
+
+/// The plate itself, at size, with no stage decoration around it — the
+/// design draws it directly on the page, not on a lit board.
+class _PlateStage extends StatelessWidget {
+  const _PlateStage({required this.spec, required this.child, required this.heroTag});
 
   final PlateSpec spec;
   final Widget child;
   final String heroTag;
 
+  /// `≈680px` at 1440, scaling down with the column.
+  static const double _maxWidth = 680;
+
   @override
   Widget build(BuildContext context) {
-    final ColorScheme colors = Theme.of(context).colorScheme;
-    final bool isDark = Theme.of(context).brightness == Brightness.dark;
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        borderRadius: Radii.lgAll,
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: <Color>[colors.surfaceContainerHigh, colors.surfaceContainerLowest],
-        ),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            color: colors.primary.withValues(alpha: isDark ? 0.18 : 0.10),
-            blurRadius: 60,
-            spreadRadius: -10,
-          ),
-        ],
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(Gap.xl),
-        child: SizedBox(
-          height: 220,
-          child: Center(
-            child: Hero(
-              tag: heroTag,
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: isDark ? 0.6 : 0.25),
-                      blurRadius: 24,
-                      offset: const Offset(0, 10),
-                    ),
-                  ],
-                ),
-                child: FittedBox(
-                  fit: BoxFit.contain,
-                  child: SizedBox(width: spec.canvasWidth, height: spec.canvasHeight, child: child),
-                ),
-              ),
-            ),
+    // No nested `LayoutBuilder` here: the Hero flight measures this subtree
+    // off-tree, mid-flight, where a `LayoutBuilder` can see stale or
+    // momentarily zero constraints and hand `PlateCanvas` a zero size to hit
+    // test. `ConstrainedBox` + `AspectRatio` sizes the same way without ever
+    // asking the incoming constraints what they are.
+    return Hero(
+      tag: heroTag,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: _maxWidth),
+        child: AspectRatio(
+          aspectRatio: spec.canvasWidth / spec.canvasHeight,
+          child: FittedBox(
+            fit: BoxFit.contain,
+            child: SizedBox(width: spec.canvasWidth, height: spec.canvasHeight, child: child),
           ),
         ),
       ),
@@ -276,219 +317,109 @@ class _Stage extends StatelessWidget {
   }
 }
 
-/// The verdict and the Submit action, merged into one bottom-docked bar: a
-/// blurred, translucent surface that floats over the scroll rather than a
-/// button sitting cold in the flow of the page.
-class _SubmitDock extends StatelessWidget {
-  const _SubmitDock({required this.verdict, required this.completed, required this.onSubmit});
+/// The right rail: `INPUT`, `DETAILS`, then the submit block pinned to the
+/// bottom. `border-left` on the desktop two-column layout, `border-top` when
+/// the layout collapses to one column.
+class _Aside extends StatelessWidget {
+  const _Aside({
+    required this.item,
+    required this.entry,
+    required this.spec,
+    required this.plate,
+    required this.inputSource,
+    required this.onInputSourceChanged,
+    required this.onSubmit,
+    required this.borderOnTop,
+  });
 
-  final PlateValidation? verdict;
-  final bool completed;
-  final VoidCallback? onSubmit;
+  final CatalogueItem item;
+  final GalleryEntry entry;
+  final PlateSpec spec;
+  final PlateController plate;
+  final PlateInputSource inputSource;
+  final ValueChanged<PlateInputSource> onInputSourceChanged;
+  final VoidCallback onSubmit;
+  final bool borderOnTop;
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-    final ColorScheme colors = theme.colorScheme;
-    final (IconData icon, Color color, String message) = switch (verdict) {
-      null => (Icons.remove_circle_outline, colors.onSurfaceVariant, 'No validator for this plate'),
-      final PlateValidation v when !v.isValid => (Icons.error_outline, colors.error, v.reason!),
-      _ when !completed => (Icons.more_horiz, colors.onSurfaceVariant, 'Keep going'),
-      _ => (Icons.check_circle_outline, colors.primary, 'Valid plate'),
-    };
+    final List<PlateDetailRow> rows = <PlateDetailRow>[
+      PlateDetailRow(label: 'Package', value: item.source.packageName),
+      PlateDetailRow(label: 'Spec', value: spec.id, mono: true),
+      PlateDetailRow(label: 'Country block', value: _countryBlock, font: NType.forScript(_countryBlock)),
+      PlateDetailRow(label: 'Slots', value: '${spec.slotCount}'),
+      PlateDetailRow(label: 'Livery', value: entry.label),
+      PlateDetailRow(
+        label: 'Proportions',
+        value: '${(spec.canvasWidth / spec.canvasHeight).toStringAsFixed(2)} : 1',
+      ),
+      PlateDetailRow(
+        label: 'Validator',
+        value: entry.validator == null ? 'None in this package' : entry.validator.runtimeType.toString(),
+      ),
+    ];
+
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: colors.surface.withValues(alpha: 0.92),
-        border: Border(top: BorderSide(color: colors.outlineVariant)),
+        border: borderOnTop ? const Border(top: BorderSide(color: N.divider)) : const Border(left: BorderSide(color: N.divider)),
       ),
-      child: SafeArea(
-        top: false,
+      child: SizedBox(
+        height: borderOnTop ? null : MediaQuery.sizeOf(context).height,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(Gap.lg, Gap.sm, Gap.lg, Gap.sm),
-          child: Row(
-            children: <Widget>[
-              Icon(icon, size: 18, color: color),
-              const SizedBox(width: Gap.sm),
-              Expanded(
-                child: Text(
-                  message,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: theme.textTheme.bodySmall?.copyWith(color: color),
-                ),
-              ),
-              const SizedBox(width: Gap.md),
-              FilledButton.icon(
-                onPressed: onSubmit,
-                icon: const Icon(Icons.check_rounded, size: 18),
-                label: const Text('Submit'),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// Which source drives the plate's characters, as three icon-first chips
-/// rather than a labelled segmented button with a caption underneath — the
-/// caption only ever explained the one already selected, so folding it into
-/// a short helper line under the row says the same thing in less space.
-class _InputSourcePicker extends StatelessWidget {
-  const _InputSourcePicker({required this.selected, required this.onChanged});
-
-  final PlateInputSource selected;
-  final ValueChanged<PlateInputSource> onChanged;
-
-  static const Map<PlateInputSource, (IconData, String, String)> _labels = <PlateInputSource, (IconData, String, String)>{
-    PlateInputSource.system: (Icons.keyboard_alt_outlined, 'System', 'The platform keyboard.'),
-    PlateInputSource.hardwareKeyboard: (
-      Icons.keyboard_outlined,
-      'Hardware',
-      'Physical key presses only; no on-screen IME.',
-    ),
-    PlateInputSource.packageKeypad: (
-      Icons.dialpad_outlined,
-      'Keypad',
-      'The pad below drives PlateController.submit and .backspace.',
-    ),
-  };
-
-  @override
-  Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-    final ColorScheme colors = theme.colorScheme;
-    final (IconData, String, String) active = _labels[selected]!;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Row(
-          children: <Widget>[
-            for (final MapEntry<PlateInputSource, (IconData, String, String)> e in _labels.entries) ...<Widget>[
-              Expanded(child: _SourceChip(icon: e.value.$1, label: e.value.$2, selected: e.key == selected, onTap: () => onChanged(e.key))),
-              if (e.key != _labels.keys.last) const SizedBox(width: Gap.sm),
-            ],
-          ],
-        ),
-        const SizedBox(height: Gap.sm),
-        Text(
-          active.$3,
-          style: theme.textTheme.bodySmall?.copyWith(color: colors.onSurfaceVariant),
-        ),
-      ],
-    );
-  }
-}
-
-class _SourceChip extends StatelessWidget {
-  const _SourceChip({required this.icon, required this.label, required this.selected, required this.onTap});
-
-  final IconData icon;
-  final String label;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final ColorScheme colors = Theme.of(context).colorScheme;
-    final ThemeData theme = Theme.of(context);
-    return Material(
-      color: selected ? colors.primaryContainer : colors.surfaceContainerHigh,
-      borderRadius: Radii.smAll,
-      child: InkWell(
-        borderRadius: Radii.smAll,
-        onTap: onTap,
-        child: AnimatedContainer(
-          duration: Motion.fast,
-          curve: Motion.curve,
-          padding: const EdgeInsets.symmetric(vertical: 10),
+          padding: const EdgeInsets.fromLTRB(40, 56, 40, 32),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Icon(icon, size: 20, color: selected ? colors.onPrimaryContainer : colors.onSurfaceVariant),
-              const SizedBox(height: 4),
-              Text(
-                label,
-                style: theme.textTheme.labelSmall?.copyWith(
-                  color: selected ? colors.onPrimaryContainer : colors.onSurfaceVariant,
-                  fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
-                ),
-              ),
+              const Eyebrow('Input'),
+              const SizedBox(height: 20),
+              InputModeList(selected: inputSource, onChanged: onInputSourceChanged),
+              const SizedBox(height: 40),
+              const Eyebrow('Details'),
+              const SizedBox(height: 12),
+              PlateDetailsTable(rows: rows),
+              const SizedBox(height: 40),
+              if (borderOnTop)
+                _Submit(plate: plate, onSubmit: onSubmit)
+              else
+                Expanded(child: Align(alignment: Alignment.bottomCenter, child: _Submit(plate: plate, onSubmit: onSubmit))),
             ],
           ),
         ),
       ),
     );
   }
+
+  /// The value the `COUNTRY BLOCK` row shows — the printed label on the
+  /// plate's own field (Iran's `ایران`) where the spec has one, since that is
+  /// what the design's screenshot shows; the country panel's own caption
+  /// (`I.R. IRAN`) otherwise, for specs that print no such label.
+  String get _countryBlock {
+    if (spec.labels.isNotEmpty) return spec.labels.first.text;
+    final PlateCountry country = entry.country ?? spec.country;
+    return country.captionLines.join(' ');
+  }
 }
 
-/// The plate's vitals, as a two-column wrap of small cards rather than a
-/// stack of label-value rows — a row-per-fact reads as a form; a grid of
-/// short cards reads as what it is, a spec sheet.
-class _FactGrid extends StatelessWidget {
-  const _FactGrid({required this.facts});
+class _Submit extends StatelessWidget {
+  const _Submit({required this.plate, required this.onSubmit});
 
-  final List<_Fact> facts;
-
-  @override
-  Widget build(BuildContext context) => LayoutBuilder(
-    builder: (BuildContext context, BoxConstraints constraints) {
-      final double width = (constraints.maxWidth - Gap.sm) / 2;
-      return Wrap(
-        spacing: Gap.sm,
-        runSpacing: Gap.sm,
-        children: <Widget>[for (final _Fact fact in facts) SizedBox(width: width, child: fact)],
-      );
-    },
-  );
-}
-
-/// One fact, as an icon, a small-caps label, and its value.
-class _Fact extends StatelessWidget {
-  const _Fact({required this.label, required this.value, required this.icon});
-
-  final String label;
-  final String value;
-  final IconData icon;
+  final PlateController plate;
+  final VoidCallback onSubmit;
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-    final ColorScheme colors = theme.colorScheme;
-    return Container(
-      padding: const EdgeInsets.all(Gap.md),
-      decoration: BoxDecoration(
-        color: colors.surfaceContainerLow,
-        borderRadius: Radii.mdAll,
-        border: Border.all(color: colors.outlineVariant),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              Icon(icon, size: 14, color: colors.onSurfaceVariant),
-              const SizedBox(width: 6),
-              Expanded(
-                child: Text(
-                  label.toUpperCase(),
-                  overflow: TextOverflow.ellipsis,
-                  style: theme.textTheme.labelSmall?.copyWith(color: colors.onSurfaceVariant),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 6),
-          Text(
-            value,
-            style: theme.textTheme.bodyMedium?.copyWith(
-              fontFeatures: const <FontFeature>[FontFeature.tabularFigures()],
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ],
-      ),
+    return PlateBinding<(PlateValidation?, bool)>(
+      controller: plate,
+      select: (PlateController c) => (c.validation, c.isCompleted),
+      builder: (BuildContext context, (PlateValidation?, bool) state) {
+        final (PlateValidation? verdict, bool completed) = state;
+        return SubmitBlock(
+          verdict: verdict,
+          completed: completed,
+          onSubmit: completed && (verdict?.isValid ?? true) ? onSubmit : null,
+        );
+      },
     );
   }
 }
