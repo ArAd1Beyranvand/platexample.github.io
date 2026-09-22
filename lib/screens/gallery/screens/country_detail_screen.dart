@@ -27,24 +27,24 @@ class CountryDetailScreen extends StatelessWidget {
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
-          SliverAppBar(
-            pinned: true,
-            expandedHeight: 190,
-            backgroundColor: theme.colorScheme.surface,
-            flexibleSpace: FlexibleSpaceBar(
-              titlePadding: const EdgeInsets.only(left: Gap.lg, bottom: Gap.md, right: Gap.lg),
-              title: Text(source.countryName, style: theme.textTheme.titleLarge),
-              background: DecoratedBox(
-                // The country's plate colour, washed out to a backdrop. Ties
-                // the page to the shelf it was opened from without tinting
-                // anything the plates themselves sit against.
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: <Color>[accent.withValues(alpha: 0.28), theme.colorScheme.surface],
+          // The page's own header is gone: the shell's chrome stays on screen
+          // now, and drawing an app bar under it said `Iran` twice with a
+          // second back affordance. sk18–sk21 put the design's
+          // `DISCOVER / IRAN` breadcrumb row and full-bleed hero here; until
+          // then this placeholder keeps the page navigable.
+          SliverPadding(
+            padding: const EdgeInsets.fromLTRB(Gap.lg, Gap.lg, Gap.lg, 0),
+            sliver: SliverToBoxAdapter(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  TextButton(
+                    onPressed: () => Navigator.of(context).maybePop(),
+                    child: const Text('← back'),
                   ),
-                ),
+                  const SizedBox(height: Gap.sm),
+                  Text(source.countryName, style: theme.textTheme.titleLarge),
+                ],
               ),
             ),
           ),

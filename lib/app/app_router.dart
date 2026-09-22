@@ -23,17 +23,33 @@ class AppRouteParser extends RouteInformationParser<AppTab> {
 
 /// Owns which tab is showing, and hosts the shell.
 ///
-/// The shell still pushes its detail screens imperatively onto this
-/// Navigator — a pages list per tab would mean rebuilding the whole stack on
-/// every tab change, and the tabs are an [IndexedStack] precisely so they are
-/// *not* rebuilt. [popRoute] hands the back gesture to that Navigator first,
-/// so back closes an open plate before it leaves the tab.
+/// The shell pushes its detail screens imperatively onto a Navigator *nested
+/// inside* its own page area — a pages list per tab would mean rebuilding the
+/// whole stack on every tab change, and the tabs are an [IndexedStack]
+/// precisely so they are *not* rebuilt.
+///
+/// [popRoute] therefore has three things to try, in order: the nested Discover
+/// stack, this Navigator (which holds only the shell, but a dialog or a
+/// route pushed on the root belongs to it), and finally the tab history the
+/// browser keeps. Back on a plate page steps plate → country → Discover index
+/// before it leaves Discover at all.
 class AppRouterDelegate extends RouterDelegate<AppTab>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<AppTab> {
   AppRouterDelegate();
 
   @override
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+  /// Reaches the shell's state so [popRoute] can offer back to its nested
+  /// navigator. The shell is a single long-lived widget under this delegate,
+  /// so a [GlobalKey] costs nothing and saves threading a callback down.
+  final GlobalKey<GalleryShellState> _shellKey = GlobalKey<GalleryShellState>();
+
+  @override
+  Future<bool> popRoute() async {
+    if (await _shellKey.currentState?.maybePopDiscover() ?? false) return true;
+    return super.popRoute();
+  }
 
   AppTab _tab = AppTab.showcase;
 
@@ -61,7 +77,7 @@ class AppRouterDelegate extends RouterDelegate<AppTab>
       pages: <Page<void>>[
         MaterialPage<void>(
           key: const ValueKey<String>('shell'),
-          child: GalleryShellScreen(tab: _tab, onTabSelected: goTo),
+          child: GalleryShellScreen(key: _shellKey, tab: _tab, onTabSelected: goTo),
         ),
       ],
       onDidRemovePage: (Page<Object?> page) {},

@@ -60,26 +60,35 @@ class _PlateDetailScreenState extends State<PlateDetailScreen> {
     final GalleryEntry entry = _entry;
     final PlateSpec spec = entry.spec;
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        surfaceTintColor: Colors.transparent,
-        title: Text(item.source.countryName),
-      ),
       body: Stack(
         children: <Widget>[
           Column(
             children: <Widget>[
               Expanded(
                 child: ListView(
-                  padding: EdgeInsets.fromLTRB(
+                  padding: const EdgeInsets.fromLTRB(
                     Gap.lg,
-                    MediaQuery.paddingOf(context).top + kToolbarHeight,
+                    Gap.lg,
                     Gap.lg,
                     // Room for the floating dock, plus the usual breathing space.
                     Gap.xl + 96,
                   ),
                   children: <Widget>[
+                    // The transparent app bar is gone — the shell's own header
+                    // stays on screen now and reads `PLATE DETAIL`, so a second
+                    // bar under it was one chrome too many. sk18–sk21 replace
+                    // this placeholder with the design's
+                    // `DISCOVER / IRAN / IR.CAR` breadcrumb row.
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: TextButton(
+                        onPressed: () => Navigator.of(context).maybePop(),
+                        child: const Text('← back'),
+                      ),
+                    ),
+                    const SizedBox(height: Gap.sm),
+                    Text(item.source.countryName, style: theme.textTheme.labelLarge),
+                    const SizedBox(height: Gap.xs),
                     Text(entry.label, style: theme.textTheme.headlineSmall),
                     const SizedBox(height: Gap.xs),
                     Text(

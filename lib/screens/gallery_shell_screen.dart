@@ -6,6 +6,8 @@ import '../shell/mobile_panel.dart';
 import '../shell/nocturne_bottom_bar.dart';
 import '../shell/nocturne_mobile_header.dart';
 import '../shell/nocturne_rail.dart';
+import '../shell/page_rise_route.dart';
+import '../shell/shell_route_state.dart';
 import '../theme/nocturne.dart';
 import 'showcase_screen.dart';
 import 'gallery/screens/about_screen.dart';
@@ -30,29 +32,111 @@ class GalleryShellScreen extends StatefulWidget {
   final ValueChanged<AppTab> onTabSelected;
 
   @override
-  State<GalleryShellScreen> createState() => _GalleryShellScreenState();
+  State<GalleryShellScreen> createState() => GalleryShellState();
 }
 
-class _GalleryShellScreenState extends State<GalleryShellScreen> {
-  /// The mobile header's trailing `01 / SHOWCASE` text, one entry per
-  /// [AppTab] in enum order — the leading number is the enum index.
-  static const Map<AppTab, String> _screenLabels = <AppTab, String>{
-    AppTab.showcase: 'SHOWCASE',
-    AppTab.discover: 'DISCOVER',
-    AppTab.about: 'ABOUT',
-  };
+/// Public only for [AppRouterDelegate.popRoute], which needs to offer the back
+/// gesture to the shell's nested Discover navigator before the root one. All
+/// of it but [maybePopDiscover] is private in practice.
+class GalleryShellState extends State<GalleryShellScreen> {
+  /// The Discover tab's own navigator. Country and plate pages push here, not
+  /// onto the root one, which is what keeps the rail/header/bottom bar in the
+  /// tree while a detail page is open — the whole point of sk17.
+  ///
+  /// Only Discover needs one: Showcase and About push nothing.
+  final GlobalKey<NavigatorState> _discoverNavigatorKey = GlobalKey<NavigatorState>();
 
-  void _openPlate(CatalogueItem item, String heroTag) => Navigator.of(context).push(
-    MaterialPageRoute<void>(
-      builder: (BuildContext context) => PlateDetailScreen(item: item, heroTag: heroTag),
-    ),
+  /// What the chrome renders off. Recomputed by [_syncRouteState] whenever the
+  /// nested stack or the tab changes, and read by the rail, the header and the
+  /// bottom bar through [ValueListenableBuilder], so a push repaints the
+  /// chrome without rebuilding the tab bodies.
+  late final ValueNotifier<ShellRouteState> _routeState =
+      ValueNotifier<ShellRouteState>(ShellRouteState(tab: widget.tab));
+
+  /// A mirror of the nested navigator's stack, kept here because a
+  /// [NavigatorState] will not tell you what is on it. Each entry is whether
+  /// that page is a plate detail; the list's length is the depth.
+  final List<bool> _discoverStack = <bool>[];
+
+  @override
+  void didUpdateWidget(GalleryShellScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.tab != widget.tab) _syncRouteState();
+  }
+
+  @override
+  void dispose() {
+    _routeState.dispose();
+    super.dispose();
+  }
+
+  void _syncRouteState() {
+    _routeState.value = ShellRouteState(
+      tab: widget.tab,
+      // Only Discover has a stack; on the other tabs the chrome must read
+      // depth 0 even if a Discover detail page is still parked behind them.
+      depth: widget.tab == AppTab.discover ? _discoverStack.length : 0,
+      isPlateDetail: widget.tab == AppTab.discover && _discoverStack.isNotEmpty && _discoverStack.last,
+    );
+  }
+
+  /// Pushes onto the Discover navigator and records what went on. The route's
+  /// future completes on pop however it was popped — back gesture, breadcrumb,
+  /// or [_resetDiscover] — so this is the one place the mirror is trimmed.
+  void _pushDiscover({required bool isPlateDetail, required WidgetBuilder builder}) {
+    final NavigatorState? navigator = _discoverNavigatorKey.currentState;
+    if (navigator == null) return;
+
+    final int depthAfterPush = _discoverStack.length + 1;
+    _discoverStack.add(isPlateDetail);
+    _syncRouteState();
+
+    navigator.push(PageRiseRoute<void>(builder: builder)).then((_) {
+      if (!mounted) return;
+      // Trim to just below this route's own position rather than removing one
+      // entry: `popUntil` can take several pages off at once, and the futures
+      // then complete deepest-first.
+      if (_discoverStack.length >= depthAfterPush) {
+        _discoverStack.removeRange(depthAfterPush - 1, _discoverStack.length);
+      }
+      _syncRouteState();
+    });
+  }
+
+  void _openPlate(CatalogueItem item, String heroTag) => _pushDiscover(
+    isPlateDetail: true,
+    builder: (BuildContext context) => PlateDetailScreen(item: item, heroTag: heroTag),
   );
 
-  void _openCountry(GallerySource source) => Navigator.of(context).push(
-    MaterialPageRoute<void>(
-      builder: (BuildContext context) => CountryDetailScreen(source: source, onOpenPlate: _openPlate),
-    ),
+  void _openCountry(GallerySource source) => _pushDiscover(
+    isPlateDetail: false,
+    builder: (BuildContext context) => CountryDetailScreen(source: source, onOpenPlate: _openPlate),
   );
+
+  /// Tapping the already-selected Discover destination returns to its index,
+  /// the way tapping a selected tab does everywhere else. Tapping a *different*
+  /// destination leaves the stack alone, so coming back to Discover lands on
+  /// the page you left — the [IndexedStack] was already preserving the tab
+  /// bodies that way, and the nested navigator now preserves the pushes too.
+  void _onTabSelected(AppTab tab) {
+    if (tab == AppTab.discover && widget.tab == AppTab.discover) {
+      _resetDiscover();
+      return;
+    }
+    widget.onTabSelected(tab);
+  }
+
+  void _resetDiscover() => _discoverNavigatorKey.currentState?.popUntil((Route<void> route) => route.isFirst);
+
+  /// Back, for [AppRouterDelegate]: pops one nested Discover page if there is
+  /// one, and reports whether it did. Returning false lets the router fall
+  /// through to the root navigator and then to changing tabs.
+  Future<bool> maybePopDiscover() async {
+    if (widget.tab != AppTab.discover) return false;
+    final NavigatorState? navigator = _discoverNavigatorKey.currentState;
+    if (navigator == null || !navigator.canPop()) return false;
+    return navigator.maybePop();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +147,18 @@ class _GalleryShellScreenState extends State<GalleryShellScreen> {
       index: selected,
       children: <Widget>[
         ShowcaseScreen(onOpenTab: widget.onTabSelected),
-        DiscoverScreen(onOpenPlate: _openPlate, onOpenCountry: _openCountry),
+        // Discover is the nested navigator, and the index screen is its root
+        // page. The navigator sits *inside* the IndexedStack so switching tabs
+        // keeps the pushed pages mounted, exactly as it keeps the scroll
+        // offsets.
+        Navigator(
+          key: _discoverNavigatorKey,
+          onGenerateRoute: (RouteSettings settings) => PageRiseRoute<void>(
+            settings: settings,
+            builder: (BuildContext context) =>
+                DiscoverScreen(onOpenPlate: _openPlate, onOpenCountry: _openCountry),
+          ),
+        ),
         const AboutScreen(),
       ],
     );
@@ -94,11 +189,14 @@ class _GalleryShellScreenState extends State<GalleryShellScreen> {
             body: Row(
               children: <Widget>[
                 Expanded(child: ClipRect(child: body)),
+                // The rail is always shown on desktop, and `02 Discover` stays
+                // selected on the country and plate pages: they are Discover,
+                // one level down, not somewhere else.
                 ValueListenableBuilder<bool>(
                   valueListenable: forceMobilePanel,
                   builder: (BuildContext context, bool forced, _) => NocturneRail(
                     tab: widget.tab,
-                    onTabSelected: widget.onTabSelected,
+                    onTabSelected: _onTabSelected,
                     onToggleView: () => forceMobilePanel.value = !forceMobilePanel.value,
                     viewLabel: forced ? 'DESKTOP VIEW' : 'MOBILE VIEW',
                   ),
@@ -110,17 +208,24 @@ class _GalleryShellScreenState extends State<GalleryShellScreen> {
 
         return Scaffold(
           backgroundColor: PosterColors.pageBlack,
-          body: Column(
-            children: <Widget>[
-              NocturneMobileHeader(
-                trailing: Text(
-                  '${(widget.tab.index + 1).toString().padLeft(2, '0')} / ${_screenLabels[widget.tab]!}',
-                  style: NType.pill.copyWith(color: N.n600),
-                ),
-              ),
-              Expanded(child: body),
-              NocturneBottomBar(tab: widget.tab, onTabSelected: widget.onTabSelected),
-            ],
+          body: ValueListenableBuilder<ShellRouteState>(
+            valueListenable: _routeState,
+            // The tab bodies are the one thing that must not rebuild when the
+            // chrome does — the IndexedStack and the nested navigator both
+            // hold state the pages depend on.
+            child: body,
+            builder: (BuildContext context, ShellRouteState route, Widget? tabBodies) {
+              final String? label = route.headerLabel;
+              return Column(
+                children: <Widget>[
+                  NocturneMobileHeader(
+                    trailing: label == null ? null : Text(label, style: NType.pill.copyWith(color: N.n600)),
+                  ),
+                  Expanded(child: tabBodies!),
+                  if (route.showsBottomBar) NocturneBottomBar(tab: route.tab, onTabSelected: _onTabSelected),
+                ],
+              );
+            },
           ),
         );
       },
