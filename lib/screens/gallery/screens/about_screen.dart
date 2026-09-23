@@ -22,8 +22,9 @@ class AboutScreen extends StatelessWidget {
   // hardcoding it here, so a `pub upgrade` can't leave it stale again.
   //
   // sk24 found it stale in exactly that way: four of the eight versions had
-  // drifted, `iranshahr_plate` — which draws Bahrain, Azerbaijan and
-  // Afghanistan, three of the eight countries on Discover — was missing, and
+  // drifted, `iranshahr_plate` — which draws Bahrain, Azerbaijan,
+  // Afghanistan and Armenia, four of the nine countries on Discover — was
+  // missing, and
   // `core_plate_bloc` was
   // listed although this app has never depended on it (it is not in
   // `pubspec.lock`). Every line below is now the resolved version from

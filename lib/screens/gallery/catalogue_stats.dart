@@ -43,7 +43,8 @@ class CatalogueStats {
   final int packages;
 
   /// Distinct [GallerySource.countryNames], flattened — not one per source:
-  /// `iranshahr` alone ships three: Bahrain, Azerbaijan, and Afghanistan.
+  /// `iranshahr` alone ships four: Bahrain, Azerbaijan, Afghanistan and
+  /// Armenia.
   final int countries;
 
   /// Distinct plate spec ids (`entry.spec.id`) across every entry in every

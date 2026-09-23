@@ -2,7 +2,7 @@ import 'package:iranshahr_plate/iranshahr.dart';
 
 import '../catalogue.dart';
 
-/// Bahrain's, Azerbaijan's and Afghanistan's plate designs from the
+/// Bahrain's, Azerbaijan's, Afghanistan's and Armenia's plate designs from the
 /// `iranshahr_plate` package.
 ///
 /// The sample values are written out rather than generated: the package ships
@@ -15,16 +15,17 @@ class IranshahirSource extends GallerySource {
   String get countryName => 'Iranshahr';
 
   @override
-  List<String> get countryNames => const <String>['Bahrain', 'Azerbaijan', 'Afghanistan'];
+  List<String> get countryNames => const <String>['Bahrain', 'Azerbaijan', 'Afghanistan', 'Armenia'];
 
   @override
   String get packageName => 'iranshahr_plate';
 
   @override
   String get note =>
-      'Bahrain\'s five designs, Azerbaijan\'s four specs and Afghanistan\'s '
-      'eleven from the iranshahr_plate package. Each country is independent '
-      'with distinct design languages. See iranshahr_plate/README.md.';
+      'Bahrain\'s five designs, Azerbaijan\'s four specs, Afghanistan\'s '
+      'eleven and Armenia\'s ten from the iranshahr_plate package. Each '
+      'country is independent with distinct design languages. See '
+      'iranshahr_plate/README.md.';
 
   /// Built once, and returned by identity: the pickers select a section by
   /// equality, and a fresh list per read would make the selected one never
@@ -276,6 +277,104 @@ class IranshahirSource extends GallerySource {
           country: AfghanistanProvince.herat.country(),
           note: 'Latin figures and a spelled-out category, no Persian half. Reconstructed from text — no photograph exists.',
           sampleValues: const <String?>['1', '2', '3', '4', '6', 'B'],
+        ),
+      ],
+    ),
+    GallerySection(
+      title: 'Armenia',
+      note:
+          'Ten designs on a German-style face: flag over `AM`, a silver '
+          'identifier band, and `NN LL NNN` told apart by gaps alone — no '
+          'hyphen, no divider. Two things here are rules rather than shapes. '
+          'The letters are Latin because the four the system opened with in '
+          '1996 were Armenian letters chosen to *look* Latin (`Ս` as `U`, `Տ` '
+          'as `S`, `Օ` as `O`), and `G` and `I` are still issued to the Police '
+          'and the Prosecutor alone. And a state plate reverses the number to '
+          '`NNN LL NN`, where the trailing four characters are not a serial '
+          'but an institution: `NN 01` is the Security Council, `GG 01` the '
+          'Prosecutor\'s office.',
+      entries: <GalleryEntry>[
+        GalleryEntry(
+          id: 'am.car',
+          label: 'Private car',
+          spec: ArmeniaPlates.car,
+          theme: ArmeniaThemes.civilian,
+          note: 'The 2014 design: region code, two letters, three digits, and the silver band beside the flag.',
+          sampleValues: const <String?>['0', '1', 'A', 'D', '2', '3', '4'],
+        ),
+        GalleryEntry(
+          id: 'am.carTwoRow',
+          label: 'Private car (two-row)',
+          spec: ArmeniaPlates.carTwoRow,
+          theme: ArmeniaThemes.civilian,
+          note: 'The same seven characters in the same three groups, on a deeper canvas.',
+          sampleValues: const <String?>['0', '1', 'A', 'D', '2', '3', '4'],
+        ),
+        GalleryEntry(
+          id: 'am.motorcycle',
+          label: 'Motorcycle',
+          spec: ArmeniaPlates.motorcycle,
+          theme: ArmeniaThemes.civilian,
+          note: 'The two-row plate was found too cumbersome to carry; the gap between region and letters was closed.',
+          sampleValues: const <String?>['0', '1', 'A', 'D', '2', '3', '4'],
+        ),
+        GalleryEntry(
+          id: 'am.public',
+          label: 'State-owned (Security Council)',
+          spec: ArmeniaPlates.public,
+          theme: ArmeniaThemes.civilian,
+          note: 'The number reversed: `NN 01` names the institution, and only fourteen pairs are issued at all.',
+          sampleValues: const <String?>['0', '0', '1', 'N', 'N', '0', '1'],
+        ),
+        GalleryEntry(
+          id: 'am.trailer',
+          label: 'Trailer',
+          spec: ArmeniaPlates.trailer,
+          theme: ArmeniaThemes.civilian,
+          note: 'A pre-2014 design: no identifier band, and the letter count cut to one — most often `L`.',
+          sampleValues: const <String?>['2', '9', '0', 'L', '0', '1'],
+        ),
+        GalleryEntry(
+          id: 'am.bus',
+          label: 'Bus',
+          spec: ArmeniaPlates.bus,
+          theme: ArmeniaThemes.bus,
+          note: 'The Soviet public-transport format Armenia kept: `S` for a city bus, `L` for a long-range coach.',
+          sampleValues: const <String?>['1', '2', '3', '4', 'S'],
+        ),
+        GalleryEntry(
+          id: 'am.diplomatic',
+          label: 'Diplomatic corps',
+          spec: ArmeniaPlates.diplomatic,
+          theme: ArmeniaThemes.diplomatic,
+          note: 'Mission code, `D` for a diplomat or `T` for a technician, serial, and Armenia\'s own code at the tail.',
+          sampleValues: const <String?>['0', '4', 'D', '0', '5', '7'],
+        ),
+        GalleryEntry(
+          id: 'am.diplomaticArm',
+          label: 'Diplomatic corps (current)',
+          spec: ArmeniaPlates.diplomaticArm,
+          theme: ArmeniaThemes.diplomatic,
+          note: 'The same design; newer plates print `ARM` where the older ones print `AM`.',
+          sampleValues: const <String?>['0', '4', 'T', '0', '5', '7'],
+        ),
+        GalleryEntry(
+          id: 'am.un',
+          label: 'United Nations',
+          spec: ArmeniaPlates.un,
+          theme: ArmeniaThemes.un,
+          note: 'Three digits between two printed words. Nothing on this plate is chosen but the serial.',
+          sampleValues: const <String?>['0', '8', '0'],
+        ),
+        GalleryEntry(
+          id: 'am.military',
+          label: 'Ministry of Defence',
+          spec: ArmeniaPlates.military,
+          theme: ArmeniaThemes.military,
+          note:
+              'The one Armenian plate with no Latin on it: `ՊՆ` for the ministry, '
+              '`Մ` for a passenger vehicle, `Տ` for a transport one.',
+          sampleValues: const <String?>['1', '0', '0', '7', 'M'],
         ),
       ],
     ),
