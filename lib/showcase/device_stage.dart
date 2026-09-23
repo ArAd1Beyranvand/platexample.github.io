@@ -173,9 +173,9 @@ class _CardGlass extends StatelessWidget {
         const Positioned.fill(child: PlateBackdrop()),
         Center(
           child: Padding(
-            padding: const EdgeInsets.all(24),
+            padding: const EdgeInsets.all(12),
             child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 680),
+              constraints: const BoxConstraints(maxWidth: 820),
               child: PlateTile(
                 // Fresh state per plate, so a content swap re-seeds the
                 // controller and restarts the auto-replay on the new entry.
@@ -183,6 +183,9 @@ class _CardGlass extends StatelessWidget {
                 entry: item.entry,
                 heroTag: heroTag,
                 onTap: () => onOpenPlate(item, heroTag),
+                // A taller plate band than the grid's default, so the plate is
+                // the subject of the showcase glass rather than a small strip.
+                stageHeight: 200,
                 // The showcase card fills itself in on a loop, hover or not.
                 autoReplay: true,
               ),
