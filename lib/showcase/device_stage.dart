@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../device_preview/device_config.dart';
 import '../device_preview/device_frame.dart';
 import '../device_preview/device_transition.dart';
+import '../poster/plate_backdrop.dart';
 import '../screens/gallery/catalogue_index.dart';
 import '../screens/gallery/widgets/plate_tile.dart';
 import '../showcase/demo_config.dart';
@@ -145,7 +146,8 @@ class _DeviceStageState extends State<DeviceStage> {
   }
 }
 
-/// The device glass, holding one discovery-style [PlateTile] centred on it.
+/// The device glass, holding one discovery-style [PlateTile] centred on it,
+/// over the same drifting-orb [PlateBackdrop] the detail page paints.
 ///
 /// The same card the Discover archive draws: it auto-types its sample on hover
 /// and, tapped, opens the plate into its detail page. Padding and a cap on the
@@ -162,18 +164,27 @@ class _CardGlass extends StatelessWidget {
     // Unique per device so the hero into the detail page never clashes with a
     // Discover tile's tag, and re-keys as the content swaps.
     final String heroTag = 'showcase-stage-${item.entry.id}';
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 420),
-          child: PlateTile(
-            entry: item.entry,
-            heroTag: heroTag,
-            onTap: () => onOpenPlate(item, heroTag),
+    return Stack(
+      fit: StackFit.expand,
+      children: <Widget>[
+        // The moving blue orbs, behind the card on the glass — the same ambient
+        // the detail page draws, so the showcase device reads like the real
+        // screen it opens into.
+        const Positioned.fill(child: PlateBackdrop()),
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 560),
+              child: PlateTile(
+                entry: item.entry,
+                heroTag: heroTag,
+                onTap: () => onOpenPlate(item, heroTag),
+              ),
+            ),
           ),
         ),
-      ),
+      ],
     );
   }
 }
