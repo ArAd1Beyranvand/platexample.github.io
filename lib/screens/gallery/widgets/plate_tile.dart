@@ -113,7 +113,21 @@ class PlateSliverGrid extends StatelessWidget {
 /// `PlateView` path and is not styled here — the card is the surface the
 /// plate sits on, and nothing more.
 class PlateTile extends StatefulWidget {
-  const PlateTile({super.key, required this.entry, required this.heroTag, this.onTap, this.stageHeight = defaultStageHeight});
+  const PlateTile({
+    super.key,
+    required this.entry,
+    required this.heroTag,
+    this.onTap,
+    this.stageHeight = defaultStageHeight,
+    this.autoReplay = false,
+  });
+
+  /// Loops the sample-value replay continuously, independent of hover, so the
+  /// card fills itself in over and over without a pointer on it. Hover then
+  /// only lifts the card to its lit style; the run keeps going underneath.
+  /// The showcase device stage turns this on; the discover grid leaves it off,
+  /// where a wall of cards all typing at once would be noise.
+  final bool autoReplay;
 
   /// The design's plate row is a modest band inside the card — the plate is
   /// the card's subject, not its whole surface.
@@ -183,11 +197,51 @@ class _PlateTileState extends State<PlateTile> {
   bool _pressed = false;
   bool _hovered = false;
 
+  /// True while the [autoReplay] loop is meant to keep running. Cleared on
+  /// dispose so a pending gap between passes doesn't restart a torn-down tile.
+  bool _looping = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.autoReplay && _canReplay) {
+      // The replay opens no modal here (useLetterPicker is false), but it still
+      // reads context and drives controllers, so wait for the first layout.
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        _looping = true;
+        _loopReplay();
+      });
+    }
+  }
+
   @override
   void dispose() {
+    _looping = false;
     _typist.dispose();
     _plate.dispose();
     super.dispose();
+  }
+
+  /// Runs the sample replay end to end, then, after a beat, again — forever,
+  /// until the tile is disposed. Each pass clears and re-types from scratch, so
+  /// the card is seen filling in rather than sitting full.
+  Future<void> _loopReplay() async {
+    while (_looping && mounted) {
+      if (!context.mounted) break;
+      final BuildContext ctx = context;
+      _plate.clear();
+      await _typist.run(
+        spec: widget.entry.spec,
+        controller: _plate,
+        steps: scriptFromValues(spec: widget.entry.spec, values: widget.entry.sampleValues!),
+        useLetterPicker: false,
+        context: ctx,
+      );
+      if (!_looping || !mounted) break;
+      // Hold on the completed plate before wiping it and starting over.
+      await Future<void>.delayed(const Duration(milliseconds: 1400));
+    }
   }
 
   /// True once the entry has values worth replaying. A plate with no sample
@@ -224,6 +278,9 @@ class _PlateTileState extends State<PlateTile> {
   void _setHovered(bool value) {
     if (_hovered == value) return;
     setState(() => _hovered = value);
+    // In auto-replay the run is already looping on its own — hover only lifts
+    // the card to its lit style and must not restart or stop the typing.
+    if (widget.autoReplay) return;
     if (value) {
       _startReplay();
     } else {
