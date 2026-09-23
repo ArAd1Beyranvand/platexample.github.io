@@ -21,6 +21,7 @@ class PlateDisplay extends StatelessWidget {
     this.showBackdrop = false,
     this.plateWidthFactor = 0.62,
     this.baseTheme,
+    this.country,
     this.secondarySpec,
     this.secondaryTheme,
     this.secondaryController,
@@ -28,6 +29,12 @@ class PlateDisplay extends StatelessWidget {
 
   final PlateSpec spec;
   final PlateMode mode;
+
+  /// The panel/country block override for the plate, or null to keep
+  /// [PlateSpec.country]. Forwarded straight to [PlateCanvas] — a showcase
+  /// device draws its chosen entry's country block (Lebanon's usage colours,
+  /// Germany's Bundeswehr flag) through this.
+  final PlateCountry? country;
 
   /// The plate's characters, and the handle a host drives entry through from
   /// outside the plate (e.g. a custom on-screen keypad). Forwarded straight to
@@ -121,6 +128,7 @@ class PlateDisplay extends StatelessWidget {
       onActiveIndexChanged: onActiveIndexChanged,
       controller: controller,
       baseTheme: baseTheme,
+      country: country,
       secondarySpec: secondarySpec,
       secondaryTheme: secondaryTheme,
       secondaryController: secondaryController,
@@ -145,6 +153,7 @@ class _PlateDisplayBody extends StatelessWidget {
     required this.onActiveIndexChanged,
     required this.controller,
     required this.baseTheme,
+    required this.country,
     required this.secondarySpec,
     required this.secondaryTheme,
     required this.secondaryController,
@@ -165,6 +174,7 @@ class _PlateDisplayBody extends StatelessWidget {
   final ValueChanged<int?>? onActiveIndexChanged;
   final PlateController? controller;
   final PlateTheme? baseTheme;
+  final PlateCountry? country;
   final PlateSpec? secondarySpec;
   final PlateTheme? secondaryTheme;
   final PlateController? secondaryController;
@@ -186,6 +196,7 @@ class _PlateDisplayBody extends StatelessWidget {
       onActiveIndexChanged: onActiveIndexChanged,
       controller: controller,
       baseTheme: baseTheme,
+      country: country,
       secondarySpec: secondarySpec,
       secondaryTheme: secondaryTheme,
       secondaryController: secondaryController,
@@ -239,6 +250,7 @@ class _PlateInputSurface extends StatelessWidget {
     required this.onActiveIndexChanged,
     required this.controller,
     required this.baseTheme,
+    required this.country,
     required this.secondarySpec,
     required this.secondaryTheme,
     required this.secondaryController,
@@ -256,6 +268,7 @@ class _PlateInputSurface extends StatelessWidget {
   final ValueChanged<int?>? onActiveIndexChanged;
   final PlateController? controller;
   final PlateTheme? baseTheme;
+  final PlateCountry? country;
   final PlateSpec? secondarySpec;
   final PlateTheme? secondaryTheme;
   final PlateController? secondaryController;
@@ -271,6 +284,7 @@ class _PlateInputSurface extends StatelessWidget {
 
     final plate = PlateCanvas(
       spec: spec,
+      country: country,
       validator: validator,
       autoValidate: autoValidate,
       inputSource: inputSource,

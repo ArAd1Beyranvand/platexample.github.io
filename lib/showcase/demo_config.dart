@@ -1,11 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/foundation.dart';
-import 'package:iran_plate/iran_plate.dart';
-import 'package:palestine_plate/palestine_plate.dart';
-import 'package:yemen_plate/yemen_plate.dart';
 import 'package:core_plate/core_plate.dart';
 
 import '../device_preview/device_config.dart';
-import 'plate_mirror.dart';
+import '../screens/gallery/sources/sources.dart';
 import 'plate_typist.dart';
 
 /// The complete, per-device recipe the showcase stage plays back: which plate
@@ -13,9 +12,16 @@ import 'plate_typist.dart';
 /// switches ([DeviceStage] used to spread across ternaries) that make each
 /// device feel like its own demo.
 ///
-/// Every field encodes exactly one former `switch (device)` / `device == ...`
-/// branch in `device_stage.dart`, so swapping the switches for a
-/// `demoConfigs[device]!` lookup is behaviour-preserving.
+/// This used to be a hand-written table pinning Yemen to the laptop, Palestine
+/// to the tablet and Iran to the phone, each with its own bespoke script and
+/// country-specific second-plate mirror. Now that [scriptFromValues] can type
+/// any plate from its sample values, the content is drawn from
+/// [gallerySources] instead: [pickDemoConfig] picks a country at random each
+/// time a device comes up in the cycle, and everything a device needs — spec,
+/// livery, validator, keypad alphabets and the auto-typed script — is read off
+/// that country's catalogue entry. The device-shaped fields ([compactKeypad], [showsKeypad],
+/// [plateWidthFactor], [inputSource]) are properties of the *device*, not the
+/// country, so they stay fixed per [DeviceType].
 @immutable
 class DemoConfig {
   const DemoConfig({
@@ -28,16 +34,17 @@ class DemoConfig {
     this.validator,
     required this.compactKeypad,
     required this.showsKeypad,
+    required this.digitAlphabet,
+    required this.letterAlphabet,
     this.theme,
-    this.secondarySpec,
-    this.secondaryTheme,
-    this.mirrorPairs,
+    this.country,
   });
 
-  /// The plate rendered on the glass and fed to its backing bloc.
+  /// The plate rendered on the glass and fed to its backing controller.
   final PlateSpec spec;
 
-  /// The keystrokes the auto-typist walks for this device.
+  /// The keystrokes the auto-typist walks for this device, derived from the
+  /// chosen entry's sample values via [scriptFromValues].
   final List<TypistStep> script;
 
   /// The [PlateDisplay.inputSource] for this device. Null would let the plate
@@ -52,15 +59,14 @@ class DemoConfig {
   /// Whether the shared [PlateController] drives this device's plate.
   final bool usesController;
 
-  /// Whether typed values are validated (the tablet's Palestinian plate and
-  /// the laptop's Yemeni one) — gates the active-slot tracking and, as
-  /// `PlateCanvas.autoValidate`, the red invalid-underline colour the plate now
-  /// paints for itself.
+  /// Whether typed values are validated — gates the active-slot tracking and,
+  /// as `PlateCanvas.autoValidate`, the red invalid-underline colour the plate
+  /// paints for itself. On for any device whose chosen country ships a
+  /// validator.
   final bool showsValidation;
 
   /// The rule this device's plate is judged against, when [showsValidation] is
-  /// on. Variation as data: a country validator is a value in this table, not
-  /// a `device == tablet` branch in the stage. Never prevents a keystroke.
+  /// on. Comes from the chosen entry. Never prevents a keystroke.
   final PlateValidator? validator;
 
   /// Whether the on-screen keypad renders in its compact layout (mobile) rather
@@ -71,103 +77,138 @@ class DemoConfig {
   /// carries the keys).
   final bool showsKeypad;
 
-  /// The plate's own colours, when it has any. Null means the black-on-white
-  /// `PlateTheme.standard()` the Iranian plate is printed in; the Palestinian
-  /// plate is green on white and the Yemeni ones are white or blue, and those
-  /// ship their themes with the country.
+  /// The digit alphabet the on-screen keypad types in. Read off the chosen
+  /// spec's first numeric slot rather than hardcoded, so a random country types
+  /// in its own numerals (Persian, Latin, …) instead of always Latin.
+  final PlateAlphabet digitAlphabet;
+
+  /// The letter alphabet the keypad's letters pad types in, or null when the
+  /// spec has no free-choice letter slot. Read off the spec the same way.
+  final PlateAlphabet? letterAlphabet;
+
+  /// The plate's own colours, when the entry ships any. Null means the app's
+  /// default `PlateTheme.standard()`.
   final PlateTheme? theme;
 
-  /// A second plate rendered read-only beneath [spec], carrying the same typed
-  /// digits rewritten into its own grammar. Null for a device that shows one
-  /// plate — which is the phone; the laptop and the tablet both show two.
-  ///
-  /// This exists because neither country here has a single plate. Yemen has two
-  /// systems in force at the same time — the 2026 unified plate the recognised
-  /// government issues and the 1993 format still current across the north — and
-  /// Palestine has two separate designs, the West Bank's `ف / P` plate and
-  /// Gaza's, which went its own way in 2012. Showing one without the other
-  /// would present a country's plates as settled when they are not. See
-  /// `plate_mirror.dart` for how the value crosses over, and for the caveat
-  /// that the crossover is a display device rather than a claim.
-  final PlateSpec? secondarySpec;
-
-  /// The printed colours of [secondarySpec]. On the northern Yemeni plate this
-  /// is not decoration: the field colour *is* the usage class, so a plate
-  /// painted the wrong colour says the vehicle is something else. On the Gaza
-  /// plate the field is always white and the *glyphs* carry the class instead.
-  final PlateTheme? secondaryTheme;
-
-  /// Which of [spec]'s keyed text groups feed which of [secondarySpec]'s.
-  ///
-  /// Required whenever [secondarySpec] is set, and null otherwise. It lives
-  /// here rather than in the stage for the reason every other field does: the
-  /// pairing is a property of the demo, not a `device == laptop` branch. See
-  /// `plate_mirror.dart` for why the match is by group key and never by slot
-  /// index.
-  final MirrorPairs? mirrorPairs;
+  /// The panel/country block, when the entry overrides it (Lebanon's usage
+  /// blocks, Germany's Bundeswehr flag). Null keeps [PlateSpec.country].
+  final PlateCountry? country;
 }
 
-/// The variation-as-data table behind the showcase: one [DemoConfig] per
-/// [DeviceType], holding exactly what `device_stage.dart` used to inline.
-final Map<DeviceType, DemoConfig> demoConfigs = {
-  // Yemen has two systems in force at once: the deck's keys type into the 2026
-  // unified plate, and `plate_mirror.dart` writes the same digits onto the 1993
-  // northern plate below it, so both fill in together.
-  DeviceType.desktop: DemoConfig(
-    spec: YemenUnifiedPlates.car5,
-    theme: YemenThemes.unified,
-    secondarySpec: YemenNorthernPlates.carGov2Serial5,
-    secondaryTheme: YemenThemes.northernPrivate,
-    mirrorPairs: yemenUnifiedToNorthern,
-    script: yemenUnifiedCarScript,
-    inputSource: PlateInputSource.host,
-    // Half the glass each, stacked, rather than the single plate's 0.55.
-    plateWidthFactor: 0.5,
+/// The device-shaped presentation for each [DeviceType] — everything that is a
+/// property of the form factor rather than of the country shown on it.
+@immutable
+class _DevicePreset {
+  const _DevicePreset({
+    required this.plateWidthFactor,
+    required this.usesController,
+    required this.compactKeypad,
+    required this.showsKeypad,
+  });
+
+  final double plateWidthFactor;
+  final bool usesController;
+  final bool compactKeypad;
+  final bool showsKeypad;
+}
+
+const Map<DeviceType, _DevicePreset> _devicePresets = <DeviceType, _DevicePreset>{
+  // The laptop: no on-screen keypad, its deck carries the keys.
+  DeviceType.desktop: _DevicePreset(
+    plateWidthFactor: 0.55,
     usesController: true,
-    showsValidation: true,
-    validator: YemenUnifiedValidator(),
     compactKeypad: false,
     showsKeypad: false,
   ),
-  // Palestine is split the same way, though for a different reason: the West
-  // Bank kept the `ف / P` plate and Gaza went its own way in 2012. The legacy
-  // West Bank plate is paired with the Gaza one because their grammars line up
-  // digit for digit — 1 + 4 + 2 on both — so the keypad fills both plates at
-  // once rather than leaving the mirror half-typed.
-  //
-  // The two plates are painted in different colours from the same digits on
-  // purpose: `40` is a private car in the West Bank and a municipality vehicle
-  // in Gaza. Same keystrokes, two grammars.
-  DeviceType.tablet: DemoConfig(
-    spec: PSWestBankPlates.legacyCar,
-    theme: PSThemes.greenOnWhite,
-    secondarySpec: PSGazaPlates.car2012,
-    secondaryTheme: PSThemes.gazaBlue,
-    mirrorPairs: palestineWestBankToGaza,
-    script: palestineLegacyCarScript,
-    inputSource: PlateInputSource.host,
-    // Half the glass each, stacked, matching the laptop's pair.
-    plateWidthFactor: 0.5,
+  // The tablet: the full on-screen pad.
+  DeviceType.tablet: _DevicePreset(
+    plateWidthFactor: 0.72,
     usesController: true,
-    showsValidation: true,
-    validator: PSWestBankLegacyValidator(),
     compactKeypad: false,
     showsKeypad: true,
   ),
-  DeviceType.mobile: DemoConfig(
-    spec: IranPlates.bicycle,
-    script: bicycleScript,
-    // Deliberately NOT the platform default. On a real phone that default is
-    // [PlateInputSource.system], which makes every slot an IME field — so the
-    // auto-typist moving the cursor from slot to slot raised the visitor's own
-    // soft keyboard over the page, unasked. Routing input through the host
-    // keeps the slots read-only: the cursor still walks the plate and the
-    // compact pad below still types into it, and nothing summons the IME.
-    inputSource: PlateInputSource.host,
+  // The phone: the compact pad, its slots host-fed so the auto-typist never
+  // raises the visitor's own IME.
+  DeviceType.mobile: _DevicePreset(
     plateWidthFactor: 0.86,
     usesController: false,
-    showsValidation: false,
     compactKeypad: true,
     showsKeypad: true,
   ),
+};
+
+/// The spec's own digit alphabet — the first numeric slot's — so the keypad
+/// types in the plate's numerals rather than a hardcoded set. Falls back to
+/// Latin digits for the (unlikely) spec with no numeric slot at all.
+PlateAlphabet _digitAlphabetOf(PlateSpec spec) {
+  for (final slot in spec.slots) {
+    if (slot.alphabet.isNumeric) return slot.alphabet;
+  }
+  return PlateAlphabet.latinDigits;
+}
+
+/// The spec's free-choice letter alphabet — the first non-numeric slot with
+/// more than one character — or null when the plate has none (an all-digit
+/// plate, or one whose only letter slot is a printed constant).
+PlateAlphabet? _letterAlphabetOf(PlateSpec spec) {
+  for (final slot in spec.slots) {
+    if (!slot.alphabet.isNumeric && slot.alphabet.characters.length > 1) return slot.alphabet;
+  }
+  return null;
+}
+
+/// Builds a [DemoConfig] for [device] from a chosen catalogue [entry].
+DemoConfig _configFor(DeviceType device, GalleryEntry entry) {
+  final preset = _devicePresets[device]!;
+  final values = entry.sampleValues ?? const <String?>[];
+  return DemoConfig(
+    spec: entry.spec,
+    script: scriptFromValues(spec: entry.spec, values: values),
+    // Always route through the host: the stage types by script, and a scripted
+    // run must never raise the visitor's own keyboard.
+    inputSource: PlateInputSource.host,
+    plateWidthFactor: preset.plateWidthFactor,
+    usesController: preset.usesController,
+    showsValidation: entry.validator != null,
+    validator: entry.validator,
+    compactKeypad: preset.compactKeypad,
+    showsKeypad: preset.showsKeypad,
+    digitAlphabet: _digitAlphabetOf(entry.spec),
+    letterAlphabet: _letterAlphabetOf(entry.spec),
+    theme: entry.theme,
+    country: entry.country,
+  );
+}
+
+/// Every catalogue entry that carries enough to auto-type: sample values with
+/// at least one real character. Anything blank has no script to walk, so it is
+/// never picked for a device.
+List<GalleryEntry> _typeableEntries() => <GalleryEntry>[
+  for (final GallerySource source in gallerySources)
+    for (final GalleryEntry entry in source.entries)
+      if (entry.sampleValues != null && entry.sampleValues!.any((v) => v != null && v.isNotEmpty)) entry,
+];
+
+final Random _defaultRng = Random();
+
+/// Picks one country at random from the whole catalogue and builds a
+/// [DemoConfig] for [device] from it.
+///
+/// Called fresh every time a device comes up in the showcase cycle, so a
+/// device shows a different plate each turn rather than a fixed one for the
+/// whole session — the same country can turn up twice in a row or on two
+/// devices at once, which is the point: the stage is demonstrating that the
+/// library draws any of them. Pass a seeded [random] to pin the pick (goldens,
+/// tests); the default reshuffles on every call.
+DemoConfig pickDemoConfig(DeviceType device, {Random? random}) {
+  final rng = random ?? _defaultRng;
+  final entries = _typeableEntries();
+  return _configFor(device, entries[rng.nextInt(entries.length)]);
+}
+
+/// One random [DemoConfig] per [DeviceType], for a caller that wants the whole
+/// table at once (a test, or a first paint before the cycle re-rolls). Each
+/// device is drawn independently.
+Map<DeviceType, DemoConfig> pickDemoConfigs({Random? random}) => <DeviceType, DemoConfig>{
+  for (final device in DeviceType.values) device: pickDemoConfig(device, random: random),
 };

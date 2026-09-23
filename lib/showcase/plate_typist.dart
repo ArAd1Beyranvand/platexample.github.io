@@ -33,95 +33,55 @@ class BackspaceStep extends TypistStep {
   const BackspaceStep({super.pauseAfter, super.holdAfter});
 }
 
-/// The keystrokes for the car plate ("91-ه-886-40"): '9' and '1' typed as a
-/// quick burst, a pause, the letter, another pause, then '886' and '40' as
-/// two more quick bursts.
-const List<TypistStep> carScript = [
-  KeyStep(0, '9'),
-  KeyStep(1, '1', pauseAfter: true),
-  KeyStep(2, 'ه', pauseAfter: true),
-  KeyStep(3, '8'),
-  KeyStep(4, '8'),
-  KeyStep(5, '6', pauseAfter: true),
-  KeyStep(6, '4'),
-  KeyStep(7, '0'),
-];
+/// Builds a typing script from a plate's [values], so any entry that ships
+/// `sampleValues` can be auto-typed without a hand-authored [TypistStep] list.
+///
+/// This is what lets the showcase draw a random country on each device and the
+/// discover page auto-type any card, in place of the hand-authored per-plate
+/// scripts the showcase used to carry. A hand-written script could tune one
+/// plate's *rhythm and story* — a deliberate pause on a letter, a hold on a
+/// one-digit invalid state; this builder makes no such judgement. It walks
+/// the slots in index order and:
+///
+/// - Skips a slot whose alphabet holds exactly one character (a printed
+///   constant, like Gaza's leading `3`): the plate fills it itself, and typing
+///   it would flash a key for a character the visitor never chose.
+/// - Skips an empty ([values] holds null or '') slot — a partial plate types
+///   only what it has.
+/// - Marks a natural break ([TypistStep.pauseAfter]) after every letter slot
+///   and at the end of each run of digits it can see, so a plate reads as
+///   bursts rather than an even drip — the same rhythm the hand-written scripts
+///   aim for.
+List<TypistStep> scriptFromValues({required PlateSpec spec, required List<String?> values}) {
+  final steps = <TypistStep>[];
+  // The index of the last step actually emitted, so pauses can be attached
+  // retroactively when a burst ends (the slot that ends it is the one before
+  // the break, not the one that starts the next burst).
+  int lastEmitted = -1;
+  for (var i = 0; i < spec.slots.length; i++) {
+    final slot = spec.slots[i];
+    // A one-character alphabet is a printed constant, not a keystroke.
+    if (slot.alphabet.characters.length <= 1) continue;
+    final char = i < values.length ? values[i] : null;
+    if (char == null || char.isEmpty) continue;
 
-/// The keystrokes for the tablet demo: a legacy West Bank plate (`7·1234·40`),
-/// mirrored live onto the Gaza plate below it (`3·1234·40`).
-///
-/// Slot 0 is the district code — `7` is the northern West Bank, registered
-/// after 1995. Slots 1–4 are the serial. Slots 5–6 are the usage class, and
-/// they are the whole point of the run:
-///
-/// - The run passes through an invalid state and comes back.
-///   `PSWestBankLegacyValidator` stays quiet until the usage group has
-///   something in it, so nothing goes red while the serial is being typed. The
-///   first usage digit (`4`) leaves a one-digit code, which is not a legal
-///   class — the plate goes red and holds there long enough to read. The second
-///   digit (`0`) finishes it as `40`, which is valid, and the red clears.
-/// - `40` means **private** on the West Bank plate and **municipality** on the
-///   Gaza plate. The two code spaces are unrelated and share only their digits,
-///   which is exactly why the two plates below are printed in different
-///   colours from the same typed value.
-///
-/// The district digit is `7` rather than a rounder number because Gaza's
-/// leading slot is a one-character alphabet: it fills itself with `3` and
-/// never takes the district digit, and a `7` above a `3` makes that visible
-/// instead of looking like a coincidence.
-const List<TypistStep> palestineLegacyCarScript = [
-  KeyStep(0, '7', pauseAfter: true),
-  KeyStep(1, '1'),
-  KeyStep(2, '2'),
-  KeyStep(3, '3'),
-  KeyStep(4, '4', pauseAfter: true),
-  // One digit is an unfinished usage class, and the plate says so before the
-  // second digit rescues it.
-  KeyStep(5, '4', holdAfter: Duration(milliseconds: 1200)),
-  KeyStep(6, '0'),
-];
+    final isLetter = !slot.alphabet.isNumeric;
+    // A letter is its own beat: pause after it, and pause after the digit that
+    // ran up to it so the burst before the letter closes cleanly.
+    if (isLetter && lastEmitted >= 0) {
+      steps[lastEmitted] = _withPause(steps[lastEmitted]);
+    }
+    steps.add(KeyStep(i, char, pauseAfter: isLetter));
+    lastEmitted = steps.length - 1;
+  }
+  return steps;
+}
 
-/// The keystrokes for the Yemeni laptop demo, typed into the 2026 unified
-/// plate and mirrored live onto the 1993 northern plate below it.
-///
-/// Slots 0-4 are the five-digit vehicle number; slots 5-6 are the two-digit
-/// code stacked in the blue side panel. The mirror sends the number to the
-/// northern plate's serial and the side code to its governorate register, so
-/// the whole run reads as one value written out in two grammars.
-///
-/// The run deliberately passes through an invalid state and comes back:
-/// `YemenUnifiedValidator` stays quiet until the side code has something in
-/// it, so nothing goes red while the number is being typed, and the first
-/// side-code digit ("0") lands the plate on a one-digit code — invalid, and
-/// painted red. It holds there long enough to read, then the second digit
-/// ("6") finishes the code as `06`, which is Al Hudaydah on the northern
-/// plate below. `3` was chosen as the number's leading digit because a
-/// northern serial is never zero-padded.
-const List<TypistStep> yemenUnifiedCarScript = [
-  KeyStep(0, '3'),
-  KeyStep(1, '4', pauseAfter: true),
-  KeyStep(2, '7'),
-  KeyStep(3, '1'),
-  KeyStep(4, '9', pauseAfter: true),
-  // Side code (slots 5-6): one digit is an unfinished code, and the plate
-  // says so before the second digit rescues it.
-  KeyStep(5, '0', holdAfter: Duration(milliseconds: 1200)),
-  KeyStep(6, '6'),
-];
-
-/// The keystrokes for the bicycle plate: eight straight digits, no letter.
-/// Typed as four quick pairs rather than an even drip — pausing after every
-/// single digit made the longest plate of the three the slowest to watch.
-const List<TypistStep> bicycleScript = [
-  KeyStep(0, '9'),
-  KeyStep(1, '1', pauseAfter: true),
-  KeyStep(2, '8'),
-  KeyStep(3, '8', pauseAfter: true),
-  KeyStep(4, '6'),
-  KeyStep(5, '4', pauseAfter: true),
-  KeyStep(6, '0'),
-  KeyStep(7, '4'),
-];
+/// Returns [step] with [TypistStep.pauseAfter] set, preserving its kind.
+TypistStep _withPause(TypistStep step) => switch (step) {
+  KeyStep(:final index, :final char, :final holdAfter) => KeyStep(index, char, pauseAfter: true, holdAfter: holdAfter),
+  BackspaceStep(:final holdAfter) => BackspaceStep(pauseAfter: true, holdAfter: holdAfter),
+};
 
 /// Tracks which slot the letters pad is currently showing across a [PlateTypist.run],
 /// so the pad only rises or falls when the kind of slot actually changes.

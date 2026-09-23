@@ -2,8 +2,10 @@ import 'package:core_plate/core_plate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../showcase/plate_typist.dart';
 import '../../../theme/nocturne.dart';
 import '../catalogue.dart';
+import 'plate_binding.dart';
 
 /// The stage a plate stands on inside a card.
 ///
@@ -172,13 +174,61 @@ class _PlateTileState extends State<PlateTile> {
   /// same characters on every plate in it.
   late final PlateController _plate = PlateController(spec: widget.entry.spec, values: widget.entry.sampleValues);
 
+  /// Replays the entry's sample values into [_plate] on hover/focus, so the
+  /// card demonstrates the plate filling in the way the showcase's device
+  /// stage does — driven off the same generic [scriptFromValues] rather than a
+  /// hand-authored script, which is what lets *any* discover plate auto-type.
+  final PlateTypist _typist = PlateTypist();
+
   bool _pressed = false;
   bool _hovered = false;
 
   @override
   void dispose() {
+    _typist.dispose();
     _plate.dispose();
     super.dispose();
+  }
+
+  /// True once the entry has values worth replaying. A plate with no sample
+  /// (or only printed constants) has nothing to type, so hover leaves it be.
+  bool get _canReplay {
+    final values = widget.entry.sampleValues;
+    return values != null && values.any((v) => v != null && v.isNotEmpty);
+  }
+
+  /// Clears the plate and auto-types its sample values. A no-op if a run is
+  /// already going, so re-entering hover mid-run doesn't restart it.
+  Future<void> _startReplay() async {
+    if (!_canReplay || _typist.isRunning) return;
+    _plate.clear();
+    await _typist.run(
+      spec: widget.entry.spec,
+      controller: _plate,
+      steps: scriptFromValues(spec: widget.entry.spec, values: widget.entry.sampleValues!),
+      // No picker and no keypad: a grid of tiles must never raise a modal or an
+      // IME, so letters land straight on the controller like digits.
+      useLetterPicker: false,
+      context: context,
+    );
+  }
+
+  /// Stops any run and restores the resting sample so the card doesn't sit
+  /// half-typed once the pointer leaves.
+  void _stopReplay() {
+    if (!_canReplay) return;
+    _typist.cancel();
+    _plate.setValues(widget.entry.sampleValues!);
+  }
+
+  void _setHovered(bool value) {
+    if (_hovered == value) return;
+    setState(() => _hovered = value);
+    if (value) {
+      _startReplay();
+    } else {
+      _stopReplay();
+    }
   }
 
   /// The design's `{{ p.label }}`: the entry's name, and the note where it has
@@ -198,7 +248,7 @@ class _PlateTileState extends State<PlateTile> {
       label: entry.label,
       child: FocusableActionDetector(
         mouseCursor: widget.onTap == null ? MouseCursor.defer : SystemMouseCursors.click,
-        onShowHoverHighlight: (bool value) => setState(() => _hovered = value),
+        onShowHoverHighlight: _setHovered,
         actions: <Type, Action<Intent>>{
           ActivateIntent: CallbackAction<ActivateIntent>(
             onInvoke: (_) {
@@ -247,10 +297,15 @@ class _PlateTileState extends State<PlateTile> {
                       tag: widget.heroTag,
                       child: PlateFrame(
                         spec: entry.spec,
-                        child: PlateView(
+                        // Bound to the value, not read once at build: an entry
+                        // whose livery is a fact about its digits (Gaza reads
+                        // its usage class off its own last two) recolours as
+                        // the hover replay types, since the tile itself does
+                        // not rebuild on each keystroke.
+                        child: PlateBinding<PlateTheme?>(
                           controller: _plate,
-                          theme: entry.themeFor(_plate.values),
-                          country: entry.country,
+                          select: (c) => entry.themeFor(c.values),
+                          builder: (context, theme) => PlateView(controller: _plate, theme: theme, country: entry.country),
                         ),
                       ),
                     ),
