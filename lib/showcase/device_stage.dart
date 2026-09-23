@@ -164,6 +164,18 @@ class _CardGlass extends StatelessWidget {
     // Unique per device so the hero into the detail page never clashes with a
     // Discover tile's tag, and re-keys as the content swaps.
     final String heroTag = 'showcase-stage-${item.entry.id}';
+    // The plate band's height on the showcase glass — much taller than the
+    // grid's default, so the plate is the subject of the card.
+    const double stageHeight = 200;
+    // The card is sized to its plate rather than to a fixed cap: a card wider
+    // than the plate at this height leaves the plate a small strip floating in
+    // it (which is what the fixed 820 cap did to nearly-square plates). Width
+    // the card to the plate's own aspect at [stageHeight], plus the card's
+    // horizontal padding, so the plate fills the band edge to edge whatever its
+    // proportions. Clamped so a very wide plate still fits the glass.
+    final double aspect = item.entry.spec.canvasWidth / item.entry.spec.canvasHeight;
+    final double cardWidth = (stageHeight * aspect + PlateTile.padding.horizontal).clamp(300.0, 860.0);
+
     return Stack(
       fit: StackFit.expand,
       children: <Widget>[
@@ -174,8 +186,8 @@ class _CardGlass extends StatelessWidget {
         Center(
           child: Padding(
             padding: const EdgeInsets.all(12),
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 820),
+            child: SizedBox(
+              width: cardWidth,
               child: PlateTile(
                 // Fresh state per plate, so a content swap re-seeds the
                 // controller and restarts the auto-replay on the new entry.
@@ -183,9 +195,7 @@ class _CardGlass extends StatelessWidget {
                 entry: item.entry,
                 heroTag: heroTag,
                 onTap: () => onOpenPlate(item, heroTag),
-                // A taller plate band than the grid's default, so the plate is
-                // the subject of the showcase glass rather than a small strip.
-                stageHeight: 200,
+                stageHeight: stageHeight,
                 // The showcase card fills itself in on a loop, hover or not.
                 autoReplay: true,
               ),
