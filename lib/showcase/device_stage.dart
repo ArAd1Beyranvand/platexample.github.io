@@ -355,6 +355,10 @@ class _DeviceStageState extends State<DeviceStage> {
                   highlight: PosterTokens.keypadHighlight,
                   keyBorder: PosterTokens.hairline,
                 ),
+                // The phone's slots are host-fed now (see [DemoConfig.inputSource]),
+                // so this pad is the only way into them — it used to be decoration,
+                // with the visitor's own IME doing the typing.
+                onKey: (key) => key == kPlateBackspaceKey ? _plate.backspace() : _plate.submit(key),
               ),
       ),
     );

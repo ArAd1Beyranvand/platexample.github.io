@@ -58,16 +58,13 @@ class ShowcaseHero extends StatelessWidget {
   /// float over it are the hero's, not the stage's — see [_Stage].
   final Widget stage;
 
-  /// The design's own sentence, verbatim from line 99.
-  ///
-  /// Not derived from `gallerySources`: the registry carries country *names*
-  /// (`Iran`, `Palestine`), and this line wants demonyms. Deriving it would
-  /// mean shipping a demonym table, which is a hardcoded country list wearing
-  /// a lookup — so the design's wording stands, as the prompt allows.
+  /// Each country is its own package, with multiple widgets per package —
+  /// different specs for cars, motorbikes, and plate variants that the spec
+  /// alone cannot capture. A single import brings in the whole country's plates.
   static const String _paragraph =
-      'One widget, one const swapped: licence-plate fields that look and behave '
-      'like the real thing. Iranian, Palestinian, Yemeni, Lebanese and German '
-      'plates ship today, for cars and for motorbikes.';
+      'Six country packages, each with its own plate and input widgets: Iran, '
+      'Iranshahr, Palestine, Yemen, Lebanon, and Germany — spanning seven countries. '
+      'German includes cars and motorbikes; Iran has diplomatic and temporary variants.';
 
   /// Below this the hero is inside the design's 390×812 phone panel (or a
   /// window no wider than one), and the stacked desktop metrics stop working:
@@ -137,10 +134,7 @@ class ShowcaseHero extends StatelessWidget {
               // `max-width: 620px` on the left column.
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 620),
-                child: _HeroText(
-                  metrics: _HeroMetrics.wide(width),
-                  onOpenArchive: onOpenArchive,
-                ),
+                child: _HeroText(metrics: _HeroMetrics.wide(width), onOpenArchive: onOpenArchive),
               ),
             ),
           ),
@@ -189,7 +183,7 @@ class ShowcaseHero extends StatelessWidget {
           ),
           // `.pg-feat`, under the stage: floating them here would drop a card
           // on the headline, which now sits directly above the stage.
-          const CalloutList(padding: EdgeInsets.only(bottom: 8)),
+          CalloutList(device: device, padding: const EdgeInsets.only(bottom: 8)),
         ],
       ),
     );
@@ -214,10 +208,15 @@ class ShowcaseHero extends StatelessWidget {
         // Sized, so the intrinsic measurement does not descend into the rule's
         // own LayoutBuilder, which has no intrinsics to give.
         const SizedBox(height: 1, child: NRule()),
-        Expanded(child: SizedBox(height: _compactStageMin, child: ClipRect(child: stage))),
+        Expanded(
+          child: SizedBox(
+            height: _compactStageMin,
+            child: ClipRect(child: stage),
+          ),
+        ),
         // `.pg-feat { gap: 10px; padding: 0 18px 8px }`, in the place the
         // panel render gives it: under the device, above the stamp line.
-        const CalloutList(padding: EdgeInsets.fromLTRB(18, 16, 18, 8)),
+        CalloutList(device: device, padding: const EdgeInsets.fromLTRB(18, 16, 18, 8)),
       ],
     );
   }
@@ -286,12 +285,8 @@ class _Stage extends StatelessWidget {
         // Over the device, under the stamp: the design's cards sit above the
         // stage's own contents, and the pill is the one thing it draws over
         // them both.
-        if (floatingCallouts) const Positioned.fill(child: CalloutLayer()),
-        const Positioned(
-          left: 16,
-          bottom: 0,
-          child: NPill(label: 'Iran made · open source'),
-        ),
+        if (floatingCallouts) Positioned.fill(child: CalloutLayer(device: device)),
+        const Positioned(left: 16, bottom: 0, child: NPill(label: 'Iran made · open source')),
       ],
     );
   }
@@ -318,43 +313,43 @@ class _HeroMetrics {
 
   /// `font-size: clamp(52px, 5.6vw, 80px)`.
   factory _HeroMetrics.wide(double width) => _HeroMetrics(
-        heading: (width * 0.056).clamp(52.0, 80.0),
-        masthead: 11,
-        paragraph: 20,
-        buttonsFillWidth: false,
-        showMastheadRule: true,
-        mastheadColor: N.n400,
-        afterMasthead: 40,
-        afterHeading: 28,
-        afterParagraph: 36,
-      );
+    heading: (width * 0.056).clamp(52.0, 80.0),
+    masthead: 11,
+    paragraph: 20,
+    buttonsFillWidth: false,
+    showMastheadRule: true,
+    mastheadColor: N.n400,
+    afterMasthead: 40,
+    afterHeading: 28,
+    afterParagraph: 36,
+  );
 
   factory _HeroMetrics.stacked() => const _HeroMetrics(
-        heading: 56,
-        masthead: 11,
-        paragraph: 20,
-        buttonsFillWidth: false,
-        showMastheadRule: true,
-        mastheadColor: N.n400,
-        afterMasthead: 40,
-        afterHeading: 28,
-        afterParagraph: 36,
-      );
+    heading: 56,
+    masthead: 11,
+    paragraph: 20,
+    buttonsFillWidth: false,
+    showMastheadRule: true,
+    mastheadColor: N.n400,
+    afterMasthead: 40,
+    afterHeading: 28,
+    afterParagraph: 36,
+  );
 
   factory _HeroMetrics.compact() => const _HeroMetrics(
-        heading: 40,
-        masthead: 10,
-        paragraph: 17,
-        buttonsFillWidth: true,
-        // The panel render drops the accent rule and tints the credit itself
-        // instead — there is no room for a 28px rule plus a 12px gap in a
-        // 354px column that the credit already fills.
-        showMastheadRule: false,
-        mastheadColor: N.accent300,
-        afterMasthead: 22,
-        afterHeading: 18,
-        afterParagraph: 24,
-      );
+    heading: 40,
+    masthead: 10,
+    paragraph: 17,
+    buttonsFillWidth: true,
+    // The panel render drops the accent rule and tints the credit itself
+    // instead — there is no room for a 28px rule plus a 12px gap in a
+    // 354px column that the credit already fills.
+    showMastheadRule: false,
+    mastheadColor: N.accent300,
+    afterMasthead: 22,
+    afterHeading: 18,
+    afterParagraph: 24,
+  );
 
   final double heading;
   final double masthead;
@@ -379,10 +374,8 @@ class _HeroText extends StatelessWidget {
   /// `Read the docs` goes to the package's pub.dev page — the docs this app
   /// has always linked. The URL lives in [PosterLinks] and is read, not
   /// restated.
-  Future<void> _openDocs() => launchUrl(
-    Uri.parse(PosterLinks.pubDevUrl),
-    mode: LaunchMode.externalApplication,
-  );
+  Future<void> _openDocs() =>
+      launchUrl(Uri.parse(PosterLinks.pubDevUrl), mode: LaunchMode.externalApplication);
 
   /// `.pg-actions`: `display: flex; gap: 12px; align-items: center`.
   ///

@@ -70,8 +70,9 @@ class CountryDetailScreen extends StatelessWidget {
     // A [LayoutBuilder], not [MediaQuery]: the showcase renders the whole
     // shell again inside its simulated device frames, and this page has to
     // take the layout its own column calls for rather than the window's.
-    // [PlateSizes], which the old screen sized its grid from, reads
-    // `MediaQuery.sizeOf` and so cannot be used here.
+    // The old `PlateSizes` helper, which the previous screen sized its grid
+    // from, read `MediaQuery.sizeOf` and so could not be used here; it was
+    // deleted in sk15 once this screen stopped calling it.
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         final double width = constraints.maxWidth;

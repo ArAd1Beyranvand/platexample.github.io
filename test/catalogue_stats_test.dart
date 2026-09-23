@@ -6,17 +6,18 @@ void main() {
   test('CatalogueStats.of counts the current registry', () {
     final CatalogueStats stats = CatalogueStats.of(gallerySources);
 
-    // One per source: iran_plate, palestine_plate, yemen_plate,
-    // lebanon_plate, germany_plate.
-    expect(stats.packages, 5);
+    // One per source: iran_plate, iranshahr_plate, palestine_plate,
+    // yemen_plate, lebanon_plate, germany_plate.
+    expect(stats.packages, 6);
 
-    // Iran (3: Iran, Bahrain, Azerbaijan) + Palestine + Yemen + Lebanon +
-    // Germany. `iran_plate` is the one package that ships more than one
+    // Iran + Bahrain, Azerbaijan, Afghanistan + Palestine + Yemen + Lebanon +
+    // Germany. `iranshahr_plate` is the one package that ships more than one
     // country's worth of plates.
-    expect(stats.countries, 7);
+    expect(stats.countries, 8);
 
-    // Distinct `entry.spec.id`s across every section of every source.
-    expect(stats.specs, 51);
+    // Distinct `entry.spec.id`s across every section of every source:
+    // 2 + 20 + 11 + 11 + 4 + 14.
+    expect(stats.specs, 62);
 
     // Every entry lands in one of two buckets: a car-family plate, or a
     // motorcycle/bicycle one. Both buckets are non-empty in the current

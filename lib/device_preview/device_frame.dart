@@ -281,9 +281,17 @@ class _DeviceFrameState extends State<DeviceFrame> with SingleTickerProviderStat
   /// fade-in: the plate is never visible while the geometry is moving.
   double get _contentOpacity => _fadeIn.value > 0 ? _fadeIn.value : 1 - _fadeOut.value;
 
-  /// The old layout stays mounted until the morph's midpoint; after it, the
-  /// target layout is built and faded in.
-  DeviceConfig get _contentConfig => _morphRaw.value < 0.5 ? _from : _to;
+  /// The old layout stays mounted until the morph *ends*; the target layout is
+  /// then built during the blank hold and faded in.
+  ///
+  /// Swapping at the morph's end rather than its midpoint is deliberate. The
+  /// swap re-inflates the whole page — plate, backdrop, keypad — which is one
+  /// heavy frame wherever it lands. At the midpoint the frame geometry is
+  /// mid-flight and the spike shows as a stutter in the morph; at the end the
+  /// device is already at rest and still black for the whole blank hold, so the
+  /// same spike is invisible. The page is never *seen* in either config while
+  /// this is true, because opacity is pinned at zero across the entire window.
+  DeviceConfig get _contentConfig => _morphRaw.value < 1 ? _from : _to;
 
   /// The page currently on the glass, and the config it was built for. Held so
   /// an animation tick reuses the same widget instance instead of rebuilding
@@ -443,7 +451,7 @@ class _DeviceFrameState extends State<DeviceFrame> with SingleTickerProviderStat
                     ),
                     const Positioned.fill(child: LaptopChassisEdge()),
                   ],
-                  ),
+                ),
               ),
             ),
           ),
@@ -489,8 +497,21 @@ class _DeviceFrameState extends State<DeviceFrame> with SingleTickerProviderStat
                       // morphs, this is all that shows.
                       child: ColoredBox(
                         color: const Color(0xFF0D1017),
-                        child: opacity <= 0.001
-                            ? const SizedBox.expand()
+                        // NOTE: there is deliberately no `opacity <= 0.001`
+                        // branch here. Swapping the page out for a SizedBox
+                        // through the blank unmounts it and every State under
+                        // it, so the first frame of the fade-in had to inflate,
+                        // lay out and paint the entire page at once — the lag
+                        // you see the instant content starts appearing. The
+                        // GlobalKey below cannot help: it reparents within a
+                        // frame, not across the ~1.2s the page spends gone.
+                        //
+                        // Staying mounted at Opacity(0) is nearly free:
+                        // RenderOpacity paints nothing at all at alpha 0, and
+                        // the constraints under _ScreenContent's fixed-size box
+                        // never change, so the page does not re-lay-out while
+                        // the frame morphs around it.
+                        child: opacity >= 0.999
                             // At rest the page is painted straight into the
                             // frame's own layer — no Opacity, no boundary.
                             //
@@ -503,7 +524,6 @@ class _DeviceFrameState extends State<DeviceFrame> with SingleTickerProviderStat
                             // back soft, and snaps sharp the moment an animation
                             // starts and the cache is abandoned. Not caching a
                             // still frame costs nothing: nothing is repainting.
-                            : opacity >= 0.999
                             ? _screenContent()
                             : Opacity(
                                 opacity: opacity.clamp(0.0, 1.0),

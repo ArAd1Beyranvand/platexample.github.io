@@ -40,9 +40,10 @@ class DemoConfig {
   /// The keystrokes the auto-typist walks for this device.
   final List<TypistStep> script;
 
-  /// The [PlateDisplay.inputSource] for this device. Null lets the plate fall
-  /// back to the platform default (as the mobile demo does); the laptop and
-  /// tablet route input through the host instead.
+  /// The [PlateDisplay.inputSource] for this device. Null would let the plate
+  /// fall back to the platform default; every demo here routes input through
+  /// the host instead, because the stage types by script and a scripted run
+  /// must never raise the visitor's own keyboard.
   final PlateInputSource? inputSource;
 
   /// Fraction of the glass width the plate occupies.
@@ -156,7 +157,13 @@ final Map<DeviceType, DemoConfig> demoConfigs = {
   DeviceType.mobile: DemoConfig(
     spec: IranPlates.bicycle,
     script: bicycleScript,
-    inputSource: null,
+    // Deliberately NOT the platform default. On a real phone that default is
+    // [PlateInputSource.system], which makes every slot an IME field — so the
+    // auto-typist moving the cursor from slot to slot raised the visitor's own
+    // soft keyboard over the page, unasked. Routing input through the host
+    // keeps the slots read-only: the cursor still walks the plate and the
+    // compact pad below still types into it, and nothing summons the IME.
+    inputSource: PlateInputSource.host,
     plateWidthFactor: 0.86,
     usesController: false,
     showsValidation: false,

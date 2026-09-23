@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 
+import 'plate_metadata.dart';
 import 'sources/sources.dart';
 
 /// The Showcase stat band's four numbers, computed from the registry so they
@@ -15,15 +16,13 @@ class CatalogueStats {
   });
 
   /// Walks [catalogue] once, tallying all four counts together.
+  /// Uses [PlateMetadata] for package and country counts to stay in sync
+  /// with the ecosystem README.
   factory CatalogueStats.of(List<GallerySource> catalogue) {
-    final Set<String> packages = <String>{};
-    final Set<String> countries = <String>{};
     final Set<String> specs = <String>{};
     final Set<String> formFactors = <String>{};
 
     for (final GallerySource source in catalogue) {
-      packages.add(source.packageName);
-      countries.addAll(source.countryNames);
       for (final GallerySection section in source.sections) {
         for (final GalleryEntry entry in section.entries) {
           specs.add(entry.spec.id);
@@ -33,8 +32,8 @@ class CatalogueStats {
     }
 
     return CatalogueStats(
-      packages: packages.length,
-      countries: countries.length,
+      packages: PlateMetadata.packageCount,
+      countries: PlateMetadata.countryCount,
       specs: specs.length,
       formFactors: formFactors.length,
     );
@@ -44,7 +43,7 @@ class CatalogueStats {
   final int packages;
 
   /// Distinct [GallerySource.countryNames], flattened — not one per source:
-  /// `iran_plate` alone ships three.
+  /// `iranshahr` alone ships three: Bahrain, Azerbaijan, and Afghanistan.
   final int countries;
 
   /// Distinct plate spec ids (`entry.spec.id`) across every entry in every

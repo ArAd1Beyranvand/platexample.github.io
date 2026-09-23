@@ -82,6 +82,22 @@ class _PlateDetailScreenState extends State<PlateDetailScreen> {
 
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
+        if (constraints.maxWidth < NBreak.shell) {
+          return _MobilePlateDetail(
+            item: item,
+            entry: entry,
+            spec: spec,
+            plate: _plate,
+            inputSource: _inputSource,
+            onInputSourceChanged: (PlateInputSource s) => setState(() => _inputSource = s),
+            onOpenDiscover: widget.onOpenDiscover,
+            onOpenCountry: widget.onOpenCountry,
+            heroTag: widget.heroTag,
+            onSubmit: _onSubmit,
+            alphabet: _alphabet,
+          );
+        }
+
         final bool oneColumn = constraints.maxWidth < NBreak.detail;
         final EdgeInsets mainPadding = oneColumn
             ? const EdgeInsets.fromLTRB(40, 24, 40, 24)
@@ -156,6 +172,260 @@ class _PlateDetailScreenState extends State<PlateDetailScreen> {
           ],
         );
       },
+    );
+  }
+}
+
+/// sk21: the page below [NBreak.shell] — a scrolling body plus a pinned
+/// footer, sharing this screen's one [PlateController] and [_inputSource]
+/// rather than a second copy of either.
+///
+/// The footer sits outside the scroll view so it is always on screen; the
+/// scroll body carries the plate, its title, the `INPUT` card list and the
+/// `DETAILS` table. Two things move with the keyboard/keypad:
+/// - **System**: the soft keyboard pushes [MediaQuery.viewInsets] up; this
+///   widget rebuilds around that inset so the footer keeps riding above it,
+///   and the focused slot's `Scrollable.ensureVisible` (already wired into
+///   `PlateCanvas`/`core_plate`) brings the plate back into view.
+/// - **Keypad**: the in-app pad renders between the scroll body and the
+///   footer instead of overlaying anything, so the footer never gets covered.
+///   On a short phone this can starve the plate of room; [_TitleBlock]
+///   collapses first rather than letting the plate itself scroll off.
+class _MobilePlateDetail extends StatelessWidget {
+  const _MobilePlateDetail({
+    required this.item,
+    required this.entry,
+    required this.spec,
+    required this.plate,
+    required this.inputSource,
+    required this.onInputSourceChanged,
+    required this.onOpenDiscover,
+    required this.onOpenCountry,
+    required this.heroTag,
+    required this.onSubmit,
+    required this.alphabet,
+  });
+
+  final CatalogueItem item;
+  final GalleryEntry entry;
+  final PlateSpec spec;
+  final PlateController plate;
+  final PlateInputSource inputSource;
+  final ValueChanged<PlateInputSource> onInputSourceChanged;
+  final VoidCallback? onOpenDiscover;
+  final void Function(GallerySource source)? onOpenCountry;
+  final String heroTag;
+  final VoidCallback onSubmit;
+  final PlateAlphabet Function({required bool numeric}) alphabet;
+
+  static const EdgeInsets _bodyPadding = EdgeInsets.symmetric(horizontal: 18);
+  static const EdgeInsets _footerPadding = EdgeInsets.fromLTRB(18, 16, 18, 16);
+
+  @override
+  Widget build(BuildContext context) {
+    final bool showsKeypad = inputSource == PlateInputSource.packageKeypad;
+    final double keyboardInset = MediaQuery.viewInsetsOf(context).bottom;
+
+    final List<PlateDetailRow> rows = <PlateDetailRow>[
+      PlateDetailRow(label: 'Package', value: item.source.packageName),
+      PlateDetailRow(label: 'Spec', value: spec.id, mono: true),
+      PlateDetailRow(label: 'Country block', value: _countryBlock, font: NType.forScript(_countryBlock)),
+      PlateDetailRow(label: 'Slots', value: '${spec.slotCount}'),
+      PlateDetailRow(label: 'Livery', value: entry.label),
+      PlateDetailRow(
+        label: 'Proportions',
+        value: '${(spec.canvasWidth / spec.canvasHeight).toStringAsFixed(2)} : 1',
+      ),
+      PlateDetailRow(
+        label: 'Validator',
+        value: entry.validator == null ? 'None in this package' : entry.validator.runtimeType.toString(),
+      ),
+    ];
+
+    return Padding(
+      // Rides the footer and keypad above the system keyboard. The scroll
+      // body needs no matching adjustment: `Scrollable.ensureVisible` off the
+      // focused slot already accounts for the same inset when it decides how
+      // far to scroll.
+      padding: EdgeInsets.only(bottom: keyboardInset),
+      child: Column(
+        children: <Widget>[
+          Expanded(
+            // No padding here: the two dividers below need the full panel
+            // width, and each other child instead carries its own 18px
+            // horizontal padding — see `_bodyPadding` on each.
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Padding(
+                    padding: _bodyPadding,
+                    child: PlateBreadcrumb(
+                      countryName: item.source.countryName,
+                      specId: spec.id,
+                      onOpenDiscover: onOpenDiscover,
+                      onOpenCountry: onOpenCountry == null ? null : () => onOpenCountry!(item.source),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  const Divider(height: 1, thickness: 1, color: N.divider),
+                  const SizedBox(height: 24),
+                  Padding(
+                    padding: _bodyPadding,
+                    child: _PlateStage(
+                      spec: spec,
+                      heroTag: heroTag,
+                      child: PlateBinding<PlateTheme?>(
+                        controller: plate,
+                        select: (PlateController c) => entry.themeFor(c.values),
+                        builder: (BuildContext context, PlateTheme? plateTheme) => PlateCanvas(
+                          spec: spec,
+                          theme: plateTheme,
+                          country: entry.country,
+                          inputSource: inputSource,
+                          validator: entry.validator,
+                          autoValidate: true,
+                          controller: plate,
+                          onChooseCharacter: (PlateAlphabet a) => PlateCharacterPicker.show(context, a),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Padding(
+                    padding: _bodyPadding,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        // Collapses first if the keypad leaves the body short
+                        // of room on a small phone — the plate itself never
+                        // yields.
+                        _TitleBlock(
+                          collapsed: showsKeypad,
+                          livery: entry.label,
+                          countryName: item.source.countryName,
+                          packageName: item.source.packageName,
+                        ),
+                        PlateBinding<int>(
+                          controller: plate,
+                          select: (PlateController c) =>
+                              c.values.where((String? v) => v != null && v.isNotEmpty).length,
+                          builder: (BuildContext context, int filled) => Text(
+                            '$filled SLOTS FILLED · ${spec.id}'.toUpperCase(),
+                            style: NType.kicker.copyWith(color: N.n500),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  const Divider(height: 1, thickness: 1, color: N.divider),
+                  const SizedBox(height: 24),
+                  Padding(
+                    padding: _bodyPadding,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        const Eyebrow('Input'),
+                        const SizedBox(height: 16),
+                        InputModeList(
+                          style: InputModeListStyle.cards,
+                          selected: inputSource,
+                          onChanged: onInputSourceChanged,
+                        ),
+                        const SizedBox(height: 32),
+                        const Eyebrow('Details'),
+                        const SizedBox(height: 12),
+                        PlateDetailsTable(rows: rows),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          if (showsKeypad)
+            PlateBinding<PlateSlot?>(
+              controller: plate,
+              select: (PlateController c) => c.activeSlot,
+              builder: (BuildContext context, PlateSlot? active) => PlateKeypad(
+                highlightedKey: null,
+                compact: true,
+                showLetters: active != null && !active.alphabet.isNumeric,
+                digitAlphabet: alphabet(numeric: true),
+                letterAlphabet: alphabet(numeric: false),
+                activeAlphabet: active?.alphabet,
+                onKey: (String key) => key == kPlateBackspaceKey ? plate.backspace() : plate.submit(key),
+              ),
+            ),
+          DecoratedBox(
+            decoration: const BoxDecoration(
+              color: N.bg,
+              border: Border(top: BorderSide(color: N.divider)),
+            ),
+            child: Padding(
+              padding: _footerPadding,
+              child: _Submit(plate: plate, onSubmit: onSubmit),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// The value the `COUNTRY BLOCK` row shows — see [_Aside._countryBlock].
+  String get _countryBlock {
+    if (spec.labels.isNotEmpty) return spec.labels.first.text;
+    final PlateCountry country = entry.country ?? spec.country;
+    return country.captionLines.join(' ');
+  }
+}
+
+/// [PlateTitleBlock] at sk21's mobile size (`≈32px`), dropping the `Country ·
+/// package` line when the keypad has eaten the room a short phone would
+/// otherwise give it — keeping the plate itself on screen rather than
+/// letting it scroll off, per sk21's keypad-mode rule.
+class _TitleBlock extends StatelessWidget {
+  const _TitleBlock({
+    required this.collapsed,
+    required this.livery,
+    required this.countryName,
+    required this.packageName,
+  });
+
+  final bool collapsed;
+  final String livery;
+  final String countryName;
+  final String packageName;
+
+  static const double _liveryFontSize = 32;
+
+  @override
+  Widget build(BuildContext context) {
+    if (!collapsed) {
+      return Padding(
+        padding: const EdgeInsets.only(bottom: 8),
+        child: PlateTitleBlock(
+          livery: livery,
+          countryName: countryName,
+          packageName: packageName,
+          liveryFontSize: _liveryFontSize,
+        ),
+      );
+    }
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Text(
+        livery,
+        style: const TextStyle(
+          fontFamily: NType.archivo,
+          fontWeight: FontWeight.w800,
+          fontSize: _liveryFontSize,
+          height: 1.05,
+          letterSpacing: -0.02 * _liveryFontSize,
+          color: N.n100,
+        ),
+      ),
     );
   }
 }

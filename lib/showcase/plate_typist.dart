@@ -254,6 +254,7 @@ class PlateTypist extends ChangeNotifier {
         _notify();
         if (!await _sleep(flash)) return false;
         controller.setAt(keyStep.index, keyStep.char);
+        _advanceCursor(spec: spec, controller: controller, from: keyStep.index);
         activeKey = null;
         _notify();
         return _sleep(keyStep.holdAfter ?? gap);
@@ -273,11 +274,28 @@ class PlateTypist extends ChangeNotifier {
     if (!await _sleep(flash)) return false;
 
     controller.setAt(keyStep.index, keyStep.char);
+    _advanceCursor(spec: spec, controller: controller, from: keyStep.index);
 
     // Release it.
     activeKey = null;
     _notify();
     return _sleep(keyStep.holdAfter ?? (keyStep.pauseAfter ? gap : burstGap));
+  }
+
+  /// Steps the cursor onto the slot the next character will land in, the
+  /// instant the current one is committed.
+  ///
+  /// Characters are written straight to the controller rather than through
+  /// [PlateController.submit], so nothing advances focus for us: without this
+  /// the caret sat *on* the digit just typed until the next step's
+  /// [PlateController.focusSlot] moved it, which through a whole run reads as
+  /// the caret dropping a slot behind every keystroke and catching up a beat
+  /// later. A real typist's caret is always one slot ahead of the last
+  /// character, and at the end of the plate it stays where it is rather than
+  /// wrapping back to the start.
+  void _advanceCursor({required PlateSpec spec, required PlateController controller, required int from}) {
+    final next = spec.nextIndex(from);
+    if (next != null) controller.focusSlot(next);
   }
 
   /// Opens [PlateCharacterPicker] and scrolls it to [step]'s character
@@ -314,6 +332,7 @@ class PlateTypist extends ChangeNotifier {
         sheetOpen = false;
       }
       controller.setAt(step.index, step.char);
+      _advanceCursor(spec: spec, controller: controller, from: step.index);
     } finally {
       if (sheetOpen && navigator.canPop()) navigator.pop();
       scroll.dispose();

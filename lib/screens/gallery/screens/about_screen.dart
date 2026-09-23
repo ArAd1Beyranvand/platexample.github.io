@@ -20,13 +20,22 @@ class AboutScreen extends StatelessWidget {
   /// a showcase.
   // TODO(sk14): generate this from pubspec.lock at build time instead of
   // hardcoding it here, so a `pub upgrade` can't leave it stale again.
+  //
+  // sk24 found it stale in exactly that way: four of the eight versions had
+  // drifted, `iranshahr_plate` — which draws Bahrain, Azerbaijan and
+  // Afghanistan, three of the eight countries on Discover — was missing, and
+  // `core_plate_bloc` was
+  // listed although this app has never depended on it (it is not in
+  // `pubspec.lock`). Every line below is now the resolved version from
+  // `pubspec.lock`; re-check it against that file, not against the sibling
+  // pubspecs, whenever this list is touched.
   static const List<_PackageInfo> _packages = <_PackageInfo>[
-    _PackageInfo('core_plate', '0.5.0', 'https://github.com/ArAd1Beyranvand/core-plate'),
-    _PackageInfo('core_plate_bloc', '0.1.0', 'https://github.com/ArAd1Beyranvand/core-plate-bloc'),
-    _PackageInfo('plate_keypad', '0.1.0', 'https://github.com/ArAd1Beyranvand/keypad-plate'),
-    _PackageInfo('iran_plate', '0.1.0', 'https://github.com/ArAd1Beyranvand/iran-plate'),
+    _PackageInfo('core_plate', '0.9.1', 'https://github.com/ArAd1Beyranvand/core-plate'),
+    _PackageInfo('plate_keypad', '0.1.1', 'https://github.com/ArAd1Beyranvand/keypad-plate'),
+    _PackageInfo('iran_plate', '0.5.0', 'https://github.com/ArAd1Beyranvand/iran-plate'),
+    _PackageInfo('iranshahr_plate', '0.1.0', 'https://github.com/ArAd1Beyranvand/iranshahr'),
     _PackageInfo('germany_plate', '0.2.0', 'https://github.com/ArAd1Beyranvand/germany-plate'),
-    _PackageInfo('palestine_plate', '0.2.0', 'https://github.com/ArAd1Beyranvand/plate-palestine'),
+    _PackageInfo('palestine_plate', '0.3.0', 'https://github.com/ArAd1Beyranvand/plate-palestine'),
     _PackageInfo('yemen_plate', '0.3.0', 'https://github.com/ArAd1Beyranvand/plate-yemen'),
     _PackageInfo('lebanon_plate', '0.1.0', 'https://github.com/ArAd1Beyranvand/lebanon-plate'),
   ];

@@ -1,10 +1,14 @@
 import 'package:flutter/foundation.dart';
 
+import '../../device_preview/device_config.dart';
+
 /// One of the three cards that float over the showcase's device stage.
 ///
-/// The old poster carried nine of these across three per-device sets, each
-/// with its own flag strip, EU badge, tag and bevel. Nocturne has three cards
-/// and one panel: a kicker, a title, an optional body (see [CalloutCard]).
+/// The old poster carried nine of these across three per-device sets, each with
+/// its own flag strip, EU badge, tag and bevel. sk23.5 brings the three sets
+/// back — the stage says something different about each device it hops to — but
+/// not the chrome: Nocturne has three cards and one panel, a kicker, a title
+/// and an optional body (see [CalloutCard]).
 @immutable
 class CalloutSpec {
   const CalloutSpec({
@@ -22,8 +26,8 @@ class CalloutSpec {
 
   final String title;
 
-  /// Only the first card has one; the design's `sc-if` drops the paragraph on
-  /// the other two.
+  /// Only the first card of a set has one; the design's `sc-if` drops the
+  /// paragraph on the other two, which are a third of its width.
   final String? body;
 
   /// The card's left edge and top edge as fractions of the device stage, and
@@ -39,35 +43,131 @@ class CalloutSpec {
   final double widthFx;
 }
 
-/// The three cards, in the design's order.
+/// Mobile anchor slots. The phone frame is the narrowest of the three, so it
+/// leaves the most clearance either side — these still float over the stage
+/// exactly like tablet's and desktop's do whenever the picker has the phone
+/// selected inside the wide two-column hero (`floatingCallouts: true` in
+/// [_Stage]). Only the phone-panel breakpoint (window itself under ~600px)
+/// drops these for the stacked [CalloutList].
+const double _mobileSlot1Fx = 0.02;
+const double _mobileSlot1Fy = 0.14;
+const double _mobileSlot1W = 0.27;
+const double _mobileSlot2Fx = 0.74;
+const double _mobileSlot2Fy = 0.08;
+const double _mobileSlot2W = 0.20;
+const double _mobileSlot3Fx = 0.72;
+const double _mobileSlot3Fy = 0.78;
+const double _mobileSlot3W = 0.20;
+
+/// Tablet anchor slots: one card on left beside field, two stacked on right.
+/// Read off the reference render at 1440×900.
+const double _tabletSlot1Fx = 0.01;
+const double _tabletSlot1Fy = 0.16;
+const double _tabletSlot1W = 0.27;
+const double _tabletSlot2Fx = 0.74;
+const double _tabletSlot2Fy = 0.08;
+const double _tabletSlot2W = 0.19;
+const double _tabletSlot3Fx = 0.72;
+const double _tabletSlot3Fy = 0.80;
+const double _tabletSlot3W = 0.19;
+
+/// Desktop anchor slots: scaled for larger catalogue layout with more breathing room.
+const double _desktopSlot1Fx = 0.02;
+const double _desktopSlot1Fy = 0.12;
+const double _desktopSlot1W = 0.28;
+const double _desktopSlot2Fx = 0.73;
+const double _desktopSlot2Fy = 0.06;
+const double _desktopSlot2W = 0.20;
+const double _desktopSlot3Fx = 0.71;
+const double _desktopSlot3Fy = 0.78;
+const double _desktopSlot3W = 0.20;
+
+/// The three cards, in the design's order, one set per device.
 ///
-/// The percentages are read off the reference render of the showcase at
-/// 1440×900 (`newdesign_migration/pictures/target/desktop`), measured against
-/// the `.pg-stage` box: the first card sits on the stage's left edge level
-/// with the laptop's screen, and the other two stack down its right edge,
-/// clearing the device between them.
-const List<CalloutSpec> calloutSpecs = <CalloutSpec>[
-  CalloutSpec(
-    kicker: 'RULES',
-    title: 'Live validation',
-    body: 'Forbidden district and serial combinations flare red as you type: '
-        'before submit, not after.',
-    anchorFx: 0.01,
-    anchorFy: 0.16,
-    widthFx: 0.27,
-  ),
-  CalloutSpec(
-    kicker: 'FEATURE',
-    title: 'Both plate input and its display',
-    anchorFx: 0.74,
-    anchorFy: 0.08,
-    widthFx: 0.19,
-  ),
-  CalloutSpec(
-    kicker: 'SCALE',
-    title: 'Everything is customizable',
-    anchorFx: 0.72,
-    anchorFy: 0.80,
-    widthFx: 0.19,
-  ),
-];
+/// Every set is three cards into the three slots above: a wide one on the left
+/// carrying the only paragraph, and two narrow ones down the right. Each set
+/// says something specific to what that device is showing, rather than
+/// restating "customizable" in three different fonts.
+const Map<DeviceType, List<CalloutSpec>> calloutSets = <DeviceType, List<CalloutSpec>>{
+  // The phone is the keypad demo: what the field does while you are typing
+  // into it. Mobile uses a grid layout: two small on top, one large below.
+  DeviceType.mobile: <CalloutSpec>[
+    CalloutSpec(
+      kicker: 'KEYBOARD',
+      title: 'Shapes itself to each country',
+      anchorFx: _mobileSlot1Fx,
+      anchorFy: _mobileSlot1Fy,
+      widthFx: _mobileSlot1W,
+    ),
+    CalloutSpec(
+      kicker: 'INSTANT',
+      title: 'Errors flash red as you type',
+      anchorFx: _mobileSlot2Fx,
+      anchorFy: _mobileSlot2Fy,
+      widthFx: _mobileSlot2W,
+    ),
+    CalloutSpec(
+      kicker: 'VARIANTS',
+      title: 'Cars, motors, diplomatic, temporary — all built in',
+      anchorFx: _mobileSlot3Fx,
+      anchorFy: _mobileSlot3Fy,
+      widthFx: _mobileSlot3W,
+    ),
+  ],
+  // The tablet shows a plate at rest beside its field — the pair the design's
+  // own render of this screen is drawn from, which is why this set is the one
+  // sk8 kept when it collapsed the three.
+  DeviceType.tablet: <CalloutSpec>[
+    CalloutSpec(
+      kicker: 'RULES',
+      title: 'Bad combinations turn red while you type',
+      anchorFx: _tabletSlot1Fx,
+      anchorFy: _tabletSlot1Fy,
+      widthFx: _tabletSlot1W,
+    ),
+    CalloutSpec(
+      kicker: 'PAIR',
+      title: 'The field that types it, the plate that shows it',
+      anchorFx: _tabletSlot2Fx,
+      anchorFy: _tabletSlot2Fy,
+      widthFx: _tabletSlot2W,
+    ),
+    CalloutSpec(
+      kicker: 'SCALE',
+      title: 'Same knobs at every screen size',
+      anchorFx: _tabletSlot3Fx,
+      anchorFy: _tabletSlot3Fy,
+      widthFx: _tabletSlot3W,
+    ),
+  ],
+  // The laptop is the catalogue view, so its set is about breadth rather than
+  // about one field. Desktop has its own anchor positions for better spacing.
+  DeviceType.desktop: <CalloutSpec>[
+    CalloutSpec(
+      kicker: 'COUNTRIES',
+      title: 'Five country packages, one pattern',
+      anchorFx: _desktopSlot1Fx,
+      anchorFy: _desktopSlot1Fy,
+      widthFx: _desktopSlot1W,
+    ),
+    CalloutSpec(
+      kicker: 'VARIANTS',
+      title: 'Cars and motorbikes, both',
+      anchorFx: _desktopSlot2Fx,
+      anchorFy: _desktopSlot2Fy,
+      widthFx: _desktopSlot2W,
+    ),
+    CalloutSpec(
+      kicker: 'OPEN SOURCE',
+      title: 'Built in Iran, published for anyone',
+      anchorFx: _desktopSlot3Fx,
+      anchorFy: _desktopSlot3Fy,
+      widthFx: _desktopSlot3W,
+    ),
+  ],
+};
+
+/// The set shown when nothing says otherwise — the one the design's reference
+/// render of this screen is drawn at.
+List<CalloutSpec> calloutSetFor(DeviceType device) =>
+    calloutSets[device] ?? calloutSets[DeviceType.tablet]!;

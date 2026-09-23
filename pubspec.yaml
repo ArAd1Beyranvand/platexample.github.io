@@ -52,8 +52,8 @@ dependencies:
   # and nothing else — not on the keypad, and not on each other.
   iran_plate:
     path: ../iran_plate
-  iranshahr:
-    path: ../iranshahr
+  iranshahr_plate:
+    path: ../iranshahr_plate
   germany_plate:
     path: ../germany_plate
 
@@ -82,7 +82,7 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^6.0.0
 
-# Local development only: plate_keypad, iran_plate, iranshahr, palestine_plate,
+# Local development only: plate_keypad, iran_plate, iranshahr_plate, palestine_plate,
 # yemen_plate and lebanon_plate still use path dependencies until they are published on
 # pub.dev. core_plate is now published and uses the versioned dependency above.
 dependency_overrides:
@@ -94,8 +94,8 @@ dependency_overrides:
     path: ../plate_keypad
   iran_plate:
     path: ../iran_plate
-  iranshahr:
-    path: ../iranshahr
+  iranshahr_plate:
+    path: ../iranshahr_plate
   germany_plate:
     path: ../germany_plate
   palestine_plate:

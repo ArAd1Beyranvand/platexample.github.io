@@ -106,10 +106,10 @@ class _StatMetrics {
   /// pixel the longest label, `FORM FACTORS`, doesn't have.
   factory _StatMetrics.compact() => const _StatMetrics(
     margin: 0,
-    padding: EdgeInsets.fromLTRB(NSpace.s4, NSpace.s6, NSpace.s4, NSpace.s6),
-    numberSize: 26,
+    padding: EdgeInsets.fromLTRB(NSpace.s4, NSpace.s3, NSpace.s4, NSpace.s3),
+    numberSize: 22,
     labelSize: 10,
-    gap: 6,
+    gap: 4,
   );
 
   final double margin;

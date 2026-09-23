@@ -22,7 +22,8 @@ class IranSource extends GallerySource {
 
   @override
   String get note =>
-      'Two Iranian specs with Persian digits and the chosen-letter slot. '
+      'Car and motor plates: same Persian digits and chosen-letter slot, '
+      'different layout. Cars show the province pair; motors stay compact. '
       'See iran_plate/README.md.';
 
   /// Built once, and returned by identity: the pickers select a section by
@@ -31,13 +32,19 @@ class IranSource extends GallerySource {
   @override
   List<GallerySection> get sections => _sections;
 
+  /// The default takes one entry per section, and Iran's single section is
+  /// two systems (car, motor) — the same case as Yemen, so both need naming
+  /// here rather than letting the default drop the motor plate.
+  @override
+  List<GalleryEntry> get highlights => _sections[0].entries;
+
   static final List<GallerySection> _sections = <GallerySection>[
     GallerySection(
       title: 'Iran',
       note:
-          'Right-to-left, with the province pair past the divider. The letter '
-          'slot is a `chosen` alphabet, so it opens a picker rather than '
-          'accepting typing.',
+          'Car plate: right-to-left with full width, showing the province pair. '
+          'Motor plate: compact, same alphabet. Both use a chosen-letter slot, '
+          'so the slot opens a picker instead of accepting typing.',
       entries: <GalleryEntry>[
         GalleryEntry(
           id: 'ir.car',
@@ -47,7 +54,7 @@ class IranSource extends GallerySource {
         ),
         GalleryEntry(
           id: 'ir.bicycle',
-          label: 'Bicycle',
+          label: 'Motor',
           spec: IranPlates.bicycle,
           sampleValues: const <String?>[
             '1', '2', '3', //
