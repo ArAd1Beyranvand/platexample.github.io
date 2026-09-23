@@ -1,18 +1,23 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:plate_keypad/plate_keypad.dart';
-import 'package:core_plate/core_plate.dart';
 
 import '../device_preview/device_config.dart';
 import '../device_preview/device_frame.dart';
 import '../device_preview/device_transition.dart';
-import '../poster/poster_tokens.dart';
+import '../screens/gallery/catalogue_index.dart';
+import '../screens/gallery/widgets/plate_tile.dart';
 import '../showcase/demo_config.dart';
 import '../showcase/device_cycle.dart';
-import '../showcase/plate_typist.dart';
-import '../widgets/plate_display.dart';
 
 class DeviceStage extends StatefulWidget {
-  const DeviceStage({super.key, this.cycleController, this.onFrameDeviceChanged, this.onPhaseChanged});
+  const DeviceStage({
+    super.key,
+    required this.onOpenPlate,
+    this.cycleController,
+    this.onFrameDeviceChanged,
+    this.onPhaseChanged,
+  });
 
   /// The handle the hero's segmented control pins a device with. Supplying one
   /// hands its lifetime to the caller; omitting it leaves the stage cycling on
@@ -28,95 +33,53 @@ class DeviceStage extends StatefulWidget {
   /// Fired for every phase reported by the frame transition.
   final ValueChanged<DeviceTransitionPhase>? onPhaseChanged;
 
+  /// Opens the plate currently on the glass into its detail page — the card on
+  /// the glass is a control now, not a demo, so tapping it routes to the same
+  /// page a Discover tile opens.
+  final void Function(CatalogueItem item, String heroTag) onOpenPlate;
+
   @override
   State<DeviceStage> createState() => _DeviceStageState();
 }
 
 class _DeviceStageState extends State<DeviceStage> {
   late final DeviceCycleController _controller = widget.cycleController ?? DeviceCycleController();
-  final PlateTypist _typist = PlateTypist();
 
-  /// Mirrors [PlateTypist.activeKey] as a value the keycaps and the keypad can
-  /// subscribe to individually.
-  ///
-  /// The stage used to wrap the entire device subtree in an
-  /// `AnimatedBuilder(animation: _typist)`, so every press and every release —
-  /// roughly every 115ms through a run — rebuilt the plate, its live text
-  /// fields, the ambient backdrop, the device shell and 41 keycaps, to change
-  /// which single key is drawn highlighted. Now only the highlight rebuilds.
-  final ValueNotifier<String?> _pressedKey = ValueNotifier<String?>(null);
+  /// The plate the content device currently shows — a random catalogue item,
+  /// re-rolled on every content swap so a device shows a different plate each
+  /// turn. Held as a [CatalogueItem] rather than a bare spec so the card's tap
+  /// can open it into its own detail page.
+  CatalogueItem _item = pickDemoItem();
 
-  void _syncPressedKey() => _pressedKey.value = _typist.activeKey;
-
-  /// Drives the frame's geometry morph; flips the instant a hop starts so the
-  /// shell begins reshaping toward the incoming device.
-  DeviceType _frameDevice = DeviceType.desktop;
-
-  /// Drives the plate type shown and its backing controller; lags
-  /// [_frameDevice],
-  /// only catching up during the blank hold once the outgoing plate has faded
-  /// out (see [_onContentSwap]).
-  DeviceType _contentDevice = DeviceType.desktop;
-
-  /// The demo the content device is currently playing — a random country's
-  /// plate, its livery, validator, keypad alphabets and auto-typed script.
-  /// Re-rolled on every content swap (see [_onContentSwap]) so a device shows a
-  /// different plate each turn rather than a fixed one for the whole session.
-  late DemoConfig _config = pickDemoConfig(_contentDevice);
-
-  /// The plate's characters for the content device, recreated on every content
-  /// swap so each plate starts blank. It is also the handle the tablet's keypad,
-  /// the laptop's deck keys and the auto-typist drive entry through: one object
-  /// where there used to be a bloc for the value and a controller for the focus.
-  /// [PlateDisplay] hands it straight to its [PlateCanvas].
-  late PlateController _plate = PlateController(spec: _config.spec);
-
-  /// A tapped laptop keycap, routed through the attached plate's active slot.
-  /// PlateController.submit is a no-op when the character isn't in the
-  /// slot's alphabet, so the deck's Persian letters land only on letter slots
-  /// and its digits only on digit slots — no hard-coded character checks here,
-  /// and it keeps working for any plate of any country.
-  void _onDeckKey(String label) {
-    if (_typist.isRunning) return; // never fight the auto-typist
-    if (label == kPlateBackspaceKey) {
-      _plate.backspace();
-      return;
-    }
-    _plate.submit(label);
-  }
-
-  /// Bumped on every device hop; captured by pending awaits so a stale run
-  /// (a delayed typist start from a device we already left) bails out.
+  /// Bumped on every device hop; captured by the pending auto-advance so a
+  /// stale timer (from a device we already left) bails out.
   int _generation = 0;
 
-  /// The generation a typing run has already been kicked off for, so a repeated
-  /// idle phase for the same device doesn't start a second run.
+  /// The generation the dwell timer has already been armed for, so a repeated
+  /// idle phase for the same device doesn't queue a second advance.
   int _startedGen = -1;
 
-  /// Which plate slot currently holds focus, driving the tablet's letters
-  /// pad via its alphabet. Null when focus is off the plate.
-  int? _activeIndex;
+  /// How long a card sits on the glass before the cycle advances to the next
+  /// device. The card auto-types on hover, so there is no typing run to wait
+  /// on any more — this is a plain dwell.
+  static const Duration _dwell = Duration(seconds: 4);
 
-  void _setActiveIndex(int? index) {
-    if (_activeIndex == index) return;
-    setState(() => _activeIndex = index);
-  }
+  /// The pending dwell, held as a real [Timer] rather than a [Future.delayed]
+  /// so [dispose] can cancel it — a delayed future keeps ticking after the
+  /// stage is gone and trips the test binding's "timer still pending" guard.
+  Timer? _dwellTimer;
 
   @override
   void initState() {
     super.initState();
-    _typist.addListener(_syncPressedKey);
-    // The first device never fires a transition phase, so kick it off directly
-    // once the tree is laid out.
-    WidgetsBinding.instance.addPostFrameCallback((_) => _maybeStartTyping());
+    // The first device never fires a transition phase, so arm the dwell timer
+    // directly once the tree is laid out.
+    WidgetsBinding.instance.addPostFrameCallback((_) => _maybeArmDwell());
   }
 
   @override
   void dispose() {
-    _typist.removeListener(_syncPressedKey);
-    _typist.dispose();
-    _pressedKey.dispose();
-    _plate.dispose();
+    _dwellTimer?.cancel();
     // Only the one this stage made: a caller-supplied controller outlives the
     // stage (the hero rebuilds this subtree on every resize) and is disposed
     // by whoever created it.
@@ -127,69 +90,35 @@ class _DeviceStageState extends State<DeviceStage> {
 
   void _onDeviceChanged(DeviceType device) {
     _generation++;
-    _typist.cancel();
-    // Only the frame starts reshaping now. The plate + its controller stay on the
-    // outgoing device until it has faded out; _onContentSwap does the hand-off.
-    // DeviceCycle rebuilds its builder as part of the same advance, so the new
-    // frame device is picked up without a setState here.
-    _frameDevice = device;
+    // The card itself is device-independent — the same plate on every form
+    // factor — so nothing about the content changes on a hop; only the shell
+    // reshapes. The re-roll happens on the content swap.
     widget.onFrameDeviceChanged?.call(device);
   }
 
   /// Fired by [DeviceFrame] the moment content opacity hits zero, as the frame
-  /// starts morphing — the outgoing plate is already invisible, so its
-  /// controller can be disposed and replaced without a visible flash.
+  /// starts morphing — the outgoing card is already invisible, so the plate can
+  /// be re-rolled without a visible flash.
   void _onContentSwap() {
     if (!mounted) return;
-    // Hand the outgoing controller off to be disposed *after* this frame, not
-    // now. The content swap changes both the spec and the controller on the
-    // same PlateCanvas in one build; PlateCanvas.didUpdateWidget reacts to the
-    // spec change first and calls adoptSpec on its still-current (outgoing)
-    // controller before it adopts the incoming one, so disposing the outgoing
-    // one synchronously here would have adoptSpec dispose already-disposed slot
-    // notifiers and crash. Once the frame is laid out the canvas holds the new
-    // controller and the old one is safe to drop.
-    final outgoing = _plate;
-    _contentDevice = _frameDevice;
-    // Re-roll the country for the incoming device, so each turn shows a fresh
-    // random plate rather than the one it showed last time.
-    _config = pickDemoConfig(_contentDevice);
-    _plate = PlateController(spec: _config.spec);
-    _activeIndex = null;
-    setState(() {});
-    WidgetsBinding.instance.addPostFrameCallback((_) => outgoing.dispose());
+    setState(() => _item = pickDemoItem());
   }
 
   void _onPhase(DeviceTransitionPhase phase) {
     widget.onPhaseChanged?.call(phase);
-    // At idle the content has fully faded back in, so it's safe to start typing.
-    if (phase == DeviceTransitionPhase.idle) _maybeStartTyping();
+    // At idle the content has fully faded back in, so start the dwell.
+    if (phase == DeviceTransitionPhase.idle) _maybeArmDwell();
   }
 
-  void _maybeStartTyping() {
+  void _maybeArmDwell() {
     if (!mounted || _startedGen == _generation) return;
     _startedGen = _generation;
-    _runTyping(_generation);
-  }
-
-  Future<void> _runTyping(int gen) async {
-    await Future<void>.delayed(const Duration(milliseconds: 600));
-    if (!mounted || gen != _generation) return;
-
-    final config = _config;
-    await _typist.run(
-      spec: config.spec,
-      controller: _plate,
-      steps: config.script,
-      useLetterPicker: false,
-      onSlotChanged: config.showsValidation ? _setActiveIndex : null,
-      context: context,
-    );
-    if (!mounted || gen != _generation) return;
-
-    await Future<void>.delayed(const Duration(milliseconds: 1400));
-    if (!mounted || gen != _generation) return;
-    _controller.advance();
+    final int gen = _generation;
+    _dwellTimer?.cancel();
+    _dwellTimer = Timer(_dwell, () {
+      if (!mounted || gen != _generation) return;
+      _controller.advance();
+    });
   }
 
   @override
@@ -197,124 +126,53 @@ class _DeviceStageState extends State<DeviceStage> {
     return DeviceCycle(
       controller: _controller,
       onDeviceChanged: _onDeviceChanged,
-      builder: (context, device) {
-        // Isolate the device + plate in its own layer. It is expensive to
-        // raster (perspective transform, nested FittedBoxes, clips and live
-        // TextFields), and on Linux an instant window maximise that forces a
-        // full re-raster of it can miss the GL embedder's frame deadline and
-        // crash the app with "Timed out waiting for OpenGL frame". A
-        // RepaintBoundary lets the resize composite the cached layer instead
-        // of re-rendering it from scratch.
-        //
-        // Keystrokes no longer rebuild anything here: the pressed key travels
-        // down as [_pressedKey], and only the widgets that draw a highlight
-        // subscribe to it.
-        return RepaintBoundary(child: _buildDevice(device));
-      },
+      // Isolate the device + card in its own layer. It is expensive to raster
+      // (perspective transform, nested FittedBoxes, clips), and on Linux an
+      // instant window maximise that forces a full re-raster of it can miss the
+      // GL embedder's frame deadline and crash the app. A RepaintBoundary lets
+      // the resize composite the cached layer instead of re-rendering it.
+      builder: (context, device) => RepaintBoundary(child: _buildDevice(device)),
     );
   }
 
   Widget _buildDevice(DeviceType frameDevice) {
-    // The shell morphs to [frameDevice], but the plate on the glass stays on
-    // [_contentDevice] until the swap, so the outgoing plate keeps rendering
-    // through its fade-out instead of being replaced the instant the hop fires.
-    final config = _config;
-    // The active slot's alphabet, not its position, decides whether the
-    // tablet's letters pad shows: a digit-only alphabet keeps the digit grid,
-    // anything else slides the letters layer in.
-    final activeIndex = _activeIndex;
-    final activeAlphabet = activeIndex == null ? null : config.spec.slotAt(activeIndex)?.alphabet;
-    final showLetters = activeAlphabet != null && !activeAlphabet.isNumeric;
     return DeviceFrame(
       device: frameDevice,
       onPhaseChanged: _onPhase,
       onContentSwap: _onContentSwap,
-      deckPressedKey: _pressedKey,
-      onDeckKey: _onDeckKey,
-      builder: (context, _) => PlateDisplay(
-        spec: config.spec,
-        mode: PlateMode.input,
-        // Null for the plates printed black on white; the plates that ship
-        // their own colours — the Palestinian green-on-white, both Yemeni ones
-        // — carry them here.
-        baseTheme: config.theme,
-        // The panel block, where the chosen entry overrides it (Lebanon's usage
-        // colours, Germany's Bundeswehr flag); null keeps the spec's own.
-        country: config.country,
-        activeColor: PosterTokens.accent,
-        // The plate judges itself now: with a validator and autoValidate on, it
-        // paints its own completed-field underline red when the typed value is
-        // invalid. The stage neither watches the value nor holds a verdict — a
-        // host that wants its own timing would read
-        // PlateController.validation instead.
-        alertColor: PosterTokens.invalid,
-        validator: config.validator,
-        autoValidate: config.showsValidation,
-        // The laptop deck already carries letter keys, so its letter comes in
-        // through the library's on-screen-keypad mode instead of the modal
-        // picker. Other devices keep their platform default.
-        inputSource: config.inputSource,
-        // Core ships no built-in picker since the keypad split; hand it the
-        // one from plate_keypad for any `chosen`-alphabet slot.
-        onChooseCharacter: (alphabet) => PlateCharacterPicker.show(context, alphabet),
-        onActiveIndexChanged: config.showsValidation ? _setActiveIndex : null,
-        // Always passed now, on every device: this is where the plate's
-        // characters live, not just a focus handle, so the canvas has to render
-        // from it. `usesController` still says which devices drive entry from
-        // an app-supplied pad.
-        controller: _plate,
-        showBackdrop: true,
-        plateWidthFactor: config.plateWidthFactor,
-        // The pad watches the pressed key itself, so the twice-per-keystroke
-        // flash rebuilds individual keys rather than this whole page.
-        //
-        // The full pad used to sit under a BlocBuilder scoped to itself,
-        // because the barred-key set had to track the typed value. Nothing in
-        // it depends on plate state any more, so the BlocBuilder is gone and
-        // the pad is built from the stage's own state alone. The rebuild was
-        // dropped, not hoisted.
-        keyboard: !config.showsKeypad
-            ? null
-            : !config.compactKeypad
-            ? PlateKeypad(
-                highlightedKey: null,
-                highlightedKeyListenable: _pressedKey,
-                compact: false,
-                showLetters: showLetters,
-                // Read off the chosen plate's own slots, not hardcoded: a
-                // random country types in its own numerals and its own letter
-                // alphabet.
-                digitAlphabet: config.digitAlphabet,
-                letterAlphabet: config.letterAlphabet ?? PlateAlphabet.latinUppercase,
-                activeAlphabet: activeAlphabet,
-                // The demo now types a forbidden value by hand or by script —
-                // every key in the active alphabet is tappable either way — and
-                // the plate goes red once it lands. That is the behaviour being
-                // demonstrated.
-                theme: const PlateKeypadTheme(
-                  highlight: PosterTokens.keypadHighlight,
-                  keyBorder: PosterTokens.hairline,
-                ),
-                onKey: (key) => key == kPlateBackspaceKey ? _plate.backspace() : _plate.submit(key),
-              )
-            : PlateKeypad(
-                highlightedKey: null,
-                highlightedKeyListenable: _pressedKey,
-                compact: config.compactKeypad,
-                // The compact pad's alphabets come from the chosen plate too, so
-                // the phone types whatever country it was dealt rather than a
-                // fixed Persian set.
-                digitAlphabet: config.digitAlphabet,
-                letterAlphabet: config.letterAlphabet ?? PlateAlphabet.latinUppercase,
-                theme: const PlateKeypadTheme(
-                  highlight: PosterTokens.keypadHighlight,
-                  keyBorder: PosterTokens.hairline,
-                ),
-                // The phone's slots are host-fed now (see [DemoConfig.inputSource]),
-                // so this pad is the only way into them — it used to be decoration,
-                // with the visitor's own IME doing the typing.
-                onKey: (key) => key == kPlateBackspaceKey ? _plate.backspace() : _plate.submit(key),
-              ),
+      builder: (context, _) => _CardGlass(item: _item, onOpenPlate: widget.onOpenPlate),
+    );
+  }
+}
+
+/// The device glass, holding one discovery-style [PlateTile] centred on it.
+///
+/// The same card the Discover archive draws: it auto-types its sample on hover
+/// and, tapped, opens the plate into its detail page. Padding and a cap on the
+/// card's width keep it reading as a card sitting on the glass rather than one
+/// stretched edge to edge.
+class _CardGlass extends StatelessWidget {
+  const _CardGlass({required this.item, required this.onOpenPlate});
+
+  final CatalogueItem item;
+  final void Function(CatalogueItem item, String heroTag) onOpenPlate;
+
+  @override
+  Widget build(BuildContext context) {
+    // Unique per device so the hero into the detail page never clashes with a
+    // Discover tile's tag, and re-keys as the content swaps.
+    final String heroTag = 'showcase-stage-${item.entry.id}';
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 420),
+          child: PlateTile(
+            entry: item.entry,
+            heroTag: heroTag,
+            onTap: () => onOpenPlate(item, heroTag),
+          ),
+        ),
       ),
     );
   }

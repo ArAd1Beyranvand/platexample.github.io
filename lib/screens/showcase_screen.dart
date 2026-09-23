@@ -9,6 +9,7 @@ import '../poster/poster_scale.dart';
 import '../showcase/device_cycle.dart';
 import '../showcase/device_stage.dart';
 import '../theme/nocturne.dart';
+import 'gallery/catalogue_index.dart';
 import 'gallery/catalogue_stats.dart';
 import 'gallery/sources/sources.dart';
 import 'showcase/hero.dart';
@@ -25,12 +26,18 @@ final CatalogueStats _catalogueStats = CatalogueStats.of(gallerySources);
 /// takes whatever height is left and the stat band is pinned under it. This
 /// widget is only that composition — backdrop, hero, stat band.
 class ShowcaseScreen extends StatefulWidget {
-  const ShowcaseScreen({super.key, required this.onOpenTab});
+  const ShowcaseScreen({super.key, required this.onOpenTab, required this.onOpenPlate});
 
   /// Asks the router to navigate; the hero's `Open the archive` button is the
   /// only caller. The shell owns the tab, so the screen routes through it
   /// rather than reaching for the Navigator.
   final ValueChanged<AppTab> onOpenTab;
+
+  /// Opens a plate into its detail page. The device stage's card is the only
+  /// caller — tapping it routes to the same page a Discover tile opens. The
+  /// shell owns the Discover navigator, so the request travels up to it rather
+  /// than being pushed from here.
+  final void Function(CatalogueItem item, String heroTag) onOpenPlate;
 
   @override
   State<ShowcaseScreen> createState() => _ShowcaseScreenState();
@@ -75,6 +82,7 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
       cycleController: _cycle,
       onFrameDeviceChanged: _onFrameDeviceChanged,
       onPhaseChanged: _onPhaseChanged,
+      onOpenPlate: widget.onOpenPlate,
     );
 
     final Widget hero = ShowcaseHero(

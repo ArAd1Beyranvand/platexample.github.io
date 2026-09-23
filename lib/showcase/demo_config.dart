@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:core_plate/core_plate.dart';
 
 import '../device_preview/device_config.dart';
+import '../screens/gallery/catalogue_index.dart';
 import '../screens/gallery/sources/sources.dart';
 import 'plate_typist.dart';
 
@@ -204,6 +205,27 @@ DemoConfig pickDemoConfig(DeviceType device, {Random? random}) {
   final rng = random ?? _defaultRng;
   final entries = _typeableEntries();
   return _configFor(device, entries[rng.nextInt(entries.length)]);
+}
+
+/// Every catalogue *item* whose entry carries enough to draw a sample — the
+/// same filter as [_typeableEntries], but paired back up with the section and
+/// source each entry came from, which is what opening a plate into its detail
+/// page needs.
+List<CatalogueItem> _typeableItems() => <CatalogueItem>[
+  for (final CatalogueItem item in catalogueItems)
+    if (item.entry.sampleValues != null && item.entry.sampleValues!.any((v) => v != null && v.isNotEmpty)) item,
+];
+
+/// Picks one plate at random from the whole catalogue, as a [CatalogueItem] so
+/// the showcase card it feeds can open into that plate's detail page.
+///
+/// Drawn from the same typeable pool as [pickDemoConfig] and re-rolled on every
+/// device hop, so the device glass shows a different, openable plate each turn.
+/// Pass a seeded [random] to pin the pick.
+CatalogueItem pickDemoItem({Random? random}) {
+  final rng = random ?? _defaultRng;
+  final items = _typeableItems();
+  return items[rng.nextInt(items.length)];
 }
 
 /// One random [DemoConfig] per [DeviceType], for a caller that wants the whole

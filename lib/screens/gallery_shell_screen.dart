@@ -118,6 +118,22 @@ class GalleryShellState extends State<GalleryShellScreen> {
     ),
   );
 
+  /// Opens a plate tapped on the Showcase tab's device stage. The plate detail
+  /// page lives on the Discover navigator — that is the stack the breadcrumb's
+  /// `DISCOVER` and the back gesture unwind into — so this switches to Discover
+  /// first, then pushes the plate onto it once that navigator is in the tree.
+  ///
+  /// The tab change comes back down through [widget.tab] on the next build, so
+  /// the push is deferred a frame: on the first frame the Discover navigator is
+  /// mounted but still showing its index, and pushing then lands the plate on
+  /// top of it exactly as a Discover tile would.
+  void _openShowcasePlate(CatalogueItem item, String heroTag) {
+    if (widget.tab != AppTab.discover) widget.onTabSelected(AppTab.discover);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _openPlate(item, heroTag);
+    });
+  }
+
   WidgetBuilder _countryBuilder(GallerySource source) => (BuildContext context) => CountryDetailScreen(
     source: source,
     onOpenPlate: _openPlate,
@@ -171,7 +187,7 @@ class GalleryShellState extends State<GalleryShellScreen> {
     final Widget body = IndexedStack(
       index: selected,
       children: <Widget>[
-        ShowcaseScreen(onOpenTab: widget.onTabSelected),
+        ShowcaseScreen(onOpenTab: widget.onTabSelected, onOpenPlate: _openShowcasePlate),
         // Discover is the nested navigator, and the index screen is its root
         // page. The navigator sits *inside* the IndexedStack so switching tabs
         // keeps the pushed pages mounted, exactly as it keeps the scroll
