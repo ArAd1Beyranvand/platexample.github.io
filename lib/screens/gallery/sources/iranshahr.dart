@@ -134,7 +134,7 @@ class IranshahirSource extends GallerySource {
       title: 'Afghanistan',
       note:
           'Fifteen plates over eleven specs, and the only bilingual design in '
-          'this package: the serial is printed twice — eastern Arabic numerals '
+          'this package: the serial is printed twice — iranian Arabic numerals '
           'over Latin figures — and so is the class, as a Persian letter over '
           'its Latin code. Both pairs are one value echoed by a `PlateMirror`, '
           'which is why the last sample value of most entries below is a '
