@@ -9,10 +9,15 @@ import 'package:flutter/material.dart';
 /// fade-upwards that animates the *whole* page including the scrim behind it.
 /// This is the same motion the design's pages use when their content arrives.
 class PageRiseRoute<T> extends PageRouteBuilder<T> {
-  PageRiseRoute({required WidgetBuilder builder, super.settings})
+  /// [instant] skips the fade/rise entirely — used when a page is only being
+  /// built to sit underneath another one that's about to push on top of it,
+  /// so it should never itself be visible mid-transition (e.g. the country
+  /// page built as the plate page's ancestor when opening a plate straight
+  /// from Showcase, where nothing on the Discover stack exists yet).
+  PageRiseRoute({required WidgetBuilder builder, super.settings, bool instant = false})
       : super(
-          transitionDuration: const Duration(milliseconds: 200),
-          reverseTransitionDuration: const Duration(milliseconds: 200),
+          transitionDuration: instant ? Duration.zero : const Duration(milliseconds: 200),
+          reverseTransitionDuration: instant ? Duration.zero : const Duration(milliseconds: 200),
           pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondary) =>
               builder(context),
           transitionsBuilder: (

@@ -18,6 +18,12 @@ export 'yemen.dart';
 ///
 /// Built once. Three of the six adapters deal seeded sample values, so a fresh
 /// list per read would reshuffle the catalogue on every frame.
+///
+/// Iranshahr is shown on Discover as a single group, but clicking "All plates"
+/// navigates to `/iranshahr` where it displays like Discover itself, showing
+/// each of its four countries (Bahrain, Azerbaijan, Afghanistan, Armenia) as
+/// separate groups. The four country sources below are used for those detail
+/// pages and the `/iranshahr` overview page.
 final List<GallerySource> gallerySources = <GallerySource>[
   const IranSource(),
   const IranshahirSource(),
@@ -25,4 +31,13 @@ final List<GallerySource> gallerySources = <GallerySource>[
   YemenSource(),
   LebanonSource(),
   const GermanySource(),
+];
+
+/// The four countries within Iranshahr, for the `/iranshahr/{country}` detail
+/// pages and the `/iranshahr` overview page which shows them as country groups.
+final List<GallerySource> iranshahirCountries = <GallerySource>[
+  const BahrainSource(),
+  const AzerbaijanSource(),
+  const AfghanistanSource(),
+  const ArmeniaSource(),
 ];

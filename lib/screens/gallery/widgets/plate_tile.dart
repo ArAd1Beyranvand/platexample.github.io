@@ -166,7 +166,7 @@ class PlateTile extends StatefulWidget {
   /// The `+ 2` is the card's own 1px border, which a [Container] lays out
   /// inside its box rather than around it.
   static double heightFor(double stageHeight) =>
-      padding.vertical + 2 + stageHeight + _stageToRule + 1 + _ruleToFooter + _footerLineHeight;
+      padding.vertical + 2 + stageHeight + _stageToRule + 1 + _ruleToFooter + _footerLineHeight + 1;
 
   final GalleryEntry entry;
 
@@ -368,10 +368,7 @@ class _PlateTileState extends State<PlateTile> {
                     ),
                   ),
                   const SizedBox(height: PlateTile._stageToRule),
-                  // Solid, not an [NRule]: Nocturne's fade-at-the-ends
-                  // treatment is for freestanding rules, and this one is a
-                  // separator inside a bordered box.
-                  const Divider(height: 1, thickness: 1, color: N.n800),
+                  Container(height: 1, color: N.n800),
                   const SizedBox(height: PlateTile._ruleToFooter),
                   // The design aligns these two on their baselines. Centred
                   // instead, because both carry the same pinned line box and

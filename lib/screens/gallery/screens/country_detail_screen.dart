@@ -32,6 +32,7 @@ class CountryDetailScreen extends StatelessWidget {
     required this.onOpenPlate,
     this.onOpenDiscover,
     this.onSwitchCountry,
+    this.isIranshahirOverview = false,
   });
 
   final GallerySource source;
@@ -47,6 +48,10 @@ class CountryDetailScreen extends StatelessWidget {
   /// on Discover no matter how many countries were browsed in between. Null
   /// hides the block, which the desktop layout relies on.
   final void Function(GallerySource source)? onSwitchCountry;
+
+  /// When true and source is Iranshahr, this should not actually be shown
+  /// and instead a different screen should be rendered. This is a safety check.
+  final bool isIranshahirOverview;
 
   /// Discover's `padding: 72px 64px 96px 72px`, and its media query's
   /// `56px 40px 72px` under [NBreak.detail]. The same section shell, because
