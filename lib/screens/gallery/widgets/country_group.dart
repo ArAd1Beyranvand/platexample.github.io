@@ -155,6 +155,9 @@ class _PlateGrid extends StatelessWidget {
           heroTag: tag,
           stageHeight: stageHeight,
           onTap: () => onOpenPlate(item, tag),
+          // Every card Discover shows loops its own replay — see
+          // [PlateTile.autoReplay].
+          autoReplay: true,
         );
       },
     );

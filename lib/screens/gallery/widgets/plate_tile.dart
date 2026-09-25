@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:core_plate/core_plate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -125,8 +127,9 @@ class PlateTile extends StatefulWidget {
   /// Loops the sample-value replay continuously, independent of hover, so the
   /// card fills itself in over and over without a pointer on it. Hover then
   /// only lifts the card to its lit style; the run keeps going underneath.
-  /// The showcase device stage turns this on; the discover grid leaves it off,
-  /// where a wall of cards all typing at once would be noise.
+  /// The showcase device stage and the country grid both turn this on, so
+  /// every tile [SliverGrid] actually builds — i.e. every card on or near
+  /// screen — types itself without a pointer.
   final bool autoReplay;
 
   /// The design's plate row is a modest band inside the card — the plate is
@@ -201,6 +204,14 @@ class _PlateTileState extends State<PlateTile> {
   /// dispose so a pending gap between passes doesn't restart a torn-down tile.
   bool _looping = false;
 
+  /// The hold between passes, in flight. Tracked (rather than a bare
+  /// `Future.delayed`) so [dispose] can cancel the real [Timer] underneath —
+  /// otherwise a torn-down tile leaves one ticking for up to its own length,
+  /// which widget tests that assert no timers survive teardown catch on the
+  /// very first grid of auto-replaying cards.
+  Timer? _holdTimer;
+  Completer<bool>? _holdCompleter;
+
   @override
   void initState() {
     super.initState();
@@ -218,6 +229,9 @@ class _PlateTileState extends State<PlateTile> {
   @override
   void dispose() {
     _looping = false;
+    _holdTimer?.cancel();
+    final holdCompleter = _holdCompleter;
+    if (holdCompleter != null && !holdCompleter.isCompleted) holdCompleter.complete(false);
     _typist.dispose();
     _plate.dispose();
     super.dispose();
@@ -240,8 +254,19 @@ class _PlateTileState extends State<PlateTile> {
       );
       if (!_looping || !mounted) break;
       // Hold on the completed plate before wiping it and starting over.
-      await Future<void>.delayed(const Duration(milliseconds: 1400));
+      if (!await _hold(const Duration(milliseconds: 1400))) break;
     }
+  }
+
+  /// Awaits [d], returning false immediately if [dispose] cancels it first.
+  Future<bool> _hold(Duration d) {
+    final completer = Completer<bool>();
+    _holdCompleter = completer;
+    _holdTimer = Timer(d, () {
+      _holdTimer = null;
+      if (!completer.isCompleted) completer.complete(true);
+    });
+    return completer.future;
   }
 
   /// True once the entry has values worth replaying. A plate with no sample

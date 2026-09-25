@@ -124,7 +124,7 @@ packages:
       path: "../iran_plate"
       relative: true
     source: path
-    version: "0.5.0"
+    version: "0.6.0"
   iranshahr_plate:
     dependency: "direct main"
     description:

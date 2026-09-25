@@ -25,6 +25,12 @@ import '../widgets/plate_tile.dart';
 /// package through the usual `PlateView` path, exactly as on Discover. The
 /// design's plate drawings have the wrong proportions, blocks and colours and
 /// none of them is copied.
+///
+/// Every tile in the grid auto-replays its sample values on a loop
+/// ([PlateTile.autoReplay]), independent of hover — so every card the grid
+/// actually builds keeps filling itself in. [SliverGrid] only builds tiles on
+/// or near screen, so this reads as "every showing card types itself" without
+/// this screen having to track scroll position or visibility itself.
 class CountryDetailScreen extends StatelessWidget {
   const CountryDetailScreen({
     super.key,
@@ -69,6 +75,29 @@ class CountryDetailScreen extends StatelessWidget {
   static const double _gridToOtherDivider = 28;
   static const double _otherDividerToKicker = 24;
   static const double _otherKickerToList = 16;
+
+  /// The grid's `maxCrossAxisExtent` for a content column [contentWidth] wide.
+  ///
+  /// Solved from the column count the design asks for rather than tuned by
+  /// hand: at 1440 the content column is ~1024px and four cards across it are
+  /// 241 apiece, at 1280 three are 236, at 1040 two are 232 — near enough one
+  /// number that a single fixed extent would have to sit inside all three
+  /// windows, and would break the moment the rail's width changed. Dividing
+  /// instead means the count is the thing that is pinned.
+  static double _columnExtent(double contentWidth) {
+    final int columns = contentWidth >= 960
+        ? 4
+        : contentWidth >= 720
+        ? 3
+        : contentWidth >= 420
+        ? 2
+        : 1;
+    final double gaps = PlateTile.gridGap * (columns - 1);
+    // A hair under the exact share: the delegate divides by
+    // `(width + spacing) / (extent + spacing)` and rounds *up*, so an extent
+    // that lands exactly on the share can tip to one column more.
+    return (contentWidth - gaps) / columns - 0.5;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -126,6 +155,9 @@ class CountryDetailScreen extends StatelessWidget {
                     heroTag: tag,
                     stageHeight: stageHeight,
                     onTap: () => onOpenPlate(item, tag),
+                    // Every tile the grid actually builds loops its sample
+                    // replay on its own — see the class doc.
+                    autoReplay: true,
                   );
                 },
               ),
@@ -150,29 +182,6 @@ class CountryDetailScreen extends StatelessWidget {
         );
       },
     );
-  }
-
-  /// The grid's `maxCrossAxisExtent` for a content column [contentWidth] wide.
-  ///
-  /// Solved from the column count the design asks for rather than tuned by
-  /// hand: at 1440 the content column is ~1024px and four cards across it are
-  /// 241 apiece, at 1280 three are 236, at 1040 two are 232 — near enough one
-  /// number that a single fixed extent would have to sit inside all three
-  /// windows, and would break the moment the rail's width changed. Dividing
-  /// instead means the count is the thing that is pinned.
-  static double _columnExtent(double contentWidth) {
-    final int columns = contentWidth >= 960
-        ? 4
-        : contentWidth >= 720
-        ? 3
-        : contentWidth >= 420
-        ? 2
-        : 1;
-    final double gaps = PlateTile.gridGap * (columns - 1);
-    // A hair under the exact share: the delegate divides by
-    // `(width + spacing) / (extent + spacing)` and rounds *up*, so an extent
-    // that lands exactly on the share can tip to one column more.
-    return (contentWidth - gaps) / columns - 0.5;
   }
 }
 

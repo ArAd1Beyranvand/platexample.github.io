@@ -1,8 +1,7 @@
-import 'package:flutter_web_plugins/url_strategy.dart';
-
-/// Drops the `#` from web URLs, so the tabs are `example.ir/info` rather than
-/// `example.ir/#/info`.
+/// Keeps the default hash URL strategy (`example.ir/#/info`).
 ///
-/// This needs the host to serve `index.html` for every unknown path — a deep
-/// link to `/info` is a real request the server sees before Flutter boots.
-void configureUrlStrategy() => usePathUrlStrategy();
+/// A hash fragment is never sent to the server, so any static host — even
+/// one with no SPA fallback configured, like a bare `http.server` — can
+/// serve a deep link correctly: every request resolves to `/`, and Flutter
+/// reads the route out of the fragment once it boots.
+void configureUrlStrategy() {}

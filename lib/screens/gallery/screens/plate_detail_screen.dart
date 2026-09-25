@@ -49,14 +49,29 @@ class PlateDetailScreen extends StatefulWidget {
 
 class _PlateDetailScreenState extends State<PlateDetailScreen> {
   late final GalleryEntry _entry = widget.item.entry;
-  late final PlateController _plate = PlateController(spec: _entry.spec, values: _entry.sampleValues);
+  late final PlateController _plate = PlateController(spec: _entry.spec);
 
   PlateInputSource _inputSource = PlateInputSource.system;
 
   @override
+  void initState() {
+    super.initState();
+    _plate.completed.addListener(_onCompletedChanged);
+  }
+
+  @override
   void dispose() {
+    _plate.completed.removeListener(_onCompletedChanged);
     _plate.dispose();
     super.dispose();
+  }
+
+  /// Drops focus the moment the last slot fills in — whichever kind of
+  /// keyboard is up. `FocusManager.instance.primaryFocus` needs no
+  /// `BuildContext`, so this fires straight off the controller's own
+  /// [ValueListenable] rather than waiting for a rebuild.
+  void _onCompletedChanged() {
+    if (_plate.isCompleted) FocusManager.instance.primaryFocus?.unfocus();
   }
 
   /// The keypad's labels, taken off the plate itself — Persian digits on an
@@ -69,9 +84,12 @@ class _PlateDetailScreenState extends State<PlateDetailScreen> {
     return numeric ? PlateAlphabet.latinDigits : PlateAlphabet.latinUppercase;
   }
 
-  void _onSubmit() => ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(behavior: SnackBarBehavior.floating, content: Text(_plate.text(sep: ' · '))),
-  );
+  void _onSubmit() {
+    FocusScope.of(context).unfocus();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(behavior: SnackBarBehavior.floating, content: Text(_plate.text(sep: ' · '))),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -147,27 +165,33 @@ class _PlateDetailScreenState extends State<PlateDetailScreen> {
           children: <Widget>[
             Expanded(child: page),
             if (_inputSource == PlateInputSource.packageKeypad)
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  color: colors.surfaceContainerLow,
-                  border: Border(top: BorderSide(color: colors.outlineVariant)),
-                ),
-                child: SafeArea(
-                  top: false,
-                  child: PlateBinding<PlateSlot?>(
-                    controller: _plate,
-                    select: (PlateController c) => c.activeSlot,
-                    builder: (BuildContext context, PlateSlot? active) => PlateKeypad(
-                      highlightedKey: null,
-                      compact: true,
-                      showLetters: active != null && !active.alphabet.isNumeric,
-                      digitAlphabet: _alphabet(numeric: true),
-                      letterAlphabet: _alphabet(numeric: false),
-                      activeAlphabet: active?.alphabet,
-                      onKey: (String key) => key == kPlateBackspaceKey ? _plate.backspace() : _plate.submit(key),
-                    ),
-                  ),
-                ),
+              PlateBinding<PlateSlot?>(
+                controller: _plate,
+                select: (PlateController c) => c.activeSlot,
+                // No slot focused — the plate just completed, or the field
+                // was unfocused some other way — and the pad has nothing
+                // left to type into, so it drops off screen with it.
+                builder: (BuildContext context, PlateSlot? active) => active == null
+                    ? const SizedBox.shrink()
+                    : DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: colors.surfaceContainerLow,
+                          border: Border(top: BorderSide(color: colors.outlineVariant)),
+                        ),
+                        child: SafeArea(
+                          top: false,
+                          child: PlateKeypad(
+                            highlightedKey: null,
+                            compact: true,
+                            showLetters: !active.alphabet.isNumeric,
+                            digitAlphabet: _alphabet(numeric: true),
+                            letterAlphabet: _alphabet(numeric: false),
+                            activeAlphabet: active.alphabet,
+                            onKey: (String key) =>
+                                key == kPlateBackspaceKey ? _plate.backspace() : _plate.submit(key),
+                          ),
+                        ),
+                      ),
               ),
           ],
         );
@@ -348,15 +372,19 @@ class _MobilePlateDetail extends StatelessWidget {
             PlateBinding<PlateSlot?>(
               controller: plate,
               select: (PlateController c) => c.activeSlot,
-              builder: (BuildContext context, PlateSlot? active) => PlateKeypad(
-                highlightedKey: null,
-                compact: true,
-                showLetters: active != null && !active.alphabet.isNumeric,
-                digitAlphabet: alphabet(numeric: true),
-                letterAlphabet: alphabet(numeric: false),
-                activeAlphabet: active?.alphabet,
-                onKey: (String key) => key == kPlateBackspaceKey ? plate.backspace() : plate.submit(key),
-              ),
+              // No slot focused — the plate just completed, or the field was
+              // unfocused some other way — so the pad drops off screen too.
+              builder: (BuildContext context, PlateSlot? active) => active == null
+                  ? const SizedBox.shrink()
+                  : PlateKeypad(
+                      highlightedKey: null,
+                      compact: true,
+                      showLetters: !active.alphabet.isNumeric,
+                      digitAlphabet: alphabet(numeric: true),
+                      letterAlphabet: alphabet(numeric: false),
+                      activeAlphabet: active.alphabet,
+                      onKey: (String key) => key == kPlateBackspaceKey ? plate.backspace() : plate.submit(key),
+                    ),
             ),
           DecoratedBox(
             decoration: const BoxDecoration(

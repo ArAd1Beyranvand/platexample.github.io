@@ -104,6 +104,15 @@ class PlateTypist extends ChangeNotifier {
   bool _cancelled = true;
   bool _disposed = false;
 
+  /// The in-flight wait from [_sleep], if any. Tracked so [cancel] and
+  /// [dispose] can cancel the real [Timer] underneath rather than merely
+  /// flipping a flag [_sleep] checks once the delay has already elapsed —
+  /// otherwise a disposed typist still leaves a pending timer alive for up to
+  /// [gap]/[burstGap]/the loop's hold, which widget tests that assert no
+  /// timers survive teardown catch immediately.
+  Timer? _sleepTimer;
+  Completer<bool>? _sleepCompleter;
+
   bool get isRunning => _running;
 
   /// Walks [steps] in order against [controller], flashing each key for
@@ -300,13 +309,32 @@ class PlateTypist extends ChangeNotifier {
   }
 
   /// Awaits [d], returning false if the run was cancelled or disposed meanwhile.
-  Future<bool> _sleep(Duration d) async {
-    await Future<void>.delayed(d);
-    return !_cancelled && !_disposed;
+  ///
+  /// A real, cancellable [Timer] rather than a bare `Future.delayed`: [cancel]
+  /// and [dispose] cancel it directly, so a stopped or torn-down typist has no
+  /// timer left ticking in the background.
+  Future<bool> _sleep(Duration d) {
+    final completer = Completer<bool>();
+    _sleepCompleter = completer;
+    _sleepTimer = Timer(d, () {
+      _sleepTimer = null;
+      if (!completer.isCompleted) completer.complete(!_cancelled && !_disposed);
+    });
+    return completer.future;
   }
 
   void _notify() {
     if (!_disposed) notifyListeners();
+  }
+
+  /// Cancels [_sleepTimer] if one is waiting, unblocking whichever `await
+  /// _sleep(...)` is in flight so the run unwinds immediately instead of at
+  /// the timer's original due time.
+  void _cancelSleep() {
+    _sleepTimer?.cancel();
+    _sleepTimer = null;
+    final completer = _sleepCompleter;
+    if (completer != null && !completer.isCompleted) completer.complete(false);
   }
 
   /// Aborts an in-flight [run]; the walk unwinds at its next guarded await.
@@ -314,6 +342,7 @@ class PlateTypist extends ChangeNotifier {
     _cancelled = true;
     _running = false;
     activeKey = null;
+    _cancelSleep();
     _notify();
   }
 
@@ -321,6 +350,7 @@ class PlateTypist extends ChangeNotifier {
   void dispose() {
     _disposed = true;
     _cancelled = true;
+    _cancelSleep();
     super.dispose();
   }
 }
