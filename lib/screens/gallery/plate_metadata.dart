@@ -11,11 +11,11 @@
 ///
 /// Countries:
 /// - Iran, Germany, Palestine, Yemen, Bahrain, Azerbaijan, Afghanistan,
-///   Armenia, Lebanon
+///   Armenia, Tajikistan, Lebanon
 class PlateMetadata {
   /// Total number of packages in the ecosystem (2 core + 6 country + 1 utility).
   static const int packageCount = 9;
 
   /// Total number of countries supported across all packages.
-  static const int countryCount = 9;
+  static const int countryCount = 10;
 }

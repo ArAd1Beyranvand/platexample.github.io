@@ -253,7 +253,11 @@ class GalleryShellState extends State<GalleryShellScreen> {
     final CatalogueItem? item = location.item;
     if (item == null) {
       // Iranshahr overview: show the four countries as groups like Discover.
-      if (location.isIranshahirOverview) {
+      // Only the umbrella source itself renders the overview; its four member
+      // countries (which also carry `isIranshahirOverview`) fall through to the
+      // regular country page below — otherwise "All plates" on a member group
+      // would re-render the overview instead of that country's detail page.
+      if (location.isIranshahirOverview && source.countryName == 'Iranshahr') {
         return (BuildContext context) => IranshahirOverviewScreen(
           onOpenPlate: _openPlate,
           onOpenCountry: (GallerySource countrySource) =>

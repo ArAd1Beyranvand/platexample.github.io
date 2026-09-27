@@ -5,9 +5,9 @@ import '../catalogue_index.dart';
 import '../sources/sources.dart';
 import '../widgets/country_group.dart';
 
-/// The Iranshahr overview page, showing the four countries (Bahrain, Azerbaijan,
-/// Afghanistan, Armenia) as separate groups, just like the Discover page shows
-/// different country packages.
+/// The Iranshahr overview page, showing the five countries (Bahrain, Azerbaijan,
+/// Afghanistan, Armenia, Tajikistan) as separate groups, just like the Discover
+/// page shows different country packages.
 ///
 /// This page is shown when navigating to `/iranshahr` after clicking "All plates"
 /// on the Iranshahr group in the Discover page. Each country group has an
@@ -93,7 +93,7 @@ class _Header extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            'Four countries, one package',
+            'Five countries, one package',
             style: TextStyle(
               fontFamily: NType.archivo,
               fontWeight: FontWeight.w800,
@@ -105,7 +105,7 @@ class _Header extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           Text(
-            'Bahrain, Azerbaijan, Afghanistan, and Armenia plate designs from the iranshahr_plate '
+            'Bahrain, Azerbaijan, Afghanistan, Armenia, and Tajikistan plate designs from the iranshahr_plate '
             'package. Each country is independent with distinct design languages.',
             style: const TextStyle(fontFamily: NType.serif, fontSize: 18, height: 1.6, color: N.n300),
           ),

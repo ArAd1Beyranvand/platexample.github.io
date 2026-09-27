@@ -2,9 +2,9 @@ import 'package:iranshahr_plate/iranshahr.dart';
 
 import '../catalogue.dart';
 
-/// The Iranshahr umbrella source, showing all four countries at once on the
+/// The Iranshahr umbrella source, showing all five countries at once on the
 /// Discover index. When users click "All plates", they navigate to
-/// `/iranshahr`, which displays the four countries as separate groups like
+/// `/iranshahr`, which displays the five countries as separate groups like
 /// the Discover page itself.
 class IranshahirSource extends GallerySource {
   const IranshahirSource();
@@ -13,7 +13,7 @@ class IranshahirSource extends GallerySource {
   String get countryName => 'Iranshahr';
 
   @override
-  List<String> get countryNames => const <String>['Bahrain', 'Azerbaijan', 'Afghanistan', 'Armenia'];
+  List<String> get countryNames => const <String>['Bahrain', 'Azerbaijan', 'Afghanistan', 'Armenia', 'Tajikistan'];
 
   @override
   String get packageName => 'iranshahr_plate';
@@ -21,8 +21,8 @@ class IranshahirSource extends GallerySource {
   @override
   String get note =>
       'Bahrain\'s five designs, Azerbaijan\'s four specs, Afghanistan\'s '
-      'eleven and Armenia\'s ten from the iranshahr_plate package. Each '
-      'country is independent with distinct design languages. See '
+      'eleven, Armenia\'s ten and Tajikistan\'s nine from the iranshahr_plate '
+      'package. Each country is independent with distinct design languages. See '
       'iranshahr_plate/README.md.';
 
   /// Built once, and returned by identity: the pickers select a section by
@@ -374,8 +374,103 @@ class IranshahirSource extends GallerySource {
         ),
       ],
     ),
+    _tajikistanSection(),
   ];
 }
+
+/// Tajikistan's section.
+///
+/// A fresh [GallerySection] each call: the umbrella source and [TajikistanSource]
+/// each build their own, because [catalogueItems] resolves a [GalleryEntry] back
+/// to its [CatalogueItem] by identity — sharing one set of entries across the
+/// two sources would make that lookup ambiguous, exactly as it would for the
+/// other four countries, which duplicate their entries the same way.
+GallerySection _tajikistanSection() => GallerySection(
+  title: 'Tajikistan',
+  note:
+      'Nine designs on a European face: the flag over `TJ` at the hoist end, '
+      'Latin letters that are really the shared Cyrillic register wearing Latin '
+      'shapes, and the region printed as two digits of the number itself — no '
+      'panel, no divider on the civilian plates, told apart by the gaps alone. '
+      'Colour is a theme, not a class: the amber transport plate and the blue '
+      'police plate are the same geometry printed differently. The foreign, '
+      'diplomatic and governmental classes drop the flag and carry their own '
+      'arrangement.',
+  entries: <GalleryEntry>[
+    GalleryEntry(
+      id: 'tj.car',
+      label: 'Private car',
+      spec: TajikistanPlates.car,
+      theme: TajikistanThemes.civilian,
+      note: 'The commonest plate: `NNNN LL NN` — serial, two letters, region — with the flag block at the hoist end.',
+      sampleValues: const <String?>['9', '9', '9', '9', 'M', 'K', '0', '2'],
+    ),
+    GalleryEntry(
+      id: 'tj.carTwoRow',
+      label: 'Private car (two-row)',
+      spec: TajikistanPlates.carTwoRow,
+      theme: TajikistanThemes.civilian,
+      note: 'The same eight characters and groups, broken across two rows for a vehicle with no room for a 520 mm plate.',
+      sampleValues: const <String?>['9', '9', '9', '9', 'M', 'K', '0', '2'],
+    ),
+    GalleryEntry(
+      id: 'tj.motorcycle',
+      label: 'Motorcycle',
+      spec: TajikistanPlates.motorcycle,
+      theme: TajikistanThemes.civilian,
+      note: 'A three-digit serial over one letter and the region.',
+      sampleValues: const <String?>['3', '0', '4', 'A', '0', '3'],
+    ),
+    GalleryEntry(
+      id: 'tj.trailer',
+      label: 'Trailer',
+      spec: TajikistanPlates.trailer,
+      theme: TajikistanThemes.civilian,
+      note: 'The one two-row plate that leads with its region: `NN LL` up top, the four-digit serial to itself below.',
+      sampleValues: const <String?>['0', '7', 'A', 'A', '0', '7', '7', '6'],
+    ),
+    GalleryEntry(
+      id: 'tj.publicTransport',
+      label: 'Public transport',
+      spec: TajikistanPlates.publicTransport,
+      theme: TajikistanThemes.transport,
+      note: 'Black on amber, with the fixed `TT` marker printed between serial and region — a label, not a value anyone enters.',
+      sampleValues: const <String?>['9', '0', '0', '6', '0', '5'],
+    ),
+    GalleryEntry(
+      id: 'tj.police',
+      label: 'Police',
+      spec: TajikistanPlates.police,
+      theme: TajikistanThemes.police,
+      note: 'White on blue: the flag block over the blue field, `TJ` reversed out white, one letter between serial and region.',
+      sampleValues: const <String?>['0', '2', '4', '5', 'M', '0', '1'],
+    ),
+    GalleryEntry(
+      id: 'tj.foreign',
+      label: 'Foreign vehicle',
+      spec: TajikistanPlates.foreign,
+      theme: TajikistanThemes.foreign,
+      note: 'Black on yellow, no flag: a foreign vehicle carries no region, so the hoist end is bare and the number is `NNN L NNN`.',
+      sampleValues: const <String?>['2', '0', '0', 'P', '0', '0', '5'],
+    ),
+    GalleryEntry(
+      id: 'tj.diplomatic',
+      label: 'Diplomatic corps',
+      spec: TajikistanPlates.diplomatic,
+      theme: TajikistanThemes.diplomatic,
+      note: 'White on red, no flag: a serial, a class code — `CD`, `CMD`, `D`, `T` or `S` chosen as one glyph group — and a trailing digit.',
+      sampleValues: const <String?>['0', '9', '1', 'CMD', '1'],
+    ),
+    GalleryEntry(
+      id: 'tj.governmental',
+      label: 'Governmental',
+      spec: TajikistanPlates.governmental,
+      theme: TajikistanThemes.governmental,
+      note: 'The old Russian-derived layout: serial, two letters, then the region boxed off by a divider with `RT` beneath it.',
+      sampleValues: const <String?>['0', '0', '1', 'C', 'O', '0', '4'],
+    ),
+  ],
+);
 
 /// Bahrain source — one of the four countries under the Iranshahr umbrella.
 class BahrainSource extends GallerySource {
@@ -823,4 +918,30 @@ class ArmeniaSource extends GallerySource {
       ],
     ),
   ];
+}
+
+/// Tajikistan source — one of the countries under the Iranshahr umbrella.
+class TajikistanSource extends GallerySource {
+  const TajikistanSource();
+
+  @override
+  String get countryName => 'Tajikistan';
+
+  @override
+  String get packageName => 'iranshahr_plate';
+
+  @override
+  String get note =>
+      'Nine designs on a European face: the flag over `TJ` at the hoist end, '
+      'Latin letters that are really the shared Cyrillic register wearing Latin '
+      'shapes, and the region printed as two digits of the number itself. '
+      'See iranshahr_plate/README.md.';
+
+  /// Built once, and returned by identity: [catalogueItems] resolves a
+  /// [GalleryEntry] back to its [CatalogueItem] by identity, so a fresh list
+  /// per read would make that lookup never find a match.
+  @override
+  List<GallerySection> get sections => _sections;
+
+  static final List<GallerySection> _sections = <GallerySection>[_tajikistanSection()];
 }

@@ -10,15 +10,15 @@ void main() {
     // yemen_plate, lebanon_plate, germany_plate.
     expect(stats.packages, 6);
 
-    // Iran + Bahrain, Azerbaijan, Afghanistan, Armenia + Palestine + Yemen +
-    // Lebanon + Germany. `iranshahr_plate` is the one package that ships more
-    // than one country's worth of plates.
-    expect(stats.countries, 9);
+    // Iran + Bahrain, Azerbaijan, Afghanistan, Armenia, Tajikistan + Palestine
+    // + Yemen + Lebanon + Germany. `iranshahr_plate` is the one package that
+    // ships more than one country's worth of plates.
+    expect(stats.countries, 10);
 
     // Distinct `entry.spec.id`s across every section of every source:
-    // 2 + 30 + 11 + 11 + 4 + 14. Armenia's ten took `iranshahr_plate` from
-    // twenty to thirty.
-    expect(stats.specs, 72);
+    // 2 + 39 + 11 + 11 + 4 + 14. Tajikistan's nine took `iranshahr_plate` from
+    // thirty to thirty-nine.
+    expect(stats.specs, 81);
 
     // Every entry lands in one of two buckets: a car-family plate, or a
     // motorcycle/bicycle one. Both buckets are non-empty in the current
