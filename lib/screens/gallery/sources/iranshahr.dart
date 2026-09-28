@@ -13,7 +13,7 @@ class IranshahirSource extends GallerySource {
   String get countryName => 'Iranshahr';
 
   @override
-  List<String> get countryNames => const <String>['Bahrain', 'Azerbaijan', 'Afghanistan', 'Armenia', 'Tajikistan'];
+  List<String> get countryNames => const <String>['Bahrain', 'Azerbaijan', 'Afghanistan', 'Armenia', 'Tajikistan', 'Kuwait'];
 
   @override
   String get packageName => 'iranshahr_plate';
@@ -21,9 +21,9 @@ class IranshahirSource extends GallerySource {
   @override
   String get note =>
       'Bahrain\'s five designs, Azerbaijan\'s four specs, Afghanistan\'s '
-      'eleven, Armenia\'s ten and Tajikistan\'s nine from the iranshahr_plate '
-      'package. Each country is independent with distinct design languages. See '
-      'iranshahr_plate/README.md.';
+      'eleven, Armenia\'s ten, Tajikistan\'s nine and Kuwait\'s thirteen from the '
+      'iranshahr_plate package. Each country is independent with distinct design '
+      'languages. See iranshahr_plate/README.md.';
 
   /// Built once, and returned by identity: the pickers select a section by
   /// equality, and a fresh list per read would make the selected one never
@@ -375,6 +375,7 @@ class IranshahirSource extends GallerySource {
       ],
     ),
     _tajikistanSection(),
+    _kuwaitSection(),
   ];
 }
 
@@ -920,6 +921,131 @@ class ArmeniaSource extends GallerySource {
   ];
 }
 
+/// Kuwait's section.
+///
+/// A fresh [GallerySection] each call: the umbrella source and [KuwaitSource]
+/// each build their own, because [catalogueItems] resolves a [GalleryEntry] back
+/// to its [CatalogueItem] by identity — sharing one set of entries across the
+/// two sources would make that lookup ambiguous, exactly as it would for the
+/// other five countries, which duplicate their entries the same way.
+GallerySection _kuwaitSection() => GallerySection(
+  title: 'Kuwait',
+  note:
+      'Thirteen plates covering all major vehicle classes. Kuwait adopted its '
+      'current plate format in 2008. Standard format: 2-digit class code, hyphen, '
+      '5-digit serial number (e.g., "12-45678"). The country block at the hoist '
+      'end displays the flag and "دولة الكويت" (State of Kuwait). Field colour '
+      'varies by vehicle class: white for civilian vehicles, yellow for public '
+      'transport, red for police, blue for government/diplomatic, and various '
+      'colours for special vehicle classes.',
+  entries: <GalleryEntry>[
+    GalleryEntry(
+      id: 'kw.civilian',
+      label: 'Civilian private vehicle',
+      spec: KuwaitPlates.civilian,
+      theme: KuwaitThemes.civilian,
+      note: 'Standard private vehicle: black text on white field with flag block.',
+      sampleValues: const <String?>['1', '2', '4', '5', '6', '7', '8'],
+    ),
+    GalleryEntry(
+      id: 'kw.transport',
+      label: 'Public transport',
+      spec: KuwaitPlates.transport,
+      theme: KuwaitThemes.transport,
+      note: 'Taxis, buses, goods export: black text on yellow field. Codes 90-99.',
+      sampleValues: const <String?>['9', '2', '1', '2', '3', '4', '5'],
+    ),
+    GalleryEntry(
+      id: 'kw.police',
+      label: 'Police',
+      spec: KuwaitPlates.police,
+      theme: KuwaitThemes.police,
+      note: 'Police vehicles: white text on red field with flag and "الشرطة" caption.',
+      sampleValues: const <String?>['5', '0', '1', '2', '3', '4', '5'],
+    ),
+    GalleryEntry(
+      id: 'kw.government',
+      label: 'Government',
+      spec: KuwaitPlates.government,
+      theme: KuwaitThemes.government,
+      note: 'Government vehicles: white text on blue field with flag block.',
+      sampleValues: const <String?>['2', '0', '1', '2', '3', '4', '5'],
+    ),
+    GalleryEntry(
+      id: 'kw.diplomatic',
+      label: 'Diplomatic corps',
+      spec: KuwaitPlates.diplomatic,
+      theme: KuwaitThemes.government,
+      note: 'Diplomatic vehicles: white text on blue field with "دبلوماسي" caption.',
+      sampleValues: const <String?>['6', '0', '1', '2', '3', '4', '5'],
+    ),
+    GalleryEntry(
+      id: 'kw.nationalguard',
+      label: 'National guard',
+      spec: KuwaitPlates.nationalGuard,
+      theme: KuwaitThemes.nationalGuard,
+      note: 'National guard vehicles: white text on green field.',
+      sampleValues: const <String?>['3', '0', '1', '2', '3', '4', '5'],
+    ),
+    GalleryEntry(
+      id: 'kw.army',
+      label: 'Military / Army',
+      spec: KuwaitPlates.army,
+      theme: KuwaitThemes.army,
+      note: 'Military vehicles: black text on beige field.',
+      sampleValues: const <String?>['7', '0', '1', '2', '3', '4', '5'],
+    ),
+    GalleryEntry(
+      id: 'kw.commercial',
+      label: 'Commercial',
+      spec: KuwaitPlates.commercial,
+      theme: KuwaitThemes.commercial,
+      note: 'Commercial vehicles: black text on pink field.',
+      sampleValues: const <String?>['8', '0', '1', '2', '3', '4', '5'],
+    ),
+    GalleryEntry(
+      id: 'kw.construction',
+      label: 'Construction',
+      spec: KuwaitPlates.construction,
+      theme: KuwaitThemes.construction,
+      note: 'Construction vehicles: black text on orange field.',
+      sampleValues: const <String?>['9', '5', '1', '2', '3', '4', '5'],
+    ),
+    GalleryEntry(
+      id: 'kw.firefighting',
+      label: 'Firefighting',
+      spec: KuwaitPlates.firefighting,
+      theme: KuwaitThemes.firefighting,
+      note: 'Firefighting vehicles: white text on red field with "الإطفاء" caption.',
+      sampleValues: const <String?>['4', '5', '1', '2', '3', '4', '5'],
+    ),
+    GalleryEntry(
+      id: 'kw.export',
+      label: 'Export / Goods export',
+      spec: KuwaitPlates.exportPlate,
+      theme: KuwaitThemes.export,
+      note: 'Export vehicles: white text on green field.',
+      sampleValues: const <String?>['9', '5', '5', '1', '2', '3', '4'],
+    ),
+    GalleryEntry(
+      id: 'kw.customs',
+      label: 'Temporary / Customs',
+      spec: KuwaitPlates.customs,
+      theme: KuwaitThemes.customs,
+      note: 'Temporary and customs vehicles: white text on purple field.',
+      sampleValues: const <String?>['9', '9', '1', '2', '3', '4', '5'],
+    ),
+    GalleryEntry(
+      id: 'kw.emiri',
+      label: 'Emiri Bureau',
+      spec: KuwaitPlates.emiri,
+      theme: KuwaitThemes.emiri,
+      note: 'Emiri Bureau vehicles: white text on blue field with "الديوان الأميري" caption.',
+      sampleValues: const <String?>['1', '0', '1', '2', '3', '4', '5'],
+    ),
+  ],
+);
+
 /// Tajikistan source — one of the countries under the Iranshahr umbrella.
 class TajikistanSource extends GallerySource {
   const TajikistanSource();
@@ -944,4 +1070,30 @@ class TajikistanSource extends GallerySource {
   List<GallerySection> get sections => _sections;
 
   static final List<GallerySection> _sections = <GallerySection>[_tajikistanSection()];
+}
+
+/// Kuwait source — one of the countries under the Iranshahr umbrella.
+class KuwaitSource extends GallerySource {
+  const KuwaitSource();
+
+  @override
+  String get countryName => 'Kuwait';
+
+  @override
+  String get packageName => 'iranshahr_plate';
+
+  @override
+  String get note =>
+      'Thirteen plate designs covering all major vehicle classes. Kuwait adopted '
+      'its current plate format in 2008. Standard format: 2-digit class code, '
+      'hyphen, 5-digit serial number. The country block displays the flag and '
+      '"دولة الكويت". See iranshahr_plate/README.md.';
+
+  /// Built once, and returned by identity: [catalogueItems] resolves a
+  /// [GalleryEntry] back to its [CatalogueItem] by identity, so a fresh list
+  /// per read would make that lookup never find a match.
+  @override
+  List<GallerySection> get sections => _sections;
+
+  static final List<GallerySection> _sections = <GallerySection>[_kuwaitSection()];
 }
