@@ -2,10 +2,10 @@ import 'package:iranshahr_plate/iranshahr.dart';
 
 import '../catalogue.dart';
 
-/// The Iranshahr umbrella source, showing all five countries at once on the
-/// Discover index. When users click "All plates", they navigate to
-/// `/iranshahr`, which displays the five countries as separate groups like
-/// the Discover page itself.
+/// The Iranshahr umbrella source, showing every country in the package at once
+/// on the Discover index. When users click "All plates", they navigate to
+/// `/iranshahr`, which displays the countries as separate groups like the
+/// Discover page itself.
 class IranshahirSource extends GallerySource {
   const IranshahirSource();
 
@@ -13,7 +13,15 @@ class IranshahirSource extends GallerySource {
   String get countryName => 'Iranshahr';
 
   @override
-  List<String> get countryNames => const <String>['Bahrain', 'Azerbaijan', 'Afghanistan', 'Armenia', 'Tajikistan', 'Kuwait'];
+  List<String> get countryNames => const <String>[
+    'Bahrain',
+    'Azerbaijan',
+    'Afghanistan',
+    'Armenia',
+    'Tajikistan',
+    'Kuwait',
+    'Qatar',
+  ];
 
   @override
   String get packageName => 'iranshahr_plate';
@@ -21,8 +29,8 @@ class IranshahirSource extends GallerySource {
   @override
   String get note =>
       'Bahrain\'s five designs, Azerbaijan\'s four specs, Afghanistan\'s '
-      'eleven, Armenia\'s ten, Tajikistan\'s nine and Kuwait\'s sixteen from the '
-      'iranshahr_plate package. Each country is independent with distinct design '
+      'eleven, Armenia\'s ten, Tajikistan\'s nine, Kuwait\'s sixteen and '
+      'Qatar\'s five from the iranshahr_plate package. Each country is independent with distinct design '
       'languages. See iranshahr_plate/README.md.';
 
   /// Built once, and returned by identity: the pickers select a section by
@@ -376,8 +384,75 @@ class IranshahirSource extends GallerySource {
     ),
     _tajikistanSection(),
     _kuwaitSection(),
+    _qatarSection(),
   ];
 }
+
+/// Qatar's section.
+///
+/// A fresh [GallerySection] each call, for the same reason as Tajikistan's and
+/// Kuwait's: [catalogueItems] resolves a [GalleryEntry] back to its
+/// [CatalogueItem] by identity, so the umbrella source and [QatarSource] each
+/// build their own.
+GallerySection _qatarSection() => GallerySection(
+  title: 'Qatar',
+  note:
+      'Five designs, and the only country block in this package that is not a '
+      'rectangle. A Qatari car plate opens with the hoist end of the flag '
+      'itself — a maroon column cut down its inboard edge by the flag\'s '
+      'nine-point serration, with `QATAR` reversed out of it one letter per '
+      'line — so the block carries no flag image at all. The shape is '
+      '`QatarFlagEdgeClipper`, and its geometry is the official flag\'s own: '
+      'nine triangles whose tips reach inboard of a spine at 22/28 of the '
+      'block\'s width. After the block the plate is plain — `قطر`, then the '
+      'serial, at three, four or five digits; the figures spread *and* widen as '
+      'they get fewer, so every length fills the same room. The other two '
+      'designs drop the block entirely: the motorcycle plate is near-square and '
+      'names the country twice, and the police plate is a blue field ruled into '
+      'a serial row over two wording cells.',
+  entries: <GalleryEntry>[
+    GalleryEntry(
+      id: 'qa.civilian',
+      label: 'Civilian (five digits)',
+      spec: QatarPlates.civilian,
+      theme: QatarThemes.civilian,
+      note: 'The everyday registration, and the longest Qatar issues: the serrated maroon block, `قطر`, five digits.',
+      sampleValues: const <String?>['2', '5', '7', '7', '7'],
+    ),
+    GalleryEntry(
+      id: 'qa.civilian4',
+      label: 'Civilian (four digits)',
+      spec: QatarPlates.civilian4,
+      theme: QatarThemes.civilian,
+      note: 'Identical furniture. The serial fills the same room, so the figures spread and widen together.',
+      sampleValues: const <String?>['4', '0', '7', '1'],
+    ),
+    GalleryEntry(
+      id: 'qa.civilian3',
+      label: 'Civilian (three digits)',
+      spec: QatarPlates.civilian3,
+      theme: QatarThemes.civilian,
+      note: 'The shortest ordinary registration — below this, a serial belongs to the royal family.',
+      sampleValues: const <String?>['4', '1', '1'],
+    ),
+    GalleryEntry(
+      id: 'qa.motorcycle',
+      label: 'Motorcycle',
+      spec: QatarPlates.motorcycle,
+      theme: QatarThemes.civilian,
+      note: 'A different plate, not a shorter one: near-square, no hoist block, `قطر` over the serial over `QATAR`.',
+      sampleValues: const <String?>['2', '5', '7', '7', '7'],
+    ),
+    GalleryEntry(
+      id: 'qa.police',
+      label: 'Police',
+      spec: QatarPlates.police,
+      theme: QatarThemes.police,
+      note: 'No block and no serration: a blue field ruled into a serial row over `قطر` and `شرطة`.',
+      sampleValues: const <String?>['7', '4', '6', '4'],
+    ),
+  ],
+);
 
 /// Tajikistan's section.
 ///
@@ -1063,7 +1138,7 @@ GallerySection _kuwaitSection() => GallerySection(
       id: 'kw.emiriguard',
       label: 'Emiri Guard',
       spec: KuwaitPlates.emiriGuard,
-      theme: KuwaitThemes.emiri,
+      theme: KuwaitThemes.emiriGuard,
       note: 'Emiri Guard vehicles: white text on blue field, "الحرس — الأميري" caption.',
       sampleValues: const <String?>['1', '1', '0', '2', '3'],
     ),
@@ -1129,4 +1204,30 @@ class KuwaitSource extends GallerySource {
   List<GallerySection> get sections => _sections;
 
   static final List<GallerySection> _sections = <GallerySection>[_kuwaitSection()];
+}
+
+/// Qatar source — one of the countries under the Iranshahr umbrella.
+class QatarSource extends GallerySource {
+  const QatarSource();
+
+  @override
+  String get countryName => 'Qatar';
+
+  @override
+  String get packageName => 'iranshahr_plate';
+
+  @override
+  String get note =>
+      'Five designs, and the only country block in this package that is not a '
+      'rectangle: the maroon hoist of the flag itself, cut down its inboard '
+      'edge by the flag\'s nine-point serration, with `QATAR` reversed out of '
+      'it one letter per line. See iranshahr_plate/README.md.';
+
+  /// Built once, and returned by identity: [catalogueItems] resolves a
+  /// [GalleryEntry] back to its [CatalogueItem] by identity, so a fresh list
+  /// per read would make that lookup never find a match.
+  @override
+  List<GallerySection> get sections => _sections;
+
+  static final List<GallerySection> _sections = <GallerySection>[_qatarSection()];
 }

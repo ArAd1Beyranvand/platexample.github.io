@@ -40,7 +40,7 @@ dependencies:
   # core_plate ships no country and no assets, so this app names every country
   # it draws. An app that draws one country depends on one.
   # ---------------------------------------------------------------------------
-  core_plate: ^0.1.0
+  core_plate: ^0.10.0
 
   # The optional on-screen keypad + slot picker, extracted from core_plate
   # in P7. Depends on core_plate for PlateAlphabet.
@@ -104,6 +104,16 @@ dependency_overrides:
     path: ../yemen_plate
   lebanon_plate:
     path: ../lebanon_plate
+
+  # Not a dependency this app names — it reaches it through the country
+  # packages, every one of which takes its digit and letter alphabets from it.
+  # It still needs an override: the country packages above are themselves
+  # overridden to sibling checkouts, and a path dependency of an overridden
+  # package is not resolved from that checkout's own pubspec, so without this
+  # entry `package:plate_alphabet/...` is missing from this app's package
+  # config and every country package fails to compile.
+  plate_alphabet:
+    path: ../plate_alphabet
 
 flutter:
   uses-material-design: true
