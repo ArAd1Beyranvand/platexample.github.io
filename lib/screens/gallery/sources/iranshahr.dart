@@ -21,6 +21,7 @@ class IranshahirSource extends GallerySource {
     'Tajikistan',
     'Kuwait',
     'Qatar',
+    'Iraq',
   ];
 
   @override
@@ -29,8 +30,8 @@ class IranshahirSource extends GallerySource {
   @override
   String get note =>
       'Bahrain\'s five designs, Azerbaijan\'s four specs, Afghanistan\'s '
-      'eleven, Armenia\'s ten, Tajikistan\'s nine, Kuwait\'s sixteen and '
-      'Qatar\'s five from the iranshahr_plate package. Each country is independent with distinct design '
+      'eleven, Armenia\'s ten, Tajikistan\'s nine, Kuwait\'s sixteen, '
+      'Qatar\'s five and Iraq\'s ten from the iranshahr_plate package. Each country is independent with distinct design '
       'languages. See iranshahr_plate/README.md.';
 
   /// Built once, and returned by identity: the pickers select a section by
@@ -38,6 +39,12 @@ class IranshahirSource extends GallerySource {
   /// equal the one in the list.
   @override
   List<GallerySection> get sections => _sections;
+
+  @override
+  List<GalleryEntry> get highlights => <GalleryEntry>[
+    for (final GallerySection section in sections)
+      if (section.entries.isNotEmpty) ...[section.entries[0], if (section.entries.length > 1) section.entries[1]],
+  ];
 
   static final List<GallerySection> _sections = <GallerySection>[
     GallerySection(
@@ -385,6 +392,7 @@ class IranshahirSource extends GallerySource {
     _tajikistanSection(),
     _kuwaitSection(),
     _qatarSection(),
+    _iraqSection(),
   ];
 }
 
@@ -571,6 +579,14 @@ class BahrainSource extends GallerySource {
   @override
   List<GallerySection> get sections => _sections;
 
+  @override
+  List<GalleryEntry> get highlights => <GalleryEntry>[
+    if (sections.isNotEmpty && sections[0].entries.isNotEmpty) ...[
+      sections[0].entries[0],
+      sections[0].entries.firstWhere((GalleryEntry e) => e.id == 'bh.police', orElse: () => sections[0].entries[1]),
+    ],
+  ];
+
   static final List<GallerySection> _sections = <GallerySection>[
     GallerySection(
       title: 'Bahrain',
@@ -644,6 +660,14 @@ class AzerbaijanSource extends GallerySource {
   /// per read would make that lookup never find a match.
   @override
   List<GallerySection> get sections => _sections;
+
+  @override
+  List<GalleryEntry> get highlights => <GalleryEntry>[
+    if (sections.isNotEmpty && sections[0].entries.isNotEmpty) ...[
+      sections[0].entries[0],
+      sections[0].entries.firstWhere((GalleryEntry e) => e.id == 'az.car.transport', orElse: () => sections[0].entries[1]),
+    ],
+  ];
 
   static final List<GallerySection> _sections = <GallerySection>[
     GallerySection(
@@ -720,6 +744,14 @@ class AfghanistanSource extends GallerySource {
   /// per read would make that lookup never find a match.
   @override
   List<GallerySection> get sections => _sections;
+
+  @override
+  List<GalleryEntry> get highlights => <GalleryEntry>[
+    if (sections.isNotEmpty && sections[0].entries.isNotEmpty) ...[
+      sections[0].entries[0],
+      sections[0].entries.firstWhere((GalleryEntry e) => e.id == 'af.governmental', orElse: () => sections[0].entries[1]),
+    ],
+  ];
 
   static final List<GallerySection> _sections = <GallerySection>[
     GallerySection(
@@ -893,6 +925,14 @@ class ArmeniaSource extends GallerySource {
   /// per read would make that lookup never find a match.
   @override
   List<GallerySection> get sections => _sections;
+
+  @override
+  List<GalleryEntry> get highlights => <GalleryEntry>[
+    if (sections.isNotEmpty && sections[0].entries.isNotEmpty) ...[
+      sections[0].entries[0],
+      sections[0].entries.firstWhere((GalleryEntry e) => e.id == 'am.military', orElse: () => sections[0].entries[1]),
+    ],
+  ];
 
   static final List<GallerySection> _sections = <GallerySection>[
     GallerySection(
@@ -1176,6 +1216,12 @@ class TajikistanSource extends GallerySource {
   @override
   List<GallerySection> get sections => _sections;
 
+  @override
+  List<GalleryEntry> get highlights => <GalleryEntry>[
+    for (final GallerySection section in sections)
+      if (section.entries.isNotEmpty) ...[section.entries[0], if (section.entries.length > 1) section.entries[1]],
+  ];
+
   static final List<GallerySection> _sections = <GallerySection>[_tajikistanSection()];
 }
 
@@ -1203,8 +1249,127 @@ class KuwaitSource extends GallerySource {
   @override
   List<GallerySection> get sections => _sections;
 
+  @override
+  List<GalleryEntry> get highlights => <GalleryEntry>[
+    if (sections.isNotEmpty && sections[0].entries.isNotEmpty) ...[
+      sections[0].entries[0],
+      sections[0].entries.firstWhere((GalleryEntry e) => e.id == 'kw.diplomatic', orElse: () => sections[0].entries[1]),
+    ],
+  ];
+
   static final List<GallerySection> _sections = <GallerySection>[_kuwaitSection()];
 }
+
+/// Iraq's section.
+///
+/// A fresh [GallerySection] each call, for the same reason as the other country
+/// sections: [catalogueItems] resolves a [GalleryEntry] back to its
+/// [CatalogueItem] by identity, so the umbrella source and [IraqSource] each
+/// build their own.
+///
+/// The entries cover every spec and every theme once, and every band colour at
+/// least once. Class is the band, not the field, so the five permanent classes
+/// share one spec and differ only in the [PlateCountry] passed with it.
+GallerySection _iraqSection() => GallerySection(
+  title: 'Iraq',
+  note:
+      'Black on white in both sizes, with the class carried entirely by the '
+      'coloured band down the left: white private, red for hire, blue '
+      'government, yellow trade, green agricultural. The format is a '
+      'two-digit governorate code, a class letter and a five-digit serial. '
+      'Kurdistan Region plates stack KR under IRQ in the band; temporary '
+      'plates print the whole thing in red and carry a two-digit expiry year '
+      'in place of the letter.',
+  entries: <GalleryEntry>[
+    GalleryEntry(
+      id: 'iq.large.private',
+      label: 'Private (520x110)',
+      spec: IraqPlates.large,
+      theme: IraqThemes.large,
+      country: IraqCountry.private,
+      note: 'Basra, 14. The band is white, so only the divider separates it.',
+      sampleValues: const <String?>['1', '4', 'G', '3', '4', '5', '6', '7'],
+    ),
+    GalleryEntry(
+      id: 'iq.large.hire',
+      label: 'For hire (520x110)',
+      spec: IraqPlates.large,
+      theme: IraqThemes.large,
+      country: IraqCountry.hire,
+      note: 'Same spec, red band: taxis and other hire vehicles.',
+      sampleValues: const <String?>['1', '4', 'G', '3', '4', '5', '6', '7'],
+    ),
+    GalleryEntry(
+      id: 'iq.large.government',
+      label: 'Government (520x110)',
+      spec: IraqPlates.large,
+      theme: IraqThemes.large,
+      country: IraqCountry.government,
+      sampleValues: const <String?>['1', '4', 'G', '3', '4', '5', '6', '7'],
+    ),
+    GalleryEntry(
+      id: 'iq.large.trade',
+      label: 'Trade (520x110)',
+      spec: IraqPlates.large,
+      theme: IraqThemes.large,
+      country: IraqCountry.trade,
+      sampleValues: const <String?>['1', '4', 'G', '3', '4', '5', '6', '7'],
+    ),
+    GalleryEntry(
+      id: 'iq.large.agricultural',
+      label: 'Agricultural (520x110)',
+      spec: IraqPlates.large,
+      theme: IraqThemes.large,
+      country: IraqCountry.agricultural,
+      sampleValues: const <String?>['1', '4', 'G', '3', '4', '5', '6', '7'],
+    ),
+    GalleryEntry(
+      id: 'iq.large.kr',
+      label: 'Kurdistan Region (520x110)',
+      spec: IraqPlates.largeKurdistan,
+      theme: IraqThemes.large,
+      country: IraqCountry.private,
+      note: 'Sulaymaniyah, 21. KR sits under IRQ, so the stack is shorter.',
+      sampleValues: const <String?>['2', '1', 'G', '3', '4', '5', '6', '7'],
+    ),
+    GalleryEntry(
+      id: 'iq.small.private',
+      label: 'Private (335x155)',
+      spec: IraqPlates.small,
+      theme: IraqThemes.small,
+      country: IraqCountry.private,
+      note: 'The same registration re-laid in two rows for a short bracket.',
+      sampleValues: const <String?>['1', '4', 'G', '3', '4', '5', '6', '7'],
+    ),
+    GalleryEntry(
+      id: 'iq.small.hire',
+      label: 'For hire (335x155)',
+      spec: IraqPlates.small,
+      theme: IraqThemes.small,
+      country: IraqCountry.hire,
+      sampleValues: const <String?>['1', '4', 'G', '3', '4', '5', '6', '7'],
+    ),
+    GalleryEntry(
+      id: 'iq.small.kr',
+      label: 'Kurdistan Region (335x155)',
+      spec: IraqPlates.smallKurdistan,
+      theme: IraqThemes.small,
+      country: IraqCountry.government,
+      sampleValues: const <String?>['2', '1', 'G', '3', '4', '5', '6', '7'],
+    ),
+    GalleryEntry(
+      id: 'iq.small.temporary',
+      label: 'Temporary (335x155)',
+      spec: IraqPlates.smallTemporary,
+      theme: IraqThemes.temporary,
+      country: IraqCountry.temporary,
+      note:
+          'Red ink on white, rim and divider included, with 22 as the expiry '
+          'year where a permanent plate carries its class letter.',
+      sampleValues: const <String?>['2', '1', '2', '2', '3', '4', '5', '6', '7'],
+    ),
+  ],
+);
 
 /// Qatar source — one of the countries under the Iranshahr umbrella.
 class QatarSource extends GallerySource {
@@ -1229,5 +1394,47 @@ class QatarSource extends GallerySource {
   @override
   List<GallerySection> get sections => _sections;
 
+  @override
+  List<GalleryEntry> get highlights => <GalleryEntry>[
+    if (sections.isNotEmpty && sections[0].entries.isNotEmpty) ...[
+      sections[0].entries[0],
+      sections[0].entries.firstWhere((GalleryEntry e) => e.id == 'qa.police', orElse: () => sections[0].entries[1]),
+    ],
+  ];
+
   static final List<GallerySection> _sections = <GallerySection>[_qatarSection()];
+}
+
+/// Iraq's gallery source, showing Iraqi plates as part of the Iranshahr umbrella.
+class IraqSource extends GallerySource {
+  const IraqSource();
+
+  @override
+  String get countryName => 'Iraq';
+
+  @override
+  String get packageName => 'iranshahr_plate';
+
+  @override
+  String get note =>
+      'The current Iraqi series: black on white in a 520x110 and a 335x155 '
+      'size, in a Kurdistan Region variant of each, plus a red temporary '
+      'plate. The class is the colour of the band down the left, not the '
+      'field, which is white on all of them. See iranshahr_plate/README.md.';
+
+  /// Built once, and returned by identity: [catalogueItems] resolves a
+  /// [GalleryEntry] back to its [CatalogueItem] by identity, so a fresh list
+  /// per read would make that lookup never find a match.
+  @override
+  List<GallerySection> get sections => _sections;
+
+  @override
+  List<GalleryEntry> get highlights => <GalleryEntry>[
+    if (sections.isNotEmpty && sections[0].entries.isNotEmpty) ...[
+      sections[0].entries[0],
+      if (sections[0].entries.length > 1) sections[0].entries[1],
+    ],
+  ];
+
+  static final List<GallerySection> _sections = <GallerySection>[_iraqSection()];
 }

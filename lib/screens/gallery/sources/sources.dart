@@ -33,7 +33,7 @@ final List<GallerySource> gallerySources = <GallerySource>[
   const GermanySource(),
 ];
 
-/// The seven countries within Iranshahr, for the `/iranshahr/{country}` detail
+/// The eight countries within Iranshahr, for the `/iranshahr/{country}` detail
 /// pages and the `/iranshahr` overview page which shows them as country groups.
 final List<GallerySource> iranshahirCountries = <GallerySource>[
   const BahrainSource(),
@@ -43,4 +43,5 @@ final List<GallerySource> iranshahirCountries = <GallerySource>[
   const TajikistanSource(),
   const KuwaitSource(),
   const QatarSource(),
+  const IraqSource(),
 ];
