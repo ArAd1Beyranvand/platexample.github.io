@@ -3,6 +3,7 @@ import 'package:plate_number_holder/screens/gallery/catalogue_stats.dart';
 import 'package:plate_number_holder/screens/gallery/sources/sources.dart';
 
 void main() {
+  // currently failing
   test('CatalogueStats.of counts the current registry', () {
     final CatalogueStats stats = CatalogueStats.of(gallerySources);
 
@@ -26,6 +27,7 @@ void main() {
     expect(stats.formFactors, 2);
   });
 
+  // currently failing
   test('changing the registry moves the numbers, not a constant', () {
     // A minimal fake source proves the stats are read from the catalogue
     // passed in, not from `gallerySources` by name.

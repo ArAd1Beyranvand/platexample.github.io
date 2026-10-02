@@ -78,6 +78,7 @@ void main() {
   });
 
   group('countries and plates', () {
+    // currently failing
     test('a country page has a meaningful path and parses back to itself', () {
       for (final GallerySource source in gallerySources) {
         final AppLocation location = AppLocation.country(source);
@@ -86,6 +87,7 @@ void main() {
       }
     });
 
+    // currently failing
     test('every plate round-trips through its own URL', () {
       for (final CatalogueItem item in catalogueItems) {
         final AppLocation location = item.location;

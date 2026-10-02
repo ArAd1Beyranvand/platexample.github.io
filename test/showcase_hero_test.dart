@@ -108,6 +108,7 @@ void main() {
     expect(find.text('IRAN MADE · OPEN SOURCE'), findsNothing);
   });
 
+  // currently failing
   testWidgets('the hero never grows past the height it is given', (WidgetTester tester) async {
     tester.view.physicalSize = const Size(1440, 900);
     tester.view.devicePixelRatio = 1.0;

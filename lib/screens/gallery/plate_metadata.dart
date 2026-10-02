@@ -6,9 +6,9 @@
 /// Packages:
 /// - Core: core_plate, core_plate_bloc
 /// - Countries: iran_plate, germany_plate, palestine_plate, yemen_plate,
-///   iranshahr_plate, lebanon_plate
+///   iranshahr_plate, lebanon_plate, cuba_plate
 /// - Utilities: plate_keypad
 class PlateMetadata {
-  /// Total number of packages in the ecosystem (2 core + 6 country + 1 utility).
-  static const int packageCount = 9;
+  /// Total number of packages in the ecosystem (2 core + 7 country + 1 utility).
+  static const int packageCount = 10;
 }

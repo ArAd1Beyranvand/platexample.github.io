@@ -73,6 +73,8 @@ dependencies:
   # sharing one spec, which is a page and not a prop.
   lebanon_plate:
     path: ../lebanon_plate
+  cuba_plate:
+    path: ../cuba_plate
 
   # Used directly by the showcase to drive PlateCardBloc from the demo screen.
   url_launcher: ^6.3.2

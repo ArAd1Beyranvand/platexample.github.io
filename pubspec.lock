@@ -56,6 +56,13 @@ packages:
       relative: true
     source: path
     version: "0.11.1"
+  cuba_plate:
+    dependency: "direct main"
+    description:
+      path: "../cuba_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
   fake_async:
     dependency: transitive
     description:

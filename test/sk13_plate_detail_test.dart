@@ -30,6 +30,7 @@ void main() {
     ('1000 — stacked', Size(1000, 900)),
     ('390 — phone panel', Size(390, 844)),
   ]) {
+    // currently failing (the 390 phone case only)
     testWidgets('sk13 plate detail at $name does not overflow', (WidgetTester tester) async {
       tester.view.physicalSize = size;
       tester.view.devicePixelRatio = 1.0;
@@ -102,6 +103,7 @@ void main() {
     expect(find.byType(PlateKeypad), findsNothing);
   });
 
+  // currently failing
   testWidgets('sk13 an Arabic-script country block gets Vazirmatn', (WidgetTester tester) async {
     tester.view.physicalSize = const Size(1440, 900);
     tester.view.devicePixelRatio = 1.0;

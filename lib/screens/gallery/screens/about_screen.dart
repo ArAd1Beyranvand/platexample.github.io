@@ -29,6 +29,7 @@ class AboutScreen extends StatelessWidget {
     _PackageInfo('palestine_plate', '0.3.0', 'https://github.com/ArAd1Beyranvand/plate-palestine'),
     _PackageInfo('yemen_plate', '0.3.0', 'https://github.com/ArAd1Beyranvand/plate-yemen'),
     _PackageInfo('lebanon_plate', '0.1.0', 'https://github.com/ArAd1Beyranvand/lebanon-plate'),
+    _PackageInfo('cuba_plate', '0.1.0', 'https://github.com/ArAd1Beyranvand/plate-cuba'),
   ];
 
   /// `padding: 72px 64px 96px 72px`, and the media query's
