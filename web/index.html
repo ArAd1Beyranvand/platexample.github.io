@@ -17,6 +17,9 @@
   <base href="$FLUTTER_BASE_HREF">
 
   <meta charset="UTF-8">
+  <!-- Must match what the Flutter engine injects at startup; otherwise the
+       viewport swaps mid-load and the splash jumps. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="description" content="A new Flutter project.">
 
@@ -33,92 +36,153 @@
   <link rel="manifest" href="manifest.json">
 
   <style>
-    /* Renders immediately, before Flutter's JS/wasm is even fetched. Palette
-       matches lib/theme/nocturne.dart (N.bg/N.n900/N.n800/N.accent) and the
-       ambient look of lib/poster/plate_backdrop.dart, so the handoff to the
-       real app is a continuation rather than a swap. */
     html, body {
       margin: 0;
       height: 100%;
-      background: #050608;
+      background: #161826;
+      color: #e9e9ed;
+      font-family: Inter, Vazirmatn, system-ui, sans-serif;
     }
     #splash {
       position: fixed;
       inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 22px;
-      overflow: hidden;
-      background:
-        radial-gradient(circle at 18% 22%, rgba(124, 92, 255, 0.16) 0%, rgba(124, 92, 255, 0) 42%),
-        radial-gradient(circle at 82% 78%, rgba(124, 92, 255, 0.14) 0%, rgba(124, 92, 255, 0) 46%),
-        linear-gradient(135deg, #0e1219 0%, #232c42 55%, #050608 100%);
-      transition: opacity 0.35s ease;
+      display: grid;
+      place-items: center;
+      background: radial-gradient(60% 50% at 50% 45%, #1f2236 0%, #161826 70%);
+      transition: opacity 0.5s ease, visibility 0.5s;
       z-index: 9999;
     }
     #splash.splash-hidden {
       opacity: 0;
-      pointer-events: none;
+      visibility: hidden;
     }
 
-    /* A stand-in for the real PlateCanvas: it can't paint until the Flutter
-       engine boots, so this mimics its shape (white face, black keyline,
-       two slot groups) rather than the actual widget. */
-    #splash .plate {
-      width: min(62vw, 260px);
-      aspect-ratio: 220 / 108;
-      background: #f4f6f9;
-      border: 4px solid #14161a;
-      border-radius: 10px;
-      box-shadow: 0 26px 60px rgba(0, 0, 0, 0.55);
+    .splash-content {
+      display: grid;
+      justify-items: center;
+      gap: 22px;
+    }
+    .plate {
+      position: relative;
+      display: flex;
+      direction: ltr;
+      width: 220px;
+      height: 50px;
+      border: 1.5px solid #3a3d55;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 0 40px -10px #9184d966;
+    }
+    .plate { zoom: 4; }
+    @media (max-width: 940px) { .plate { zoom: 1.6; } }
+    .plate:after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(100deg, transparent 30%, #9184d933 50%, transparent 70%);
+      animation: splash-shine 1.8s ease-in-out infinite;
+    }
+    .plate-section {
+      width: 22px;
+      background: #2b2a55;
+      border-right: 1px solid #3a3d55;
+      display: grid;
+      align-content: end;
+      padding-bottom: 5px;
+      justify-items: center;
+    }
+    .plate-section i {
+      width: 10px;
+      height: 6px;
+      background: linear-gradient(#5a9b6b 33%, #d9d9de 33% 66%, #c45a5a 66%);
+      border-radius: 1px;
+    }
+    .plate-number {
+      flex: 1;
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 10%;
-      padding: 0 8%;
+      justify-content: space-evenly;
+      font-size: 24px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      font-variant-numeric: tabular-nums;
     }
-    #splash .plate .slot {
-      flex: 1;
-      height: 46%;
-      border-radius: 3px;
-      background: #14161a;
-      opacity: 0.86;
+    .plate-number b {
+      font-weight: 500;
+      color: #b5abf0;
     }
-    #splash .plate .gap {
-      width: 4%;
+    .digit {
+      display: inline-block;
+      transition: opacity 0.25s, transform 0.25s;
     }
-    #splash .plate .slot.blink {
-      animation: splash-blink 1.1s ease-in-out infinite;
+    .digit.fade {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+    .plate-region {
+      width: 46px;
+      border-left: 1px solid #3a3d55;
+      display: grid;
+      place-items: center;
+      font-size: 17px;
+      position: relative;
+    }
+    .plate-region small {
+      position: absolute;
+      top: 3px;
+      font-size: 8px;
+      color: #8b8ea6;
+    }
+    .progress-bar {
+      width: 120px;
+      height: 2px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, transparent, #2a2d42 30%, #2a2d42 70%, transparent);
+      overflow: hidden;
+      position: relative;
+    }
+    .progress-bar:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      width: 40%;
+      height: 100%;
+      background: #9184d9;
+      box-shadow: 0 0 8px #9184d9;
+      animation: splash-move 1.2s ease-in-out infinite;
+    }
+    .splash-label {
+      font-size: 13px;
+      color: #8b8ea6;
+      letter-spacing: 0.02em;
     }
 
-    #splash .label {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: rgba(234, 240, 251, 0.55);
+    @keyframes splash-shine {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
     }
-
-    @keyframes splash-blink {
-      0%, 100% { opacity: 0.86; }
-      50% { opacity: 0.12; background: #7c5cff; }
+    @keyframes splash-move {
+      0% { right: -40%; }
+      100% { right: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .plate:after, .progress-bar:after {
+        animation: none;
+      }
     }
   </style>
 </head>
 <body>
-  <div id="splash">
-    <div class="plate">
-      <div class="slot"></div>
-      <div class="slot"></div>
-      <div class="gap"></div>
-      <div class="slot blink"></div>
-      <div class="slot"></div>
-      <div class="slot"></div>
+  <div id="splash" role="status" aria-label="در حال بارگذاری">
+    <div class="splash-content">
+      <div class="plate" aria-hidden="true">
+        <div class="plate-section"><i></i></div>
+        <div class="plate-number"><span class="digit">۱۲</span><b class="digit">ب</b><span class="digit">۳۴۵</span></div>
+        <div class="plate-region"><small>ایران</small><span class="digit">۶۷</span></div>
+      </div>
+      <div class="progress-bar"></div>
+      <div class="splash-label">پلاک گالری</div>
     </div>
-    <div class="label">Loading</div>
   </div>
 
   <!--
@@ -130,12 +194,17 @@
     * https://docs.flutter.dev/platform-integration/web/initialization
   -->
   <script>
-    window.addEventListener('flutter-first-frame', function () {
-      var splash = document.getElementById('splash');
-      if (!splash) return;
-      splash.classList.add('splash-hidden');
-      setTimeout(function () { splash.remove(); }, 400);
-    });
+    (function(){
+      var fa="۰۱۲۳۴۵۶۷۸۹",L="بجدسصطقلمنوهی",ds=document.querySelectorAll('.digit'),k=0;
+      function r(n){var s="";while(n--)s+=fa[Math.random()*10|0];return s}
+      var gen=[function(){return r(2)},function(){return L[Math.random()*L.length|0]},function(){return r(3)},function(){return r(2)}];
+      var iv=setInterval(function(){
+        var i=k++%4,el=ds[i];el.classList.add('fade');
+        setTimeout(function(){el.textContent=gen[i]();el.classList.remove('fade')},250);
+      },420);
+      function done(){var l=document.getElementById('splash');if(!l)return;clearInterval(iv);l.classList.add('splash-hidden');setTimeout(function(){l.remove()},600)}
+      window.addEventListener('flutter-first-frame',done);
+    })();
   </script>
   <script src="flutter_bootstrap.js" async></script>
 </body>

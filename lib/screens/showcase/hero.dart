@@ -62,9 +62,10 @@ class ShowcaseHero extends StatelessWidget {
   /// different specs for cars, motorbikes, and plate variants that the spec
   /// alone cannot capture. A single import brings in the whole country's plates.
   static const String _paragraph =
-      'Six country packages, each with its own plate and input widgets: Iran, '
-      'Iranshahr, Palestine, Yemen, Lebanon, and Germany — spanning seven countries. '
-      'German includes cars and motorbikes; Iran has diplomatic and temporary variants.';
+      'Six country packages spanning thirteen countries: Iran, Iranshahr '
+      '(Bahrain, Azerbaijan, Afghanistan, Armenia, Tajikistan, Kuwait, Qatar, Iraq), '
+      'Palestine, Yemen, Lebanon, and Germany. German includes cars and motorbikes; '
+      'Iran has diplomatic and temporary variants.';
 
   /// Below this the hero is inside the design's 390×812 phone panel (or a
   /// window no wider than one), and the stacked desktop metrics stop working:

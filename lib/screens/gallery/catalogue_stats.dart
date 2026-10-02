@@ -16,13 +16,14 @@ class CatalogueStats {
   });
 
   /// Walks [catalogue] once, tallying all four counts together.
-  /// Uses [PlateMetadata] for package and country counts to stay in sync
-  /// with the ecosystem README.
+  /// The package count comes from [PlateMetadata].
   factory CatalogueStats.of(List<GallerySource> catalogue) {
     final Set<String> specs = <String>{};
     final Set<String> formFactors = <String>{};
+    final Set<String> countries = <String>{};
 
     for (final GallerySource source in catalogue) {
+      countries.addAll(source.countryNames);
       for (final GallerySection section in source.sections) {
         for (final GalleryEntry entry in section.entries) {
           specs.add(entry.spec.id);
@@ -33,7 +34,7 @@ class CatalogueStats {
 
     return CatalogueStats(
       packages: PlateMetadata.packageCount,
-      countries: PlateMetadata.countryCount,
+      countries: countries.length,
       specs: specs.length,
       formFactors: formFactors.length,
     );
@@ -43,8 +44,7 @@ class CatalogueStats {
   final int packages;
 
   /// Distinct [GallerySource.countryNames], flattened — not one per source:
-  /// `iranshahr` alone ships four: Bahrain, Azerbaijan, Afghanistan and
-  /// Armenia.
+  /// `iranshahr` alone ships eight.
   final int countries;
 
   /// Distinct plate spec ids (`entry.spec.id`) across every entry in every

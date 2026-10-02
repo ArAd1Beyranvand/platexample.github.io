@@ -93,7 +93,7 @@ class _Header extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            'Five countries, one package',
+            'Eight countries, one package',
             style: TextStyle(
               fontFamily: NType.archivo,
               fontWeight: FontWeight.w800,

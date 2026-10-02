@@ -32,6 +32,7 @@ class PlateDetailScreen extends StatefulWidget {
     required this.heroTag,
     this.onOpenDiscover,
     this.onOpenCountry,
+    this.isIranshahirOverview = false,
   });
 
   final CatalogueItem item;
@@ -42,6 +43,9 @@ class PlateDetailScreen extends StatefulWidget {
 
   /// The country segment in the breadcrumb. Null leaves it inert.
   final void Function(GallerySource source)? onOpenCountry;
+
+  /// Whether this plate is in the Iranshahr context.
+  final bool isIranshahirOverview;
 
   @override
   State<PlateDetailScreen> createState() => _PlateDetailScreenState();
@@ -113,6 +117,7 @@ class _PlateDetailScreenState extends State<PlateDetailScreen> {
             heroTag: widget.heroTag,
             onSubmit: _onSubmit,
             alphabet: _alphabet,
+            isIranshahirOverview: widget.isIranshahirOverview,
           );
         }
 
@@ -132,6 +137,7 @@ class _PlateDetailScreenState extends State<PlateDetailScreen> {
           heroTag: widget.heroTag,
           padding: mainPadding,
           center: !oneColumn,
+          isIranshahirOverview: widget.isIranshahirOverview,
         );
 
         final Widget aside = _Aside(
@@ -228,6 +234,7 @@ class _MobilePlateDetail extends StatelessWidget {
     required this.heroTag,
     required this.onSubmit,
     required this.alphabet,
+    this.isIranshahirOverview = false,
   });
 
   final CatalogueItem item;
@@ -241,6 +248,7 @@ class _MobilePlateDetail extends StatelessWidget {
   final String heroTag;
   final VoidCallback onSubmit;
   final PlateAlphabet Function({required bool numeric}) alphabet;
+  final bool isIranshahirOverview;
 
   static const EdgeInsets _bodyPadding = EdgeInsets.symmetric(horizontal: 18);
   static const EdgeInsets _footerPadding = EdgeInsets.fromLTRB(18, 16, 18, 16);
@@ -289,6 +297,7 @@ class _MobilePlateDetail extends StatelessWidget {
                       specId: spec.id,
                       onOpenDiscover: onOpenDiscover,
                       onOpenCountry: onOpenCountry == null ? null : () => onOpenCountry!(item.source),
+                      isIranshahirOverview: isIranshahirOverview,
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -474,6 +483,7 @@ class _MainColumn extends StatelessWidget {
     required this.heroTag,
     required this.padding,
     required this.center,
+    this.isIranshahirOverview = false,
   });
 
   final CatalogueItem item;
@@ -492,6 +502,7 @@ class _MainColumn extends StatelessWidget {
   /// layout, where this stacks above the aside in the same scroll view and
   /// centring within the full viewport would push the aside off-screen.
   final bool center;
+  final bool isIranshahirOverview;
 
   @override
   Widget build(BuildContext context) {
@@ -539,6 +550,7 @@ class _MainColumn extends StatelessWidget {
       specId: spec.id,
       onOpenDiscover: onOpenDiscover,
       onOpenCountry: onOpenCountry == null ? null : () => onOpenCountry!(item.source),
+      isIranshahirOverview: isIranshahirOverview,
     ),
     const SizedBox(height: 32),
     PlateTitleBlock(

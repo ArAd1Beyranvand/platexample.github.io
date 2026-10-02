@@ -22,6 +22,7 @@ class IranshahirSource extends GallerySource {
     'Kuwait',
     'Qatar',
     'Iraq',
+    'United Arab Emirates',
   ];
 
   @override
@@ -31,7 +32,7 @@ class IranshahirSource extends GallerySource {
   String get note =>
       'Bahrain\'s five designs, Azerbaijan\'s four specs, Afghanistan\'s '
       'eleven, Armenia\'s ten, Tajikistan\'s nine, Kuwait\'s sixteen, '
-      'Qatar\'s five and Iraq\'s ten from the iranshahr_plate package. Each country is independent with distinct design '
+      'Qatar\'s five, Iraq\'s ten, and the UAE\'s fourteen from the iranshahr_plate package. Each country is independent with distinct design '
       'languages. See iranshahr_plate/README.md.';
 
   /// Built once, and returned by identity: the pickers select a section by
@@ -43,7 +44,7 @@ class IranshahirSource extends GallerySource {
   @override
   List<GalleryEntry> get highlights => <GalleryEntry>[
     for (final GallerySection section in sections)
-      if (section.entries.isNotEmpty) ...[section.entries[0], if (section.entries.length > 1) section.entries[1]],
+      if (section.entries.isNotEmpty) section.entries[0],
   ];
 
   static final List<GallerySection> _sections = <GallerySection>[
@@ -393,6 +394,7 @@ class IranshahirSource extends GallerySource {
     _kuwaitSection(),
     _qatarSection(),
     _iraqSection(),
+    _uaeSection(),
   ];
 }
 
@@ -1437,4 +1439,161 @@ class IraqSource extends GallerySource {
   ];
 
   static final List<GallerySection> _sections = <GallerySection>[_iraqSection()];
+}
+
+/// The UAE's section: the private plate of each of the seven emirates, long and
+/// short. A fresh [GallerySection] each call, for the same reason as the other
+/// country sections.
+GallerySection _uaeSection() => GallerySection(
+  title: 'United Arab Emirates',
+  note:
+      'Each emirate prints its own black-on-white design in a 520x110 and a '
+      '335x155 size: a code (a number in Abu Dhabi and Sharjah, a letter '
+      'elsewhere), the emirate named in Arabic and English, and a serial of up '
+      'to five digits. Logo and calligraphy variants are not included.',
+  entries: <GalleryEntry>[
+    GalleryEntry(
+      id: 'ae.abudhabi.long',
+      label: 'Abu Dhabi (520x110)',
+      spec: UaePlates.abuDhabiLong,
+      theme: UaeThemes.long,
+      country: UaeCountry.uae,
+      note: 'White code on the red strip (long) or band (short), painted as background sections.',
+      sampleValues: const <String?>['1', '2', '2', '3', '4', '5', '6'],
+    ),
+    GalleryEntry(
+      id: 'ae.abudhabi.short',
+      label: 'Abu Dhabi (335x155)',
+      spec: UaePlates.abuDhabiShort,
+      theme: UaeThemes.short,
+      country: UaeCountry.uae,
+      sampleValues: const <String?>['1', '2', '2', '3', '4', '5', '6'],
+    ),
+    GalleryEntry(
+      id: 'ae.ajman.long',
+      label: 'Ajman (520x110)',
+      spec: UaePlates.ajmanLong,
+      theme: UaeThemes.long,
+      country: UaeCountry.uae,
+      sampleValues: const <String?>['A', '2', '3', '4', '5', '6'],
+    ),
+    GalleryEntry(
+      id: 'ae.ajman.short',
+      label: 'Ajman (335x155)',
+      spec: UaePlates.ajmanShort,
+      theme: UaeThemes.short,
+      country: UaeCountry.uae,
+      sampleValues: const <String?>['A', '2', '3', '4', '5', '6'],
+    ),
+    GalleryEntry(
+      id: 'ae.dubai.long',
+      label: 'Dubai (520x110)',
+      spec: UaePlates.dubaiLong,
+      theme: UaeThemes.long,
+      country: UaeCountry.uae,
+      note: '"DUBAI" logotype set as bold text; single code letter only (AA-EE not laid out).',
+      sampleValues: const <String?>['A', '2', '3', '4', '5', '6'],
+    ),
+    GalleryEntry(
+      id: 'ae.dubai.short',
+      label: 'Dubai (335x155)',
+      spec: UaePlates.dubaiShort,
+      theme: UaeThemes.short,
+      country: UaeCountry.uae,
+      sampleValues: const <String?>['A', '2', '3', '4', '5', '6'],
+    ),
+    GalleryEntry(
+      id: 'ae.fujairah.long',
+      label: 'Fujairah (520x110)',
+      spec: UaePlates.fujairahLong,
+      theme: UaeThemes.long,
+      country: UaeCountry.uae,
+      sampleValues: const <String?>['A', '2', '3', '4', '5', '6'],
+    ),
+    GalleryEntry(
+      id: 'ae.fujairah.short',
+      label: 'Fujairah (335x155)',
+      spec: UaePlates.fujairahShort,
+      theme: UaeThemes.short,
+      country: UaeCountry.uae,
+      sampleValues: const <String?>['A', '2', '3', '4', '5', '6'],
+    ),
+    GalleryEntry(
+      id: 'ae.rasalkhaimah.long',
+      label: 'Ras Al Khaimah (520x110)',
+      spec: UaePlates.rasAlKhaimahLong,
+      theme: UaeThemes.long,
+      country: UaeCountry.uae,
+      sampleValues: const <String?>['A', '2', '3', '4', '5', '6'],
+    ),
+    GalleryEntry(
+      id: 'ae.rasalkhaimah.short',
+      label: 'Ras Al Khaimah (335x155)',
+      spec: UaePlates.rasAlKhaimahShort,
+      theme: UaeThemes.short,
+      country: UaeCountry.uae,
+      sampleValues: const <String?>['A', '2', '3', '4', '5', '6'],
+    ),
+    GalleryEntry(
+      id: 'ae.sharjah.long',
+      label: 'Sharjah (520x110)',
+      spec: UaePlates.sharjahLong,
+      theme: UaeThemes.long,
+      country: UaeCountry.uae,
+      note: 'Heavier frame; the one-digit code (1-4) is optional.',
+      sampleValues: const <String?>['1', '2', '3', '4', '5', '6'],
+    ),
+    GalleryEntry(
+      id: 'ae.sharjah.short',
+      label: 'Sharjah (335x155)',
+      spec: UaePlates.sharjahShort,
+      theme: UaeThemes.short,
+      country: UaeCountry.uae,
+      sampleValues: const <String?>['1', '2', '3', '4', '5', '6'],
+    ),
+    GalleryEntry(
+      id: 'ae.ummalquwain.long',
+      label: 'Umm Al Quwain (520x110)',
+      spec: UaePlates.ummAlQuwainLong,
+      theme: UaeThemes.long,
+      country: UaeCountry.uae,
+      sampleValues: const <String?>['A', '2', '3', '4', '5', '6'],
+    ),
+    GalleryEntry(
+      id: 'ae.ummalquwain.short',
+      label: 'Umm Al Quwain (335x155)',
+      spec: UaePlates.ummAlQuwainShort,
+      theme: UaeThemes.short,
+      country: UaeCountry.uae,
+      sampleValues: const <String?>['A', '2', '3', '4', '5', '6'],
+    ),
+  ],
+);
+
+/// The UAE's gallery source, showing Emirati plates as part of the Iranshahr
+/// umbrella.
+class UaeSource extends GallerySource {
+  const UaeSource();
+
+  @override
+  String get countryName => 'United Arab Emirates';
+
+  @override
+  String get packageName => 'iranshahr_plate';
+
+  @override
+  String get note =>
+      'The private plates of the seven emirates, each in a long and a short '
+      'size. See iranshahr_plate/README.md.';
+
+  /// Built once, and returned by identity, as for the other sources.
+  @override
+  List<GallerySection> get sections => _sections;
+
+  @override
+  List<GalleryEntry> get highlights => <GalleryEntry>[
+    if (sections.isNotEmpty && sections[0].entries.length > 1) ...[sections[0].entries[0], sections[0].entries[1]],
+  ];
+
+  static final List<GallerySection> _sections = <GallerySection>[_uaeSection()];
 }

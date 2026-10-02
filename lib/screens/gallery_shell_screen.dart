@@ -275,11 +275,13 @@ class GalleryShellState extends State<GalleryShellScreen> {
     return (BuildContext context) => PlateDetailScreen(
       item: item,
       heroTag: _heroTags[item] ?? 'plate-${item.entry.id}',
+      isIranshahirOverview: location.isIranshahirOverview,
       onOpenDiscover: () => widget.onNavigate(AppLocation.discover),
       // Goes to the country page by URL rather than popping: a plate opened
       // from a link has its country underneath it just as a tapped one does
       // (see [_stackFor]), so this is one consistent destination either way.
-      onOpenCountry: (GallerySource source) => widget.onNavigate(AppLocation.country(source)),
+      onOpenCountry: (GallerySource source) =>
+          widget.onNavigate(AppLocation.country(source, isIranshahirOverview: location.isIranshahirOverview)),
     );
   }
 

@@ -145,7 +145,7 @@ const Map<DeviceType, List<CalloutSpec>> calloutSets = <DeviceType, List<Callout
   DeviceType.desktop: <CalloutSpec>[
     CalloutSpec(
       kicker: 'COUNTRIES',
-      title: 'Five country packages, one pattern',
+      title: 'Thirteen countries, one pattern',
       anchorFx: _desktopSlot1Fx,
       anchorFy: _desktopSlot1Fy,
       widthFx: _desktopSlot1W,

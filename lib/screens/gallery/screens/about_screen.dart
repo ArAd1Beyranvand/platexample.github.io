@@ -17,19 +17,9 @@ class AboutScreen extends StatelessWidget {
   ///
   /// Written out rather than read from a generated file: an app that wants
   /// its own dependency versions at runtime needs a build step, and this is
-  /// a showcase.
-  // TODO(sk14): generate this from pubspec.lock at build time instead of
-  // hardcoding it here, so a `pub upgrade` can't leave it stale again.
-  //
-  // sk24 found it stale in exactly that way: four of the eight versions had
-  // drifted, `iranshahr_plate` — which draws Bahrain, Azerbaijan,
-  // Afghanistan and Armenia, four of the nine countries on Discover — was
-  // missing, and
-  // `core_plate_bloc` was
-  // listed although this app has never depended on it (it is not in
-  // `pubspec.lock`). Every line below is now the resolved version from
-  // `pubspec.lock`; re-check it against that file, not against the sibling
-  // pubspecs, whenever this list is touched.
+  /// a showcase. Every line below is the resolved version from `pubspec.lock`;
+  /// re-check it against that file, not against the sibling pubspecs, whenever
+  /// this list is touched.
   static const List<_PackageInfo> _packages = <_PackageInfo>[
     _PackageInfo('core_plate', '0.9.1', 'https://github.com/ArAd1Beyranvand/core-plate'),
     _PackageInfo('plate_keypad', '0.1.1', 'https://github.com/ArAd1Beyranvand/keypad-plate'),

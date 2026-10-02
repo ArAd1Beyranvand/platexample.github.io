@@ -21,9 +21,10 @@ export 'yemen.dart';
 ///
 /// Iranshahr is shown on Discover as a single group, but clicking "All plates"
 /// navigates to `/iranshahr` where it displays like Discover itself, showing
-/// each of its seven countries (Bahrain, Azerbaijan, Afghanistan, Armenia,
-/// Tajikistan, Kuwait, Qatar) as separate groups. The seven country sources
-/// below are used for those detail pages and the `/iranshahr` overview page.
+/// each of its nine countries (Bahrain, Azerbaijan, Afghanistan, Armenia,
+/// Tajikistan, Kuwait, Qatar, Iraq, UAE) as separate groups. The nine country
+/// sources below are used for those detail pages and the `/iranshahr` overview
+/// page.
 final List<GallerySource> gallerySources = <GallerySource>[
   const IranSource(),
   const IranshahirSource(),
@@ -33,8 +34,8 @@ final List<GallerySource> gallerySources = <GallerySource>[
   const GermanySource(),
 ];
 
-/// The eight countries within Iranshahr, for the `/iranshahr/{country}` detail
-/// pages and the `/iranshahr` overview page which shows them as country groups.
+/// The nine countries within Iranshahr for the `/iranshahr/{country}` detail
+/// pages and the `/iranshahr` overview page showing them as country groups.
 final List<GallerySource> iranshahirCountries = <GallerySource>[
   const BahrainSource(),
   const AzerbaijanSource(),
@@ -44,4 +45,5 @@ final List<GallerySource> iranshahirCountries = <GallerySource>[
   const KuwaitSource(),
   const QatarSource(),
   const IraqSource(),
+  const UaeSource(),
 ];
