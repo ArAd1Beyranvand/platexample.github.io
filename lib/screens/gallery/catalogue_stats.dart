@@ -66,7 +66,7 @@ class CatalogueStats {
     (value: packages, label: 'Packages'),
     (value: countries, label: 'Countries'),
     (value: specs, label: 'Specs'),
-    (value: formFactors, label: 'Form factors'),
+    (value: formFactors, label: 'Form Factors'),
   ];
 
   /// No package models a form factor as a field — not on `PlateSpec`, not on
