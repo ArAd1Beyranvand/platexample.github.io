@@ -12,6 +12,7 @@ import 'tunisia.dart';
 import 'venezuela.dart';
 import 'lebanon.dart';
 import 'malaysia.dart';
+import 'niger.dart';
 import 'palestine.dart';
 import 'sudan.dart';
 import 'yemen.dart';
@@ -30,6 +31,7 @@ export 'tunisia.dart';
 export 'venezuela.dart';
 export 'lebanon.dart';
 export 'malaysia.dart';
+export 'niger.dart';
 export 'palestine.dart';
 export 'sudan.dart';
 export 'yemen.dart';
@@ -62,6 +64,7 @@ final List<GallerySource> gallerySources = <GallerySource>[
   BoliviaSource(),
   ColombiaSource(),
   SudanSource(),
+  NigerSource(),
 ];
 
 /// The nine countries within Iranshahr for the `/iranshahr/{country}` detail
