@@ -6,7 +6,7 @@ import 'package:plate_number_holder/theme/nocturne.dart';
 import 'package:plate_number_holder/theme/nocturne_theme.dart';
 
 void main() {
-  for (final double width in <double>[360, 390, 430, 559, 560]) {
+  for (final double width in <double>[360, 390, 430, 559, 560, 1440]) {
     testWidgets('showcase at $width picks the right body', (
       WidgetTester tester,
     ) async {
@@ -26,13 +26,10 @@ void main() {
       );
       await tester.pump(const Duration(milliseconds: 500));
 
-      expect(
-        find.byType(MobileBody),
-        width < NBreak.panel ? findsOneWidget : findsNothing,
-      );
-      // The stacked hero's own overflow at 560 predates the mobile body.
-      final Object? error = tester.takeException();
-      if (width < NBreak.panel) expect(error, isNull);
+      // Portrait counts as a phone too, so 560×900 is a panel as well.
+      final bool panel = NBreak.isPanel(Size(width, 900));
+      expect(find.byType(MobileBody), panel ? findsOneWidget : findsNothing);
+      expect(tester.takeException(), isNull);
     });
   }
 }

@@ -189,11 +189,19 @@ class AppLocation {
 
   /// A country page. Always under Discover — that is the tab whose breadcrumb
   /// and back stack it belongs to.
+  ///
+  /// The Iranshahr umbrella itself is always its overview: `/discover/iranshahr`
+  /// parses to the overview, so building it any other way would give a
+  /// location that does not round-trip through its own URL.
   factory AppLocation.country(
     GallerySource source, {
     bool isIranshahirOverview = false,
-  }) =>
-      AppLocation._country(source, isIranshahirOverview: isIranshahirOverview);
+  }) => AppLocation._country(
+    source,
+    isIranshahirOverview: isIranshahirOverview || source.slug == _iranshahrSlug,
+  );
+
+  static const String _iranshahrSlug = 'iranshahr';
 
   /// A plate page, with the country it hangs off so the breadcrumb and the URL
   /// agree even when the plate was opened straight from Showcase.
@@ -299,6 +307,14 @@ class AppLocation {
         );
         if (countrySource != null) {
           return AppLocation.country(countrySource, isIranshahirOverview: true);
+        }
+        // Otherwise `/discover/iranshahr/{plate}`: a plate the umbrella
+        // package ships under its own name.
+        final GallerySource? iranshahr = _sourceBySlug(_iranshahrSlug);
+        if (iranshahr != null) {
+          final CatalogueItem? item = _itemBySlug(iranshahr, segments[2]);
+          if (item != null) return AppLocation.plate(iranshahr, item);
+          return AppLocation.country(iranshahr);
         }
       }
       // `/discover/iranshahr/{country}/{plate}` shows a plate within that country

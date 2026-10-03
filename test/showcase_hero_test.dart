@@ -137,7 +137,6 @@ void main() {
     expect(secondary.top, greaterThan(primary.bottom));
   });
 
-  // currently failing
   testWidgets('the hero never grows past the height it is given', (
     WidgetTester tester,
   ) async {

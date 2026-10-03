@@ -45,13 +45,25 @@ class PlateBreadcrumb extends StatelessWidget {
           onPressed: onOpenDiscover,
         ),
         Text(' / ', style: crumb),
-        _CrumbLink(
-          label: countryName.toUpperCase(),
-          style: crumb,
-          onPressed: onOpenCountry,
+        // On a phone the trail is wider than the screen; the spec id gives
+        // way first, then the country, rather than overflowing.
+        Flexible(
+          child: _CrumbLink(
+            label: countryName.toUpperCase(),
+            style: crumb,
+            onPressed: onOpenCountry,
+          ),
         ),
         Text(' / ', style: crumb),
-        Text(specId.toUpperCase(), style: crumb.copyWith(color: N.n300)),
+        Flexible(
+          flex: 2,
+          child: Text(
+            specId.toUpperCase(),
+            style: crumb.copyWith(color: N.n300),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
       ],
     );
   }
@@ -125,8 +137,14 @@ class _CrumbLinkState extends State<_CrumbLink> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.onPressed == null)
-      return Text(widget.label, style: widget.style);
+    if (widget.onPressed == null) {
+      return Text(
+        widget.label,
+        style: widget.style,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+      );
+    }
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       onEnter: (_) => setState(() => _hovered = true),
@@ -139,6 +157,8 @@ class _CrumbLinkState extends State<_CrumbLink> {
           style: widget.style.copyWith(
             color: _hovered ? N.n200 : widget.style.color,
           ),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         ),
       ),
     );

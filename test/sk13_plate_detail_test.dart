@@ -35,7 +35,6 @@ void main() {
     ('1000 — stacked', Size(1000, 900)),
     ('390 — phone panel', Size(390, 844)),
   ]) {
-    // currently failing (the 390 phone case only)
     testWidgets('sk13 plate detail at $name does not overflow', (
       WidgetTester tester,
     ) async {
@@ -127,7 +126,6 @@ void main() {
     expect(find.byType(PlateKeypad), findsNothing);
   });
 
-  // currently failing
   testWidgets('sk13 an Arabic-script country block gets Vazirmatn', (
     WidgetTester tester,
   ) async {
@@ -135,14 +133,14 @@ void main() {
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.reset);
 
-    // Lebanon's private block prints `خصوصي`.
+    // Lebanon's country block is its spec label, `لبنان`.
     await tester.pumpWidget(_app(_item('lb.oneLine.private')));
     await tester.pumpAndSettle();
 
     // The plate itself paints the same word, so this asserts over every
     // match rather than the first: one of them is the aside's fact row, and
     // that one has to be in a font that can draw it.
-    final Finder block = find.textContaining('خصوصي');
+    final Finder block = find.textContaining('لبنان');
     expect(block, findsWidgets);
     expect(
       tester.widgetList<Text>(block).map((Text t) => t.style?.fontFamily),

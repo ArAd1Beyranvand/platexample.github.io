@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 
-import 'plate_metadata.dart';
 import 'sources/sources.dart';
 
 /// The Showcase stat band's four numbers, computed from the registry so they
@@ -16,13 +15,14 @@ class CatalogueStats {
   });
 
   /// Walks [catalogue] once, tallying all four counts together.
-  /// The package count comes from [PlateMetadata].
   factory CatalogueStats.of(List<GallerySource> catalogue) {
     final Set<String> specs = <String>{};
     final Set<String> formFactors = <String>{};
     final Set<String> countries = <String>{};
+    final Set<String> packages = <String>{};
 
     for (final GallerySource source in catalogue) {
+      packages.add(source.packageName);
       countries.addAll(source.countryNames);
       for (final GallerySection section in source.sections) {
         for (final GalleryEntry entry in section.entries) {
@@ -33,7 +33,7 @@ class CatalogueStats {
     }
 
     return CatalogueStats(
-      packages: PlateMetadata.packageCount,
+      packages: packages.length,
       countries: countries.length,
       specs: specs.length,
       formFactors: formFactors.length,

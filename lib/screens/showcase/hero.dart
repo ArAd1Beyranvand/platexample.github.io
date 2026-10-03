@@ -1,4 +1,7 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../device_preview/device_config.dart';
@@ -406,9 +409,9 @@ class _HeroText extends StatelessWidget {
           ),
         ),
         SizedBox(height: metrics.afterHeading),
-        ConstrainedBox(
+        _MaxWidth(
           // `max-width: 46ch` at 20px Newsreader.
-          constraints: const BoxConstraints(maxWidth: 460),
+          maxWidth: 460,
           child: Text(
             ShowcaseHero._paragraph,
             style: TextStyle(
@@ -425,6 +428,43 @@ class _HeroText extends StatelessWidget {
       ],
     );
   }
+}
+
+/// `max-width`, but measured honestly: [ConstrainedBox] reports its child's
+/// intrinsic height at the full width offered rather than at its cap, so the
+/// paragraph read ~90px shorter to [IntrinsicHeight] than it laid out, and the
+/// hero overflowed instead of scrolling on a short window.
+class _MaxWidth extends SingleChildRenderObjectWidget {
+  const _MaxWidth({required this.maxWidth, super.child});
+
+  final double maxWidth;
+
+  @override
+  _RenderMaxWidth createRenderObject(BuildContext context) =>
+      _RenderMaxWidth(maxWidth);
+
+  @override
+  void updateRenderObject(BuildContext context, _RenderMaxWidth renderObject) {
+    renderObject.maxWidth = maxWidth;
+  }
+}
+
+class _RenderMaxWidth extends RenderConstrainedBox {
+  _RenderMaxWidth(double maxWidth)
+    : super(additionalConstraints: BoxConstraints(maxWidth: maxWidth));
+
+  set maxWidth(double value) =>
+      additionalConstraints = BoxConstraints(maxWidth: value);
+
+  double get _cap => additionalConstraints.maxWidth;
+
+  @override
+  double computeMinIntrinsicHeight(double width) =>
+      super.computeMinIntrinsicHeight(math.min(width, _cap));
+
+  @override
+  double computeMaxIntrinsicHeight(double width) =>
+      super.computeMaxIntrinsicHeight(math.min(width, _cap));
 }
 
 /// The hero's text column at phone-panel scale, for the mobile body.

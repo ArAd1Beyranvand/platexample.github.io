@@ -97,7 +97,6 @@ void main() {
   });
 
   group('countries and plates', () {
-    // currently failing
     test('a country page has a meaningful path and parses back to itself', () {
       for (final GallerySource source in gallerySources) {
         final AppLocation location = AppLocation.country(source);
@@ -110,11 +109,18 @@ void main() {
       }
     });
 
-    // currently failing
     test('every plate round-trips through its own URL', () {
       for (final CatalogueItem item in catalogueItems) {
         final AppLocation location = item.location;
-        expect(location.path, '/discover/${item.source.slug}/${item.slug}');
+        final bool nested = iranshahirCountries.any(
+          (GallerySource s) => identical(s, item.source),
+        );
+        expect(
+          location.path,
+          nested
+              ? '/discover/iranshahr/${item.source.slug}/${item.slug}'
+              : '/discover/${item.source.slug}/${item.slug}',
+        );
         final AppLocation parsed = AppLocation.fromUri(
           Uri.parse(location.path),
         );

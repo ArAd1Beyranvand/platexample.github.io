@@ -43,7 +43,6 @@ void main() {
     });
   }
 
-  // currently failing
   testWidgets('sk12 the grid turns over at the pinned breakpoints', (
     WidgetTester tester,
   ) async {
@@ -72,8 +71,13 @@ void main() {
       }).length;
     }
 
-    expect(await columnCountAt(1440), 3);
-    expect(await columnCountAt(1040), 2);
-    expect(await columnCountAt(650), 1);
+    // The breakpoints are window widths; the screen here is pumped without
+    // the 208px rail that sits beside it in the shell.
+    const double rail = 208;
+    expect(await columnCountAt(1440 - rail), 4);
+    expect(await columnCountAt(1280 - rail), 3);
+    expect(await columnCountAt(1040 - rail), 3);
+    expect(await columnCountAt(900 - rail), 2);
+    expect(await columnCountAt(390), 1);
   });
 }

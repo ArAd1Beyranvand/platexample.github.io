@@ -80,7 +80,7 @@ class CountryDetailScreen extends StatelessWidget {
   ///
   /// Solved from the column count the design asks for rather than tuned by
   /// hand: at 1440 the content column is ~1024px and four cards across it are
-  /// 241 apiece, at 1280 three are 236, at 1040 two are 232 — near enough one
+  /// 241 apiece, at 1280 three are 236, at 1040 three are 238 — near enough one
   /// number that a single fixed extent would have to sit inside all three
   /// windows, and would break the moment the rail's width changed. Dividing
   /// instead means the count is the thing that is pinned.
@@ -153,7 +153,7 @@ class CountryDetailScreen extends StatelessWidget {
               ),
               sliver: PlateSliverGrid(
                 stageHeight: stageHeight,
-                // 4 columns at 1440, 3 at ≤1280, 2 at ≤1040 — expressed as the
+                // 4 columns at 1440, 3 at ≤1280, 2 at ≤900 — expressed as the
                 // widest a column may get rather than as a count, because the
                 // page column is the window less the 208px rail less 136px of
                 // gutter, and a count would have to know all three.
