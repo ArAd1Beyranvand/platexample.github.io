@@ -1,4 +1,3 @@
-import 'package:core_plate/core_plate.dart';
 import 'package:mali_plate/mali_plate.dart';
 
 import '../catalogue.dart';
