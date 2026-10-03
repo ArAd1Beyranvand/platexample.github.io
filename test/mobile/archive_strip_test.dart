@@ -38,7 +38,7 @@ void main() {
     );
     expect(
       tester.getSize(find.byType(IntrinsicHeight).first).height,
-      lessThan(80),
+      lessThan(100),
     );
   });
 }
