@@ -1,5 +1,6 @@
 import '../catalogue.dart';
 import 'algeria.dart';
+import 'bolivia.dart';
 import 'germany.dart';
 import 'iran.dart';
 import 'iranshahr.dart';
@@ -15,6 +16,7 @@ import 'yemen.dart';
 
 export '../catalogue.dart';
 export 'algeria.dart';
+export 'bolivia.dart';
 export 'germany.dart';
 export 'iran.dart';
 export 'iranshahr.dart';
@@ -53,6 +55,7 @@ final List<GallerySource> gallerySources = <GallerySource>[
   AlgeriaSource(),
   IndonesiaSource(),
   TunisiaSource(),
+  BoliviaSource(),
 ];
 
 /// The nine countries within Iranshahr for the `/iranshahr/{country}` detail
