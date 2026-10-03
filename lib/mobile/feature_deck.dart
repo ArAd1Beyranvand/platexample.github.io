@@ -5,6 +5,7 @@ import '../poster/callouts/callout_data.dart';
 import '../theme/nocturne.dart';
 import 'mobile_tokens.dart';
 import 'mono_label.dart';
+import 'rolling_numeral.dart';
 import 'segmented_progress.dart';
 
 @immutable
@@ -181,13 +182,15 @@ class _FeatureDeckState extends State<FeatureDeck>
   }
 
   void _onTap(TapUpDetails d, double width) {
-    _goTo(d.localPosition.dx > width * FeatureDeck._backZone
-        ? _index + 1
-        : _index - 1);
+    _goTo(
+      d.localPosition.dx > width * FeatureDeck._backZone
+          ? _index + 1
+          : _index - 1,
+    );
   }
 
   void _hold(bool held) {
-    _held = held;
+    setState(() => _held = held);
     _sync();
   }
 
@@ -220,7 +223,13 @@ class _FeatureDeckState extends State<FeatureDeck>
               onLongPressStart: (_) => _hold(true),
               onLongPressEnd: (_) => _hold(false),
               onLongPressCancel: () => _hold(false),
-              child: _DeckCard(index: _index, card: _cards[_index]),
+              child: _DeckCard(
+                index: _index,
+                count: _cards.length,
+                card: _cards[_index],
+                dwell: _dwell,
+                paused: _held,
+              ),
             );
           },
         ),
@@ -232,10 +241,19 @@ class _FeatureDeckState extends State<FeatureDeck>
 }
 
 class _DeckCard extends StatelessWidget {
-  const _DeckCard({required this.index, required this.card});
+  const _DeckCard({
+    required this.index,
+    required this.count,
+    required this.card,
+    required this.dwell,
+    required this.paused,
+  });
 
   final int index;
+  final int count;
   final FeatureCard card;
+  final Animation<double> dwell;
+  final bool paused;
 
   @override
   Widget build(BuildContext context) {
@@ -257,7 +275,13 @@ class _DeckCard extends StatelessWidget {
           Positioned(
             right: -6,
             bottom: -30,
-            child: _DeckNumeral(index: index),
+            child: RollingNumeral(
+              value: index + 1,
+              count: count,
+              dwell: dwell,
+              paused: paused,
+              style: _numeralStyle,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(18, 0, 18, 0),
@@ -284,6 +308,13 @@ class _DeckCard extends StatelessWidget {
       ),
     );
   }
+
+  static const TextStyle _numeralStyle = TextStyle(
+    fontFamily: NType.archivo,
+    fontWeight: FontWeight.w700,
+    fontSize: 150,
+    height: 1,
+  );
 
   static Widget _transition(Widget child, Animation<double> animation) {
     return FadeTransition(
@@ -352,35 +383,6 @@ class _DeckText extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-/// Placeholder for the rolling counter (MV5): outlined, not filled.
-class _DeckNumeral extends StatelessWidget {
-  const _DeckNumeral({required this.index});
-
-  final int index;
-
-  static final Paint _stroke = Paint()
-    ..style = PaintingStyle.stroke
-    ..strokeWidth = 1
-    ..color = MobileTokens.n800;
-
-  @override
-  Widget build(BuildContext context) {
-    return IgnorePointer(
-      child: Text(
-        '${index + 1}'.padLeft(2, '0'),
-        style: TextStyle(
-          fontFamily: NType.archivo,
-          fontWeight: FontWeight.w700,
-          fontSize: 150,
-          height: 1,
-          letterSpacing: -0.06 * 150,
-          foreground: _stroke,
-        ),
-      ),
     );
   }
 }
