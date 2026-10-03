@@ -83,19 +83,28 @@
       animation: splash-shine 1.8s ease-in-out infinite;
     }
     .plate-section {
-      width: 22px;
-      background: #2b2a55;
+      width: 26px;
+      background: #1f3f9a;
       border-right: 1px solid #3a3d55;
       display: grid;
-      align-content: end;
-      padding-bottom: 5px;
+      grid-template-rows: auto 1fr;
       justify-items: center;
+      align-items: start;
+      padding-top: 5px;
+      row-gap: 3px;
     }
     .plate-section i {
-      width: 10px;
-      height: 6px;
-      background: linear-gradient(#5a9b6b 33%, #d9d9de 33% 66%, #c45a5a 66%);
-      border-radius: 1px;
+      width: 20px;
+      height: 11.4px;
+      background: url("assets/packages/iran_plate/assets/flags/Flag_of_Iran.svg") center / 100% 100% no-repeat;
+    }
+    .plate-section span {
+      align-self: center;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      line-height: 1;
     }
     .plate-number {
       flex: 1;
@@ -176,7 +185,7 @@
   <div id="splash" role="status" aria-label="در حال بارگذاری">
     <div class="splash-content">
       <div class="plate" aria-hidden="true">
-        <div class="plate-section"><i></i></div>
+        <div class="plate-section"><i></i><span>IR</span></div>
         <div class="plate-number"><span class="digit">۱۲</span><b class="digit">ب</b><span class="digit">۳۴۵</span></div>
         <div class="plate-region"><small>ایران</small><span class="digit">۶۷</span></div>
       </div>

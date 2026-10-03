@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../device_preview/device_config.dart';
-import '../poster/callouts/callout_data.dart';
 import '../theme/nocturne.dart';
 import 'mobile_tokens.dart';
 import 'mono_label.dart';
@@ -24,22 +23,47 @@ class FeatureGroup {
   final List<FeatureCard> cards;
 }
 
-/// The deck's own device order (design order, not `DeviceCycle.order`).
-const List<DeviceType> _deckOrder = <DeviceType>[
-  DeviceType.mobile,
-  DeviceType.tablet,
-  DeviceType.desktop,
-];
-
-final List<FeatureGroup> featureGroups = <FeatureGroup>[
-  for (final DeviceType device in _deckOrder)
-    FeatureGroup(
-      device: device,
-      cards: <FeatureCard>[
-        for (final CalloutSpec spec in calloutSets[device]!)
-          FeatureCard(label: spec.kicker, title: spec.title),
-      ],
-    ),
+/// In design order (not `DeviceCycle.order`), three cards per device.
+const List<FeatureGroup> featureGroups = <FeatureGroup>[
+  FeatureGroup(
+    device: DeviceType.mobile,
+    cards: <FeatureCard>[
+      FeatureCard(
+        label: 'KEYPAD',
+        title: 'An on-screen pad in the plate\'s own script',
+      ),
+      FeatureCard(label: 'FOCUS', title: 'Each slot hands off to the next'),
+      FeatureCard(label: 'IME', title: 'No system keyboard pops up'),
+    ],
+  ),
+  FeatureGroup(
+    device: DeviceType.tablet,
+    cards: <FeatureCard>[
+      FeatureCard(
+        label: 'RULES',
+        title: 'Validation marks a bad plate red and never blocks a key',
+      ),
+      FeatureCard(
+        label: 'CONTROLLER',
+        title: 'Read and write the value from code',
+      ),
+      FeatureCard(label: 'STATE', title: 'No provider or bloc required'),
+    ],
+  ),
+  FeatureGroup(
+    device: DeviceType.desktop,
+    cards: <FeatureCard>[
+      FeatureCard(
+        label: 'COUNTRIES',
+        title: 'One package per country, one widget for all',
+      ),
+      FeatureCard(label: 'KEYBOARD', title: 'Physical keys type straight in'),
+      FeatureCard(
+        label: 'SPECS',
+        title: 'A new plate is a const, not a widget',
+      ),
+    ],
+  ),
 ];
 
 /// The device whose group holds flat card index [i].

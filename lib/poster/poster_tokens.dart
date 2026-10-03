@@ -193,40 +193,6 @@ class PosterGradients {
     colors: [Color(0xFF1B2131), Color(0xFF0C0F16)],
   );
 
-  /// Per-card ground for the numbered callout cards (steel + dark kinds):
-  ///
-  ///  * 04 — a lighter blue of hero card 01 (`#16479D`)
-  ///  * 12 — a muted denim, lighter than hero card 09 (`#003399`)
-  ///  * 07 — cool charcoal, 08 — cool steel blue, 11 — blue slate
-  ///  * 02 / 03 — one shared slate tone
-  ///
-  /// Anything unlisted falls back to [cardSteel].
-  static LinearGradient calloutFace(int index) {
-    switch (index) {
-      case 2:
-      case 3:
-        return _face(0xFF20293C, 0xFF0C0F17);
-      case 4:
-        return _face(0xFF3160B0, 0xFF17233F);
-      case 7:
-        return _face(0xFF26262B, 0xFF0E0E12);
-      case 8:
-        return _face(0xFF1B2B3C, 0xFF0A131B);
-      case 11:
-        return _face(0xFF243040, 0xFF0C1019);
-      case 12:
-        return _face(0xFF3C5C97, 0xFF111A2E);
-      default:
-        return cardSteel;
-    }
-  }
-
-  static LinearGradient _face(int top, int bottom) => LinearGradient(
-    begin: const Alignment(-0.62, -0.79),
-    end: const Alignment(0.62, 0.79),
-    colors: <Color>[Color(top), Color(bottom)],
-  );
-
   /// `linear-gradient(158deg, #1A2032, #0C0E16)`; hover ground → `#EDEFF3`.
   static const LinearGradient linkButton = LinearGradient(
     begin: Alignment(-0.62, -0.79),

@@ -203,6 +203,12 @@ abstract final class NBreak {
   /// same place: the showcase hero switches to its panel column here, and the
   /// backdrop drops the road for the panel's ground here.
   static const double panel = 560;
+
+  /// Whether a box of [size] gets the phone-panel layout: under [panel], or
+  /// any portrait box. A tall desktop window uses the mobile layout rather
+  /// than a stacked version of the wide one.
+  static bool isPanel(Size size) =>
+      size.width < panel || size.height > size.width;
 }
 
 /// A horizontal rule that fades to transparent over its first and last 48px

@@ -20,8 +20,7 @@ PosterTier _tierFor(Size size) {
   // but it is still a wide surface, and the wide poster is entirely
   // fraction-positioned, so it lays out there correctly once the fluid factor
   // follows the *height* as well (see [_fluidFactorFor]). Without this it fell
-  // to the medium rails, which drop half the callouts and squeeze the wordmark
-  // into a ~40px band.
+  // to the medium rails, which squeeze the wordmark into a ~40px band.
   if (size.width >= 760 && size.width / size.height >= _wideAspect) {
     return PosterTier.wide;
   }

@@ -31,6 +31,7 @@ class ShowcaseScreen extends StatefulWidget {
     super.key,
     required this.onOpenTab,
     required this.onOpenPlate,
+    required this.onOpenCountry,
   });
 
   /// Asks the router to navigate; the hero's `Browse plates` button is the
@@ -43,6 +44,9 @@ class ShowcaseScreen extends StatefulWidget {
   /// shell owns the Discover navigator, so the request travels up to it rather
   /// than being pushed from here.
   final void Function(CatalogueItem item, String heroTag) onOpenPlate;
+
+  /// Opens a country page; the mobile package carousel's cards are the caller.
+  final ValueChanged<GallerySource> onOpenCountry;
 
   @override
   State<ShowcaseScreen> createState() => _ShowcaseScreenState();
@@ -83,7 +87,7 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
     // does: the forced panel narrows constraints, not the window.
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) =>
-          constraints.maxWidth < NBreak.panel ? _mobile() : _wide(),
+          NBreak.isPanel(constraints.biggest) ? _mobile() : _wide(),
     );
   }
 
@@ -100,6 +104,7 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
               stats: _catalogueStats,
               onOpenArchive: () => widget.onOpenTab(AppTab.discover),
               onOpenPlate: widget.onOpenPlate,
+              onOpenCountry: widget.onOpenCountry,
             ),
           ],
         ),
@@ -108,10 +113,6 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
   }
 
   Widget _wide() {
-    // Just the stage. The callouts float over the whole `.pg-stage` box —
-    // picker and stamp included — and turn into a stacked list when the hero
-    // collapses, so the hero owns them rather than this screen wrapping them
-    // into `stage`.
     final Widget stage = DeviceStage(
       cycleController: _cycle,
       onFrameDeviceChanged: _onFrameDeviceChanged,

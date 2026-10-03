@@ -53,7 +53,10 @@ class SegmentedProgress extends StatelessWidget {
       );
       start += groups[g];
     }
-    return SizedBox(height: _hitHeight, child: Row(children: children));
+    return SizedBox(
+      height: _hitHeight,
+      child: Row(children: children),
+    );
   }
 }
 

@@ -35,8 +35,8 @@ Type used by the mobile showcase (all MartianMono unless noted; `ls` = letter-sp
 |---|---|---|
 | Header brand `PLATE GALLERY` | 10 / 400 / .14 / n100 | preceded by 16×1 accent rule, gap 10 |
 | Header right `01 / SHOWCASE` | 9.5 / 400 / .12 / n600 | |
-| Section label (`ONE PLATE PER PACKAGE`, `WHAT IT DOES`, `THE ARCHIVE, REGISTERED`) | 10 / 400 / .12 / n400, uppercase | |
-| Section aside (`SWIPE →`) | 9.5 / .10 / n600 | |
+| Section label (`ONE COUNTRY PER PACKAGE`, `WHAT IT DOES`, `THE ARCHIVE, REGISTERED`) | 10 / 400 / .12 / n400, uppercase | |
+| Section aside (`ALL COUNTRIES`) | 9.5 / .10 / n600 | |
 | Deck aside (`MOBILE PREVIEW`) | 9.5 / .10 / accent300 | |
 | Device chip | 9.5 / .10 / n500 (hover n200), border 1 n800, pill, pad 5×12 | |
 | Deck eyebrow | 9.5 / .12 / accent300 | = `CalloutSpec.kicker` |
@@ -94,7 +94,7 @@ New code root: **`lib/mobile/`** (README assumed `example/lib/mobile/`; this app
 | 1 | Header `— PLATE GALLERY` / `01 / SHOWCASE` | `mobile/mobile_header.dart` (or keep `NocturneMobileHeader`, see §3) | `ShellRouteState.headerLabel` (already `01 / SHOWCASE`) |
 | 2 | Hero (credit, h1, para, 2 buttons) | keep `ShowcaseHero` compact text (`_HeroText`) — see Q1 | `hero.dart` |
 | 3 | Device frame + 3 chips | reuse `DeviceStage` + `_cycle` from `ShowcaseScreen`; chips = new `mobile/device_chips.dart` | `DeviceType`, `DeviceCycleController.pin` |
-| 4 | "ONE PLATE PER PACKAGE · SWIPE →" carousel | `mobile/package_carousel.dart` | `gallerySources` → `source.highlightItems.first` (`CatalogueItem`: `source.countryName`, `entry.spec.id`, plate via `PlateFrame`/`PlateTile` internals) |
+| 4 | "ONE COUNTRY PER PACKAGE · ALL COUNTRIES" carousel | `mobile/package_carousel.dart` | `gallerySources` → `source.highlightItems.first` (`CatalogueItem`: `source.countryName`, `entry.spec.id`, plate via `PlateFrame`/`PlateTile` internals) |
 | 5 | "WHAT IT DOES" deck | `mobile/feature_deck.dart`, `mobile/segmented_progress.dart` | `calloutSets[DeviceType]` (`kicker`, `title`) flattened Mobile→Tablet→Desktop |
 | 5a | Rolling outlined numeral | `mobile/rolling_numeral.dart` (MV5) | deck index; preview in `design/rolling_numeral_preview.html` |
 | 6 | "THE ARCHIVE, REGISTERED" plate strip | `mobile/archive_strip.dart` | `CatalogueStats.of(gallerySources).tiles` (labels need a `short` form: `pkgs / countries / specs / forms`) |

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../device_preview/device_config.dart';
-import '../../poster/callouts/callout_card.dart';
 import '../../poster/chrome/poster_links.dart';
 import '../../theme/nocturne.dart';
 import '../../widgets/nocturne/n_button.dart';
@@ -29,11 +28,6 @@ import '../../widgets/nocturne/n_segmented.dart';
 /// the frames and sk10 the backdrop, and this prompt only gives the existing
 /// stage the column proportion and the chrome the design asks for.
 ///
-/// The callouts *are* built here, in both of the presentations the design
-/// gives them: floating over the stage in the two-column layout ([CalloutLayer])
-/// and a stacked list under it once the hero collapses ([CalloutList]). They
-/// belong to the hero rather than to the stage because only the hero knows
-/// which of the two is in play.
 class ShowcaseHero extends StatelessWidget {
   const ShowcaseHero({
     super.key,
@@ -54,8 +48,7 @@ class ShowcaseHero extends StatelessWidget {
   /// `Browse plates` — navigates to `/discover`.
   final VoidCallback onOpenArchive;
 
-  /// The right column's content: the device stage itself. The callouts that
-  /// float over it are the hero's, not the stage's — see [_Stage].
+  /// The right column's content: the device stage itself.
   final Widget stage;
 
   /// No country names and no counts: the stat band under the hero counts the
@@ -144,7 +137,6 @@ class ShowcaseHero extends StatelessWidget {
                   stage: stage,
                   device: device,
                   onPickDevice: onPickDevice,
-                  floatingCallouts: true,
                 ),
               ),
             ),
@@ -179,12 +171,6 @@ class ShowcaseHero extends StatelessWidget {
               ),
             ),
           ),
-          // `.pg-feat`, under the stage: floating them here would drop a card
-          // on the headline, which now sits directly above the stage.
-          CalloutList(
-            device: device,
-            padding: const EdgeInsets.only(bottom: 8),
-          ),
         ],
       ),
     );
@@ -206,23 +192,15 @@ class _Stage extends StatelessWidget {
     required this.stage,
     required this.device,
     required this.onPickDevice,
-    this.floatingCallouts = false,
   });
 
   final Widget stage;
   final DeviceType device;
   final ValueChanged<DeviceType> onPickDevice;
 
-  /// Whether the callouts float over this box. Only the two-column hero says
-  /// yes; the stacked layouts put them in a list under the stage instead, and
-  /// rendering both would draw each card twice.
-  final bool floatingCallouts;
-
   @override
   Widget build(BuildContext context) {
     return Stack(
-      // The callouts hang outside this box on purpose: the top card clears
-      // the stage's top edge and the bottom one its bottom edge.
       clipBehavior: Clip.none,
       children: <Widget>[
         Positioned.fill(
@@ -259,11 +237,6 @@ class _Stage extends StatelessWidget {
             ),
           ),
         ),
-        // Over the device, under the stamp: the design's cards sit above the
-        // stage's own contents, and the pill is the one thing it draws over
-        // them both.
-        if (floatingCallouts)
-          Positioned.fill(child: CalloutLayer(device: device)),
         const Positioned(
           left: 16,
           bottom: 0,

@@ -5,7 +5,7 @@ import 'mobile_tokens.dart';
 
 /// Uppercase mono label for mobile showcase sections.
 ///
-/// Examples: `PLATE GALLERY`, `SWIPE →`, `TAP TO ADVANCE`.
+/// Examples: `PLATE GALLERY`, `ALL COUNTRIES`, `TAP TO ADVANCE`.
 class MonoLabel extends StatelessWidget {
   const MonoLabel(
     this.text, {

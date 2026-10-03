@@ -81,14 +81,18 @@ class _TabBarItem extends StatelessWidget {
         child: Container(
           constraints: const BoxConstraints(minHeight: 60),
           decoration: BoxDecoration(
-            border: isLast ? null : const Border(right: BorderSide(color: N.n800)),
+            border: isLast
+                ? null
+                : const Border(right: BorderSide(color: N.n800)),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               // Animated accent bar: 16×2, slides in/out with constant tree shape
               AnimatedAlign(
-                alignment: isSelected ? Alignment.center : const Alignment(0, -1),
+                alignment: isSelected
+                    ? Alignment.center
+                    : const Alignment(0, -1),
                 duration: const Duration(milliseconds: 200),
                 child: Container(
                   width: 16,

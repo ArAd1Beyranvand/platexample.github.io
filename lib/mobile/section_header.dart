@@ -4,7 +4,7 @@ import 'mobile_tokens.dart';
 
 /// Section header with leading label and optional trailing accent label.
 ///
-/// Example: `ONE PLATE PER PACKAGE` (leading) · `SWIPE →` (trailing).
+/// Example: `ONE COUNTRY PER PACKAGE` (leading) · `ALL COUNTRIES` (trailing).
 class SectionHeader extends StatelessWidget {
   const SectionHeader({
     super.key,

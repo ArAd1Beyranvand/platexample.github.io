@@ -99,44 +99,43 @@ void main() {
     },
   );
 
-  testWidgets(
-    'the mobile hero text stacks the buttons full-width',
-    (WidgetTester tester) async {
-      tester.view.physicalSize = const Size(390, 2400);
-      tester.view.devicePixelRatio = 1.0;
-      addTearDown(tester.view.reset);
+  testWidgets('the mobile hero text stacks the buttons full-width', (
+    WidgetTester tester,
+  ) async {
+    tester.view.physicalSize = const Size(390, 2400);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
 
-      await tester.pumpWidget(
-        MaterialApp(
-          theme: nocturneTheme(),
-          home: Scaffold(
-            body: SizedBox(
-              width: 390,
-              height: 2400,
-              child: MobileHeroText(onOpenArchive: () {}),
-            ),
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: nocturneTheme(),
+        home: Scaffold(
+          body: SizedBox(
+            width: 390,
+            height: 2400,
+            child: MobileHeroText(onOpenArchive: () {}),
           ),
         ),
-      );
+      ),
+    );
 
-      expect(tester.takeException(), isNull);
-      expect(
-        tester
-            .widget<Text>(find.text('Plate input\nfor Flutter.'))
-            .style!
-            .fontSize,
-        40,
-      );
+    expect(tester.takeException(), isNull);
+    expect(
+      tester
+          .widget<Text>(find.text('Plate input\nfor Flutter.'))
+          .style!
+          .fontSize,
+      40,
+    );
 
-      // Full-width and stacked: both buttons span the column inside its 18px
-      // gutters, and the secondary sits below the primary rather than beside it.
-      final Rect primary = tester.getRect(find.text('Browse plates'));
-      final Rect secondary = tester.getRect(find.text('View on pub.dev'));
-      expect(secondary.right, lessThanOrEqualTo(390 - 18));
-      expect(primary.width, closeTo(390 - 36 - 2 * 22 - 2, 1));
-      expect(secondary.top, greaterThan(primary.bottom));
-    },
-  );
+    // Full-width and stacked: both buttons span the column inside its 18px
+    // gutters, and the secondary sits below the primary rather than beside it.
+    final Rect primary = tester.getRect(find.text('Browse plates'));
+    final Rect secondary = tester.getRect(find.text('View on pub.dev'));
+    expect(secondary.right, lessThanOrEqualTo(390 - 18));
+    expect(primary.width, closeTo(390 - 36 - 2 * 22 - 2, 1));
+    expect(secondary.top, greaterThan(primary.bottom));
+  });
 
   // currently failing
   testWidgets('the hero never grows past the height it is given', (

@@ -406,6 +406,7 @@ class GalleryShellState extends State<GalleryShellScreen> {
         ShowcaseScreen(
           onOpenTab: (AppTab tab) => widget.onNavigate(AppLocation.tab(tab)),
           onOpenPlate: _openShowcasePlate,
+          onOpenCountry: _openCountry,
         ),
         // Discover is the nested navigator, and the index screen is its root
         // page. The navigator sits *inside* the IndexedStack so switching tabs

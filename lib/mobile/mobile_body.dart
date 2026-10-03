@@ -7,6 +7,7 @@ import 'archive_strip.dart';
 import 'deck_device_sync.dart';
 import 'mobile_deck_section.dart';
 import 'mobile_device_section.dart';
+import '../screens/gallery/sources/sources.dart';
 import 'package_carousel.dart';
 
 /// The showcase below [NBreak.panel]: hero, device frame, package carousel,
@@ -19,11 +20,14 @@ class MobileBody extends StatefulWidget {
     required this.stats,
     required this.onOpenArchive,
     required this.onOpenPlate,
+    required this.onOpenCountry,
   });
 
   final CatalogueStats stats;
   final VoidCallback onOpenArchive;
   final void Function(CatalogueItem item, String heroTag) onOpenPlate;
+
+  final ValueChanged<GallerySource> onOpenCountry;
 
   @override
   State<MobileBody> createState() => _MobileBodyState();
@@ -46,7 +50,7 @@ class _MobileBodyState extends State<MobileBody> {
         children: <Widget>[
           MobileHeroText(onOpenArchive: widget.onOpenArchive),
           MobileDeviceSection(sync: _sync, onOpenPlate: widget.onOpenPlate),
-          const PackageCarousel(),
+          PackageCarousel(onOpenCountry: widget.onOpenCountry),
           MobileDeckSection(sync: _sync),
           ArchiveStrip(stats: widget.stats),
         ],

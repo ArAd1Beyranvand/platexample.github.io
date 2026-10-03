@@ -17,7 +17,11 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           theme: nocturneTheme(),
-          home: ShowcaseScreen(onOpenTab: (_) {}, onOpenPlate: (_, _) {}),
+          home: ShowcaseScreen(
+            onOpenTab: (_) {},
+            onOpenPlate: (_, _) {},
+            onOpenCountry: (_) {},
+          ),
         ),
       );
       await tester.pump(const Duration(milliseconds: 500));

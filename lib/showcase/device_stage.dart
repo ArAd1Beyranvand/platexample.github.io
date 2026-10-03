@@ -27,8 +27,7 @@ class DeviceStage extends StatefulWidget {
 
   /// Fired the instant a hop starts, with the incoming device — i.e. the same
   /// moment [_DeviceStageState._frameDevice] flips, before the plate content
-  /// has caught up. The callout rails switch on this, so they leave while the
-  /// device is still morphing.
+  /// has caught up.
   final ValueChanged<DeviceType>? onFrameDeviceChanged;
 
   /// Fired for every phase reported by the frame transition.

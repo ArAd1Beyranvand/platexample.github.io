@@ -121,7 +121,7 @@ class _PosterBackdropState extends State<PosterBackdrop> {
   @override
   Widget build(BuildContext context) {
     final PosterMetrics metrics = PosterMetrics.of(context);
-    final bool panelLayout = metrics.size.width < NBreak.panel;
+    final bool panelLayout = NBreak.isPanel(metrics.size);
 
     return SizedBox(
       width: metrics.size.width,

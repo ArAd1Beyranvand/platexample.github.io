@@ -1,30 +1,23 @@
-import 'package:core_plate/core_plate.dart';
 import 'package:flutter/material.dart';
 
 import '../screens/gallery/catalogue_index.dart';
 import '../screens/gallery/sources/sources.dart';
 import '../screens/gallery/widgets/plate_tile.dart';
-import '../theme/nocturne.dart';
-import 'mobile_tokens.dart';
 import 'section_header.dart';
 
-/// "One plate per package": a start-aligned swipe carousel with the next card
+/// "One country per package": a start-aligned swipe carousel with the next card
 /// peeking, one card per gallery source.
 class PackageCarousel extends StatefulWidget {
-  const PackageCarousel({super.key});
+  const PackageCarousel({super.key, required this.onOpenCountry});
+
+  final ValueChanged<GallerySource> onOpenCountry;
 
   static const double gutter = 18;
   static const double cardWidth = 262;
   static const double cardGap = 12;
   static const double stageHeight = 96;
 
-  static const EdgeInsets _cardPadding = EdgeInsets.fromLTRB(16, 16, 16, 14);
-
-  /// Both borders, both paddings, the stage, the 16 gap, the rule, the 12 gap
-  /// and the pinned footer line.
-  static const double cardHeight =
-      16 + 14 + 2 + stageHeight + 16 + 1 + 12 + _footerLine;
-  static const double _footerLine = 18;
+  static double get cardHeight => PlateTile.heightFor(stageHeight);
 
   @override
   State<PackageCarousel> createState() => _PackageCarouselState();
@@ -58,7 +51,7 @@ class _PackageCarouselState extends State<PackageCarousel> {
   Widget build(BuildContext context) {
     const double gutter = PackageCarousel.gutter;
     const double cardWidth = PackageCarousel.cardWidth;
-    const double cardHeight = PackageCarousel.cardHeight;
+    final double cardHeight = PackageCarousel.cardHeight;
     return Padding(
       padding: const EdgeInsets.only(top: 24, bottom: 20),
       child: Column(
@@ -68,8 +61,8 @@ class _PackageCarouselState extends State<PackageCarousel> {
           const Padding(
             padding: EdgeInsets.fromLTRB(gutter, 0, gutter, 16),
             child: SectionHeader(
-              leading: 'ONE PLATE PER PACKAGE',
-              trailing: 'SWIPE →',
+              leading: 'ONE COUNTRY PER PACKAGE',
+              trailing: 'ALL COUNTRIES',
             ),
           ),
           LayoutBuilder(
@@ -92,7 +85,14 @@ class _PackageCarouselState extends State<PackageCarousel> {
                         width: cardWidth,
                         height: cardHeight,
                         child: RepaintBoundary(
-                          child: _PackageCard(item: _items[index]),
+                          child: PlateTile(
+                            key: ValueKey<String>(_items[index].entry.id),
+                            entry: _items[index].entry,
+                            heroTag: 'carousel:${_items[index].entry.id}',
+                            stageHeight: PackageCarousel.stageHeight,
+                            onTap: () =>
+                                widget.onOpenCountry(_items[index].source),
+                          ),
                         ),
                       ),
                     ),
@@ -102,99 +102,6 @@ class _PackageCarouselState extends State<PackageCarousel> {
             },
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _PackageCard extends StatefulWidget {
-  const _PackageCard({required this.item});
-
-  final CatalogueItem item;
-
-  @override
-  State<_PackageCard> createState() => _PackageCardState();
-}
-
-class _PackageCardState extends State<_PackageCard> {
-  late final PlateController _plate = PlateController(
-    spec: widget.item.entry.spec,
-    values: widget.item.entry.sampleValues,
-  );
-
-  @override
-  void dispose() {
-    _plate.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final GalleryEntry entry = widget.item.entry;
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(NRadius.lg),
-        border: Border.all(color: MobileTokens.n800),
-        gradient: const LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: <Color>[MobileTokens.surface, MobileTokens.n900],
-        ),
-      ),
-      child: Padding(
-        padding: PackageCarousel._cardPadding,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            SizedBox(
-              height: PackageCarousel.stageHeight,
-              child: ExcludeSemantics(
-                child: IgnorePointer(
-                  child: PlateFrame(
-                    spec: entry.spec,
-                    child: PlateView(
-                      controller: _plate,
-                      theme: entry.themeFor(_plate.values),
-                      country: entry.country,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-            Container(height: 1, color: MobileTokens.n800),
-            const SizedBox(height: 12),
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: Text(
-                    widget.item.source.countryName,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontFamily: NType.archivo,
-                      fontSize: 14,
-                      height: PackageCarousel._footerLine / 14,
-                      color: MobileTokens.n100,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: NSpace.s4),
-                Text(
-                  entry.spec.id,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: NType.specId.copyWith(
-                    fontSize: 9.5,
-                    letterSpacing: 0.06 * 9.5,
-                    height: PackageCarousel._footerLine / 9.5,
-                    color: MobileTokens.n500,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
       ),
     );
   }
