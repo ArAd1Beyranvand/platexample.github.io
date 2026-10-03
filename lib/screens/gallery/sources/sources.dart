@@ -3,6 +3,7 @@ import 'germany.dart';
 import 'iran.dart';
 import 'iranshahr.dart';
 import 'cuba.dart';
+import 'india.dart';
 import 'venezuela.dart';
 import 'lebanon.dart';
 import 'palestine.dart';
@@ -13,6 +14,7 @@ export 'germany.dart';
 export 'iran.dart';
 export 'iranshahr.dart';
 export 'cuba.dart';
+export 'india.dart';
 export 'venezuela.dart';
 export 'lebanon.dart';
 export 'palestine.dart';
@@ -37,6 +39,7 @@ final List<GallerySource> gallerySources = <GallerySource>[
   LebanonSource(),
   CubaSource(),
   VenezuelaSource(),
+  IndiaSource(),
   const GermanySource(),
 ];
 
