@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../app/app_routes.dart';
 import '../device_preview/device_config.dart';
 import '../device_preview/device_transition.dart';
+import '../mobile/mobile_body.dart';
 import '../poster/backdrop/poster_backdrop.dart';
 import '../poster/backdrop/sweep_light.dart';
 import '../poster/poster_scale.dart';
@@ -78,6 +79,35 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Measured here rather than with MediaQuery, for the same reason the hero
+    // does: the forced panel narrows constraints, not the window.
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) =>
+          constraints.maxWidth < NBreak.panel ? _mobile() : _wide(),
+    );
+  }
+
+  Widget _mobile() {
+    return Scaffold(
+      backgroundColor: N.bg,
+      body: PosterMetricsScope(
+        child: Stack(
+          fit: StackFit.expand,
+          clipBehavior: Clip.none,
+          children: <Widget>[
+            const PosterBackdrop(),
+            MobileBody(
+              stats: _catalogueStats,
+              onOpenArchive: () => widget.onOpenTab(AppTab.discover),
+              onOpenPlate: widget.onOpenPlate,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _wide() {
     // Just the stage. The callouts float over the whole `.pg-stage` box —
     // picker and stamp included — and turn into a stacked list when the hero
     // collapses, so the hero owns them rather than this screen wrapping them

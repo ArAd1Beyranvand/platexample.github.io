@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/nocturne.dart';
+import '../widgets/nocturne/n_button.dart';
 
 /// Whether the app is forced into the design's phone-panel presentation.
 ///
@@ -57,21 +58,38 @@ class MobilePanelChrome extends StatelessWidget {
           stops: <double>[0.0, 0.6],
         ),
       ),
-      child: Center(
-        child: Container(
-          width: _width,
-          height: _height,
-          margin: const EdgeInsets.symmetric(vertical: 28),
-          decoration: BoxDecoration(
-            border: Border.all(color: N.divider),
-            borderRadius: BorderRadius.circular(_radius),
-            boxShadow: NShadow.lgShadows,
+      child: Stack(
+        children: <Widget>[
+          Center(child: _panel()),
+          // `.pg-mtoggle`: on the viewport, outside the panel.
+          Positioned(
+            top: 18,
+            right: 18,
+            child: NButton(
+              label: 'Desktop view',
+              fontSize: 9.5,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 9),
+              onPressed: () => MobilePanelScope.of(context).value = false,
+            ),
           ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(_radius),
-            child: child,
-          ),
-        ),
+        ],
+      ),
+    );
+  }
+
+  Widget _panel() {
+    return Container(
+      width: _width,
+      height: _height,
+      margin: const EdgeInsets.symmetric(vertical: 28),
+      decoration: BoxDecoration(
+        border: Border.all(color: N.divider),
+        borderRadius: BorderRadius.circular(_radius),
+        boxShadow: NShadow.lgShadows,
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(_radius),
+        child: child,
       ),
     );
   }

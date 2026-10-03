@@ -114,21 +114,6 @@ void main() {
     _expectNoOverlapWithText(tester);
   });
 
-  testWidgets('the phone panel keeps the stacked list', (
-    WidgetTester tester,
-  ) async {
-    tester.view.physicalSize = const Size(390, 2400);
-    tester.view.devicePixelRatio = 1.0;
-    addTearDown(tester.view.reset);
-
-    await tester.pumpWidget(_hero(width: 390));
-    await tester.pumpAndSettle();
-
-    expect(find.byType(CalloutList), findsOneWidget);
-    expect(find.byType(CalloutCard), findsNWidgets(3));
-    _expectNoOverlapWithText(tester);
-  });
-
   testWidgets('each device brings its own set, and the swap is by tile', (
     WidgetTester tester,
   ) async {

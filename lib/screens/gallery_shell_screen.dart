@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../app/app_routes.dart';
+import '../mobile/mobile_header.dart';
+import '../mobile/mobile_tab_bar.dart';
 import '../poster/poster_tokens.dart';
 import '../shell/mobile_panel.dart';
-import '../shell/nocturne_bottom_bar.dart';
-import '../shell/nocturne_mobile_header.dart';
 import '../shell/nocturne_rail.dart';
 import '../shell/page_rise_route.dart';
 import '../shell/shell_route_state.dart';
@@ -484,33 +484,12 @@ class GalleryShellState extends State<GalleryShellScreen> {
                   ShellRouteState route,
                   Widget? tabBodies,
                 ) {
-                  final String? label = route.headerLabel;
                   return Column(
                     children: <Widget>[
-                      ValueListenableBuilder<bool>(
-                        valueListenable: forceMobilePanel,
-                        builder: (BuildContext context, bool forced, _) {
-                          Widget? trailing;
-                          if (forced) {
-                            trailing = GestureDetector(
-                              onTap: () => forceMobilePanel.value = false,
-                              child: Text(
-                                'DESKTOP VIEW',
-                                style: NType.pill.copyWith(color: N.accent),
-                              ),
-                            );
-                          } else if (label != null) {
-                            trailing = Text(
-                              label,
-                              style: NType.pill.copyWith(color: N.n600),
-                            );
-                          }
-                          return NocturneMobileHeader(trailing: trailing);
-                        },
-                      ),
+                      MobileHeader(label: route.headerLabel),
                       Expanded(child: tabBodies!),
                       if (route.showsBottomBar)
-                        NocturneBottomBar(
+                        MobileTabBar(
                           tab: route.tab,
                           onTabSelected: _onTabSelected,
                         ),

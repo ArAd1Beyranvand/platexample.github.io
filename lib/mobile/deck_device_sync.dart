@@ -35,10 +35,12 @@ class DeckDeviceSync extends ChangeNotifier {
     _drive();
   }
 
-  void detach() {
+  /// [release] frees a deck held unsettled; skip it while tearing down, when
+  /// the deck's listener can no longer look up its ancestors.
+  void detach({bool release = true}) {
     _attached = false;
     _hopping = false;
-    deck.settled.value = true;
+    if (release) deck.settled.value = true;
   }
 
   /// Chip tap: jump the deck to the start of [device]'s group.

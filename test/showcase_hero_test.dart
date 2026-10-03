@@ -100,13 +100,24 @@ void main() {
   );
 
   testWidgets(
-    'the phone panel stacks the buttons full-width and drops the picker',
+    'the mobile hero text stacks the buttons full-width',
     (WidgetTester tester) async {
       tester.view.physicalSize = const Size(390, 2400);
       tester.view.devicePixelRatio = 1.0;
       addTearDown(tester.view.reset);
 
-      await tester.pumpWidget(_hero(width: 390));
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: nocturneTheme(),
+          home: Scaffold(
+            body: SizedBox(
+              width: 390,
+              height: 2400,
+              child: MobileHeroText(onOpenArchive: () {}),
+            ),
+          ),
+        ),
+      );
 
       expect(tester.takeException(), isNull);
       expect(
@@ -124,11 +135,6 @@ void main() {
       expect(secondary.right, lessThanOrEqualTo(390 - 18));
       expect(primary.width, closeTo(390 - 36 - 2 * 22 - 2, 1));
       expect(secondary.top, greaterThan(primary.bottom));
-
-      // No room for three cells and a 200px pill at this width; the auto-cycle
-      // still walks the devices.
-      expect(find.text('TABLET'), findsNothing);
-      expect(find.text('IRAN MADE · OPEN SOURCE'), findsNothing);
     },
   );
 

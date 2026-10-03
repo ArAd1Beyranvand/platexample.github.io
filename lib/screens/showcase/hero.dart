@@ -67,18 +67,6 @@ class ShowcaseHero extends StatelessWidget {
       'plate is printed. Each country is a separate package: add the ones you '
       'ship and pass a const spec.';
 
-  /// Below this the hero is inside the design's 390×812 phone panel (or a
-  /// window no wider than one), and the stacked desktop metrics stop working:
-  /// a 56px headline wraps to three lines and a 48px gutter eats a quarter of
-  /// the column. The CSS has no rule for it because its media queries measure
-  /// the viewport, and the panel narrows a box inside one — so the panel's
-  /// proportions come from the reference render instead.
-  ///
-  /// sk10 moved the value onto [NBreak] rather than leaving a second copy in
-  /// the backdrop: the road has to disappear on the same pixel this column
-  /// changes shape.
-  static const double _compactBreak = NBreak.panel;
-
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -92,8 +80,7 @@ class ShowcaseHero extends StatelessWidget {
 
         final Widget content = switch (width) {
           >= NBreak.hero => _wide(width),
-          >= _compactBreak => _stacked(),
-          _ => _compact(),
+          _ => _stacked(),
         };
 
         // `min-height: 100vh`, and nothing more: fill the height given, and
@@ -202,53 +189,14 @@ class ShowcaseHero extends StatelessWidget {
       ),
     );
   }
-
-  /// The phone panel: text at panel scale, a rule edge to edge, and the device
-  /// taking every pixel left under it — cropped by the panel's bottom bar
-  /// rather than pushing the page taller, which is what the reference render
-  /// of this width shows.
-  ///
-  /// The picker and the stamp are dropped here, as they are in that render:
-  /// three cells and a 200px pill do not fit beside anything at 390px, and the
-  /// auto-cycle still walks the devices on its own.
-  Widget _compact() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.fromLTRB(18, 24, 18, 20),
-          child: _HeroText(
-            metrics: _HeroMetrics.compact(),
-            onOpenArchive: onOpenArchive,
-          ),
-        ),
-        // Sized, so the intrinsic measurement does not descend into the rule's
-        // own LayoutBuilder, which has no intrinsics to give.
-        const SizedBox(height: 1, child: NRule()),
-        Expanded(
-          child: SizedBox(
-            height: _compactStageMin,
-            child: ClipRect(child: stage),
-          ),
-        ),
-        // `.pg-feat { gap: 10px; padding: 0 18px 8px }`, in the place the
-        // panel render gives it: under the device, above the stamp line.
-        CalloutList(
-          device: device,
-          padding: const EdgeInsets.fromLTRB(18, 16, 18, 8),
-        ),
-      ],
-    );
-  }
 }
 
-/// `.pg-stage { min-height: 420px }`, and the phone panel's share of it.
+/// `.pg-stage { min-height: 420px }`.
 ///
 /// Floors rather than heights: the stage takes the row it is in, and these
 /// only decide how short a window has to get before the hero stops shrinking
 /// the device and starts scrolling instead.
 const double _stageMin = 420;
-const double _compactStageMin = 220;
 
 /// `.pg-stage`: the device centred in its column, the device picker 22px under
 /// it, and the `IRAN MADE · OPEN SOURCE` stamp pinned to the column's
@@ -502,6 +450,24 @@ class _HeroText extends StatelessWidget {
         SizedBox(height: metrics.afterParagraph),
         _actions(),
       ],
+    );
+  }
+}
+
+/// The hero's text column at phone-panel scale, for the mobile body.
+class MobileHeroText extends StatelessWidget {
+  const MobileHeroText({super.key, required this.onOpenArchive});
+
+  final VoidCallback onOpenArchive;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(18, 32, 18, 30),
+      child: _HeroText(
+        metrics: _HeroMetrics.compact(),
+        onOpenArchive: onOpenArchive,
+      ),
     );
   }
 }

@@ -1,34 +1,24 @@
 import 'package:flutter/material.dart';
 
-import '../app/app_routes.dart';
 import '../theme/nocturne.dart';
 
 /// MV2 mobile header: the `PLATE GALLERY` wordmark on the left (with leading
-/// accent dash), and the active tab index / name on the right (`01 / SHOWCASE`).
+/// accent dash), and the shell's label on the right (`01 / SHOWCASE`).
 ///
 /// Spec: MOBILE_SPEC.md § 1 (header), § 3 (current-file inventory).
 class MobileHeader extends StatelessWidget implements PreferredSizeWidget {
-  const MobileHeader({super.key, required this.tab});
+  const MobileHeader({super.key, required this.label});
 
-  /// The tab the URL currently names, used to derive the right-hand label.
-  final AppTab tab;
+  /// The right-hand text, or nothing where the page names itself.
+  final String? label;
 
   static const double height = 15 * 2 + 16;
-
-  static const Map<AppTab, String> _labels = <AppTab, String>{
-    AppTab.showcase: 'SHOWCASE',
-    AppTab.discover: 'DISCOVER',
-    AppTab.about: 'ABOUT',
-  };
 
   @override
   Size get preferredSize => const Size.fromHeight(height);
 
   @override
   Widget build(BuildContext context) {
-    final int tabIndex = tab.index + 1;
-    final String tabLabel = _labels[tab]!;
-
     return DecoratedBox(
       decoration: const BoxDecoration(
         border: Border(bottom: BorderSide(color: N.divider)),
@@ -55,16 +45,16 @@ class MobileHeader extends StatelessWidget implements PreferredSizeWidget {
                 ),
               ],
             ),
-            // Right: '01 / SHOWCASE' (tab index / name)
-            Text(
-              '${tabIndex.toString().padLeft(2, '0')} / $tabLabel',
-              style: TextStyle(
-                fontFamily: NType.mono,
-                fontSize: 9.5,
-                letterSpacing: 0.12 * 9.5,
-                color: N.n600,
+            if (label != null)
+              Text(
+                label!,
+                style: TextStyle(
+                  fontFamily: NType.mono,
+                  fontSize: 9.5,
+                  letterSpacing: 0.12 * 9.5,
+                  color: N.n600,
+                ),
               ),
-            ),
           ],
         ),
       ),

@@ -35,7 +35,7 @@ class _MobileDeviceSectionState extends State<MobileDeviceSection> {
 
   @override
   void dispose() {
-    widget.sync.detach();
+    widget.sync.detach(release: false);
     super.dispose();
   }
 
