@@ -1,0 +1,48 @@
+import 'package:flutter/material.dart';
+
+import 'mobile_tokens.dart';
+
+/// Section header with leading label and optional trailing accent label.
+///
+/// Example: `ONE PLATE PER PACKAGE` (leading) · `SWIPE →` (trailing).
+class SectionHeader extends StatelessWidget {
+  const SectionHeader({
+    super.key,
+    required this.leading,
+    this.trailing,
+  });
+
+  final String leading;
+  final String? trailing;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: Text(
+            leading.toUpperCase(),
+            style: const TextStyle(
+              fontFamily: 'MartianMono',
+              fontWeight: FontWeight.w400,
+              fontSize: 10,
+              letterSpacing: 0.12 * 10,
+              color: MobileTokens.n400,
+            ),
+          ),
+        ),
+        if (trailing != null)
+          Text(
+            trailing!.toUpperCase(),
+            style: const TextStyle(
+              fontFamily: 'MartianMono',
+              fontWeight: FontWeight.w400,
+              fontSize: 9.5,
+              letterSpacing: 0.10 * 9.5,
+              color: MobileTokens.n600,
+            ),
+          ),
+      ],
+    );
+  }
+}
