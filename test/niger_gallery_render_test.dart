@@ -40,6 +40,6 @@ void main() {
         c.dispose();
       }
     }
-    expect(themes.length, 2);
+    expect(themes.length, 5);
   });
 }

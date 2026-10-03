@@ -3,8 +3,9 @@ import 'package:niger_plate/niger_plate.dart';
 
 import '../catalogue.dart';
 
-/// `niger_plate`: the 520 × 110 plate of 2005 in its two artwork liveries.
-/// Each entry carries the value of its reference artwork.
+/// `niger_plate`: the 520 × 110 plate of 2005 in its two artwork liveries,
+/// then the article's other formats, which have no artwork. Each artwork
+/// entry carries the value of its reference.
 class NigerSource extends GallerySource {
   NigerSource();
 
@@ -24,14 +25,15 @@ class NigerSource extends GallerySource {
     PlateSpec spec,
     PlateCountry country,
     List<String?> values,
-    String format,
-  ) => GalleryEntry(
+    String format, [
+    PlateValidator validator = const NigerValidator(),
+  ]) => GalleryEntry(
     id: 'ne.${usage.name}',
     label: '${usage.english} · $format',
     spec: spec,
     theme: NigerThemes.forUsage(usage),
     country: country,
-    validator: const NigerValidator(),
+    validator: validator,
     sampleValues: values,
   );
 
@@ -58,6 +60,47 @@ class NigerSource extends GallerySource {
           NigerCountry.commercial,
           <String?>['1', 'E', '2', '3', '4', '5'],
           '1E-2345',
+        ),
+      ],
+    ),
+    GallerySection(
+      title: 'Other formats — unverified',
+      note:
+          'No image of these four was found. They follow the article\'s '
+          'formats and colour words on the private plate\'s digit height and '
+          'pitch; positions and colours are approximations.',
+      entries: <GalleryEntry>[
+        _entry(
+          NigerUsage.stateTransport,
+          NigerOtherPlates.state,
+          NigerCountry.plain,
+          <String?>['1', '2', '3', '4', '5', '6'],
+          '12345ARN6',
+          const NigerStateValidator(),
+        ),
+        _entry(
+          NigerUsage.military,
+          NigerOtherPlates.military,
+          NigerCountry.military,
+          <String?>['1', '2', '3', '4', '5'],
+          '12345',
+          const NigerMilitaryValidator(),
+        ),
+        _entry(
+          NigerUsage.diplomaticChief,
+          NigerOtherPlates.diplomaticChief,
+          NigerCountry.plain,
+          <String?>['1', '2', '3'],
+          '123CMD RN',
+          const NigerDiplomaticValidator(),
+        ),
+        _entry(
+          NigerUsage.diplomaticStaff,
+          NigerOtherPlates.diplomaticStaff,
+          NigerCountry.plain,
+          <String?>['1', '2', '3', '4'],
+          '123CD4 RN',
+          const NigerDiplomaticValidator(),
         ),
       ],
     ),
