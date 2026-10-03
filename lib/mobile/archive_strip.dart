@@ -10,10 +10,7 @@ import 'section_header.dart';
 ///
 /// Spec: `claude/mobile_view/MV6_archive_strip.md`
 class ArchiveStrip extends StatelessWidget {
-  const ArchiveStrip({
-    super.key,
-    required this.stats,
-  });
+  const ArchiveStrip({super.key, required this.stats});
 
   final CatalogueStats stats;
 
@@ -23,9 +20,7 @@ class ArchiveStrip extends StatelessWidget {
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 28),
-          child: SectionHeader(
-            leading: 'THE ARCHIVE, REGISTERED',
-          ),
+          child: SectionHeader(leading: 'THE ARCHIVE, REGISTERED'),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 18),
@@ -37,10 +32,7 @@ class ArchiveStrip extends StatelessWidget {
                 end: Alignment.bottomCenter,
                 colors: <Color>[MobileTokens.n900, MobileTokens.bg],
               ),
-              border: Border.all(
-                color: MobileTokens.n700,
-                width: 1.5,
-              ),
+              border: Border.all(color: MobileTokens.n700, width: 1.5),
               boxShadow: <BoxShadow>[
                 BoxShadow(
                   color: MobileTokens.accentAt(0.55),
@@ -49,17 +41,25 @@ class ArchiveStrip extends StatelessWidget {
                 ),
               ],
             ),
-            child: Row(
-              children: <Widget>[
-                _PGBand(),
-                ..._buildStatCells(),
-                _CornerLabel(),
-              ],
+            child: IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  _PGBand(),
+                  ..._buildStatCells(),
+                  _CornerLabel(),
+                ],
+              ),
             ),
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 20, bottom: 36, left: 18, right: 18),
+          padding: const EdgeInsets.only(
+            top: 20,
+            bottom: 36,
+            left: 18,
+            right: 18,
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
@@ -92,24 +92,23 @@ class ArchiveStrip extends StatelessWidget {
 
   List<Widget> _buildStatCells() {
     final List<({int value, String label})> tiles = stats.tiles;
-    final List<String> shortLabels = <String>['PKGS', 'COUNTRIES', 'SPECS', 'FORMS'];
+    final List<String> shortLabels = <String>[
+      'PKGS',
+      'COUNTRIES',
+      'SPECS',
+      'FORMS',
+    ];
 
     return <Widget>[
       for (int i = 0; i < tiles.length; i++)
         Expanded(
-          child: Column(
-            children: <Widget>[
-              _StatCell(
-                value: tiles[i].value,
-                label: shortLabels[i],
-              ),
-              if (i < tiles.length - 1)
-                Container(
-                  width: 1,
-                  height: 40,
-                  color: MobileTokens.n800,
-                ),
-            ],
+          child: DecoratedBox(
+            decoration: const BoxDecoration(
+              border: Border(right: BorderSide(color: MobileTokens.n800)),
+            ),
+            child: Center(
+              child: _StatCell(value: tiles[i].value, label: shortLabels[i]),
+            ),
           ),
         ),
     ];
@@ -123,9 +122,7 @@ class _PGBand extends StatelessWidget {
       width: 30,
       decoration: BoxDecoration(
         color: MobileTokens.accent900,
-        border: Border(
-          right: BorderSide(color: MobileTokens.n700, width: 1),
-        ),
+        border: Border(right: BorderSide(color: MobileTokens.n700, width: 1)),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -135,10 +132,7 @@ class _PGBand extends StatelessWidget {
             height: 12,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              border: Border.all(
-                color: MobileTokens.accent400,
-                width: 1,
-              ),
+              border: Border.all(color: MobileTokens.accent400, width: 1),
             ),
           ),
           const SizedBox(height: 6),
@@ -159,10 +153,7 @@ class _PGBand extends StatelessWidget {
 }
 
 class _StatCell extends StatelessWidget {
-  const _StatCell({
-    required this.value,
-    required this.label,
-  });
+  const _StatCell({required this.value, required this.label});
 
   final int value;
   final String label;
@@ -212,9 +203,7 @@ class _CornerLabel extends StatelessWidget {
     return Container(
       width: 44,
       decoration: BoxDecoration(
-        border: Border(
-          left: BorderSide(color: MobileTokens.n700, width: 1),
-        ),
+        border: Border(left: BorderSide(color: MobileTokens.n700, width: 1)),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

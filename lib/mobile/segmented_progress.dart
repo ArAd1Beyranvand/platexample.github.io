@@ -30,6 +30,7 @@ class SegmentedProgress extends StatelessWidget {
     int start = 0;
     final List<Widget> children = <Widget>[];
     for (int g = 0; g < groups.length; g++) {
+      final int first = start;
       if (g > 0) children.add(const SizedBox(width: _groupGap));
       children.add(
         Expanded(
@@ -40,9 +41,9 @@ class SegmentedProgress extends StatelessWidget {
                 if (s > 0) const SizedBox(width: _segmentGap),
                 Expanded(
                   child: _Segment(
-                    position: start + s - index,
+                    position: first + s - index,
                     progress: progress,
-                    onTap: () => onSelect(start + s),
+                    onTap: () => onSelect(first + s),
                   ),
                 ),
               ],
