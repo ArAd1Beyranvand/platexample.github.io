@@ -10,10 +10,12 @@ class SectionHeader extends StatelessWidget {
     super.key,
     required this.leading,
     this.trailing,
+    this.trailingColor = MobileTokens.n600,
   });
 
   final String leading;
   final String? trailing;
+  final Color trailingColor;
 
   @override
   Widget build(BuildContext context) {
@@ -34,12 +36,12 @@ class SectionHeader extends StatelessWidget {
         if (trailing != null)
           Text(
             trailing!.toUpperCase(),
-            style: const TextStyle(
+            style: TextStyle(
               fontFamily: 'MartianMono',
               fontWeight: FontWeight.w400,
               fontSize: 9.5,
               letterSpacing: 0.10 * 9.5,
-              color: MobileTokens.n600,
+              color: trailingColor,
             ),
           ),
       ],

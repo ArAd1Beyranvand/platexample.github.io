@@ -41,14 +41,42 @@ final List<FeatureGroup> featureGroups = <FeatureGroup>[
     ),
 ];
 
+/// The device whose group holds flat card index [i].
+DeviceType deviceAt(int i) {
+  int start = 0;
+  for (final FeatureGroup group in featureGroups) {
+    start += group.cards.length;
+    if (i < start) return group.device;
+  }
+  return featureGroups.last.device;
+}
+
+/// Flat index of the first card in [device]'s group.
+int firstIndexOf(DeviceType device) {
+  int start = 0;
+  for (final FeatureGroup group in featureGroups) {
+    if (group.device == device) return start;
+    start += group.cards.length;
+  }
+  return 0;
+}
+
 /// Lets the owner of a [FeatureDeck] observe and drive its position.
 class FeatureDeckController {
   final ValueNotifier<int> index = ValueNotifier<int>(0);
+
+  /// False holds the dwell at zero, e.g. while the device frame is still
+  /// morphing to the current card's device.
+  final ValueNotifier<bool> settled = ValueNotifier<bool>(true);
+
   void Function(int)? _jump;
 
   void jumpTo(int i) => _jump?.call(i);
 
-  void dispose() => index.dispose();
+  void dispose() {
+    index.dispose();
+    settled.dispose();
+  }
 }
 
 /// "What it does": a story deck over [featureGroups] with a 4 s dwell.
@@ -96,13 +124,19 @@ class _FeatureDeckState extends State<FeatureDeck>
   void _bind(FeatureDeckController c) {
     c._jump = _goTo;
     c.index.value = _index;
+    c.settled.addListener(_sync);
+  }
+
+  void _unbind(FeatureDeckController c) {
+    c._jump = null;
+    c.settled.removeListener(_sync);
   }
 
   @override
   void didUpdateWidget(FeatureDeck old) {
     super.didUpdateWidget(old);
     if (old.controller != widget.controller) {
-      (old.controller ?? _own)._jump = null;
+      _unbind(old.controller ?? _own);
       _bind(_controller);
     }
   }
@@ -121,7 +155,11 @@ class _FeatureDeckState extends State<FeatureDeck>
 
   /// Runs the dwell only while visible, in the foreground, and not held.
   void _sync() {
-    final bool run = TickerMode.valuesOf(context).enabled && _foreground && !_held;
+    final bool run =
+        TickerMode.valuesOf(context).enabled &&
+        _foreground &&
+        !_held &&
+        _controller.settled.value;
     if (run && !_dwell.isAnimating) {
       _dwell.forward();
     } else if (!run && _dwell.isAnimating) {
@@ -156,7 +194,7 @@ class _FeatureDeckState extends State<FeatureDeck>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    _controller._jump = null;
+    _unbind(_controller);
     _dwell.dispose();
     _own.dispose();
     super.dispose();
