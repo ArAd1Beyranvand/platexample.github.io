@@ -11,7 +11,8 @@ import '../theme/nocturne.dart';
 /// (`{{ screenLabel }}`) on the right for the three top-level screens and a
 /// back arrow on detail; [trailing] is deliberately generic so either can be
 /// passed without this widget knowing about routes.
-class NocturneMobileHeader extends StatelessWidget implements PreferredSizeWidget {
+class NocturneMobileHeader extends StatelessWidget
+    implements PreferredSizeWidget {
   const NocturneMobileHeader({super.key, this.trailing});
 
   /// The right-hand control — a screen label, a back button, or nothing.

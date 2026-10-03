@@ -37,7 +37,10 @@ class NPill extends StatelessWidget {
             Container(
               width: 6,
               height: 6,
-              decoration: const BoxDecoration(color: N.accent, shape: BoxShape.circle),
+              decoration: const BoxDecoration(
+                color: N.accent,
+                shape: BoxShape.circle,
+              ),
             ),
             const SizedBox(width: 10),
           ],

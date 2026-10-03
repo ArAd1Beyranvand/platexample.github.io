@@ -17,7 +17,11 @@ import '../app/app_routes.dart';
 /// [isPlateDetail] is carried rather than derived from [depth].
 @immutable
 class ShellRouteState {
-  const ShellRouteState({required this.tab, this.depth = 0, this.isPlateDetail = false});
+  const ShellRouteState({
+    required this.tab,
+    this.depth = 0,
+    this.isPlateDetail = false,
+  });
 
   /// The tab the URL names.
   final AppTab tab;
@@ -59,5 +63,6 @@ class ShellRouteState {
   int get hashCode => Object.hash(tab, depth, isPlateDetail);
 
   @override
-  String toString() => 'ShellRouteState(tab: $tab, depth: $depth, isPlateDetail: $isPlateDetail)';
+  String toString() =>
+      'ShellRouteState(tab: $tab, depth: $depth, isPlateDetail: $isPlateDetail)';
 }

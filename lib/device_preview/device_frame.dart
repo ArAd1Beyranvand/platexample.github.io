@@ -95,7 +95,8 @@ class DeviceFrame extends StatefulWidget {
   State<DeviceFrame> createState() => _DeviceFrameState();
 }
 
-class _DeviceFrameState extends State<DeviceFrame> with SingleTickerProviderStateMixin {
+class _DeviceFrameState extends State<DeviceFrame>
+    with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
 
   late DeviceConfig _from;
@@ -130,13 +131,17 @@ class _DeviceFrameState extends State<DeviceFrame> with SingleTickerProviderStat
   /// it has fired (or when idle). Reset when a new device arrives.
   bool _contentSwapped = true;
 
-  DeviceConfig _resolve(DeviceType type) => widget.configResolver?.call(type) ?? DevicePresets.of(type);
+  DeviceConfig _resolve(DeviceType type) =>
+      widget.configResolver?.call(type) ?? DevicePresets.of(type);
 
   @override
   void initState() {
     super.initState();
     _from = _to = _resolve(widget.device);
-    _controller = AnimationController(vsync: this, duration: widget.durations.total)..addListener(_onTick);
+    _controller = AnimationController(
+      vsync: this,
+      duration: widget.durations.total,
+    )..addListener(_onTick);
     _buildIntervals();
     _controller.value = 1;
   }
@@ -161,7 +166,10 @@ class _DeviceFrameState extends State<DeviceFrame> with SingleTickerProviderStat
       parent: _controller,
       curve: Interval(inStart, 1, curve: widget.fadeInCurve),
     );
-    _morphRaw = CurvedAnimation(parent: _controller, curve: Interval(morphStart, morphEnd));
+    _morphRaw = CurvedAnimation(
+      parent: _controller,
+      curve: Interval(morphStart, morphEnd),
+    );
   }
 
   /// Ticks elapsed since the dissolve wavefront was last reseeded.
@@ -256,7 +264,8 @@ class _DeviceFrameState extends State<DeviceFrame> with SingleTickerProviderStat
       _deckAngle = angle(fold);
       // Linear so the blocks vanish at a steady rate across the ~0.4s beat.
       _deckReveal = 1 - ((mr - 0.34) / 0.28).clamp(0.0, 1.0);
-      _deckT = 1 - Curves.easeInOut.transform(((mr - 0.62) / 0.38).clamp(0.0, 1.0));
+      _deckT =
+          1 - Curves.easeInOut.transform(((mr - 0.62) / 0.38).clamp(0.0, 1.0));
       return widget.curve.transform(((mr - 0.62) / 0.38).clamp(0.0, 1.0));
     }
     if (!wasLaptop && willBeLaptop) {
@@ -264,7 +273,9 @@ class _DeviceFrameState extends State<DeviceFrame> with SingleTickerProviderStat
       final body = widget.curve.transform((mr / 0.38).clamp(0.0, 1.0));
       _deckT = 1;
       _deckReveal = ((mr - 0.38) / 0.28).clamp(0.0, 1.0);
-      final open = Curves.easeInOut.transform(((mr - 0.66) / 0.34).clamp(0.0, 1.0));
+      final open = Curves.easeInOut.transform(
+        ((mr - 0.66) / 0.34).clamp(0.0, 1.0),
+      );
       _deckAngle = angle(1 - open);
       return body;
     }
@@ -279,7 +290,8 @@ class _DeviceFrameState extends State<DeviceFrame> with SingleTickerProviderStat
 
   /// 1 → 0 over the fade-out, pinned at 0 through the morph, 0 → 1 over the
   /// fade-in: the plate is never visible while the geometry is moving.
-  double get _contentOpacity => _fadeIn.value > 0 ? _fadeIn.value : 1 - _fadeOut.value;
+  double get _contentOpacity =>
+      _fadeIn.value > 0 ? _fadeIn.value : 1 - _fadeOut.value;
 
   /// The old layout stays mounted until the morph *ends*; the target layout is
   /// then built during the blank hold and faded in.
@@ -315,9 +327,14 @@ class _DeviceFrameState extends State<DeviceFrame> with SingleTickerProviderStat
   Widget _screenContent() {
     final config = _contentConfig;
     final cached = _cachedContent;
-    if (cached != null && identical(_cachedContentConfig, config)) return cached;
+    if (cached != null && identical(_cachedContentConfig, config))
+      return cached;
     _cachedContentConfig = config;
-    return _cachedContent = _ScreenContent(key: _screenKey, config: config, builder: widget.builder);
+    return _cachedContent = _ScreenContent(
+      key: _screenKey,
+      config: config,
+      builder: widget.builder,
+    );
   }
 
   @override
@@ -327,8 +344,10 @@ class _DeviceFrameState extends State<DeviceFrame> with SingleTickerProviderStat
     // AnimatedBuilder inside it rebuilds only the shell on each tick.
     return ClipRect(
       child: LayoutBuilder(
-        builder: (context, constraints) =>
-            AnimatedBuilder(animation: _controller, builder: (context, _) => _buildFrame(context, constraints)),
+        builder: (context, constraints) => AnimatedBuilder(
+          animation: _controller,
+          builder: (context, _) => _buildFrame(context, constraints),
+        ),
       ),
     );
   }
@@ -367,7 +386,11 @@ class _DeviceFrameState extends State<DeviceFrame> with SingleTickerProviderStat
               height: total.height * fit,
               child: FittedBox(
                 fit: BoxFit.fill,
-                child: SizedBox(width: total.width, height: total.height, child: _buildDevice(context, config)),
+                child: SizedBox(
+                  width: total.width,
+                  height: total.height,
+                  child: _buildDevice(context, config),
+                ),
               ),
             ),
           ),
@@ -395,7 +418,8 @@ class _DeviceFrameState extends State<DeviceFrame> with SingleTickerProviderStat
     // face shows) grow the depth to at least the body height, so the shut deck
     // blankets the whole screen for the dissolve.
     final coverT = ((deckAngle - 90) / 90).clamp(0.0, 1.0);
-    final renderDepth = deck.depth + (math.max(deck.depth, body.height) - deck.depth) * coverT;
+    final renderDepth =
+        deck.depth + (math.max(deck.depth, body.height) - deck.depth) * coverT;
     final projected = deck.projectedHeightAt(deckAngle, widget.perspective);
     // cross-fade the faces through edge-on so neither pops in or out.
     const band = 42.0;
@@ -554,7 +578,11 @@ class _DeviceFrameState extends State<DeviceFrame> with SingleTickerProviderStat
 /// Lays the page out at the target device's logical size and scales it into
 /// the current glass, so text and the plate never reflow mid-morph.
 class _ScreenContent extends StatelessWidget {
-  const _ScreenContent({super.key, required this.config, required this.builder});
+  const _ScreenContent({
+    super.key,
+    required this.config,
+    required this.builder,
+  });
 
   final DeviceConfig config;
   final Widget Function(BuildContext, DeviceConfig) builder;
@@ -571,7 +599,10 @@ class _ScreenContent extends StatelessWidget {
         child: MediaQuery(
           data: MediaQuery.of(context).copyWith(
             size: logical,
-            padding: EdgeInsets.only(top: config.notchSize.height, bottom: config.homeIndicatorWidth > 0 ? 20 : 0),
+            padding: EdgeInsets.only(
+              top: config.notchSize.height,
+              bottom: config.homeIndicatorWidth > 0 ? 20 : 0,
+            ),
           ),
           // No boundary here. This one sits *under* the FittedBox, so a
           // cached raster of it is recorded in the page's own logical

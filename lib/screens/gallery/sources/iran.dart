@@ -25,9 +25,10 @@ class IranSource extends GallerySource {
 
   @override
   String get note =>
-      'Seventeen vehicle classes off one axis: the class fixes both the series '
-      'letter and the field colour, so spec and theme are looked up together '
-      'from an IranUsage. See iran_plate/README.md.';
+      'All seventeen vehicle classes, from private and taxi to police, '
+      'diplomatic and motorcycle. Pick the class and you get the spec and the '
+      'colours together, with Persian digits, right-to-left input and the '
+      'series letter fixed wherever the class fixes it.';
 
   /// Built once, and returned by identity: the pickers select a section by
   /// equality, and a fresh list per read would make the selected one never
@@ -57,7 +58,9 @@ class IranSource extends GallerySource {
         if (entry.id == id) return entry;
       }
     }
-    throw StateError('IranSource has no entry for $id; every IranUsage must sit in a section.');
+    throw StateError(
+      'IranSource has no entry for $id; every IranUsage must sit in a section.',
+    );
   }
 
   static final List<GalleryEntry> _highlights = <GalleryEntry>[
@@ -69,14 +72,32 @@ class IranSource extends GallerySource {
 
   /// Eight positions on the shared 520x110 blank: `12 ب 345 - 11`, the number
   /// the article's own reference images carry.
-  static const List<String?> _standardValues = <String?>['1', '2', null, '3', '4', '5', '1', '1'];
+  static const List<String?> _standardValues = <String?>[
+    '1',
+    '2',
+    null,
+    '3',
+    '4',
+    '5',
+    '1',
+    '1',
+  ];
 
   /// The five digits of a protocol or historic plate.
   static const List<String?> _fiveDigits = <String?>['1', '3', '9', '0', '1'];
 
   /// A motorcycle's three-digit provincial code over its five-digit serial.
   /// Neither register may contain a zero.
-  static const List<String?> _motorcycleValues = <String?>['1', '2', '3', '5', '6', '7', '8', '9'];
+  static const List<String?> _motorcycleValues = <String?>[
+    '1',
+    '2',
+    '3',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+  ];
 
   /// The entry for one vehicle class. Spec, theme and label all come from
   /// [usage]; the only thing this adds is what to draw into the slots.
@@ -168,7 +189,10 @@ class IranSource extends GallerySource {
           'caption in the square — سیاسی for the diplomatic corps, سرویس for '
           'international organisations. The serial is the assigned country '
           'number; the leading pair counts embassies within it.',
-      entries: _entriesFor(const <IranUsage>[IranUsage.political, IranUsage.service]),
+      entries: _entriesFor(const <IranUsage>[
+        IranUsage.political,
+        IranUsage.service,
+      ]),
     ),
     GallerySection(
       title: 'Other blanks',
@@ -177,7 +201,11 @@ class IranSource extends GallerySource {
           '(wording beside a bare serial, no letter and no province square), '
           'historic (American size, brown) and the motorcycle plate (a '
           'three-digit provincial code over a five-digit serial).',
-      entries: _entriesFor(const <IranUsage>[IranUsage.protocol, IranUsage.historic, IranUsage.motorcycle]),
+      entries: _entriesFor(const <IranUsage>[
+        IranUsage.protocol,
+        IranUsage.historic,
+        IranUsage.motorcycle,
+      ]),
     ),
   ];
 }

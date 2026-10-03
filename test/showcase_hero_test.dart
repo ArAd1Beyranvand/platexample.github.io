@@ -41,7 +41,9 @@ Widget _hero({
 }
 
 void main() {
-  testWidgets('hero lays out in two columns above the breakpoint', (WidgetTester tester) async {
+  testWidgets('hero lays out in two columns above the breakpoint', (
+    WidgetTester tester,
+  ) async {
     tester.view.physicalSize = const Size(1440, 2400);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.reset);
@@ -50,66 +52,90 @@ void main() {
     // showcase on a 1440 window.
     await tester.pumpWidget(_hero(width: 1232));
 
-    expect(find.text('Plate input\nfor the road.'), findsOneWidget);
+    expect(find.text('Plate input\nfor Flutter.'), findsOneWidget);
     expect(find.text('ARAD BEYRANVAND — SOLE AUTHOR'), findsOneWidget);
-    expect(find.text('Open the archive'), findsOneWidget);
-    expect(find.text('Read the docs'), findsOneWidget);
+    expect(find.text('Browse plates'), findsOneWidget);
+    expect(find.text('View on pub.dev'), findsOneWidget);
 
     // The serif is used for the paragraph and nowhere else in the hero — the
     // headline stays on Archivo.
-    final TextStyle heading = tester.widget<Text>(find.text('Plate input\nfor the road.')).style!;
+    final TextStyle heading = tester
+        .widget<Text>(find.text('Plate input\nfor Flutter.'))
+        .style!;
     expect(heading.fontFamily, NType.archivo);
     expect(heading.fontWeight, FontWeight.w800);
     expect(heading.fontSize, closeTo(1232 * 0.056, 0.01));
 
     // Text left, stage right.
     expect(
-      tester.getTopLeft(find.text('Plate input\nfor the road.')).dx,
+      tester.getTopLeft(find.text('Plate input\nfor Flutter.')).dx,
       lessThan(tester.getTopLeft(find.byKey(_stageKey)).dx),
     );
   });
 
-  testWidgets('hero stacks under the breakpoint and drops the headline to 56px', (WidgetTester tester) async {
-    tester.view.physicalSize = const Size(900, 2400);
-    tester.view.devicePixelRatio = 1.0;
-    addTearDown(tester.view.reset);
+  testWidgets(
+    'hero stacks under the breakpoint and drops the headline to 56px',
+    (WidgetTester tester) async {
+      tester.view.physicalSize = const Size(900, 2400);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.reset);
 
-    await tester.pumpWidget(_hero(width: 900));
+      await tester.pumpWidget(_hero(width: 900));
 
-    expect(tester.widget<Text>(find.text('Plate input\nfor the road.')).style!.fontSize, 56);
-    // Stacked means the stage is below the text, not beside it.
-    expect(
-      tester.getTopLeft(find.byKey(_stageKey)).dy,
-      greaterThan(tester.getBottomLeft(find.text('Plate input\nfor the road.')).dy),
-    );
-  });
+      expect(
+        tester
+            .widget<Text>(find.text('Plate input\nfor Flutter.'))
+            .style!
+            .fontSize,
+        56,
+      );
+      // Stacked means the stage is below the text, not beside it.
+      expect(
+        tester.getTopLeft(find.byKey(_stageKey)).dy,
+        greaterThan(
+          tester.getBottomLeft(find.text('Plate input\nfor Flutter.')).dy,
+        ),
+      );
+    },
+  );
 
-  testWidgets('the phone panel stacks the buttons full-width and drops the picker', (WidgetTester tester) async {
-    tester.view.physicalSize = const Size(390, 2400);
-    tester.view.devicePixelRatio = 1.0;
-    addTearDown(tester.view.reset);
+  testWidgets(
+    'the phone panel stacks the buttons full-width and drops the picker',
+    (WidgetTester tester) async {
+      tester.view.physicalSize = const Size(390, 2400);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.reset);
 
-    await tester.pumpWidget(_hero(width: 390));
+      await tester.pumpWidget(_hero(width: 390));
 
-    expect(tester.takeException(), isNull);
-    expect(tester.widget<Text>(find.text('Plate input\nfor the road.')).style!.fontSize, 40);
+      expect(tester.takeException(), isNull);
+      expect(
+        tester
+            .widget<Text>(find.text('Plate input\nfor Flutter.'))
+            .style!
+            .fontSize,
+        40,
+      );
 
-    // Full-width and stacked: both buttons span the column inside its 18px
-    // gutters, and the secondary sits below the primary rather than beside it.
-    final Rect primary = tester.getRect(find.text('Open the archive'));
-    final Rect secondary = tester.getRect(find.text('Read the docs'));
-    expect(secondary.right, lessThanOrEqualTo(390 - 18));
-    expect(primary.width, closeTo(390 - 36 - 2 * 22 - 2, 1));
-    expect(secondary.top, greaterThan(primary.bottom));
+      // Full-width and stacked: both buttons span the column inside its 18px
+      // gutters, and the secondary sits below the primary rather than beside it.
+      final Rect primary = tester.getRect(find.text('Browse plates'));
+      final Rect secondary = tester.getRect(find.text('View on pub.dev'));
+      expect(secondary.right, lessThanOrEqualTo(390 - 18));
+      expect(primary.width, closeTo(390 - 36 - 2 * 22 - 2, 1));
+      expect(secondary.top, greaterThan(primary.bottom));
 
-    // No room for three cells and a 200px pill at this width; the auto-cycle
-    // still walks the devices.
-    expect(find.text('TABLET'), findsNothing);
-    expect(find.text('IRAN MADE · OPEN SOURCE'), findsNothing);
-  });
+      // No room for three cells and a 200px pill at this width; the auto-cycle
+      // still walks the devices.
+      expect(find.text('TABLET'), findsNothing);
+      expect(find.text('IRAN MADE · OPEN SOURCE'), findsNothing);
+    },
+  );
 
   // currently failing
-  testWidgets('the hero never grows past the height it is given', (WidgetTester tester) async {
+  testWidgets('the hero never grows past the height it is given', (
+    WidgetTester tester,
+  ) async {
     tester.view.physicalSize = const Size(1440, 900);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.reset);
@@ -120,10 +146,15 @@ void main() {
     // whatever is left — here, a real 900px-tall viewport.
     await tester.pumpWidget(_hero(width: 1232, height: 900));
 
-    expect(tester.getRect(find.byKey(_stageKey)).bottom, lessThanOrEqualTo(900));
+    expect(
+      tester.getRect(find.byKey(_stageKey)).bottom,
+      lessThanOrEqualTo(900),
+    );
   });
 
-  testWidgets('picking a segment reports that device', (WidgetTester tester) async {
+  testWidgets('picking a segment reports that device', (
+    WidgetTester tester,
+  ) async {
     tester.view.physicalSize = const Size(1440, 2400);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.reset);
@@ -139,7 +170,7 @@ void main() {
     expect(picked, <DeviceType>[DeviceType.mobile]);
   });
 
-  testWidgets('Open the archive asks to navigate', (WidgetTester tester) async {
+  testWidgets('Browse plates asks to navigate', (WidgetTester tester) async {
     tester.view.physicalSize = const Size(1440, 2400);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.reset);
@@ -147,7 +178,7 @@ void main() {
     int opened = 0;
     await tester.pumpWidget(_hero(width: 1232, onOpenArchive: () => opened++));
 
-    await tester.tap(find.text('Open the archive'));
+    await tester.tap(find.text('Browse plates'));
     expect(opened, 1);
   });
 }

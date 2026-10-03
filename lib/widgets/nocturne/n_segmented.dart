@@ -88,7 +88,11 @@ class _Separator extends StatelessWidget {
 }
 
 class _SegmentedCell<T> extends StatefulWidget {
-  const _SegmentedCell({required this.label, required this.isSelected, required this.onPressed});
+  const _SegmentedCell({
+    required this.label,
+    required this.isSelected,
+    required this.onPressed,
+  });
 
   final String label;
   final bool isSelected;
@@ -141,12 +145,17 @@ class _SegmentedCellState<T> extends State<_SegmentedCell<T>> {
               // drawn over the cell, inside its bounds.
               foregroundDecoration: widget.isSelected || _focused
                   ? BoxDecoration(
-                      border: Border.all(color: N.accent, width: _focused ? 2 : 1),
+                      border: Border.all(
+                        color: N.accent,
+                        width: _focused ? 2 : 1,
+                      ),
                     )
                   : null,
               child: Text(
                 widget.label.toUpperCase(),
-                style: NType.pill.copyWith(color: widget.isSelected ? N.accent : N.text),
+                style: NType.pill.copyWith(
+                  color: widget.isSelected ? N.accent : N.text,
+                ),
               ),
             ),
           ),

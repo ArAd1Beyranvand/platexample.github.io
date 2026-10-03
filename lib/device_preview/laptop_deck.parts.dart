@@ -9,7 +9,9 @@ const _rowGap = 10.0;
 /// The inner height of the main keyboard well: every deck row plus the gap
 /// that follows it. Used to shrink-to-fit the well when the deck is handed
 /// less height than its natural total.
-double get _deckWellHeight => deckRows.fold<double>(0, (h, r) => h + r.height) + _rowGap * deckRows.length;
+double get _deckWellHeight =>
+    deckRows.fold<double>(0, (h, r) => h + r.height) +
+    _rowGap * deckRows.length;
 
 /// The Material icon a keycap renders in place of its glyph label, if any.
 /// The label itself stays the reporting identity, so highlighting and the
@@ -22,7 +24,12 @@ IconData? _iconFor(String label) => switch (label) {
 
 /// A single keyboard row of keycaps, scaled by [scale] to fit the well.
 class _DeckRowStrip extends StatelessWidget {
-  const _DeckRowStrip({required this.row, required this.scale, this.onKey, this.pressedKey});
+  const _DeckRowStrip({
+    required this.row,
+    required this.scale,
+    this.onKey,
+    this.pressedKey,
+  });
 
   final DeckRow row;
   final double scale;
@@ -66,20 +73,26 @@ class _BackPanel extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [Color(0xFF0B0D10), Color(0xFF181B21), Color(0xFF212530), Color(0xFF0A0C0F)],
+          colors: [
+            Color(0xFF0B0D10),
+            Color(0xFF181B21),
+            Color(0xFF212530),
+            Color(0xFF0A0C0F),
+          ],
           stops: [0, .38, .62, 1],
         ),
       ),
       child: LayoutBuilder(
         builder: (context, c) {
           final w = c.maxWidth, h = c.maxHeight;
-          Widget vent(double left, double top, double width, double height) => Positioned(
-            left: left,
-            top: top,
-            width: width,
-            height: height,
-            child: CustomPaint(painter: const _VentPainter()),
-          );
+          Widget vent(double left, double top, double width, double height) =>
+              Positioned(
+                left: left,
+                top: top,
+                width: width,
+                height: height,
+                child: CustomPaint(painter: const _VentPainter()),
+              );
           Widget foot(double? left, double? right, double top) => Positioned(
             left: left,
             right: right,
@@ -87,7 +100,10 @@ class _BackPanel extends StatelessWidget {
             width: w * .032,
             height: h * .06,
             child: const DecoratedBox(
-              decoration: BoxDecoration(color: Color(0xFF07080A), borderRadius: BorderRadius.all(Radius.circular(99))),
+              decoration: BoxDecoration(
+                color: Color(0xFF07080A),
+                borderRadius: BorderRadius.all(Radius.circular(99)),
+              ),
             ),
           );
 
@@ -118,7 +134,11 @@ class _BackPanel extends StatelessWidget {
                 child: const Center(
                   child: Text(
                     'DESIGNED FOR PLATE OS',
-                    style: TextStyle(color: Color(0x29FFFFFF), fontSize: 5, letterSpacing: 1.6),
+                    style: TextStyle(
+                      color: Color(0x29FFFFFF),
+                      fontSize: 5,
+                      letterSpacing: 1.6,
+                    ),
                   ),
                 ),
               ),
@@ -138,7 +158,10 @@ class _VentPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final slot = Paint()..color = const Color(0xB8000000);
     final gap = Paint()..color = const Color(0x0DFFFFFF);
-    canvas.drawRRect(RRect.fromRectAndRadius(Offset.zero & size, const Radius.circular(3)), gap);
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(Offset.zero & size, const Radius.circular(3)),
+      gap,
+    );
     for (var x = 0.0; x < size.width; x += 5) {
       canvas.drawRect(Rect.fromLTWH(x, 0, 2, size.height), slot);
     }
@@ -215,7 +238,9 @@ class _KeyState extends State<_Key> {
 
   @override
   Widget build(BuildContext context) {
-    final pressed = _pressed || (widget.pressedLabel != null && widget.pressedLabel == widget.label);
+    final pressed =
+        _pressed ||
+        (widget.pressedLabel != null && widget.pressedLabel == widget.label);
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTapDown: (_) => _setPressed(true),
@@ -237,11 +262,21 @@ class _KeyState extends State<_Key> {
             ),
             border: const Border(top: BorderSide(color: Color(0x33FFFFFF))),
             boxShadow: pressed
-                ? const [BoxShadow(color: Color(0x99000000), blurRadius: 10, offset: Offset(0, 4))]
+                ? const [
+                    BoxShadow(
+                      color: Color(0x99000000),
+                      blurRadius: 10,
+                      offset: Offset(0, 4),
+                    ),
+                  ]
                 : const [
                     BoxShadow(color: Color(0xFF34373C), offset: Offset(0, 5)),
                     BoxShadow(color: Color(0xFF1A1C20), offset: Offset(0, 7)),
-                    BoxShadow(color: Color(0x99000000), blurRadius: 16, offset: Offset(0, 13)),
+                    BoxShadow(
+                      color: Color(0x99000000),
+                      blurRadius: 16,
+                      offset: Offset(0, 13),
+                    ),
                   ],
           ),
           child: FittedBox(
@@ -251,7 +286,11 @@ class _KeyState extends State<_Key> {
                   ? Icon(widget.icon, size: 18, color: const Color(0xFFE8EBEF))
                   : Text(
                       widget.label,
-                      style: const TextStyle(color: Color(0xFFE8EBEF), fontSize: 18, fontWeight: FontWeight.w600),
+                      style: const TextStyle(
+                        color: Color(0xFFE8EBEF),
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
             ),
           ),

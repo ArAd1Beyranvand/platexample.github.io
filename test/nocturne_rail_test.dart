@@ -59,7 +59,10 @@ void main() {
     expect(ticks(), findsOneWidget);
     expect(
       tester.getRect(ticks()).center.dy,
-      moreOrLessEquals(tester.getRect(find.text('Discover')).center.dy, epsilon: 2),
+      moreOrLessEquals(
+        tester.getRect(find.text('Discover')).center.dy,
+        epsilon: 2,
+      ),
     );
 
     // Tick moves with the selection.
@@ -69,11 +72,16 @@ void main() {
     expect(_colorOf(tester, 'Discover'), N.n500);
     expect(
       tester.getRect(ticks()).center.dy,
-      moreOrLessEquals(tester.getRect(find.text('About')).center.dy, epsilon: 2),
+      moreOrLessEquals(
+        tester.getRect(find.text('About')).center.dy,
+        epsilon: 2,
+      ),
     );
 
     // Hover a non-selected row: only its own text lightens.
-    final TestGesture mouse = await tester.createGesture(kind: PointerDeviceKind.mouse);
+    final TestGesture mouse = await tester.createGesture(
+      kind: PointerDeviceKind.mouse,
+    );
     await mouse.addPointer(location: Offset.zero);
     addTearDown(mouse.removePointer);
     await mouse.moveTo(tester.getCenter(find.text('Showcase')));

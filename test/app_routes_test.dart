@@ -8,12 +8,18 @@ void main() {
     test('root and /showcase are the same page', () {
       expect(AppLocation.fromUri(Uri.parse('/')).tab, AppTab.showcase);
       expect(AppLocation.fromUri(Uri.parse('/showcase')).tab, AppTab.showcase);
-      expect(AppLocation.fromUri(Uri.parse('https://platexample.ir/')).tab, AppTab.showcase);
+      expect(
+        AppLocation.fromUri(Uri.parse('https://platexample.ir/')).tab,
+        AppTab.showcase,
+      );
     });
 
     test('each tab answers to its own path, trailing slash included', () {
       expect(AppLocation.fromUri(Uri.parse('/discover')), AppLocation.discover);
-      expect(AppLocation.fromUri(Uri.parse('/discover/')), AppLocation.discover);
+      expect(
+        AppLocation.fromUri(Uri.parse('/discover/')),
+        AppLocation.discover,
+      );
       expect(AppLocation.fromUri(Uri.parse('/about')), AppLocation.about);
     });
 
@@ -24,7 +30,11 @@ void main() {
     test('a tab round-trips through its own path', () {
       for (final AppTab tab in AppTab.values) {
         final AppLocation location = AppLocation.tab(tab);
-        expect(AppLocation.fromUri(Uri.parse(location.path)), location, reason: location.path);
+        expect(
+          AppLocation.fromUri(Uri.parse(location.path)),
+          location,
+          reason: location.path,
+        );
       }
     });
   });
@@ -50,7 +60,8 @@ void main() {
         expect(
           RegExp('[a-z]').hasMatch(item.slug),
           isTrue,
-          reason: '${item.entry.label} (${item.source.countryName}) slugs to "${item.slug}"',
+          reason:
+              '${item.entry.label} (${item.source.countryName}) slugs to "${item.slug}"',
         );
       }
     });
@@ -59,7 +70,11 @@ void main() {
       final Set<String> seen = <String>{};
       for (final GallerySource source in gallerySources) {
         expect(source.slug, isNotEmpty, reason: source.countryName);
-        expect(seen.add(source.slug), isTrue, reason: 'duplicate country slug: ${source.slug}');
+        expect(
+          seen.add(source.slug),
+          isTrue,
+          reason: 'duplicate country slug: ${source.slug}',
+        );
       }
     });
 
@@ -67,11 +82,15 @@ void main() {
       final Map<String, Set<String>> seen = <String, Set<String>>{};
       for (final CatalogueItem item in catalogueItems) {
         expect(item.slug, isNotEmpty, reason: item.entry.label);
-        final Set<String> within = seen.putIfAbsent(item.source.slug, () => <String>{});
+        final Set<String> within = seen.putIfAbsent(
+          item.source.slug,
+          () => <String>{},
+        );
         expect(
           within.add(item.slug),
           isTrue,
-          reason: 'duplicate plate slug in ${item.source.countryName}: ${item.slug} (${item.entry.label})',
+          reason:
+              'duplicate plate slug in ${item.source.countryName}: ${item.slug} (${item.entry.label})',
         );
       }
     });
@@ -83,7 +102,11 @@ void main() {
       for (final GallerySource source in gallerySources) {
         final AppLocation location = AppLocation.country(source);
         expect(location.path, '/discover/${source.slug}');
-        expect(AppLocation.fromUri(Uri.parse(location.path)), location, reason: location.path);
+        expect(
+          AppLocation.fromUri(Uri.parse(location.path)),
+          location,
+          reason: location.path,
+        );
       }
     });
 
@@ -92,7 +115,9 @@ void main() {
       for (final CatalogueItem item in catalogueItems) {
         final AppLocation location = item.location;
         expect(location.path, '/discover/${item.source.slug}/${item.slug}');
-        final AppLocation parsed = AppLocation.fromUri(Uri.parse(location.path));
+        final AppLocation parsed = AppLocation.fromUri(
+          Uri.parse(location.path),
+        );
         expect(parsed, location, reason: location.path);
         expect(identical(parsed.item, item), isTrue, reason: location.path);
       }
@@ -111,22 +136,31 @@ void main() {
     });
 
     test('an unknown country falls back to Discover', () {
-      expect(AppLocation.fromUri(Uri.parse('/discover/atlantis')), AppLocation.discover);
+      expect(
+        AppLocation.fromUri(Uri.parse('/discover/atlantis')),
+        AppLocation.discover,
+      );
     });
 
     test('an unknown plate falls back to its country', () {
       final GallerySource source = gallerySources.first;
       expect(
-        AppLocation.fromUri(Uri.parse('/discover/${source.slug}/no-such-plate')),
+        AppLocation.fromUri(
+          Uri.parse('/discover/${source.slug}/no-such-plate'),
+        ),
         AppLocation.country(source),
       );
     });
 
     test('a URL is matched case-insensitively and past extra segments', () {
       final CatalogueItem item = catalogueItems.first;
-      final String upper = '/DISCOVER/${item.source.slug.toUpperCase()}/${item.slug.toUpperCase()}';
+      final String upper =
+          '/DISCOVER/${item.source.slug.toUpperCase()}/${item.slug.toUpperCase()}';
       expect(AppLocation.fromUri(Uri.parse(upper)), item.location);
-      expect(AppLocation.fromUri(Uri.parse('${item.location.path}/extra')), item.location);
+      expect(
+        AppLocation.fromUri(Uri.parse('${item.location.path}/extra')),
+        item.location,
+      );
     });
   });
 }

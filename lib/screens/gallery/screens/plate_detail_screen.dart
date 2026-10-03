@@ -91,7 +91,10 @@ class _PlateDetailScreenState extends State<PlateDetailScreen> {
   void _onSubmit() {
     FocusScope.of(context).unfocus();
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(behavior: SnackBarBehavior.floating, content: Text(_plate.text(sep: ' · '))),
+      SnackBar(
+        behavior: SnackBarBehavior.floating,
+        content: Text(_plate.text(sep: ' · ')),
+      ),
     );
   }
 
@@ -111,7 +114,8 @@ class _PlateDetailScreenState extends State<PlateDetailScreen> {
             spec: spec,
             plate: _plate,
             inputSource: _inputSource,
-            onInputSourceChanged: (PlateInputSource s) => setState(() => _inputSource = s),
+            onInputSourceChanged: (PlateInputSource s) =>
+                setState(() => _inputSource = s),
             onOpenDiscover: widget.onOpenDiscover,
             onOpenCountry: widget.onOpenCountry,
             heroTag: widget.heroTag,
@@ -146,20 +150,30 @@ class _PlateDetailScreenState extends State<PlateDetailScreen> {
           spec: spec,
           plate: _plate,
           inputSource: _inputSource,
-          onInputSourceChanged: (PlateInputSource s) => setState(() => _inputSource = s),
+          onInputSourceChanged: (PlateInputSource s) =>
+              setState(() => _inputSource = s),
           onSubmit: _onSubmit,
           borderOnTop: oneColumn,
         );
 
         final Widget page = oneColumn
             ? SingleChildScrollView(
-                child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[main, aside]),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[main, aside],
+                ),
               )
             : Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  Expanded(flex: 115, child: SingleChildScrollView(child: main)),
-                  SizedBox(width: 380, child: SingleChildScrollView(child: aside)),
+                  Expanded(
+                    flex: 115,
+                    child: SingleChildScrollView(child: main),
+                  ),
+                  SizedBox(
+                    width: 380,
+                    child: SingleChildScrollView(child: aside),
+                  ),
                 ],
               );
 
@@ -177,12 +191,15 @@ class _PlateDetailScreenState extends State<PlateDetailScreen> {
                 // No slot focused — the plate just completed, or the field
                 // was unfocused some other way — and the pad has nothing
                 // left to type into, so it drops off screen with it.
-                builder: (BuildContext context, PlateSlot? active) => active == null
+                builder: (BuildContext context, PlateSlot? active) =>
+                    active == null
                     ? const SizedBox.shrink()
                     : DecoratedBox(
                         decoration: BoxDecoration(
                           color: colors.surfaceContainerLow,
-                          border: Border(top: BorderSide(color: colors.outlineVariant)),
+                          border: Border(
+                            top: BorderSide(color: colors.outlineVariant),
+                          ),
                         ),
                         child: SafeArea(
                           top: false,
@@ -193,8 +210,9 @@ class _PlateDetailScreenState extends State<PlateDetailScreen> {
                             digitAlphabet: _alphabet(numeric: true),
                             letterAlphabet: _alphabet(numeric: false),
                             activeAlphabet: active.alphabet,
-                            onKey: (String key) =>
-                                key == kPlateBackspaceKey ? _plate.backspace() : _plate.submit(key),
+                            onKey: (String key) => key == kPlateBackspaceKey
+                                ? _plate.backspace()
+                                : _plate.submit(key),
                           ),
                         ),
                       ),
@@ -261,16 +279,23 @@ class _MobilePlateDetail extends StatelessWidget {
     final List<PlateDetailRow> rows = <PlateDetailRow>[
       PlateDetailRow(label: 'Package', value: item.source.packageName),
       PlateDetailRow(label: 'Spec', value: spec.id, mono: true),
-      PlateDetailRow(label: 'Country block', value: _countryBlock, font: NType.forScript(_countryBlock)),
+      PlateDetailRow(
+        label: 'Country block',
+        value: _countryBlock,
+        font: NType.forScript(_countryBlock),
+      ),
       PlateDetailRow(label: 'Slots', value: '${spec.slotCount}'),
       PlateDetailRow(label: 'Livery', value: entry.label),
       PlateDetailRow(
         label: 'Proportions',
-        value: '${(spec.canvasWidth / spec.canvasHeight).toStringAsFixed(2)} : 1',
+        value:
+            '${(spec.canvasWidth / spec.canvasHeight).toStringAsFixed(2)} : 1',
       ),
       PlateDetailRow(
         label: 'Validator',
-        value: entry.validator == null ? 'None in this package' : entry.validator.runtimeType.toString(),
+        value: entry.validator == null
+            ? 'None'
+            : entry.validator.runtimeType.toString(),
       ),
     ];
 
@@ -296,7 +321,9 @@ class _MobilePlateDetail extends StatelessWidget {
                       countryName: item.source.countryName,
                       specId: spec.id,
                       onOpenDiscover: onOpenDiscover,
-                      onOpenCountry: onOpenCountry == null ? null : () => onOpenCountry!(item.source),
+                      onOpenCountry: onOpenCountry == null
+                          ? null
+                          : () => onOpenCountry!(item.source),
                       isIranshahirOverview: isIranshahirOverview,
                     ),
                   ),
@@ -311,16 +338,19 @@ class _MobilePlateDetail extends StatelessWidget {
                       child: PlateBinding<PlateTheme?>(
                         controller: plate,
                         select: (PlateController c) => entry.themeFor(c.values),
-                        builder: (BuildContext context, PlateTheme? plateTheme) => PlateCanvas(
-                          spec: spec,
-                          theme: plateTheme,
-                          country: entry.country,
-                          inputSource: inputSource,
-                          validator: entry.validator,
-                          autoValidate: true,
-                          controller: plate,
-                          onChooseCharacter: (PlateAlphabet a) => PlateCharacterPicker.show(context, a),
-                        ),
+                        builder:
+                            (BuildContext context, PlateTheme? plateTheme) =>
+                                PlateCanvas(
+                                  spec: spec,
+                                  theme: plateTheme,
+                                  country: entry.country,
+                                  inputSource: inputSource,
+                                  validator: entry.validator,
+                                  autoValidate: true,
+                                  controller: plate,
+                                  onChooseCharacter: (PlateAlphabet a) =>
+                                      PlateCharacterPicker.show(context, a),
+                                ),
                       ),
                     ),
                   ),
@@ -341,8 +371,9 @@ class _MobilePlateDetail extends StatelessWidget {
                         ),
                         PlateBinding<int>(
                           controller: plate,
-                          select: (PlateController c) =>
-                              c.values.where((String? v) => v != null && v.isNotEmpty).length,
+                          select: (PlateController c) => c.values
+                              .where((String? v) => v != null && v.isNotEmpty)
+                              .length,
                           builder: (BuildContext context, int filled) => Text(
                             '$filled SLOTS FILLED · ${spec.id}'.toUpperCase(),
                             style: NType.kicker.copyWith(color: N.n500),
@@ -383,7 +414,8 @@ class _MobilePlateDetail extends StatelessWidget {
               select: (PlateController c) => c.activeSlot,
               // No slot focused — the plate just completed, or the field was
               // unfocused some other way — so the pad drops off screen too.
-              builder: (BuildContext context, PlateSlot? active) => active == null
+              builder: (BuildContext context, PlateSlot? active) =>
+                  active == null
                   ? const SizedBox.shrink()
                   : PlateKeypad(
                       highlightedKey: null,
@@ -392,7 +424,9 @@ class _MobilePlateDetail extends StatelessWidget {
                       digitAlphabet: alphabet(numeric: true),
                       letterAlphabet: alphabet(numeric: false),
                       activeAlphabet: active.alphabet,
-                      onKey: (String key) => key == kPlateBackspaceKey ? plate.backspace() : plate.submit(key),
+                      onKey: (String key) => key == kPlateBackspaceKey
+                          ? plate.backspace()
+                          : plate.submit(key),
                     ),
             ),
           DecoratedBox(
@@ -549,7 +583,9 @@ class _MainColumn extends StatelessWidget {
       countryName: item.source.countryName,
       specId: spec.id,
       onOpenDiscover: onOpenDiscover,
-      onOpenCountry: onOpenCountry == null ? null : () => onOpenCountry!(item.source),
+      onOpenCountry: onOpenCountry == null
+          ? null
+          : () => onOpenCountry!(item.source),
       isIranshahirOverview: isIranshahirOverview,
     ),
     const SizedBox(height: 32),
@@ -576,14 +612,16 @@ class _MainColumn extends StatelessWidget {
           controller: plate,
           // A `chosen` slot — Iran's letter, the West Bank's
           // governorate — asks the host for a character.
-          onChooseCharacter: (PlateAlphabet alphabet) => PlateCharacterPicker.show(context, alphabet),
+          onChooseCharacter: (PlateAlphabet alphabet) =>
+              PlateCharacterPicker.show(context, alphabet),
         ),
       ),
     ),
     const SizedBox(height: 12),
     PlateBinding<int>(
       controller: plate,
-      select: (PlateController c) => c.values.where((String? v) => v != null && v.isNotEmpty).length,
+      select: (PlateController c) =>
+          c.values.where((String? v) => v != null && v.isNotEmpty).length,
       builder: (BuildContext context, int filled) => Text(
         '$filled SLOTS FILLED · ${spec.id}'.toUpperCase(),
         style: NType.kicker.copyWith(color: N.n500),
@@ -595,7 +633,11 @@ class _MainColumn extends StatelessWidget {
 /// The plate itself, at size, with no stage decoration around it — the
 /// design draws it directly on the page, not on a lit board.
 class _PlateStage extends StatelessWidget {
-  const _PlateStage({required this.spec, required this.child, required this.heroTag});
+  const _PlateStage({
+    required this.spec,
+    required this.child,
+    required this.heroTag,
+  });
 
   final PlateSpec spec;
   final Widget child;
@@ -619,7 +661,11 @@ class _PlateStage extends StatelessWidget {
           aspectRatio: spec.canvasWidth / spec.canvasHeight,
           child: FittedBox(
             fit: BoxFit.contain,
-            child: SizedBox(width: spec.canvasWidth, height: spec.canvasHeight, child: child),
+            child: SizedBox(
+              width: spec.canvasWidth,
+              height: spec.canvasHeight,
+              child: child,
+            ),
           ),
         ),
       ),
@@ -656,22 +702,31 @@ class _Aside extends StatelessWidget {
     final List<PlateDetailRow> rows = <PlateDetailRow>[
       PlateDetailRow(label: 'Package', value: item.source.packageName),
       PlateDetailRow(label: 'Spec', value: spec.id, mono: true),
-      PlateDetailRow(label: 'Country block', value: _countryBlock, font: NType.forScript(_countryBlock)),
+      PlateDetailRow(
+        label: 'Country block',
+        value: _countryBlock,
+        font: NType.forScript(_countryBlock),
+      ),
       PlateDetailRow(label: 'Slots', value: '${spec.slotCount}'),
       PlateDetailRow(label: 'Livery', value: entry.label),
       PlateDetailRow(
         label: 'Proportions',
-        value: '${(spec.canvasWidth / spec.canvasHeight).toStringAsFixed(2)} : 1',
+        value:
+            '${(spec.canvasWidth / spec.canvasHeight).toStringAsFixed(2)} : 1',
       ),
       PlateDetailRow(
         label: 'Validator',
-        value: entry.validator == null ? 'None in this package' : entry.validator.runtimeType.toString(),
+        value: entry.validator == null
+            ? 'None'
+            : entry.validator.runtimeType.toString(),
       ),
     ];
 
     return DecoratedBox(
       decoration: BoxDecoration(
-        border: borderOnTop ? const Border(top: BorderSide(color: N.divider)) : const Border(left: BorderSide(color: N.divider)),
+        border: borderOnTop
+            ? const Border(top: BorderSide(color: N.divider))
+            : const Border(left: BorderSide(color: N.divider)),
       ),
       child: SizedBox(
         height: borderOnTop ? null : MediaQuery.sizeOf(context).height,
@@ -683,7 +738,10 @@ class _Aside extends StatelessWidget {
             children: <Widget>[
               const Eyebrow('Input'),
               const SizedBox(height: 20),
-              InputModeList(selected: inputSource, onChanged: onInputSourceChanged),
+              InputModeList(
+                selected: inputSource,
+                onChanged: onInputSourceChanged,
+              ),
               const SizedBox(height: 40),
               const Eyebrow('Details'),
               const SizedBox(height: 12),
@@ -692,7 +750,12 @@ class _Aside extends StatelessWidget {
               if (borderOnTop)
                 _Submit(plate: plate, onSubmit: onSubmit)
               else
-                Expanded(child: Align(alignment: Alignment.bottomCenter, child: _Submit(plate: plate, onSubmit: onSubmit))),
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: _Submit(plate: plate, onSubmit: onSubmit),
+                  ),
+                ),
             ],
           ),
         ),

@@ -39,9 +39,17 @@ class PlateBreadcrumb extends StatelessWidget {
       children: <Widget>[
         _BackButton(onPressed: () => Navigator.of(context).maybePop()),
         const SizedBox(width: 16),
-        _CrumbLink(label: 'Discover'.toUpperCase(), style: crumb, onPressed: onOpenDiscover),
+        _CrumbLink(
+          label: 'Discover'.toUpperCase(),
+          style: crumb,
+          onPressed: onOpenDiscover,
+        ),
         Text(' / ', style: crumb),
-        _CrumbLink(label: countryName.toUpperCase(), style: crumb, onPressed: onOpenCountry),
+        _CrumbLink(
+          label: countryName.toUpperCase(),
+          style: crumb,
+          onPressed: onOpenCountry,
+        ),
         Text(' / ', style: crumb),
         Text(specId.toUpperCase(), style: crumb.copyWith(color: N.n300)),
       ],
@@ -98,7 +106,11 @@ class _BackButtonState extends State<_BackButton> {
 /// One tappable word in the trail. Inert — and unhoverable — when its
 /// callback is null.
 class _CrumbLink extends StatefulWidget {
-  const _CrumbLink({required this.label, required this.style, required this.onPressed});
+  const _CrumbLink({
+    required this.label,
+    required this.style,
+    required this.onPressed,
+  });
 
   final String label;
   final TextStyle style;
@@ -113,7 +125,8 @@ class _CrumbLinkState extends State<_CrumbLink> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.onPressed == null) return Text(widget.label, style: widget.style);
+    if (widget.onPressed == null)
+      return Text(widget.label, style: widget.style);
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       onEnter: (_) => setState(() => _hovered = true),
@@ -123,7 +136,9 @@ class _CrumbLinkState extends State<_CrumbLink> {
         onTap: widget.onPressed,
         child: Text(
           widget.label,
-          style: widget.style.copyWith(color: _hovered ? N.n200 : widget.style.color),
+          style: widget.style.copyWith(
+            color: _hovered ? N.n200 : widget.style.color,
+          ),
         ),
       ),
     );

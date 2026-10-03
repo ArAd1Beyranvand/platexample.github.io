@@ -17,10 +17,12 @@ class CubaSource extends GallerySource {
 
   @override
   String get note =>
-      'The 2013 system: a series letter and six digits on a car, five on a '
-      'motorcycle, always black on white. See cuba_plate/README.md.';
+      'The 2013 system: a series letter and six digits on cars, five on '
+      'motorcycles, black on white, with a validator for the format.';
 
-  static List<String?> _values(String value) => <String?>[for (final c in value.split('')) c];
+  static List<String?> _values(String value) => <String?>[
+    for (final c in value.split('')) c,
+  ];
 
   /// Cached: the catalogue pairs highlights back to sections by identity.
   @override
@@ -54,7 +56,8 @@ class CubaSource extends GallerySource {
     ),
     GallerySection(
       title: 'Motorcycle — 200 × 140',
-      note: 'The letter alone on the top row, beside CUBA in a ruled box; five digits below.',
+      note:
+          'The letter alone on the top row, beside CUBA in a ruled box; five digits below.',
       entries: <GalleryEntry>[
         GalleryEntry(
           id: 'cu.motorcycle',

@@ -30,13 +30,16 @@ class StatBand extends StatelessWidget {
   static const double _compactBreak = 480;
 
   List<_Stat> get _cells => <_Stat>[
-    for (final ({int value, String label}) tile in stats.tiles) _Stat(tile.value, tile.label),
+    for (final ({int value, String label}) tile in stats.tiles)
+      _Stat(tile.value, tile.label),
   ];
 
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: const BoxDecoration(border: Border(top: BorderSide(color: N.divider))),
+      decoration: const BoxDecoration(
+        border: Border(top: BorderSide(color: N.divider)),
+      ),
       child: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           final double width = constraints.maxWidth;
@@ -50,7 +53,10 @@ class StatBand extends StatelessWidget {
           return Wrap(
             children: <Widget>[
               for (final _Stat stat in _cells)
-                SizedBox(width: columnWidth, child: _StatCell(stat: stat, metrics: metrics)),
+                SizedBox(
+                  width: columnWidth,
+                  child: _StatCell(stat: stat, metrics: metrics),
+                ),
             ],
           );
         },
@@ -130,7 +136,9 @@ class _StatCell extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(left: metrics.margin),
       padding: metrics.padding,
-      decoration: const BoxDecoration(border: Border(left: BorderSide(color: N.divider))),
+      decoration: const BoxDecoration(
+        border: Border(left: BorderSide(color: N.divider)),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,

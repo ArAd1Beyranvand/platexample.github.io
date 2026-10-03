@@ -16,7 +16,9 @@ void main() {
     ('1000 — under NBreak.detail', Size(1000, 900)),
     ('390 — phone', Size(390, 844)),
   ]) {
-    testWidgets('sk11 discover at $name does not overflow', (WidgetTester tester) async {
+    testWidgets('sk11 discover at $name does not overflow', (
+      WidgetTester tester,
+    ) async {
       tester.view.physicalSize = size;
       tester.view.devicePixelRatio = 1.0;
       addTearDown(tester.view.reset);
@@ -42,7 +44,9 @@ void main() {
     });
   }
 
-  testWidgets('sk11 the group turns over at NBreak.detail', (WidgetTester tester) async {
+  testWidgets('sk11 the group turns over at NBreak.detail', (
+    WidgetTester tester,
+  ) async {
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.reset);
 

@@ -23,11 +23,18 @@ class InputModeList extends StatelessWidget {
   final ValueChanged<PlateInputSource> onChanged;
   final InputModeListStyle style;
 
-  static const Map<PlateInputSource, (String, String)> _labels = <PlateInputSource, (String, String)>{
-    PlateInputSource.system: ('System', 'The platform keyboard.'),
-    PlateInputSource.hardwareKeyboard: ('Hardware', 'Physical keys, no overlay.'),
-    PlateInputSource.packageKeypad: ('Keypad', 'In-app plate keypad.'),
-  };
+  static const Map<PlateInputSource, (String, String)> _labels =
+      <PlateInputSource, (String, String)>{
+        PlateInputSource.system: ('System', 'The platform keyboard.'),
+        PlateInputSource.hardwareKeyboard: (
+          'Hardware',
+          'Physical keys only, no on-screen keyboard.',
+        ),
+        PlateInputSource.packageKeypad: (
+          'Keypad',
+          'The on-screen pad from plate_keypad.',
+        ),
+      };
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +42,8 @@ class InputModeList extends StatelessWidget {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          for (final MapEntry<PlateInputSource, (String, String)> e in _labels.entries) ...<Widget>[
+          for (final MapEntry<PlateInputSource, (String, String)> e
+              in _labels.entries) ...<Widget>[
             _CardRow(
               title: e.value.$1,
               description: e.value.$2,
@@ -50,7 +58,8 @@ class InputModeList extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        for (final MapEntry<PlateInputSource, (String, String)> e in _labels.entries) ...<Widget>[
+        for (final MapEntry<PlateInputSource, (String, String)> e
+            in _labels.entries) ...<Widget>[
           _RadioRow(
             title: e.value.$1,
             description: e.value.$2,
@@ -69,7 +78,12 @@ class InputModeList extends StatelessWidget {
 /// the mobile panel has no room for the aside's dot-and-label pairing to read
 /// as anything but a checkbox.
 class _CardRow extends StatefulWidget {
-  const _CardRow({required this.title, required this.description, required this.selected, required this.onTap});
+  const _CardRow({
+    required this.title,
+    required this.description,
+    required this.selected,
+    required this.onTap,
+  });
 
   final String title;
   final String description;
@@ -120,19 +134,31 @@ class _CardRowState extends State<_CardRow> {
                     children: <Widget>[
                       Text(
                         widget.title,
-                        style: const TextStyle(fontFamily: NType.archivo, fontSize: 15, color: N.n100),
+                        style: const TextStyle(
+                          fontFamily: NType.archivo,
+                          fontSize: 15,
+                          color: N.n100,
+                        ),
                       ),
                       const SizedBox(height: 2),
                       Text(
                         widget.description,
-                        style: const TextStyle(fontFamily: NType.archivo, fontSize: 13, color: N.n500),
+                        style: const TextStyle(
+                          fontFamily: NType.archivo,
+                          fontSize: 13,
+                          color: N.n500,
+                        ),
                       ),
                     ],
                   ),
                 ),
                 if (widget.selected) ...<Widget>[
                   const SizedBox(width: 12),
-                  Container(width: _dashWidth, height: _dashHeight, color: N.accent),
+                  Container(
+                    width: _dashWidth,
+                    height: _dashHeight,
+                    color: N.accent,
+                  ),
                 ],
               ],
             ),
@@ -147,7 +173,12 @@ class _CardRowState extends State<_CardRow> {
 /// [BoxDecoration] circle, not `RadioListTile` — that brings its own padding,
 /// ripple and colours the design does not use.
 class _RadioRow extends StatefulWidget {
-  const _RadioRow({required this.title, required this.description, required this.selected, required this.onTap});
+  const _RadioRow({
+    required this.title,
+    required this.description,
+    required this.selected,
+    required this.onTap,
+  });
 
   final String title;
   final String description;
@@ -201,7 +232,10 @@ class _RadioRowState extends State<_RadioRow> {
                           child: Container(
                             width: _dotSize - 8,
                             height: _dotSize - 8,
-                            decoration: const BoxDecoration(shape: BoxShape.circle, color: N.bg),
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: N.bg,
+                            ),
                           ),
                         )
                       : null,
@@ -215,12 +249,21 @@ class _RadioRowState extends State<_RadioRow> {
                   children: <Widget>[
                     Text(
                       widget.title,
-                      style: const TextStyle(fontFamily: NType.archivo, fontSize: 15, fontWeight: FontWeight.w600, color: N.n100),
+                      style: const TextStyle(
+                        fontFamily: NType.archivo,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                        color: N.n100,
+                      ),
                     ),
                     const SizedBox(height: 2),
                     Text(
                       widget.description,
-                      style: const TextStyle(fontFamily: NType.archivo, fontSize: 13, color: N.n500),
+                      style: const TextStyle(
+                        fontFamily: NType.archivo,
+                        fontSize: 13,
+                        color: N.n500,
+                      ),
                     ),
                   ],
                 ),

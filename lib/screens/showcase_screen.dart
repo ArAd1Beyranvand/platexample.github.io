@@ -26,9 +26,13 @@ final CatalogueStats _catalogueStats = CatalogueStats.of(gallerySources);
 /// takes whatever height is left and the stat band is pinned under it. This
 /// widget is only that composition — backdrop, hero, stat band.
 class ShowcaseScreen extends StatefulWidget {
-  const ShowcaseScreen({super.key, required this.onOpenTab, required this.onOpenPlate});
+  const ShowcaseScreen({
+    super.key,
+    required this.onOpenTab,
+    required this.onOpenPlate,
+  });
 
-  /// Asks the router to navigate; the hero's `Open the archive` button is the
+  /// Asks the router to navigate; the hero's `Browse plates` button is the
   /// only caller. The shell owns the tab, so the screen routes through it
   /// rather than reaching for the Navigator.
   final ValueChanged<AppTab> onOpenTab;
@@ -105,7 +109,9 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
             PosterBackdrop(
               // Fires on the rising edge of frameTransform, which is the exact
               // frame the device's content opacity reaches zero.
-              sweep: SweepLight(isHopping: _phase == DeviceTransitionPhase.frameTransform),
+              sweep: SweepLight(
+                isHopping: _phase == DeviceTransitionPhase.frameTransform,
+              ),
             ),
             // `grid-template-rows: 1fr auto`, at every width. The section is
             // exactly one viewport tall and never scrolls: the hero takes the

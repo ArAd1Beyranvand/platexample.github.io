@@ -15,8 +15,8 @@ class VenezuelaSource extends GallerySource {
 
   @override
   String get note =>
-      'The 2008 system: seven characters on the flag, the last letter naming '
-      'the state. See venezuela_plate/README.md.';
+      'The 2008 car plate: seven characters on the flag. Where the letters '
+      'fall gives the category, and the last letter prints its state.';
 
   static List<String?> _values(String value) => <String?>[
     for (final c in value.split('')) c,

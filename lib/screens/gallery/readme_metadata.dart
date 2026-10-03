@@ -1,9 +1,6 @@
 /// Extracts metadata from README files for the showcase.
 class ReadmeMetadata {
-  const ReadmeMetadata({
-    required this.packages,
-    required this.countries,
-  });
+  const ReadmeMetadata({required this.packages, required this.countries});
 
   /// Number of packages in the plate ecosystem.
   final int packages;
@@ -35,10 +32,7 @@ class ReadmeMetadata {
       if (packages != null && countries != null) break;
     }
 
-    return ReadmeMetadata(
-      packages: packages ?? 0,
-      countries: countries ?? 0,
-    );
+    return ReadmeMetadata(packages: packages ?? 0, countries: countries ?? 0);
   }
 
   static int? _extractNumber(String line) {

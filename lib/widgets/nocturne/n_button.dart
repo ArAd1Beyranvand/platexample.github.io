@@ -67,7 +67,9 @@ class _NButtonState extends State<NButton> {
       widget.padding ??
       EdgeInsets.symmetric(
         vertical: NSpace.s2,
-        horizontal: widget.variant == NButtonVariant.ghost ? NSpace.s1 : NSpace.s3 * 1.2,
+        horizontal: widget.variant == NButtonVariant.ghost
+            ? NSpace.s1
+            : NSpace.s3 * 1.2,
       );
 
   Color? get _fill {

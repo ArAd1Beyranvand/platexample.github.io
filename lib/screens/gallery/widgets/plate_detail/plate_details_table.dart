@@ -6,7 +6,12 @@ import '../../../../theme/nocturne.dart';
 /// right, a solid 1px divider under it (an in-control separator, so [NRule]
 /// — which fades at its ends — is the wrong widget here).
 class PlateDetailRow {
-  const PlateDetailRow({required this.label, required this.value, this.mono = false, this.font});
+  const PlateDetailRow({
+    required this.label,
+    required this.value,
+    this.mono = false,
+    this.font,
+  });
 
   final String label;
   final String value;
@@ -54,7 +59,10 @@ class _Row extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 14),
       child: Row(
         children: <Widget>[
-          Text(row.label.toUpperCase(), style: NType.kicker.copyWith(color: N.n500)),
+          Text(
+            row.label.toUpperCase(),
+            style: NType.kicker.copyWith(color: N.n500),
+          ),
           const Spacer(),
           Flexible(
             child: Text(

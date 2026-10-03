@@ -36,7 +36,12 @@ class IranshahirOverviewScreen extends StatelessWidget {
         return CustomScrollView(
           slivers: <Widget>[
             SliverPadding(
-              padding: EdgeInsets.fromLTRB(padding.left, padding.top, padding.right, 0),
+              padding: EdgeInsets.fromLTRB(
+                padding.left,
+                padding.top,
+                padding.right,
+                0,
+              ),
               sliver: SliverToBoxAdapter(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -49,7 +54,12 @@ class IranshahirOverviewScreen extends StatelessWidget {
               ),
             ),
             SliverPadding(
-              padding: EdgeInsets.fromLTRB(padding.left, 0, padding.right, padding.bottom),
+              padding: EdgeInsets.fromLTRB(
+                padding.left,
+                0,
+                padding.right,
+                padding.bottom,
+              ),
               sliver: SliverList.builder(
                 itemCount: iranshahirCountries.length * 2 - 1,
                 itemBuilder: (BuildContext context, int index) {
@@ -89,11 +99,15 @@ class _Header extends StatelessWidget {
         children: <Widget>[
           Text(
             'Iranshahr'.toUpperCase(),
-            style: NType.kicker.copyWith(fontSize: 11, letterSpacing: 0.12 * 11, color: N.accent300),
+            style: NType.kicker.copyWith(
+              fontSize: 11,
+              letterSpacing: 0.12 * 11,
+              color: N.accent300,
+            ),
           ),
           const SizedBox(height: 8),
           Text(
-            'Eight countries, one package',
+            'Nine countries, one package',
             style: TextStyle(
               fontFamily: NType.archivo,
               fontWeight: FontWeight.w800,
@@ -105,9 +119,15 @@ class _Header extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           Text(
-            'Bahrain, Azerbaijan, Afghanistan, Armenia, and Tajikistan plate designs from the iranshahr_plate '
-            'package. Each country is independent with distinct design languages.',
-            style: const TextStyle(fontFamily: NType.serif, fontSize: 18, height: 1.6, color: N.n300),
+            'Bahrain, Azerbaijan, Afghanistan, Armenia, Tajikistan, Kuwait, Qatar, '
+            'Iraq and the UAE, in one iranshahr_plate import. The countries share '
+            'no design; each has its own specs, colours and country block.',
+            style: const TextStyle(
+              fontFamily: NType.serif,
+              fontSize: 18,
+              height: 1.6,
+              color: N.n300,
+            ),
           ),
         ],
       ),

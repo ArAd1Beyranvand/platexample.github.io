@@ -113,30 +113,31 @@ class _DevicePreset {
   final bool showsKeypad;
 }
 
-const Map<DeviceType, _DevicePreset> _devicePresets = <DeviceType, _DevicePreset>{
-  // The laptop: no on-screen keypad, its deck carries the keys.
-  DeviceType.desktop: _DevicePreset(
-    plateWidthFactor: 0.55,
-    usesController: true,
-    compactKeypad: false,
-    showsKeypad: false,
-  ),
-  // The tablet: the full on-screen pad.
-  DeviceType.tablet: _DevicePreset(
-    plateWidthFactor: 0.72,
-    usesController: true,
-    compactKeypad: false,
-    showsKeypad: true,
-  ),
-  // The phone: the compact pad, its slots host-fed so the auto-typist never
-  // raises the visitor's own IME.
-  DeviceType.mobile: _DevicePreset(
-    plateWidthFactor: 0.86,
-    usesController: false,
-    compactKeypad: true,
-    showsKeypad: true,
-  ),
-};
+const Map<DeviceType, _DevicePreset> _devicePresets =
+    <DeviceType, _DevicePreset>{
+      // The laptop: no on-screen keypad, its deck carries the keys.
+      DeviceType.desktop: _DevicePreset(
+        plateWidthFactor: 0.55,
+        usesController: true,
+        compactKeypad: false,
+        showsKeypad: false,
+      ),
+      // The tablet: the full on-screen pad.
+      DeviceType.tablet: _DevicePreset(
+        plateWidthFactor: 0.72,
+        usesController: true,
+        compactKeypad: false,
+        showsKeypad: true,
+      ),
+      // The phone: the compact pad, its slots host-fed so the auto-typist never
+      // raises the visitor's own IME.
+      DeviceType.mobile: _DevicePreset(
+        plateWidthFactor: 0.86,
+        usesController: false,
+        compactKeypad: true,
+        showsKeypad: true,
+      ),
+    };
 
 /// The spec's own digit alphabet — the first numeric slot's — so the keypad
 /// types in the plate's numerals rather than a hardcoded set. Falls back to
@@ -153,7 +154,8 @@ PlateAlphabet _digitAlphabetOf(PlateSpec spec) {
 /// plate, or one whose only letter slot is a printed constant).
 PlateAlphabet? _letterAlphabetOf(PlateSpec spec) {
   for (final slot in spec.slots) {
-    if (!slot.alphabet.isNumeric && slot.alphabet.characters.length > 1) return slot.alphabet;
+    if (!slot.alphabet.isNumeric && slot.alphabet.characters.length > 1)
+      return slot.alphabet;
   }
   return null;
 }
@@ -187,7 +189,9 @@ DemoConfig _configFor(DeviceType device, GalleryEntry entry) {
 List<GalleryEntry> _typeableEntries() => <GalleryEntry>[
   for (final GallerySource source in gallerySources)
     for (final GalleryEntry entry in source.entries)
-      if (entry.sampleValues != null && entry.sampleValues!.any((v) => v != null && v.isNotEmpty)) entry,
+      if (entry.sampleValues != null &&
+          entry.sampleValues!.any((v) => v != null && v.isNotEmpty))
+        entry,
 ];
 
 final Random _defaultRng = Random();
@@ -213,7 +217,9 @@ DemoConfig pickDemoConfig(DeviceType device, {Random? random}) {
 /// page needs.
 List<CatalogueItem> _typeableItems() => <CatalogueItem>[
   for (final CatalogueItem item in catalogueItems)
-    if (item.entry.sampleValues != null && item.entry.sampleValues!.any((v) => v != null && v.isNotEmpty)) item,
+    if (item.entry.sampleValues != null &&
+        item.entry.sampleValues!.any((v) => v != null && v.isNotEmpty))
+      item,
 ];
 
 /// Picks one plate at random from the whole catalogue, as a [CatalogueItem] so
@@ -231,6 +237,8 @@ CatalogueItem pickDemoItem({Random? random}) {
 /// One random [DemoConfig] per [DeviceType], for a caller that wants the whole
 /// table at once (a test, or a first paint before the cycle re-rolls). Each
 /// device is drawn independently.
-Map<DeviceType, DemoConfig> pickDemoConfigs({Random? random}) => <DeviceType, DemoConfig>{
-  for (final device in DeviceType.values) device: pickDemoConfig(device, random: random),
-};
+Map<DeviceType, DemoConfig> pickDemoConfigs({Random? random}) =>
+    <DeviceType, DemoConfig>{
+      for (final device in DeviceType.values)
+        device: pickDemoConfig(device, random: random),
+    };

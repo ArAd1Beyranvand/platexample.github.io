@@ -21,16 +21,56 @@ class AboutScreen extends StatelessWidget {
   /// re-check it against that file, not against the sibling pubspecs, whenever
   /// this list is touched.
   static const List<_PackageInfo> _packages = <_PackageInfo>[
-    _PackageInfo('core_plate', '0.9.1', 'https://github.com/ArAd1Beyranvand/core-plate'),
-    _PackageInfo('plate_keypad', '0.1.1', 'https://github.com/ArAd1Beyranvand/keypad-plate'),
-    _PackageInfo('iran_plate', '0.5.0', 'https://github.com/ArAd1Beyranvand/iran-plate'),
-    _PackageInfo('iranshahr_plate', '0.1.0', 'https://github.com/ArAd1Beyranvand/iranshahr'),
-    _PackageInfo('germany_plate', '0.2.0', 'https://github.com/ArAd1Beyranvand/germany-plate'),
-    _PackageInfo('palestine_plate', '0.3.0', 'https://github.com/ArAd1Beyranvand/plate-palestine'),
-    _PackageInfo('yemen_plate', '0.3.0', 'https://github.com/ArAd1Beyranvand/plate-yemen'),
-    _PackageInfo('lebanon_plate', '0.1.0', 'https://github.com/ArAd1Beyranvand/lebanon-plate'),
-    _PackageInfo('cuba_plate', '0.1.0', 'https://github.com/ArAd1Beyranvand/plate-cuba'),
-    _PackageInfo('venezuela_plate', '0.1.0', 'https://github.com/ArAd1Beyranvand/plate-venezuela'),
+    _PackageInfo(
+      'core_plate',
+      '0.9.1',
+      'https://github.com/ArAd1Beyranvand/core-plate',
+    ),
+    _PackageInfo(
+      'plate_keypad',
+      '0.1.1',
+      'https://github.com/ArAd1Beyranvand/keypad-plate',
+    ),
+    _PackageInfo(
+      'iran_plate',
+      '0.5.0',
+      'https://github.com/ArAd1Beyranvand/iran-plate',
+    ),
+    _PackageInfo(
+      'iranshahr_plate',
+      '0.1.0',
+      'https://github.com/ArAd1Beyranvand/iranshahr',
+    ),
+    _PackageInfo(
+      'germany_plate',
+      '0.2.0',
+      'https://github.com/ArAd1Beyranvand/germany-plate',
+    ),
+    _PackageInfo(
+      'palestine_plate',
+      '0.3.0',
+      'https://github.com/ArAd1Beyranvand/plate-palestine',
+    ),
+    _PackageInfo(
+      'yemen_plate',
+      '0.3.0',
+      'https://github.com/ArAd1Beyranvand/plate-yemen',
+    ),
+    _PackageInfo(
+      'lebanon_plate',
+      '0.1.0',
+      'https://github.com/ArAd1Beyranvand/lebanon-plate',
+    ),
+    _PackageInfo(
+      'cuba_plate',
+      '0.1.0',
+      'https://github.com/ArAd1Beyranvand/plate-cuba',
+    ),
+    _PackageInfo(
+      'venezuela_plate',
+      '0.1.0',
+      'https://github.com/ArAd1Beyranvand/plate-venezuela',
+    ),
   ];
 
   /// `padding: 72px 64px 96px 72px`, and the media query's
@@ -51,11 +91,18 @@ class AboutScreen extends StatelessWidget {
             const SizedBox(height: 28),
             const NRule(),
             SizedBox(height: compact ? 32 : 44),
-            Text('Countries'.toUpperCase(), style: NType.kicker.copyWith(color: N.n500)),
+            Text(
+              'Countries'.toUpperCase(),
+              style: NType.kicker.copyWith(color: N.n500),
+            ),
             const SizedBox(height: 8),
-            for (final GallerySource source in gallerySources) _CountryRow(source: source, compact: compact),
+            for (final GallerySource source in gallerySources)
+              _CountryRow(source: source, compact: compact),
             SizedBox(height: compact ? 40 : 52),
-            Text('Built against'.toUpperCase(), style: NType.kicker.copyWith(color: N.n500)),
+            Text(
+              'Built against'.toUpperCase(),
+              style: NType.kicker.copyWith(color: N.n500),
+            ),
             SizedBox(height: compact ? 14 : 16),
             _PackageGrid(compact: compact),
           ],
@@ -73,14 +120,16 @@ class _Header extends StatelessWidget {
   final bool compact;
 
   static const String _p1 =
-      'Each package ships a ~30-line example that draws one plate; the '
-      'catalogue lives here instead, so no publishable package carries a '
-      'showcase.';
+      'core_plate is the widget: PlateCanvas paints the plate, takes input '
+      'slot by slot and holds the value in a PlateController. It knows no '
+      'country and needs no state-management package. A validator can mark '
+      'a plate red; it never blocks a keystroke.';
   static const String _p2 =
-      'A plate is three independent render-time inputs: a PlateSpec for '
-      'geometry, a PlateTheme for colour and a PlateCountry for the panel '
-      'block. Nothing in this app depends on a country package knowing about '
-      'any other, and no country package depends on this app.';
+      'Countries are separate packages of const PlateSpecs, with their '
+      'colours and validators. Add one and pass its spec; a new plate is a '
+      'new const, not a new widget. plate_keypad adds an on-screen keypad and '
+      'a letter picker, and core_plate_bloc adds a bloc layer for apps that '
+      'already use bloc.';
 
   @override
   Widget build(BuildContext context) {
@@ -90,20 +139,25 @@ class _Header extends StatelessWidget {
       children: <Widget>[
         Text(
           '03 — About'.toUpperCase(),
-          style: NType.kicker.copyWith(fontSize: 11, letterSpacing: 0.12 * 11, color: N.accent300),
+          style: NType.kicker.copyWith(
+            fontSize: 11,
+            letterSpacing: 0.12 * 11,
+            color: N.accent300,
+          ),
         ),
         const SizedBox(height: 18),
         LayoutBuilder(
           // `font-size: clamp(34px, 3.6vw, 48px)`, measured against this
           // column rather than the viewport — see DiscoverScreen's header.
           builder: (BuildContext context, BoxConstraints constraints) => Text(
-            'One app for every country package.',
+            'How the packages fit together.',
             style: TextStyle(
               fontFamily: NType.archivo,
               fontWeight: FontWeight.w800,
               fontSize: (constraints.maxWidth * 0.036).clamp(34.0, 48.0),
               height: 0.95,
-              letterSpacing: -0.035 * (constraints.maxWidth * 0.036).clamp(34.0, 48.0),
+              letterSpacing:
+                  -0.035 * (constraints.maxWidth * 0.036).clamp(34.0, 48.0),
               color: N.n100,
             ),
           ),
@@ -117,9 +171,25 @@ class _Header extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Text(_p1, style: const TextStyle(fontFamily: NType.serif, fontSize: 18.5, height: 1.55, color: N.n300)),
+          Text(
+            _p1,
+            style: const TextStyle(
+              fontFamily: NType.serif,
+              fontSize: 18.5,
+              height: 1.55,
+              color: N.n300,
+            ),
+          ),
           const SizedBox(height: 18),
-          Text(_p2, style: const TextStyle(fontFamily: NType.serif, fontSize: 18.5, height: 1.55, color: N.n400)),
+          Text(
+            _p2,
+            style: const TextStyle(
+              fontFamily: NType.serif,
+              fontSize: 18.5,
+              height: 1.55,
+              color: N.n400,
+            ),
+          ),
         ],
       ),
     );
@@ -158,9 +228,19 @@ class _CountryRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.baseline,
       textBaseline: TextBaseline.alphabetic,
       children: <Widget>[
-        Text(source.countryName, style: const TextStyle(fontFamily: NType.archivo, fontSize: 17, color: N.n100)),
+        Text(
+          source.countryName,
+          style: const TextStyle(
+            fontFamily: NType.archivo,
+            fontSize: 17,
+            color: N.n100,
+          ),
+        ),
         const SizedBox(width: 10),
-        Text(source.packageName, style: NType.specId.copyWith(letterSpacing: 0.06 * 11, color: N.n600)),
+        Text(
+          source.packageName,
+          style: NType.specId.copyWith(letterSpacing: 0.06 * 11, color: N.n600),
+        ),
       ],
     );
     final Widget specCount = Text(
@@ -169,19 +249,29 @@ class _CountryRow extends StatelessWidget {
     );
     final Widget description = Text(
       source.note,
-      style: const TextStyle(fontFamily: NType.serif, fontSize: 16.5, height: 1.5, color: N.n400),
+      style: const TextStyle(
+        fontFamily: NType.serif,
+        fontSize: 16.5,
+        height: 1.5,
+        color: N.n400,
+      ),
     );
 
     return Container(
       padding: EdgeInsets.symmetric(vertical: compact ? 18 : 20),
-      decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: N.n900))),
+      decoration: const BoxDecoration(
+        border: Border(bottom: BorderSide(color: N.n900)),
+      ),
       child: compact
           ? Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[Flexible(child: nameAndPackage), specCount],
+                  children: <Widget>[
+                    Flexible(child: nameAndPackage),
+                    specCount,
+                  ],
                 ),
                 const SizedBox(height: 10),
                 description,
@@ -195,7 +285,13 @@ class _CountryRow extends StatelessWidget {
                 const SizedBox(width: 28),
                 Expanded(child: description),
                 const SizedBox(width: 28),
-                SizedBox(width: 84, child: Align(alignment: Alignment.centerRight, child: specCount)),
+                SizedBox(
+                  width: 84,
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: specCount,
+                  ),
+                ),
               ],
             ),
     );
@@ -213,7 +309,10 @@ class _PackageGrid extends StatelessWidget {
       return Column(
         children: <Widget>[
           for (final _PackageInfo package in AboutScreen._packages)
-            Padding(padding: const EdgeInsets.only(bottom: 10), child: _PackageCard(package: package)),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: _PackageCard(package: package),
+            ),
         ],
       );
     }
@@ -264,10 +363,22 @@ class _PackageCard extends StatelessWidget {
         children: <Widget>[
           Text(
             package.name,
-            style: const TextStyle(fontFamily: NType.mono, fontSize: 14, letterSpacing: 0.02 * 14, color: N.n100),
+            style: const TextStyle(
+              fontFamily: NType.mono,
+              fontSize: 14,
+              letterSpacing: 0.02 * 14,
+              color: N.n100,
+            ),
           ),
           const SizedBox(height: 5),
-          Text(package.version, style: NType.specId.copyWith(fontSize: 11, letterSpacing: 0, color: N.n500)),
+          Text(
+            package.version,
+            style: NType.specId.copyWith(
+              fontSize: 11,
+              letterSpacing: 0,
+              color: N.n500,
+            ),
+          ),
           const SizedBox(height: 16),
           Row(
             children: <Widget>[
@@ -289,7 +400,8 @@ class _LinkChip extends StatelessWidget {
   final String label;
   final String url;
 
-  Future<void> _open() => launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+  Future<void> _open() =>
+      launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
 
   @override
   Widget build(BuildContext context) {
@@ -301,8 +413,18 @@ class _LinkChip extends StatelessWidget {
         onTap: _open,
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-          decoration: BoxDecoration(border: Border.all(color: N.n800), borderRadius: BorderRadius.circular(NRadius.sm)),
-          child: Text(label, style: NType.specId.copyWith(fontSize: 12, letterSpacing: 0, color: N.n300)),
+          decoration: BoxDecoration(
+            border: Border.all(color: N.n800),
+            borderRadius: BorderRadius.circular(NRadius.sm),
+          ),
+          child: Text(
+            label,
+            style: NType.specId.copyWith(
+              fontSize: 12,
+              letterSpacing: 0,
+              color: N.n300,
+            ),
+          ),
         ),
       ),
     );

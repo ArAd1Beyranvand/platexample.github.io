@@ -29,7 +29,10 @@ import '../theme/nocturne.dart';
 ///
 /// Pure decoration — ignores pointer events.
 class PlateBackdrop extends StatelessWidget {
-  const PlateBackdrop({super.key, this.duration = const Duration(milliseconds: 900)});
+  const PlateBackdrop({
+    super.key,
+    this.duration = const Duration(milliseconds: 900),
+  });
 
   /// Full fade-out / travel / fade-in cycle. Runs whenever the glass resizes.
   final Duration duration;
@@ -60,7 +63,8 @@ class PlateBackdrop extends StatelessWidget {
             ),
           ),
           child: LayoutBuilder(
-            builder: (context, constraints) => _OrbLayer(size: constraints.biggest, duration: duration),
+            builder: (context, constraints) =>
+                _OrbLayer(size: constraints.biggest, duration: duration),
           ),
         ),
       ),
@@ -80,7 +84,10 @@ class _OrbLayer extends StatefulWidget {
 }
 
 class _OrbLayerState extends State<_OrbLayer> with TickerProviderStateMixin {
-  late final AnimationController _controller = AnimationController(vsync: this, duration: widget.duration);
+  late final AnimationController _controller = AnimationController(
+    vsync: this,
+    duration: widget.duration,
+  );
 
   /// Free-running clock for the slow continuous drift, independent of the
   /// relayout timeline on [_controller].
@@ -159,9 +166,21 @@ class _OrbLayerState extends State<_OrbLayer> with TickerProviderStateMixin {
 
   /// Down, held at zero for the whole journey, then back up.
   late final Animation<double> _opacity = TweenSequence<double>([
-    TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.0).chain(CurveTween(curve: Curves.easeOut)), weight: 26),
+    TweenSequenceItem(
+      tween: Tween(
+        begin: 1.0,
+        end: 0.0,
+      ).chain(CurveTween(curve: Curves.easeOut)),
+      weight: 26,
+    ),
     TweenSequenceItem(tween: ConstantTween<double>(0.0), weight: 44),
-    TweenSequenceItem(tween: Tween(begin: 0.0, end: 1.0).chain(CurveTween(curve: Curves.easeIn)), weight: 30),
+    TweenSequenceItem(
+      tween: Tween(
+        begin: 0.0,
+        end: 1.0,
+      ).chain(CurveTween(curve: Curves.easeIn)),
+      weight: 30,
+    ),
   ]).animate(_controller);
 
   /// The layout the orbs are travelling away from.
@@ -201,7 +220,13 @@ class _OrbLayerState extends State<_OrbLayer> with TickerProviderStateMixin {
     // frame repaints without rebuilding any widget. build() now runs only when
     // the glass actually resizes.
     return CustomPaint(
-      painter: _OrbPainter(from: _from, to: widget.size, travel: _travel, opacity: _opacity, drift: _drift),
+      painter: _OrbPainter(
+        from: _from,
+        to: widget.size,
+        travel: _travel,
+        opacity: _opacity,
+        drift: _drift,
+      ),
       size: Size.infinite,
       child: const SizedBox.expand(),
     );
@@ -210,7 +235,14 @@ class _OrbLayerState extends State<_OrbLayer> with TickerProviderStateMixin {
 
 @immutable
 class _Orb {
-  const _Orb(this.dx, this.dy, this.r, this.color, this.alpha, {this.core = 0.0});
+  const _Orb(
+    this.dx,
+    this.dy,
+    this.r,
+    this.color,
+    this.alpha, {
+    this.core = 0.0,
+  });
 
   /// Centre, as a fraction of width / height.
   final double dx;
@@ -231,8 +263,13 @@ class _Orb {
 }
 
 class _OrbPainter extends CustomPainter {
-  _OrbPainter({required this.from, required this.to, required this.travel, required this.opacity, required this.drift})
-    : super(repaint: Listenable.merge(<Listenable>[travel, opacity, drift]));
+  _OrbPainter({
+    required this.from,
+    required this.to,
+    required this.travel,
+    required this.opacity,
+    required this.drift,
+  }) : super(repaint: Listenable.merge(<Listenable>[travel, opacity, drift]));
 
   /// Layout being left behind and layout being flown to. Plain values: they
   /// change only when the glass resizes, which rebuilds this painter anyway.
@@ -275,9 +312,11 @@ class _OrbPainter extends CustomPainter {
     for (var i = 0; i < _orbs.length; i++) {
       final o = _orbs[i];
       final d = i < drifts.length ? drifts[i] : Offset.zero;
-      final base = Offset.lerp(o.centreIn(from), o.centreIn(to), t) ?? o.centreIn(to);
+      final base =
+          Offset.lerp(o.centreIn(from), o.centreIn(to), t) ?? o.centreIn(to);
       final centre = base + Offset(d.dx * size.width, d.dy * size.height);
-      final radius = lerpDouble(o.radiusIn(from), o.radiusIn(to), t) ?? o.radiusIn(to);
+      final radius =
+          lerpDouble(o.radiusIn(from), o.radiusIn(to), t) ?? o.radiusIn(to);
       if (radius <= 0.5) continue;
 
       final peak = (o.alpha * groupOpacity).clamp(0.0, 1.0);

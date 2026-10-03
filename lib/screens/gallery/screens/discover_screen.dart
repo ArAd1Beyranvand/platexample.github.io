@@ -22,7 +22,11 @@ final CatalogueStats _catalogueStats = CatalogueStats.of(gallerySources);
 /// none of that is copied here — this screen restyles everything *around* the
 /// plate and supplies the surface it sits on.
 class DiscoverScreen extends StatelessWidget {
-  const DiscoverScreen({super.key, required this.onOpenPlate, required this.onOpenCountry});
+  const DiscoverScreen({
+    super.key,
+    required this.onOpenPlate,
+    required this.onOpenCountry,
+  });
 
   final void Function(CatalogueItem item, String heroTag) onOpenPlate;
   final ValueChanged<GallerySource> onOpenCountry;
@@ -44,7 +48,12 @@ class DiscoverScreen extends StatelessWidget {
         return CustomScrollView(
           slivers: <Widget>[
             SliverPadding(
-              padding: EdgeInsets.fromLTRB(padding.left, padding.top, padding.right, 0),
+              padding: EdgeInsets.fromLTRB(
+                padding.left,
+                padding.top,
+                padding.right,
+                0,
+              ),
               sliver: SliverToBoxAdapter(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -57,7 +66,12 @@ class DiscoverScreen extends StatelessWidget {
               ),
             ),
             SliverPadding(
-              padding: EdgeInsets.fromLTRB(padding.left, 0, padding.right, padding.bottom),
+              padding: EdgeInsets.fromLTRB(
+                padding.left,
+                0,
+                padding.right,
+                padding.bottom,
+              ),
               sliver: SliverList.builder(
                 // Two children per source — the group and the rule under it —
                 // so a group is built only when it scrolls into reach.
@@ -103,7 +117,11 @@ class _Header extends StatelessWidget {
         children: <Widget>[
           Text(
             '02 — Discover'.toUpperCase(),
-            style: NType.kicker.copyWith(fontSize: 11, letterSpacing: 0.12 * 11, color: N.accent300),
+            style: NType.kicker.copyWith(
+              fontSize: 11,
+              letterSpacing: 0.12 * 11,
+              color: N.accent300,
+            ),
           ),
           const SizedBox(height: 18),
           LayoutBuilder(
@@ -118,20 +136,24 @@ class _Header extends StatelessWidget {
                 fontWeight: FontWeight.w800,
                 fontSize: (constraints.maxWidth * 0.036).clamp(34.0, 48.0),
                 height: 0.95,
-                letterSpacing: -0.035 * (constraints.maxWidth * 0.036).clamp(34.0, 48.0),
+                letterSpacing:
+                    -0.035 * (constraints.maxWidth * 0.036).clamp(34.0, 48.0),
                 color: N.n100,
               ),
             ),
           ),
           const SizedBox(height: 16),
-          // The design's own string, verbatim, and the design's own serif for
-          // it — the lede is one of the two places Nocturne leaves Archivo for
+          // The design's own serif for the lede is one of the two places Nocturne leaves Archivo for
           // Newsreader, the showcase hero's paragraph being the other.
           const Text(
-            'Every licence plate the packages in this repo can draw. A plate '
-            'is a geometry, a livery and a country block — so two of these can '
-            'share a spec and still be different plates.',
-            style: TextStyle(fontFamily: NType.serif, fontSize: 18, height: 1.5, color: N.n400),
+            'Every plate the packages can render and take input for. Open one '
+            'to type into it, swap the input mode, and run its validator.',
+            style: TextStyle(
+              fontFamily: NType.serif,
+              fontSize: 18,
+              height: 1.5,
+              color: N.n400,
+            ),
           ),
         ],
       ),
@@ -145,7 +167,8 @@ class _Header extends StatelessWidget {
         spacing: 36,
         runSpacing: 20,
         children: <Widget>[
-          for (final ({int value, String label}) tile in stats.tiles) _StatTile(tile: tile),
+          for (final ({int value, String label}) tile in stats.tiles)
+            _StatTile(tile: tile),
         ],
       ),
     );
@@ -198,7 +221,11 @@ class _StatTile extends StatelessWidget {
         const SizedBox(height: 7),
         Text(
           tile.label.toUpperCase(),
-          style: NType.kicker.copyWith(fontSize: 10, letterSpacing: 0.1 * 10, color: N.n500),
+          style: NType.kicker.copyWith(
+            fontSize: 10,
+            letterSpacing: 0.1 * 10,
+            color: N.n500,
+          ),
         ),
       ],
     );

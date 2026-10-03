@@ -40,11 +40,18 @@ class PlateTitleBlock extends StatelessWidget {
         const SizedBox(height: 10),
         Text.rich(
           TextSpan(
-            style: const TextStyle(fontFamily: NType.archivo, fontSize: 16, color: N.n400),
+            style: const TextStyle(
+              fontFamily: NType.archivo,
+              fontSize: 16,
+              color: N.n400,
+            ),
             children: <InlineSpan>[
               TextSpan(text: countryName),
               const TextSpan(text: ' · '),
-              TextSpan(text: packageName, style: const TextStyle(fontFamily: NType.mono)),
+              TextSpan(
+                text: packageName,
+                style: const TextStyle(fontFamily: NType.mono),
+              ),
             ],
           ),
         ),

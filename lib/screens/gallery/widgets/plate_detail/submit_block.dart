@@ -9,11 +9,15 @@ import '../../../../widgets/nocturne/n_button.dart';
 /// under it. Pinned to the bottom of the aside by the caller's
 /// `margin-top: auto` (a [Spacer] above this in the column).
 ///
-/// A plate with no validator shows the old bottom bar's `No validator for
-/// this plate` line here instead of in a footer; a failing validator's reason
+/// A plate with no validator shows `This plate has no validator` here instead of in a footer; a failing validator's reason
 /// renders here too, never in a `SnackBar`.
 class SubmitBlock extends StatelessWidget {
-  const SubmitBlock({super.key, required this.verdict, required this.completed, required this.onSubmit});
+  const SubmitBlock({
+    super.key,
+    required this.verdict,
+    required this.completed,
+    required this.onSubmit,
+  });
 
   final PlateValidation? verdict;
   final bool completed;
@@ -22,11 +26,13 @@ class SubmitBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String? message = switch (verdict) {
-      null => 'No validator for this plate',
+      null => 'This plate has no validator',
       final PlateValidation v when !v.isValid => v.reason,
       _ => null,
     };
-    final Color messageColor = (verdict != null && !verdict!.isValid) ? N.accent300 : N.n500;
+    final Color messageColor = (verdict != null && !verdict!.isValid)
+        ? N.accent300
+        : N.n500;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -34,7 +40,11 @@ class SubmitBlock extends StatelessWidget {
         if (message != null) ...<Widget>[
           Text(
             message,
-            style: TextStyle(fontFamily: NType.archivo, fontSize: 13, color: messageColor),
+            style: TextStyle(
+              fontFamily: NType.archivo,
+              fontSize: 13,
+              color: messageColor,
+            ),
           ),
           const SizedBox(height: 16),
         ],

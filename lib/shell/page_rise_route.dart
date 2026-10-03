@@ -14,33 +14,48 @@ class PageRiseRoute<T> extends PageRouteBuilder<T> {
   /// so it should never itself be visible mid-transition (e.g. the country
   /// page built as the plate page's ancestor when opening a plate straight
   /// from Showcase, where nothing on the Discover stack exists yet).
-  PageRiseRoute({required WidgetBuilder builder, super.settings, bool instant = false})
-      : super(
-          transitionDuration: instant ? Duration.zero : const Duration(milliseconds: 200),
-          reverseTransitionDuration: instant ? Duration.zero : const Duration(milliseconds: 200),
-          pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondary) =>
-              builder(context),
-          transitionsBuilder: (
-            BuildContext context,
-            Animation<double> animation,
-            Animation<double> secondaryAnimation,
-            Widget child,
-          ) {
-            final CurvedAnimation curved = CurvedAnimation(parent: animation, curve: Curves.easeOut);
-            return FadeTransition(
-              opacity: curved,
-              child: SlideTransition(
-                // 10px of a 812px-tall phone panel, expressed as a fraction of
-                // the page's own height so it is 10px on any device.
-                position: Tween<Offset>(
-                  begin: const Offset(0, 10 / 812),
-                  end: Offset.zero,
-                ).animate(curved),
-                child: child,
-              ),
-            );
-          },
-        );
+  PageRiseRoute({
+    required WidgetBuilder builder,
+    super.settings,
+    bool instant = false,
+  }) : super(
+         transitionDuration: instant
+             ? Duration.zero
+             : const Duration(milliseconds: 200),
+         reverseTransitionDuration: instant
+             ? Duration.zero
+             : const Duration(milliseconds: 200),
+         pageBuilder:
+             (
+               BuildContext context,
+               Animation<double> animation,
+               Animation<double> secondary,
+             ) => builder(context),
+         transitionsBuilder:
+             (
+               BuildContext context,
+               Animation<double> animation,
+               Animation<double> secondaryAnimation,
+               Widget child,
+             ) {
+               final CurvedAnimation curved = CurvedAnimation(
+                 parent: animation,
+                 curve: Curves.easeOut,
+               );
+               return FadeTransition(
+                 opacity: curved,
+                 child: SlideTransition(
+                   // 10px of a 812px-tall phone panel, expressed as a fraction of
+                   // the page's own height so it is 10px on any device.
+                   position: Tween<Offset>(
+                     begin: const Offset(0, 10 / 812),
+                     end: Offset.zero,
+                   ).animate(curved),
+                   child: child,
+                 ),
+               );
+             },
+       );
 
   /// Opaque, like the pages it replaces: the nested navigator's root stays
   /// mounted underneath, and letting it show through would double-paint the

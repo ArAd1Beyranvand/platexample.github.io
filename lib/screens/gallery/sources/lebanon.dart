@@ -32,9 +32,9 @@ class LebanonSource extends GallerySource {
 
   @override
   String get note =>
-      'Two shapes and many colours — the inverse of the other packages here. '
-      'The field colour is the usage class and the letter is the town of '
-      'registration. See lebanon_plate/README.md.';
+      'Two plate shapes in nine usage colours, plus short numbers of one to '
+      'six digits. The field colour is the usage class; on a private plate '
+      'the letter is the town of registration.';
 
   /// The town a private plate is registered in, for the sample values.
   ///
@@ -65,7 +65,11 @@ class LebanonSource extends GallerySource {
   /// slot and it refuses both at once, so a class that pins its own letter
   /// (consular `C`, diplomatic `D`) passes the usage and everything else passes
   /// the town.
-  List<GalleryEntry> _liveries(PlateSpec spec, String form, Iterable<LebanonUsage> usages) => <GalleryEntry>[
+  List<GalleryEntry> _liveries(
+    PlateSpec spec,
+    String form,
+    Iterable<LebanonUsage> usages,
+  ) => <GalleryEntry>[
     for (final LebanonUsage usage in usages)
       GalleryEntry(
         id: 'lb.$form.${usage.name}',
@@ -76,7 +80,11 @@ class LebanonSource extends GallerySource {
         validator: const LebanonValidator(),
         sampleValues: usage.letter != null
             ? LebanonSerialGenerator.generate(spec, random: _rng, usage: usage)
-            : LebanonSerialGenerator.generate(spec, random: _rng, letter: _town),
+            : LebanonSerialGenerator.generate(
+                spec,
+                random: _rng,
+                letter: _town,
+              ),
         note: usage.arabic == null && !usage.isWhite
             ? 'No source names the Arabic word on this band, so it carries لبنان alone.'
             : null,
@@ -95,7 +103,11 @@ class LebanonSource extends GallerySource {
         country: LebanonCountry.forUsage(LebanonUsage.private),
         theme: LebanonThemes.forUsage(LebanonUsage.private),
         validator: const LebanonValidator(),
-        sampleValues: LebanonSerialGenerator.generate(parliament, random: _rng, letter: LebanonLetter.mp),
+        sampleValues: LebanonSerialGenerator.generate(
+          parliament,
+          random: _rng,
+          letter: LebanonLetter.mp,
+        ),
         note:
             'Numbered 1..128, one per seat — the only documented number range '
             'in the system, and the only one the validator enforces. MP is one '
@@ -108,8 +120,13 @@ class LebanonSource extends GallerySource {
         country: LebanonCountry.forUsage(LebanonUsage.private),
         theme: LebanonThemes.forUsage(LebanonUsage.private),
         validator: const LebanonValidator(),
-        sampleValues: LebanonSerialGenerator.generate(motorcycle, random: _rng, letter: LebanonLetter.m),
-        note: 'M plates have been issued with fewer than six digits since 2019.',
+        sampleValues: LebanonSerialGenerator.generate(
+          motorcycle,
+          random: _rng,
+          letter: LebanonLetter.m,
+        ),
+        note:
+            'M plates have been issued with fewer than six digits since 2019.',
       ),
     ];
   }

@@ -11,7 +11,8 @@ import 'package:plate_number_holder/screens/gallery/sources/sources.dart';
 /// one of the three fails here and nowhere else.
 void main() {
   final List<GalleryEntry> entries = <GalleryEntry>[
-    for (final GallerySection section in const IraqSource().sections) ...section.entries,
+    for (final GallerySection section in const IraqSource().sections)
+      ...section.entries,
   ];
 
   test('every Iraqi entry is wired to a theme and a country', () {
@@ -22,14 +23,18 @@ void main() {
       expect(
         entry.sampleValues,
         hasLength(entry.spec.slotCount),
-        reason: '${entry.id} samples ${entry.sampleValues?.length} of ${entry.spec.slotCount} slots',
+        reason:
+            '${entry.id} samples ${entry.sampleValues?.length} of ${entry.spec.slotCount} slots',
       );
     }
   });
 
   for (final GalleryEntry entry in entries) {
     testWidgets('${entry.id} renders', (WidgetTester tester) async {
-      final PlateController controller = PlateController.fromValues(entry.spec, entry.sampleValues!);
+      final PlateController controller = PlateController.fromValues(
+        entry.spec,
+        entry.sampleValues!,
+      );
       addTearDown(controller.dispose);
 
       await tester.pumpWidget(
@@ -41,7 +46,11 @@ void main() {
                 height: 520 * entry.spec.canvasHeight / entry.spec.canvasWidth,
                 child: PlateThemeScope(
                   theme: entry.theme!,
-                  child: PlateView(controller: controller, theme: entry.theme, country: entry.country),
+                  child: PlateView(
+                    controller: controller,
+                    theme: entry.theme,
+                    country: entry.country,
+                  ),
                 ),
               ),
             ),

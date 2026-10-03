@@ -11,11 +11,7 @@ ThemeData nocturneTheme() {
   final ColorScheme colorScheme = ColorScheme.fromSeed(
     seedColor: N.accent,
     brightness: Brightness.dark,
-  ).copyWith(
-    surface: N.surface,
-    onSurface: N.text,
-    outline: N.divider,
-  );
+  ).copyWith(surface: N.surface, onSurface: N.text, outline: N.divider);
 
   return ThemeData(
     useMaterial3: true,
@@ -34,11 +30,7 @@ ThemeData nocturneTheme() {
       labelLarge: NType.h6,
       bodyMedium: NType.body,
     ),
-    dividerTheme: DividerThemeData(
-      color: N.divider,
-      thickness: 1,
-      space: 0,
-    ),
+    dividerTheme: DividerThemeData(color: N.divider, thickness: 1, space: 0),
     // The design has no Material ripple anywhere; hover is a colour change
     // and nothing else.
     splashFactory: NoSplash.splashFactory,
@@ -58,12 +50,16 @@ ThemeData nocturneTheme() {
 class NocturneScrollBehavior extends MaterialScrollBehavior {
   @override
   Set<PointerDeviceKind> get dragDevices => const {
-        PointerDeviceKind.touch,
-        PointerDeviceKind.mouse,
-        PointerDeviceKind.stylus,
-        PointerDeviceKind.trackpad,
-      };
+    PointerDeviceKind.touch,
+    PointerDeviceKind.mouse,
+    PointerDeviceKind.stylus,
+    PointerDeviceKind.trackpad,
+  };
 
   @override
-  Widget buildScrollbar(BuildContext context, Widget child, ScrollableDetails details) => child;
+  Widget buildScrollbar(
+    BuildContext context,
+    Widget child,
+    ScrollableDetails details,
+  ) => child;
 }

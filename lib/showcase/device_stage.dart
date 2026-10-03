@@ -44,7 +44,8 @@ class DeviceStage extends StatefulWidget {
 }
 
 class _DeviceStageState extends State<DeviceStage> {
-  late final DeviceCycleController _controller = widget.cycleController ?? DeviceCycleController();
+  late final DeviceCycleController _controller =
+      widget.cycleController ?? DeviceCycleController();
 
   /// The plate the content device currently shows — a random catalogue item,
   /// re-rolled on every content swap so a device shows a different plate each
@@ -132,7 +133,8 @@ class _DeviceStageState extends State<DeviceStage> {
       // instant window maximise that forces a full re-raster of it can miss the
       // GL embedder's frame deadline and crash the app. A RepaintBoundary lets
       // the resize composite the cached layer instead of re-rendering it.
-      builder: (context, device) => RepaintBoundary(child: _buildDevice(device)),
+      builder: (context, device) =>
+          RepaintBoundary(child: _buildDevice(device)),
     );
   }
 
@@ -141,7 +143,8 @@ class _DeviceStageState extends State<DeviceStage> {
       device: frameDevice,
       onPhaseChanged: _onPhase,
       onContentSwap: _onContentSwap,
-      builder: (context, _) => _CardGlass(item: _item, onOpenPlate: widget.onOpenPlate),
+      builder: (context, _) =>
+          _CardGlass(item: _item, onOpenPlate: widget.onOpenPlate),
     );
   }
 }
@@ -173,8 +176,13 @@ class _CardGlass extends StatelessWidget {
     // the card to the plate's own aspect at [stageHeight], plus the card's
     // horizontal padding, so the plate fills the band edge to edge whatever its
     // proportions. Clamped so a very wide plate still fits the glass.
-    final double aspect = item.entry.spec.canvasWidth / item.entry.spec.canvasHeight;
-    final double cardWidth = (stageHeight * aspect + PlateTile.padding.horizontal).clamp(300.0, 860.0);
+    final double aspect =
+        item.entry.spec.canvasWidth / item.entry.spec.canvasHeight;
+    final double cardWidth =
+        (stageHeight * aspect + PlateTile.padding.horizontal).clamp(
+          300.0,
+          860.0,
+        );
 
     return Stack(
       fit: StackFit.expand,

@@ -118,12 +118,20 @@ class CountryDetailScreen extends StatelessWidget {
         return CustomScrollView(
           slivers: <Widget>[
             SliverPadding(
-              padding: EdgeInsets.fromLTRB(padding.left, padding.top, padding.right, 0),
+              padding: EdgeInsets.fromLTRB(
+                padding.left,
+                padding.top,
+                padding.right,
+                0,
+              ),
               sliver: SliverToBoxAdapter(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    _Breadcrumb(countryName: source.countryName, onOpenDiscover: onOpenDiscover),
+                    _Breadcrumb(
+                      countryName: source.countryName,
+                      onOpenDiscover: onOpenDiscover,
+                    ),
                     const SizedBox(height: _crumbToHero),
                     _HeroCard(source: source, compact: compact),
                     const SizedBox(height: _heroToKicker),
@@ -137,7 +145,12 @@ class CountryDetailScreen extends StatelessWidget {
               ),
             ),
             SliverPadding(
-              padding: EdgeInsets.fromLTRB(padding.left, 0, padding.right, padding.bottom),
+              padding: EdgeInsets.fromLTRB(
+                padding.left,
+                0,
+                padding.right,
+                padding.bottom,
+              ),
               sliver: PlateSliverGrid(
                 stageHeight: stageHeight,
                 // 4 columns at 1440, 3 at ≤1280, 2 at ≤1040 — expressed as the
@@ -209,7 +222,11 @@ class _Breadcrumb extends StatelessWidget {
         // Only `DISCOVER` is a target. The separator and the country's own
         // name are where you already are, and a hover state on them would
         // promise a navigation that does not exist.
-        _CrumbLink(label: 'Discover'.toUpperCase(), style: crumb, onPressed: onOpenDiscover),
+        _CrumbLink(
+          label: 'Discover'.toUpperCase(),
+          style: crumb,
+          onPressed: onOpenDiscover,
+        ),
         Text(' / ', style: crumb),
         Text(countryName.toUpperCase(), style: crumb.copyWith(color: N.n300)),
       ],
@@ -266,7 +283,11 @@ class _BackButtonState extends State<_BackButton> {
 /// One tappable word in the trail. Inert — and unhoverable — when its
 /// callback is null.
 class _CrumbLink extends StatefulWidget {
-  const _CrumbLink({required this.label, required this.style, required this.onPressed});
+  const _CrumbLink({
+    required this.label,
+    required this.style,
+    required this.onPressed,
+  });
 
   final String label;
   final TextStyle style;
@@ -281,7 +302,8 @@ class _CrumbLinkState extends State<_CrumbLink> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.onPressed == null) return Text(widget.label, style: widget.style);
+    if (widget.onPressed == null)
+      return Text(widget.label, style: widget.style);
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       onEnter: (_) => setState(() => _hovered = true),
@@ -291,7 +313,9 @@ class _CrumbLinkState extends State<_CrumbLink> {
         onTap: widget.onPressed,
         child: Text(
           widget.label,
-          style: widget.style.copyWith(color: _hovered ? N.n200 : widget.style.color),
+          style: widget.style.copyWith(
+            color: _hovered ? N.n200 : widget.style.color,
+          ),
         ),
       ),
     );
@@ -344,7 +368,10 @@ class _HeroCard extends StatelessWidget {
             // other Nocturne headline is: inside the showcase's phone panel
             // the viewport is still the desktop window.
             builder: (BuildContext context, BoxConstraints constraints) {
-              final double size = (constraints.maxWidth * 0.05).clamp(38.0, 64.0);
+              final double size = (constraints.maxWidth * 0.05).clamp(
+                38.0,
+                64.0,
+              );
               return Text(
                 source.countryName,
                 style: TextStyle(
@@ -366,7 +393,12 @@ class _HeroCard extends StatelessWidget {
             // country has, and a second copy here is how the two drift.
             child: Text(
               source.note,
-              style: const TextStyle(fontFamily: NType.serif, fontSize: 18, height: 1.6, color: N.n300),
+              style: const TextStyle(
+                fontFamily: NType.serif,
+                fontSize: 18,
+                height: 1.6,
+                color: N.n300,
+              ),
             ),
           ),
           SizedBox(height: compact ? 28 : 36),
@@ -393,15 +425,19 @@ class _StatRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<({String value, String label})> tiles = <({String value, String label})>[
-      (value: '${source.entries.length}', label: 'Plates shown'),
-      (value: '${source.specIds.length} specs', label: 'Specs'),
-      (value: '${source.sections.length}', label: 'Sections'),
-    ];
+    final List<({String value, String label})> tiles =
+        <({String value, String label})>[
+          (value: '${source.entries.length}', label: 'Plates shown'),
+          (value: '${source.specIds.length} specs', label: 'Specs'),
+          (value: '${source.sections.length}', label: 'Sections'),
+        ];
     return Wrap(
       spacing: _gap,
       runSpacing: 24,
-      children: <Widget>[for (final ({String value, String label}) tile in tiles) _StatTile(tile: tile)],
+      children: <Widget>[
+        for (final ({String value, String label}) tile in tiles)
+          _StatTile(tile: tile),
+      ],
     );
   }
 }
@@ -433,7 +469,11 @@ class _StatTile extends StatelessWidget {
         const SizedBox(height: 9),
         Text(
           tile.label.toUpperCase(),
-          style: NType.kicker.copyWith(fontSize: 10, letterSpacing: 0.1 * 10, color: N.n500),
+          style: NType.kicker.copyWith(
+            fontSize: 10,
+            letterSpacing: 0.1 * 10,
+            color: N.n500,
+          ),
         ),
       ],
     );
@@ -473,7 +513,11 @@ extension on GallerySource {
 /// besides the one already open — every entry in [gallerySources] but
 /// [current].
 class _OtherCountries extends StatelessWidget {
-  const _OtherCountries({required this.current, required this.padding, required this.onSwitchCountry});
+  const _OtherCountries({
+    required this.current,
+    required this.padding,
+    required this.onSwitchCountry,
+  });
 
   final GallerySource current;
   final EdgeInsets padding;
@@ -497,14 +541,25 @@ class _OtherCountries extends StatelessWidget {
         // to both edges of the panel, not just the content column.
         const Divider(height: 1, thickness: 1, color: N.divider),
         Padding(
-          padding: EdgeInsets.fromLTRB(padding.left, _CountryDetailScreenSpacing.dividerToKicker, padding.right, 0),
+          padding: EdgeInsets.fromLTRB(
+            padding.left,
+            _CountryDetailScreenSpacing.dividerToKicker,
+            padding.right,
+            0,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Text('Other countries'.toUpperCase(), style: NType.kicker.copyWith(color: N.n500)),
+              Text(
+                'Other countries'.toUpperCase(),
+                style: NType.kicker.copyWith(color: N.n500),
+              ),
               const SizedBox(height: _CountryDetailScreenSpacing.kickerToList),
               for (final GallerySource source in others) ...<Widget>[
-                _OtherCountryRow(source: source, onTap: () => onSwitchCountry(source)),
+                _OtherCountryRow(
+                  source: source,
+                  onTap: () => onSwitchCountry(source),
+                ),
                 if (source != others.last) const SizedBox(height: _rowGap),
               ],
             ],
@@ -518,7 +573,8 @@ class _OtherCountries extends StatelessWidget {
 /// Spacing shared between [CountryDetailScreen] and [_OtherCountries] — kept
 /// off the screen's own private statics, which [_OtherCountries] cannot see.
 abstract final class _CountryDetailScreenSpacing {
-  static const double dividerToKicker = CountryDetailScreen._otherDividerToKicker;
+  static const double dividerToKicker =
+      CountryDetailScreen._otherDividerToKicker;
   static const double kickerToList = CountryDetailScreen._otherKickerToList;
 }
 
@@ -543,9 +599,13 @@ class _OtherCountryRowState extends State<_OtherCountryRow> {
   /// disposed with the row rather than rebuilt and leaked on every frame.
   late final PlateController? _plate = _leadOf(widget.source) == null
       ? null
-      : PlateController(spec: _leadOf(widget.source)!.spec, values: _leadOf(widget.source)!.sampleValues);
+      : PlateController(
+          spec: _leadOf(widget.source)!.spec,
+          values: _leadOf(widget.source)!.sampleValues,
+        );
 
-  static GalleryEntry? _leadOf(GallerySource source) => source.highlights.isEmpty ? null : source.highlights.first;
+  static GalleryEntry? _leadOf(GallerySource source) =>
+      source.highlights.isEmpty ? null : source.highlights.first;
 
   bool get _lit => _hovered || _pressed;
 
@@ -597,11 +657,18 @@ class _OtherCountryRowState extends State<_OtherCountryRow> {
                         ),
                       ),
                       const SizedBox(height: 4),
-                      Text(source.packageName, style: NType.specId.copyWith(color: N.n500)),
+                      Text(
+                        source.packageName,
+                        style: NType.specId.copyWith(color: N.n500),
+                      ),
                       const SizedBox(height: 4),
                       Text(
                         '${source.entries.length} entries · ${source.specIds.length} specs',
-                        style: TextStyle(fontFamily: NType.mono, fontSize: 11, color: N.n500),
+                        style: TextStyle(
+                          fontFamily: NType.mono,
+                          fontSize: 11,
+                          color: N.n500,
+                        ),
                       ),
                     ],
                   ),

@@ -114,14 +114,18 @@ final Map<CatalogueItem, String> _plateSlugs = _resolvePlateSlugs();
 /// cover, not the normal path.
 String _shortName(CatalogueItem item) {
   final String fromLabel = slugify(item.entry.label);
-  final bool nameable = fromLabel.codeUnits.any((int unit) => unit >= 0x61 && unit <= 0x7a);
+  final bool nameable = fromLabel.codeUnits.any(
+    (int unit) => unit >= 0x61 && unit <= 0x7a,
+  );
   return nameable ? fromLabel : slugify(item.entry.id);
 }
 
 Map<CatalogueItem, String> _resolvePlateSlugs() {
-  final Map<String, List<CatalogueItem>> byShortName = <String, List<CatalogueItem>>{};
+  final Map<String, List<CatalogueItem>> byShortName =
+      <String, List<CatalogueItem>>{};
   for (final CatalogueItem item in catalogueItems) {
-    final String key = '${slugify(item.source.countryName)}/${_shortName(item)}';
+    final String key =
+        '${slugify(item.source.countryName)}/${_shortName(item)}';
     byShortName.putIfAbsent(key, () => <CatalogueItem>[]).add(item);
   }
 
@@ -146,8 +150,13 @@ extension CatalogueItemSlug on CatalogueItem {
   /// Nested under `/discover/iranshahr/{country}/...` when [source] is one of
   /// the four countries inside the Iranshahr umbrella, so a plate opened from
   /// within that overview keeps a URL and back stack that stay inside it.
-  AppLocation get location =>
-      AppLocation.plate(source, this, isIranshahirOverview: iranshahirCountries.any((GallerySource s) => identical(s, source)));
+  AppLocation get location => AppLocation.plate(
+    source,
+    this,
+    isIranshahirOverview: iranshahirCountries.any(
+      (GallerySource s) => identical(s, source),
+    ),
+  );
 }
 
 /// One page of the app, as both a URL and the state the shell renders from.
@@ -163,15 +172,27 @@ extension CatalogueItemSlug on CatalogueItem {
 /// real catalogue objects and never a string it has to look up again.
 @immutable
 class AppLocation {
-  const AppLocation.tab(this.tab) : source = null, item = null, isIranshahirOverview = false;
+  const AppLocation.tab(this.tab)
+    : source = null,
+      item = null,
+      isIranshahirOverview = false;
 
-  const AppLocation._country(this.source, {this.isIranshahirOverview = false}) : tab = AppTab.discover, item = null;
+  const AppLocation._country(this.source, {this.isIranshahirOverview = false})
+    : tab = AppTab.discover,
+      item = null;
 
-  const AppLocation._plate(this.source, this.item, {this.isIranshahirOverview = false}) : tab = AppTab.discover;
+  const AppLocation._plate(
+    this.source,
+    this.item, {
+    this.isIranshahirOverview = false,
+  }) : tab = AppTab.discover;
 
   /// A country page. Always under Discover — that is the tab whose breadcrumb
   /// and back stack it belongs to.
-  factory AppLocation.country(GallerySource source, {bool isIranshahirOverview = false}) =>
+  factory AppLocation.country(
+    GallerySource source, {
+    bool isIranshahirOverview = false,
+  }) =>
       AppLocation._country(source, isIranshahirOverview: isIranshahirOverview);
 
   /// A plate page, with the country it hangs off so the breadcrumb and the URL
@@ -180,8 +201,15 @@ class AppLocation {
   /// [isIranshahirOverview] should be true when [source] is one of the four
   /// countries inside the Iranshahr umbrella, so the URL and the back stack
   /// nest under `/discover/iranshahr/...` instead of `/discover/{country}/...`.
-  factory AppLocation.plate(GallerySource source, CatalogueItem item, {bool isIranshahirOverview = false}) =>
-      AppLocation._plate(source, item, isIranshahirOverview: isIranshahirOverview);
+  factory AppLocation.plate(
+    GallerySource source,
+    CatalogueItem item, {
+    bool isIranshahirOverview = false,
+  }) => AppLocation._plate(
+    source,
+    item,
+    isIranshahirOverview: isIranshahirOverview,
+  );
 
   static const AppLocation showcase = AppLocation.tab(AppTab.showcase);
   static const AppLocation discover = AppLocation.tab(AppTab.discover);
@@ -249,7 +277,8 @@ class AppLocation {
 
     final AppTab? tab = AppTab.bySegment(segments.first);
     if (tab == null) return showcase;
-    if (tab != AppTab.discover || segments.length == 1) return AppLocation.tab(tab);
+    if (tab != AppTab.discover || segments.length == 1)
+      return AppLocation.tab(tab);
 
     // Must have at least country segment
     if (segments.length < 2) return discover;
@@ -265,18 +294,26 @@ class AppLocation {
       }
       // `/discover/iranshahr/{country}` shows an individual country page
       if (segments.length == 3) {
-        final GallerySource? countrySource = _iranshahirCountryBySlug(segments[2]);
+        final GallerySource? countrySource = _iranshahirCountryBySlug(
+          segments[2],
+        );
         if (countrySource != null) {
           return AppLocation.country(countrySource, isIranshahirOverview: true);
         }
       }
       // `/discover/iranshahr/{country}/{plate}` shows a plate within that country
       if (segments.length == 4) {
-        final GallerySource? countrySource = _iranshahirCountryBySlug(segments[2]);
+        final GallerySource? countrySource = _iranshahirCountryBySlug(
+          segments[2],
+        );
         if (countrySource != null) {
           final CatalogueItem? item = _itemBySlug(countrySource, segments[3]);
           if (item != null) {
-            return AppLocation.plate(countrySource, item, isIranshahirOverview: true);
+            return AppLocation.plate(
+              countrySource,
+              item,
+              isIranshahirOverview: true,
+            );
           }
           return AppLocation.country(countrySource, isIranshahirOverview: true);
         }
@@ -323,7 +360,12 @@ class AppLocation {
       other.isIranshahirOverview == isIranshahirOverview;
 
   @override
-  int get hashCode => Object.hash(tab, identityHashCode(source), identityHashCode(item), isIranshahirOverview);
+  int get hashCode => Object.hash(
+    tab,
+    identityHashCode(source),
+    identityHashCode(item),
+    isIranshahirOverview,
+  );
 
   @override
   String toString() => 'AppLocation($path)';

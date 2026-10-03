@@ -15,7 +15,12 @@ import 'package:flutter/scheduler.dart';
 /// keystroke. Deferring the same way per binding keeps the safety and drops
 /// everything else.
 class PlateBinding<T> extends StatefulWidget {
-  const PlateBinding({super.key, required this.controller, required this.select, required this.builder});
+  const PlateBinding({
+    super.key,
+    required this.controller,
+    required this.select,
+    required this.builder,
+  });
 
   final PlateController controller;
 
@@ -68,7 +73,8 @@ class _PlateBindingState<T> extends State<PlateBinding<T>> {
     if (next == _value) return;
 
     final SchedulerPhase phase = SchedulerBinding.instance.schedulerPhase;
-    if (phase == SchedulerPhase.persistentCallbacks || phase == SchedulerPhase.midFrameMicrotasks) {
+    if (phase == SchedulerPhase.persistentCallbacks ||
+        phase == SchedulerPhase.midFrameMicrotasks) {
       _settling = true;
       SchedulerBinding.instance.addPostFrameCallback((_) {
         _settling = false;
@@ -100,12 +106,20 @@ class VerdictBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final ColorScheme colors = Theme.of(context).colorScheme;
     final (IconData icon, Color color, String message) = switch (verdict) {
-      null => (Icons.remove_circle_outline, colors.onSurfaceVariant, 'This package ships no validator for this plate.'),
-      final PlateValidation v when !v.isValid => (Icons.info_outline, colors.error, v.reason!),
+      null => (
+        Icons.remove_circle_outline,
+        colors.onSurfaceVariant,
+        'This plate has no validator.',
+      ),
+      final PlateValidation v when !v.isValid => (
+        Icons.info_outline,
+        colors.error,
+        v.reason!,
+      ),
       _ when !completed => (
         Icons.more_horiz,
         colors.onSurfaceVariant,
-        'Nothing wrong so far — the rule stays quiet until the last register.',
+        'No errors so far. The full check runs once the plate is complete.',
       ),
       _ => (Icons.check_circle_outline, colors.primary, 'Valid plate'),
     };
@@ -114,7 +128,12 @@ class VerdictBar extends StatelessWidget {
         Icon(icon, size: 18, color: color),
         const SizedBox(width: 8),
         Expanded(
-          child: Text(message, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: color)),
+          child: Text(
+            message,
+            style: Theme.of(
+              context,
+            ).textTheme.bodySmall?.copyWith(color: color),
+          ),
         ),
       ],
     );

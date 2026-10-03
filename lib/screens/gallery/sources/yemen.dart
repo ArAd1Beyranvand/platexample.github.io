@@ -29,8 +29,9 @@ class YemenSource extends GallerySource {
 
   @override
   String get note =>
-      'Two current systems, not one current and one legacy: the 2026 unified '
-      'white plate and the 1993 northern format. See yemen_plate/README.md.';
+      'Both systems in use today: the 2026 unified white plate and the 1993 '
+      'northern format, each for cars and motorcycles. The northern '
+      'motorcycle geometry is unverified and marked so in the package.';
 
   /// The word the plate itself prints for [usage] on this system, falling back
   /// to the enum's name where no source names one — a northern government or
@@ -49,15 +50,22 @@ class YemenSource extends GallerySource {
     final String form = motorcycle ? 'moto' : 'car';
     return <GalleryEntry>[
       for (final MapEntry<int, PlateSpec> geometry
-          in (motorcycle ? YemenUnifiedPlates.motoGeometries : YemenUnifiedPlates.carGeometries).entries)
+          in (motorcycle
+                  ? YemenUnifiedPlates.motoGeometries
+                  : YemenUnifiedPlates.carGeometries)
+              .entries)
         GalleryEntry(
           id: 'ye.unified.$form.${_unifiedUsage.name}.${geometry.key}',
-          label: '${_word(_unifiedUsage, unified: true)} · ${geometry.key} digits',
+          label:
+              '${_word(_unifiedUsage, unified: true)} · ${geometry.key} digits',
           spec: geometry.value,
           country: YemenCountry.unifiedFor(_unifiedUsage),
           theme: YemenThemes.forUnifiedUsage(_unifiedUsage),
           validator: const YemenUnifiedValidator(),
-          sampleValues: YemenUnifiedSerialGenerator.generate(geometry.value, random: _rng),
+          sampleValues: YemenUnifiedSerialGenerator.generate(
+            geometry.value,
+            random: _rng,
+          ),
         ),
     ];
   }
@@ -73,15 +81,31 @@ class YemenSource extends GallerySource {
     final String form = motorcycle ? 'moto' : 'car';
     return <GalleryEntry>[
       for (final MapEntry<(int, int), PlateSpec> geometry
-          in (motorcycle ? YemenNorthernPlates.motoGeometries : YemenNorthernPlates.carGeometries).entries)
+          in (motorcycle
+                  ? YemenNorthernPlates.motoGeometries
+                  : YemenNorthernPlates.carGeometries)
+              .entries)
         GalleryEntry(
-          id: <String>['ye.northern.$form', _northernUsage.name, '${geometry.key.$1}+${geometry.key.$2}'].join('.'),
-          label: <String>[_word(_northernUsage, unified: false), '${geometry.key.$1} + ${geometry.key.$2}'].join(' · '),
+          id: <String>[
+            'ye.northern.$form',
+            _northernUsage.name,
+            '${geometry.key.$1}+${geometry.key.$2}',
+          ].join('.'),
+          label: <String>[
+            _word(_northernUsage, unified: false),
+            '${geometry.key.$1} + ${geometry.key.$2}',
+          ].join(' · '),
           spec: geometry.value,
           country: YemenCountry.northernFor(_northernUsage),
-          theme: YemenThemes.forNorthernUsage(_northernUsage, style: YemenMilitaryStyle.classic),
+          theme: YemenThemes.forNorthernUsage(
+            _northernUsage,
+            style: YemenMilitaryStyle.classic,
+          ),
           validator: const YemenNorthernValidator(),
-          sampleValues: YemenNorthernSerialGenerator.generate(geometry.value, random: _rng),
+          sampleValues: YemenNorthernSerialGenerator.generate(
+            geometry.value,
+            random: _rng,
+          ),
         ),
     ];
   }
@@ -90,7 +114,10 @@ class YemenSource extends GallerySource {
   /// systems shown in two form factors each, so the car entry leads for both
   /// — the home screen isn't the place to also distinguish car from moto.
   @override
-  List<GalleryEntry> get highlights => <GalleryEntry>[sections[0].entries.first, sections[2].entries.first];
+  List<GalleryEntry> get highlights => <GalleryEntry>[
+    sections[0].entries.first,
+    sections[2].entries.first,
+  ];
 
   @override
   List<GallerySection> get sections => _sections ??= <GallerySection>[

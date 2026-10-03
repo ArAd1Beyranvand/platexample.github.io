@@ -66,7 +66,9 @@ class TileTransition extends StatefulWidget {
 }
 
 class _TileTransitionState extends State<TileTransition> {
-  late final SnapshotController _snapshot = SnapshotController(allowSnapshotting: widget.enabled);
+  late final SnapshotController _snapshot = SnapshotController(
+    allowSnapshotting: widget.enabled,
+  );
   late _TilePainter _painter;
 
   @override
@@ -75,8 +77,11 @@ class _TileTransitionState extends State<TileTransition> {
     _painter = _buildPainter();
   }
 
-  _TilePainter _buildPainter() =>
-      _TilePainter(animation: widget.animation, entering: widget.entering, seed: widget.seed);
+  _TilePainter _buildPainter() => _TilePainter(
+    animation: widget.animation,
+    entering: widget.entering,
+    seed: widget.seed,
+  );
 
   @override
   void didUpdateWidget(covariant TileTransition oldWidget) {
@@ -116,12 +121,20 @@ class _TileTransitionState extends State<TileTransition> {
 
   @override
   Widget build(BuildContext context) {
-    return SnapshotWidget(controller: _snapshot, painter: _painter, child: widget.child);
+    return SnapshotWidget(
+      controller: _snapshot,
+      painter: _painter,
+      child: widget.child,
+    );
   }
 }
 
 class _TilePainter extends SnapshotPainter {
-  _TilePainter({required this.animation, required this.entering, required this.seed}) {
+  _TilePainter({
+    required this.animation,
+    required this.entering,
+    required this.seed,
+  }) {
     animation.addListener(notifyListeners);
   }
 
@@ -142,7 +155,8 @@ class _TilePainter extends SnapshotPainter {
     // fast as one finishing at t.
     final double finish =
         TileTransition.earliest +
-        (1 - TileTransition.earliest) * _rand(row * 92821 + col * 68917 + seed * 15485863);
+        (1 - TileTransition.earliest) *
+            _rand(row * 92821 + col * 68917 + seed * 15485863);
     final double travelled = (animation.value / finish).clamp(0.0, 1.0);
     return entering ? travelled : 1 - travelled;
   }
@@ -187,7 +201,12 @@ class _TilePainter extends SnapshotPainter {
         canvas.drawImageRect(
           image,
           Rect.fromLTRB(left * sx, top * sy, right * sx, bottom * sy),
-          Rect.fromLTRB(offset.dx + left, offset.dy + top, offset.dx + right, offset.dy + bottom),
+          Rect.fromLTRB(
+            offset.dx + left,
+            offset.dy + top,
+            offset.dx + right,
+            offset.dy + bottom,
+          ),
           paint,
         );
       }
@@ -198,7 +217,12 @@ class _TilePainter extends SnapshotPainter {
   /// platform view in the subtree, or a renderer without support). Paints the
   /// card plainly rather than not at all.
   @override
-  void paint(PaintingContext context, Offset offset, Size size, PaintingContextCallback painter) {
+  void paint(
+    PaintingContext context,
+    Offset offset,
+    Size size,
+    PaintingContextCallback painter,
+  ) {
     painter(context, offset);
   }
 

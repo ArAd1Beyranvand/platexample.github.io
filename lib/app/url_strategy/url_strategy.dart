@@ -5,5 +5,5 @@
 /// ships. The stub is a no-op: there is no address bar to configure.
 library;
 
-export 'url_strategy_stub.dart' if (dart.library.js_interop) 'url_strategy_web.dart';
-
+export 'url_strategy_stub.dart'
+    if (dart.library.js_interop) 'url_strategy_web.dart';

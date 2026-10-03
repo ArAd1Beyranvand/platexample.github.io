@@ -33,7 +33,8 @@ Offset edgeNormal(double s) {
 }
 
 /// A point on the perimeter, pushed [inset] px toward the interior.
-Offset seatOnEdge(double s, Size body, double inset) => edgePoint(s, body) + edgeNormal(s) * inset;
+Offset seatOnEdge(double s, Size body, double inset) =>
+    edgePoint(s, body) + edgeNormal(s) * inset;
 
 /// Interpolates two perimeter parameters the short way round.
 double lerpEdge(double a, double b, double t) {
@@ -54,7 +55,12 @@ enum DeviceType { mobile, tablet, desktop }
 /// from 0 and [angleDeg] falls from 90° (edge-on, invisible) to its rest tilt.
 @immutable
 class DeviceDeck {
-  const DeviceDeck({this.depth = 0, this.angleDeg = 90, this.hingeHeight = 0, this.opacity = 0});
+  const DeviceDeck({
+    this.depth = 0,
+    this.angleDeg = 90,
+    this.hingeHeight = 0,
+    this.opacity = 0,
+  });
 
   static const none = DeviceDeck();
 
@@ -73,7 +79,8 @@ class DeviceDeck {
 
   /// Height the tilted deck actually occupies on screen, so the frame can
   /// reserve space for it while it swings open.
-  double projectedHeight(double perspective) => projectedHeightAt(angleDeg, perspective);
+  double projectedHeight(double perspective) =>
+      projectedHeightAt(angleDeg, perspective);
 
   /// Same, for an angle driven by the hinge rather than the preset. Past 90°
   /// the deck has folded up behind the screen, so it occupies nothing.
@@ -87,8 +94,12 @@ class DeviceDeck {
 
   /// Same deck with its depth scaled — used to grow it out of the body in its
   /// own beat of the transition.
-  DeviceDeck scaledDepth(double t) =>
-      DeviceDeck(depth: depth * t, angleDeg: angleDeg, hingeHeight: hingeHeight, opacity: opacity);
+  DeviceDeck scaledDepth(double t) => DeviceDeck(
+    depth: depth * t,
+    angleDeg: angleDeg,
+    hingeHeight: hingeHeight,
+    opacity: opacity,
+  );
 
   static DeviceDeck lerp(DeviceDeck a, DeviceDeck b, double t) => DeviceDeck(
     depth: lerpDouble(a.depth, b.depth, t)!,
@@ -129,8 +140,13 @@ class SideButton {
     opacity: lerpDouble(a.opacity, b.opacity, t)!,
   );
 
-  SideButton withOpacity(double o) =>
-      SideButton(side: side, start: start, length: length, thickness: thickness, opacity: o);
+  SideButton withOpacity(double o) => SideButton(
+    side: side,
+    start: start,
+    length: length,
+    thickness: thickness,
+    opacity: o,
+  );
 }
 
 /// Everything the frame needs to draw and animate one device. Every field is
@@ -199,12 +215,16 @@ class DeviceConfig {
   final double lidTiltDeg;
 
   /// Logical size of the glass — the size the page is laid out at.
-  Size get screenSize => Size(bodySize.width - bezel.horizontal, bodySize.height - bezel.vertical);
+  Size get screenSize =>
+      Size(bodySize.width - bezel.horizontal, bodySize.height - bezel.vertical);
 
-  Size totalSize(double perspective) => Size(bodySize.width, bodySize.height + deck.projectedHeight(perspective));
+  Size totalSize(double perspective) =>
+      Size(bodySize.width, bodySize.height + deck.projectedHeight(perspective));
 
-  static Size _lerpSize(Size a, Size b, double t) =>
-      Size(lerpDouble(a.width, b.width, t)!, lerpDouble(a.height, b.height, t)!);
+  static Size _lerpSize(Size a, Size b, double t) => Size(
+    lerpDouble(a.width, b.width, t)!,
+    lerpDouble(a.height, b.height, t)!,
+  );
 
   /// Side buttons are matched by index; one missing on either side fades
   /// instead of popping, so the hardware travels with the body.
@@ -235,7 +255,11 @@ class DeviceConfig {
       cameraRadius: lerpDouble(a.cameraRadius, b.cameraRadius, t)!,
       speakerEdge: lerpEdge(a.speakerEdge, b.speakerEdge, t),
       speakerSize: _lerpSize(a.speakerSize, b.speakerSize, t),
-      homeIndicatorWidth: lerpDouble(a.homeIndicatorWidth, b.homeIndicatorWidth, t)!,
+      homeIndicatorWidth: lerpDouble(
+        a.homeIndicatorWidth,
+        b.homeIndicatorWidth,
+        t,
+      )!,
       sideButtons: buttons,
       deck: DeviceDeck.lerp(a.deck, b.deck, t),
       stageScale: lerpDouble(a.stageScale, b.stageScale, t)!,

@@ -10,15 +10,18 @@ import 'sources/sources.dart';
 /// three nested loops re-walked on every keystroke.
 @immutable
 class CatalogueItem {
-  CatalogueItem({required this.source, required this.section, required this.entry})
-    : haystack = <String>[
-        entry.label,
-        entry.note ?? '',
-        entry.spec.id,
-        section.title,
-        source.countryName,
-        source.packageName,
-      ].join(' ').toLowerCase();
+  CatalogueItem({
+    required this.source,
+    required this.section,
+    required this.entry,
+  }) : haystack = <String>[
+         entry.label,
+         entry.note ?? '',
+         entry.spec.id,
+         section.title,
+         source.countryName,
+         source.packageName,
+       ].join(' ').toLowerCase();
 
   final GallerySource source;
   final GallerySection section;
@@ -41,9 +44,13 @@ class CatalogueItem {
 /// [CatalogueSourceLook.highlightItems], which the Iranshahr overview page
 /// calls on each of those four sources directly.
 final List<CatalogueItem> catalogueItems = <CatalogueItem>[
-  for (final GallerySource source in <GallerySource>[...gallerySources, ...iranshahirCountries])
+  for (final GallerySource source in <GallerySource>[
+    ...gallerySources,
+    ...iranshahirCountries,
+  ])
     for (final GallerySection section in source.sections)
-      for (final GalleryEntry entry in section.entries) CatalogueItem(source: source, section: section, entry: entry),
+      for (final GalleryEntry entry in section.entries)
+        CatalogueItem(source: source, section: section, entry: entry),
 ];
 
 /// The items matching a free-text [query] and an optional [country].
@@ -51,8 +58,15 @@ final List<CatalogueItem> catalogueItems = <CatalogueItem>[
 /// Terms are ANDed, so "yemen moto" narrows rather than widens — the
 /// behaviour anyone who has used a search box expects, and the reason this
 /// isn't a single `contains`.
-List<CatalogueItem> searchCatalogue({String query = '', GallerySource? country}) {
-  final List<String> terms = query.toLowerCase().split(' ').where((String t) => t.isNotEmpty).toList();
+List<CatalogueItem> searchCatalogue({
+  String query = '',
+  GallerySource? country,
+}) {
+  final List<String> terms = query
+      .toLowerCase()
+      .split(' ')
+      .where((String t) => t.isNotEmpty)
+      .toList();
   return <CatalogueItem>[
     for (final CatalogueItem item in catalogueItems)
       if (country == null || identical(item.source, country))
@@ -66,7 +80,9 @@ extension CatalogueSourceLook on GallerySource {
   /// and to open it into a detail page.
   List<CatalogueItem> get highlightItems => <CatalogueItem>[
     for (final GalleryEntry entry in highlights)
-      catalogueItems.firstWhere((CatalogueItem item) => identical(item.entry, entry)),
+      catalogueItems.firstWhere(
+        (CatalogueItem item) => identical(item.entry, entry),
+      ),
   ];
 
   /// The colour this country is keyed with in the chrome — its own leading

@@ -51,21 +51,21 @@ class ShowcaseHero extends StatelessWidget {
   /// Picking a cell pins the stage to that device and stops the auto-cycle.
   final ValueChanged<DeviceType> onPickDevice;
 
-  /// `Open the archive` — navigates to `/discover`.
+  /// `Browse plates` — navigates to `/discover`.
   final VoidCallback onOpenArchive;
 
   /// The right column's content: the device stage itself. The callouts that
   /// float over it are the hero's, not the stage's — see [_Stage].
   final Widget stage;
 
-  /// Each country is its own package, with multiple widgets per package —
-  /// different specs for cars, motorbikes, and plate variants that the spec
-  /// alone cannot capture. A single import brings in the whole country's plates.
+  /// No country names and no counts: the stat band under the hero counts the
+  /// catalogue itself, and a list written here goes stale with the next
+  /// package.
   static const String _paragraph =
-      'Six country packages spanning thirteen countries: Iran, Iranshahr '
-      '(Bahrain, Azerbaijan, Afghanistan, Armenia, Tajikistan, Kuwait, Qatar, Iraq), '
-      'Palestine, Yemen, Lebanon, and Germany. German includes cars and motorbikes; '
-      'Iran has diplomatic and temporary variants.';
+      'A Flutter widget for typing licence plates. It is filled slot by slot, '
+      'in the plate\'s own alphabet and direction, and rendered the way the '
+      'plate is printed. Each country is a separate package: add the ones you '
+      'ship and pass a const spec.';
 
   /// Below this the hero is inside the design's 390×812 phone panel (or a
   /// window no wider than one), and the stacked desktop metrics stop working:
@@ -135,7 +135,10 @@ class ShowcaseHero extends StatelessWidget {
               // `max-width: 620px` on the left column.
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 620),
-                child: _HeroText(metrics: _HeroMetrics.wide(width), onOpenArchive: onOpenArchive),
+                child: _HeroText(
+                  metrics: _HeroMetrics.wide(width),
+                  onOpenArchive: onOpenArchive,
+                ),
               ),
             ),
           ),
@@ -172,19 +175,29 @@ class ShowcaseHero extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          _HeroText(metrics: _HeroMetrics.stacked(), onOpenArchive: onOpenArchive),
+          _HeroText(
+            metrics: _HeroMetrics.stacked(),
+            onOpenArchive: onOpenArchive,
+          ),
           const SizedBox(height: 48),
           Expanded(
             // Tight, so the measurement above reads [_stageMin] and stops
             // there; [Expanded]'s own tight height overrides it in layout.
             child: SizedBox(
               height: _stageMin,
-              child: _Stage(stage: stage, device: device, onPickDevice: onPickDevice),
+              child: _Stage(
+                stage: stage,
+                device: device,
+                onPickDevice: onPickDevice,
+              ),
             ),
           ),
           // `.pg-feat`, under the stage: floating them here would drop a card
           // on the headline, which now sits directly above the stage.
-          CalloutList(device: device, padding: const EdgeInsets.only(bottom: 8)),
+          CalloutList(
+            device: device,
+            padding: const EdgeInsets.only(bottom: 8),
+          ),
         ],
       ),
     );
@@ -204,7 +217,10 @@ class ShowcaseHero extends StatelessWidget {
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.fromLTRB(18, 24, 18, 20),
-          child: _HeroText(metrics: _HeroMetrics.compact(), onOpenArchive: onOpenArchive),
+          child: _HeroText(
+            metrics: _HeroMetrics.compact(),
+            onOpenArchive: onOpenArchive,
+          ),
         ),
         // Sized, so the intrinsic measurement does not descend into the rule's
         // own LayoutBuilder, which has no intrinsics to give.
@@ -217,7 +233,10 @@ class ShowcaseHero extends StatelessWidget {
         ),
         // `.pg-feat { gap: 10px; padding: 0 18px 8px }`, in the place the
         // panel render gives it: under the device, above the stamp line.
-        CalloutList(device: device, padding: const EdgeInsets.fromLTRB(18, 16, 18, 8)),
+        CalloutList(
+          device: device,
+          padding: const EdgeInsets.fromLTRB(18, 16, 18, 8),
+        ),
       ],
     );
   }
@@ -274,9 +293,18 @@ class _Stage extends StatelessWidget {
                   value: device,
                   onChanged: onPickDevice,
                   options: const <NSegmentedOption<DeviceType>>[
-                    NSegmentedOption<DeviceType>(value: DeviceType.mobile, label: 'Mobile'),
-                    NSegmentedOption<DeviceType>(value: DeviceType.tablet, label: 'Tablet'),
-                    NSegmentedOption<DeviceType>(value: DeviceType.desktop, label: 'Desktop'),
+                    NSegmentedOption<DeviceType>(
+                      value: DeviceType.mobile,
+                      label: 'Mobile',
+                    ),
+                    NSegmentedOption<DeviceType>(
+                      value: DeviceType.tablet,
+                      label: 'Tablet',
+                    ),
+                    NSegmentedOption<DeviceType>(
+                      value: DeviceType.desktop,
+                      label: 'Desktop',
+                    ),
                   ],
                 ),
               ],
@@ -286,8 +314,13 @@ class _Stage extends StatelessWidget {
         // Over the device, under the stamp: the design's cards sit above the
         // stage's own contents, and the pill is the one thing it draws over
         // them both.
-        if (floatingCallouts) Positioned.fill(child: CalloutLayer(device: device)),
-        const Positioned(left: 16, bottom: 0, child: NPill(label: 'Iran made · open source')),
+        if (floatingCallouts)
+          Positioned.fill(child: CalloutLayer(device: device)),
+        const Positioned(
+          left: 16,
+          bottom: 0,
+          child: NPill(label: 'Iran made · open source'),
+        ),
       ],
     );
   }
@@ -372,11 +405,13 @@ class _HeroText extends StatelessWidget {
   final _HeroMetrics metrics;
   final VoidCallback onOpenArchive;
 
-  /// `Read the docs` goes to the package's pub.dev page — the docs this app
+  /// `View on pub.dev` goes to the package's pub.dev page — the docs this app
   /// has always linked. The URL lives in [PosterLinks] and is read, not
   /// restated.
-  Future<void> _openDocs() =>
-      launchUrl(Uri.parse(PosterLinks.pubDevUrl), mode: LaunchMode.externalApplication);
+  Future<void> _openDocs() => launchUrl(
+    Uri.parse(PosterLinks.pubDevUrl),
+    mode: LaunchMode.externalApplication,
+  );
 
   /// `.pg-actions`: `display: flex; gap: 12px; align-items: center`.
   ///
@@ -387,14 +422,14 @@ class _HeroText extends StatelessWidget {
   /// two buttons are together wider than the column they sit in.
   Widget _actions() {
     final NButton primary = NButton(
-      label: 'Open the archive',
+      label: 'Browse plates',
       variant: NButtonVariant.primary,
       fontSize: 15,
       padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 11),
       onPressed: onOpenArchive,
     );
     final NButton secondary = NButton(
-      label: 'Read the docs',
+      label: 'View on pub.dev',
       fontSize: 15,
       padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 11),
       onPressed: _openDocs,
@@ -439,7 +474,7 @@ class _HeroText extends StatelessWidget {
         ),
         SizedBox(height: metrics.afterMasthead),
         Text(
-          'Plate input\nfor the road.',
+          'Plate input\nfor Flutter.',
           style: TextStyle(
             fontFamily: NType.archivo,
             fontWeight: FontWeight.w800,

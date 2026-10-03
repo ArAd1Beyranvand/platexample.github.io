@@ -12,7 +12,11 @@ import '../theme/nocturne.dart';
 /// like the rail: no [Material] nav widget, no ripple, no indicator
 /// animation beyond the colour and accent-bar swap.
 class NocturneBottomBar extends StatelessWidget {
-  const NocturneBottomBar({super.key, required this.tab, required this.onTabSelected});
+  const NocturneBottomBar({
+    super.key,
+    required this.tab,
+    required this.onTabSelected,
+  });
 
   /// The tab the URL currently names.
   final AppTab tab;
@@ -102,7 +106,11 @@ class _BottomBarItemState extends State<_BottomBarItem> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Container(width: 18, height: 2, color: widget.isSelected ? N.accent : Colors.transparent),
+                Container(
+                  width: 18,
+                  height: 2,
+                  color: widget.isSelected ? N.accent : Colors.transparent,
+                ),
                 const SizedBox(height: 7),
                 Text(
                   widget.label.toUpperCase(),

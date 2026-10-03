@@ -59,7 +59,11 @@ class CalloutStyle {
 /// background: linear-gradient(158deg, #1C2233, #0D1017)`. No shadow: the
 /// device mockup is what casts one on this page, not the cards.
 class CalloutCard extends StatelessWidget {
-  const CalloutCard({super.key, required this.spec, this.style = CalloutStyle.floating});
+  const CalloutCard({
+    super.key,
+    required this.spec,
+    this.style = CalloutStyle.floating,
+  });
 
   final CalloutSpec spec;
   final CalloutStyle style;
@@ -242,23 +246,38 @@ class CalloutSwap extends StatefulWidget {
   /// [TileTransition] repaints from its own snapshot without rebuilding
   /// anything underneath it, so no text is laid out and no card is measured
   /// while the tiles are moving.
-  final Widget Function(BuildContext context, List<CalloutSpec> specs, CalloutTiler tile) builder;
+  final Widget Function(
+    BuildContext context,
+    List<CalloutSpec> specs,
+    CalloutTiler tile,
+  )
+  builder;
 
   @override
   State<CalloutSwap> createState() => _CalloutSwapState();
 }
 
-class _CalloutSwapState extends State<CalloutSwap> with SingleTickerProviderStateMixin {
+class _CalloutSwapState extends State<CalloutSwap>
+    with SingleTickerProviderStateMixin {
   /// The whole hop, so the two tile windows bracket the device's own fade-out
   /// and fade-in.
   static final Duration _swap = const DeviceTransitionDurations().total;
 
-  late final AnimationController _controller = AnimationController(vsync: this, duration: _swap);
+  late final AnimationController _controller = AnimationController(
+    vsync: this,
+    duration: _swap,
+  );
 
   /// Exit closes just before the midpoint and entry opens just after, leaving
   /// a beat of nothing at the crossover — the callouts' own [blankHold].
-  late final Animation<double> _exit = CurvedAnimation(parent: _controller, curve: const Interval(0, 0.46));
-  late final Animation<double> _entry = CurvedAnimation(parent: _controller, curve: const Interval(0.54, 1));
+  late final Animation<double> _exit = CurvedAnimation(
+    parent: _controller,
+    curve: const Interval(0, 0.46),
+  );
+  late final Animation<double> _entry = CurvedAnimation(
+    parent: _controller,
+    curve: const Interval(0.54, 1),
+  );
 
   /// The device being tiled away, or null at rest.
   DeviceType? _outgoing;
@@ -361,18 +380,23 @@ class CalloutLayer extends StatelessWidget {
             final double height = constraints.maxHeight;
             return CalloutSwap(
               device: device,
-              builder: (BuildContext context, List<CalloutSpec> specs, CalloutTiler tile) => Stack(
-                clipBehavior: Clip.none,
-                children: <Widget>[
-                  for (final (int i, CalloutSpec spec) in specs.indexed)
-                    Positioned(
-                      left: width * spec.anchorFx,
-                      top: height * spec.anchorFy,
-                      width: width * spec.widthFx,
-                      child: tile(i, CalloutCard(spec: spec)),
-                    ),
-                ],
-              ),
+              builder:
+                  (
+                    BuildContext context,
+                    List<CalloutSpec> specs,
+                    CalloutTiler tile,
+                  ) => Stack(
+                    clipBehavior: Clip.none,
+                    children: <Widget>[
+                      for (final (int i, CalloutSpec spec) in specs.indexed)
+                        Positioned(
+                          left: width * spec.anchorFx,
+                          top: height * spec.anchorFy,
+                          width: width * spec.widthFx,
+                          child: tile(i, CalloutCard(spec: spec)),
+                        ),
+                    ],
+                  ),
             );
           },
         ),
@@ -391,7 +415,11 @@ class CalloutLayer extends StatelessWidget {
 ///
 /// Layout: two small cards side-by-side on top, one larger card below.
 class CalloutList extends StatelessWidget {
-  const CalloutList({super.key, required this.device, this.padding = EdgeInsets.zero});
+  const CalloutList({
+    super.key,
+    required this.device,
+    this.padding = EdgeInsets.zero,
+  });
 
   /// Which set to show. See [CalloutSwap].
   final DeviceType device;
@@ -407,16 +435,25 @@ class CalloutList extends StatelessWidget {
       child: CalloutRise(
         child: CalloutSwap(
           device: device,
-          builder: (BuildContext context, List<CalloutSpec> specs, CalloutTiler tile) => Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              for (final (int i, CalloutSpec spec) in specs.indexed) ...<Widget>[
-                if (i > 0) const SizedBox(height: 10),
-                tile(i, CalloutCard(spec: spec, style: CalloutStyle.stacked)),
-              ],
-            ],
-          ),
+          builder:
+              (
+                BuildContext context,
+                List<CalloutSpec> specs,
+                CalloutTiler tile,
+              ) => Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  for (final (int i, CalloutSpec spec)
+                      in specs.indexed) ...<Widget>[
+                    if (i > 0) const SizedBox(height: 10),
+                    tile(
+                      i,
+                      CalloutCard(spec: spec, style: CalloutStyle.stacked),
+                    ),
+                  ],
+                ],
+              ),
         ),
       ),
     );

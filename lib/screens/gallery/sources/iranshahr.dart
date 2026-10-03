@@ -30,10 +30,9 @@ class IranshahirSource extends GallerySource {
 
   @override
   String get note =>
-      'Bahrain\'s five designs, Azerbaijan\'s four specs, Afghanistan\'s '
-      'eleven, Armenia\'s ten, Tajikistan\'s nine, Kuwait\'s sixteen, '
-      'Qatar\'s five, Iraq\'s ten, and the UAE\'s fourteen from the iranshahr_plate package. Each country is independent with distinct design '
-      'languages. See iranshahr_plate/README.md.';
+      'Nine countries in one package: Bahrain, Azerbaijan, Afghanistan, '
+      'Armenia, Tajikistan, Kuwait, Qatar, Iraq and the UAE. They share no '
+      'design; each has its own specs, colours and country block.';
 
   /// Built once, and returned by identity: the pickers select a section by
   /// equality, and a fresh list per read would make the selected one never
@@ -100,7 +99,7 @@ class IranshahirSource extends GallerySource {
       note:
           'Five plates over four specs. The class is the colour of the field '
           'and the grouping of the serial, and nothing else: no divider, no '
-          'band, no sticker, and the same white flag-over-`AZ` block on every '
+          'band, no sticker, and the same white flag-over-AZ block on every '
           'one. The blue transport plate is the car spec in another theme — '
           'which is why two entries here share `AzerbaijanPlates.car`.',
       entries: <GalleryEntry>[
@@ -132,7 +131,8 @@ class IranshahirSource extends GallerySource {
           label: 'Diplomatic corps',
           spec: AzerbaijanPlates.diplomatic,
           theme: AzerbaijanThemes.diplomatic,
-          note: 'Mission code, class letter, serial — told apart by gaps, not hyphens.',
+          note:
+              'Mission code, class letter, serial — told apart by gaps, not hyphens.',
           sampleValues: const <String?>['0', '1', '3', 'D', '0', '0', '4'],
         ),
         GalleryEntry(
@@ -173,7 +173,8 @@ class IranshahirSource extends GallerySource {
           spec: AfghanistanPlates.car4,
           theme: AfghanistanThemes.civilian,
           country: AfghanistanProvince.zabul.country(),
-          note: 'Same design, one figure shorter — the figures spread, they do not grow.',
+          note:
+              'Same design, one figure shorter — the figures spread, they do not grow.',
           sampleValues: const <String?>['1', '2', '3', '4', 'P'],
         ),
         GalleryEntry(
@@ -190,7 +191,8 @@ class IranshahirSource extends GallerySource {
           spec: AfghanistanPlates.kabul6,
           theme: AfghanistanThemes.civilian,
           country: AfghanistanProvince.kabul.country(),
-          note: 'Kabul exhausted five figures. The sixth is printed once, in Persian only, between two hyphens.',
+          note:
+              'Kabul exhausted five figures. The sixth is printed once, in Persian only, between two hyphens.',
           sampleValues: const <String?>['5', '1', '2', '3', '4', '6', 'P'],
         ),
         GalleryEntry(
@@ -208,7 +210,8 @@ class IranshahirSource extends GallerySource {
           spec: AfghanistanPlates.car5,
           theme: AfghanistanThemes.transport,
           country: AfghanistanProvince.kabul.country(),
-          note: 'The same yellow field as the taxi. One character tells them apart: `ب` over `B`.',
+          note:
+              'The same yellow field as the taxi. One character tells them apart: `ب` over `B`.',
           sampleValues: const <String?>['1', '2', '3', '4', '6', 'B'],
         ),
         GalleryEntry(
@@ -225,7 +228,8 @@ class IranshahirSource extends GallerySource {
           spec: AfghanistanPlates.car5,
           theme: AfghanistanThemes.civilian,
           country: AfghanistanProvince.herat.country(),
-          note: 'The one class the Persian register cannot distinguish: `ش` above on both, `DUPL` below.',
+          note:
+              'The one class the Persian register cannot distinguish: `ش` above on both, `DUPL` below.',
           sampleValues: const <String?>['1', '2', '3', '4', '6', 'D'],
         ),
         GalleryEntry(
@@ -234,7 +238,8 @@ class IranshahirSource extends GallerySource {
           spec: AfghanistanPlates.cycle3,
           theme: AfghanistanThemes.civilian,
           country: AfghanistanProvince.nimruz.country(),
-          note: 'The two-wheeler plate: a longer, shallower rectangle, not a shrunk car plate.',
+          note:
+              'The two-wheeler plate: a longer, shallower rectangle, not a shrunk car plate.',
           sampleValues: const <String?>['1', '2', '3', 'M'],
         ),
         GalleryEntry(
@@ -250,8 +255,11 @@ class IranshahirSource extends GallerySource {
           label: 'Diplomatic corps',
           spec: AfghanistanPlates.diplomatic,
           theme: AfghanistanThemes.diplomatic,
-          country: AfghanistanProvince.kabul.country(ink: AfghanistanPanelInk.light),
-          note: 'The only hyphenated Afghan number, and the only `CD` — printed once, with no Persian counterpart.',
+          country: AfghanistanProvince.kabul.country(
+            ink: AfghanistanPanelInk.light,
+          ),
+          note:
+              'The only hyphenated Afghan number, and the only `CD` — printed once, with no Persian counterpart.',
           sampleValues: const <String?>['1', '2', '3', '4'],
         ),
         GalleryEntry(
@@ -259,8 +267,11 @@ class IranshahirSource extends GallerySource {
           label: 'Governmental',
           spec: AfghanistanPlates.governmental,
           theme: AfghanistanThemes.governmental,
-          country: AfghanistanProvince.kabul.country(ink: AfghanistanPanelInk.light),
-          note: 'A government vehicle\'s type is not printed: a dash stands in both registers.',
+          country: AfghanistanProvince.kabul.country(
+            ink: AfghanistanPanelInk.light,
+          ),
+          note:
+              'A government vehicle\'s type is not printed: a dash stands in both registers.',
           sampleValues: const <String?>['1', '2', '3', '4'],
         ),
         GalleryEntry(
@@ -269,7 +280,8 @@ class IranshahirSource extends GallerySource {
           spec: AfghanistanPlates.un,
           theme: AfghanistanThemes.un,
           country: AfghanistanProvince.kabul.country(),
-          note: 'The plainest of the eleven: the province block and the number, and nothing at the head.',
+          note:
+              'The plainest of the eleven: the province block and the number, and nothing at the head.',
           sampleValues: const <String?>['1', '2', '3', '4'],
         ),
         GalleryEntry(
@@ -278,7 +290,8 @@ class IranshahirSource extends GallerySource {
           spec: AfghanistanPlates.temporary,
           theme: AfghanistanThemes.civilian,
           country: AfghanistanProvince.herat.country(showCode: false),
-          note: 'Issued from 2023, valid three years. The one Afghan plate printed in two inks.',
+          note:
+              'Issued from 2023, valid three years. The one Afghan plate printed in two inks.',
           sampleValues: const <String?>['1', '2', '3', '4', '6'],
         ),
         GalleryEntry(
@@ -287,7 +300,8 @@ class IranshahirSource extends GallerySource {
           spec: AfghanistanPlates.international,
           theme: AfghanistanThemes.civilian,
           country: AfghanistanProvince.herat.country(),
-          note: 'Latin figures and a spelled-out category, no Persian half. Reconstructed from text — no photograph exists.',
+          note:
+              'Latin figures and a spelled-out category, no Persian half. Reconstructed from text — no photograph exists.',
           sampleValues: const <String?>['1', '2', '3', '4', '6', 'B'],
         ),
       ],
@@ -311,7 +325,8 @@ class IranshahirSource extends GallerySource {
           label: 'Private car',
           spec: ArmeniaPlates.car,
           theme: ArmeniaThemes.civilian,
-          note: 'The 2014 design: region code, two letters, three digits, and the silver band beside the flag.',
+          note:
+              'The 2014 design: region code, two letters, three digits, and the silver band beside the flag.',
           sampleValues: const <String?>['0', '1', 'A', 'D', '2', '3', '4'],
         ),
         GalleryEntry(
@@ -319,7 +334,8 @@ class IranshahirSource extends GallerySource {
           label: 'Private car (two-row)',
           spec: ArmeniaPlates.carTwoRow,
           theme: ArmeniaThemes.civilian,
-          note: 'The same seven characters in the same three groups, on a deeper canvas.',
+          note:
+              'The same seven characters in the same three groups, on a deeper canvas.',
           sampleValues: const <String?>['0', '1', 'A', 'D', '2', '3', '4'],
         ),
         GalleryEntry(
@@ -327,7 +343,8 @@ class IranshahirSource extends GallerySource {
           label: 'Motorcycle',
           spec: ArmeniaPlates.motorcycle,
           theme: ArmeniaThemes.civilian,
-          note: 'The two-row plate was found too cumbersome to carry; the gap between region and letters was closed.',
+          note:
+              'The two-row plate was found too cumbersome to carry; the gap between region and letters was closed.',
           sampleValues: const <String?>['0', '1', 'A', 'D', '2', '3', '4'],
         ),
         GalleryEntry(
@@ -335,7 +352,8 @@ class IranshahirSource extends GallerySource {
           label: 'State-owned (Security Council)',
           spec: ArmeniaPlates.public,
           theme: ArmeniaThemes.civilian,
-          note: 'The number reversed: `NN 01` names the institution, and only fourteen pairs are issued at all.',
+          note:
+              'The number reversed: `NN 01` names the institution, and only fourteen pairs are issued at all.',
           sampleValues: const <String?>['0', '0', '1', 'N', 'N', '0', '1'],
         ),
         GalleryEntry(
@@ -343,7 +361,8 @@ class IranshahirSource extends GallerySource {
           label: 'Trailer',
           spec: ArmeniaPlates.trailer,
           theme: ArmeniaThemes.civilian,
-          note: 'A pre-2014 design: no identifier band, and the letter count cut to one — most often `L`.',
+          note:
+              'A pre-2014 design: no identifier band, and the letter count cut to one — most often `L`.',
           sampleValues: const <String?>['2', '9', '0', 'L', '0', '1'],
         ),
         GalleryEntry(
@@ -351,7 +370,8 @@ class IranshahirSource extends GallerySource {
           label: 'Bus',
           spec: ArmeniaPlates.bus,
           theme: ArmeniaThemes.bus,
-          note: 'The Soviet public-transport format Armenia kept: `S` for a city bus, `L` for a long-range coach.',
+          note:
+              'The Soviet public-transport format Armenia kept: `S` for a city bus, `L` for a long-range coach.',
           sampleValues: const <String?>['1', '2', '3', '4', 'S'],
         ),
         GalleryEntry(
@@ -359,7 +379,8 @@ class IranshahirSource extends GallerySource {
           label: 'Diplomatic corps',
           spec: ArmeniaPlates.diplomatic,
           theme: ArmeniaThemes.diplomatic,
-          note: 'Mission code, `D` for a diplomat or `T` for a technician, serial, and Armenia\'s own code at the tail.',
+          note:
+              'Mission code, `D` for a diplomat or `T` for a technician, serial, and Armenia\'s own code at the tail.',
           sampleValues: const <String?>['0', '4', 'D', '0', '5', '7'],
         ),
         GalleryEntry(
@@ -367,7 +388,8 @@ class IranshahirSource extends GallerySource {
           label: 'Diplomatic corps (current)',
           spec: ArmeniaPlates.diplomaticArm,
           theme: ArmeniaThemes.diplomatic,
-          note: 'The same design; newer plates print `ARM` where the older ones print `AM`.',
+          note:
+              'The same design; newer plates print `ARM` where the older ones print `AM`.',
           sampleValues: const <String?>['0', '4', 'T', '0', '5', '7'],
         ),
         GalleryEntry(
@@ -375,7 +397,8 @@ class IranshahirSource extends GallerySource {
           label: 'United Nations',
           spec: ArmeniaPlates.un,
           theme: ArmeniaThemes.un,
-          note: 'Three digits between two printed words. Nothing on this plate is chosen but the serial.',
+          note:
+              'Three digits between two printed words. Nothing on this plate is chosen but the serial.',
           sampleValues: const <String?>['0', '8', '0'],
         ),
         GalleryEntry(
@@ -426,7 +449,8 @@ GallerySection _qatarSection() => GallerySection(
       label: 'Civilian (five digits)',
       spec: QatarPlates.civilian,
       theme: QatarThemes.civilian,
-      note: 'The everyday registration, and the longest Qatar issues: the serrated maroon block, `قطر`, five digits.',
+      note:
+          'The everyday registration, and the longest Qatar issues: the serrated maroon block, `قطر`, five digits.',
       sampleValues: const <String?>['2', '5', '7', '7', '7'],
     ),
     GalleryEntry(
@@ -434,7 +458,8 @@ GallerySection _qatarSection() => GallerySection(
       label: 'Civilian (four digits)',
       spec: QatarPlates.civilian4,
       theme: QatarThemes.civilian,
-      note: 'Identical furniture. The serial fills the same room, so the figures spread and widen together.',
+      note:
+          'Identical furniture. The serial fills the same room, so the figures spread and widen together.',
       sampleValues: const <String?>['4', '0', '7', '1'],
     ),
     GalleryEntry(
@@ -442,7 +467,8 @@ GallerySection _qatarSection() => GallerySection(
       label: 'Civilian (three digits)',
       spec: QatarPlates.civilian3,
       theme: QatarThemes.civilian,
-      note: 'The shortest ordinary registration — below this, a serial belongs to the royal family.',
+      note:
+          'The shortest ordinary registration — below this, a serial belongs to the royal family.',
       sampleValues: const <String?>['4', '1', '1'],
     ),
     GalleryEntry(
@@ -450,7 +476,8 @@ GallerySection _qatarSection() => GallerySection(
       label: 'Motorcycle',
       spec: QatarPlates.motorcycle,
       theme: QatarThemes.civilian,
-      note: 'A different plate, not a shorter one: near-square, no hoist block, `قطر` over the serial over `QATAR`.',
+      note:
+          'A different plate, not a shorter one: near-square, no hoist block, `قطر` over the serial over `QATAR`.',
       sampleValues: const <String?>['2', '5', '7', '7', '7'],
     ),
     GalleryEntry(
@@ -458,7 +485,8 @@ GallerySection _qatarSection() => GallerySection(
       label: 'Police',
       spec: QatarPlates.police,
       theme: QatarThemes.police,
-      note: 'No block and no serration: a blue field ruled into a serial row over `قطر` and `شرطة`.',
+      note:
+          'No block and no serration: a blue field ruled into a serial row over `قطر` and `شرطة`.',
       sampleValues: const <String?>['7', '4', '6', '4'],
     ),
   ],
@@ -474,7 +502,7 @@ GallerySection _qatarSection() => GallerySection(
 GallerySection _tajikistanSection() => GallerySection(
   title: 'Tajikistan',
   note:
-      'Nine designs on a European face: the flag over `TJ` at the hoist end, '
+      'Nine designs on a European face: the flag over TJ at the hoist end, '
       'Latin letters that are really the shared Cyrillic register wearing Latin '
       'shapes, and the region printed as two digits of the number itself — no '
       'panel, no divider on the civilian plates, told apart by the gaps alone. '
@@ -488,7 +516,8 @@ GallerySection _tajikistanSection() => GallerySection(
       label: 'Private car',
       spec: TajikistanPlates.car,
       theme: TajikistanThemes.civilian,
-      note: 'The commonest plate: `NNNN LL NN` — serial, two letters, region — with the flag block at the hoist end.',
+      note:
+          'The commonest plate: `NNNN LL NN` — serial, two letters, region — with the flag block at the hoist end.',
       sampleValues: const <String?>['9', '9', '9', '9', 'M', 'K', '0', '2'],
     ),
     GalleryEntry(
@@ -496,7 +525,8 @@ GallerySection _tajikistanSection() => GallerySection(
       label: 'Private car (two-row)',
       spec: TajikistanPlates.carTwoRow,
       theme: TajikistanThemes.civilian,
-      note: 'The same eight characters and groups, broken across two rows for a vehicle with no room for a 520 mm plate.',
+      note:
+          'The same eight characters and groups, broken across two rows for a vehicle with no room for a 520 mm plate.',
       sampleValues: const <String?>['9', '9', '9', '9', 'M', 'K', '0', '2'],
     ),
     GalleryEntry(
@@ -512,7 +542,8 @@ GallerySection _tajikistanSection() => GallerySection(
       label: 'Trailer',
       spec: TajikistanPlates.trailer,
       theme: TajikistanThemes.civilian,
-      note: 'The one two-row plate that leads with its region: `NN LL` up top, the four-digit serial to itself below.',
+      note:
+          'The one two-row plate that leads with its region: `NN LL` up top, the four-digit serial to itself below.',
       sampleValues: const <String?>['0', '7', 'A', 'A', '0', '7', '7', '6'],
     ),
     GalleryEntry(
@@ -520,7 +551,8 @@ GallerySection _tajikistanSection() => GallerySection(
       label: 'Public transport',
       spec: TajikistanPlates.publicTransport,
       theme: TajikistanThemes.transport,
-      note: 'Black on amber, with the fixed `TT` marker printed between serial and region — a label, not a value anyone enters.',
+      note:
+          'Black on amber, with the fixed `TT` marker printed between serial and region — a label, not a value anyone enters.',
       sampleValues: const <String?>['9', '0', '0', '6', '0', '5'],
     ),
     GalleryEntry(
@@ -528,7 +560,8 @@ GallerySection _tajikistanSection() => GallerySection(
       label: 'Police',
       spec: TajikistanPlates.police,
       theme: TajikistanThemes.police,
-      note: 'White on blue: the flag block over the blue field, `TJ` reversed out white, one letter between serial and region.',
+      note:
+          'White on blue: the flag block over the blue field, `TJ` reversed out white, one letter between serial and region.',
       sampleValues: const <String?>['0', '2', '4', '5', 'M', '0', '1'],
     ),
     GalleryEntry(
@@ -536,7 +569,8 @@ GallerySection _tajikistanSection() => GallerySection(
       label: 'Foreign vehicle',
       spec: TajikistanPlates.foreign,
       theme: TajikistanThemes.foreign,
-      note: 'Black on yellow, no flag: a foreign vehicle carries no region, so the hoist end is bare and the number is `NNN L NNN`.',
+      note:
+          'Black on yellow, no flag: a foreign vehicle carries no region, so the hoist end is bare and the number is `NNN L NNN`.',
       sampleValues: const <String?>['2', '0', '0', 'P', '0', '0', '5'],
     ),
     GalleryEntry(
@@ -544,7 +578,8 @@ GallerySection _tajikistanSection() => GallerySection(
       label: 'Diplomatic corps',
       spec: TajikistanPlates.diplomatic,
       theme: TajikistanThemes.diplomatic,
-      note: 'White on red, no flag: a serial, a class code — `CD`, `CMD`, `D`, `T` or `S` chosen as one glyph group — and a trailing digit.',
+      note:
+          'White on red, no flag: a serial, a class code — `CD`, `CMD`, `D`, `T` or `S` chosen as one glyph group — and a trailing digit.',
       sampleValues: const <String?>['0', '9', '1', 'CMD', '1'],
     ),
     GalleryEntry(
@@ -552,7 +587,8 @@ GallerySection _tajikistanSection() => GallerySection(
       label: 'Governmental',
       spec: TajikistanPlates.governmental,
       theme: TajikistanThemes.governmental,
-      note: 'The old Russian-derived layout: serial, two letters, then the region boxed off by a divider with `RT` beneath it.',
+      note:
+          'The old Russian-derived layout: serial, two letters, then the region boxed off by a divider with `RT` beneath it.',
       sampleValues: const <String?>['0', '0', '1', 'C', 'O', '0', '4'],
     ),
   ],
@@ -572,8 +608,7 @@ class BahrainSource extends GallerySource {
   String get note =>
       'Left-to-right Latin digits, a grey security band down the right on '
       'every class, and the wording set at both ends as labels. The panel '
-      'is the flag on the civilian plates and a colour band on the other two. '
-      'See iranshahr_plate/README.md.';
+      'is the flag on the civilian plates and a colour band on the other two.';
 
   /// Built once, and returned by identity: [catalogueItems] resolves a
   /// [GalleryEntry] back to its [CatalogueItem] by identity, so a fresh list
@@ -585,7 +620,10 @@ class BahrainSource extends GallerySource {
   List<GalleryEntry> get highlights => <GalleryEntry>[
     if (sections.isNotEmpty && sections[0].entries.isNotEmpty) ...[
       sections[0].entries[0],
-      sections[0].entries.firstWhere((GalleryEntry e) => e.id == 'bh.police', orElse: () => sections[0].entries[1]),
+      sections[0].entries.firstWhere(
+        (GalleryEntry e) => e.id == 'bh.police',
+        orElse: () => sections[0].entries[1],
+      ),
     ],
   ];
 
@@ -654,8 +692,7 @@ class AzerbaijanSource extends GallerySource {
   String get note =>
       'Five plates over four specs. The class is the colour of the field '
       'and the grouping of the serial, and nothing else: no divider, no '
-      'band, no sticker, and the same white flag-over-`AZ` block on every one. '
-      'See iranshahr_plate/README.md.';
+      'band, no sticker, and the same white flag-over-AZ block on every one.';
 
   /// Built once, and returned by identity: [catalogueItems] resolves a
   /// [GalleryEntry] back to its [CatalogueItem] by identity, so a fresh list
@@ -667,7 +704,10 @@ class AzerbaijanSource extends GallerySource {
   List<GalleryEntry> get highlights => <GalleryEntry>[
     if (sections.isNotEmpty && sections[0].entries.isNotEmpty) ...[
       sections[0].entries[0],
-      sections[0].entries.firstWhere((GalleryEntry e) => e.id == 'az.car.transport', orElse: () => sections[0].entries[1]),
+      sections[0].entries.firstWhere(
+        (GalleryEntry e) => e.id == 'az.car.transport',
+        orElse: () => sections[0].entries[1],
+      ),
     ],
   ];
 
@@ -677,7 +717,7 @@ class AzerbaijanSource extends GallerySource {
       note:
           'Five plates over four specs. The class is the colour of the field '
           'and the grouping of the serial, and nothing else: no divider, no '
-          'band, no sticker, and the same white flag-over-`AZ` block on every '
+          'band, no sticker, and the same white flag-over-AZ block on every '
           'one. The blue transport plate is the car spec in another theme — '
           'which is why two entries here share `AzerbaijanPlates.car`.',
       entries: <GalleryEntry>[
@@ -709,7 +749,8 @@ class AzerbaijanSource extends GallerySource {
           label: 'Diplomatic corps',
           spec: AzerbaijanPlates.diplomatic,
           theme: AzerbaijanThemes.diplomatic,
-          note: 'Mission code, class letter, serial — told apart by gaps, not hyphens.',
+          note:
+              'Mission code, class letter, serial — told apart by gaps, not hyphens.',
           sampleValues: const <String?>['0', '1', '3', 'D', '0', '0', '4'],
         ),
         GalleryEntry(
@@ -737,9 +778,8 @@ class AfghanistanSource extends GallerySource {
 
   @override
   String get note =>
-      'Fifteen plates over eleven specs, and the only bilingual design in '
-      'this package: the serial is printed twice — iranian Arabic numerals '
-      'over Latin figures. See iranshahr_plate/README.md.';
+      'Fifteen plates over eleven specs. The serial is printed twice, in '
+      'Eastern Arabic numerals over Latin figures, and typed once.';
 
   /// Built once, and returned by identity: [catalogueItems] resolves a
   /// [GalleryEntry] back to its [CatalogueItem] by identity, so a fresh list
@@ -751,7 +791,10 @@ class AfghanistanSource extends GallerySource {
   List<GalleryEntry> get highlights => <GalleryEntry>[
     if (sections.isNotEmpty && sections[0].entries.isNotEmpty) ...[
       sections[0].entries[0],
-      sections[0].entries.firstWhere((GalleryEntry e) => e.id == 'af.governmental', orElse: () => sections[0].entries[1]),
+      sections[0].entries.firstWhere(
+        (GalleryEntry e) => e.id == 'af.governmental',
+        orElse: () => sections[0].entries[1],
+      ),
     ],
   ];
 
@@ -784,7 +827,8 @@ class AfghanistanSource extends GallerySource {
           spec: AfghanistanPlates.car4,
           theme: AfghanistanThemes.civilian,
           country: AfghanistanProvince.zabul.country(),
-          note: 'Same design, one figure shorter — the figures spread, they do not grow.',
+          note:
+              'Same design, one figure shorter — the figures spread, they do not grow.',
           sampleValues: const <String?>['1', '2', '3', '4', 'P'],
         ),
         GalleryEntry(
@@ -801,7 +845,8 @@ class AfghanistanSource extends GallerySource {
           spec: AfghanistanPlates.kabul6,
           theme: AfghanistanThemes.civilian,
           country: AfghanistanProvince.kabul.country(),
-          note: 'Kabul exhausted five figures. The sixth is printed once, in Persian only, between two hyphens.',
+          note:
+              'Kabul exhausted five figures. The sixth is printed once, in Persian only, between two hyphens.',
           sampleValues: const <String?>['5', '1', '2', '3', '4', '6', 'P'],
         ),
         GalleryEntry(
@@ -819,7 +864,8 @@ class AfghanistanSource extends GallerySource {
           spec: AfghanistanPlates.car5,
           theme: AfghanistanThemes.transport,
           country: AfghanistanProvince.kabul.country(),
-          note: 'The same yellow field as the taxi. One character tells them apart: `ب` over `B`.',
+          note:
+              'The same yellow field as the taxi. One character tells them apart: `ب` over `B`.',
           sampleValues: const <String?>['1', '2', '3', '4', '6', 'B'],
         ),
         GalleryEntry(
@@ -836,7 +882,8 @@ class AfghanistanSource extends GallerySource {
           spec: AfghanistanPlates.car5,
           theme: AfghanistanThemes.civilian,
           country: AfghanistanProvince.herat.country(),
-          note: 'The one class the Persian register cannot distinguish: `ش` above on both, `DUPL` below.',
+          note:
+              'The one class the Persian register cannot distinguish: `ش` above on both, `DUPL` below.',
           sampleValues: const <String?>['1', '2', '3', '4', '6', 'D'],
         ),
         GalleryEntry(
@@ -845,7 +892,8 @@ class AfghanistanSource extends GallerySource {
           spec: AfghanistanPlates.cycle3,
           theme: AfghanistanThemes.civilian,
           country: AfghanistanProvince.nimruz.country(),
-          note: 'The two-wheeler plate: a longer, shallower rectangle, not a shrunk car plate.',
+          note:
+              'The two-wheeler plate: a longer, shallower rectangle, not a shrunk car plate.',
           sampleValues: const <String?>['1', '2', '3', 'M'],
         ),
         GalleryEntry(
@@ -861,8 +909,11 @@ class AfghanistanSource extends GallerySource {
           label: 'Diplomatic corps',
           spec: AfghanistanPlates.diplomatic,
           theme: AfghanistanThemes.diplomatic,
-          country: AfghanistanProvince.kabul.country(ink: AfghanistanPanelInk.light),
-          note: 'The only hyphenated Afghan number, and the only `CD` — printed once, with no Persian counterpart.',
+          country: AfghanistanProvince.kabul.country(
+            ink: AfghanistanPanelInk.light,
+          ),
+          note:
+              'The only hyphenated Afghan number, and the only `CD` — printed once, with no Persian counterpart.',
           sampleValues: const <String?>['1', '2', '3', '4'],
         ),
         GalleryEntry(
@@ -870,8 +921,11 @@ class AfghanistanSource extends GallerySource {
           label: 'Governmental',
           spec: AfghanistanPlates.governmental,
           theme: AfghanistanThemes.governmental,
-          country: AfghanistanProvince.kabul.country(ink: AfghanistanPanelInk.light),
-          note: 'A government vehicle\'s type is not printed: a dash stands in both registers.',
+          country: AfghanistanProvince.kabul.country(
+            ink: AfghanistanPanelInk.light,
+          ),
+          note:
+              'A government vehicle\'s type is not printed: a dash stands in both registers.',
           sampleValues: const <String?>['1', '2', '3', '4'],
         ),
         GalleryEntry(
@@ -880,7 +934,8 @@ class AfghanistanSource extends GallerySource {
           spec: AfghanistanPlates.un,
           theme: AfghanistanThemes.un,
           country: AfghanistanProvince.kabul.country(),
-          note: 'The plainest of the eleven: the province block and the number, and nothing at the head.',
+          note:
+              'The plainest of the eleven: the province block and the number, and nothing at the head.',
           sampleValues: const <String?>['1', '2', '3', '4'],
         ),
         GalleryEntry(
@@ -889,7 +944,8 @@ class AfghanistanSource extends GallerySource {
           spec: AfghanistanPlates.temporary,
           theme: AfghanistanThemes.civilian,
           country: AfghanistanProvince.herat.country(showCode: false),
-          note: 'Issued from 2023, valid three years. The one Afghan plate printed in two inks.',
+          note:
+              'Issued from 2023, valid three years. The one Afghan plate printed in two inks.',
           sampleValues: const <String?>['1', '2', '3', '4', '6'],
         ),
         GalleryEntry(
@@ -898,7 +954,8 @@ class AfghanistanSource extends GallerySource {
           spec: AfghanistanPlates.international,
           theme: AfghanistanThemes.civilian,
           country: AfghanistanProvince.herat.country(),
-          note: 'Latin figures and a spelled-out category, no Persian half. Reconstructed from text — no photograph exists.',
+          note:
+              'Latin figures and a spelled-out category, no Persian half. Reconstructed from text — no photograph exists.',
           sampleValues: const <String?>['1', '2', '3', '4', '6', 'B'],
         ),
       ],
@@ -918,9 +975,8 @@ class ArmeniaSource extends GallerySource {
 
   @override
   String get note =>
-      'Ten designs on a German-style face: flag over `AM`, a silver '
-      'identifier band, and `NN LL NNN` told apart by gaps alone. '
-      'See iranshahr_plate/README.md.';
+      'Ten designs on a German-style face: flag over AM, a silver '
+      'identifier band, and NN LL NNN told apart by gaps alone.';
 
   /// Built once, and returned by identity: [catalogueItems] resolves a
   /// [GalleryEntry] back to its [CatalogueItem] by identity, so a fresh list
@@ -932,7 +988,10 @@ class ArmeniaSource extends GallerySource {
   List<GalleryEntry> get highlights => <GalleryEntry>[
     if (sections.isNotEmpty && sections[0].entries.isNotEmpty) ...[
       sections[0].entries[0],
-      sections[0].entries.firstWhere((GalleryEntry e) => e.id == 'am.military', orElse: () => sections[0].entries[1]),
+      sections[0].entries.firstWhere(
+        (GalleryEntry e) => e.id == 'am.military',
+        orElse: () => sections[0].entries[1],
+      ),
     ],
   ];
 
@@ -956,7 +1015,8 @@ class ArmeniaSource extends GallerySource {
           label: 'Private car',
           spec: ArmeniaPlates.car,
           theme: ArmeniaThemes.civilian,
-          note: 'The 2014 design: region code, two letters, three digits, and the silver band beside the flag.',
+          note:
+              'The 2014 design: region code, two letters, three digits, and the silver band beside the flag.',
           sampleValues: const <String?>['0', '1', 'A', 'D', '2', '3', '4'],
         ),
         GalleryEntry(
@@ -964,7 +1024,8 @@ class ArmeniaSource extends GallerySource {
           label: 'Private car (two-row)',
           spec: ArmeniaPlates.carTwoRow,
           theme: ArmeniaThemes.civilian,
-          note: 'The same seven characters in the same three groups, on a deeper canvas.',
+          note:
+              'The same seven characters in the same three groups, on a deeper canvas.',
           sampleValues: const <String?>['0', '1', 'A', 'D', '2', '3', '4'],
         ),
         GalleryEntry(
@@ -972,7 +1033,8 @@ class ArmeniaSource extends GallerySource {
           label: 'Motorcycle',
           spec: ArmeniaPlates.motorcycle,
           theme: ArmeniaThemes.civilian,
-          note: 'The two-row plate was found too cumbersome to carry; the gap between region and letters was closed.',
+          note:
+              'The two-row plate was found too cumbersome to carry; the gap between region and letters was closed.',
           sampleValues: const <String?>['0', '1', 'A', 'D', '2', '3', '4'],
         ),
         GalleryEntry(
@@ -980,7 +1042,8 @@ class ArmeniaSource extends GallerySource {
           label: 'State-owned (Security Council)',
           spec: ArmeniaPlates.public,
           theme: ArmeniaThemes.civilian,
-          note: 'The number reversed: `NN 01` names the institution, and only fourteen pairs are issued at all.',
+          note:
+              'The number reversed: `NN 01` names the institution, and only fourteen pairs are issued at all.',
           sampleValues: const <String?>['0', '0', '1', 'N', 'N', '0', '1'],
         ),
         GalleryEntry(
@@ -988,7 +1051,8 @@ class ArmeniaSource extends GallerySource {
           label: 'Trailer',
           spec: ArmeniaPlates.trailer,
           theme: ArmeniaThemes.civilian,
-          note: 'A pre-2014 design: no identifier band, and the letter count cut to one — most often `L`.',
+          note:
+              'A pre-2014 design: no identifier band, and the letter count cut to one — most often `L`.',
           sampleValues: const <String?>['2', '9', '0', 'L', '0', '1'],
         ),
         GalleryEntry(
@@ -996,7 +1060,8 @@ class ArmeniaSource extends GallerySource {
           label: 'Bus',
           spec: ArmeniaPlates.bus,
           theme: ArmeniaThemes.bus,
-          note: 'The Soviet public-transport format Armenia kept: `S` for a city bus, `L` for a long-range coach.',
+          note:
+              'The Soviet public-transport format Armenia kept: `S` for a city bus, `L` for a long-range coach.',
           sampleValues: const <String?>['1', '2', '3', '4', 'S'],
         ),
         GalleryEntry(
@@ -1004,7 +1069,8 @@ class ArmeniaSource extends GallerySource {
           label: 'Diplomatic corps',
           spec: ArmeniaPlates.diplomatic,
           theme: ArmeniaThemes.diplomatic,
-          note: 'Mission code, `D` for a diplomat or `T` for a technician, serial, and Armenia\'s own code at the tail.',
+          note:
+              'Mission code, `D` for a diplomat or `T` for a technician, serial, and Armenia\'s own code at the tail.',
           sampleValues: const <String?>['0', '4', 'D', '0', '5', '7'],
         ),
         GalleryEntry(
@@ -1012,7 +1078,8 @@ class ArmeniaSource extends GallerySource {
           label: 'Diplomatic corps (current)',
           spec: ArmeniaPlates.diplomaticArm,
           theme: ArmeniaThemes.diplomatic,
-          note: 'The same design; newer plates print `ARM` where the older ones print `AM`.',
+          note:
+              'The same design; newer plates print `ARM` where the older ones print `AM`.',
           sampleValues: const <String?>['0', '4', 'T', '0', '5', '7'],
         ),
         GalleryEntry(
@@ -1020,7 +1087,8 @@ class ArmeniaSource extends GallerySource {
           label: 'United Nations',
           spec: ArmeniaPlates.un,
           theme: ArmeniaThemes.un,
-          note: 'Three digits between two printed words. Nothing on this plate is chosen but the serial.',
+          note:
+              'Three digits between two printed words. Nothing on this plate is chosen but the serial.',
           sampleValues: const <String?>['0', '8', '0'],
         ),
         GalleryEntry(
@@ -1069,7 +1137,8 @@ GallerySection _kuwaitSection() => GallerySection(
       label: 'Civilian private vehicle',
       spec: KuwaitPlates.civilian,
       theme: KuwaitThemes.civilian,
-      note: 'Standard private vehicle: black text on white field with flag block. Codes 1-89.',
+      note:
+          'Standard private vehicle: black text on white field with flag block. Codes 1-89.',
       sampleValues: const <String?>['1', '2', '4', '5', '6', '7', '8'],
     ),
     GalleryEntry(
@@ -1077,7 +1146,8 @@ GallerySection _kuwaitSection() => GallerySection(
       label: 'Public transport',
       spec: KuwaitPlates.transport,
       theme: KuwaitThemes.transport,
-      note: 'Taxis, buses, goods export: black text on yellow field. Codes 90-99.',
+      note:
+          'Taxis, buses, goods export: black text on yellow field. Codes 90-99.',
       sampleValues: const <String?>['9', '2', '1', '2', '3', '4', '5'],
     ),
     GalleryEntry(
@@ -1085,7 +1155,8 @@ GallerySection _kuwaitSection() => GallerySection(
       label: 'Police',
       spec: KuwaitPlates.police,
       theme: KuwaitThemes.police,
-      note: 'Police vehicles: white text on black field, "POLICE شرطة" caption.',
+      note:
+          'Police vehicles: white text on black field, "POLICE شرطة" caption.',
       sampleValues: const <String?>['5', '0', '1', '2', '3', '4'],
     ),
     GalleryEntry(
@@ -1093,7 +1164,8 @@ GallerySection _kuwaitSection() => GallerySection(
       label: 'Police motorcycle',
       spec: KuwaitPlates.policeMotorcycle,
       theme: KuwaitThemes.police,
-      note: 'Police motorcycles: white text on black field, "شرطة" caption only.',
+      note:
+          'Police motorcycles: white text on black field, "شرطة" caption only.',
       sampleValues: const <String?>['0', '1', '2', '3'],
     ),
     GalleryEntry(
@@ -1101,7 +1173,8 @@ GallerySection _kuwaitSection() => GallerySection(
       label: 'Government',
       spec: KuwaitPlates.government,
       theme: KuwaitThemes.government,
-      note: 'Government vehicles: black text on blue field, "دولة الكويت — حكومة" caption.',
+      note:
+          'Government vehicles: black text on blue field, "دولة الكويت — حكومة" caption.',
       sampleValues: const <String?>['2', '3', '4', '5', '6'],
     ),
     GalleryEntry(
@@ -1109,7 +1182,8 @@ GallerySection _kuwaitSection() => GallerySection(
       label: 'Corps Diplomatique',
       spec: KuwaitPlates.diplomatic,
       theme: KuwaitThemes.diplomatic,
-      note: 'Diplomatic vehicles: blue text on white field, red band at the bottom, "هيئة دبلوماسية / C.D" caption.',
+      note:
+          'Diplomatic vehicles: blue text on white field, red band at the bottom, "هيئة دبلوماسية / C.D" caption.',
       sampleValues: const <String?>['1', '2', '3', '4', '5', '6'],
     ),
     GalleryEntry(
@@ -1117,7 +1191,8 @@ GallerySection _kuwaitSection() => GallerySection(
       label: 'National guard',
       spec: KuwaitPlates.nationalGuard,
       theme: KuwaitThemes.nationalGuard,
-      note: 'National guard vehicles: yellow text on green field, "الحرس الوطني" caption.',
+      note:
+          'National guard vehicles: yellow text on green field, "الحرس الوطني" caption.',
       sampleValues: const <String?>['3', '4', '5', '6', '7'],
     ),
     GalleryEntry(
@@ -1125,7 +1200,8 @@ GallerySection _kuwaitSection() => GallerySection(
       label: 'Military / Army',
       spec: KuwaitPlates.army,
       theme: KuwaitThemes.army,
-      note: 'Military vehicles: black text on beige field, "الجيش الكويتي" caption.',
+      note:
+          'Military vehicles: black text on beige field, "الجيش الكويتي" caption.',
       sampleValues: const <String?>['7', '0', '1', '2', '3'],
     ),
     GalleryEntry(
@@ -1133,7 +1209,8 @@ GallerySection _kuwaitSection() => GallerySection(
       label: 'Commercial',
       spec: KuwaitPlates.commercial,
       theme: KuwaitThemes.commercial,
-      note: 'Commercial vehicles: black text on pink field, "دولة الكويت — تجاري" caption.',
+      note:
+          'Commercial vehicles: black text on pink field, "دولة الكويت — تجاري" caption.',
       sampleValues: const <String?>['8', '0', '1', '2', '3'],
     ),
     GalleryEntry(
@@ -1141,7 +1218,8 @@ GallerySection _kuwaitSection() => GallerySection(
       label: 'Construction',
       spec: KuwaitPlates.construction,
       theme: KuwaitThemes.construction,
-      note: 'Construction vehicles: black text on orange field, "دولة الكويت — إنشاءت" caption.',
+      note:
+          'Construction vehicles: black text on orange field, "دولة الكويت — إنشاءت" caption.',
       sampleValues: const <String?>['9', '5', '1', '2', '3'],
     ),
     GalleryEntry(
@@ -1149,7 +1227,8 @@ GallerySection _kuwaitSection() => GallerySection(
       label: 'General firefighting',
       spec: KuwaitPlates.firefighting,
       theme: KuwaitThemes.firefighting,
-      note: 'Firefighting vehicles: black text on red field, "FIRE — الإطفاء العام" caption.',
+      note:
+          'Firefighting vehicles: black text on red field, "FIRE — الإطفاء العام" caption.',
       sampleValues: const <String?>['4', '5', '1', '2', '3'],
     ),
     GalleryEntry(
@@ -1157,7 +1236,8 @@ GallerySection _kuwaitSection() => GallerySection(
       label: 'Export / Goods export',
       spec: KuwaitPlates.exportPlate,
       theme: KuwaitThemes.export,
-      note: 'Export vehicles: black text on green field, "دولة الكويت — تصدير" caption.',
+      note:
+          'Export vehicles: black text on green field, "دولة الكويت — تصدير" caption.',
       sampleValues: const <String?>['9', '5', '5', '1', '2'],
     ),
     GalleryEntry(
@@ -1165,7 +1245,8 @@ GallerySection _kuwaitSection() => GallerySection(
       label: 'Temporary / Customs',
       spec: KuwaitPlates.customs,
       theme: KuwaitThemes.customs,
-      note: 'Temporary and customs vehicles: black text on purple field, "دولة الكويت — جمرك مؤقت" caption.',
+      note:
+          'Temporary and customs vehicles: black text on purple field, "دولة الكويت — جمرك مؤقت" caption.',
       sampleValues: const <String?>['9', '9', '1', '2', '3'],
     ),
     GalleryEntry(
@@ -1173,7 +1254,8 @@ GallerySection _kuwaitSection() => GallerySection(
       label: 'Emiri Bureau',
       spec: KuwaitPlates.emiri,
       theme: KuwaitThemes.emiri,
-      note: 'Emiri Bureau vehicles: white text on blue field, "دولة الكويت — الديوان الأميري" caption.',
+      note:
+          'Emiri Bureau vehicles: white text on blue field, "دولة الكويت — الديوان الأميري" caption.',
       sampleValues: const <String?>['1', '0', '1', '2', '3'],
     ),
     GalleryEntry(
@@ -1181,7 +1263,8 @@ GallerySection _kuwaitSection() => GallerySection(
       label: 'Emiri Guard',
       spec: KuwaitPlates.emiriGuard,
       theme: KuwaitThemes.emiriGuard,
-      note: 'Emiri Guard vehicles: white text on blue field, "الحرس — الأميري" caption.',
+      note:
+          'Emiri Guard vehicles: white text on blue field, "الحرس — الأميري" caption.',
       sampleValues: const <String?>['1', '1', '0', '2', '3'],
     ),
     GalleryEntry(
@@ -1189,7 +1272,8 @@ GallerySection _kuwaitSection() => GallerySection(
       label: 'Motorcycle',
       spec: KuwaitPlates.motorcycle,
       theme: KuwaitThemes.civilian,
-      note: 'Motorcycles: black text on white field, "دولة الكويت / دراجة" caption. Codes 1-10.',
+      note:
+          'Motorcycles: black text on white field, "دولة الكويت / دراجة" caption. Codes 1-10.',
       sampleValues: const <String?>['1', '2', '3', '4'],
     ),
   ],
@@ -1207,10 +1291,9 @@ class TajikistanSource extends GallerySource {
 
   @override
   String get note =>
-      'Nine designs on a European face: the flag over `TJ` at the hoist end, '
+      'Nine designs on a European face: the flag over TJ at the hoist end, '
       'Latin letters that are really the shared Cyrillic register wearing Latin '
-      'shapes, and the region printed as two digits of the number itself. '
-      'See iranshahr_plate/README.md.';
+      'shapes, and the region printed as two digits of the number itself.';
 
   /// Built once, and returned by identity: [catalogueItems] resolves a
   /// [GalleryEntry] back to its [CatalogueItem] by identity, so a fresh list
@@ -1221,10 +1304,15 @@ class TajikistanSource extends GallerySource {
   @override
   List<GalleryEntry> get highlights => <GalleryEntry>[
     for (final GallerySection section in sections)
-      if (section.entries.isNotEmpty) ...[section.entries[0], if (section.entries.length > 1) section.entries[1]],
+      if (section.entries.isNotEmpty) ...[
+        section.entries[0],
+        if (section.entries.length > 1) section.entries[1],
+      ],
   ];
 
-  static final List<GallerySection> _sections = <GallerySection>[_tajikistanSection()];
+  static final List<GallerySection> _sections = <GallerySection>[
+    _tajikistanSection(),
+  ];
 }
 
 /// Kuwait source — one of the countries under the Iranshahr umbrella.
@@ -1239,11 +1327,9 @@ class KuwaitSource extends GallerySource {
 
   @override
   String get note =>
-      'Sixteen plate designs covering all major vehicle classes, transcribed '
-      'from Wikipedia\'s "Vehicle registration plates of Kuwait" article. '
-      'Only private, public transport and police carry a hyphen-split '
-      'class-serial number; every other class prints a plain serial. '
-      'See iranshahr_plate/README.md.';
+      'Sixteen designs across the vehicle classes. Private, public transport '
+      'and police plates split a class number from the serial with a hyphen; '
+      'every other class prints a plain serial.';
 
   /// Built once, and returned by identity: [catalogueItems] resolves a
   /// [GalleryEntry] back to its [CatalogueItem] by identity, so a fresh list
@@ -1255,11 +1341,16 @@ class KuwaitSource extends GallerySource {
   List<GalleryEntry> get highlights => <GalleryEntry>[
     if (sections.isNotEmpty && sections[0].entries.isNotEmpty) ...[
       sections[0].entries[0],
-      sections[0].entries.firstWhere((GalleryEntry e) => e.id == 'kw.diplomatic', orElse: () => sections[0].entries[1]),
+      sections[0].entries.firstWhere(
+        (GalleryEntry e) => e.id == 'kw.diplomatic',
+        orElse: () => sections[0].entries[1],
+      ),
     ],
   ];
 
-  static final List<GallerySection> _sections = <GallerySection>[_kuwaitSection()];
+  static final List<GallerySection> _sections = <GallerySection>[
+    _kuwaitSection(),
+  ];
 }
 
 /// Iraq's section.
@@ -1368,7 +1459,17 @@ GallerySection _iraqSection() => GallerySection(
       note:
           'Red ink on white, rim and divider included, with 22 as the expiry '
           'year where a permanent plate carries its class letter.',
-      sampleValues: const <String?>['2', '1', '2', '2', '3', '4', '5', '6', '7'],
+      sampleValues: const <String?>[
+        '2',
+        '1',
+        '2',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+      ],
     ),
   ],
 );
@@ -1385,10 +1486,8 @@ class QatarSource extends GallerySource {
 
   @override
   String get note =>
-      'Five designs, and the only country block in this package that is not a '
-      'rectangle: the maroon hoist of the flag itself, cut down its inboard '
-      'edge by the flag\'s nine-point serration, with `QATAR` reversed out of '
-      'it one letter per line. See iranshahr_plate/README.md.';
+      'Five designs. The country block is the maroon hoist of the flag, cut '
+      'by its nine-point serration, with QATAR set one letter per line.';
 
   /// Built once, and returned by identity: [catalogueItems] resolves a
   /// [GalleryEntry] back to its [CatalogueItem] by identity, so a fresh list
@@ -1400,11 +1499,16 @@ class QatarSource extends GallerySource {
   List<GalleryEntry> get highlights => <GalleryEntry>[
     if (sections.isNotEmpty && sections[0].entries.isNotEmpty) ...[
       sections[0].entries[0],
-      sections[0].entries.firstWhere((GalleryEntry e) => e.id == 'qa.police', orElse: () => sections[0].entries[1]),
+      sections[0].entries.firstWhere(
+        (GalleryEntry e) => e.id == 'qa.police',
+        orElse: () => sections[0].entries[1],
+      ),
     ],
   ];
 
-  static final List<GallerySection> _sections = <GallerySection>[_qatarSection()];
+  static final List<GallerySection> _sections = <GallerySection>[
+    _qatarSection(),
+  ];
 }
 
 /// Iraq's gallery source, showing Iraqi plates as part of the Iranshahr umbrella.
@@ -1422,7 +1526,7 @@ class IraqSource extends GallerySource {
       'The current Iraqi series: black on white in a 520x110 and a 335x155 '
       'size, in a Kurdistan Region variant of each, plus a red temporary '
       'plate. The class is the colour of the band down the left, not the '
-      'field, which is white on all of them. See iranshahr_plate/README.md.';
+      'field, which is white on all of them.';
 
   /// Built once, and returned by identity: [catalogueItems] resolves a
   /// [GalleryEntry] back to its [CatalogueItem] by identity, so a fresh list
@@ -1438,7 +1542,9 @@ class IraqSource extends GallerySource {
     ],
   ];
 
-  static final List<GallerySection> _sections = <GallerySection>[_iraqSection()];
+  static final List<GallerySection> _sections = <GallerySection>[
+    _iraqSection(),
+  ];
 }
 
 /// The UAE's section: the private plate of each of the seven emirates, long and
@@ -1458,7 +1564,8 @@ GallerySection _uaeSection() => GallerySection(
       spec: UaePlates.abuDhabiLong,
       theme: UaeThemes.long,
       country: UaeCountry.uae,
-      note: 'White code on the red strip (long) or band (short), painted as background sections.',
+      note:
+          'White code on the red strip (long) or band (short), painted as background sections.',
       sampleValues: const <String?>['1', '2', '2', '3', '4', '5', '6'],
     ),
     GalleryEntry(
@@ -1491,7 +1598,8 @@ GallerySection _uaeSection() => GallerySection(
       spec: UaePlates.dubaiLong,
       theme: UaeThemes.long,
       country: UaeCountry.uae,
-      note: '"DUBAI" logotype set as bold text; single code letter only (AA-EE not laid out).',
+      note:
+          '"DUBAI" logotype set as bold text; single code letter only (AA-EE not laid out).',
       sampleValues: const <String?>['A', '2', '3', '4', '5', '6'],
     ),
     GalleryEntry(
@@ -1584,7 +1692,7 @@ class UaeSource extends GallerySource {
   @override
   String get note =>
       'The private plates of the seven emirates, each in a long and a short '
-      'size. See iranshahr_plate/README.md.';
+      'size.';
 
   /// Built once, and returned by identity, as for the other sources.
   @override
@@ -1592,7 +1700,10 @@ class UaeSource extends GallerySource {
 
   @override
   List<GalleryEntry> get highlights => <GalleryEntry>[
-    if (sections.isNotEmpty && sections[0].entries.length > 1) ...[sections[0].entries[0], sections[0].entries[1]],
+    if (sections.isNotEmpty && sections[0].entries.length > 1) ...[
+      sections[0].entries[0],
+      sections[0].entries[1],
+    ],
   ];
 
   static final List<GallerySection> _sections = <GallerySection>[_uaeSection()];

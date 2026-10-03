@@ -8,13 +8,17 @@ import '../theme/nocturne.dart';
 /// [InheritedNotifier] rather than `provider`/`riverpod` — the app has no
 /// other shared state and does not need a package for one flag.
 class MobilePanelScope extends InheritedNotifier<ValueNotifier<bool>> {
-  const MobilePanelScope({super.key, required ValueNotifier<bool> notifier, required super.child})
-      : super(notifier: notifier);
+  const MobilePanelScope({
+    super.key,
+    required ValueNotifier<bool> notifier,
+    required super.child,
+  }) : super(notifier: notifier);
 
   /// The shared toggle. Reading it (rather than [ValueNotifier.value]
   /// directly) subscribes the caller to rebuilds when it flips.
   static ValueNotifier<bool> of(BuildContext context) {
-    final MobilePanelScope? scope = context.dependOnInheritedWidgetOfExactType<MobilePanelScope>();
+    final MobilePanelScope? scope = context
+        .dependOnInheritedWidgetOfExactType<MobilePanelScope>();
     assert(scope != null, 'No MobilePanelScope found in context');
     return scope!.notifier!;
   }

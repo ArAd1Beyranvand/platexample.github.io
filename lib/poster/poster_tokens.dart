@@ -87,6 +87,7 @@ class PosterColors {
   /// On-screen keypad key highlight — a lighter cast of hero card 01
   /// (`#16479D`), keeping the pad in the project's blue family.
   static const Color keypadHighlight = Color(0xFF3160B0);
+
   /// The navigation chrome's accent. The poster keeps its violet [accent],
   /// but the nav is app furniture rather than poster art, and violet made it
   /// read as a different product than the rest of the blue-family UI. This is
@@ -136,7 +137,9 @@ class PosterColors {
   static const Color accentCompat = accent;
 
   /// Read by the frozen `virtual_keypad.dart`.
-  static const Color hairlineCompat = Color(0x1AFFFFFF); // rgba(255,255,255,.10)
+  static const Color hairlineCompat = Color(
+    0x1AFFFFFF,
+  ); // rgba(255,255,255,.10)
 
   /// Read by the frozen plate wiring in `showcase_screen.dart`.
   static const Color bgCompat = stageBlack;

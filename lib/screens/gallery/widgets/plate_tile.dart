@@ -25,7 +25,12 @@ import 'plate_binding.dart';
 /// grid is one size whatever it holds, and the plate keeps its true
 /// proportions inside it.
 class PlateFrame extends StatelessWidget {
-  const PlateFrame({super.key, required this.spec, required this.child, this.padding = 0});
+  const PlateFrame({
+    super.key,
+    required this.spec,
+    required this.child,
+    this.padding = 0,
+  });
 
   final PlateSpec spec;
 
@@ -53,7 +58,11 @@ class PlateFrame extends StatelessWidget {
             // contain, not fill: a plate drawn at the wrong aspect ratio is a
             // different plate.
             fit: BoxFit.contain,
-            child: SizedBox(width: spec.canvasWidth, height: spec.canvasHeight, child: child),
+            child: SizedBox(
+              width: spec.canvasWidth,
+              height: spec.canvasHeight,
+              child: child,
+            ),
           ),
         ),
       ),
@@ -169,7 +178,14 @@ class PlateTile extends StatefulWidget {
   /// The `+ 2` is the card's own 1px border, which a [Container] lays out
   /// inside its box rather than around it.
   static double heightFor(double stageHeight) =>
-      padding.vertical + 2 + stageHeight + _stageToRule + 1 + _ruleToFooter + _footerLineHeight + 1;
+      padding.vertical +
+      2 +
+      stageHeight +
+      _stageToRule +
+      1 +
+      _ruleToFooter +
+      _footerLineHeight +
+      1;
 
   final GalleryEntry entry;
 
@@ -189,7 +205,10 @@ class PlateTile extends StatefulWidget {
 class _PlateTileState extends State<PlateTile> {
   /// Scoped to this tile: one controller shared down a grid would show the
   /// same characters on every plate in it.
-  late final PlateController _plate = PlateController(spec: widget.entry.spec, values: widget.entry.sampleValues);
+  late final PlateController _plate = PlateController(
+    spec: widget.entry.spec,
+    values: widget.entry.sampleValues,
+  );
 
   /// Replays the entry's sample values into [_plate] on hover/focus, so the
   /// card demonstrates the plate filling in the way the showcase's device
@@ -231,7 +250,8 @@ class _PlateTileState extends State<PlateTile> {
     _looping = false;
     _holdTimer?.cancel();
     final holdCompleter = _holdCompleter;
-    if (holdCompleter != null && !holdCompleter.isCompleted) holdCompleter.complete(false);
+    if (holdCompleter != null && !holdCompleter.isCompleted)
+      holdCompleter.complete(false);
     _typist.dispose();
     _plate.dispose();
     super.dispose();
@@ -248,7 +268,10 @@ class _PlateTileState extends State<PlateTile> {
       await _typist.run(
         spec: widget.entry.spec,
         controller: _plate,
-        steps: scriptFromValues(spec: widget.entry.spec, values: widget.entry.sampleValues!),
+        steps: scriptFromValues(
+          spec: widget.entry.spec,
+          values: widget.entry.sampleValues!,
+        ),
         useLetterPicker: false,
         context: ctx,
       );
@@ -284,7 +307,10 @@ class _PlateTileState extends State<PlateTile> {
     await _typist.run(
       spec: widget.entry.spec,
       controller: _plate,
-      steps: scriptFromValues(spec: widget.entry.spec, values: widget.entry.sampleValues!),
+      steps: scriptFromValues(
+        spec: widget.entry.spec,
+        values: widget.entry.sampleValues!,
+      ),
       // No picker and no keypad: a grid of tiles must never raise a modal or an
       // IME, so letters land straight on the controller like digits.
       useLetterPicker: false,
@@ -329,7 +355,9 @@ class _PlateTileState extends State<PlateTile> {
       button: widget.onTap != null,
       label: entry.label,
       child: FocusableActionDetector(
-        mouseCursor: widget.onTap == null ? MouseCursor.defer : SystemMouseCursors.click,
+        mouseCursor: widget.onTap == null
+            ? MouseCursor.defer
+            : SystemMouseCursors.click,
         onShowHoverHighlight: _setHovered,
         actions: <Type, Action<Intent>>{
           ActivateIntent: CallbackAction<ActivateIntent>(
@@ -366,7 +394,9 @@ class _PlateTileState extends State<PlateTile> {
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: _lit ? const <Color>[N.n900, N.surface] : const <Color>[N.surface, N.n900],
+                  colors: _lit
+                      ? const <Color>[N.n900, N.surface]
+                      : const <Color>[N.surface, N.n900],
                 ),
               ),
               child: Column(
@@ -387,7 +417,11 @@ class _PlateTileState extends State<PlateTile> {
                         child: PlateBinding<PlateTheme?>(
                           controller: _plate,
                           select: (c) => entry.themeFor(c.values),
-                          builder: (context, theme) => PlateView(controller: _plate, theme: theme, country: entry.country),
+                          builder: (context, theme) => PlateView(
+                            controller: _plate,
+                            theme: theme,
+                            country: entry.country,
+                          ),
                         ),
                       ),
                     ),
@@ -411,7 +445,9 @@ class _PlateTileState extends State<PlateTile> {
                           style: const TextStyle(
                             fontFamily: NType.archivo,
                             fontSize: PlateTile._footerFontSize,
-                            height: PlateTile._footerLineHeight / PlateTile._footerFontSize,
+                            height:
+                                PlateTile._footerLineHeight /
+                                PlateTile._footerFontSize,
                             color: N.n200,
                           ),
                         ),

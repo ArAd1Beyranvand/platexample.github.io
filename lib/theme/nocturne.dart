@@ -43,13 +43,13 @@ abstract final class NType {
   static const String arabic = 'Vazirmatn';
 
   static TextStyle _heading(double fontSize) => TextStyle(
-        fontFamily: archivo,
-        fontWeight: FontWeight.w800,
-        fontSize: fontSize,
-        height: 1.12,
-        letterSpacing: -0.015 * fontSize,
-        color: N.text,
-      );
+    fontFamily: archivo,
+    fontWeight: FontWeight.w800,
+    fontSize: fontSize,
+    height: 1.12,
+    letterSpacing: -0.015 * fontSize,
+    color: N.text,
+  );
 
   static TextStyle get h1 => _heading(42);
   static TextStyle get h2 => _heading(32);
@@ -60,59 +60,59 @@ abstract final class NType {
   /// The uppercase eyebrow. `text-transform: uppercase` has no Flutter
   /// equivalent — callers must uppercase the string themselves.
   static TextStyle get h6 => TextStyle(
-        fontFamily: archivo,
-        fontWeight: FontWeight.w800,
-        fontSize: 13,
-        height: 1.12,
-        letterSpacing: 0.08 * 13,
-        color: N.text,
-      );
+    fontFamily: archivo,
+    fontWeight: FontWeight.w800,
+    fontSize: 13,
+    height: 1.12,
+    letterSpacing: 0.08 * 13,
+    color: N.text,
+  );
 
   static TextStyle get body => const TextStyle(
-        fontFamily: archivo,
-        fontWeight: FontWeight.w400,
-        fontSize: 15,
-        height: 1.55,
-        color: N.text,
-      );
+    fontFamily: archivo,
+    fontWeight: FontWeight.w400,
+    fontSize: 15,
+    height: 1.55,
+    color: N.text,
+  );
 
   /// `01` / `02` / `03` — the rail numbers on the showcase device stage.
   static TextStyle get railNumber => const TextStyle(
-        fontFamily: mono,
-        fontWeight: FontWeight.w400,
-        fontSize: 10,
-        letterSpacing: 0.10 * 10,
-        color: N.text,
-      );
+    fontFamily: mono,
+    fontWeight: FontWeight.w400,
+    fontSize: 10,
+    letterSpacing: 0.10 * 10,
+    color: N.text,
+  );
 
   /// `RULES`, `FEATURE`, `SCALE`, `COUNTRIES`, `INPUT`, `DETAILS`,
   /// `BUILT AGAINST`. Uppercase the string at the call site.
   static TextStyle get kicker => const TextStyle(
-        fontFamily: mono,
-        fontWeight: FontWeight.w400,
-        fontSize: 11,
-        letterSpacing: 0.12 * 11,
-        color: N.text,
-      );
+    fontFamily: mono,
+    fontWeight: FontWeight.w400,
+    fontSize: 11,
+    letterSpacing: 0.12 * 11,
+    color: N.text,
+  );
 
   /// `ir.car`, `ps.gaza.car2012` — spec identifiers.
   static TextStyle get specId => const TextStyle(
-        fontFamily: mono,
-        fontWeight: FontWeight.w400,
-        fontSize: 11,
-        letterSpacing: 0.02 * 11,
-        color: N.text,
-      );
+    fontFamily: mono,
+    fontWeight: FontWeight.w400,
+    fontSize: 11,
+    letterSpacing: 0.02 * 11,
+    color: N.text,
+  );
 
   /// The MOBILE VIEW button and the MOBILE / TABLET / DESKTOP segmented
   /// control. Uppercase the string at the call site.
   static TextStyle get pill => const TextStyle(
-        fontFamily: mono,
-        fontWeight: FontWeight.w400,
-        fontSize: 9.5,
-        letterSpacing: 0.10 * 9.5,
-        color: N.text,
-      );
+    fontFamily: mono,
+    fontWeight: FontWeight.w400,
+    fontSize: 9.5,
+    letterSpacing: 0.10 * 9.5,
+    color: N.text,
+  );
 
   /// Arabic-script country blocks (`ایران`, `اليمن - خصوصي`) need Vazirmatn;
   /// everything else stays on Archivo.
@@ -157,30 +157,30 @@ abstract final class NRadius {
 abstract final class NShadow {
   /// White at [opacity] — the hairline every elevation step carries.
   static Border hairline(double opacity) => Border.all(
-        color: const Color(0xFFFFFFFF).withValues(alpha: opacity),
-        width: 1,
-      );
+    color: const Color(0xFFFFFFFF).withValues(alpha: opacity),
+    width: 1,
+  );
 
   static Border get smBorder => hairline(0.08);
   static List<BoxShadow> get smShadows => const [];
 
   static Border get mdBorder => hairline(0.10);
   static List<BoxShadow> get mdShadows => [
-        BoxShadow(
-          color: const Color(0xFF000000).withValues(alpha: 0.70),
-          offset: const Offset(0, 10),
-          blurRadius: 26,
-        ),
-      ];
+    BoxShadow(
+      color: const Color(0xFF000000).withValues(alpha: 0.70),
+      offset: const Offset(0, 10),
+      blurRadius: 26,
+    ),
+  ];
 
   static Border get lgBorder => hairline(0.14);
   static List<BoxShadow> get lgShadows => [
-        BoxShadow(
-          color: const Color(0xFF000000).withValues(alpha: 0.80),
-          offset: const Offset(0, 26),
-          blurRadius: 60,
-        ),
-      ];
+    BoxShadow(
+      color: const Color(0xFF000000).withValues(alpha: 0.80),
+      offset: const Offset(0, 26),
+      blurRadius: 60,
+    ),
+  ];
 }
 
 /// The page's own media-query breakpoints, in logical pixels.
@@ -218,8 +218,9 @@ class NRule extends StatelessWidget {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         final double width = constraints.maxWidth;
-        final double fadeStop =
-            (width.isFinite && width > 0) ? (48 / width).clamp(0.0, 0.5) : 0.5;
+        final double fadeStop = (width.isFinite && width > 0)
+            ? (48 / width).clamp(0.0, 0.5)
+            : 0.5;
         return Container(
           height: 1,
           decoration: BoxDecoration(

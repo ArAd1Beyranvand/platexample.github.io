@@ -19,7 +19,8 @@ class PosterLinks extends StatelessWidget {
   const PosterLinks({super.key});
 
   static const String pubDevUrl = 'https://pub.dev/packages/core_plate';
-  static const String githubUrl = 'https://github.com/ArAd1Beyranvand/core-plate';
+  static const String githubUrl =
+      'https://github.com/ArAd1Beyranvand/core-plate';
 
   @override
   Widget build(BuildContext context) {
@@ -81,9 +82,18 @@ class _LinkButtonState extends State<_LinkButton> {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          SizedBox(width: iconSize, height: iconSize, child: widget.iconBuilder(contentColor)),
+          SizedBox(
+            width: iconSize,
+            height: iconSize,
+            child: widget.iconBuilder(contentColor),
+          ),
           SizedBox(width: metrics.px(8)),
-          Text(widget.label, style: PosterType.linkLabel(metrics.f * 1.6).copyWith(color: contentColor)),
+          Text(
+            widget.label,
+            style: PosterType.linkLabel(
+              metrics.f * 1.6,
+            ).copyWith(color: contentColor),
+          ),
         ],
       ),
     );
@@ -213,7 +223,12 @@ class _OctocatPainter extends CustomPainter {
 
     // Body / tentacle sweep below the head.
     cat.moveTo(c.dx - r * 0.55, c.dy + r * 0.55);
-    cat.quadraticBezierTo(c.dx, c.dy + r * 1.5, c.dx + r * 0.55, c.dy + r * 0.55);
+    cat.quadraticBezierTo(
+      c.dx,
+      c.dy + r * 1.5,
+      c.dx + r * 0.55,
+      c.dy + r * 0.55,
+    );
     cat.quadraticBezierTo(c.dx + r * 0.2, c.dy + r * 1.1, c.dx, c.dy + r * 0.5);
     cat.close();
 

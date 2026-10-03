@@ -50,7 +50,11 @@ class DeviceCycle extends StatefulWidget {
     super.key,
     required this.builder,
     required this.controller,
-    this.order = const [DeviceType.desktop, DeviceType.mobile, DeviceType.tablet],
+    this.order = const [
+      DeviceType.desktop,
+      DeviceType.mobile,
+      DeviceType.tablet,
+    ],
     this.onDeviceChanged,
   });
 
@@ -82,7 +86,9 @@ class _DeviceCycleState extends State<DeviceCycle> {
   void _advance() {
     if (!mounted) return;
     final DeviceType? target = widget.controller.target;
-    final int next = target == null ? (_index + 1) % widget.order.length : widget.order.indexOf(target);
+    final int next = target == null
+        ? (_index + 1) % widget.order.length
+        : widget.order.indexOf(target);
     // A pin onto the device already showing, or onto one this cycle does not
     // carry, leaves the cycle where it is. The pin itself has still taken
     // effect — the controller stops advancing — so there is nothing to

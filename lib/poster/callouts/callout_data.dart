@@ -88,84 +88,83 @@ const double _desktopSlot3W = 0.20;
 /// carrying the only paragraph, and two narrow ones down the right. Each set
 /// says something specific to what that device is showing, rather than
 /// restating "customizable" in three different fonts.
-const Map<DeviceType, List<CalloutSpec>> calloutSets = <DeviceType, List<CalloutSpec>>{
-  // The phone is the keypad demo: what the field does while you are typing
-  // into it. Mobile uses a grid layout: two small on top, one large below.
-  DeviceType.mobile: <CalloutSpec>[
-    CalloutSpec(
-      kicker: 'KEYBOARD',
-      title: 'Shapes itself to each country',
-      anchorFx: _mobileSlot1Fx,
-      anchorFy: _mobileSlot1Fy,
-      widthFx: _mobileSlot1W,
-    ),
-    CalloutSpec(
-      kicker: 'INSTANT',
-      title: 'Errors flash red as you type',
-      anchorFx: _mobileSlot2Fx,
-      anchorFy: _mobileSlot2Fy,
-      widthFx: _mobileSlot2W,
-    ),
-    CalloutSpec(
-      kicker: 'VARIANTS',
-      title: 'Cars, motors, diplomatic, temporary — all built in',
-      anchorFx: _mobileSlot3Fx,
-      anchorFy: _mobileSlot3Fy,
-      widthFx: _mobileSlot3W,
-    ),
-  ],
-  // The tablet shows a plate at rest beside its field — the pair the design's
-  // own render of this screen is drawn from, which is why this set is the one
-  // sk8 kept when it collapsed the three.
-  DeviceType.tablet: <CalloutSpec>[
-    CalloutSpec(
-      kicker: 'RULES',
-      title: 'Bad combinations turn red while you type',
-      anchorFx: _tabletSlot1Fx,
-      anchorFy: _tabletSlot1Fy,
-      widthFx: _tabletSlot1W,
-    ),
-    CalloutSpec(
-      kicker: 'PAIR',
-      title: 'The field that types it, the plate that shows it',
-      anchorFx: _tabletSlot2Fx,
-      anchorFy: _tabletSlot2Fy,
-      widthFx: _tabletSlot2W,
-    ),
-    CalloutSpec(
-      kicker: 'SCALE',
-      title: 'Same knobs at every screen size',
-      anchorFx: _tabletSlot3Fx,
-      anchorFy: _tabletSlot3Fy,
-      widthFx: _tabletSlot3W,
-    ),
-  ],
-  // The laptop is the catalogue view, so its set is about breadth rather than
-  // about one field. Desktop has its own anchor positions for better spacing.
-  DeviceType.desktop: <CalloutSpec>[
-    CalloutSpec(
-      kicker: 'COUNTRIES',
-      title: 'Thirteen countries, one pattern',
-      anchorFx: _desktopSlot1Fx,
-      anchorFy: _desktopSlot1Fy,
-      widthFx: _desktopSlot1W,
-    ),
-    CalloutSpec(
-      kicker: 'VARIANTS',
-      title: 'Cars and motorbikes, both',
-      anchorFx: _desktopSlot2Fx,
-      anchorFy: _desktopSlot2Fy,
-      widthFx: _desktopSlot2W,
-    ),
-    CalloutSpec(
-      kicker: 'OPEN SOURCE',
-      title: 'Built in Iran, published for anyone',
-      anchorFx: _desktopSlot3Fx,
-      anchorFy: _desktopSlot3Fy,
-      widthFx: _desktopSlot3W,
-    ),
-  ],
-};
+const Map<DeviceType, List<CalloutSpec>> calloutSets =
+    <DeviceType, List<CalloutSpec>>{
+      // The phone runs the compact on-screen keypad: what typing on it is like.
+      DeviceType.mobile: <CalloutSpec>[
+        CalloutSpec(
+          kicker: 'KEYPAD',
+          title: 'An on-screen pad in the plate\'s own script',
+          anchorFx: _mobileSlot1Fx,
+          anchorFy: _mobileSlot1Fy,
+          widthFx: _mobileSlot1W,
+        ),
+        CalloutSpec(
+          kicker: 'FOCUS',
+          title: 'Each slot hands off to the next',
+          anchorFx: _mobileSlot2Fx,
+          anchorFy: _mobileSlot2Fy,
+          widthFx: _mobileSlot2W,
+        ),
+        CalloutSpec(
+          kicker: 'IME',
+          title: 'No system keyboard pops up',
+          anchorFx: _mobileSlot3Fx,
+          anchorFy: _mobileSlot3Fy,
+          widthFx: _mobileSlot3W,
+        ),
+      ],
+      // The tablet: what the host app gets back — the rules, the value, and no
+      // state-management dependency.
+      DeviceType.tablet: <CalloutSpec>[
+        CalloutSpec(
+          kicker: 'RULES',
+          title: 'Validation marks a bad plate red and never blocks a key',
+          anchorFx: _tabletSlot1Fx,
+          anchorFy: _tabletSlot1Fy,
+          widthFx: _tabletSlot1W,
+        ),
+        CalloutSpec(
+          kicker: 'CONTROLLER',
+          title: 'Read and write the value from code',
+          anchorFx: _tabletSlot2Fx,
+          anchorFy: _tabletSlot2Fy,
+          widthFx: _tabletSlot2W,
+        ),
+        CalloutSpec(
+          kicker: 'STATE',
+          title: 'No provider or bloc required',
+          anchorFx: _tabletSlot3Fx,
+          anchorFy: _tabletSlot3Fy,
+          widthFx: _tabletSlot3W,
+        ),
+      ],
+      // The laptop is typed from its deck, and its set is about breadth: how
+      // countries and plates are added.
+      DeviceType.desktop: <CalloutSpec>[
+        CalloutSpec(
+          kicker: 'COUNTRIES',
+          title: 'One package per country, one widget for all',
+          anchorFx: _desktopSlot1Fx,
+          anchorFy: _desktopSlot1Fy,
+          widthFx: _desktopSlot1W,
+        ),
+        CalloutSpec(
+          kicker: 'KEYBOARD',
+          title: 'Physical keys type straight in',
+          anchorFx: _desktopSlot2Fx,
+          anchorFy: _desktopSlot2Fy,
+          widthFx: _desktopSlot2W,
+        ),
+        CalloutSpec(
+          kicker: 'SPECS',
+          title: 'A new plate is a const, not a widget',
+          anchorFx: _desktopSlot3Fx,
+          anchorFy: _desktopSlot3Fy,
+          widthFx: _desktopSlot3W,
+        ),
+      ],
+    };
 
 /// The set shown when nothing says otherwise — the one the design's reference
 /// render of this screen is drawn at.

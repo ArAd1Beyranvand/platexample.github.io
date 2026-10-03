@@ -4,7 +4,12 @@
 import 'package:flutter/foundation.dart';
 
 /// The three phases of a device change.
-enum DeviceTransitionPhase { idle, contentFadeOut, frameTransform, contentFadeIn }
+enum DeviceTransitionPhase {
+  idle,
+  contentFadeOut,
+  frameTransform,
+  contentFadeIn,
+}
 
 /// Durations for each phase. Fades default to 1500ms.
 ///
@@ -32,5 +37,6 @@ class DeviceTransitionDurations {
   /// hold — so the shell begins reshaping exactly on the swap.
   final Duration blankHold;
 
-  Duration get total => contentFadeOut + frameTransform + blankHold + contentFadeIn;
+  Duration get total =>
+      contentFadeOut + frameTransform + blankHold + contentFadeIn;
 }

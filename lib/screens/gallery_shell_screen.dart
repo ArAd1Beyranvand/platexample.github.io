@@ -21,7 +21,11 @@ import 'gallery/sources/sources.dart';
 typedef _Destination = ({IconData icon, IconData selected, String label});
 
 class GalleryShellScreen extends StatefulWidget {
-  const GalleryShellScreen({super.key, required this.location, required this.onNavigate});
+  const GalleryShellScreen({
+    super.key,
+    required this.location,
+    required this.onNavigate,
+  });
 
   /// The page the URL currently names. The shell does not own this — the router
   /// does, so that the address bar, the highlighted rail row and the nested
@@ -46,7 +50,8 @@ class GalleryShellState extends State<GalleryShellScreen> {
   /// tree while a detail page is open — the whole point of sk17.
   ///
   /// Only Discover needs one: Showcase and About push nothing.
-  final GlobalKey<NavigatorState> _discoverNavigatorKey = GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> _discoverNavigatorKey =
+      GlobalKey<NavigatorState>();
 
   /// What the chrome renders off. Recomputed by [_syncRouteState] whenever the
   /// nested stack or the tab changes, and read by the rail, the header and the
@@ -133,7 +138,9 @@ class GalleryShellState extends State<GalleryShellScreen> {
     // How much of the current stack the target shares. Countries and plates
     // are compared by identity, which is what [AppLocation]'s `==` does.
     int shared = 0;
-    while (shared < wanted.length && shared < _discoverStack.length && _discoverStack[shared] == wanted[shared]) {
+    while (shared < wanted.length &&
+        shared < _discoverStack.length &&
+        _discoverStack[shared] == wanted[shared]) {
       shared++;
     }
 
@@ -190,7 +197,13 @@ class GalleryShellState extends State<GalleryShellScreen> {
     final GallerySource? source = location.source;
     if (source == null) return const <AppLocation>[];
     if (location.item == null) return <AppLocation>[location];
-    return <AppLocation>[AppLocation.country(source, isIranshahirOverview: location.isIranshahirOverview), location];
+    return <AppLocation>[
+      AppLocation.country(
+        source,
+        isIranshahirOverview: location.isIranshahirOverview,
+      ),
+      location,
+    ];
   }
 
   void _syncRouteState() {
@@ -200,7 +213,10 @@ class GalleryShellState extends State<GalleryShellScreen> {
       // Only Discover has a stack; on the other tabs the chrome must read
       // depth 0 even if a Discover detail page is still parked behind them.
       depth: tab == AppTab.discover ? _discoverStack.length : 0,
-      isPlateDetail: tab == AppTab.discover && _discoverStack.isNotEmpty && _discoverStack.last.isPlate,
+      isPlateDetail:
+          tab == AppTab.discover &&
+          _discoverStack.isNotEmpty &&
+          _discoverStack.last.isPlate,
     );
   }
 
@@ -218,34 +234,43 @@ class GalleryShellState extends State<GalleryShellScreen> {
     _discoverStack.add(location);
     _syncRouteState();
 
-    navigator.push(PageRiseRoute<void>(builder: _builderFor(location), instant: instant)).then((_) {
-      if (!mounted) return;
-      // Trim to just below this route's own position rather than removing one
-      // entry: `popUntil` can take several pages off at once, and the futures
-      // then complete deepest-first.
-      if (_discoverStack.length >= depthAfterPush) {
-        _discoverStack.removeRange(depthAfterPush - 1, _discoverStack.length);
-      }
-      _syncRouteState();
-      // Claim this resolution against a pending router-issued pop if there is
-      // one. [_syncToLocation] pops deepest-first and each `push` future
-      // likewise resolves deepest-first, so the counter and the futures drain
-      // in the same order — the first future to resolve after N pops were
-      // issued is always the deepest page's, which is always what the Nth
-      // pop removed.
-      final bool wasSyncPop = _pendingSyncPops > 0;
-      if (wasSyncPop) _pendingSyncPops--;
+    navigator
+        .push(
+          PageRiseRoute<void>(builder: _builderFor(location), instant: instant),
+        )
+        .then((_) {
+          if (!mounted) return;
+          // Trim to just below this route's own position rather than removing one
+          // entry: `popUntil` can take several pages off at once, and the futures
+          // then complete deepest-first.
+          if (_discoverStack.length >= depthAfterPush) {
+            _discoverStack.removeRange(
+              depthAfterPush - 1,
+              _discoverStack.length,
+            );
+          }
+          _syncRouteState();
+          // Claim this resolution against a pending router-issued pop if there is
+          // one. [_syncToLocation] pops deepest-first and each `push` future
+          // likewise resolves deepest-first, so the counter and the futures drain
+          // in the same order — the first future to resolve after N pops were
+          // issued is always the deepest page's, which is always what the Nth
+          // pop removed.
+          final bool wasSyncPop = _pendingSyncPops > 0;
+          if (wasSyncPop) _pendingSyncPops--;
 
-      // A gesture-driven pop leaves the URL a level too deep. Report the
-      // stack's new top, unless this pop was the router's own doing — see
-      // [_pendingSyncPops].
-      final AppLocation top = _discoverStack.isEmpty
-          ? AppLocation.discover
-          : _discoverStack.last;
-      if (!wasSyncPop && widget.location.tab == AppTab.discover && widget.location != top) {
-        widget.onNavigate(top);
-      }
-    });
+          // A gesture-driven pop leaves the URL a level too deep. Report the
+          // stack's new top, unless this pop was the router's own doing — see
+          // [_pendingSyncPops].
+          final AppLocation top = _discoverStack.isEmpty
+              ? AppLocation.discover
+              : _discoverStack.last;
+          if (!wasSyncPop &&
+              widget.location.tab == AppTab.discover &&
+              widget.location != top) {
+            widget.onNavigate(top);
+          }
+        });
   }
 
   WidgetBuilder _builderFor(AppLocation location) {
@@ -260,8 +285,9 @@ class GalleryShellState extends State<GalleryShellScreen> {
       if (location.isIranshahirOverview && source.countryName == 'Iranshahr') {
         return (BuildContext context) => IranshahirOverviewScreen(
           onOpenPlate: _openPlate,
-          onOpenCountry: (GallerySource countrySource) =>
-              widget.onNavigate(AppLocation.country(countrySource, isIranshahirOverview: true)),
+          onOpenCountry: (GallerySource countrySource) => widget.onNavigate(
+            AppLocation.country(countrySource, isIranshahirOverview: true),
+          ),
         );
       }
       // Regular country detail page.
@@ -280,8 +306,12 @@ class GalleryShellState extends State<GalleryShellScreen> {
       // Goes to the country page by URL rather than popping: a plate opened
       // from a link has its country underneath it just as a tapped one does
       // (see [_stackFor]), so this is one consistent destination either way.
-      onOpenCountry: (GallerySource source) =>
-          widget.onNavigate(AppLocation.country(source, isIranshahirOverview: location.isIranshahirOverview)),
+      onOpenCountry: (GallerySource source) => widget.onNavigate(
+        AppLocation.country(
+          source,
+          isIranshahirOverview: location.isIranshahirOverview,
+        ),
+      ),
     );
   }
 
@@ -303,11 +333,14 @@ class GalleryShellState extends State<GalleryShellScreen> {
   /// page lives under Discover — that is the tab whose breadcrumb and back
   /// gesture it unwinds into — so this is the same navigation a Discover tile
   /// makes, and [_syncToLocation] builds the country page underneath it.
-  void _openShowcasePlate(CatalogueItem item, String heroTag) => _openPlate(item, heroTag);
+  void _openShowcasePlate(CatalogueItem item, String heroTag) =>
+      _openPlate(item, heroTag);
 
   void _openCountry(GallerySource source) {
     final bool isIranshahirOverview = source.countryName == 'Iranshahr';
-    widget.onNavigate(AppLocation.country(source, isIranshahirOverview: isIranshahirOverview));
+    widget.onNavigate(
+      AppLocation.country(source, isIranshahirOverview: isIranshahirOverview),
+    );
   }
 
   /// `OTHER COUNTRIES` on the mobile country page: replaces the current
@@ -324,7 +357,9 @@ class GalleryShellState extends State<GalleryShellScreen> {
     final AppLocation location = AppLocation.country(source);
     _discoverStack[_discoverStack.length - 1] = location;
     _syncRouteState();
-    navigator.pushReplacement<void, void>(PageRiseRoute<void>(builder: _builderFor(location)));
+    navigator.pushReplacement<void, void>(
+      PageRiseRoute<void>(builder: _builderFor(location)),
+    );
     widget.onNavigate(location);
   }
 
@@ -380,8 +415,10 @@ class GalleryShellState extends State<GalleryShellScreen> {
           key: _discoverNavigatorKey,
           onGenerateRoute: (RouteSettings settings) => PageRiseRoute<void>(
             settings: settings,
-            builder: (BuildContext context) =>
-                DiscoverScreen(onOpenPlate: _openPlate, onOpenCountry: _openCountry),
+            builder: (BuildContext context) => DiscoverScreen(
+              onOpenPlate: _openPlate,
+              onOpenCountry: _openCountry,
+            ),
           ),
         ),
         const AboutScreen(),
@@ -419,12 +456,14 @@ class GalleryShellState extends State<GalleryShellScreen> {
                 // one level down, not somewhere else.
                 ValueListenableBuilder<bool>(
                   valueListenable: forceMobilePanel,
-                  builder: (BuildContext context, bool forced, _) => NocturneRail(
-                    tab: widget.location.tab,
-                    onTabSelected: _onTabSelected,
-                    onToggleView: () => forceMobilePanel.value = !forceMobilePanel.value,
-                    viewLabel: forced ? 'DESKTOP VIEW' : 'MOBILE VIEW',
-                  ),
+                  builder: (BuildContext context, bool forced, _) =>
+                      NocturneRail(
+                        tab: widget.location.tab,
+                        onTabSelected: _onTabSelected,
+                        onToggleView: () =>
+                            forceMobilePanel.value = !forceMobilePanel.value,
+                        viewLabel: forced ? 'DESKTOP VIEW' : 'MOBILE VIEW',
+                      ),
                 ),
               ],
             ),
@@ -439,30 +478,45 @@ class GalleryShellState extends State<GalleryShellScreen> {
             // chrome does — the IndexedStack and the nested navigator both
             // hold state the pages depend on.
             child: body,
-            builder: (BuildContext context, ShellRouteState route, Widget? tabBodies) {
-              final String? label = route.headerLabel;
-              return Column(
-                children: <Widget>[
-                  ValueListenableBuilder<bool>(
-                    valueListenable: forceMobilePanel,
-                    builder: (BuildContext context, bool forced, _) {
-                      Widget? trailing;
-                      if (forced) {
-                        trailing = GestureDetector(
-                          onTap: () => forceMobilePanel.value = false,
-                          child: Text('DESKTOP VIEW', style: NType.pill.copyWith(color: N.accent)),
-                        );
-                      } else if (label != null) {
-                        trailing = Text(label, style: NType.pill.copyWith(color: N.n600));
-                      }
-                      return NocturneMobileHeader(trailing: trailing);
-                    },
-                  ),
-                  Expanded(child: tabBodies!),
-                  if (route.showsBottomBar) NocturneBottomBar(tab: route.tab, onTabSelected: _onTabSelected),
-                ],
-              );
-            },
+            builder:
+                (
+                  BuildContext context,
+                  ShellRouteState route,
+                  Widget? tabBodies,
+                ) {
+                  final String? label = route.headerLabel;
+                  return Column(
+                    children: <Widget>[
+                      ValueListenableBuilder<bool>(
+                        valueListenable: forceMobilePanel,
+                        builder: (BuildContext context, bool forced, _) {
+                          Widget? trailing;
+                          if (forced) {
+                            trailing = GestureDetector(
+                              onTap: () => forceMobilePanel.value = false,
+                              child: Text(
+                                'DESKTOP VIEW',
+                                style: NType.pill.copyWith(color: N.accent),
+                              ),
+                            );
+                          } else if (label != null) {
+                            trailing = Text(
+                              label,
+                              style: NType.pill.copyWith(color: N.n600),
+                            );
+                          }
+                          return NocturneMobileHeader(trailing: trailing);
+                        },
+                      ),
+                      Expanded(child: tabBodies!),
+                      if (route.showsBottomBar)
+                        NocturneBottomBar(
+                          tab: route.tab,
+                          onTabSelected: _onTabSelected,
+                        ),
+                    ],
+                  );
+                },
           ),
         );
       },
@@ -486,7 +540,11 @@ class GalleryShellState extends State<GalleryShellScreen> {
 /// with it. sk15 deletes the lot.
 // ignore: unused_element
 class _SideNavBar extends StatelessWidget {
-  const _SideNavBar({required this.destinations, required this.selectedIndex, required this.onSelected});
+  const _SideNavBar({
+    required this.destinations,
+    required this.selectedIndex,
+    required this.onSelected,
+  });
 
   final List<_Destination> destinations;
   final int selectedIndex;
@@ -507,15 +565,31 @@ class _SideNavBar extends StatelessWidget {
           // the poster. It replaces the old capsule's all-round glow: a
           // full-height panel has only one edge facing the content, so that is
           // the only edge worth lighting.
-          border: Border(left: BorderSide(color: PosterColors.navAccent.withValues(alpha: 0.5), width: _borderWidth)),
+          border: Border(
+            left: BorderSide(
+              color: PosterColors.navAccent.withValues(alpha: 0.5),
+              width: _borderWidth,
+            ),
+          ),
           gradient: const LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: <Color>[PosterColors.navSurfaceTop, PosterColors.navSurfaceBottom],
+            colors: <Color>[
+              PosterColors.navSurfaceTop,
+              PosterColors.navSurfaceBottom,
+            ],
           ),
           boxShadow: <BoxShadow>[
-            BoxShadow(color: PosterColors.navAccent.withValues(alpha: 0.3), blurRadius: 48, spreadRadius: -8),
-            const BoxShadow(color: Color(0xCC000000), blurRadius: 32, offset: Offset(-12, 0)),
+            BoxShadow(
+              color: PosterColors.navAccent.withValues(alpha: 0.3),
+              blurRadius: 48,
+              spreadRadius: -8,
+            ),
+            const BoxShadow(
+              color: Color(0xCC000000),
+              blurRadius: 32,
+              offset: Offset(-12, 0),
+            ),
           ],
         ),
         // Each row is an equal fraction of whatever height the rail is given,
@@ -525,7 +599,8 @@ class _SideNavBar extends StatelessWidget {
         // lets one animated child travel behind all of them.
         child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
-            final double rowHeight = constraints.maxHeight / destinations.length;
+            final double rowHeight =
+                constraints.maxHeight / destinations.length;
 
             return Stack(
               children: <Widget>[
@@ -575,13 +650,24 @@ class _IndicatorBand extends StatelessWidget {
         gradient: LinearGradient(
           begin: isVertical ? Alignment.centerLeft : Alignment.topCenter,
           end: isVertical ? Alignment.centerRight : Alignment.bottomCenter,
-          colors: <Color>[PosterColors.navAccent, PosterColors.navAccent.withValues(alpha: 0.82)],
+          colors: <Color>[
+            PosterColors.navAccent,
+            PosterColors.navAccent.withValues(alpha: 0.82),
+          ],
         ),
         border: isVertical
-            ? Border(left: BorderSide(color: PosterColors.navAccentGlow, width: 4))
-            : Border(top: BorderSide(color: PosterColors.navAccentGlow, width: 4)),
+            ? Border(
+                left: BorderSide(color: PosterColors.navAccentGlow, width: 4),
+              )
+            : Border(
+                top: BorderSide(color: PosterColors.navAccentGlow, width: 4),
+              ),
         boxShadow: <BoxShadow>[
-          BoxShadow(color: PosterColors.navAccentGlow.withValues(alpha: 0.45), blurRadius: 40, spreadRadius: -4),
+          BoxShadow(
+            color: PosterColors.navAccentGlow.withValues(alpha: 0.45),
+            blurRadius: 40,
+            spreadRadius: -4,
+          ),
         ],
       ),
     );
@@ -622,13 +708,17 @@ class _NavItemState extends State<_NavItem> {
     final borderSide = widget.isVertical
         ? Border(
             left: BorderSide(
-              color: PosterColors.navAccentGlow.withValues(alpha: !active && _hovered ? 0.7 : 0),
+              color: PosterColors.navAccentGlow.withValues(
+                alpha: !active && _hovered ? 0.7 : 0,
+              ),
               width: 4,
             ),
           )
         : Border(
             top: BorderSide(
-              color: PosterColors.navAccentGlow.withValues(alpha: !active && _hovered ? 0.7 : 0),
+              color: PosterColors.navAccentGlow.withValues(
+                alpha: !active && _hovered ? 0.7 : 0,
+              ),
               width: 4,
             ),
           );
@@ -644,11 +734,17 @@ class _NavItemState extends State<_NavItem> {
                   fontSize: 12,
                   fontWeight: FontWeight.w700,
                   letterSpacing: 0.5,
-                  color: active ? Colors.white.withValues(alpha: 0.75) : PosterColors.inkMetaWeak.withValues(alpha: 0.6),
+                  color: active
+                      ? Colors.white.withValues(alpha: 0.75)
+                      : PosterColors.inkMetaWeak.withValues(alpha: 0.6),
                 ),
               ),
               const SizedBox(width: 12),
-              Icon(active ? widget.destination.selected : widget.destination.icon, color: foreground, size: 30),
+              Icon(
+                active ? widget.destination.selected : widget.destination.icon,
+                color: foreground,
+                size: 30,
+              ),
               const SizedBox(width: 12),
               Text(
                 widget.destination.label,
@@ -664,7 +760,11 @@ class _NavItemState extends State<_NavItem> {
         : Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Icon(active ? widget.destination.selected : widget.destination.icon, color: foreground, size: 24),
+              Icon(
+                active ? widget.destination.selected : widget.destination.icon,
+                color: foreground,
+                size: 24,
+              ),
             ],
           );
 
@@ -679,10 +779,14 @@ class _NavItemState extends State<_NavItem> {
           duration: const Duration(milliseconds: 160),
           curve: Curves.easeOut,
           decoration: BoxDecoration(
-            color: PosterColors.navAccent.withValues(alpha: !active && _hovered ? 0.22 : 0),
+            color: PosterColors.navAccent.withValues(
+              alpha: !active && _hovered ? 0.22 : 0,
+            ),
             border: borderSide,
           ),
-          padding: widget.isVertical ? const EdgeInsets.symmetric(horizontal: 22) : EdgeInsets.zero,
+          padding: widget.isVertical
+              ? const EdgeInsets.symmetric(horizontal: 22)
+              : EdgeInsets.zero,
           child: child,
         ),
       ),
@@ -698,7 +802,11 @@ class _NavItemState extends State<_NavItem> {
 /// [_IndicatorBand] with it. sk15 deletes the lot.
 // ignore: unused_element
 class _BottomNavBar extends StatelessWidget {
-  const _BottomNavBar({required this.destinations, required this.selectedIndex, required this.onSelected});
+  const _BottomNavBar({
+    required this.destinations,
+    required this.selectedIndex,
+    required this.onSelected,
+  });
 
   final List<_Destination> destinations;
   final int selectedIndex;
@@ -713,15 +821,31 @@ class _BottomNavBar extends StatelessWidget {
       height: totalHeight,
       child: DecoratedBox(
         decoration: BoxDecoration(
-          border: Border(top: BorderSide(color: PosterColors.navAccent.withValues(alpha: 0.5), width: _borderWidth)),
+          border: Border(
+            top: BorderSide(
+              color: PosterColors.navAccent.withValues(alpha: 0.5),
+              width: _borderWidth,
+            ),
+          ),
           gradient: const LinearGradient(
             begin: Alignment.centerLeft,
             end: Alignment.centerRight,
-            colors: <Color>[PosterColors.navSurfaceTop, PosterColors.navSurfaceBottom],
+            colors: <Color>[
+              PosterColors.navSurfaceTop,
+              PosterColors.navSurfaceBottom,
+            ],
           ),
           boxShadow: <BoxShadow>[
-            BoxShadow(color: PosterColors.navAccent.withValues(alpha: 0.3), blurRadius: 48, spreadRadius: -8),
-            const BoxShadow(color: Color(0xCC000000), blurRadius: 32, offset: Offset(0, -12)),
+            BoxShadow(
+              color: PosterColors.navAccent.withValues(alpha: 0.3),
+              blurRadius: 48,
+              spreadRadius: -8,
+            ),
+            const BoxShadow(
+              color: Color(0xCC000000),
+              blurRadius: 32,
+              offset: Offset(0, -12),
+            ),
           ],
         ),
         child: LayoutBuilder(

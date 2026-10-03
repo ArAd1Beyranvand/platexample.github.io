@@ -23,7 +23,12 @@ Widget _app(CatalogueItem item) => MaterialApp(
 void main() {
   // The four sk13 names by hand: Iran (a `chosen` letter slot), Palestine
   // (a value-driven livery), Germany (the one real validator) and Lebanon.
-  const List<String> entryIds = <String>['ir.car', 'ps.gaza.car2012', 'de.car', 'lb.oneLine.private'];
+  const List<String> entryIds = <String>[
+    'ir.car',
+    'ps.gaza.car2012',
+    'de.car',
+    'lb.oneLine.private',
+  ];
 
   for (final (String name, Size size) in <(String, Size)>[
     ('1440 — two columns', Size(1440, 900)),
@@ -31,7 +36,9 @@ void main() {
     ('390 — phone panel', Size(390, 844)),
   ]) {
     // currently failing (the 390 phone case only)
-    testWidgets('sk13 plate detail at $name does not overflow', (WidgetTester tester) async {
+    testWidgets('sk13 plate detail at $name does not overflow', (
+      WidgetTester tester,
+    ) async {
       tester.view.physicalSize = size;
       tester.view.devicePixelRatio = 1.0;
       addTearDown(tester.view.reset);
@@ -55,7 +62,9 @@ void main() {
     });
   }
 
-  testWidgets('sk13 the slot caption counts off the controller', (WidgetTester tester) async {
+  testWidgets('sk13 the slot caption counts off the controller', (
+    WidgetTester tester,
+  ) async {
     tester.view.physicalSize = const Size(1440, 900);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.reset);
@@ -68,18 +77,32 @@ void main() {
     final Finder caption = find.textContaining('SLOTS FILLED');
     expect(caption, findsOneWidget);
 
-    final PlateController controller = tester.widget<PlateCanvas>(find.byType(PlateCanvas)).controller!;
+    final PlateController controller = tester
+        .widget<PlateCanvas>(find.byType(PlateCanvas))
+        .controller!;
 
-    final int before = controller.values.where((String? v) => v != null && v.isNotEmpty).length;
-    expect(tester.widget<Text>(caption).data, startsWith('$before SLOTS FILLED'));
+    final int before = controller.values
+        .where((String? v) => v != null && v.isNotEmpty)
+        .length;
+    expect(
+      tester.widget<Text>(caption).data,
+      startsWith('$before SLOTS FILLED'),
+    );
 
     controller.setAt(0, 'B');
     await tester.pumpAndSettle();
-    final int after = controller.values.where((String? v) => v != null && v.isNotEmpty).length;
-    expect(tester.widget<Text>(find.textContaining('SLOTS FILLED')).data, startsWith('$after SLOTS FILLED'));
+    final int after = controller.values
+        .where((String? v) => v != null && v.isNotEmpty)
+        .length;
+    expect(
+      tester.widget<Text>(find.textContaining('SLOTS FILLED')).data,
+      startsWith('$after SLOTS FILLED'),
+    );
   });
 
-  testWidgets('sk13 the radio list still drives PlateInputSource', (WidgetTester tester) async {
+  testWidgets('sk13 the radio list still drives PlateInputSource', (
+    WidgetTester tester,
+  ) async {
     tester.view.physicalSize = const Size(1440, 900);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.reset);
@@ -87,7 +110,8 @@ void main() {
     await tester.pumpWidget(_app(_item('ir.car')));
     await tester.pumpAndSettle();
 
-    PlateInputSource? sourceOf() => tester.widget<PlateCanvas>(find.byType(PlateCanvas)).inputSource;
+    PlateInputSource? sourceOf() =>
+        tester.widget<PlateCanvas>(find.byType(PlateCanvas)).inputSource;
 
     expect(sourceOf(), PlateInputSource.system);
     expect(find.byType(PlateKeypad), findsNothing);
@@ -104,7 +128,9 @@ void main() {
   });
 
   // currently failing
-  testWidgets('sk13 an Arabic-script country block gets Vazirmatn', (WidgetTester tester) async {
+  testWidgets('sk13 an Arabic-script country block gets Vazirmatn', (
+    WidgetTester tester,
+  ) async {
     tester.view.physicalSize = const Size(1440, 900);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.reset);
@@ -124,7 +150,9 @@ void main() {
     );
   });
 
-  testWidgets('sk13 PROPORTIONS and VALIDATOR survive the redesign', (WidgetTester tester) async {
+  testWidgets('sk13 PROPORTIONS and VALIDATOR survive the redesign', (
+    WidgetTester tester,
+  ) async {
     tester.view.physicalSize = const Size(1440, 1400);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.reset);
@@ -132,9 +160,17 @@ void main() {
     await tester.pumpWidget(_app(_item('ir.car')));
     await tester.pumpAndSettle();
 
-    for (final String label in <String>['PROPORTIONS', 'VALIDATOR', 'PACKAGE', 'SPEC', 'COUNTRY BLOCK', 'SLOTS', 'LIVERY']) {
+    for (final String label in <String>[
+      'PROPORTIONS',
+      'VALIDATOR',
+      'PACKAGE',
+      'SPEC',
+      'COUNTRY BLOCK',
+      'SLOTS',
+      'LIVERY',
+    ]) {
       expect(find.text(label), findsOneWidget, reason: label);
     }
-    expect(find.text('None in this package'), findsOneWidget);
+    expect(find.text('None'), findsOneWidget);
   });
 }

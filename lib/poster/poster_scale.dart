@@ -53,7 +53,13 @@ double _fluidFactorFor(PosterTier tier, Size size) {
 /// down to every poster widget, so nothing positions itself with raw
 /// design px.
 class PosterMetrics extends InheritedWidget {
-  const PosterMetrics({super.key, required this.tier, required this.f, required this.size, required super.child});
+  const PosterMetrics({
+    super.key,
+    required this.tier,
+    required this.f,
+    required this.size,
+    required super.child,
+  });
 
   final PosterTier tier;
   final double f;
@@ -85,7 +91,12 @@ class PosterMetrics extends InheritedWidget {
   /// Converts a design-space fractional box (`fx, fy, fw, fh` — each in
   /// `0..1` of the 1920×1080 canvas) to a real [Rect] within [size].
   Rect box(double fx, double fy, double fw, double fh) {
-    return Rect.fromLTWH(fx * size.width, fy * size.height, fw * size.width, fh * size.height);
+    return Rect.fromLTWH(
+      fx * size.width,
+      fy * size.height,
+      fw * size.width,
+      fh * size.height,
+    );
   }
 
   @override
@@ -107,7 +118,9 @@ class PosterMetricsScope extends StatelessWidget {
       builder: (context, constraints) {
         final size = Size(
           constraints.maxWidth.isFinite ? constraints.maxWidth : _designWidth,
-          constraints.maxHeight.isFinite ? constraints.maxHeight : _designHeight,
+          constraints.maxHeight.isFinite
+              ? constraints.maxHeight
+              : _designHeight,
         );
         final tier = _tierFor(size);
         final f = _fluidFactorFor(tier, size);

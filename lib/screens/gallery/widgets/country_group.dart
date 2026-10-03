@@ -48,7 +48,11 @@ class CountryGroup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Widget rail = _Rail(source: source, onOpenCountry: onOpenCountry);
-    final Widget plates = _PlateGrid(source: source, onOpenPlate: onOpenPlate, compact: compact);
+    final Widget plates = _PlateGrid(
+      source: source,
+      onOpenPlate: onOpenPlate,
+      compact: compact,
+    );
 
     return Padding(
       padding: EdgeInsets.symmetric(vertical: compact ? 32 : 44),
@@ -87,7 +91,11 @@ class _Rail extends StatelessWidget {
       children: <Widget>[
         Text(
           source.countryName,
-          style: NType.h3.copyWith(fontSize: 24, letterSpacing: -0.025 * 24, height: 1.2),
+          style: NType.h3.copyWith(
+            fontSize: 24,
+            letterSpacing: -0.025 * 24,
+            height: 1.2,
+          ),
         ),
         const SizedBox(height: 10),
         // The package and the two counts, as one mono block at `line-height:
@@ -96,15 +104,26 @@ class _Rail extends StatelessWidget {
         // paragraph of code.
         Text(
           '${source.packageName}\n$entries entries · $specs specs',
-          style: NType.kicker.copyWith(letterSpacing: 0.1 * 11, height: 1.9, color: N.n500),
+          style: NType.kicker.copyWith(
+            letterSpacing: 0.1 * 11,
+            height: 1.9,
+            color: N.n500,
+          ),
         ),
         const SizedBox(height: 10),
         // The systems this country ships, named the way its own sections are —
         // `Gaza · West Bank modern · West Bank legacy`. Derived, so a section
         // added to a source turns up here without anyone editing a string.
         Text(
-          <String>[for (final GallerySection section in source.sections) section.title].join(' · '),
-          style: const TextStyle(fontFamily: NType.serif, fontSize: 15, height: 1.5, color: N.n600),
+          <String>[
+            for (final GallerySection section in source.sections) section.title,
+          ].join(' · '),
+          style: const TextStyle(
+            fontFamily: NType.serif,
+            fontSize: 15,
+            height: 1.5,
+            color: N.n600,
+          ),
         ),
         const SizedBox(height: 18),
         NButton(
@@ -121,7 +140,11 @@ class _Rail extends StatelessWidget {
 /// The right column: one card per highlight, two across and one under
 /// [NBreak.detail].
 class _PlateGrid extends StatelessWidget {
-  const _PlateGrid({required this.source, required this.onOpenPlate, required this.compact});
+  const _PlateGrid({
+    required this.source,
+    required this.onOpenPlate,
+    required this.compact,
+  });
 
   final GallerySource source;
   final void Function(CatalogueItem item, String heroTag) onOpenPlate;

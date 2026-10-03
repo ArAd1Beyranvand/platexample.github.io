@@ -52,7 +52,9 @@ class LaptopChassisEdge extends StatelessWidget {
   Widget build(BuildContext context) {
     return const DecoratedBox(
       decoration: BoxDecoration(
-        border: Border.fromBorderSide(BorderSide(color: _edgeColor, width: laptopEdgeWidth)),
+        border: Border.fromBorderSide(
+          BorderSide(color: _edgeColor, width: laptopEdgeWidth),
+        ),
         borderRadius: _edgeRadius,
       ),
     );
@@ -74,13 +76,19 @@ class DeckKey {
 
 List<DeckKey> _row(String spec, {Map<int, double> flex = const {}}) {
   final parts = spec.split('|');
-  return [for (var i = 0; i < parts.length; i++) DeckKey(parts[i], flex: flex[i] ?? 1)];
+  return [
+    for (var i = 0; i < parts.length; i++)
+      DeckKey(parts[i], flex: flex[i] ?? 1),
+  ];
 }
 
 /// A Persian (Farsi) keyboard layout, purely decorative — it dresses the
 /// laptop preset but doesn't feed input anywhere.
 final deckRows = <DeckRow>[
-  DeckRow(32, _row('esc|F1|F2|F3|F4|F5|F6|F7|F8|F9|F10|F11|F12|⏻', flex: {0: 1.7})),
+  DeckRow(
+    32,
+    _row('esc|F1|F2|F3|F4|F5|F6|F7|F8|F9|F10|F11|F12|⏻', flex: {0: 1.7}),
+  ),
   DeckRow(52, _row('`|1|2|3|4|5|6|7|8|9|0|-|=|⌫', flex: {13: 1.9})),
   DeckRow(52, _row('⇥|ض|ص|ث|ق|ف|غ|ع|ه|خ|ح|ج|چ', flex: {0: 1.5})),
 ];
@@ -89,7 +97,13 @@ final deckRows = <DeckRow>[
 /// keycaps. Laid out at its full physical depth — [DeviceFrame] tilts it
 /// into perspective, so it unfolds out of the body as the frame morphs.
 class LaptopDeck extends StatelessWidget {
-  const LaptopDeck({super.key, required this.frontOpacity, required this.backOpacity, this.onKey, this.pressedKey});
+  const LaptopDeck({
+    super.key,
+    required this.frontOpacity,
+    required this.backOpacity,
+    this.onKey,
+    this.pressedKey,
+  });
 
   /// Keyboard side, facing us while the laptop is open.
   final double frontOpacity;
@@ -114,7 +128,12 @@ class LaptopDeck extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         for (var r = 0; r < deckRows.length; r++) ...[
-          _DeckRowStrip(row: deckRows[r], scale: scale, onKey: onKey, pressedKey: held),
+          _DeckRowStrip(
+            row: deckRows[r],
+            scale: scale,
+            onKey: onKey,
+            pressedKey: held,
+          ),
           if (r < deckRows.length - 1) SizedBox(height: _rowGap * scale),
         ],
       ],
@@ -176,7 +195,13 @@ class LaptopDeck extends StatelessWidget {
                     // above it, lifting to n900 at its far edge.
                     colors: [Color(0xFF0D1017), N.n900],
                   ),
-                  boxShadow: const [BoxShadow(color: Color(0xB3000000), blurRadius: 14, offset: Offset(0, 4))],
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0xB3000000),
+                      blurRadius: 14,
+                      offset: Offset(0, 4),
+                    ),
+                  ],
                 ),
                 child: LayoutBuilder(
                   builder: (context, constraints) {
@@ -194,7 +219,10 @@ class LaptopDeck extends StatelessWidget {
                     // keyboard fills the well instead of leaving its
                     // lower portion empty.
                     final scale = constraints.hasBoundedHeight
-                        ? (constraints.maxHeight / _deckWellHeight).clamp(0.0, double.infinity)
+                        ? (constraints.maxHeight / _deckWellHeight).clamp(
+                            0.0,
+                            double.infinity,
+                          )
                         : 1.0;
                     // Rows now scale up to fill the well (see [scale]
                     // above), so a fixed fraction of the bottom is no

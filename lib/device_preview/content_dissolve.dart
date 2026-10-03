@@ -70,13 +70,20 @@ class ContentDissolve {
 /// a stable listenable the cached page stays cached and only the few widgets
 /// that actually paint per frame subscribe.
 class ContentDissolveScope extends InheritedWidget {
-  const ContentDissolveScope({super.key, required this.dissolve, required super.child});
+  const ContentDissolveScope({
+    super.key,
+    required this.dissolve,
+    required super.child,
+  });
 
   final ValueListenable<ContentDissolve> dissolve;
 
   static ValueListenable<ContentDissolve>? maybeOf(BuildContext context) =>
-      context.dependOnInheritedWidgetOfExactType<ContentDissolveScope>()?.dissolve;
+      context
+          .dependOnInheritedWidgetOfExactType<ContentDissolveScope>()
+          ?.dissolve;
 
   @override
-  bool updateShouldNotify(ContentDissolveScope old) => !identical(old.dissolve, dissolve);
+  bool updateShouldNotify(ContentDissolveScope old) =>
+      !identical(old.dissolve, dissolve);
 }

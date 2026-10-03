@@ -14,7 +14,9 @@ class AppRouteParser extends RouteInformationParser<AppLocation> {
   const AppRouteParser();
 
   @override
-  Future<AppLocation> parseRouteInformation(RouteInformation routeInformation) =>
+  Future<AppLocation> parseRouteInformation(
+    RouteInformation routeInformation,
+  ) =>
       SynchronousFuture<AppLocation>(AppLocation.fromUri(routeInformation.uri));
 
   @override
@@ -81,7 +83,11 @@ class AppRouterDelegate extends RouterDelegate<AppLocation>
       pages: <Page<void>>[
         MaterialPage<void>(
           key: const ValueKey<String>('shell'),
-          child: GalleryShellScreen(key: _shellKey, location: _location, onNavigate: goTo),
+          child: GalleryShellScreen(
+            key: _shellKey,
+            location: _location,
+            onNavigate: goTo,
+          ),
         ),
       ],
       onDidRemovePage: (Page<Object?> page) {},

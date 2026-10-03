@@ -35,7 +35,14 @@ class Eyebrow extends StatelessWidget {
 /// visual anchor at all. Title in title type, eyebrow above it for the
 /// category, count set quietly to the right.
 class SectionIntro extends StatelessWidget {
-  const SectionIntro({super.key, required this.title, this.eyebrow, this.note, this.count, this.trailing});
+  const SectionIntro({
+    super.key,
+    required this.title,
+    this.eyebrow,
+    this.note,
+    this.count,
+    this.trailing,
+  });
 
   final String title;
   final String? eyebrow;
@@ -53,11 +60,17 @@ class SectionIntro extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        if (eyebrow != null) ...<Widget>[Eyebrow(eyebrow), const SizedBox(height: NSpace.s2)],
+        if (eyebrow != null) ...<Widget>[
+          Eyebrow(eyebrow),
+          const SizedBox(height: NSpace.s2),
+        ],
         Row(
           children: <Widget>[
             Flexible(child: Text(title, style: NType.h4)),
-            if (count != null) ...<Widget>[const SizedBox(width: NSpace.s3), _Count(count)],
+            if (count != null) ...<Widget>[
+              const SizedBox(width: NSpace.s3),
+              _Count(count),
+            ],
             const Spacer(),
             ?trailing,
           ],
@@ -70,7 +83,12 @@ class SectionIntro extends StatelessWidget {
             constraints: const BoxConstraints(maxWidth: 620),
             child: Text(
               note,
-              style: const TextStyle(fontFamily: NType.serif, fontSize: 15, height: 1.5, color: N.n400),
+              style: const TextStyle(
+                fontFamily: NType.serif,
+                fontSize: 15,
+                height: 1.5,
+                color: N.n400,
+              ),
             ),
           ),
         ],
@@ -112,7 +130,10 @@ class SettingsSection extends StatelessWidget {
       Eyebrow(title),
       const SizedBox(height: NSpace.s3),
       Container(
-        padding: const EdgeInsets.symmetric(horizontal: NSpace.s6, vertical: NSpace.s3),
+        padding: const EdgeInsets.symmetric(
+          horizontal: NSpace.s6,
+          vertical: NSpace.s3,
+        ),
         decoration: BoxDecoration(
           color: N.n900,
           borderRadius: BorderRadius.circular(NRadius.lg),

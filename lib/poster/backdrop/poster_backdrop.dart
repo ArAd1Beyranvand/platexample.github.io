@@ -22,7 +22,12 @@ const double _kRoadRadians = kRoadDegrees * math.pi / 180;
 /// the frame [roadFrame] sets up, the panel is this rect exactly — axis
 /// aligned — which is what lets the sweep clip with a rect instead of a path.
 Rect showcasePanelRect(Size stage) {
-  return Rect.fromLTWH(-0.14 * stage.width, 0.16 * stage.height, 1.28 * stage.width, 0.62 * stage.height);
+  return Rect.fromLTWH(
+    -0.14 * stage.width,
+    0.16 * stage.height,
+    1.28 * stage.width,
+    0.62 * stage.height,
+  );
 }
 
 /// Moves [canvas] into the panel's own rotated frame: [kRoadDegrees] about the
@@ -99,7 +104,9 @@ class _PosterBackdropState extends State<PosterBackdrop> {
 
   static Future<ui.Image> _decodeAsset(String key) async {
     final ByteData data = await rootBundle.load(key);
-    final ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List());
+    final ui.Codec codec = await ui.instantiateImageCodec(
+      data.buffer.asUint8List(),
+    );
     final ui.FrameInfo frame = await codec.getNextFrame();
     return frame.image;
   }
@@ -130,7 +137,11 @@ class _PosterBackdropState extends State<PosterBackdrop> {
           // costs one texture and takes all of that off the per-frame path.
           RepaintBoundary(
             child: CustomPaint(
-              painter: _BackdropPainter(grainA: _grainA, grainB: _grainB, panelLayout: panelLayout),
+              painter: _BackdropPainter(
+                grainA: _grainA,
+                grainB: _grainB,
+                panelLayout: panelLayout,
+              ),
               child: const SizedBox.expand(),
             ),
           ),
@@ -145,7 +156,11 @@ class _PosterBackdropState extends State<PosterBackdrop> {
 }
 
 class _BackdropPainter extends CustomPainter {
-  const _BackdropPainter({required this.grainA, required this.grainB, required this.panelLayout});
+  const _BackdropPainter({
+    required this.grainA,
+    required this.grainB,
+    required this.panelLayout,
+  });
 
   final ui.Image? grainA;
   final ui.Image? grainB;
@@ -206,7 +221,11 @@ class _BackdropPainter extends CustomPainter {
       centre: Offset(stage.center.dx, stage.top),
       rx: 1.20 * stage.width,
       ry: 1.00 * stage.height,
-      colors: <Color>[PosterColors.groundLiftCore, PosterColors.groundLiftEdge, PosterColors.groundLiftEdge],
+      colors: <Color>[
+        PosterColors.groundLiftCore,
+        PosterColors.groundLiftEdge,
+        PosterColors.groundLiftEdge,
+      ],
       stops: const <double>[0.0, 0.60, 1.0],
     );
   }
@@ -228,7 +247,11 @@ class _BackdropPainter extends CustomPainter {
         ..shader = ui.Gradient.linear(
           panel.topCenter,
           panel.bottomCenter,
-          <Color>[PosterColors.panelHead, PosterColors.panelKnee, PosterColors.panelFoot],
+          <Color>[
+            PosterColors.panelHead,
+            PosterColors.panelKnee,
+            PosterColors.panelFoot,
+          ],
           <double>[0.0, 0.55, 1.0],
         ),
     );
@@ -271,7 +294,10 @@ class _BackdropPainter extends CustomPainter {
 
     final Paint paint = Paint()..color = PosterColors.roadStripe;
     for (double x = left; x < left + width; x += period) {
-      canvas.drawRect(Rect.fromLTWH(x, top, math.min(dash, left + width - x), thickness), paint);
+      canvas.drawRect(
+        Rect.fromLTWH(x, top, math.min(dash, left + width - x), thickness),
+        paint,
+      );
     }
 
     canvas.restore();
@@ -282,7 +308,9 @@ class _BackdropPainter extends CustomPainter {
   /// top-left-corner bloom of the phone panel, `95% 62% at 12% 0%` at 16%
   /// (line 353).
   void _paintAccentBloom(Canvas canvas, Rect stage) {
-    final Color core = panelLayout ? PosterColors.accentBloomPanel : PosterColors.accentBloom;
+    final Color core = panelLayout
+        ? PosterColors.accentBloomPanel
+        : PosterColors.accentBloom;
     final Color edge = core.withValues(alpha: 0);
 
     _paintRadial(
@@ -308,7 +336,12 @@ class _BackdropPainter extends CustomPainter {
         ..shader = ui.Gradient.linear(
           stage.topCenter,
           stage.bottomCenter,
-          <Color>[ground.withValues(alpha: 0), ground.withValues(alpha: 0), ground, ground],
+          <Color>[
+            ground.withValues(alpha: 0),
+            ground.withValues(alpha: 0),
+            ground,
+            ground,
+          ],
           const <double>[0.0, 0.40, 0.96, 1.0],
         ),
     );
@@ -343,11 +376,26 @@ class _BackdropPainter extends CustomPainter {
   /// `ColorFilter.mode` recolours the tile instead of blending it, and
   /// `DecorationImage` has no blend-against-destination at all. An
   /// `ImageShader` plus a `saveLayer` does both correctly.
-  void _paintGrain(Canvas canvas, Rect rect, ui.Image? image, double tilePx, double opacity) {
+  void _paintGrain(
+    Canvas canvas,
+    Rect rect,
+    ui.Image? image,
+    double tilePx,
+    double opacity,
+  ) {
     if (image == null || opacity <= 0) return;
-    final Matrix4 tile = Matrix4.identity()..scaleByDouble(tilePx / image.width, tilePx / image.height, 1, 1);
-    final ui.ImageShader shader = ui.ImageShader(image, TileMode.repeated, TileMode.repeated, tile.storage);
-    canvas.saveLayer(rect, Paint()..color = Color.fromRGBO(255, 255, 255, opacity));
+    final Matrix4 tile = Matrix4.identity()
+      ..scaleByDouble(tilePx / image.width, tilePx / image.height, 1, 1);
+    final ui.ImageShader shader = ui.ImageShader(
+      image,
+      TileMode.repeated,
+      TileMode.repeated,
+      tile.storage,
+    );
+    canvas.saveLayer(
+      rect,
+      Paint()..color = Color.fromRGBO(255, 255, 255, opacity),
+    );
     canvas.drawRect(rect, Paint()..shader = shader);
     canvas.restore();
   }

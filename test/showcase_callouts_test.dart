@@ -10,7 +10,11 @@ import 'package:plate_number_holder/theme/nocturne_theme.dart';
 
 /// The hero with a stand-in stage, as in `showcase_hero_test.dart` — the real
 /// one drags an auto-typist and five plate packages in behind it.
-Widget _hero({required double width, double height = 2400, DeviceType device = DeviceType.tablet}) {
+Widget _hero({
+  required double width,
+  double height = 2400,
+  DeviceType device = DeviceType.tablet,
+}) {
   return MaterialApp(
     theme: nocturneTheme(),
     home: Scaffold(
@@ -30,9 +34,9 @@ Widget _hero({required double width, double height = 2400, DeviceType device = D
 
 /// The headline and the two buttons — the text column the cards must clear.
 final List<Finder> _textColumn = <Finder>[
-  find.text('Plate input\nfor the road.'),
-  find.text('Open the archive'),
-  find.text('Read the docs'),
+  find.text('Plate input\nfor Flutter.'),
+  find.text('Browse plates'),
+  find.text('View on pub.dev'),
 ];
 
 void _expectNoOverlapWithText(WidgetTester tester) {
@@ -63,7 +67,9 @@ void main() {
     }
   });
 
-  testWidgets('above the breakpoint the cards float over the stage', (WidgetTester tester) async {
+  testWidgets('above the breakpoint the cards float over the stage', (
+    WidgetTester tester,
+  ) async {
     tester.view.physicalSize = const Size(1440, 2400);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.reset);
@@ -75,13 +81,15 @@ void main() {
     expect(find.byType(CalloutList), findsNothing);
     expect(find.byType(CalloutCard), findsNWidgets(3));
     expect(find.text('RULES'), findsOneWidget);
-    expect(find.text('PAIR'), findsOneWidget);
-    expect(find.text('SCALE'), findsOneWidget);
+    expect(find.text('CONTROLLER'), findsOneWidget);
+    expect(find.text('STATE'), findsOneWidget);
 
     _expectNoOverlapWithText(tester);
   });
 
-  testWidgets('under the breakpoint the cards stack in a column', (WidgetTester tester) async {
+  testWidgets('under the breakpoint the cards stack in a column', (
+    WidgetTester tester,
+  ) async {
     tester.view.physicalSize = const Size(1100, 2400);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.reset);
@@ -106,7 +114,9 @@ void main() {
     _expectNoOverlapWithText(tester);
   });
 
-  testWidgets('the phone panel keeps the stacked list', (WidgetTester tester) async {
+  testWidgets('the phone panel keeps the stacked list', (
+    WidgetTester tester,
+  ) async {
     tester.view.physicalSize = const Size(390, 2400);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.reset);
@@ -146,46 +156,56 @@ void main() {
     // The set flips once, at the crossover — not at the start of the hop.
     await tester.pumpWidget(_hero(width: 1232, device: DeviceType.mobile));
     await tester.pump();
-    expect(find.text('COUNTRIES'), findsOneWidget, reason: 'outgoing set holds through the exit');
+    expect(
+      find.text('COUNTRIES'),
+      findsOneWidget,
+      reason: 'outgoing set holds through the exit',
+    );
     await tester.pumpAndSettle();
-    expect(find.text('KEYBOARD'), findsOneWidget);
+    expect(find.text('KEYPAD'), findsOneWidget);
   });
 
-  testWidgets('the card is a hairline panel with no shadow, and an accent kicker', (
-    WidgetTester tester,
-  ) async {
-    await tester.pumpWidget(
-      MaterialApp(
-        theme: nocturneTheme(),
-        home: Scaffold(
-          body: Center(
-            child: SizedBox(
-              width: 200,
-              child: CalloutCard(spec: calloutSetFor(DeviceType.tablet).first),
+  testWidgets(
+    'the card is a hairline panel with no shadow, and an accent kicker',
+    (WidgetTester tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: nocturneTheme(),
+          home: Scaffold(
+            body: Center(
+              child: SizedBox(
+                width: 200,
+                child: CalloutCard(
+                  spec: calloutSetFor(DeviceType.tablet).first,
+                ),
+              ),
             ),
           ),
         ),
-      ),
-    );
-    await tester.pumpAndSettle();
+      );
+      await tester.pumpAndSettle();
 
-    final BoxDecoration decoration =
-        tester
-                .widget<Container>(
-                  find
-                      .descendant(of: find.byType(CalloutCard), matching: find.byType(Container))
-                      .first,
-                )
-                .decoration!
-            as BoxDecoration;
+      final BoxDecoration decoration =
+          tester
+                  .widget<Container>(
+                    find
+                        .descendant(
+                          of: find.byType(CalloutCard),
+                          matching: find.byType(Container),
+                        )
+                        .first,
+                  )
+                  .decoration!
+              as BoxDecoration;
 
-    expect(decoration.boxShadow, anyOf(isNull, isEmpty));
-    expect(decoration.border, Border.all(color: N.n800));
-    expect((decoration.borderRadius! as BorderRadius).topLeft.x, NRadius.lg);
-    expect(decoration.gradient, isA<LinearGradient>());
+      expect(decoration.boxShadow, anyOf(isNull, isEmpty));
+      expect(decoration.border, Border.all(color: N.n800));
+      expect((decoration.borderRadius! as BorderRadius).topLeft.x, NRadius.lg);
+      expect(decoration.gradient, isA<LinearGradient>());
 
-    final TextStyle kicker = tester.widget<Text>(find.text('RULES')).style!;
-    expect(kicker.fontFamily, NType.mono);
-    expect(kicker.color, N.accent300);
-  });
+      final TextStyle kicker = tester.widget<Text>(find.text('RULES')).style!;
+      expect(kicker.fontFamily, NType.mono);
+      expect(kicker.color, N.accent300);
+    },
+  );
 }

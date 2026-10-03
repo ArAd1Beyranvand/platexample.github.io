@@ -314,7 +314,10 @@ class _PlateInputSurface extends StatelessWidget {
                   // black-on-white would be the wrong plate. It renders blank
                   // until the mirror writes into it, which is what the stacked
                   // pair should look like before the first keystroke.
-                  _SecondaryPlate(theme: secondaryTheme ?? PlateTheme.standard(), controller: secondaryValue),
+                  _SecondaryPlate(
+                    theme: secondaryTheme ?? PlateTheme.standard(),
+                    controller: secondaryValue,
+                  ),
                 ],
               ),
       ),

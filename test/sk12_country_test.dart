@@ -14,7 +14,9 @@ void main() {
     ('1040 — two columns', Size(1040, 900)),
     ('390 — phone, one column', Size(390, 844)),
   ]) {
-    testWidgets('sk12 country grid at $name does not overflow', (WidgetTester tester) async {
+    testWidgets('sk12 country grid at $name does not overflow', (
+      WidgetTester tester,
+    ) async {
       tester.view.physicalSize = size;
       tester.view.devicePixelRatio = 1.0;
       addTearDown(tester.view.reset);
@@ -30,7 +32,10 @@ void main() {
         expect(tester.takeException(), isNull, reason: source.countryName);
 
         for (int i = 0; i < 6; i++) {
-          await tester.drag(find.byType(CountryDetailScreen), const Offset(0, -700));
+          await tester.drag(
+            find.byType(CountryDetailScreen),
+            const Offset(0, -700),
+          );
           await tester.pumpAndSettle();
           expect(tester.takeException(), isNull, reason: source.countryName);
         }
@@ -39,7 +44,9 @@ void main() {
   }
 
   // currently failing
-  testWidgets('sk12 the grid turns over at the pinned breakpoints', (WidgetTester tester) async {
+  testWidgets('sk12 the grid turns over at the pinned breakpoints', (
+    WidgetTester tester,
+  ) async {
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.reset);
 
@@ -48,11 +55,16 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           theme: nocturneTheme(),
-          home: CountryDetailScreen(source: gallerySources.first, onOpenPlate: (_, _) {}),
+          home: CountryDetailScreen(
+            source: gallerySources.first,
+            onOpenPlate: (_, _) {},
+          ),
         ),
       );
       await tester.pumpAndSettle();
-      final double firstTop = tester.getTopLeft(find.byType(PlateTile).first).dy;
+      final double firstTop = tester
+          .getTopLeft(find.byType(PlateTile).first)
+          .dy;
       return find.byType(PlateTile).evaluate().where((element) {
         final RenderBox box = element.renderObject! as RenderBox;
         final Offset top = box.localToGlobal(Offset.zero);

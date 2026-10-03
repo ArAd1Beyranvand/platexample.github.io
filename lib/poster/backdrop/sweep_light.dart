@@ -36,7 +36,8 @@ class SweepLight extends StatefulWidget {
   State<SweepLight> createState() => _SweepLightState();
 }
 
-class _SweepLightState extends State<SweepLight> with SingleTickerProviderStateMixin {
+class _SweepLightState extends State<SweepLight>
+    with SingleTickerProviderStateMixin {
   static const Duration _travel = Duration(milliseconds: 1500);
 
   /// `cubic-bezier(.42,.02,.6,1)`.
@@ -45,7 +46,10 @@ class _SweepLightState extends State<SweepLight> with SingleTickerProviderStateM
   /// `.34s` of the 1.5s travel, at each end.
   static const double _fade = 340 / 1500;
 
-  late final AnimationController _controller = AnimationController(vsync: this, duration: _travel);
+  late final AnimationController _controller = AnimationController(
+    vsync: this,
+    duration: _travel,
+  );
 
   @override
   void initState() {
@@ -82,7 +86,10 @@ class _SweepLightState extends State<SweepLight> with SingleTickerProviderStateM
             final double t = _controller.value;
             if (t == 0 || t == 1) return const SizedBox.expand();
             return CustomPaint(
-              painter: _SweepPainter(travel: _travelCurve.transform(t), opacity: _opacityAt(t)),
+              painter: _SweepPainter(
+                travel: _travelCurve.transform(t),
+                opacity: _opacityAt(t),
+              ),
             );
           },
         ),
@@ -191,7 +198,12 @@ class _SweepPainter extends CustomPainter {
 
     // Its glow first, then the hard edge over it.
     final double glowHalf = bandWidth * _glowHalfWidth;
-    final Rect glow = Rect.fromLTRB(band.right - glowHalf, band.top, band.right + glowHalf, band.bottom);
+    final Rect glow = Rect.fromLTRB(
+      band.right - glowHalf,
+      band.top,
+      band.right + glowHalf,
+      band.bottom,
+    );
     final double glowAlpha = PosterColors.sweepEdgeGlow.a * o;
     canvas.drawRect(
       glow,
@@ -201,14 +213,20 @@ class _SweepPainter extends CustomPainter {
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
           colors: <Color>[
-            for (final double p in _glowProfile) PosterColors.sweepEdgeGlow.withValues(alpha: glowAlpha * p),
+            for (final double p in _glowProfile)
+              PosterColors.sweepEdgeGlow.withValues(alpha: glowAlpha * p),
           ],
           stops: _glowStops,
         ).createShader(glow),
     );
 
     // The bright edge on the band's leading side, brightest at its middle.
-    final Rect edge = Rect.fromLTWH(band.right - _edgeWidth, band.top, _edgeWidth, band.height);
+    final Rect edge = Rect.fromLTWH(
+      band.right - _edgeWidth,
+      band.top,
+      _edgeWidth,
+      band.height,
+    );
     canvas.drawRect(
       edge,
       Paint()

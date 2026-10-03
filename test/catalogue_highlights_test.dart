@@ -11,12 +11,16 @@ import 'package:plate_number_holder/screens/gallery/sources/sources.dart';
 /// That is a trap every source has to avoid and nothing else checks, so it is
 /// checked here once for all of them rather than in one source's own test.
 void main() {
-  final List<GallerySource> sources = <GallerySource>[...gallerySources, ...iranshahirCountries];
+  final List<GallerySource> sources = <GallerySource>[
+    ...gallerySources,
+    ...iranshahirCountries,
+  ];
 
   test('every highlight is the same object as the section entry it names', () {
     for (final GallerySource source in sources) {
       final List<GalleryEntry> sectioned = <GalleryEntry>[
-        for (final GallerySection section in source.sections) ...section.entries,
+        for (final GallerySection section in source.sections)
+          ...section.entries,
       ];
       for (final GalleryEntry highlight in source.highlights) {
         expect(
@@ -33,13 +37,21 @@ void main() {
 
   test('highlightItems resolves for every source', () {
     for (final GallerySource source in sources) {
-      expect(source.highlightItems, hasLength(source.highlights.length), reason: source.countryName);
+      expect(
+        source.highlightItems,
+        hasLength(source.highlights.length),
+        reason: source.countryName,
+      );
     }
   });
 
   test('sections are returned by identity, not rebuilt per read', () {
     for (final GallerySource source in sources) {
-      expect(identical(source.sections, source.sections), isTrue, reason: source.countryName);
+      expect(
+        identical(source.sections, source.sections),
+        isTrue,
+        reason: source.countryName,
+      );
     }
   });
 }

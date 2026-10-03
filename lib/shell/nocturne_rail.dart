@@ -104,10 +104,7 @@ class _Wordmark extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            'PLATE\nGALLERY',
-            style: NType.kicker.copyWith(color: N.n100),
-          ),
+          Text('PLATE\nGALLERY', style: NType.kicker.copyWith(color: N.n100)),
           const SizedBox(height: 14),
           Container(width: 20, height: 1, color: N.accent),
         ],
@@ -167,7 +164,10 @@ class _RailItemState extends State<_RailItem> {
             crossAxisAlignment: CrossAxisAlignment.baseline,
             textBaseline: TextBaseline.alphabetic,
             children: <Widget>[
-              Text(widget.number, style: NType.railNumber.copyWith(color: foreground)),
+              Text(
+                widget.number,
+                style: NType.railNumber.copyWith(color: foreground),
+              ),
               const SizedBox(width: 12),
               // Flexible, not bare: the rail is a fixed 208px and a label
               // longer than the three shipped ones would otherwise overflow
@@ -177,7 +177,11 @@ class _RailItemState extends State<_RailItem> {
                   widget.label,
                   softWrap: false,
                   overflow: TextOverflow.ellipsis,
-                  style: NType.body.copyWith(fontSize: 15, height: 1, color: foreground),
+                  style: NType.body.copyWith(
+                    fontSize: 15,
+                    height: 1,
+                    color: foreground,
+                  ),
                 ),
               ),
             ],
@@ -294,7 +298,8 @@ class _ViewPillState extends State<_ViewPill> {
         label: widget.label,
         child: FocusableActionDetector(
           mouseCursor: SystemMouseCursors.click,
-          onShowFocusHighlight: (bool value) => setState(() => _focused = value),
+          onShowFocusHighlight: (bool value) =>
+              setState(() => _focused = value),
           actions: <Type, Action<Intent>>{
             ActivateIntent: CallbackAction<ActivateIntent>(
               onInvoke: (_) {
@@ -314,7 +319,10 @@ class _ViewPillState extends State<_ViewPill> {
               behavior: HitTestBehavior.opaque,
               onTap: widget.onPressed,
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
                 decoration: BoxDecoration(
                   border: Border.all(color: _hovered ? N.accent700 : N.n800),
                   borderRadius: BorderRadius.circular(NRadius.pill),

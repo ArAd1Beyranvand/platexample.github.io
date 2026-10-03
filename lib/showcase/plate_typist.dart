@@ -52,7 +52,10 @@ class BackspaceStep extends TypistStep {
 ///   and at the end of each run of digits it can see, so a plate reads as
 ///   bursts rather than an even drip — the same rhythm the hand-written scripts
 ///   aim for.
-List<TypistStep> scriptFromValues({required PlateSpec spec, required List<String?> values}) {
+List<TypistStep> scriptFromValues({
+  required PlateSpec spec,
+  required List<String?> values,
+}) {
   final steps = <TypistStep>[];
   // The index of the last step actually emitted, so pauses can be attached
   // retroactively when a burst ends (the slot that ends it is the one before
@@ -79,8 +82,16 @@ List<TypistStep> scriptFromValues({required PlateSpec spec, required List<String
 
 /// Returns [step] with [TypistStep.pauseAfter] set, preserving its kind.
 TypistStep _withPause(TypistStep step) => switch (step) {
-  KeyStep(:final index, :final char, :final holdAfter) => KeyStep(index, char, pauseAfter: true, holdAfter: holdAfter),
-  BackspaceStep(:final holdAfter) => BackspaceStep(pauseAfter: true, holdAfter: holdAfter),
+  KeyStep(:final index, :final char, :final holdAfter) => KeyStep(
+    index,
+    char,
+    pauseAfter: true,
+    holdAfter: holdAfter,
+  ),
+  BackspaceStep(:final holdAfter) => BackspaceStep(
+    pauseAfter: true,
+    holdAfter: holdAfter,
+  ),
 };
 
 /// Tracks which slot the letters pad is currently showing across a [PlateTypist.run],
@@ -203,7 +214,12 @@ class PlateTypist extends ChangeNotifier {
 
     if (isLetterSlot) {
       if (useLetterPicker) {
-        await _pickLetter(controller: controller, context: context, spec: spec, step: keyStep);
+        await _pickLetter(
+          controller: controller,
+          context: context,
+          spec: spec,
+          step: keyStep,
+        );
         if (_cancelled) return false;
         return _sleep(keyStep.holdAfter ?? gap);
       }
@@ -213,7 +229,9 @@ class PlateTypist extends ChangeNotifier {
           onSlotChanged(keyStep.index);
           padState.shown = keyStep.index;
           if (!padAlreadyUp) {
-            if (!await _sleep(kPlateKeypadSlide + const Duration(milliseconds: 80))) {
+            if (!await _sleep(
+              kPlateKeypadSlide + const Duration(milliseconds: 80),
+            )) {
               return false;
             }
           }
@@ -262,7 +280,11 @@ class PlateTypist extends ChangeNotifier {
   /// later. A real typist's caret is always one slot ahead of the last
   /// character, and at the end of the plate it stays where it is rather than
   /// wrapping back to the start.
-  void _advanceCursor({required PlateSpec spec, required PlateController controller, required int from}) {
+  void _advanceCursor({
+    required PlateSpec spec,
+    required PlateController controller,
+    required int from,
+  }) {
     final next = spec.nextIndex(from);
     if (next != null) controller.focusSlot(next);
   }
@@ -285,13 +307,19 @@ class PlateTypist extends ChangeNotifier {
 
     try {
       // Fire-and-forget: the sheet stays up until we pop it below.
-      unawaited(PlateCharacterPicker.show(context, alphabet, scrollController: scroll));
+      unawaited(
+        PlateCharacterPicker.show(context, alphabet, scrollController: scroll),
+      );
       sheetOpen = true;
 
       // Let the picker mount so the controller is attached before we scroll.
       if (!await _sleep(const Duration(milliseconds: 220))) return;
       if (scroll.hasClients) {
-        await scroll.animateToItem(target, duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
+        await scroll.animateToItem(
+          target,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeInOut,
+        );
       }
       if (_cancelled) return;
       if (!await _sleep(const Duration(milliseconds: 400))) return;
