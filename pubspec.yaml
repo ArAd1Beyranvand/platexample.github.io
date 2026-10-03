@@ -83,6 +83,8 @@ dependencies:
     path: ../malaysia_plate
   algeria_plate:
     path: ../algeria_plate
+  indonesia_plate:
+    path: ../indonesia_plate
 
   # Used directly by the showcase to drive PlateCardBloc from the demo screen.
   url_launcher: ^6.3.2
