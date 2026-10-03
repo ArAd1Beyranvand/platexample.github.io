@@ -6,6 +6,7 @@ import 'cuba.dart';
 import 'india.dart';
 import 'venezuela.dart';
 import 'lebanon.dart';
+import 'malaysia.dart';
 import 'palestine.dart';
 import 'yemen.dart';
 
@@ -17,6 +18,7 @@ export 'cuba.dart';
 export 'india.dart';
 export 'venezuela.dart';
 export 'lebanon.dart';
+export 'malaysia.dart';
 export 'palestine.dart';
 export 'yemen.dart';
 
@@ -41,6 +43,7 @@ final List<GallerySource> gallerySources = <GallerySource>[
   VenezuelaSource(),
   IndiaSource(),
   const GermanySource(),
+  MalaysiaSource(),
 ];
 
 /// The nine countries within Iranshahr for the `/iranshahr/{country}` detail
