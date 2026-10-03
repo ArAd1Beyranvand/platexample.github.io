@@ -20,7 +20,7 @@ Only three accent steps are missing; the design reads them from `design_ref/_ds/
 | `--color-divider` | `rgba(255,255,255,.10)` | `N.divider` | section `border-top`, header/tab bar border |
 | neutral 100/200/300/400/500/600/700/800/900 | `#EAF0FB #D6E1F1 #C4D0E2 #A5B4C7 #8592A3 #6A7484 #39414F #232C42 #0E1219` | `N.n100…n900` | see blocks |
 | `--color-accent` / 300 / 700 / 800 / 900 | `#7C5CFF #B9A7FF #4A3A93 #2E2560 #1A1540` | `N.accent`, `accent300/700/800/900` | |
-| **accent-200 / 400 / 500** | `#E7E5FE #B5ABFC #968ADE0`→`#968AE0` | **missing — add `N.accent200/400/500`** | archive strip (`PG`, ring), progress "done" fill |
+| **accent-200 / 400 / 500** | `#E7E5FE #B5ABFC #968AE0` | **missing — add `N.accent200/400/500`** | archive strip (`PG`, ring), progress "done" fill |
 | `--radius-lg` / md / sm | 14 / 8 / 4 | `NRadius.lg/md/sm` | cards |
 | `--shadow-md` | `0 0 0 1px rgba(255,255,255,.10), 0 10px 26px rgba(0,0,0,.70)` | `NShadow.mdShadows` (+ hairline) | plate on carousel card |
 | Fonts | Archivo (heading 800), MartianMono, Newsreader, Vazirmatn | `NType.archivo/mono/serif/arabic` | |
