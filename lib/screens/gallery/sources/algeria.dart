@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:algeria_plate/algeria_plate.dart';
-import 'package:core_plate/core_plate.dart';
+import 'package:plate_core/core_plate.dart';
 
 import '../catalogue.dart';
 

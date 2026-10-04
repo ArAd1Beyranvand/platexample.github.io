@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:plate_keypad/plate_keypad.dart';
-import 'package:core_plate/core_plate.dart';
+import 'package:plate_core/core_plate.dart';
 
 /// One step in a typing script: either a keystroke into a slot, or a
 /// backspace. `pauseAfter: true` marks a natural break (a burst just

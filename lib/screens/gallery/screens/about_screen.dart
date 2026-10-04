@@ -22,7 +22,7 @@ class AboutScreen extends StatelessWidget {
   /// this list is touched.
   static const List<_PackageInfo> _packages = <_PackageInfo>[
     _PackageInfo(
-      'core_plate',
+      'plate_core',
       '0.9.1',
       'https://github.com/ArAd1Beyranvand/core-plate',
     ),
@@ -120,7 +120,7 @@ class _Header extends StatelessWidget {
   final bool compact;
 
   static const String _p1 =
-      'core_plate is the widget: PlateCanvas paints the plate, takes input '
+      'plate_core is the widget: PlateCanvas paints the plate, takes input '
       'slot by slot and holds the value in a PlateController. It knows no '
       'country and needs no state-management package. A validator can mark '
       'a plate red; it never blocks a keystroke.';

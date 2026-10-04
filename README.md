@@ -7,7 +7,7 @@ FREE PALESTINE 🇮🇷🇵🇸 پاینده ایران
 
 # plate_number_holder
 
-The showcase / poster app for the plate library — [`core_plate`](../core-plate)
+The showcase / poster app for the plate library — [`plate_core`](../core-plate)
 plus [`iran_plate`](../iran-plate), [`germany_plate`](../germany-plate) and
 [`plate_keypad`](../plate-keypad). It used to live inside the package repo as
 `example/`; it was split out so the packages ship nothing demo-only.
@@ -67,7 +67,7 @@ used plainly, without any poster dressing. After the split it is two imports and
 one `PlateCanvas`:
 
 ```dart
-import 'package:core_plate/core_plate.dart';
+import 'package:plate_core/plate_core.dart';
 import 'package:iran_plate/iran_plate.dart';
 ```
 

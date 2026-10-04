@@ -1,6 +1,6 @@
 name: plate_number_holder
 description: >-
-  Showcase / poster app for the core_plate library. Lives outside the
+  Showcase / poster app for the plate_core library. Lives outside the
   package repo so the library stays free of demo-only assets (fonts,
   textures, device-frame art) and demo-only dependencies.
 publish_to: 'none'
@@ -25,11 +25,11 @@ dependencies:
   # PATH dependencies on sibling checkouts, so editing a library and
   # hot-reloading this app is a single loop — no publish, no `pub get` between
   # them. The split makes the libraries siblings of each other, not a
-  # `packages/` directory inside one repo (see core_plate/docs/split/PLAN.md
+  # `packages/` directory inside one repo (see plate_core/docs/split/PLAN.md
   # §0). Path-only, not published (PLAN.md §6.6). Layout:
   #
   #   StudioProjects/plate/
-  #     core_plate/             package `core_plate`   (the engine)
+  #     plate_core/             package `plate_core`   (the engine)
   #     plate_keypad/           package `plate_keypad`  (extracted in P7)
   #     iran_plate/             package `iran_plate`    (extracted in P8)
   #     palestine_plate/        package `palestine_plate`
@@ -37,18 +37,18 @@ dependencies:
 #     lebanon_plate/          package `lebanon_plate`
   #     plate_number_holder/    this app (keeps its name — it is an app, not a package)
   #
-  # core_plate ships no country and no assets, so this app names every country
+  # plate_core ships no country and no assets, so this app names every country
   # it draws. An app that draws one country depends on one.
   # ---------------------------------------------------------------------------
-  core_plate: ^0.11.0
+  plate_core: ^0.11.0
 
-  # The optional on-screen keypad + slot picker, extracted from core_plate
-  # in P7. Depends on core_plate for PlateAlphabet.
+  # The optional on-screen keypad + slot picker, extracted from plate_core
+  # in P7. Depends on plate_core for PlateAlphabet.
   plate_keypad:
     path: ../plate_keypad
 
-  # The country packages, extracted from core_plate in P8. Each owns its own
-  # plate specs, alphabets and flag/sticker assets, and depends on core_plate
+  # The country packages, extracted from plate_core in P8. Each owns its own
+  # plate specs, alphabets and flag/sticker assets, and depends on plate_core
   # and nothing else — not on the keypad, and not on each other.
   iran_plate:
     path: ../iran_plate
@@ -108,12 +108,12 @@ dev_dependencies:
 
 # Local development only: plate_keypad, iran_plate, iranshahr_plate, palestine_plate,
 # yemen_plate and lebanon_plate still use path dependencies until they are published on
-# pub.dev. core_plate is now published and uses the versioned dependency above.
+# pub.dev. plate_core is now published and uses the versioned dependency above.
 dependency_overrides:
   # Local development only: this stage's PlateController/PlateView API is not
-  # published yet, so core_plate resolves to the sibling checkout.
-  core_plate:
-    path: ../core_plate
+  # published yet, so plate_core resolves to the sibling checkout.
+  plate_core:
+    path: ../plate_core
   plate_keypad:
     path: ../plate_keypad
   iran_plate:

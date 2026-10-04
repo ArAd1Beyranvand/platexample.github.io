@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:core_plate/core_plate.dart';
+import 'package:plate_core/core_plate.dart';
 import 'package:tunisia_plate/tunisia_plate.dart';
 
 import '../catalogue.dart';
