@@ -10,6 +10,7 @@ import 'india.dart';
 import 'indonesia.dart';
 import 'belarus.dart';
 import 'namibia.dart';
+import 'oman.dart';
 import 'nicaragua.dart';
 import 'tunisia.dart';
 import 'venezuela.dart';
@@ -34,6 +35,7 @@ export 'india.dart';
 export 'indonesia.dart';
 export 'belarus.dart';
 export 'namibia.dart';
+export 'oman.dart';
 export 'nicaragua.dart';
 export 'tunisia.dart';
 export 'venezuela.dart';
@@ -80,6 +82,7 @@ final List<GallerySource> gallerySources = <GallerySource>[
   MaliSource(),
   NorthKoreaSource(),
   NamibiaSource(),
+  OmanSource(),
 ];
 
 /// The ten countries within Iranshahr for the `/iranshahr/{country}` detail
