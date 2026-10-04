@@ -89,8 +89,6 @@ dependencies:
     path: ../belarus_plate
   namibia_plate:
     path: ../namibia_plate
-  oman_plate:
-    path: ../oman_plate
   nicaragua_plate:
     path: ../nicaragua_plate
   tunisia_plate:
@@ -142,8 +140,6 @@ dependency_overrides:
     path: ../belarus_plate
   namibia_plate:
     path: ../namibia_plate
-  oman_plate:
-    path: ../oman_plate
   nicaragua_plate:
     path: ../nicaragua_plate
 

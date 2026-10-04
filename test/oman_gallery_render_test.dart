@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:plate_core/plate_core.dart';
-import 'package:plate_number_holder/screens/gallery/sources/oman.dart';
+import 'package:plate_number_holder/screens/gallery/sources/sources.dart';
 
 void main() {
-  for (final entry in OmanSource().sections.expand((s) => s.entries)) {
+  for (final entry in const OmanSource().sections.expand((s) => s.entries)) {
     testWidgets('${entry.id} renders', (tester) async {
       final c = PlateController.fromValues(entry.spec, entry.sampleValues!);
       await tester.pumpWidget(

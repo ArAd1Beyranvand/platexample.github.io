@@ -25,6 +25,7 @@ class IranshahirSource extends GallerySource {
     'Iraq',
     'United Arab Emirates',
     'Turkey',
+    'Oman',
   ];
 
   @override
@@ -32,8 +33,8 @@ class IranshahirSource extends GallerySource {
 
   @override
   String get note =>
-      'Ten countries in one package: Bahrain, Azerbaijan, Afghanistan, '
-      'Armenia, Tajikistan, Kuwait, Qatar, Iraq, the UAE and Turkey. They share no '
+      'Eleven countries in one package: Bahrain, Azerbaijan, Afghanistan, '
+      'Armenia, Tajikistan, Kuwait, Qatar, Iraq, the UAE, Turkey and Oman. They share no '
       'design; each has its own specs, colours and country block.';
 
   /// Built once, and returned by identity: the pickers select a section by
@@ -421,6 +422,7 @@ class IranshahirSource extends GallerySource {
     _iraqSection(),
     _uaeSection(),
     _turkeySection(),
+    _omanSection(),
   ];
 }
 
@@ -1921,5 +1923,122 @@ class TurkeySource extends GallerySource {
 
   static final List<GallerySection> _sections = <GallerySection>[
     _turkeySection(),
+  ];
+}
+
+/// Oman's section: one three-panel design in two liveries.
+GallerySection _omanSection() => GallerySection(
+  title: 'Oman',
+  note:
+      'The 2001 series: number, letters and عمان in three panels, in black '
+      'on yellow (private) and white on red (taxi). The letters are printed '
+      'twice, Latin below and Arabic above in the opposite order. Four '
+      'digits with two letters and five with one are measured; the other two '
+      'use the same rule. Only A, B, K and M are sourced as letters.',
+  entries: <GalleryEntry>[
+    GalleryEntry(
+      id: 'om.private.d4l1',
+      label: 'Four digits, one letter',
+      spec: OmanPlates.fourDigitOneLetter,
+      theme: OmanThemes.private,
+      country: OmanCountry.oman,
+      validator: const OmanPlateValidator(),
+      sampleValues: <String?>['4', '5', '1', '7', 'B'],
+    ),
+    GalleryEntry(
+      id: 'om.private.d4l2',
+      label: 'Four digits, two letters',
+      spec: OmanPlates.fourDigitTwoLetter,
+      theme: OmanThemes.private,
+      country: OmanCountry.oman,
+      validator: const OmanPlateValidator(),
+      sampleValues: <String?>['4', '5', '1', '7', 'B', 'M'],
+    ),
+    GalleryEntry(
+      id: 'om.private.d5l1',
+      label: 'Five digits, one letter',
+      spec: OmanPlates.fiveDigitOneLetter,
+      theme: OmanThemes.private,
+      country: OmanCountry.oman,
+      validator: const OmanPlateValidator(),
+      sampleValues: <String?>['9', '1', '1', '6', '9', 'B'],
+    ),
+    GalleryEntry(
+      id: 'om.private.d5l2',
+      label: 'Five digits, two letters',
+      spec: OmanPlates.fiveDigitTwoLetter,
+      theme: OmanThemes.private,
+      country: OmanCountry.oman,
+      validator: const OmanPlateValidator(),
+      sampleValues: <String?>['9', '1', '1', '6', '9', 'B', 'M'],
+    ),
+    GalleryEntry(
+      id: 'om.taxi.d4l1',
+      label: 'Four digits, one letter',
+      spec: OmanPlates.fourDigitOneLetter,
+      theme: OmanThemes.taxi,
+      country: OmanCountry.oman,
+      validator: const OmanPlateValidator(),
+      sampleValues: <String?>['4', '5', '1', '7', 'K'],
+    ),
+    GalleryEntry(
+      id: 'om.taxi.d4l2',
+      label: 'Four digits, two letters',
+      spec: OmanPlates.fourDigitTwoLetter,
+      theme: OmanThemes.taxi,
+      country: OmanCountry.oman,
+      validator: const OmanPlateValidator(),
+      sampleValues: <String?>['4', '5', '1', '7', 'K', 'K'],
+    ),
+    GalleryEntry(
+      id: 'om.taxi.d5l1',
+      label: 'Five digits, one letter',
+      spec: OmanPlates.fiveDigitOneLetter,
+      theme: OmanThemes.taxi,
+      country: OmanCountry.oman,
+      validator: const OmanPlateValidator(),
+      sampleValues: <String?>['9', '1', '1', '6', '9', 'K'],
+    ),
+    GalleryEntry(
+      id: 'om.taxi.d5l2',
+      label: 'Five digits, two letters',
+      spec: OmanPlates.fiveDigitTwoLetter,
+      theme: OmanThemes.taxi,
+      country: OmanCountry.oman,
+      validator: const OmanPlateValidator(),
+      sampleValues: <String?>['9', '1', '1', '6', '9', 'K', 'K'],
+    ),
+  ],
+);
+
+class OmanSource extends GallerySource {
+  const OmanSource();
+
+  @override
+  String get countryName => 'Oman';
+
+  @override
+  String get packageName => 'iranshahr_plate';
+
+  @override
+  String get note =>
+      'One three-panel design — number, letters, عمان — in black on yellow '
+      '(private) and white on red (taxi), with four or five digits and one '
+      'or two letters.';
+
+  /// Built once, and returned by identity, as for the other sources.
+  @override
+  List<GallerySection> get sections => _sections;
+
+  @override
+  List<GalleryEntry> get highlights => <GalleryEntry>[
+    if (sections.isNotEmpty && sections[0].entries.length > 1) ...[
+      sections[0].entries[1],
+      sections[0].entries[2],
+    ],
+  ];
+
+  static final List<GallerySection> _sections = <GallerySection>[
+    _omanSection(),
   ];
 }
