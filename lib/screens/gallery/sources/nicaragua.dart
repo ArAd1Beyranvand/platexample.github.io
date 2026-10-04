@@ -2,7 +2,7 @@ import 'package:nicaragua_plate/nicaragua_plate.dart';
 
 import '../catalogue.dart';
 
-/// `nicaragua_plate`: two specs for standard and state-owned (estatal) vehicles.
+/// `nicaragua_plate`: the 2005 series in its three serial lengths.
 class NicaraguaSource extends GallerySource {
   NicaraguaSource();
 
@@ -14,36 +14,43 @@ class NicaraguaSource extends GallerySource {
 
   @override
   String get note =>
-      'Black on white plates with brown frame. Standard format: 1–2 region '
-      'letters followed by 5 digits. State vehicles marked "ESTATAL".';
+      'The 2005 series: black on white, a department code of one or two '
+      'letters, then the number. Managua runs six digits printed 3 + 3.';
 
-  static List<String?> _values(List<String> items) =>
-      items.map((e) => e.length == 1 ? e : null).toList();
+  static List<String?> _chars(String value) => value.split('');
 
   @override
   List<GallerySection> get sections => _sections ??= <GallerySection>[
     GallerySection(
-      title: 'Car — 335 × 155',
-      note: 'Standard Nicaraguan plates. Two variants: standard and estatal.',
+      title: 'Car — 300 × 152',
+      note: 'The map watermark and the coat-of-arms seal are not drawn.',
       entries: <GalleryEntry>[
         GalleryEntry(
-          id: 'ni.standard',
-          label: 'Standard vehicle',
-          spec: NicaraguaPlates.standard,
+          id: 'ni.managua',
+          label: 'Managua',
+          spec: NicaraguaPlates.managua,
           theme: NicaraguaThemes.standard,
           country: NicaraguaCountry.nicaragua,
-          validator: null,
-          sampleValues: _values(['M', 'Q', '0', '0', '2', '9', '3']),
+          validator: const NicaraguaValidator(),
+          sampleValues: _chars('M027557'),
         ),
         GalleryEntry(
-          id: 'ni.estatal',
-          label: 'State vehicle (Estatal)',
-          spec: NicaraguaPlates.estatal,
+          id: 'ni.department',
+          label: 'Department, four digits',
+          spec: NicaraguaPlates.department,
           theme: NicaraguaThemes.standard,
           country: NicaraguaCountry.nicaragua,
-          validator: null,
-          sampleValues: _values(['M', 'Q', '0', '0', '2', '9', '3']),
-          note: 'State-owned vehicles display "ESTATAL" at the bottom.',
+          validator: const NicaraguaValidator(),
+          sampleValues: _chars('CT4361'),
+        ),
+        GalleryEntry(
+          id: 'ni.department_short',
+          label: 'Department, three digits',
+          spec: NicaraguaPlates.departmentShort,
+          theme: NicaraguaThemes.standard,
+          country: NicaraguaCountry.nicaragua,
+          validator: const NicaraguaValidator(),
+          sampleValues: _chars('MY142'),
         ),
       ],
     ),
