@@ -25,6 +25,6 @@ void main() {
       }
     }
     // diplomatic equals private by value: black on white, black band.
-    expect(themes.length, 9);
+    expect(themes.length, 14);
   });
 }

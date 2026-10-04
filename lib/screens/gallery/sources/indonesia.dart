@@ -23,7 +23,8 @@ class IndonesiaSource extends GallerySource {
   String get note =>
       'The 2023 series: FE-Schrift car plates and DIN motorcycle plates in '
       'four usage colours, a blue expiry band for electric vehicles, and the '
-      'CD diplomatic plate.';
+      'CD diplomatic plate. The armed-forces and police plates are measured '
+      'off photographs: no artwork of them exists.';
 
   GalleryEntry _entry(
     String id,
@@ -59,6 +60,22 @@ class IndonesiaSource extends GallerySource {
           'CD', '1', '9', '0', '0', '1', '0', '8', '2', '8', //
         ],
       );
+
+  GalleryEntry _service(
+    String id,
+    String label,
+    PlateSpec spec,
+    PlateTheme theme,
+    List<String> values,
+  ) => GalleryEntry(
+    id: 'id.$id',
+    label: label,
+    spec: spec,
+    theme: theme,
+    country: IndonesiaCountry.indonesia,
+    validator: const IndonesiaServiceValidator(),
+    sampleValues: values,
+  );
 
   @override
   List<GallerySection> get sections => _sections ??= <GallerySection>[
@@ -179,6 +196,51 @@ class IndonesiaSource extends GallerySource {
           'cdEv',
           'Diplomatic · electric',
           IndonesiaThemes.diplomaticEv,
+        ),
+      ],
+    ),
+    GallerySection(
+      title: 'Armed forces and police — 460 × 138',
+      note:
+          'Yellow on the service colour behind the crest in its square: the '
+          'Army star, the Navy anchor, the Air Force roundel. The police plate '
+          'puts the regional command\'s Roman numeral over the serial. Sized '
+          'from photographs; the height is their median aspect.',
+      entries: <GalleryEntry>[
+        _service(
+          'army',
+          'Army (TNI-AD)',
+          IndonesiaPlates.military(IndonesiaService.army, digits: 5),
+          IndonesiaThemes.army,
+          const <String>['7', '5', '3', '5', '9', '0', '0'],
+        ),
+        _service(
+          'navy',
+          'Navy (TNI-AL)',
+          IndonesiaPlates.military(IndonesiaService.navy, digits: 4),
+          IndonesiaThemes.navy,
+          const <String>['8', '1', '9', '1', '0', '0'],
+        ),
+        _service(
+          'airForce',
+          'Air Force (TNI-AU)',
+          IndonesiaPlates.military(IndonesiaService.airForce, digits: 4),
+          IndonesiaThemes.airForce,
+          const <String>['1', '2', '4', '5', '0', '3'],
+        ),
+        _service(
+          'armedForces',
+          'TNI Headquarters',
+          IndonesiaPlates.military(IndonesiaService.armedForces, digits: 4),
+          IndonesiaThemes.armedForces,
+          const <String>['2', '3', '4', '5', '0', '0'],
+        ),
+        _service(
+          'police',
+          'National Police (Polri)',
+          IndonesiaPlates.police(),
+          IndonesiaThemes.police,
+          const <String>['XXXIII', '3', '7', '0', '5', '4', '0'],
         ),
       ],
     ),
