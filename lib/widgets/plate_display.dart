@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:plate_core/core_plate.dart';
+import 'package:plate_core/plate_core.dart';
 
 import '../poster/plate_backdrop.dart';
 

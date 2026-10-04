@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:plate_core/core_plate.dart';
+import 'package:plate_core/plate_core.dart';
 import 'package:indonesia_plate/indonesia_plate.dart';
 
 import '../catalogue.dart';

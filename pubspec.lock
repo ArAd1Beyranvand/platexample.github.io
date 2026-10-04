@@ -70,13 +70,6 @@ packages:
       relative: true
     source: path
     version: "0.1.0"
-  core_plate:
-    dependency: "direct main"
-    description:
-      path: "../core_plate"
-      relative: true
-    source: path
-    version: "0.11.3"
   cuba_plate:
     dependency: "direct main"
     description:
@@ -296,6 +289,13 @@ packages:
       relative: true
     source: path
     version: "0.1.0"
+  plate_core:
+    dependency: "direct main"
+    description:
+      path: "../plate_core"
+      relative: true
+    source: path
+    version: "0.11.3"
   plate_keypad:
     dependency: "direct main"
     description:

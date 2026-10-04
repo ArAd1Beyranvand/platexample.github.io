@@ -6,7 +6,7 @@
 //   * each package stays small — no poster fonts, no texture PNGs, no
 //     device-frame painters, no demo-only dependencies in its pubspec;
 //   * everything here goes through their public surfaces
-//     (`package:core_plate/core_plate.dart` and the country / keypad
+//     (`package:core_plate/plate_core.dart` and the country / keypad
 //     barrels), so if the demo compiles, the API is genuinely sufficient
 //     to build a real UI with;
 //   * the library was split into core_plate + plate_keypad + a country

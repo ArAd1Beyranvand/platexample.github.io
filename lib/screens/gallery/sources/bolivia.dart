@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:bolivia_plate/bolivia_plate.dart';
-import 'package:plate_core/core_plate.dart';
+import 'package:plate_core/plate_core.dart';
 
 import '../catalogue.dart';
 

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:plate_core/core_plate.dart';
+import 'package:plate_core/plate_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

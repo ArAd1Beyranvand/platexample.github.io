@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/foundation.dart';
-import 'package:plate_core/core_plate.dart';
+import 'package:plate_core/plate_core.dart';
 
 import '../device_preview/device_config.dart';
 import '../screens/gallery/catalogue_index.dart';
