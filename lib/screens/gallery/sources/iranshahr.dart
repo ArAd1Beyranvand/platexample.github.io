@@ -1,4 +1,5 @@
 import 'package:iranshahr_plate/iranshahr.dart';
+import 'package:plate_core/plate_core.dart';
 
 import '../catalogue.dart';
 
@@ -23,6 +24,7 @@ class IranshahirSource extends GallerySource {
     'Qatar',
     'Iraq',
     'United Arab Emirates',
+    'Turkey',
   ];
 
   @override
@@ -30,8 +32,8 @@ class IranshahirSource extends GallerySource {
 
   @override
   String get note =>
-      'Nine countries in one package: Bahrain, Azerbaijan, Afghanistan, '
-      'Armenia, Tajikistan, Kuwait, Qatar, Iraq and the UAE. They share no '
+      'Ten countries in one package: Bahrain, Azerbaijan, Afghanistan, '
+      'Armenia, Tajikistan, Kuwait, Qatar, Iraq, the UAE and Turkey. They share no '
       'design; each has its own specs, colours and country block.';
 
   /// Built once, and returned by identity: the pickers select a section by
@@ -418,6 +420,7 @@ class IranshahirSource extends GallerySource {
     _qatarSection(),
     _iraqSection(),
     _uaeSection(),
+    _turkeySection(),
   ];
 }
 
@@ -1707,4 +1710,216 @@ class UaeSource extends GallerySource {
   ];
 
   static final List<GallerySection> _sections = <GallerySection>[_uaeSection()];
+}
+
+GalleryEntry _tr(
+  String id,
+  String label,
+  PlateSpec spec,
+  PlateTheme theme,
+  String values, {
+  PlateValidator validator = TurkeyPlateValidator.general,
+  String? note,
+}) => GalleryEntry(
+  id: id,
+  label: label,
+  spec: spec,
+  theme: theme,
+  country: TurkeyCountry.turkey,
+  validator: validator,
+  sampleValues: values.split(''),
+  note: note,
+);
+
+/// Turkey's section: every spec, every theme, each entry in its own livery.
+GallerySection _turkeySection() => GallerySection(
+  title: 'Turkey',
+  note:
+      'A two-digit province code, one to three letters and a serial, on a '
+      '520 × 110 plate. Most classes keep the blue TR strip; police, '
+      'consulate, official and state plates drop it for a coloured field. '
+      'Diplomatic plates have been numbered at random since 2004, so no code '
+      'identifies a mission and nothing here is Israel-specific. Ink is ~90% '
+      'of the reference height, set in Roboto rather than the plate face.',
+  entries: <GalleryEntry>[
+    _tr(
+      'tr.private',
+      'Private',
+      TurkeyPlates.private,
+      TurkeyThemes.civilian,
+      '34AB1234',
+    ),
+    _tr(
+      'tr.international',
+      'International organisation',
+      TurkeyPlates.internationalOrganization,
+      TurkeyThemes.internationalOrganization,
+      '34B0426',
+    ),
+    _tr(
+      'tr.diplomatic',
+      'Diplomatic (CD)',
+      TurkeyPlates.diplomatic,
+      TurkeyThemes.diplomatic,
+      '34CD012',
+      validator: TurkeyPlateValidator.diplomatic,
+    ),
+    _tr(
+      'tr.consulate',
+      'Consulate (CC)',
+      TurkeyPlates.consulate,
+      TurkeyThemes.consulate,
+      '34CC0001',
+      validator: TurkeyPlateValidator.consulate,
+    ),
+    _tr(
+      'tr.temporary',
+      'Temporary',
+      TurkeyPlates.temporary,
+      TurkeyThemes.temporary,
+      '34G1234',
+    ),
+    _tr(
+      'tr.temporary.strip',
+      'Temporary (with strip)',
+      TurkeyPlates.temporaryWithStrip,
+      TurkeyThemes.temporary,
+      '34G1234',
+    ),
+    _tr(
+      'tr.customs',
+      'Temporary customs (GMR)',
+      TurkeyPlates.temporaryCustoms,
+      TurkeyThemes.temporaryCustoms,
+      '34GMR032',
+      validator: TurkeyPlateValidator.temporaryCustoms,
+    ),
+    _tr(
+      'tr.foreign',
+      'Foreign resident',
+      TurkeyPlates.foreignResident,
+      TurkeyThemes.civilian,
+      '34MA012',
+    ),
+    _tr(
+      'tr.syrian',
+      'Syrian resident',
+      TurkeyPlates.syrianResident,
+      TurkeyThemes.civilian,
+      '34SAB012',
+    ),
+    _tr('tr.taxi', 'Taxi', TurkeyPlates.taxi, TurkeyThemes.civilian, '06T0123'),
+    _tr(
+      'tr.taxi.istanbul',
+      'Istanbul taxi',
+      TurkeyPlates.istanbulTaxi,
+      TurkeyThemes.civilian,
+      '34TAB12',
+    ),
+    _tr(
+      'tr.police',
+      'Police',
+      TurkeyPlates.police,
+      TurkeyThemes.police,
+      '16A01234',
+      validator: TurkeyPlateValidator.police,
+    ),
+    _tr(
+      'tr.gendarmerie',
+      'Gendarmerie (J)',
+      TurkeyPlates.gendarmerie,
+      TurkeyThemes.police,
+      '06JAA1234',
+      validator: TurkeyPlateValidator.gendarmerie,
+    ),
+    _tr(
+      'tr.coastguard',
+      'Coast guard (SGH)',
+      TurkeyPlates.coastGuard,
+      TurkeyThemes.police,
+      '34SGH1234',
+      validator: TurkeyPlateValidator.coastGuard,
+    ),
+    _tr(
+      'tr.provincial',
+      'Provincial government',
+      TurkeyPlates.provincialGovernment,
+      TurkeyThemes.provincialGovernment,
+      '06AA012',
+    ),
+    _tr(
+      'tr.official',
+      'Official',
+      TurkeyPlates.official,
+      TurkeyThemes.official,
+      '34AB123',
+    ),
+    _tr(
+      'tr.governor',
+      'Province governor',
+      TurkeyPlates.governor,
+      TurkeyThemes.state,
+      '340001',
+    ),
+    _tr(
+      'tr.parliament',
+      'Parliament',
+      TurkeyPlates.parliament,
+      TurkeyThemes.state,
+      '0019',
+    ),
+    _tr(
+      'tr.parliament.tbmm',
+      'Parliament (TBMM)',
+      TurkeyPlates.parliamentLabelled,
+      TurkeyThemes.state,
+      '009',
+    ),
+    _tr(
+      'tr.sample',
+      'Sample (NUMUNE PLAKA)',
+      TurkeyPlates.sample,
+      TurkeyThemes.civilian,
+      '34123',
+    ),
+    _tr(
+      'tr.motorcycle',
+      'Motorcycle',
+      TurkeyPlates.motorcycle(2, 4),
+      TurkeyThemes.civilian,
+      '34UF2409',
+    ),
+  ],
+);
+
+class TurkeySource extends GallerySource {
+  const TurkeySource();
+
+  @override
+  String get countryName => 'Turkey';
+
+  @override
+  String get packageName => 'iranshahr_plate';
+
+  @override
+  String get note =>
+      'Province code, letters and serial behind the blue TR strip, in ten '
+      'liveries. Diplomatic numbers are random, so there is no '
+      'Israel-specific value to refuse.';
+
+  /// Built once, and returned by identity, as for the other sources.
+  @override
+  List<GallerySection> get sections => _sections;
+
+  @override
+  List<GalleryEntry> get highlights => <GalleryEntry>[
+    if (sections.isNotEmpty && sections[0].entries.length > 2) ...[
+      sections[0].entries[0],
+      sections[0].entries[2],
+    ],
+  ];
+
+  static final List<GallerySection> _sections = <GallerySection>[
+    _turkeySection(),
+  ];
 }

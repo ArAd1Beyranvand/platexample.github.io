@@ -251,13 +251,20 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.19.0"
+  namibia_plate:
+    dependency: "direct main"
+    description:
+      path: "../namibia_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
   nicaragua_plate:
     dependency: "direct main"
     description:
       path: "../nicaragua_plate"
       relative: true
     source: path
-    version: "0.0.1"
+    version: "0.1.0"
   niger_plate:
     dependency: "direct main"
     description:

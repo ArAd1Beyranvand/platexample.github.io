@@ -82,7 +82,7 @@ final List<GallerySource> gallerySources = <GallerySource>[
   NamibiaSource(),
 ];
 
-/// The nine countries within Iranshahr for the `/iranshahr/{country}` detail
+/// The ten countries within Iranshahr for the `/iranshahr/{country}` detail
 /// pages and the `/iranshahr` overview page showing them as country groups.
 final List<GallerySource> iranshahirCountries = <GallerySource>[
   const BahrainSource(),
@@ -94,4 +94,5 @@ final List<GallerySource> iranshahirCountries = <GallerySource>[
   const QatarSource(),
   const IraqSource(),
   const UaeSource(),
+  const TurkeySource(),
 ];
