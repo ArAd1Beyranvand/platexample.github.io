@@ -295,7 +295,7 @@ packages:
       path: "../plate_core"
       relative: true
     source: path
-    version: "0.11.3"
+    version: "0.11.4"
   plate_keypad:
     dependency: "direct main"
     description:
