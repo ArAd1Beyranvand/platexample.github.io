@@ -8,6 +8,7 @@ import 'iranshahr.dart';
 import 'cuba.dart';
 import 'india.dart';
 import 'indonesia.dart';
+import 'belarus.dart';
 import 'nicaragua.dart';
 import 'tunisia.dart';
 import 'venezuela.dart';
@@ -30,6 +31,7 @@ export 'iranshahr.dart';
 export 'cuba.dart';
 export 'india.dart';
 export 'indonesia.dart';
+export 'belarus.dart';
 export 'nicaragua.dart';
 export 'tunisia.dart';
 export 'venezuela.dart';
@@ -66,6 +68,7 @@ final List<GallerySource> gallerySources = <GallerySource>[
   MalaysiaSource(),
   AlgeriaSource(),
   IndonesiaSource(),
+  BelarusSource(),
   NicaraguaSource(),
   TunisiaSource(),
   BoliviaSource(),
