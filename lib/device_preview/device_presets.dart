@@ -24,7 +24,7 @@ class DevicePresets {
     screenRadius: 42,
     notchSize: Size(126, 32),
     notchRadius: 16,
-    stageScale: 0.44,
+    stageScale: 0.88,
     cameraEdge: 0.1463,
     cameraRadius: 5,
     speakerEdge: 0.1175,
@@ -46,7 +46,7 @@ class DevicePresets {
     bezel: EdgeInsets.all(16),
     bodyRadius: 38,
     screenRadius: 24,
-    stageScale: 0.34,
+    stageScale: 0.68,
     cameraEdge: 0.875,
     cameraRadius: 4,
     speakerEdge: 0.625,
@@ -74,7 +74,7 @@ class DevicePresets {
     screenRadius: 24,
     notchSize: Size(180, 22),
     notchRadius: 8,
-    stageScale: 0.34,
+    stageScale: 0.68,
     // The lid stays flat, facing the viewer, rather than leaning back off its
     // bottom edge into the scene: at the design's `rotateX(-7deg)` the screen
     // read as receding into the depth instead of sitting parallel to the
