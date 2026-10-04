@@ -97,6 +97,8 @@ dependencies:
     path: ../niger_plate
   mali_plate:
     path: ../mali_plate
+  north_korea_plate:
+    path: ../north_korea_plate
 
   # Used directly by the showcase to drive PlateCardBloc from the demo screen.
   url_launcher: ^6.3.2
