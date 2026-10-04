@@ -85,6 +85,8 @@ dependencies:
     path: ../algeria_plate
   indonesia_plate:
     path: ../indonesia_plate
+  nicaragua_plate:
+    path: ../nicaragua_plate
   tunisia_plate:
     path: ../tunisia_plate
   bolivia_plate:
@@ -130,6 +132,8 @@ dependency_overrides:
     path: ../yemen_plate
   lebanon_plate:
     path: ../lebanon_plate
+  nicaragua_plate:
+    path: ../nicaragua_plate
 
   # Not a dependency this app names — it reaches it through the country
   # packages, every one of which takes its digit and letter alphabets from it.

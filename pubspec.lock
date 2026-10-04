@@ -244,10 +244,24 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.19.0"
+  nicaragua_plate:
+    dependency: "direct main"
+    description:
+      path: "../nicaragua_plate"
+      relative: true
+    source: path
+    version: "0.0.1"
   niger_plate:
     dependency: "direct main"
     description:
       path: "../niger_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
+  north_korea_plate:
+    dependency: "direct main"
+    description:
+      path: "../north_korea_plate"
       relative: true
     source: path
     version: "0.1.0"
