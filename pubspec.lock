@@ -212,6 +212,13 @@ packages:
       relative: true
     source: path
     version: "0.1.0"
+  libya_plate:
+    dependency: "direct main"
+    description:
+      path: "../libya_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
   lints:
     dependency: transitive
     description:

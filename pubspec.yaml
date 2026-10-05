@@ -113,6 +113,8 @@ dependencies:
     path: ../comoros_plate
   somalia_plate:
     path: ../somalia_plate
+  libya_plate:
+    path: ../libya_plate
 
   # Used directly by the showcase to drive PlateCardBloc from the demo screen.
   url_launcher: ^6.3.2
