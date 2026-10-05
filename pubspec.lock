@@ -53,6 +53,13 @@ packages:
       relative: true
     source: path
     version: "0.1.0"
+  brunei_plate:
+    dependency: "direct main"
+    description:
+      path: "../brunei_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
   characters:
     dependency: transitive
     description:

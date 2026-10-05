@@ -15,6 +15,7 @@ import 'nicaragua.dart';
 import 'tunisia.dart';
 import 'venezuela.dart';
 import 'lebanon.dart';
+import 'brunei.dart';
 import 'libya.dart';
 import 'malaysia.dart';
 import 'mali.dart';
@@ -44,6 +45,7 @@ export 'nicaragua.dart';
 export 'tunisia.dart';
 export 'venezuela.dart';
 export 'lebanon.dart';
+export 'brunei.dart';
 export 'libya.dart';
 export 'malaysia.dart';
 export 'mali.dart';
@@ -95,6 +97,7 @@ final List<GallerySource> gallerySources = <GallerySource>[
   ComorosSource(),
   SomaliaSource(),
   LibyaSource(),
+  BruneiSource(),
 ];
 
 /// The ten countries within Iranshahr for the `/iranshahr/{country}` detail
