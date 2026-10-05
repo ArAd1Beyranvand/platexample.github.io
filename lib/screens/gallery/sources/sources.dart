@@ -27,6 +27,7 @@ import 'palestine.dart';
 import 'comoros.dart';
 import 'somalia.dart';
 import 'sudan.dart';
+import 'vietnam.dart';
 import 'yemen.dart';
 
 export '../catalogue.dart';
@@ -58,6 +59,7 @@ export 'palestine.dart';
 export 'comoros.dart';
 export 'somalia.dart';
 export 'sudan.dart';
+export 'vietnam.dart';
 export 'yemen.dart';
 
 /// Every country this app can draw, in the order the catalogue lists them.
@@ -101,6 +103,7 @@ final List<GallerySource> gallerySources = <GallerySource>[
   LibyaSource(),
   BruneiSource(),
   MaldivesSource(),
+  VietnamSource(),
 ];
 
 /// The ten countries within Iranshahr for the `/iranshahr/{country}` detail
