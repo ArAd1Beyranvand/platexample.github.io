@@ -1974,7 +1974,7 @@ GallerySection _omanSection() => GallerySection(
     ),
     GalleryEntry(
       id: 'om.taxi.d4l1',
-      label: 'Four digits, one letter',
+      label: 'Taxi · four digits, one letter',
       spec: OmanPlates.fourDigitOneLetter,
       theme: OmanThemes.taxi,
       country: OmanCountry.oman,
@@ -1983,7 +1983,7 @@ GallerySection _omanSection() => GallerySection(
     ),
     GalleryEntry(
       id: 'om.taxi.d4l2',
-      label: 'Four digits, two letters',
+      label: 'Taxi · four digits, two letters',
       spec: OmanPlates.fourDigitTwoLetter,
       theme: OmanThemes.taxi,
       country: OmanCountry.oman,
@@ -1992,7 +1992,7 @@ GallerySection _omanSection() => GallerySection(
     ),
     GalleryEntry(
       id: 'om.taxi.d5l1',
-      label: 'Five digits, one letter',
+      label: 'Taxi · five digits, one letter',
       spec: OmanPlates.fiveDigitOneLetter,
       theme: OmanThemes.taxi,
       country: OmanCountry.oman,
@@ -2001,7 +2001,7 @@ GallerySection _omanSection() => GallerySection(
     ),
     GalleryEntry(
       id: 'om.taxi.d5l2',
-      label: 'Five digits, two letters',
+      label: 'Taxi · five digits, two letters',
       spec: OmanPlates.fiveDigitTwoLetter,
       theme: OmanThemes.taxi,
       country: OmanCountry.oman,

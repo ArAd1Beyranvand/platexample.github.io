@@ -250,8 +250,9 @@ class _PlateTileState extends State<PlateTile> {
     _looping = false;
     _holdTimer?.cancel();
     final holdCompleter = _holdCompleter;
-    if (holdCompleter != null && !holdCompleter.isCompleted)
+    if (holdCompleter != null && !holdCompleter.isCompleted) {
       holdCompleter.complete(false);
+    }
     _typist.dispose();
     _plate.dispose();
     super.dispose();
@@ -434,38 +435,49 @@ class _PlateTileState extends State<PlateTile> {
                   // baseline alignment makes the row as tall as the deepest
                   // descender of *either* font — a height the card cannot know
                   // in advance and the grid has already committed to.
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Expanded(
-                        child: Text(
-                          _label,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontFamily: NType.archivo,
-                            fontSize: PlateTile._footerFontSize,
-                            height:
-                                PlateTile._footerLineHeight /
-                                PlateTile._footerFontSize,
-                            color: N.n200,
+                  LayoutBuilder(
+                    builder: (context, footer) => Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Expanded(
+                          child: Text(
+                            _label,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontFamily: NType.archivo,
+                              fontSize: PlateTile._footerFontSize,
+                              height:
+                                  PlateTile._footerLineHeight /
+                                  PlateTile._footerFontSize,
+                              color: N.n200,
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(width: NSpace.s4),
-                      Text(
-                        entry.spec.id,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.right,
-                        style: NType.specId.copyWith(
-                          fontSize: 10,
-                          letterSpacing: 0.04 * 10,
-                          height: PlateTile._footerLineHeight / 10,
-                          color: N.n500,
+                        const SizedBox(width: NSpace.s4),
+                        // Capped, not flexible: a long id
+                        // (`la.private.vientiane_capital`) ellipsizes instead of
+                        // pushing the row past the card, and a short one leaves
+                        // the label all the room.
+                        ConstrainedBox(
+                          constraints: BoxConstraints(
+                            maxWidth: footer.maxWidth / 2,
+                          ),
+                          child: Text(
+                            entry.spec.id,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.right,
+                            style: NType.specId.copyWith(
+                              fontSize: 10,
+                              letterSpacing: 0.04 * 10,
+                              height: PlateTile._footerLineHeight / 10,
+                              color: N.n500,
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),

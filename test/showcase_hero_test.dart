@@ -54,7 +54,7 @@ void main() {
 
     expect(find.text('Plate input\nfor Flutter.'), findsOneWidget);
     expect(find.text('ARAD BEYRANVAND — SOLE AUTHOR'), findsOneWidget);
-    expect(find.text('Browse plates'), findsOneWidget);
+    expect(find.text('Browse plates →'), findsOneWidget);
     expect(find.text('View on pub.dev'), findsOneWidget);
 
     // The serif is used for the paragraph and nowhere else in the hero — the
@@ -130,7 +130,7 @@ void main() {
 
     // Full-width and stacked: both buttons span the column inside its 18px
     // gutters, and the secondary sits below the primary rather than beside it.
-    final Rect primary = tester.getRect(find.text('Browse plates'));
+    final Rect primary = tester.getRect(find.text('Browse plates →'));
     final Rect secondary = tester.getRect(find.text('View on pub.dev'));
     expect(secondary.right, lessThanOrEqualTo(390 - 18));
     expect(primary.width, closeTo(390 - 36 - 2 * 22 - 2, 1));
@@ -182,7 +182,7 @@ void main() {
     int opened = 0;
     await tester.pumpWidget(_hero(width: 1232, onOpenArchive: () => opened++));
 
-    await tester.tap(find.text('Browse plates'));
+    await tester.tap(find.text('Browse plates →'));
     expect(opened, 1);
   });
 }

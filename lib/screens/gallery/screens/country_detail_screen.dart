@@ -228,7 +228,16 @@ class _Breadcrumb extends StatelessWidget {
           onPressed: onOpenDiscover,
         ),
         Text(' / ', style: crumb),
-        Text(countryName.toUpperCase(), style: crumb.copyWith(color: N.n300)),
+        // Flexible so a long name (`NORTH KOREA`) ellipsizes on a phone
+        // instead of running past the screen edge.
+        Flexible(
+          child: Text(
+            countryName.toUpperCase(),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: crumb.copyWith(color: N.n300),
+          ),
+        ),
       ],
     );
   }
@@ -302,8 +311,9 @@ class _CrumbLinkState extends State<_CrumbLink> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.onPressed == null)
+    if (widget.onPressed == null) {
       return Text(widget.label, style: widget.style);
+    }
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       onEnter: (_) => setState(() => _hovered = true),

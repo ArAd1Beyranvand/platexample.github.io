@@ -48,7 +48,7 @@ class ShowcaseHero extends StatelessWidget {
   /// Picking a cell pins the stage to that device and stops the auto-cycle.
   final ValueChanged<DeviceType> onPickDevice;
 
-  /// `Browse plates` — navigates to `/discover`.
+  /// `Browse plates →` — navigates to `/discover`.
   final VoidCallback onOpenArchive;
 
   /// The right column's content: the device stage itself.

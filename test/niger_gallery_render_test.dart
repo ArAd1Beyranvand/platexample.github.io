@@ -11,30 +11,38 @@ void main() {
       for (final e in section.entries) {
         themes.add(e.theme!);
         final c = PlateController.fromValues(e.spec, e.sampleValues!);
-        await t.pumpWidget(MaterialApp(
-          home: SizedBox(
-            width: 460,
-            height: 230,
-            child: PlateView(controller: c, theme: e.theme!, country: e.country),
-          ),
-        ));
-        expect(t.takeException(), isNull, reason: e.id);
-        expect(e.sampleValues!.length, e.spec.slots.length, reason: e.id);
-        await t.pumpWidget(MaterialApp(
-          home: SizedBox(
-            width: 460,
-            height: 230,
-            child: PlateThemeScope(
-              theme: e.theme!,
-              child: PlateCanvas(
-                spec: e.spec,
-                country: e.country,
+        await t.pumpWidget(
+          MaterialApp(
+            home: SizedBox(
+              width: 460,
+              height: 230,
+              child: PlateView(
                 controller: c,
-                onChooseCharacter: (_) async => null,
+                theme: e.theme!,
+                country: e.country,
               ),
             ),
           ),
-        ));
+        );
+        expect(t.takeException(), isNull, reason: e.id);
+        expect(e.sampleValues!.length, e.spec.slots.length, reason: e.id);
+        await t.pumpWidget(
+          MaterialApp(
+            home: SizedBox(
+              width: 460,
+              height: 230,
+              child: PlateThemeScope(
+                theme: e.theme!,
+                child: PlateCanvas(
+                  spec: e.spec,
+                  country: e.country,
+                  controller: c,
+                  onChooseCharacter: (_) async => null,
+                ),
+              ),
+            ),
+          ),
+        );
         expect(t.takeException(), isNull, reason: '${e.id} input');
         await t.pumpWidget(const SizedBox.shrink());
         c.dispose();

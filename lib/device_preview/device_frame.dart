@@ -327,8 +327,9 @@ class _DeviceFrameState extends State<DeviceFrame>
   Widget _screenContent() {
     final config = _contentConfig;
     final cached = _cachedContent;
-    if (cached != null && identical(_cachedContentConfig, config))
+    if (cached != null && identical(_cachedContentConfig, config)) {
       return cached;
+    }
     _cachedContentConfig = config;
     return _cachedContent = _ScreenContent(
       key: _screenKey,

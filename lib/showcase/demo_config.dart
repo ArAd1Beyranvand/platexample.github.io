@@ -154,8 +154,9 @@ PlateAlphabet _digitAlphabetOf(PlateSpec spec) {
 /// plate, or one whose only letter slot is a printed constant).
 PlateAlphabet? _letterAlphabetOf(PlateSpec spec) {
   for (final slot in spec.slots) {
-    if (!slot.alphabet.isNumeric && slot.alphabet.characters.length > 1)
+    if (!slot.alphabet.isNumeric && slot.alphabet.characters.length > 1) {
       return slot.alphabet;
+    }
   }
   return null;
 }

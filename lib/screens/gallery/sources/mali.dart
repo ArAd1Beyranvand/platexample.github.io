@@ -17,14 +17,16 @@ class MaliSource extends GallerySource {
   String get packageName => 'mali_plate';
 
   @override
-  String get note => 'One simple plate type: no variants, no categories, '
+  String get note =>
+      'One simple plate type: no variants, no categories, '
       'no colour coding. Format: 2 letters, 4 digits, 2 letters.';
 
   @override
   List<GallerySection> get sections => _sections ??= <GallerySection>[
     GallerySection(
       title: 'Current series — 520 × 110',
-      note: 'All vehicles use the same black on white plate. '
+      note:
+          'All vehicles use the same black on white plate. '
           'No provincial coding, no usage categories.',
       entries: <GalleryEntry>[
         GalleryEntry(

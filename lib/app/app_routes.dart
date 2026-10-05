@@ -285,8 +285,9 @@ class AppLocation {
 
     final AppTab? tab = AppTab.bySegment(segments.first);
     if (tab == null) return showcase;
-    if (tab != AppTab.discover || segments.length == 1)
+    if (tab != AppTab.discover || segments.length == 1) {
       return AppLocation.tab(tab);
+    }
 
     // Must have at least country segment
     if (segments.length < 2) return discover;
