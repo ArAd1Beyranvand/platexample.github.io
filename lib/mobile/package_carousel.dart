@@ -8,9 +8,14 @@ import 'section_header.dart';
 /// "One country per package": a start-aligned swipe carousel with the next card
 /// peeking, one card per gallery source.
 class PackageCarousel extends StatefulWidget {
-  const PackageCarousel({super.key, required this.onOpenCountry});
+  const PackageCarousel({
+    super.key,
+    required this.onOpenCountry,
+    required this.onOpenArchive,
+  });
 
   final ValueChanged<GallerySource> onOpenCountry;
+  final VoidCallback onOpenArchive;
 
   static const double gutter = 18;
   static const double cardWidth = 262;
@@ -58,11 +63,12 @@ class _PackageCarouselState extends State<PackageCarousel> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          const Padding(
-            padding: EdgeInsets.fromLTRB(gutter, 0, gutter, 16),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(gutter, 0, gutter, 16),
             child: SectionHeader(
               leading: 'ONE COUNTRY PER PACKAGE',
               trailing: 'ALL COUNTRIES',
+              onTrailingTap: widget.onOpenArchive,
             ),
           ),
           LayoutBuilder(
@@ -90,6 +96,7 @@ class _PackageCarouselState extends State<PackageCarousel> {
                             entry: _items[index].entry,
                             heroTag: 'carousel:${_items[index].entry.id}',
                             stageHeight: PackageCarousel.stageHeight,
+                            autoReplay: true,
                             onTap: () =>
                                 widget.onOpenCountry(_items[index].source),
                           ),

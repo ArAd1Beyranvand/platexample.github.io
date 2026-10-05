@@ -4,18 +4,20 @@ import 'mobile_tokens.dart';
 
 /// Section header with leading label and optional trailing accent label.
 ///
-/// Example: `ONE COUNTRY PER PACKAGE` (leading) · `ALL COUNTRIES` (trailing).
+/// Example: `ONE COUNTRY PER PACKAGE` (leading) · `ALL COUNTRIES →` (trailing).
 class SectionHeader extends StatelessWidget {
   const SectionHeader({
     super.key,
     required this.leading,
     this.trailing,
     this.trailingColor = MobileTokens.n600,
+    this.onTrailingTap,
   });
 
   final String leading;
   final String? trailing;
   final Color trailingColor;
+  final VoidCallback? onTrailingTap;
 
   @override
   Widget build(BuildContext context) {
@@ -34,14 +36,17 @@ class SectionHeader extends StatelessWidget {
           ),
         ),
         if (trailing != null)
-          Text(
-            trailing!.toUpperCase(),
-            style: TextStyle(
-              fontFamily: 'MartianMono',
-              fontWeight: FontWeight.w400,
-              fontSize: 9.5,
-              letterSpacing: 0.10 * 9.5,
-              color: trailingColor,
+          GestureDetector(
+            onTap: onTrailingTap,
+            child: Text(
+              '${trailing!.toUpperCase()} →',
+              style: TextStyle(
+                fontFamily: 'MartianMono',
+                fontWeight: FontWeight.w400,
+                fontSize: 9.5,
+                letterSpacing: 0.10 * 9.5,
+                color: trailingColor,
+              ),
             ),
           ),
       ],

@@ -17,6 +17,7 @@ import 'venezuela.dart';
 import 'lebanon.dart';
 import 'brunei.dart';
 import 'libya.dart';
+import 'laos.dart';
 import 'maldives.dart';
 import 'malaysia.dart';
 import 'mali.dart';
@@ -49,6 +50,7 @@ export 'venezuela.dart';
 export 'lebanon.dart';
 export 'brunei.dart';
 export 'libya.dart';
+export 'laos.dart';
 export 'maldives.dart';
 export 'malaysia.dart';
 export 'mali.dart';
@@ -103,6 +105,7 @@ final List<GallerySource> gallerySources = <GallerySource>[
   LibyaSource(),
   BruneiSource(),
   MaldivesSource(),
+  LaosSource(),
   VietnamSource(),
 ];
 

@@ -195,6 +195,13 @@ packages:
       relative: true
     source: path
     version: "0.1.0"
+  laos_plate:
+    dependency: "direct main"
+    description:
+      path: "../laos_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
   leak_tracker:
     dependency: transitive
     description:
@@ -245,6 +252,13 @@ packages:
     dependency: "direct main"
     description:
       path: "../malaysia_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
+  maldives_plate:
+    dependency: "direct main"
+    description:
+      path: "../maldives_plate"
       relative: true
     source: path
     version: "0.1.0"
@@ -556,6 +570,13 @@ packages:
     dependency: "direct main"
     description:
       path: "../venezuela_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
+  vietnam_plate:
+    dependency: "direct main"
+    description:
+      path: "../vietnam_plate"
       relative: true
     source: path
     version: "0.1.0"

@@ -119,6 +119,8 @@ dependencies:
     path: ../brunei_plate
   maldives_plate:
     path: ../maldives_plate
+  laos_plate:
+    path: ../laos_plate
   vietnam_plate:
     path: ../vietnam_plate
 

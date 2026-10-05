@@ -50,7 +50,10 @@ class _MobileBodyState extends State<MobileBody> {
         children: <Widget>[
           MobileHeroText(onOpenArchive: widget.onOpenArchive),
           MobileDeviceSection(sync: _sync, onOpenPlate: widget.onOpenPlate),
-          PackageCarousel(onOpenCountry: widget.onOpenCountry),
+          PackageCarousel(
+            onOpenCountry: widget.onOpenCountry,
+            onOpenArchive: widget.onOpenArchive,
+          ),
           MobileDeckSection(sync: _sync),
           ArchiveStrip(stats: widget.stats),
         ],

@@ -346,7 +346,7 @@ class _HeroText extends StatelessWidget {
   /// two buttons are together wider than the column they sit in.
   Widget _actions() {
     final NButton primary = NButton(
-      label: 'Browse plates',
+      label: 'Browse plates →',
       variant: NButtonVariant.primary,
       fontSize: 15,
       padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 11),
