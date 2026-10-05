@@ -109,6 +109,8 @@ dependencies:
     path: ../mauritania_plate
   brazil_plate:
     path: ../brazil_plate
+  comoros_plate:
+    path: ../comoros_plate
   somalia_plate:
     path: ../somalia_plate
 

@@ -21,6 +21,7 @@ import 'mauritania.dart';
 import 'niger.dart';
 import 'north_korea.dart';
 import 'palestine.dart';
+import 'comoros.dart';
 import 'somalia.dart';
 import 'sudan.dart';
 import 'yemen.dart';
@@ -48,6 +49,7 @@ export 'mauritania.dart';
 export 'niger.dart';
 export 'north_korea.dart';
 export 'palestine.dart';
+export 'comoros.dart';
 export 'somalia.dart';
 export 'sudan.dart';
 export 'yemen.dart';
@@ -88,6 +90,7 @@ final List<GallerySource> gallerySources = <GallerySource>[
   NamibiaSource(),
   BrazilSource(),
   MauritaniaSource(),
+  ComorosSource(),
   SomaliaSource(),
 ];
 
