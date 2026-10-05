@@ -84,6 +84,13 @@ packages:
       relative: true
     source: path
     version: "0.1.0"
+  comoros_plate:
+    dependency: "direct main"
+    description:
+      path: "../comoros_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
   cuba_plate:
     dependency: "direct main"
     description:

@@ -40,7 +40,7 @@ class MauritaniaSource extends GallerySource {
       title: 'Euro-style — 520 × 110',
       note:
           'Four digits, two letters and a region code. The serial reads '
-          'about 66% of the real height. The map in the ring is not drawn, '
+          'about 66% of the real height. '
           'and the article does not say what the red series is for.',
       entries: <GalleryEntry>[
         _entry(
