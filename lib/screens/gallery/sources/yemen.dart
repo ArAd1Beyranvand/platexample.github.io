@@ -30,7 +30,8 @@ class YemenSource extends GallerySource {
   @override
   String get note =>
       'Both systems in use today: the 2026 unified white plate and the 1993 '
-      'northern format, each for cars and motorcycles. The northern '
+      'northern format, each for cars and motorcycles, plus the southern governorate, Aden '
+      'and Taiz plates. The northern '
       'motorcycle geometry is unverified and marked so in the package.';
 
   /// The word the plate itself prints for [usage] on this system, falling back
@@ -110,6 +111,137 @@ class YemenSource extends GallerySource {
     ];
   }
 
+  /// A southern entry: digits only, so the sample is drawn here.
+  GalleryEntry _southern(
+    String id,
+    String label,
+    PlateSpec spec,
+    PlateCountry country, [
+    PlateTheme theme = YemenThemes.southern,
+  ]) => GalleryEntry(
+    id: id,
+    label: label,
+    spec: spec,
+    country: country,
+    theme: theme,
+    validator: const YemenSouthernValidator(),
+    sampleValues: <String?>[
+      for (int i = 0; i < spec.slotCount; i++) '${1 + _rng.nextInt(9)}',
+    ],
+  );
+
+  List<GalleryEntry> _governorates() => <GalleryEntry>[
+    for (final (String key, YemenSouthernGovernorate g, PlateSpec car)
+        in <(String, YemenSouthernGovernorate, PlateSpec)>[
+          (
+            'hadhramaut',
+            YemenSouthernGovernorate.hadhramaut,
+            YemenGovernoratePlates.hadhramaut,
+          ),
+          (
+            'mahrah',
+            YemenSouthernGovernorate.alMahrah,
+            YemenGovernoratePlates.alMahrah,
+          ),
+          (
+            'shabwah',
+            YemenSouthernGovernorate.shabwah,
+            YemenGovernoratePlates.shabwah,
+          ),
+          (
+            'marib',
+            YemenSouthernGovernorate.marib,
+            YemenGovernoratePlates.marib,
+          ),
+        ])
+      for (final YemenUsage usage in const <YemenUsage>[
+        YemenUsage.private,
+        YemenUsage.forHire,
+        YemenUsage.transport,
+        YemenUsage.government,
+      ])
+        if (!(g.banded && usage == YemenUsage.government))
+          _southern(
+            'ye.$key.${usage.name}',
+            '${g.name} · ${usage.name}',
+            car,
+            YemenCountry.southernFor(usage),
+          ),
+    _southern(
+      'ye.hadhramaut.private.5',
+      'حضرموت · 5 digits',
+      YemenGovernoratePlates.hadhramautFiveDigit,
+      YemenCountry.southernPrivate,
+    ),
+    _southern(
+      'ye.hadhramaut.temporary',
+      'حضرموت · مؤقت',
+      YemenGovernoratePlates.hadhramautTemporary,
+      YemenCountry.southernTemporary,
+    ),
+    _southern(
+      'ye.shabwah.temporary',
+      'شبوة · مؤقت',
+      YemenGovernoratePlates.shabwahTemporary,
+      YemenCountry.southernTemporary,
+    ),
+    _southern(
+      'ye.hadhramaut.police',
+      'حضرموت · الشرطة',
+      YemenGovernoratePlates.hadhramautPolice,
+      YemenCountry.southernPolice,
+    ),
+    _southern(
+      'ye.shabwah.police',
+      'شبوة · الشرطة',
+      YemenGovernoratePlates.shabwahPolice,
+      YemenCountry.southernPolice,
+    ),
+    for (final PlateSpec moto in <PlateSpec>[
+      YemenGovernoratePlates.hadhramautMotorcycle,
+      YemenGovernoratePlates.alMahrahMotorcycle,
+      YemenGovernoratePlates.shabwahMotorcycle,
+      YemenGovernoratePlates.maribMotorcycle,
+    ])
+      _southern(
+        moto.id,
+        '${moto.id.split('.')[1]} · motorcycle',
+        moto,
+        moto.country,
+      ),
+  ];
+
+  List<GalleryEntry> _adenTaiz() => <GalleryEntry>[
+    _southern(
+      'ye.aden.520x110',
+      'عدن · 520 x 110',
+      YemenAdenPlates.oneLine,
+      YemenCountry.plain,
+      YemenThemes.aden,
+    ),
+    _southern(
+      'ye.aden.335x170',
+      'عدن · 335 x 170',
+      YemenAdenPlates.twoLine,
+      YemenCountry.plain,
+      YemenThemes.aden,
+    ),
+    _southern(
+      'ye.taiz.private',
+      'تعز · private and for hire',
+      YemenTaizPlates.temporary,
+      YemenCountry.plain,
+      YemenThemes.taizPrivate,
+    ),
+    _southern(
+      'ye.taiz.commercial',
+      'تعز · commercial',
+      YemenTaizPlates.temporary,
+      YemenCountry.plain,
+      YemenThemes.taizCommercial,
+    ),
+  ];
+
   /// One plate per system, not per section: the four sections below are two
   /// systems shown in two form factors each, so the car entry leads for both
   /// — the home screen isn't the place to also distinguish car from moto.
@@ -152,6 +284,22 @@ class YemenSource extends GallerySource {
           'been published, so this spec is the car content rendered into the '
           'motorcycle form factor — a guess, and marked as one in the package.',
       entries: _northern(motorcycle: true),
+    ),
+    GallerySection(
+      title: 'South — Hadhramaut, Al Mahrah, Shabwah, Marib',
+      note:
+          'The coloured-strip governorate plates. The strip is the usage: '
+          'blue private, yellow for hire, red commercial, green government. '
+          'Temporary, police and motorcycle layouts where the article shows '
+          'them.',
+      entries: _governorates(),
+    ),
+    GallerySection(
+      title: 'South — Aden and Taiz',
+      note:
+          "Aden's lighthouse plate in both sizes, and Taiz's temporary plate "
+          '(blue first class, red second class).',
+      entries: _adenTaiz(),
     ),
   ];
 
