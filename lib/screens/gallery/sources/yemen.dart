@@ -84,29 +84,60 @@ class YemenSource extends GallerySource {
                   ? YemenNorthernPlates.motoGeometries
                   : YemenNorthernPlates.carGeometries)
               .entries)
-        GalleryEntry(
-          id: <String>[
-            'ye.northern.$form',
-            _northernUsage.name,
-            '${geometry.key.$1}+${geometry.key.$2}',
-          ].join('.'),
-          label: <String>[
-            _word(_northernUsage, unified: false),
-            form,
-            '${geometry.key.$1} + ${geometry.key.$2}',
-          ].join(' · '),
-          spec: geometry.value,
-          country: YemenCountry.northernFor(_northernUsage),
-          theme: YemenThemes.forNorthernUsage(
-            _northernUsage,
-            style: YemenMilitaryStyle.classic,
+        ...<GalleryEntry>[
+          GalleryEntry(
+            id: <String>[
+              'ye.northern.$form',
+              _northernUsage.name,
+              'blue',
+              '${geometry.key.$1}+${geometry.key.$2}',
+            ].join('.'),
+            label: <String>[
+              _word(_northernUsage, unified: false),
+              form,
+              'blue',
+              '${geometry.key.$1} + ${geometry.key.$2}',
+            ].join(' · '),
+            spec: geometry.value,
+            country: YemenCountry.northernFor(_northernUsage),
+            theme: YemenThemes.forNorthernUsage(
+              _northernUsage,
+              style: YemenMilitaryStyle.classic,
+              whiteBackground: false,
+            ),
+            validator: const YemenNorthernValidator(),
+            sampleValues: YemenNorthernSerialGenerator.generate(
+              geometry.value,
+              random: _rng,
+            ),
           ),
-          validator: const YemenNorthernValidator(),
-          sampleValues: YemenNorthernSerialGenerator.generate(
-            geometry.value,
-            random: _rng,
+          GalleryEntry(
+            id: <String>[
+              'ye.northern.$form',
+              _northernUsage.name,
+              'white',
+              '${geometry.key.$1}+${geometry.key.$2}',
+            ].join('.'),
+            label: <String>[
+              _word(_northernUsage, unified: false),
+              form,
+              'white',
+              '${geometry.key.$1} + ${geometry.key.$2}',
+            ].join(' · '),
+            spec: geometry.value,
+            country: YemenCountry.northernFor(_northernUsage),
+            theme: YemenThemes.forNorthernUsage(
+              _northernUsage,
+              style: YemenMilitaryStyle.classic,
+              whiteBackground: true,
+            ),
+            validator: const YemenNorthernValidator(),
+            sampleValues: YemenNorthernSerialGenerator.generate(
+              geometry.value,
+              random: _rng,
+            ),
           ),
-        ),
+        ],
     ];
   }
 
@@ -308,8 +339,8 @@ class YemenSource extends GallerySource {
       note:
           'Still in force across the Houthi-controlled north, and still the '
           'larger share of the fleet. Governorate code above the rule, serial '
-          'below; the field colour is the usage class, shown here in blue '
-          '(private). The motorcycle geometry is unverified — a guess, marked '
+          'below; the field colour is the usage class, shown here in blue and '
+          'white (private). The motorcycle geometry is unverified — a guess, marked '
           'as one in the package.',
       entries: <GalleryEntry>[
         ..._northern(motorcycle: false),
