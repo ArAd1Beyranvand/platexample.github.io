@@ -36,17 +36,17 @@ class CatalogueItem {
 
 /// Every plate in the app, country and system attached. Built once.
 ///
-/// Includes both [gallerySources] (the six top-level Discover groups, one of
-/// which — Iranshahr — is an umbrella) and [iranshahirCountries] (the four
-/// countries inside that umbrella), so a lookup by [GalleryEntry] identity
-/// works whether the caller reached the entry through the umbrella's own
-/// sections or through one of its four country sources — see
-/// [CatalogueSourceLook.highlightItems], which the Iranshahr overview page
-/// calls on each of those four sources directly.
+/// Includes every top-level source and every umbrella's
+/// [GallerySource.members], so a lookup by [GalleryEntry] identity works
+/// whether the caller reached the entry through the umbrella's own sections
+/// or through one of its members — see [CatalogueSourceLook.highlightItems],
+/// which the overview page calls on each member directly.
 final List<CatalogueItem> catalogueItems = <CatalogueItem>[
   for (final GallerySource source in <GallerySource>[
-    ...gallerySources,
-    ...iranshahirCountries,
+    for (final GallerySource top in gallerySources) ...<GallerySource>[
+      top,
+      ...top.members,
+    ],
   ])
     for (final GallerySection section in source.sections)
       for (final GalleryEntry entry in section.entries)

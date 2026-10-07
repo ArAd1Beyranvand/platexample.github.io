@@ -124,3 +124,13 @@ final List<GallerySource> iranshahirCountries = <GallerySource>[
   const TurkeySource(),
   const OmanSource(),
 ];
+
+/// The source [source] is a member of, or null for a top-level one.
+GallerySource? umbrellaOf(GallerySource source) {
+  for (final GallerySource umbrella in gallerySources) {
+    if (umbrella.members.any((GallerySource m) => identical(m, source))) {
+      return umbrella;
+    }
+  }
+  return null;
+}

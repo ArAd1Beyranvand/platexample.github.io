@@ -1,7 +1,7 @@
 import 'package:iranshahr_plate/iranshahr.dart';
 import 'package:plate_core/plate_core.dart';
 
-import '../catalogue.dart';
+import 'sources.dart';
 
 /// The Iranshahr umbrella source, showing every country in the package at once
 /// on the Discover index. When users click "All plates", they navigate to
@@ -30,6 +30,12 @@ class IranshahirSource extends GallerySource {
 
   @override
   String get packageName => 'iranshahr_plate';
+
+  @override
+  List<GallerySource> get members => iranshahirCountries;
+
+  @override
+  String get overviewTitle => 'Nine countries, one package';
 
   @override
   String get note =>

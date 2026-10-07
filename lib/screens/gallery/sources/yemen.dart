@@ -344,4 +344,14 @@ class YemenSource extends GallerySource {
   ];
 
   List<GallerySection>? _sections;
+
+  /// One group per system on Yemen's page, each opening its own page.
+  @override
+  late final List<GallerySource> members = <GallerySource>[
+    for (final GallerySection section in sections)
+      GallerySectionSource(section, packageName: packageName),
+  ];
+
+  @override
+  String get overviewTitle => 'Five systems, one country';
 }

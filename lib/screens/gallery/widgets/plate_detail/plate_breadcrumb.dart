@@ -13,7 +13,6 @@ class PlateBreadcrumb extends StatelessWidget {
     required this.specId,
     this.onOpenDiscover,
     this.onOpenCountry,
-    this.isIranshahirOverview = false,
   });
 
   final String countryName;
@@ -25,8 +24,6 @@ class PlateBreadcrumb extends StatelessWidget {
   /// The country segment. Null leaves it inert.
   final VoidCallback? onOpenCountry;
 
-  /// Whether this plate is in the Iranshahr context.
-  final bool isIranshahirOverview;
 
   /// The circle in the picture, measured off it.
   static const double buttonSize = 36;

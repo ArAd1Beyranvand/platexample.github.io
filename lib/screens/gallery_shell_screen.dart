@@ -13,7 +13,7 @@ import 'showcase_screen.dart';
 import 'gallery/screens/about_screen.dart';
 import 'gallery/screens/country_detail_screen.dart';
 import 'gallery/screens/discover_screen.dart';
-import 'gallery/screens/iranshahr_overview_screen.dart';
+import 'gallery/screens/group_overview_screen.dart';
 import 'gallery/screens/plate_detail_screen.dart';
 import 'gallery/catalogue_index.dart';
 import 'gallery/sources/sources.dart';
@@ -198,10 +198,7 @@ class GalleryShellState extends State<GalleryShellScreen> {
     if (source == null) return const <AppLocation>[];
     if (location.item == null) return <AppLocation>[location];
     return <AppLocation>[
-      AppLocation.country(
-        source,
-        isIranshahirOverview: location.isIranshahirOverview,
-      ),
+      AppLocation.country(source),
       location,
     ];
   }
@@ -277,17 +274,13 @@ class GalleryShellState extends State<GalleryShellScreen> {
     final GallerySource source = location.source!;
     final CatalogueItem? item = location.item;
     if (item == null) {
-      // Iranshahr overview: show the four countries as groups like Discover.
-      // Only the umbrella source itself renders the overview; its four member
-      // countries (which also carry `isIranshahirOverview`) fall through to the
-      // regular country page below — otherwise "All plates" on a member group
-      // would re-render the overview instead of that country's detail page.
-      if (location.isIranshahirOverview && source.countryName == 'Iranshahr') {
-        return (BuildContext context) => IranshahirOverviewScreen(
+      // An umbrella's page is the overview of its members.
+      if (location.isOverview) {
+        return (BuildContext context) => GroupOverviewScreen(
+          source: source,
           onOpenPlate: _openPlate,
-          onOpenCountry: (GallerySource countrySource) => widget.onNavigate(
-            AppLocation.country(countrySource, isIranshahirOverview: true),
-          ),
+          onOpenCountry: (GallerySource member) =>
+              widget.onNavigate(AppLocation.country(member)),
         );
       }
       // Regular country detail page.
@@ -301,7 +294,6 @@ class GalleryShellState extends State<GalleryShellScreen> {
     return (BuildContext context) => PlateDetailScreen(
       item: item,
       heroTag: _heroTags[item] ?? 'plate-${item.entry.id}',
-      isIranshahirOverview: location.isIranshahirOverview,
       onOpenDiscover: () => widget.onNavigate(AppLocation.discover),
       // Goes to the country page by URL rather than popping: a plate opened
       // from a link has its country underneath it just as a tapped one does
@@ -309,8 +301,7 @@ class GalleryShellState extends State<GalleryShellScreen> {
       onOpenCountry: (GallerySource source) => widget.onNavigate(
         AppLocation.country(
           source,
-          isIranshahirOverview: location.isIranshahirOverview,
-        ),
+            ),
       ),
     );
   }
@@ -337,10 +328,7 @@ class GalleryShellState extends State<GalleryShellScreen> {
       _openPlate(item, heroTag);
 
   void _openCountry(GallerySource source) {
-    final bool isIranshahirOverview = source.countryName == 'Iranshahr';
-    widget.onNavigate(
-      AppLocation.country(source, isIranshahirOverview: isIranshahirOverview),
-    );
+    widget.onNavigate(AppLocation.country(source));
   }
 
   /// `OTHER COUNTRIES` on the mobile country page: replaces the current

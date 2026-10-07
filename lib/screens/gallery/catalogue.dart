@@ -124,6 +124,36 @@ abstract class GallerySource {
     for (final GallerySection section in sections)
       if (section.entries.isNotEmpty) section.entries.first,
   ];
+
+  /// The groups this source is an umbrella over — Iranshahr's countries,
+  /// Yemen's systems. Non-empty makes the source's page an overview with one
+  /// group per member, each linking to the member's own page, nested under
+  /// this source's URL. Return the same instances on every read: routes and
+  /// catalogue items compare sources by identity.
+  List<GallerySource> get members => const <GallerySource>[];
+
+  /// The overview's headline, when [members] is non-empty.
+  String get overviewTitle => countryName;
+}
+
+/// A member made from one section of its umbrella — the usual shape when the
+/// umbrella's sections already are its groups (Yemen's systems).
+class GallerySectionSource extends GallerySource {
+  GallerySectionSource(this.section, {required this.packageName});
+
+  final GallerySection section;
+
+  @override
+  final String packageName;
+
+  @override
+  String get countryName => section.title;
+
+  @override
+  String get note => section.note;
+
+  @override
+  late final List<GallerySection> sections = <GallerySection>[section];
 }
 
 extension GallerySourceEntries on GallerySource {

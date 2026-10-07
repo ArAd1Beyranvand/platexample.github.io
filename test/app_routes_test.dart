@@ -112,13 +112,11 @@ void main() {
     test('every plate round-trips through its own URL', () {
       for (final CatalogueItem item in catalogueItems) {
         final AppLocation location = item.location;
-        final bool nested = iranshahirCountries.any(
-          (GallerySource s) => identical(s, item.source),
-        );
+        final GallerySource? umbrella = umbrellaOf(item.source);
         expect(
           location.path,
-          nested
-              ? '/discover/iranshahr/${item.source.slug}/${item.slug}'
+          umbrella != null
+              ? '/discover/${umbrella.slug}/${item.source.slug}/${item.slug}'
               : '/discover/${item.source.slug}/${item.slug}',
         );
         final AppLocation parsed = AppLocation.fromUri(
