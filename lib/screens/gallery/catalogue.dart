@@ -109,6 +109,10 @@ abstract class GallerySource {
   /// The package that ships it.
   String get packageName;
 
+  /// The distinct packages behind this source, for anything that counts
+  /// packages — a region umbrella ships none of its own.
+  List<String> get packageNames => <String>[packageName];
+
   /// One line for the About screen, pointing at the package's own README.
   String get note;
 

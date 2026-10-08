@@ -41,10 +41,13 @@ class CatalogueItem {
 /// whether the caller reached the entry through the umbrella's own sections
 /// or through one of its members — see [CatalogueSourceLook.highlightItems],
 /// which the overview page calls on each member directly.
+///
+/// A [RegionSource]'s sections are its members' own, so it gets no items of
+/// its own: each plate lives once, under its country.
 final List<CatalogueItem> catalogueItems = <CatalogueItem>[
   for (final GallerySource source in <GallerySource>[
     for (final GallerySource top in gallerySources) ...<GallerySource>[
-      top,
+      if (top is! RegionSource) top,
       ...top.members,
     ],
   ])
@@ -69,7 +72,9 @@ List<CatalogueItem> searchCatalogue({
       .toList();
   return <CatalogueItem>[
     for (final CatalogueItem item in catalogueItems)
-      if (country == null || identical(item.source, country))
+      if (country == null ||
+          identical(item.source, country) ||
+          (country is RegionSource && country.members.contains(item.source)))
         if (terms.every(item.haystack.contains)) item,
   ];
 }

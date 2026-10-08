@@ -5,7 +5,7 @@ import 'package:plate_number_holder/screens/gallery/sources/sources.dart';
 
 void main() {
   testWidgets('every Yemen entry renders with its own theme', (t) async {
-    final source = gallerySources.whereType<YemenSource>().single;
+    final source = allGallerySources.whereType<YemenSource>().single;
     for (final section in source.sections) {
       for (final e in section.entries) {
         final c = PlateController.fromValues(e.spec, e.sampleValues!);

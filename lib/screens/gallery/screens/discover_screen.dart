@@ -21,7 +21,7 @@ final CatalogueStats _catalogueStats = CatalogueStats.of(gallerySources);
 /// little HTML mock-ups with the wrong proportions, blocks and colours, and
 /// none of that is copied here — this screen restyles everything *around* the
 /// plate and supplies the surface it sits on.
-class DiscoverScreen extends StatelessWidget {
+class DiscoverScreen extends StatefulWidget {
   const DiscoverScreen({
     super.key,
     required this.onOpenPlate,
@@ -37,14 +37,49 @@ class DiscoverScreen extends StatelessWidget {
   static const EdgeInsets _compactPadding = EdgeInsets.fromLTRB(40, 56, 40, 72);
 
   @override
+  State<DiscoverScreen> createState() => _DiscoverScreenState();
+}
+
+/// Unlisted search terms, keyed by package: names a person might type that
+/// are not one of the source's [GallerySource.countryNames].
+const Map<String, List<String>> _hiddenAliases = <String, List<String>>{
+  // Yemen ships the Riyadh-issued plates carried over from saudi_arabia_plate.
+  'yemen_plate': <String>['saudi arabia'],
+  'iran_plate': <String>['persia', 'persian', 'tehran'],
+  'iranshahr_plate': <String>['persia', 'persian', 'tehran'],
+};
+
+class _DiscoverScreenState extends State<DiscoverScreen> {
+  String _query = '';
+
+  /// A set like `iranshahr` matches when any of its member countries does, so
+  /// searching "Oman" surfaces the set itself rather than a lone country.
+  List<GallerySource> get _visibleSources {
+    final String query = _query.trim().toLowerCase();
+    if (query.isEmpty) return gallerySources;
+    return <GallerySource>[
+      for (final GallerySource source in gallerySources)
+        if (<String>[
+          source.countryName,
+          ...source.countryNames,
+          ...?_hiddenAliases[source.packageName],
+        ].any((String name) => name.toLowerCase().contains(query)))
+          source,
+    ];
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final List<GallerySource> sources = _visibleSources;
     // A [LayoutBuilder], not [MediaQuery]: the showcase renders the whole
     // shell again inside its simulated device frames, and this page has to
     // take the layout its own column calls for rather than the window's.
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         final bool compact = constraints.maxWidth < NBreak.detail;
-        final EdgeInsets padding = compact ? _compactPadding : _padding;
+        final EdgeInsets padding = compact
+            ? DiscoverScreen._compactPadding
+            : DiscoverScreen._padding;
         return CustomScrollView(
           slivers: <Widget>[
             SliverPadding(
@@ -59,7 +94,15 @@ class DiscoverScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     _Header(stats: _catalogueStats, compact: compact),
-                    const SizedBox(height: 28),
+                    const SizedBox(height: 40),
+                    _SearchBar(
+                      shown: sources.length,
+                      total: gallerySources.length,
+                      filtering: _query.trim().isNotEmpty,
+                      onChanged: (String value) =>
+                          setState(() => _query = value),
+                    ),
+                    const SizedBox(height: 20),
                     const NRule(),
                   ],
                 ),
@@ -72,22 +115,24 @@ class DiscoverScreen extends StatelessWidget {
                 padding.right,
                 padding.bottom,
               ),
-              sliver: SliverList.builder(
-                // Two children per source — the group and the rule under it —
-                // so a group is built only when it scrolls into reach.
-                itemCount: gallerySources.length * 2 - 1,
-                itemBuilder: (BuildContext context, int index) {
-                  if (index.isOdd) return const NRule();
-                  final GallerySource source = gallerySources[index ~/ 2];
-                  return CountryGroup(
-                    key: ValueKey<String>(source.packageName),
-                    source: source,
-                    compact: compact,
-                    onOpenPlate: onOpenPlate,
-                    onOpenCountry: () => onOpenCountry(source),
-                  );
-                },
-              ),
+              sliver: sources.isEmpty
+                  ? SliverToBoxAdapter(child: _NoMatches(query: _query.trim()))
+                  : SliverList.builder(
+                      // Two children per source — the group and the rule under it —
+                      // so a group is built only when it scrolls into reach.
+                      itemCount: sources.length * 2 - 1,
+                      itemBuilder: (BuildContext context, int index) {
+                        if (index.isOdd) return const NRule();
+                        final GallerySource source = sources[index ~/ 2];
+                        return CountryGroup(
+                          key: ValueKey<String>(source.packageName),
+                          source: source,
+                          compact: compact,
+                          onOpenPlate: widget.onOpenPlate,
+                          onOpenCountry: () => widget.onOpenCountry(source),
+                        );
+                      },
+                    ),
             ),
           ],
         );
@@ -228,6 +273,189 @@ class _StatTile extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+/// The filter row between the header and the first group: a wide search
+/// field on the left, the number of groups it leaves on the right.
+class _SearchBar extends StatelessWidget {
+  const _SearchBar({
+    required this.shown,
+    required this.total,
+    required this.filtering,
+    required this.onChanged,
+  });
+
+  final int shown;
+  final int total;
+  final bool filtering;
+  final ValueChanged<String> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Flexible(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 520),
+            child: _SearchBox(onChanged: onChanged),
+          ),
+        ),
+        const SizedBox(width: 24),
+        AnimatedOpacity(
+          duration: const Duration(milliseconds: 180),
+          opacity: filtering ? 1 : 0,
+          child: Text(
+            '$shown of $total'.toUpperCase(),
+            style: NType.kicker.copyWith(
+              fontSize: 10,
+              letterSpacing: 0.1 * 10,
+              color: shown == 0 ? N.n600 : N.accent300,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// The country search field.
+class _SearchBox extends StatefulWidget {
+  const _SearchBox({required this.onChanged});
+
+  final ValueChanged<String> onChanged;
+
+  @override
+  State<_SearchBox> createState() => _SearchBoxState();
+}
+
+class _SearchBoxState extends State<_SearchBox> {
+  final TextEditingController _controller = TextEditingController();
+  final FocusNode _focus = FocusNode();
+  bool _hovered = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _focus.addListener(() => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _focus.dispose();
+    super.dispose();
+  }
+
+  void _clear() {
+    _controller.clear();
+    widget.onChanged('');
+    setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final bool focused = _focus.hasFocus;
+    final Color border = focused
+        ? N.accent
+        : _hovered
+        ? N.n600
+        : N.n800;
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hovered = true),
+      onExit: (_) => setState(() => _hovered = false),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 180),
+        curve: Curves.easeOut,
+        height: 48,
+        padding: const EdgeInsets.symmetric(horizontal: 14),
+        decoration: BoxDecoration(
+          color: focused ? N.n900 : N.surface.withValues(alpha: 0.5),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: border),
+          boxShadow: <BoxShadow>[
+            if (focused)
+              BoxShadow(
+                color: N.accent.withValues(alpha: 0.25),
+                blurRadius: 18,
+                spreadRadius: 1,
+              ),
+          ],
+        ),
+        child: Row(
+          children: <Widget>[
+            Icon(
+              Icons.search_rounded,
+              size: 18,
+              color: focused ? N.accent300 : N.n500,
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: TextField(
+                controller: _controller,
+                focusNode: _focus,
+                onChanged: (String value) {
+                  widget.onChanged(value);
+                  setState(() {});
+                },
+                cursorColor: N.accent300,
+                style: const TextStyle(
+                  fontFamily: NType.archivo,
+                  fontSize: 14,
+                  color: N.n100,
+                ),
+                decoration: InputDecoration(
+                  isCollapsed: true,
+                  border: InputBorder.none,
+                  hintText: 'Search a country — Oman, Spain, Persia…',
+                  hintStyle: NType.kicker.copyWith(
+                    fontSize: 11,
+                    letterSpacing: 0.08 * 11,
+                    color: N.n600,
+                  ),
+                ),
+              ),
+            ),
+            if (_controller.text.isNotEmpty)
+              GestureDetector(
+                onTap: _clear,
+                child: const MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: Icon(Icons.close_rounded, size: 16, color: N.n500),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Shown in place of the groups when no country matches.
+class _NoMatches extends StatelessWidget {
+  const _NoMatches({required this.query});
+
+  final String query;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 72),
+      child: Column(
+        children: <Widget>[
+          const Icon(Icons.travel_explore_rounded, size: 32, color: N.n700),
+          const SizedBox(height: 16),
+          Text(
+            'No country matches “$query”',
+            style: const TextStyle(
+              fontFamily: NType.serif,
+              fontSize: 18,
+              color: N.n400,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

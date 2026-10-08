@@ -45,7 +45,18 @@ void _installJankLog() {
   });
 }
 
-void main() {
+/// The page to open on, for platforms with no address bar: either
+/// `--dart-define=ROUTE=/discover/slovenia` or, on desktop,
+/// `--dart-entrypoint-args=/discover/slovenia`. Empty on web, where the URL
+/// already says where to go.
+String? _startRoute(List<String> args) {
+  const String defined = String.fromEnvironment('ROUTE');
+  if (kIsWeb) return null;
+  if (args.isNotEmpty && args.first.startsWith('/')) return args.first;
+  return defined.isEmpty ? null : defined;
+}
+
+void main(List<String> args) {
   WidgetsFlutterBinding.ensureInitialized();
   configureUrlStrategy();
   if (kProfileMode) _installJankLog();
@@ -55,5 +66,5 @@ void main() {
     DeviceOrientation.landscapeLeft,
     DeviceOrientation.landscapeRight,
   ]);
-  runApp(const PlateNumberShowcaseApp());
+  runApp(PlateNumberShowcaseApp(initialRoute: _startRoute(args)));
 }

@@ -60,6 +60,13 @@ packages:
       relative: true
     source: path
     version: "0.1.0"
+  burkina_faso_plate:
+    dependency: "direct main"
+    description:
+      path: "../burkina_faso_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
   characters:
     dependency: transitive
     description:
@@ -68,6 +75,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.1"
+  chile_plate:
+    dependency: "direct main"
+    description:
+      path: "../chile_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
   clock:
     dependency: transitive
     description:
@@ -102,6 +116,20 @@ packages:
     dependency: "direct main"
     description:
       path: "../cuba_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
+  djibouti_plate:
+    dependency: "direct main"
+    description:
+      path: "../djibouti_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
+  eritrea_plate:
+    dependency: "direct main"
+    description:
+      path: "../eritrea_plate"
       relative: true
     source: path
     version: "0.1.0"
@@ -192,6 +220,20 @@ packages:
     dependency: "direct main"
     description:
       path: "../iranshahr_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
+  italy_plate:
+    dependency: "direct main"
+    description:
+      path: "../italy_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
+  kyrgyzstan_plate:
+    dependency: "direct main"
+    description:
+      path: "../kyrgyzstan_plate"
       relative: true
     source: path
     version: "0.1.0"
@@ -388,11 +430,25 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
+  republic_of_ireland_plate:
+    dependency: "direct main"
+    description:
+      path: "../republic_of_ireland_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
   sky_engine:
     dependency: transitive
     description: flutter
     source: sdk
     version: "0.0.0"
+  slovenia_plate:
+    dependency: "direct main"
+    description:
+      path: "../slovenia_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
   somalia_plate:
     dependency: "direct main"
     description:
@@ -408,6 +464,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.10.2"
+  spain_plate:
+    dependency: "direct main"
+    description:
+      path: "../spain_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
   stack_trace:
     dependency: transitive
     description:
@@ -611,6 +674,13 @@ packages:
       relative: true
     source: path
     version: "0.3.0"
+  zimbabwe_plate:
+    dependency: "direct main"
+    description:
+      path: "../zimbabwe_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
 sdks:
   dart: ">=3.12.0 <4.0.0"
   flutter: ">=3.44.0"

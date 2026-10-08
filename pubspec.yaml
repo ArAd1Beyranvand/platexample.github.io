@@ -123,6 +123,26 @@ dependencies:
     path: ../laos_plate
   vietnam_plate:
     path: ../vietnam_plate
+  burkina_faso_plate:
+    path: ../burkina_faso_plate
+  eritrea_plate:
+    path: ../eritrea_plate
+  djibouti_plate:
+    path: ../djibouti_plate
+  kyrgyzstan_plate:
+    path: ../kyrgyzstan_plate
+  chile_plate:
+    path: ../chile_plate
+  slovenia_plate:
+    path: ../slovenia_plate
+  italy_plate:
+    path: ../italy_plate
+  spain_plate:
+    path: ../spain_plate
+  republic_of_ireland_plate:
+    path: ../republic_of_ireland_plate
+  zimbabwe_plate:
+    path: ../zimbabwe_plate
 
   # Used directly by the showcase to drive PlateCardBloc from the demo screen.
   url_launcher: ^6.3.2

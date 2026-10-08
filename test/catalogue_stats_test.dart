@@ -11,7 +11,7 @@ void main() {
 
     expect(
       stats.packages,
-      gallerySources.map((GallerySource s) => s.packageName).toSet().length,
+      gallerySources.expand((GallerySource s) => s.packageNames).toSet().length,
     );
 
     // Flattened, not one per source: `iranshahr_plate` ships several.

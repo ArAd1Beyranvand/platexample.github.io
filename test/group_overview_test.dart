@@ -6,7 +6,7 @@ import 'package:plate_number_holder/screens/gallery/sources/sources.dart';
 import 'package:plate_number_holder/theme/nocturne_theme.dart';
 
 void main() {
-  final GallerySource yemen = gallerySources.whereType<YemenSource>().single;
+  final GallerySource yemen = allGallerySources.whereType<YemenSource>().single;
 
   test('Yemen is an umbrella over its five systems', () {
     expect(yemen.members.map((GallerySource m) => m.countryName), <String>[

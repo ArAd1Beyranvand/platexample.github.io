@@ -5,7 +5,7 @@ import 'package:plate_number_holder/screens/gallery/sources/sources.dart';
 
 void main() {
   testWidgets('every Bolivia entry renders with its own theme', (t) async {
-    final source = gallerySources.whereType<BoliviaSource>().single;
+    final source = allGallerySources.whereType<BoliviaSource>().single;
     final themes = <PlateTheme>{};
     for (final section in source.sections) {
       for (final e in section.entries) {

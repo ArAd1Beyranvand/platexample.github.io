@@ -5,7 +5,10 @@ import '../theme/nocturne_theme.dart';
 import 'app_router.dart';
 
 class PlateNumberShowcaseApp extends StatefulWidget {
-  const PlateNumberShowcaseApp({super.key});
+  const PlateNumberShowcaseApp({super.key, this.initialRoute});
+
+  /// Overrides the platform's start route, e.g. `/discover/slovenia`.
+  final String? initialRoute;
 
   @override
   State<PlateNumberShowcaseApp> createState() => _PlateNumberShowcaseAppState();
@@ -20,10 +23,20 @@ class _PlateNumberShowcaseAppState extends State<PlateNumberShowcaseApp> {
   // switches and detail pushes untouched.
   final ValueNotifier<bool> _forceMobilePanel = ValueNotifier<bool>(false);
 
+  late final PlatformRouteInformationProvider? _routeProvider =
+      widget.initialRoute == null
+      ? null
+      : PlatformRouteInformationProvider(
+          initialRouteInformation: RouteInformation(
+            uri: Uri.parse(widget.initialRoute!),
+          ),
+        );
+
   @override
   void dispose() {
     _routerDelegate.dispose();
     _forceMobilePanel.dispose();
+    _routeProvider?.dispose();
     super.dispose();
   }
 
@@ -37,6 +50,7 @@ class _PlateNumberShowcaseAppState extends State<PlateNumberShowcaseApp> {
       themeMode: ThemeMode.dark,
       scrollBehavior: NocturneScrollBehavior(),
       routerDelegate: _routerDelegate,
+      routeInformationProvider: _routeProvider,
       routeInformationParser: const AppRouteParser(),
       builder: (BuildContext context, Widget? child) {
         return MobilePanelScope(

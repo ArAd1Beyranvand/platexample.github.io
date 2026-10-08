@@ -1,35 +1,19 @@
 import '../catalogue.dart';
-import 'algeria.dart';
-import 'bolivia.dart';
-import 'brazil.dart';
-import 'colombia.dart';
-import 'germany.dart';
 import 'iran.dart';
 import 'iranshahr.dart';
-import 'cuba.dart';
 import 'india.dart';
 import 'indonesia.dart';
-import 'belarus.dart';
-import 'namibia.dart';
-import 'nicaragua.dart';
-import 'tunisia.dart';
-import 'venezuela.dart';
 import 'lebanon.dart';
 import 'brunei.dart';
-import 'libya.dart';
 import 'laos.dart';
 import 'maldives.dart';
 import 'malaysia.dart';
-import 'mali.dart';
-import 'mauritania.dart';
-import 'niger.dart';
 import 'north_korea.dart';
 import 'palestine.dart';
-import 'comoros.dart';
-import 'somalia.dart';
-import 'sudan.dart';
 import 'vietnam.dart';
 import 'yemen.dart';
+import 'regions.dart';
+import 'kyrgyzstan.dart';
 
 export '../catalogue.dart';
 export 'algeria.dart';
@@ -63,6 +47,17 @@ export 'somalia.dart';
 export 'sudan.dart';
 export 'vietnam.dart';
 export 'yemen.dart';
+export 'zimbabwe.dart';
+export 'regions.dart';
+export 'republic_of_ireland.dart';
+export 'spain.dart';
+export 'italy.dart';
+export 'slovenia.dart';
+export 'chile.dart';
+export 'kyrgyzstan.dart';
+export 'djibouti.dart';
+export 'eritrea.dart';
+export 'burkina_faso.dart';
 
 /// Every country this app can draw, in the order the catalogue lists them.
 ///
@@ -74,39 +69,34 @@ export 'yemen.dart';
 /// each of its nine countries (Bahrain, Azerbaijan, Afghanistan, Armenia,
 /// Tajikistan, Kuwait, Qatar, Iraq, UAE) as separate groups. The nine country
 /// sources below are used for those detail pages and the `/iranshahr` overview
-/// page.
+/// page. Europe, Africa and America are umbrellas the same way, over the
+/// countries in `regions.dart`.
 final List<GallerySource> gallerySources = <GallerySource>[
   const IranSource(),
   const IranshahirSource(),
   PalestineSource(),
   YemenSource(),
   LebanonSource(),
-  CubaSource(),
-  VenezuelaSource(),
   IndiaSource(),
-  const GermanySource(),
   MalaysiaSource(),
-  AlgeriaSource(),
   IndonesiaSource(),
-  BelarusSource(),
-  NicaraguaSource(),
-  TunisiaSource(),
-  BoliviaSource(),
-  ColombiaSource(),
-  SudanSource(),
-  NigerSource(),
-  MaliSource(),
   NorthKoreaSource(),
-  NamibiaSource(),
-  BrazilSource(),
-  MauritaniaSource(),
-  ComorosSource(),
-  SomaliaSource(),
-  LibyaSource(),
   BruneiSource(),
   MaldivesSource(),
   LaosSource(),
   VietnamSource(),
+  KyrgyzstanSource(),
+  RegionSource('Europe', europeCountries),
+  RegionSource('Africa', africaCountries),
+  RegionSource('America', americaCountries),
+];
+
+/// Every source, umbrellas' members included — what a lookup by type wants.
+final List<GallerySource> allGallerySources = <GallerySource>[
+  for (final GallerySource top in gallerySources) ...<GallerySource>[
+    top,
+    ...top.members,
+  ],
 ];
 
 /// The ten countries within Iranshahr for the `/iranshahr/{country}` detail

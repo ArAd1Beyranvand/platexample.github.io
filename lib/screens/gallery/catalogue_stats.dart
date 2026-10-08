@@ -22,7 +22,7 @@ class CatalogueStats {
     final Set<String> packages = <String>{};
 
     for (final GallerySource source in catalogue) {
-      packages.add(source.packageName);
+      packages.addAll(source.packageNames);
       countries.addAll(source.countryNames);
       for (final GallerySection section in source.sections) {
         for (final GalleryEntry entry in section.entries) {

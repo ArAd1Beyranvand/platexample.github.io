@@ -65,6 +65,14 @@ class GalleryShellState extends State<GalleryShellScreen> {
   /// location that page shows; the list's length is the depth.
   final List<AppLocation> _discoverStack = <AppLocation>[];
 
+  /// The routes behind [_discoverStack], index for index.
+  final List<Route<void>> _discoverRoutes = <Route<void>>[];
+
+  /// Routes taken off by [_switchCountry]'s `pushReplacement`. Their futures
+  /// still complete, and must not trim the mirror: the slot they held now
+  /// belongs to their replacement.
+  final Set<Route<void>> _replacedRoutes = <Route<void>>{};
+
   /// How many pops [_syncToLocation] has issued whose completion is still
   /// pending.
   ///
@@ -223,28 +231,41 @@ class GalleryShellState extends State<GalleryShellScreen> {
   /// breadcrumb, browser back, or [_syncToLocation] itself — so this is the one
   /// place the mirror is trimmed, and the one place a pop the router did not
   /// initiate gets reported back up to it.
-  void _pushDiscover(AppLocation location, {bool instant = false}) {
+  void _pushDiscover(
+    AppLocation location, {
+    bool instant = false,
+    bool replace = false,
+  }) {
     final NavigatorState? navigator = _discoverNavigatorKey.currentState;
     if (navigator == null) return;
 
-    final int depthAfterPush = _discoverStack.length + 1;
+    final Route<void> route = PageRiseRoute<void>(
+      builder: _builderFor(location),
+      instant: instant,
+    );
+    if (replace) {
+      _replacedRoutes.add(_discoverRoutes.removeLast());
+      _discoverStack.removeLast();
+    }
     _discoverStack.add(location);
+    _discoverRoutes.add(route);
     _syncRouteState();
 
-    navigator
-        .push(
-          PageRiseRoute<void>(builder: _builderFor(location), instant: instant),
-        )
+    (replace
+            ? navigator.pushReplacement<void, void>(route)
+            : navigator.push(route))
         .then((_) {
           if (!mounted) return;
-          // Trim to just below this route's own position rather than removing one
-          // entry: `popUntil` can take several pages off at once, and the futures
-          // then complete deepest-first.
-          if (_discoverStack.length >= depthAfterPush) {
-            _discoverStack.removeRange(
-              depthAfterPush - 1,
-              _discoverStack.length,
-            );
+          if (_replacedRoutes.remove(route)) return;
+          // Remove this route's own entry, found by identity, and nothing
+          // else: [_syncToLocation] pops and then pushes in one go, so by the
+          // time this future resolves the pages above its slot are the ones
+          // that replaced it. A multi-page pop still empties the mirror, one
+          // future per page.
+          final int index = _discoverRoutes.indexOf(route);
+          if (index >= 0) {
+            _discoverStack.removeAt(index);
+            _discoverRoutes.removeAt(index);
           }
           _syncRouteState();
           // Claim this resolution against a pending router-issued pop if there is
@@ -340,14 +361,11 @@ class GalleryShellState extends State<GalleryShellScreen> {
   /// and another arriving; `pushReplacement` is the one transition the design
   /// asks for here, so the stack is moved directly and the router told after.
   void _switchCountry(GallerySource source) {
-    final NavigatorState? navigator = _discoverNavigatorKey.currentState;
-    if (navigator == null || _discoverStack.isEmpty) return;
+    if (_discoverNavigatorKey.currentState == null || _discoverStack.isEmpty) {
+      return;
+    }
     final AppLocation location = AppLocation.country(source);
-    _discoverStack[_discoverStack.length - 1] = location;
-    _syncRouteState();
-    navigator.pushReplacement<void, void>(
-      PageRiseRoute<void>(builder: _builderFor(location)),
-    );
+    _pushDiscover(location, replace: true);
     widget.onNavigate(location);
   }
 
