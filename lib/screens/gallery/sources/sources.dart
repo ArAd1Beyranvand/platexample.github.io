@@ -1,5 +1,6 @@
 import '../catalogue.dart';
 import 'iran.dart';
+import 'syria.dart';
 import 'iranshahr.dart';
 import 'india.dart';
 import 'indonesia.dart';
@@ -22,6 +23,7 @@ export 'brazil.dart';
 export 'colombia.dart';
 export 'germany.dart';
 export 'iran.dart';
+export 'syria.dart';
 export 'iranshahr.dart';
 export 'cuba.dart';
 export 'india.dart';
@@ -74,6 +76,7 @@ export 'burkina_faso.dart';
 final List<GallerySource> gallerySources = <GallerySource>[
   const IranSource(),
   const IranshahirSource(),
+  SyriaSource(),
   PalestineSource(),
   YemenSource(),
   LebanonSource(),

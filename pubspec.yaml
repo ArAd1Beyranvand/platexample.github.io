@@ -91,6 +91,8 @@ dependencies:
     path: ../namibia_plate
   nicaragua_plate:
     path: ../nicaragua_plate
+  syria_plate:
+    path: ../syria_plate
   tunisia_plate:
     path: ../tunisia_plate
   bolivia_plate:
