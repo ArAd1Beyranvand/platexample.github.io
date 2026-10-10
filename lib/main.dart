@@ -6,10 +6,10 @@
 //   * each package stays small — no poster fonts, no texture PNGs, no
 //     device-frame painters, no demo-only dependencies in its pubspec;
 //   * everything here goes through their public surfaces
-//     (`package:core_plate/plate_core.dart` and the country / keypad
+//     (`package:plate_core/plate_core.dart` and the country / keypad
 //     barrels), so if the demo compiles, the API is genuinely sufficient
 //     to build a real UI with;
-//   * the library was split into core_plate + plate_keypad + a country
+//   * the library was split into plate_core + plate_keypad + a country
 //     package per country without touching a single file in this project
 //     beyond the import lines — which is exactly what P7, P8 and P9 did, and
 //     what adding palestine_plate and yemen_plate since has cost.
@@ -21,8 +21,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 
-import 'app/app.dart';
+import 'package:flutter/semantics.dart';
+
 import 'app/url_strategy/url_strategy.dart';
+import 'newdesign/app/pd_app.dart';
 
 /// One line per frame that missed a 60Hz budget, split between the UI thread
 /// (Dart: build, layout, paint recording) and the raster thread (the GPU
@@ -46,8 +48,8 @@ void _installJankLog() {
 }
 
 /// The page to open on, for platforms with no address bar: either
-/// `--dart-define=ROUTE=/discover/slovenia` or, on desktop,
-/// `--dart-entrypoint-args=/discover/slovenia`. Empty on web, where the URL
+/// `--dart-define=ROUTE=/plates/slovenia` or, on desktop,
+/// `--dart-entrypoint-args=/plates/slovenia`. Empty on web, where the URL
 /// already says where to go.
 String? _startRoute(List<String> args) {
   const String defined = String.fromEnvironment('ROUTE');
@@ -59,6 +61,9 @@ String? _startRoute(List<String> args) {
 void main(List<String> args) {
   WidgetsFlutterBinding.ensureInitialized();
   configureUrlStrategy();
+  // Builds the semantics tree up front, which also removes Flutter web's
+  // floating "Enable accessibility" button.
+  SemanticsBinding.instance.ensureSemantics();
   if (kProfileMode) _installJankLog();
   SystemChrome.setPreferredOrientations(const [
     DeviceOrientation.portraitUp,
@@ -66,5 +71,5 @@ void main(List<String> args) {
     DeviceOrientation.landscapeLeft,
     DeviceOrientation.landscapeRight,
   ]);
-  runApp(PlateNumberShowcaseApp(initialRoute: _startRoute(args)));
+  runApp(PdApp(initialRoute: _startRoute(args)));
 }

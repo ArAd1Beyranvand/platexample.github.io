@@ -146,8 +146,66 @@ dependencies:
   zimbabwe_plate:
     path: ../zimbabwe_plate
 
+  # The rest of the catalogue: one package per country, every one a local
+  # path checkout like the blocks above.
+  angola_plate:
+    path: ../angola_plate
+  benin_plate:
+    path: ../benin_plate
+  bhutan_plate:
+    path: ../bhutan_plate
+  bosnia_and_herzegovina_plate:
+    path: ../bosnia_and_herzegovina_plate
+  botswana_plate:
+    path: ../botswana_plate
+  cambodia_plate:
+    path: ../cambodia_plate
+  central_african_republic_plate:
+    path: ../central_african_republic_plate
+  egypt_plate:
+    path: ../egypt_plate
+  jordan_plate:
+    path: ../jordan_plate
+  kazakhstan_plate:
+    path: ../kazakhstan_plate
+  malta_plate:
+    path: ../malta_plate
+  mongolia_plate:
+    path: ../mongolia_plate
+  mozambique_plate:
+    path: ../mozambique_plate
+  myanmar_plate:
+    path: ../myanmar_plate
+  norway_plate:
+    path: ../norway_plate
+  republic_of_the_congo_plate:
+    path: ../republic_of_the_congo_plate
+  saint_vincent_and_the_grenadines_plate:
+    path: ../saint_vincent_and_the_grenadines_plate
+  serbia_plate:
+    path: ../serbia_plate
+  sri_lanka_plate:
+    path: ../sri_lanka_plate
+  tanzania_plate:
+    path: ../tanzania_plate
+  thailand_plate:
+    path: ../thailand_plate
+  timor_leste_plate:
+    path: ../timor_leste_plate
+  turkmenistan_plate:
+    path: ../turkmenistan_plate
+  uruguay_plate:
+    path: ../uruguay_plate
+  uzbekistan_plate:
+    path: ../uzbekistan_plate
+  vanuatu_plate:
+    path: ../vanuatu_plate
+  vatican_city_plate:
+    path: ../vatican_city_plate
+
   # Used directly by the showcase to drive PlateCardBloc from the demo screen.
   url_launcher: ^6.3.2
+  web: ^1.1.1
 
 dev_dependencies:
   flutter_test:
@@ -182,6 +240,60 @@ dependency_overrides:
     path: ../namibia_plate
   nicaragua_plate:
     path: ../nicaragua_plate
+  angola_plate:
+    path: ../angola_plate
+  benin_plate:
+    path: ../benin_plate
+  bhutan_plate:
+    path: ../bhutan_plate
+  bosnia_and_herzegovina_plate:
+    path: ../bosnia_and_herzegovina_plate
+  botswana_plate:
+    path: ../botswana_plate
+  cambodia_plate:
+    path: ../cambodia_plate
+  central_african_republic_plate:
+    path: ../central_african_republic_plate
+  egypt_plate:
+    path: ../egypt_plate
+  jordan_plate:
+    path: ../jordan_plate
+  kazakhstan_plate:
+    path: ../kazakhstan_plate
+  malta_plate:
+    path: ../malta_plate
+  mongolia_plate:
+    path: ../mongolia_plate
+  mozambique_plate:
+    path: ../mozambique_plate
+  myanmar_plate:
+    path: ../myanmar_plate
+  norway_plate:
+    path: ../norway_plate
+  republic_of_the_congo_plate:
+    path: ../republic_of_the_congo_plate
+  saint_vincent_and_the_grenadines_plate:
+    path: ../saint_vincent_and_the_grenadines_plate
+  serbia_plate:
+    path: ../serbia_plate
+  sri_lanka_plate:
+    path: ../sri_lanka_plate
+  tanzania_plate:
+    path: ../tanzania_plate
+  thailand_plate:
+    path: ../thailand_plate
+  timor_leste_plate:
+    path: ../timor_leste_plate
+  turkmenistan_plate:
+    path: ../turkmenistan_plate
+  uruguay_plate:
+    path: ../uruguay_plate
+  uzbekistan_plate:
+    path: ../uzbekistan_plate
+  vanuatu_plate:
+    path: ../vanuatu_plate
+  vatican_city_plate:
+    path: ../vatican_city_plate
 
   # Not a dependency this app names — it reaches it through the country
   # packages, every one of which takes its digit and letter alphabets from it.
@@ -218,10 +330,6 @@ flutter:
       fonts:
         - asset: assets/fonts/MartianMono-latin.ttf
         - asset: assets/fonts/MartianMono-latin-ext.ttf
-    - family: Newsreader
-      fonts:
-        - asset: assets/fonts/Newsreader-latin.ttf
-        - asset: assets/fonts/Newsreader-latin-ext.ttf
     - family: Vazirmatn
       fonts:
         - asset: assets/fonts/Vazirmatn-arabic.ttf

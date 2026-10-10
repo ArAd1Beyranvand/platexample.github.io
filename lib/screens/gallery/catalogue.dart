@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 /// it is.
 ///
 /// [spec] is geometry, [theme] is colour and [country] is the panel block —
-/// three independent inputs to `PlateCanvas` since core_plate 0.6.0. An entry
+/// three independent inputs to `PlateCanvas` since plate_core 0.6.0. An entry
 /// binds one combination of the three and names it. Two entries can therefore
 /// share a spec and still be two different plates, which is the whole point of
 /// the collapse: a Yemeni government plate and a private one are one geometry
@@ -79,7 +79,7 @@ class GallerySection {
 
 /// Everything one country package offers, normalised.
 ///
-/// This type lives in the gallery and not in `core_plate` on purpose. A
+/// This type lives in the gallery and not in `plate_core` on purpose. A
 /// catalogue is a *presentation* concern: putting a `PlateCatalog` type into
 /// the engine would make it know about lists of plates, which is one step from
 /// knowing about countries. Each country exposes its plates its own way — two

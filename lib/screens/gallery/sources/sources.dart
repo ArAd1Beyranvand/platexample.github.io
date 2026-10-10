@@ -15,6 +15,7 @@ import 'vietnam.dart';
 import 'yemen.dart';
 import 'regions.dart';
 import 'kyrgyzstan.dart';
+import 'vanuatu.dart';
 
 export '../catalogue.dart';
 export 'algeria.dart';
@@ -60,6 +61,33 @@ export 'kyrgyzstan.dart';
 export 'djibouti.dart';
 export 'eritrea.dart';
 export 'burkina_faso.dart';
+export 'angola.dart';
+export 'benin.dart';
+export 'bhutan.dart';
+export 'bosnia_and_herzegovina.dart';
+export 'botswana.dart';
+export 'cambodia.dart';
+export 'central_african_republic.dart';
+export 'egypt.dart';
+export 'jordan.dart';
+export 'kazakhstan.dart';
+export 'malta.dart';
+export 'mongolia.dart';
+export 'mozambique.dart';
+export 'myanmar.dart';
+export 'norway.dart';
+export 'republic_of_the_congo.dart';
+export 'saint_vincent_and_the_grenadines.dart';
+export 'serbia.dart';
+export 'sri_lanka.dart';
+export 'tanzania.dart';
+export 'thailand.dart';
+export 'timor_leste.dart';
+export 'turkmenistan.dart';
+export 'uruguay.dart';
+export 'uzbekistan.dart';
+export 'vanuatu.dart';
+export 'vatican_city.dart';
 
 /// Every country this app can draw, in the order the catalogue lists them.
 ///
@@ -71,27 +99,31 @@ export 'burkina_faso.dart';
 /// each of its nine countries (Bahrain, Azerbaijan, Afghanistan, Armenia,
 /// Tajikistan, Kuwait, Qatar, Iraq, UAE) as separate groups. The nine country
 /// sources below are used for those detail pages and the `/iranshahr` overview
-/// page. Europe, Africa and America are umbrellas the same way, over the
-/// countries in `regions.dart`.
+/// page. Asia, Europe, Africa and America are umbrellas the same way, over
+/// the countries in `regions.dart`.
+/// The head of the list is fixed — Iran first, then the regions it sits closest
+/// to, then the continents. Everything after America is alphabetical.
 final List<GallerySource> gallerySources = <GallerySource>[
   const IranSource(),
   const IranshahirSource(),
-  SyriaSource(),
-  PalestineSource(),
   YemenSource(),
-  LebanonSource(),
-  IndiaSource(),
-  MalaysiaSource(),
-  IndonesiaSource(),
-  NorthKoreaSource(),
-  BruneiSource(),
-  MaldivesSource(),
-  LaosSource(),
-  VietnamSource(),
-  KyrgyzstanSource(),
+  PalestineSource(),
+  RegionSource('Asia', asiaCountries),
   RegionSource('Europe', europeCountries),
-  RegionSource('Africa', africaCountries),
   RegionSource('America', americaCountries),
+  RegionSource('Africa', africaCountries),
+  BruneiSource(),
+  IndiaSource(),
+  IndonesiaSource(),
+  KyrgyzstanSource(),
+  LaosSource(),
+  LebanonSource(),
+  MalaysiaSource(),
+  MaldivesSource(),
+  NorthKoreaSource(),
+  SyriaSource(),
+  VanuatuSource(),
+  VietnamSource(),
 ];
 
 /// Every source, umbrellas' members included — what a lookup by type wants.

@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:eritrea_plate/eritrea_plate.dart';
-import 'package:plate_core/plate_core.dart';
 
 import '../catalogue.dart';
 

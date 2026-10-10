@@ -7,7 +7,7 @@ FREE PALESTINE 🇮🇷🇵🇸 پاینده ایران
 
 # plate_number_holder
 
-The showcase / poster app for the plate library — [`plate_core`](../core-plate)
+The showcase / poster app for the plate library — [`plate_core`](../plate-core)
 plus [`iran_plate`](../iran-plate), [`germany_plate`](../germany-plate) and
 [`plate_keypad`](../plate-keypad). It used to live inside the package repo as
 `example/`; it was split out so the packages ship nothing demo-only.
@@ -32,7 +32,7 @@ The five checkouts must sit side by side:
 
 ```
 StudioProjects/plate/
-  core-plate/
+  plate-core/
   iran-plate/
   germany-plate/
   plate-keypad/
