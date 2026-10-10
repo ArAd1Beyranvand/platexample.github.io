@@ -284,7 +284,10 @@ class _LivePlateState extends State<LivePlate> {
             inputSource: widget.inputSource,
             validator: widget.validator,
             animation: _anim,
-            specTransition: PlateSpecTransition(keepKinds: _keep),
+            specTransition: PlateSpecTransition(
+              keepKinds: _keep,
+              keepIdentical: true,
+            ),
             onChooseCharacter: (PlateAlphabet a) =>
                 PlateCharacterPicker.show(context, a),
           ),
