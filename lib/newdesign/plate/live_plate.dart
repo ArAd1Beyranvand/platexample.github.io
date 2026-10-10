@@ -111,6 +111,7 @@ class _LivePlateState extends State<LivePlate> {
 
   // TEMPORARY DEMO: drives PlateAnimationDemoBar below the plate.
   final PlateAnimationController _anim = PlateAnimationController();
+  Set<PlatePartKind> _keep = const <PlatePartKind>{};
 
   @override
   void initState() {
@@ -283,13 +284,19 @@ class _LivePlateState extends State<LivePlate> {
             inputSource: widget.inputSource,
             validator: widget.validator,
             animation: _anim,
+            specTransition: PlateSpecTransition(keepKinds: _keep),
             onChooseCharacter: (PlateAlphabet a) =>
                 PlateCharacterPicker.show(context, a),
           ),
         ),
         // TEMPORARY DEMO control.
         const SizedBox(height: 8),
-        PlateAnimationDemoBar(controller: _anim, spec: spec),
+        PlateAnimationDemoBar(
+          controller: _anim,
+          spec: spec,
+          keep: _keep,
+          onKeepChanged: (k) => setState(() => _keep = k),
+        ),
         const SizedBox(height: 14),
         _statusBox(
           Semantics(
@@ -367,10 +374,8 @@ class SlotKeypad extends StatelessWidget {
   final double maxWidth;
 
   @override
-  Widget build(BuildContext context) => ListenableBuilder(
-    listenable: controller,
-    builder: _buildKeypad,
-  );
+  Widget build(BuildContext context) =>
+      ListenableBuilder(listenable: controller, builder: _buildKeypad);
 
   Widget _buildKeypad(BuildContext context, Widget? _) {
     final PlateSpec spec = controller.spec;
