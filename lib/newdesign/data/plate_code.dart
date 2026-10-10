@@ -19,7 +19,7 @@ String packageOf(CatalogueItem item) => item.source.packageNames.first;
 
 /// The `import` a package's barrel lives at.
 String importOf(String package) => switch (package) {
-  'iranshahr_plate' => "import 'package:iranshahr_plate/iranshahr.dart';",
+  'iranshahr_plate' => "import 'package:iranshahr_plate/iranshahr_plate.dart';",
   _ => "import 'package:$package/$package.dart';",
 };
 

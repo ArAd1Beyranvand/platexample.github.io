@@ -2,7 +2,7 @@
 // ignore_for_file: directives_ordering
 import 'package:plate_core/plate_core.dart';
 import 'package:iran_plate/iran_plate.dart';
-import 'package:iranshahr_plate/iranshahr.dart';
+import 'package:iranshahr_plate/iranshahr_plate.dart';
 import 'package:germany_plate/germany_plate.dart';
 import 'package:palestine_plate/palestine_plate.dart';
 import 'package:yemen_plate/yemen_plate.dart';
