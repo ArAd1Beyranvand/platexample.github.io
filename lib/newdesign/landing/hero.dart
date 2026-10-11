@@ -38,6 +38,25 @@ final List<(String, CatalogueItem)> heroPlates = <(String, CatalogueItem)>[
     if (itemForSpec(p.$2) case final CatalogueItem item) (p.$1, item),
 ];
 
+/// One plate per country, in catalogue order, for the hero to cycle through,
+/// starting from the first chip.
+final List<CatalogueItem> heroTour = () {
+  final List<CatalogueItem> tour = <CatalogueItem>[
+    for (final GallerySource country in plateCountries)
+      if (playgroundItems
+              .where((CatalogueItem i) => identical(i.source, country))
+              .firstOrNull
+          case final CatalogueItem item)
+        item,
+  ];
+  final int start = tour.indexWhere(
+    (CatalogueItem i) => identical(i.source, heroPlates.first.$2.source),
+  );
+  return start <= 0
+      ? tour
+      : <CatalogueItem>[...tour.sublist(start), ...tour.sublist(0, start)];
+}();
+
 String validNameOf(CatalogueItem item) =>
     '${item.source.countryName} ${item.entry.label.toLowerCase()}';
 
@@ -167,13 +186,14 @@ class _Stage extends StatefulWidget {
 class _StageState extends State<_Stage> {
   int _index = 0;
   late final PlateController _plate = PlateController(
-    spec: heroPlates.first.$2.entry.spec,
+    spec: heroTour.first.entry.spec,
   );
 
-  CatalogueItem get _item => heroPlates[_index].$2;
+  /// Index into [heroTour].
+  CatalogueItem get _item => heroTour[_index];
 
   /// How long each plate shows before the next one staggers in.
-  static const Duration _dwell = Duration(seconds: 3);
+  static const Duration _dwell = Duration(seconds: 5);
 
   /// How long autoplay waits after the user touches the plate or keypad.
   static const Duration _idle = Duration(seconds: 10);
@@ -197,14 +217,14 @@ class _StageState extends State<_Stage> {
     _autoplay?.cancel();
     _autoplay = Timer(after, () {
       if (!mounted) return;
-      _select((_index + 1) % heroPlates.length);
+      _select((_index + 1) % heroTour.length);
       _schedule(_dwell);
     });
   }
 
   void _select(int index) {
     if (index == _index) return;
-    final PlateSpec next = heroPlates[index].$2.entry.spec;
+    final PlateSpec next = heroTour[index].entry.spec;
     final List<String?> carried = carryValues(_plate.values, next);
     setState(() {
       _index = index;
@@ -280,9 +300,13 @@ class _StageState extends State<_Stage> {
               for (int i = 0; i < heroPlates.length; i++)
                 CountryChip(
                   label: heroPlates[i].$1,
-                  selected: i == _index,
+                  selected: identical(heroPlates[i].$2.source, _item.source),
                   onTap: () {
-                    _select(i);
+                    final int at = heroTour.indexWhere(
+                      (CatalogueItem t) =>
+                          identical(t.source, heroPlates[i].$2.source),
+                    );
+                    if (at >= 0) _select(at);
                     _schedule(_idle);
                   },
                 ),
