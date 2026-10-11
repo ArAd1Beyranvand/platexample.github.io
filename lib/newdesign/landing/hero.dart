@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:germany_plate/germany_plate.dart';
 import 'package:iran_plate/iran_plate.dart';
@@ -170,10 +172,34 @@ class _StageState extends State<_Stage> {
 
   CatalogueItem get _item => heroPlates[_index].$2;
 
+  /// How long each plate shows before the next one staggers in.
+  static const Duration _dwell = Duration(seconds: 3);
+
+  /// How long autoplay waits after the user touches the plate or keypad.
+  static const Duration _idle = Duration(seconds: 10);
+
+  Timer? _autoplay;
+
+  @override
+  void initState() {
+    super.initState();
+    _schedule(_dwell);
+  }
+
   @override
   void dispose() {
+    _autoplay?.cancel();
     _plate.dispose();
     super.dispose();
+  }
+
+  void _schedule(Duration after) {
+    _autoplay?.cancel();
+    _autoplay = Timer(after, () {
+      if (!mounted) return;
+      _select((_index + 1) % heroPlates.length);
+      _schedule(_dwell);
+    });
   }
 
   void _select(int index) {
@@ -222,22 +248,25 @@ class _StageState extends State<_Stage> {
             ],
           ),
           const SizedBox(height: 18),
-          LivePlate(
-            controller: _plate,
-            validName: validNameOf(item),
-            theme: item.entry.themeFor(_plate.values),
-            country: item.entry.country,
-            validator: item.entry.validator,
-            inputSource: PlateInputSource.packageKeypad,
-            fixedSize: true,
-            keypadBelow: SizedBox(
-              height: kHeroKeypadHeight,
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                alignment: Alignment.topCenter,
-                child: SizedBox(
-                  width: 320,
-                  child: SlotKeypad(controller: _plate),
+          Listener(
+            onPointerDown: (_) => _schedule(_idle),
+            child: LivePlate(
+              controller: _plate,
+              validName: validNameOf(item),
+              theme: item.entry.themeFor(_plate.values),
+              country: item.entry.country,
+              validator: item.entry.validator,
+              inputSource: PlateInputSource.packageKeypad,
+              fixedSize: true,
+              keypadBelow: SizedBox(
+                height: kHeroKeypadHeight,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.topCenter,
+                  child: SizedBox(
+                    width: 320,
+                    child: SlotKeypad(controller: _plate),
+                  ),
                 ),
               ),
             ),
@@ -252,7 +281,10 @@ class _StageState extends State<_Stage> {
                 CountryChip(
                   label: heroPlates[i].$1,
                   selected: i == _index,
-                  onTap: () => _select(i),
+                  onTap: () {
+                    _select(i);
+                    _schedule(_idle);
+                  },
                 ),
               Padding(
                 padding: const EdgeInsets.only(left: 6),

@@ -8,7 +8,6 @@ import 'package:plate_keypad/plate_keypad.dart';
 
 import '../design/tokens.dart';
 import '../widgets/controls.dart';
-import 'plate_animation_demo.dart';
 
 /// How a slot's alphabet is named in the status line: "2 digits",
 /// "a Persian letter", "a letter A–Z".
@@ -109,9 +108,8 @@ class _LivePlateState extends State<LivePlate> {
 
   PlateController get _c => widget.controller;
 
-  // TEMPORARY DEMO: drives PlateAnimationDemoBar below the plate.
+  /// Plays the stagger out and in when the spec changes.
   final PlateAnimationController _anim = PlateAnimationController();
-  Set<PlatePartKind> _keep = const <PlatePartKind>{};
 
   @override
   void initState() {
@@ -284,21 +282,10 @@ class _LivePlateState extends State<LivePlate> {
             inputSource: widget.inputSource,
             validator: widget.validator,
             animation: _anim,
-            specTransition: PlateSpecTransition(
-              keepKinds: _keep,
-              keepIdentical: true,
-            ),
+            specTransition: const PlateSpecTransition(keepIdentical: true),
             onChooseCharacter: (PlateAlphabet a) =>
                 PlateCharacterPicker.show(context, a),
           ),
-        ),
-        // TEMPORARY DEMO control.
-        const SizedBox(height: 8),
-        PlateAnimationDemoBar(
-          controller: _anim,
-          spec: spec,
-          keep: _keep,
-          onKeepChanged: (k) => setState(() => _keep = k),
         ),
         const SizedBox(height: 14),
         _statusBox(
