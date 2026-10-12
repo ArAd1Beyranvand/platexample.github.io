@@ -114,7 +114,7 @@ class _CountryPageState extends State<CountryPage> {
                 PdBreadcrumb(
                   trail: <(String, PdLocation)>[
                     (
-                      'Plates',
+                      'Countries',
                       const PdLocation.landing(LandingAnchor.coverage),
                     ),
                     if (region != null)
@@ -153,9 +153,7 @@ class _CountryPageState extends State<CountryPage> {
                         PdFilterChip(
                           label: c,
                           count: items
-                              .where(
-                                (CatalogueItem i) => i.section.title == c,
-                              )
+                              .where((CatalogueItem i) => i.section.title == c)
                               .length,
                           selected: _category == c,
                           onTap: () => setState(() => _category = c),
@@ -196,8 +194,7 @@ class _CountryPageState extends State<CountryPage> {
                     if (selected != null)
                       _TypeDetail(
                         item: selected,
-                        onPlay: () =>
-                            nav.go(PdLocation.playground(selected)),
+                        onPlay: () => nav.go(PdLocation.playground(selected)),
                       ),
                   ],
                 ),
@@ -385,7 +382,10 @@ class _TypeDetail extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(item.section.title, style: TextStyle(fontSize: 13, color: t.subtle)),
+          Text(
+            item.section.title,
+            style: TextStyle(fontSize: 13, color: t.subtle),
+          ),
           const SizedBox(height: 4),
           Text(entry.label, style: h3(t).copyWith(fontSize: 20, height: 1.3)),
           const SizedBox(height: 16),

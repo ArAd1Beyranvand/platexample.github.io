@@ -8,6 +8,7 @@ import 'package:plate_keypad/plate_keypad.dart';
 
 import '../design/tokens.dart';
 import '../widgets/controls.dart';
+import 'letter_sheet.dart';
 
 /// How a slot's alphabet is named in the status line: "2 digits",
 /// "a Persian letter", "a letter A–Z".
@@ -263,8 +264,10 @@ class _LivePlateState extends State<LivePlate> {
     final PlateAlphabet? pickAlphabet = pickAt == null
         ? null
         : spec.slotAt(pickAt)?.alphabet;
+    // A keypad already offers the letters; the chips would repeat it.
     final bool showPicker =
         !widget.fixedSize &&
+        widget.keypadBelow == null &&
         next != null &&
         pickAlphabet != null &&
         isPickedAlphabet(pickAlphabet);
@@ -282,9 +285,18 @@ class _LivePlateState extends State<LivePlate> {
             inputSource: widget.inputSource,
             validator: widget.validator,
             animation: _anim,
-            specTransition: const PlateSpecTransition(keepIdentical: true),
-            onChooseCharacter: (PlateAlphabet a) =>
-                PlateCharacterPicker.show(context, a),
+            specTransition: const PlateSpecTransition(
+              keepIdentical: true,
+              morphBackground: true,
+            ),
+            onChooseCharacter: (PlateAlphabet a) => scriptOf(a) == 'Persian'
+                ? LetterSheet.show(
+                    context,
+                    a,
+                    slot: _c.activeIndex,
+                    slotCount: spec.slotCount,
+                  )
+                : PlateCharacterPicker.show(context, a),
           ),
         ),
         const SizedBox(height: 14),

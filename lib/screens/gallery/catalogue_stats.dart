@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 
 import 'sources/sources.dart';
 
-/// The Showcase stat band's four numbers, computed from the registry so they
+/// The catalogue stat band's four numbers, computed from the registry so they
 /// stay true as packages come and go instead of drifting from a hardcoded
 /// `5 / 7 / 51 / 2`.
 @immutable
@@ -57,7 +57,7 @@ class CatalogueStats {
   /// The four counts in the order every stat row shows them, each with the
   /// label it is shown under.
   ///
-  /// Here rather than in one of the two rows that draw them — the Showcase
+  /// Here rather than in one of the two rows that draw them — the landing
   /// stat band and the Discover header's inline row — because the pairing of
   /// a number with its word is the same fact in both places, and two copies
   /// of the list is how one of them ends up saying `SPECS` over the package

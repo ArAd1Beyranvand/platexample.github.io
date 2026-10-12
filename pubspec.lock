@@ -109,10 +109,31 @@ packages:
       relative: true
     source: path
     version: "0.1.0"
+  cameroon_plate:
+    dependency: "direct main"
+    description:
+      path: "../cameroon_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
+  cape_verde_plate:
+    dependency: "direct main"
+    description:
+      path: "../cape_verde_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
   central_african_republic_plate:
     dependency: "direct main"
     description:
       path: "../central_african_republic_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
+  chad_plate:
+    dependency: "direct main"
+    description:
+      path: "../chad_plate"
       relative: true
     source: path
     version: "0.1.0"
@@ -182,6 +203,13 @@ packages:
       relative: true
     source: path
     version: "0.1.0"
+  equatorial_guinea_plate:
+    dependency: "direct main"
+    description:
+      path: "../equatorial_guinea_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
   eritrea_plate:
     dependency: "direct main"
     description:
@@ -228,6 +256,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  gabon_plate:
+    dependency: "direct main"
+    description:
+      path: "../gabon_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
   germany_plate:
     dependency: "direct main"
     description:
@@ -512,7 +547,7 @@ packages:
       path: "../plate_alphabet"
       relative: true
     source: path
-    version: "0.1.0"
+    version: "0.1.1"
   plate_core:
     dependency: "direct main"
     description:
@@ -526,7 +561,7 @@ packages:
       path: "../plate_keypad"
       relative: true
     source: path
-    version: "0.1.1"
+    version: "0.1.2"
   plugin_platform_interface:
     dependency: transitive
     description:

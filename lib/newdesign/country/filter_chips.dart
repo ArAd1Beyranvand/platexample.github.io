@@ -45,10 +45,7 @@ class PdFilterChip extends StatelessWidget {
             ),
             if (count != null) ...<Widget>[
               const SizedBox(width: 6),
-              Text(
-                '$count',
-                style: TextStyle(fontSize: 12, color: t.subtle),
-              ),
+              Text('$count', style: TextStyle(fontSize: 12, color: t.subtle)),
             ],
           ],
         ),

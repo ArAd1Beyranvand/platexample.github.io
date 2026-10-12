@@ -7,7 +7,7 @@ import 'package:plate_number_holder/newdesign/plate/live_plate.dart';
 
 void main() {
   testWidgets('live plate alone', (WidgetTester tester) async {
-    final PlateController c = PlateController(spec: IranPlates.car);
+    final PlateController c = PlateController(spec: IranPlates.civil);
     await tester.pumpWidget(
       MaterialApp(
         theme: pdTheme(Brightness.dark),
@@ -26,7 +26,7 @@ void main() {
       MaterialApp(
         theme: pdTheme(Brightness.dark),
         home: Scaffold(
-          body: SizedBox(width: 500, child: StaticPlate(spec: IranPlates.car)),
+          body: SizedBox(width: 500, child: StaticPlate(spec: IranPlates.civil)),
         ),
       ),
     );

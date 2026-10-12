@@ -1,8 +1,8 @@
 name: plate_number_holder
 description: >-
-  Showcase / poster app for the plate_core library. Lives outside the
-  package repo so the library stays free of demo-only assets (fonts,
-  textures, device-frame art) and demo-only dependencies.
+  Demo site for the plate_core library. Lives outside the package repo so
+  the library stays free of demo-only assets (fonts) and demo-only
+  dependencies.
 publish_to: 'none'
 version: 1.0.0+1
 
@@ -57,20 +57,11 @@ dependencies:
   germany_plate:
     path: ../germany_plate
 
-  # The two countries the showcase draws a *pair* of plates for, because
-  # neither has one plate: Palestine's West Bank and Gaza designs (the tablet),
-  # and Yemen's 2026 unified and 1993 northern systems (the laptop).
-  #
   palestine_plate:
     path: ../palestine_plate
   yemen_plate:
     path: ../yemen_plate
 
-  # Gallery-only, like germany_plate. Lebanon is the inverse of the packages
-  # above — two geometries and eight liveries, where they are many geometries
-  # and few — so it earns a catalogue block and not a showcase device: the
-  # three devices are claimed, and the thing worth seeing here is nine cards
-  # sharing one spec, which is a page and not a prop.
   lebanon_plate:
     path: ../lebanon_plate
   cuba_plate:
@@ -125,6 +116,16 @@ dependencies:
     path: ../laos_plate
   vietnam_plate:
     path: ../vietnam_plate
+  gabon_plate:
+    path: ../gabon_plate
+  equatorial_guinea_plate:
+    path: ../equatorial_guinea_plate
+  chad_plate:
+    path: ../chad_plate
+  cameroon_plate:
+    path: ../cameroon_plate
+  cape_verde_plate:
+    path: ../cape_verde_plate
   burkina_faso_plate:
     path: ../burkina_faso_plate
   eritrea_plate:
@@ -203,7 +204,6 @@ dependencies:
   vatican_city_plate:
     path: ../vatican_city_plate
 
-  # Used directly by the showcase to drive PlateCardBloc from the demo screen.
   url_launcher: ^6.3.2
   web: ^1.1.1
 
@@ -308,16 +308,9 @@ dependency_overrides:
 flutter:
   uses-material-design: true
 
-  # Poster-only artwork. These belong to the demo, not to the library — core
-  # ships no assets at all since P8, and the assets a real plate needs (flag
-  # SVGs, stickers) ship in the country package that needs them.
-  assets:
-    - assets/textures/bg_grain_a.png
-    - assets/textures/bg_grain_b.png
-
   # Each family ships as per-script subsets, and the `-latin-ext` file holds
   # ONLY the Latin Extended block — it has no A–Z at all. Declaring it alone
-  # left every glyph in the poster to the system fallback, which has neither
+  # left every glyph to the system fallback, which has neither
   # the `wght`/`wdth` axes nor the metrics §2 is specified against, so cards
   # wrapped far taller than the design and collided. Every subset a family has
   # must be listed; Flutter falls through them glyph by glyph.

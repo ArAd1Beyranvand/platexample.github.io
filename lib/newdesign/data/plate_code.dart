@@ -1,4 +1,3 @@
-import 'package:iran_plate/iran_plate.dart';
 import 'package:plate_core/plate_core.dart';
 
 import 'catalogue.dart';
@@ -23,72 +22,27 @@ String importOf(String package) => switch (package) {
   _ => "import 'package:$package/$package.dart';",
 };
 
-/// The colours option the playground offers next to Country and Mono.
-class UsageColours {
-  const UsageColours(this.theme, this.code);
-
-  final PlateTheme theme;
-  final String code;
-}
-
-/// The country's taxi theme, if its package has one: Iran's by usage,
-/// otherwise the theme of a catalogue entry in the same country labelled as a
-/// taxi. Null hides the Taxi option.
-UsageColours? taxiColoursFor(CatalogueItem item) {
-  if (item.source is IranSource) {
-    return UsageColours(
-      IranThemes.forUsage(IranUsage.taxi),
-      'IranThemes.forUsage(IranUsage.taxi)',
-    );
-  }
-  for (final CatalogueItem other in catalogueItems) {
-    if (!identical(other.source, item.source)) continue;
-    final GalleryEntry e = other.entry;
-    final String tag = '${e.id} ${e.label}'.toLowerCase();
-    final PlateTheme? theme = e.theme;
-    if (theme == null || !tag.contains('taxi')) continue;
-    return UsageColours(theme, themeNames[theme] ?? '/* taxi theme */ null');
-  }
-  return null;
-}
-
-enum ColoursMode { country, mono, taxi }
-
-/// The theme a colours mode paints [item] with, given the plate's values.
-PlateTheme? themeFor(
-  CatalogueItem item,
-  ColoursMode mode,
-  List<String?> values,
-) => switch (mode) {
-  ColoursMode.country => item.entry.themeFor(values),
-  ColoursMode.mono => PlateTheme.standard(),
-  ColoursMode.taxi => taxiColoursFor(item)?.theme ?? item.entry.theme,
-};
-
 /// One line of generated code; [comment] lines are drawn `subtle`.
 typedef CodeLine = ({String text, bool comment});
 
-/// The playground's code panel, generated from the spec, input mode and
-/// colours on screen.
+/// The playground's code panel, generated from the spec and input mode on
+/// screen.
 List<CodeLine> playgroundCode({
   required CatalogueItem item,
   required PlateInputSource source,
-  required ColoursMode colours,
   required List<String?> values,
   required bool isValid,
 }) {
   final PlateSpec spec = item.entry.spec;
   final String package = packageOf(item);
   final String name = specName(item) ?? "/* '${spec.id}' from $package */ spec";
-  final bool keypad = source == PlateInputSource.packageKeypad;
+  final bool keypad =
+      source == PlateInputSource.packageKeypad ||
+      source == PlateInputSource.keypadFirst;
 
-  final String? theme = switch (colours) {
-    ColoursMode.country => switch (item.entry.theme) {
-      null => null,
-      final PlateTheme t => themeNames[t],
-    },
-    ColoursMode.mono => 'PlateTheme.standard()',
-    ColoursMode.taxi => taxiColoursFor(item)?.code,
+  final String? theme = switch (item.entry.theme) {
+    null => null,
+    final PlateTheme t => themeNames[t],
   };
 
   CodeLine c(String text) => (text: text, comment: false);

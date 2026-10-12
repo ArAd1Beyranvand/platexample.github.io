@@ -10,7 +10,7 @@ import '../catalogue.dart';
 /// The sample values are written out rather than generated: the package ships
 /// no serial generator, and adding one to it so that a showcase could fill a
 /// plate would be the gallery driving library API. Every standard-blank class
-/// takes the same eight, because they are the same eight positions.
+/// takes the same four fields, one string per field.
 class IranSource extends GallerySource {
   const IranSource();
 
@@ -25,10 +25,8 @@ class IranSource extends GallerySource {
 
   @override
   String get note =>
-      'All seventeen vehicle classes, from private and taxi to police, '
-      'diplomatic and motorcycle. Pick the class and you get the spec and the '
-      'colours together, with Persian digits, right-to-left input and the '
-      'series letter fixed wherever the class fixes it.';
+      'One civil blank whose colours follow the series letter, plus protocol, '
+      'historic and motorcycle. Persian digits and right-to-left input.';
 
   /// Built once, and returned by identity: the pickers select a section by
   /// equality, and a fresh list per read would make the selected one never
@@ -65,39 +63,25 @@ class IranSource extends GallerySource {
 
   static final List<GalleryEntry> _highlights = <GalleryEntry>[
     _highlight(IranUsage.private),
-    _highlight(IranUsage.taxi),
     _highlight(IranUsage.protocol),
     _highlight(IranUsage.motorcycle),
   ];
 
-  /// Eight positions on the shared 520x110 blank: `12 ب 345 - 11`, the number
-  /// the article's own reference images carry.
+  /// Four fields on the shared 520x110 blank: `12 ب 345 - 11`, the number the
+  /// article's own reference images carry.
   static const List<String?> _standardValues = <String?>[
-    '1',
-    '2',
+    '12',
     null,
-    '3',
-    '4',
-    '5',
-    '1',
-    '1',
+    '345',
+    '11',
   ];
 
   /// The five digits of a protocol or historic plate.
-  static const List<String?> _fiveDigits = <String?>['1', '3', '9', '0', '1'];
+  static const List<String?> _fiveDigits = <String?>['13901'];
 
   /// A motorcycle's three-digit provincial code over its five-digit serial.
   /// Neither register may contain a zero.
-  static const List<String?> _motorcycleValues = <String?>[
-    '1',
-    '2',
-    '3',
-    '5',
-    '6',
-    '7',
-    '8',
-    '9',
-  ];
+  static const List<String?> _motorcycleValues = <String?>['123', '56789'];
 
   /// The entry for one vehicle class. Spec, theme and label all come from
   /// [usage]; the only thing this adds is what to draw into the slots.
@@ -107,13 +91,10 @@ class IranSource extends GallerySource {
   /// here would hide the fact that the plate carries it for free.
   static GalleryEntry _entry(IranUsage usage) {
     final spec = IranPlates.forUsage(usage);
-    final letter = usage.seriesLetter;
     final values = switch (usage) {
       IranUsage.protocol || IranUsage.historic => _fiveDigits,
       IranUsage.motorcycle => _motorcycleValues,
-      // Slot 2 is the series letter. Private picks one; every other class has
-      // it fixed, and passing it is how the plate shows the letter at all.
-      _ => <String?>[..._standardValues]..[2] = letter ?? 'ب',
+      _ => <String?>[..._standardValues]..[1] = 'ب',
     };
     return GalleryEntry(
       id: spec.id,
@@ -126,23 +107,10 @@ class IranSource extends GallerySource {
   }
 
   static String _label(IranUsage usage) => switch (usage) {
-    IranUsage.private => 'Private',
-    IranUsage.disabled => 'Disabled',
-    IranUsage.taxi => 'Taxi',
-    IranUsage.publicTransport => 'Public',
-    IranUsage.agricultural => 'Agricultural',
-    IranUsage.government => 'Government',
-    IranUsage.temporary => 'Temporary',
-    IranUsage.police => 'Police',
-    IranUsage.irgc => 'IRGC',
-    IranUsage.army => 'Army',
-    IranUsage.ministryOfDefence => 'Defence',
-    IranUsage.generalStaff => 'General Staff',
-    IranUsage.political => 'Political',
-    IranUsage.service => 'Service',
     IranUsage.protocol => 'Protocol',
     IranUsage.historic => 'Historic',
     IranUsage.motorcycle => 'Motorcycle',
+    _ => 'Civil',
   };
 
   static List<GalleryEntry> _entriesFor(List<IranUsage> usages) =>
@@ -152,47 +120,12 @@ class IranSource extends GallerySource {
     GallerySection(
       title: 'Civil',
       note:
-          'One 520x110 blank, right-to-left, with the province pair past a '
-          'full-height divider. Only the private plate picks its letter — one '
-          'of thirteen, by county. Every other class fixes it, and the field '
-          'colour says which: yellow for hire, red for the state, white for '
-          'private. The disabled plate prints the wheelchair symbol where the '
-          'county letter would go, and stores it as ژ.',
-      entries: _entriesFor(const <IranUsage>[
-        IranUsage.private,
-        IranUsage.disabled,
-        IranUsage.taxi,
-        IranUsage.publicTransport,
-        IranUsage.agricultural,
-        IranUsage.government,
-        IranUsage.temporary,
-      ]),
-    ),
-    GallerySection(
-      title: 'Military and law enforcement',
-      note:
-          'The same blank again, in four more liveries. All of these are issued '
-          'nationally from provincial code 11 regardless of where the vehicle '
-          'serves, so the square is not really a province on them.',
-      entries: _entriesFor(const <IranUsage>[
-        IranUsage.police,
-        IranUsage.irgc,
-        IranUsage.army,
-        IranUsage.ministryOfDefence,
-        IranUsage.generalStaff,
-      ]),
-    ),
-    GallerySection(
-      title: 'Political and service',
-      note:
-          'The blank once more, with a Latin series letter and a different '
-          'caption in the square — سیاسی for the diplomatic corps, سرویس for '
-          'international organisations. The serial is the assigned country '
-          'number; the leading pair counts embassies within it.',
-      entries: _entriesFor(const <IranUsage>[
-        IranUsage.political,
-        IranUsage.service,
-      ]),
+          'One 520x110 blank for private, taxi, public, agricultural, '
+          'government, temporary, police, IRGC, army, defence, general staff, '
+          'political and service plates. The series letter picks the class: '
+          'the field fades to its colour and, for a taxi, TAXI appears above '
+          'the letter. ژ prints as the wheelchair symbol.',
+      entries: _entriesFor(const <IranUsage>[IranUsage.private]),
     ),
     GallerySection(
       title: 'Other blanks',

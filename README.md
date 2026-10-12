@@ -7,7 +7,7 @@ FREE PALESTINE 🇮🇷🇵🇸 پاینده ایران
 
 # plate_number_holder
 
-The showcase / poster app for the plate library — [`plate_core`](../plate-core)
+The demo site for the plate library — [`plate_core`](../plate-core)
 plus [`iran_plate`](../iran-plate), [`germany_plate`](../germany-plate) and
 [`plate_keypad`](../plate-keypad). It used to live inside the package repo as
 `example/`; it was split out so the packages ship nothing demo-only.
@@ -19,8 +19,8 @@ Android namespace and Linux binary would churn a lot of files for no benefit.
 
 | stays in the packages | lives here |
 | --- | --- |
-| plate widgets, specs, validators, bloc | poster layout, callout cards, device frames |
-| the flag SVGs and EU stickers a real plate needs (in `iran_plate` / `germany_plate`) | Archivo / MartianMono / Newsreader / Vazirmatn fonts, grain + screen textures |
+| plate widgets, specs, validators, bloc | the site: landing, playground, country pages |
+| the flag SVGs and EU stickers a real plate needs (in `iran_plate` / `germany_plate`) | Archivo / MartianMono / Vazirmatn fonts |
 | `flutter_bloc`, `flutter_svg` | everything the demo alone needs |
 
 Because this app consumes only the packages' public surfaces, it doubles as a
@@ -52,18 +52,14 @@ hot-reloading here is one loop.
 ```
 lib/
   main.dart          entry point; wiring notes live at the top of this file
-  app/               MaterialApp + theme
-  screens/           the showcase screen
-  showcase/          demo config, device cycling, the auto-typist
-  widgets/           plate_display — the thin adapter onto the package widgets
-  poster/            poster chrome: tokens, backdrop, callouts, cards
-  device_preview/    phone / laptop frames and transitions
-  dev/               galleries used while designing tokens, bevels, backdrops
+  app/               URL strategy
+  newdesign/         the site: app + router, shell, landing, playground, country pages
+  screens/gallery/   the catalogue every page reads from
   minimal/           the smallest possible use of the library
 ```
 
 `lib/minimal/main.dart` is the one to read first if you want to see the library
-used plainly, without any poster dressing. After the split it is two imports and
+used plainly, without the site around it. After the split it is two imports and
 one `PlateCanvas`:
 
 ```dart
@@ -71,15 +67,10 @@ import 'package:plate_core/plate_core.dart';
 import 'package:iran_plate/iran_plate.dart';
 ```
 
-It also imports `plate_keypad` — the showcase uses the bundled on-screen keypad
+It also imports `plate_keypad` — the example uses the bundled on-screen keypad
 and the `chosen`-slot picker, which is a demo choice, not a requirement of
 rendering an Iranian plate.
 
-## Known remaining work
-
-The libraries have no widget-returning functions left. The holder still does —
-`device_stage.dart` and the poster layer (`PLAN.md` §5). That is a future holder
-cleanup, out of scope for the split.
 ## Also available
 
 - [`plate_core`](https://pub.dev/packages/plate-core) - Paint license plates.

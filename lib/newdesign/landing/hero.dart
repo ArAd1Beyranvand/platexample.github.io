@@ -29,8 +29,8 @@ CatalogueItem? itemForSpec(PlateSpec spec) {
 /// The plates the hero's chips switch between, in order.
 final List<(String, CatalogueItem)> heroPlates = <(String, CatalogueItem)>[
   for (final (String, PlateSpec) p in <(String, PlateSpec)>[
-    ('Iran', IranPlates.car),
-    ('Yemen', YemenUnifiedPlates.car5),
+    ('Iran', IranPlates.civil),
+    ('Yemen', YemenUnifiedPlates.car),
     ('Palestine', PSWestBankPlates.modernCar),
     ('Germany', GermanPlates.car),
     ('Lebanon', LebanonPlates.oneLine),

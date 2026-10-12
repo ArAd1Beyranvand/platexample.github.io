@@ -33,6 +33,11 @@ import 'package:brunei_plate/brunei_plate.dart';
 import 'package:maldives_plate/maldives_plate.dart';
 import 'package:laos_plate/laos_plate.dart';
 import 'package:vietnam_plate/vietnam_plate.dart';
+import 'package:gabon_plate/gabon_plate.dart';
+import 'package:equatorial_guinea_plate/equatorial_guinea_plate.dart';
+import 'package:chad_plate/chad_plate.dart';
+import 'package:cameroon_plate/cameroon_plate.dart';
+import 'package:cape_verde_plate/cape_verde_plate.dart';
 import 'package:burkina_faso_plate/burkina_faso_plate.dart';
 import 'package:eritrea_plate/eritrea_plate.dart';
 import 'package:djibouti_plate/djibouti_plate.dart';
@@ -43,26 +48,34 @@ import 'package:italy_plate/italy_plate.dart';
 import 'package:spain_plate/spain_plate.dart';
 import 'package:republic_of_ireland_plate/republic_of_ireland_plate.dart';
 import 'package:zimbabwe_plate/zimbabwe_plate.dart';
+import 'package:angola_plate/angola_plate.dart';
+import 'package:benin_plate/benin_plate.dart';
+import 'package:bhutan_plate/bhutan_plate.dart';
+import 'package:bosnia_and_herzegovina_plate/bosnia_and_herzegovina_plate.dart';
+import 'package:botswana_plate/botswana_plate.dart';
+import 'package:cambodia_plate/cambodia_plate.dart';
+import 'package:central_african_republic_plate/central_african_republic_plate.dart';
+import 'package:egypt_plate/egypt_plate.dart';
+import 'package:jordan_plate/jordan_plate.dart';
+import 'package:malta_plate/malta_plate.dart';
+import 'package:mongolia_plate/mongolia_plate.dart';
+import 'package:mozambique_plate/mozambique_plate.dart';
+import 'package:myanmar_plate/myanmar_plate.dart';
+import 'package:norway_plate/norway_plate.dart';
+import 'package:republic_of_the_congo_plate/republic_of_the_congo_plate.dart';
+import 'package:saint_vincent_and_the_grenadines_plate/saint_vincent_and_the_grenadines_plate.dart';
+import 'package:serbia_plate/serbia_plate.dart';
+import 'package:sri_lanka_plate/sri_lanka_plate.dart';
+import 'package:tanzania_plate/tanzania_plate.dart';
+import 'package:thailand_plate/thailand_plate.dart';
+import 'package:timor_leste_plate/timor_leste_plate.dart';
+import 'package:uruguay_plate/uruguay_plate.dart';
+import 'package:vanuatu_plate/vanuatu_plate.dart';
+import 'package:vatican_city_plate/vatican_city_plate.dart';
 
 /// The Dart name of every spec a country package exposes publicly.
 final Map<PlateSpec, String> specNames = Map<PlateSpec, String>.identity()
-  ..putIfAbsent(IranPlates.car, () => 'IranPlates.car')
-  ..putIfAbsent(IranPlates.disabled, () => 'IranPlates.disabled')
-  ..putIfAbsent(IranPlates.taxi, () => 'IranPlates.taxi')
-  ..putIfAbsent(IranPlates.publicTransport, () => 'IranPlates.publicTransport')
-  ..putIfAbsent(IranPlates.agricultural, () => 'IranPlates.agricultural')
-  ..putIfAbsent(IranPlates.government, () => 'IranPlates.government')
-  ..putIfAbsent(IranPlates.temporary, () => 'IranPlates.temporary')
-  ..putIfAbsent(IranPlates.police, () => 'IranPlates.police')
-  ..putIfAbsent(IranPlates.irgc, () => 'IranPlates.irgc')
-  ..putIfAbsent(IranPlates.army, () => 'IranPlates.army')
-  ..putIfAbsent(
-    IranPlates.ministryOfDefence,
-    () => 'IranPlates.ministryOfDefence',
-  )
-  ..putIfAbsent(IranPlates.generalStaff, () => 'IranPlates.generalStaff')
-  ..putIfAbsent(IranPlates.political, () => 'IranPlates.political')
-  ..putIfAbsent(IranPlates.service, () => 'IranPlates.service')
+  ..putIfAbsent(IranPlates.civil, () => 'IranPlates.civil')
   ..putIfAbsent(IranPlates.protocol, () => 'IranPlates.protocol')
   ..putIfAbsent(IranPlates.historic, () => 'IranPlates.historic')
   ..putIfAbsent(IranPlates.motorcycle, () => 'IranPlates.motorcycle')
@@ -329,22 +342,7 @@ final Map<PlateSpec, String> specNames = Map<PlateSpec, String>.identity()
     PSWestBankPlates.modernTrade,
     () => 'PSWestBankPlates.modernTrade',
   )
-  ..putIfAbsent(
-    YemenNorthernPlates.carGov2Serial5,
-    () => 'YemenNorthernPlates.carGov2Serial5',
-  )
-  ..putIfAbsent(
-    YemenNorthernPlates.carGov1Serial5,
-    () => 'YemenNorthernPlates.carGov1Serial5',
-  )
-  ..putIfAbsent(
-    YemenNorthernPlates.carGov2Serial4,
-    () => 'YemenNorthernPlates.carGov2Serial4',
-  )
-  ..putIfAbsent(
-    YemenNorthernPlates.carGov2Serial6,
-    () => 'YemenNorthernPlates.carGov2Serial6',
-  )
+  ..putIfAbsent(YemenNorthernPlates.car, () => 'YemenNorthernPlates.car')
   ..putIfAbsent(RiyadhPlates.private, () => 'RiyadhPlates.private')
   ..putIfAbsent(
     RiyadhPlates.publicTransport,
@@ -416,12 +414,8 @@ final Map<PlateSpec, String> specNames = Map<PlateSpec, String>.identity()
     YemenGovernoratePlates.maribMotorcycle,
     () => 'YemenGovernoratePlates.maribMotorcycle',
   )
-  ..putIfAbsent(YemenUnifiedPlates.car5, () => 'YemenUnifiedPlates.car5')
-  ..putIfAbsent(YemenUnifiedPlates.car4, () => 'YemenUnifiedPlates.car4')
-  ..putIfAbsent(YemenUnifiedPlates.car6, () => 'YemenUnifiedPlates.car6')
-  ..putIfAbsent(YemenUnifiedPlates.moto5, () => 'YemenUnifiedPlates.moto5')
-  ..putIfAbsent(YemenUnifiedPlates.moto4, () => 'YemenUnifiedPlates.moto4')
-  ..putIfAbsent(YemenUnifiedPlates.moto6, () => 'YemenUnifiedPlates.moto6')
+  ..putIfAbsent(YemenUnifiedPlates.car, () => 'YemenUnifiedPlates.car')
+  ..putIfAbsent(YemenUnifiedPlates.moto, () => 'YemenUnifiedPlates.moto')
   ..putIfAbsent(LebanonPlates.oneLine, () => 'LebanonPlates.oneLine')
   ..putIfAbsent(LebanonPlates.twoLine, () => 'LebanonPlates.twoLine')
   ..putIfAbsent(CubaPlates.car, () => 'CubaPlates.car')
@@ -514,6 +508,19 @@ final Map<PlateSpec, String> specNames = Map<PlateSpec, String>.identity()
   ..putIfAbsent(ComorosPlates.standard, () => 'ComorosPlates.standard')
   ..putIfAbsent(ComorosPlates.square, () => 'ComorosPlates.square')
   ..putIfAbsent(SomaliaPlates.standard, () => 'SomaliaPlates.standard')
+  ..putIfAbsent(GabonPlates.private, () => 'GabonPlates.private')
+  ..putIfAbsent(
+    EquatorialGuineaPlates.regular,
+    () => 'EquatorialGuineaPlates.regular',
+  )
+  ..putIfAbsent(ChadPlates.private, () => 'ChadPlates.private')
+  ..putIfAbsent(ChadPlates.temporary, () => 'ChadPlates.temporary')
+  ..putIfAbsent(CameroonPlates.private, () => 'CameroonPlates.private')
+  ..putIfAbsent(CameroonPlates.diplomatic, () => 'CameroonPlates.diplomatic')
+  ..putIfAbsent(CapeVerdePlates.regular, () => 'CapeVerdePlates.regular')
+  ..putIfAbsent(CapeVerdePlates.freeFont, () => 'CapeVerdePlates.freeFont')
+  ..putIfAbsent(CapeVerdePlates.military, () => 'CapeVerdePlates.military')
+  ..putIfAbsent(CapeVerdePlates.diplomatic, () => 'CapeVerdePlates.diplomatic')
   ..putIfAbsent(BurkinaFasoPlates.private, () => 'BurkinaFasoPlates.private')
   ..putIfAbsent(
     BurkinaFasoPlates.commercial,
@@ -581,7 +588,178 @@ final Map<PlateSpec, String> specNames = Map<PlateSpec, String>.identity()
     () => 'RepublicOfIrelandPlates.electric',
   )
   ..putIfAbsent(ZimbabwePlates.row, () => 'ZimbabwePlates.row')
-  ..putIfAbsent(ZimbabwePlates.stacked, () => 'ZimbabwePlates.stacked');
+  ..putIfAbsent(ZimbabwePlates.stacked, () => 'ZimbabwePlates.stacked')
+  ..putIfAbsent(AngolaPlates.standard, () => 'AngolaPlates.standard')
+  ..putIfAbsent(AngolaPlates.stacked, () => 'AngolaPlates.stacked')
+  ..putIfAbsent(BeninPlates.private, () => 'BeninPlates.private')
+  ..putIfAbsent(BeninPlates.commercial, () => 'BeninPlates.commercial')
+  ..putIfAbsent(BhutanPlates.private, () => 'BhutanPlates.private')
+  ..putIfAbsent(BhutanPlates.government, () => 'BhutanPlates.government')
+  ..putIfAbsent(BhutanPlates.taxi, () => 'BhutanPlates.taxi')
+  ..putIfAbsent(BhutanPlates.police, () => 'BhutanPlates.police')
+  ..putIfAbsent(BhutanPlates.diplomatic, () => 'BhutanPlates.diplomatic')
+  ..putIfAbsent(BhutanPlates.royalGuard, () => 'BhutanPlates.royalGuard')
+  ..putIfAbsent(
+    BosniaAndHerzegovinaPlates.private,
+    () => 'BosniaAndHerzegovinaPlates.private',
+  )
+  ..putIfAbsent(
+    BosniaAndHerzegovinaPlates.taxi,
+    () => 'BosniaAndHerzegovinaPlates.taxi',
+  )
+  ..putIfAbsent(
+    BosniaAndHerzegovinaPlates.temporary,
+    () => 'BosniaAndHerzegovinaPlates.temporary',
+  )
+  ..putIfAbsent(
+    BosniaAndHerzegovinaPlates.agricultural,
+    () => 'BosniaAndHerzegovinaPlates.agricultural',
+  )
+  ..putIfAbsent(
+    BosniaAndHerzegovinaPlates.eupm,
+    () => 'BosniaAndHerzegovinaPlates.eupm',
+  )
+  ..putIfAbsent(
+    BosniaAndHerzegovinaPlates.diplomatic,
+    () => 'BosniaAndHerzegovinaPlates.diplomatic',
+  )
+  ..putIfAbsent(BotswanaPlates.private, () => 'BotswanaPlates.private')
+  ..putIfAbsent(
+    BotswanaPlates.publicService,
+    () => 'BotswanaPlates.publicService',
+  )
+  ..putIfAbsent(BotswanaPlates.government, () => 'BotswanaPlates.government')
+  ..putIfAbsent(
+    CentralAfricanRepublicPlates.private,
+    () => 'CentralAfricanRepublicPlates.private',
+  )
+  ..putIfAbsent(EgyptPlates.car, () => 'EgyptPlates.car')
+  ..putIfAbsent(EgyptPlates.cairo, () => 'EgyptPlates.cairo')
+  ..putIfAbsent(EgyptPlates.giza, () => 'EgyptPlates.giza')
+  ..putIfAbsent(EgyptPlates.diplomatic, () => 'EgyptPlates.diplomatic')
+  ..putIfAbsent(EgyptPlates.police, () => 'EgyptPlates.police')
+  ..putIfAbsent(EgyptPlates.motorcycle, () => 'EgyptPlates.motorcycle')
+  ..putIfAbsent(JordanPlates.private, () => 'JordanPlates.private')
+  ..putIfAbsent(JordanPlates.transport, () => 'JordanPlates.transport')
+  ..putIfAbsent(JordanPlates.rental, () => 'JordanPlates.rental')
+  ..putIfAbsent(JordanPlates.trailer, () => 'JordanPlates.trailer')
+  ..putIfAbsent(JordanPlates.temporary, () => 'JordanPlates.temporary')
+  ..putIfAbsent(JordanPlates.executive, () => 'JordanPlates.executive')
+  ..putIfAbsent(JordanPlates.legislative, () => 'JordanPlates.legislative')
+  ..putIfAbsent(JordanPlates.judicial, () => 'JordanPlates.judicial')
+  ..putIfAbsent(JordanPlates.governmental, () => 'JordanPlates.governmental')
+  ..putIfAbsent(JordanPlates.aqaba, () => 'JordanPlates.aqaba')
+  ..putIfAbsent(JordanPlates.diplomatic, () => 'JordanPlates.diplomatic')
+  ..putIfAbsent(JordanPlates.police, () => 'JordanPlates.police')
+  ..putIfAbsent(JordanPlates.ambulance, () => 'JordanPlates.ambulance')
+  ..putIfAbsent(JordanPlates.gendarmerie, () => 'JordanPlates.gendarmerie')
+  ..putIfAbsent(JordanPlates.motorcycle, () => 'JordanPlates.motorcycle')
+  ..putIfAbsent(MaltaPlates.private, () => 'MaltaPlates.private')
+  ..putIfAbsent(MaltaPlates.bus, () => 'MaltaPlates.bus')
+  ..putIfAbsent(MaltaPlates.taxi, () => 'MaltaPlates.taxi')
+  ..putIfAbsent(MaltaPlates.personalised, () => 'MaltaPlates.personalised')
+  ..putIfAbsent(MaltaPlates.trailer, () => 'MaltaPlates.trailer')
+  ..putIfAbsent(MaltaPlates.motorcycle, () => 'MaltaPlates.motorcycle')
+  ..putIfAbsent(MaltaPlates.vintage, () => 'MaltaPlates.vintage')
+  ..putIfAbsent(MongoliaPlates.private, () => 'MongoliaPlates.private')
+  ..putIfAbsent(MongoliaPlates.twoRow, () => 'MongoliaPlates.twoRow')
+  ..putIfAbsent(MozambiquePlates.private, () => 'MozambiquePlates.private')
+  ..putIfAbsent(MozambiquePlates.legacy, () => 'MozambiquePlates.legacy')
+  ..putIfAbsent(
+    MozambiquePlates.legacyOneRow,
+    () => 'MozambiquePlates.legacyOneRow',
+  )
+  ..putIfAbsent(MyanmarPlates.private, () => 'MyanmarPlates.private')
+  ..putIfAbsent(MyanmarPlates.hire, () => 'MyanmarPlates.hire')
+  ..putIfAbsent(MyanmarPlates.taxi, () => 'MyanmarPlates.taxi')
+  ..putIfAbsent(MyanmarPlates.hearse, () => 'MyanmarPlates.hearse')
+  ..putIfAbsent(MyanmarPlates.religious, () => 'MyanmarPlates.religious')
+  ..putIfAbsent(
+    MyanmarPlates.embossedPrivate,
+    () => 'MyanmarPlates.embossedPrivate',
+  )
+  ..putIfAbsent(
+    MyanmarPlates.embossedCommercial,
+    () => 'MyanmarPlates.embossedCommercial',
+  )
+  ..putIfAbsent(
+    MyanmarPlates.embossedTouring,
+    () => 'MyanmarPlates.embossedTouring',
+  )
+  ..putIfAbsent(MyanmarPlates.organisation, () => 'MyanmarPlates.organisation')
+  ..putIfAbsent(MyanmarPlates.motorcycle, () => 'MyanmarPlates.motorcycle')
+  ..putIfAbsent(MyanmarPlates.rickshaw, () => 'MyanmarPlates.rickshaw')
+  ..putIfAbsent(NorwayPlates.private, () => 'NorwayPlates.private')
+  ..putIfAbsent(NorwayPlates.electric, () => 'NorwayPlates.electric')
+  ..putIfAbsent(NorwayPlates.diplomatic, () => 'NorwayPlates.diplomatic')
+  ..putIfAbsent(
+    RepublicOfTheCongoPlates.private,
+    () => 'RepublicOfTheCongoPlates.private',
+  )
+  ..putIfAbsent(
+    RepublicOfTheCongoPlates.privateTwoDigitArea,
+    () => 'RepublicOfTheCongoPlates.privateTwoDigitArea',
+  )
+  ..putIfAbsent(
+    SaintVincentAndTheGrenadinesPlates.private,
+    () => 'SaintVincentAndTheGrenadinesPlates.private',
+  )
+  ..putIfAbsent(SerbiaPlates.private, () => 'SerbiaPlates.private')
+  ..putIfAbsent(SerbiaPlates.taxi, () => 'SerbiaPlates.taxi')
+  ..putIfAbsent(SerbiaPlates.trailer, () => 'SerbiaPlates.trailer')
+  ..putIfAbsent(SerbiaPlates.police, () => 'SerbiaPlates.police')
+  ..putIfAbsent(SerbiaPlates.diplomatic, () => 'SerbiaPlates.diplomatic')
+  ..putIfAbsent(SerbiaPlates.military, () => 'SerbiaPlates.military')
+  ..putIfAbsent(SerbiaPlates.oldtimer, () => 'SerbiaPlates.oldtimer')
+  ..putIfAbsent(SerbiaPlates.agricultural, () => 'SerbiaPlates.agricultural')
+  ..putIfAbsent(SerbiaPlates.moped, () => 'SerbiaPlates.moped')
+  ..putIfAbsent(SerbiaPlates.motorcycle, () => 'SerbiaPlates.motorcycle')
+  ..putIfAbsent(SriLankaPlates.front, () => 'SriLankaPlates.front')
+  ..putIfAbsent(SriLankaPlates.rear, () => 'SriLankaPlates.rear')
+  ..putIfAbsent(TanzaniaPlates.private, () => 'TanzaniaPlates.private')
+  ..putIfAbsent(
+    TanzaniaPlates.privateTwoRow,
+    () => 'TanzaniaPlates.privateTwoRow',
+  )
+  ..putIfAbsent(
+    TanzaniaPlates.organisation,
+    () => 'TanzaniaPlates.organisation',
+  )
+  ..putIfAbsent(TimorLestePlates.private, () => 'TimorLestePlates.private')
+  ..putIfAbsent(
+    TimorLestePlates.government,
+    () => 'TimorLestePlates.government',
+  )
+  ..putIfAbsent(
+    TimorLestePlates.portugueseStacked,
+    () => 'TimorLestePlates.portugueseStacked',
+  )
+  ..putIfAbsent(UruguayPlates.private, () => 'UruguayPlates.private')
+  ..putIfAbsent(UruguayPlates.official, () => 'UruguayPlates.official')
+  ..putIfAbsent(UruguayPlates.ambulance, () => 'UruguayPlates.ambulance')
+  ..putIfAbsent(UruguayPlates.doctor, () => 'UruguayPlates.doctor')
+  ..putIfAbsent(UruguayPlates.assembly, () => 'UruguayPlates.assembly')
+  ..putIfAbsent(UruguayPlates.president, () => 'UruguayPlates.president')
+  ..putIfAbsent(UruguayPlates.remise, () => 'UruguayPlates.remise')
+  ..putIfAbsent(UruguayPlates.taxi, () => 'UruguayPlates.taxi')
+  ..putIfAbsent(
+    UruguayPlates.publicTransport,
+    () => 'UruguayPlates.publicTransport',
+  )
+  ..putIfAbsent(UruguayPlates.school, () => 'UruguayPlates.school')
+  ..putIfAbsent(UruguayPlates.tourist, () => 'UruguayPlates.tourist')
+  ..putIfAbsent(UruguayPlates.truck, () => 'UruguayPlates.truck')
+  ..putIfAbsent(UruguayPlates.rental, () => 'UruguayPlates.rental')
+  ..putIfAbsent(UruguayPlates.diplomatic, () => 'UruguayPlates.diplomatic')
+  ..putIfAbsent(UruguayPlates.mercosur, () => 'UruguayPlates.mercosur')
+  ..putIfAbsent(VanuatuPlates.diplomatic, () => 'VanuatuPlates.diplomatic')
+  ..putIfAbsent(VaticanCityPlates.private, () => 'VaticanCityPlates.private')
+  ..putIfAbsent(VaticanCityPlates.papal, () => 'VaticanCityPlates.papal')
+  ..putIfAbsent(
+    VaticanCityPlates.government,
+    () => 'VaticanCityPlates.government',
+  )
+  ..putIfAbsent(VaticanCityPlates.official, () => 'VaticanCityPlates.official');
 
 /// The Dart name of every theme a country package exposes publicly.
 final Map<PlateTheme, String> themeNames = Map<PlateTheme, String>.identity()
@@ -934,6 +1112,18 @@ final Map<PlateTheme, String> themeNames = Map<PlateTheme, String>.identity()
   ..putIfAbsent(VietnamThemes.yellow, () => 'VietnamThemes.yellow')
   ..putIfAbsent(VietnamThemes.blue, () => 'VietnamThemes.blue')
   ..putIfAbsent(VietnamThemes.red, () => 'VietnamThemes.red')
+  ..putIfAbsent(GabonThemes.private, () => 'GabonThemes.private')
+  ..putIfAbsent(
+    EquatorialGuineaThemes.regular,
+    () => 'EquatorialGuineaThemes.regular',
+  )
+  ..putIfAbsent(ChadThemes.private, () => 'ChadThemes.private')
+  ..putIfAbsent(ChadThemes.temporary, () => 'ChadThemes.temporary')
+  ..putIfAbsent(CameroonThemes.private, () => 'CameroonThemes.private')
+  ..putIfAbsent(CameroonThemes.diplomatic, () => 'CameroonThemes.diplomatic')
+  ..putIfAbsent(CapeVerdeThemes.regular, () => 'CapeVerdeThemes.regular')
+  ..putIfAbsent(CapeVerdeThemes.freeFont, () => 'CapeVerdeThemes.freeFont')
+  ..putIfAbsent(CapeVerdeThemes.diplomatic, () => 'CapeVerdeThemes.diplomatic')
   ..putIfAbsent(BurkinaFasoThemes.private, () => 'BurkinaFasoThemes.private')
   ..putIfAbsent(
     BurkinaFasoThemes.commercial,
@@ -998,20 +1188,176 @@ final Map<PlateTheme, String> themeNames = Map<PlateTheme, String>.identity()
     () => 'ZimbabweThemes.yellowStacked',
   )
   ..putIfAbsent(ZimbabweThemes.white, () => 'ZimbabweThemes.white')
-  ..putIfAbsent(ZimbabweThemes.commercial, () => 'ZimbabweThemes.commercial');
+  ..putIfAbsent(ZimbabweThemes.commercial, () => 'ZimbabweThemes.commercial')
+  ..putIfAbsent(AngolaThemes.standard, () => 'AngolaThemes.standard')
+  ..putIfAbsent(AngolaThemes.stacked, () => 'AngolaThemes.stacked')
+  ..putIfAbsent(BeninThemes.private, () => 'BeninThemes.private')
+  ..putIfAbsent(BeninThemes.commercial, () => 'BeninThemes.commercial')
+  ..putIfAbsent(BhutanThemes.private, () => 'BhutanThemes.private')
+  ..putIfAbsent(BhutanThemes.government, () => 'BhutanThemes.government')
+  ..putIfAbsent(BhutanThemes.taxi, () => 'BhutanThemes.taxi')
+  ..putIfAbsent(BhutanThemes.police, () => 'BhutanThemes.police')
+  ..putIfAbsent(BhutanThemes.diplomatic, () => 'BhutanThemes.diplomatic')
+  ..putIfAbsent(BhutanThemes.royalGuard, () => 'BhutanThemes.royalGuard')
+  ..putIfAbsent(
+    BosniaAndHerzegovinaThemes.private,
+    () => 'BosniaAndHerzegovinaThemes.private',
+  )
+  ..putIfAbsent(
+    BosniaAndHerzegovinaThemes.taxi,
+    () => 'BosniaAndHerzegovinaThemes.taxi',
+  )
+  ..putIfAbsent(
+    BosniaAndHerzegovinaThemes.temporary,
+    () => 'BosniaAndHerzegovinaThemes.temporary',
+  )
+  ..putIfAbsent(
+    BosniaAndHerzegovinaThemes.agricultural,
+    () => 'BosniaAndHerzegovinaThemes.agricultural',
+  )
+  ..putIfAbsent(
+    BosniaAndHerzegovinaThemes.eupm,
+    () => 'BosniaAndHerzegovinaThemes.eupm',
+  )
+  ..putIfAbsent(
+    BosniaAndHerzegovinaThemes.diplomatic,
+    () => 'BosniaAndHerzegovinaThemes.diplomatic',
+  )
+  ..putIfAbsent(BotswanaThemes.private, () => 'BotswanaThemes.private')
+  ..putIfAbsent(BotswanaThemes.privateRear, () => 'BotswanaThemes.privateRear')
+  ..putIfAbsent(
+    BotswanaThemes.publicService,
+    () => 'BotswanaThemes.publicService',
+  )
+  ..putIfAbsent(BotswanaThemes.government, () => 'BotswanaThemes.government')
+  ..putIfAbsent(CambodiaThemes.private, () => 'CambodiaThemes.private')
+  ..putIfAbsent(CambodiaThemes.privateLong, () => 'CambodiaThemes.privateLong')
+  ..putIfAbsent(CambodiaThemes.police, () => 'CambodiaThemes.police')
+  ..putIfAbsent(CambodiaThemes.diplomatic, () => 'CambodiaThemes.diplomatic')
+  ..putIfAbsent(CambodiaThemes.ngo, () => 'CambodiaThemes.ngo')
+  ..putIfAbsent(
+    CambodiaThemes.internationalMotorcycle,
+    () => 'CambodiaThemes.internationalMotorcycle',
+  )
+  ..putIfAbsent(
+    CentralAfricanRepublicThemes.private,
+    () => 'CentralAfricanRepublicThemes.private',
+  )
+  ..putIfAbsent(EgyptThemes.standard, () => 'EgyptThemes.standard')
+  ..putIfAbsent(JordanThemes.standard, () => 'JordanThemes.standard')
+  ..putIfAbsent(MaltaThemes.private, () => 'MaltaThemes.private')
+  ..putIfAbsent(MaltaThemes.taxi, () => 'MaltaThemes.taxi')
+  ..putIfAbsent(MaltaThemes.bus, () => 'MaltaThemes.bus')
+  ..putIfAbsent(MaltaThemes.personalised, () => 'MaltaThemes.personalised')
+  ..putIfAbsent(MaltaThemes.trailer, () => 'MaltaThemes.trailer')
+  ..putIfAbsent(MaltaThemes.motorcycle, () => 'MaltaThemes.motorcycle')
+  ..putIfAbsent(MaltaThemes.vintage, () => 'MaltaThemes.vintage')
+  ..putIfAbsent(MongoliaThemes.private, () => 'MongoliaThemes.private')
+  ..putIfAbsent(MongoliaThemes.twoRow, () => 'MongoliaThemes.twoRow')
+  ..putIfAbsent(MozambiqueThemes.private, () => 'MozambiqueThemes.private')
+  ..putIfAbsent(MozambiqueThemes.legacy, () => 'MozambiqueThemes.legacy')
+  ..putIfAbsent(
+    MozambiqueThemes.legacyOneRow,
+    () => 'MozambiqueThemes.legacyOneRow',
+  )
+  ..putIfAbsent(MyanmarThemes.private, () => 'MyanmarThemes.private')
+  ..putIfAbsent(MyanmarThemes.hire, () => 'MyanmarThemes.hire')
+  ..putIfAbsent(MyanmarThemes.religious, () => 'MyanmarThemes.religious')
+  ..putIfAbsent(
+    MyanmarThemes.embossedPrivate,
+    () => 'MyanmarThemes.embossedPrivate',
+  )
+  ..putIfAbsent(
+    MyanmarThemes.embossedCommercial,
+    () => 'MyanmarThemes.embossedCommercial',
+  )
+  ..putIfAbsent(
+    MyanmarThemes.embossedTouring,
+    () => 'MyanmarThemes.embossedTouring',
+  )
+  ..putIfAbsent(MyanmarThemes.organisation, () => 'MyanmarThemes.organisation')
+  ..putIfAbsent(MyanmarThemes.motorcycle, () => 'MyanmarThemes.motorcycle')
+  ..putIfAbsent(MyanmarThemes.rickshaw, () => 'MyanmarThemes.rickshaw')
+  ..putIfAbsent(NorwayThemes.private, () => 'NorwayThemes.private')
+  ..putIfAbsent(NorwayThemes.diplomatic, () => 'NorwayThemes.diplomatic')
+  ..putIfAbsent(
+    RepublicOfTheCongoThemes.private,
+    () => 'RepublicOfTheCongoThemes.private',
+  )
+  ..putIfAbsent(
+    SaintVincentAndTheGrenadinesThemes.private,
+    () => 'SaintVincentAndTheGrenadinesThemes.private',
+  )
+  ..putIfAbsent(SerbiaThemes.private, () => 'SerbiaThemes.private')
+  ..putIfAbsent(SerbiaThemes.taxi, () => 'SerbiaThemes.taxi')
+  ..putIfAbsent(SerbiaThemes.trailer, () => 'SerbiaThemes.trailer')
+  ..putIfAbsent(SerbiaThemes.police, () => 'SerbiaThemes.police')
+  ..putIfAbsent(SerbiaThemes.diplomatic, () => 'SerbiaThemes.diplomatic')
+  ..putIfAbsent(SerbiaThemes.military, () => 'SerbiaThemes.military')
+  ..putIfAbsent(SerbiaThemes.oldtimer, () => 'SerbiaThemes.oldtimer')
+  ..putIfAbsent(SerbiaThemes.agricultural, () => 'SerbiaThemes.agricultural')
+  ..putIfAbsent(SerbiaThemes.moped, () => 'SerbiaThemes.moped')
+  ..putIfAbsent(SerbiaThemes.motorcycle, () => 'SerbiaThemes.motorcycle')
+  ..putIfAbsent(SriLankaThemes.front, () => 'SriLankaThemes.front')
+  ..putIfAbsent(SriLankaThemes.rear, () => 'SriLankaThemes.rear')
+  ..putIfAbsent(TanzaniaThemes.private, () => 'TanzaniaThemes.private')
+  ..putIfAbsent(
+    TanzaniaThemes.privateTwoRow,
+    () => 'TanzaniaThemes.privateTwoRow',
+  )
+  ..putIfAbsent(
+    TanzaniaThemes.organisation,
+    () => 'TanzaniaThemes.organisation',
+  )
+  ..putIfAbsent(ThailandThemes.private, () => 'ThailandThemes.private')
+  ..putIfAbsent(ThailandThemes.van, () => 'ThailandThemes.van')
+  ..putIfAbsent(ThailandThemes.pickup, () => 'ThailandThemes.pickup')
+  ..putIfAbsent(ThailandThemes.tricycle, () => 'ThailandThemes.tricycle')
+  ..putIfAbsent(ThailandThemes.trailer, () => 'ThailandThemes.trailer')
+  ..putIfAbsent(ThailandThemes.taxi, () => 'ThailandThemes.taxi')
+  ..putIfAbsent(ThailandThemes.tukTuk, () => 'ThailandThemes.tukTuk')
+  ..putIfAbsent(ThailandThemes.tourist, () => 'ThailandThemes.tourist')
+  ..putIfAbsent(ThailandThemes.trade, () => 'ThailandThemes.trade')
+  ..putIfAbsent(ThailandThemes.motorcycle, () => 'ThailandThemes.motorcycle')
+  ..putIfAbsent(
+    ThailandThemes.truckPrivate,
+    () => 'ThailandThemes.truckPrivate',
+  )
+  ..putIfAbsent(ThailandThemes.truckHired, () => 'ThailandThemes.truckHired')
+  ..putIfAbsent(TimorLesteThemes.private, () => 'TimorLesteThemes.private')
+  ..putIfAbsent(
+    TimorLesteThemes.government,
+    () => 'TimorLesteThemes.government',
+  )
+  ..putIfAbsent(
+    TimorLesteThemes.indonesian,
+    () => 'TimorLesteThemes.indonesian',
+  )
+  ..putIfAbsent(
+    TimorLesteThemes.portuguese,
+    () => 'TimorLesteThemes.portuguese',
+  )
+  ..putIfAbsent(UruguayThemes.private, () => 'UruguayThemes.private')
+  ..putIfAbsent(UruguayThemes.official, () => 'UruguayThemes.official')
+  ..putIfAbsent(UruguayThemes.medical, () => 'UruguayThemes.medical')
+  ..putIfAbsent(UruguayThemes.assembly, () => 'UruguayThemes.assembly')
+  ..putIfAbsent(UruguayThemes.president, () => 'UruguayThemes.president')
+  ..putIfAbsent(UruguayThemes.yellow, () => 'UruguayThemes.yellow')
+  ..putIfAbsent(UruguayThemes.truck, () => 'UruguayThemes.truck')
+  ..putIfAbsent(UruguayThemes.rental, () => 'UruguayThemes.rental')
+  ..putIfAbsent(UruguayThemes.diplomatic, () => 'UruguayThemes.diplomatic')
+  ..putIfAbsent(UruguayThemes.mercosur, () => 'UruguayThemes.mercosur')
+  ..putIfAbsent(VanuatuThemes.standard, () => 'VanuatuThemes.standard')
+  ..putIfAbsent(VanuatuThemes.diplomatic, () => 'VanuatuThemes.diplomatic')
+  ..putIfAbsent(VaticanCityThemes.private, () => 'VaticanCityThemes.private')
+  ..putIfAbsent(VaticanCityThemes.official, () => 'VaticanCityThemes.official')
+  ..putIfAbsent(VaticanCityThemes.papal, () => 'VaticanCityThemes.papal')
+  ..putIfAbsent(
+    VaticanCityThemes.government,
+    () => 'VaticanCityThemes.government',
+  );
 
 /// Each package's git repository, from its pubspec `homepage`.
 const Map<String, String> packageRepos = <String, String>{
-  'plate_core': 'https://github.com/ArAd1Beyranvand/plate-core',
-  'plate_keypad': 'https://github.com/ArAd1Beyranvand/keypad-plate',
-  'iran_plate': 'https://github.com/ArAd1Beyranvand/iran-plate',
-  'iranshahr_plate': 'https://github.com/ArAd1Beyranvand/iranshahr_plate',
-  'germany_plate': 'https://github.com/ArAd1Beyranvand/germany-plate',
-  'palestine_plate': 'https://github.com/ArAd1Beyranvand/plate-palestine',
-  'yemen_plate': 'https://github.com/ArAd1Beyranvand/plate-yemen',
-  'lebanon_plate': 'https://github.com/ArAd1Beyranvand/plate-lebanon',
-  'cuba_plate': 'https://github.com/ArAd1Beyranvand/plate-cuba',
-  'venezuela_plate': 'https://github.com/ArAd1Beyranvand/plate-venezuela',
-  'india_plate': 'https://github.com/ArAd1Beyranvand/plate-india',
-  'syria_plate': 'https://github.com/ArAd1Beyranvand/plate-syria',
+  'india_plate': 'https://github.com/ArAd1Beyranvand/india-plate',
 };

@@ -5,16 +5,14 @@ import 'package:yemen_plate/yemen_plate.dart';
 
 import '../catalogue.dart';
 
-/// `yemen_plate` exposes geometry maps — `carGeometries` / `motoGeometries` on
-/// each of the two systems, eleven specs in all — plus `car(...)` / `moto(...)`
-/// lookups over them. This adapter walks the maps rather than naming consts, so
-/// a geometry added to the package shows up here without this file changing.
+/// `yemen_plate` has one car and one moto spec per system; their fields are
+/// variable-length (number 4–6, governorate 1–2, serial 4–6), so one spec
+/// covers every length and the samples are drawn at random lengths.
 ///
 /// **A usage is not a spec.** It selects a country block (the panel caption on
 /// System A, the usage word on System B) and, on System B, the field colour.
-/// Both are render-time inputs, so the walk below is geometries × usages: two
-/// entries can share a spec and still be two different plates. That is the
-/// whole of P4, seen from the outside.
+/// Both are render-time inputs: two entries can share a spec and still be two
+/// different plates.
 class YemenSource extends GallerySource {
   YemenSource();
 
@@ -38,108 +36,62 @@ class YemenSource extends GallerySource {
   String _word(YemenUsage usage, {required bool unified}) =>
       (unified ? usage.unifiedArabic : usage.northernArabic) ?? usage.name;
 
-  /// System A paints every usage in the same white field — the only thing
-  /// that changes is the word in the blue side panel — so five usages here
-  /// read as one plate typed five ways, not five plates. The gallery shows
-  /// the one usage that actually varies by digit count, `private`; the other
-  /// four are a caption swap on an otherwise identical geometry.
+  /// System A paints every usage in the same white field — only the word in
+  /// the blue side panel changes — so one usage stands for all five.
   static const YemenUsage _unifiedUsage = YemenUsage.private;
 
-  List<GalleryEntry> _unified({required bool motorcycle}) {
-    final String form = motorcycle ? 'moto' : 'car';
-    return <GalleryEntry>[
-      for (final MapEntry<int, PlateSpec> geometry
-          in (motorcycle
-                  ? YemenUnifiedPlates.motoGeometries
-                  : YemenUnifiedPlates.carGeometries)
-              .entries)
+  List<GalleryEntry> _unified() => <GalleryEntry>[
+    for (final (String form, PlateSpec spec) in <(String, PlateSpec)>[
+      ('car', YemenUnifiedPlates.car),
+      ('moto', YemenUnifiedPlates.moto),
+    ])
+      GalleryEntry(
+        id: 'ye.unified.$form.${_unifiedUsage.name}',
+        label: '${_word(_unifiedUsage, unified: true)} · $form',
+        spec: spec,
+        country: YemenCountry.unifiedFor(_unifiedUsage),
+        theme: YemenThemes.forUnifiedUsage(_unifiedUsage),
+        validator: const YemenUnifiedValidator(),
+        sampleValues: YemenUnifiedSerialGenerator.generate(spec, random: _rng),
+      ),
+  ];
+
+  /// System B's field colour *is* the usage class; one colour (`private`,
+  /// blue, and its white variant) stands for the format.
+  static const YemenUsage _northernUsage = YemenUsage.private;
+
+  List<GalleryEntry> _northern() => <GalleryEntry>[
+    for (final (String form, PlateSpec spec) in <(String, PlateSpec)>[
+      ('car', YemenNorthernPlates.car),
+      // ignore: deprecated_member_use
+      ('moto', YemenNorthernPlates.moto),
+    ])
+      for (final bool white in const <bool>[false, true])
         GalleryEntry(
-          id: 'ye.unified.$form.${_unifiedUsage.name}.${geometry.key}',
-          label:
-              '${_word(_unifiedUsage, unified: true)} · $form · ${geometry.key} digits',
-          spec: geometry.value,
-          country: YemenCountry.unifiedFor(_unifiedUsage),
-          theme: YemenThemes.forUnifiedUsage(_unifiedUsage),
-          validator: const YemenUnifiedValidator(),
-          sampleValues: YemenUnifiedSerialGenerator.generate(
-            geometry.value,
+          id: <String>[
+            'ye.northern.$form',
+            _northernUsage.name,
+            white ? 'white' : 'blue',
+          ].join('.'),
+          label: <String>[
+            _word(_northernUsage, unified: false),
+            form,
+            white ? 'white' : 'blue',
+          ].join(' · '),
+          spec: spec,
+          country: YemenCountry.northernFor(_northernUsage),
+          theme: YemenThemes.forNorthernUsage(
+            _northernUsage,
+            style: YemenMilitaryStyle.classic,
+            whiteBackground: white,
+          ),
+          validator: const YemenNorthernValidator(),
+          sampleValues: YemenNorthernSerialGenerator.generate(
+            spec,
             random: _rng,
           ),
         ),
-    ];
-  }
-
-  /// System B's field colour *is* the usage class, so unlike System A this is
-  /// a genuine livery difference — but five colours side by side in a gallery
-  /// that is meant to say "here is System B" is noise, not information. One
-  /// colour (`private`, blue) stands for the format; the others are a
-  /// `theme:` swap on an identical layout, same as any other usage here.
-  static const YemenUsage _northernUsage = YemenUsage.private;
-
-  List<GalleryEntry> _northern({required bool motorcycle}) {
-    final String form = motorcycle ? 'moto' : 'car';
-    return <GalleryEntry>[
-      for (final MapEntry<(int, int), PlateSpec> geometry
-          in (motorcycle
-                  ? YemenNorthernPlates.motoGeometries
-                  : YemenNorthernPlates.carGeometries)
-              .entries)
-        ...<GalleryEntry>[
-          GalleryEntry(
-            id: <String>[
-              'ye.northern.$form',
-              _northernUsage.name,
-              'blue',
-              '${geometry.key.$1}+${geometry.key.$2}',
-            ].join('.'),
-            label: <String>[
-              _word(_northernUsage, unified: false),
-              form,
-              'blue',
-              '${geometry.key.$1} + ${geometry.key.$2}',
-            ].join(' · '),
-            spec: geometry.value,
-            country: YemenCountry.northernFor(_northernUsage),
-            theme: YemenThemes.forNorthernUsage(
-              _northernUsage,
-              style: YemenMilitaryStyle.classic,
-              whiteBackground: false,
-            ),
-            validator: const YemenNorthernValidator(),
-            sampleValues: YemenNorthernSerialGenerator.generate(
-              geometry.value,
-              random: _rng,
-            ),
-          ),
-          GalleryEntry(
-            id: <String>[
-              'ye.northern.$form',
-              _northernUsage.name,
-              'white',
-              '${geometry.key.$1}+${geometry.key.$2}',
-            ].join('.'),
-            label: <String>[
-              _word(_northernUsage, unified: false),
-              form,
-              'white',
-              '${geometry.key.$1} + ${geometry.key.$2}',
-            ].join(' · '),
-            spec: geometry.value,
-            country: YemenCountry.northernFor(_northernUsage),
-            theme: YemenThemes.forNorthernUsage(
-              _northernUsage,
-              style: YemenMilitaryStyle.classic,
-              whiteBackground: true,
-            ),
-            validator: const YemenNorthernValidator(),
-            sampleValues: YemenNorthernSerialGenerator.generate(
-              geometry.value,
-              random: _rng,
-            ),
-          ),
-        ],
-    ];
-  }
+  ];
 
   /// A southern entry: digits only, so the sample is drawn here.
   GalleryEntry _southern(
@@ -329,10 +281,7 @@ class YemenSource extends GallerySource {
           'issuing in mid-2026, car then motorcycle. The field is white for '
           'every usage — only the word in the blue side panel changes — so '
           'one usage (private) stands for all five here.',
-      entries: <GalleryEntry>[
-        ..._unified(motorcycle: false),
-        ..._unified(motorcycle: true),
-      ],
+      entries: _unified(),
     ),
     GallerySection(
       title: 'Northern (1993)',
@@ -342,10 +291,7 @@ class YemenSource extends GallerySource {
           'below; the field colour is the usage class, shown here in blue and '
           'white (private). The motorcycle geometry is unverified — a guess, marked '
           'as one in the package.',
-      entries: <GalleryEntry>[
-        ..._northern(motorcycle: false),
-        ..._northern(motorcycle: true),
-      ],
+      entries: _northern(),
     ),
     GallerySection(
       title: 'Hadhramaut, Al Mahrah, Shabwah, Marib',

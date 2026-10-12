@@ -98,7 +98,7 @@ abstract class GallerySource {
   String get countryName;
 
   /// The distinct countries this source actually draws, for anything that
-  /// counts countries rather than sources — the Showcase stat band's
+  /// counts countries rather than sources — the stat band's
   /// COUNTRIES tile.
   ///
   /// Defaults to one-country-per-source, which is right for every source but

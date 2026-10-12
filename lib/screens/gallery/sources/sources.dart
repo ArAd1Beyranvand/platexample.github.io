@@ -16,6 +16,11 @@ import 'yemen.dart';
 import 'regions.dart';
 import 'kyrgyzstan.dart';
 import 'vanuatu.dart';
+import 'cape_verde.dart';
+import 'cameroon.dart';
+import 'chad.dart';
+import 'equatorial_guinea.dart';
+import 'gabon.dart';
 
 export '../catalogue.dart';
 export 'algeria.dart';
@@ -88,6 +93,11 @@ export 'uruguay.dart';
 export 'uzbekistan.dart';
 export 'vanuatu.dart';
 export 'vatican_city.dart';
+export 'cape_verde.dart';
+export 'cameroon.dart';
+export 'chad.dart';
+export 'equatorial_guinea.dart';
+export 'gabon.dart';
 
 /// Every country this app can draw, in the order the catalogue lists them.
 ///
@@ -124,6 +134,11 @@ final List<GallerySource> gallerySources = <GallerySource>[
   SyriaSource(),
   VanuatuSource(),
   VietnamSource(),
+  CapeVerdeSource(),
+  CameroonSource(),
+  ChadSource(),
+  EquatorialGuineaSource(),
+  GabonSource(),
 ];
 
 /// Every source, umbrellas' members included — what a lookup by type wants.

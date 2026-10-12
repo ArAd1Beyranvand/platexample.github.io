@@ -329,3 +329,57 @@ class PdAutoGrid extends StatelessWidget {
     },
   );
 }
+
+/// A scrollable nested inside the page's own: once [child] reaches either end,
+/// further drags on it move the page instead of stopping dead. Touch platforms
+/// otherwise trap the gesture in the inner list.
+class PdScrollHandoff extends StatelessWidget {
+  const PdScrollHandoff({super.key, required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return ScrollConfiguration(
+      // Clamping, so the inner list reports overscroll rather than bouncing.
+      behavior: ScrollConfiguration.of(
+        context,
+      ).copyWith(physics: const ClampingScrollPhysics(), overscroll: false),
+      child: NotificationListener<OverscrollNotification>(
+        onNotification: (OverscrollNotification n) {
+          if (n.depth != 0 || n.dragDetails == null) return false;
+          final ScrollPosition? outer = Scrollable.maybeOf(context)?.position;
+          if (outer == null || outer.axis != n.metrics.axis) return false;
+          outer.jumpTo(
+            (outer.pixels + n.overscroll).clamp(
+              outer.minScrollExtent,
+              outer.maxScrollExtent,
+            ),
+          );
+          return true;
+        },
+        child: child,
+      ),
+    );
+  }
+}
+
+/// Selectable on pointer devices; plain on touch, where selection's drag
+/// recognisers would swallow the swipes that scroll the snippet and the page.
+class PdCodeText extends StatelessWidget {
+  const PdCodeText(this.text, {super.key, this.style});
+
+  final String text;
+  final TextStyle? style;
+
+  @override
+  Widget build(BuildContext context) {
+    final bool touch = switch (Theme.of(context).platform) {
+      TargetPlatform.android || TargetPlatform.iOS => true,
+      _ => false,
+    };
+    return touch
+        ? Text(text, style: style)
+        : SelectableText(text, style: style);
+  }
+}

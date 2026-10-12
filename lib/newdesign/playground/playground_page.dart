@@ -28,8 +28,6 @@ class _PlaygroundPageState extends State<PlaygroundPage> {
   late final PlateController _plate = PlateController(
     spec: widget.item.entry.spec,
   )..addListener(_changed);
-  PlateInputSource _source = PlateInputSource.system;
-  ColoursMode _colours = ColoursMode.country;
   bool _codeOpen = false;
 
   CatalogueItem get _item => widget.item;
@@ -49,9 +47,6 @@ class _PlaygroundPageState extends State<PlaygroundPage> {
     final List<String?> carried = carryValues(_plate.values, next);
     _plate.adoptSpec(next, preserve: PlateValuePreservation.none);
     _plate.setValues(carried);
-    if (_colours == ColoursMode.taxi && taxiColoursFor(_item) == null) {
-      _colours = ColoursMode.country;
-    }
   }
 
   @override
@@ -101,8 +96,7 @@ class _PlaygroundPageState extends State<PlaygroundPage> {
         verdictOf(_item.entry.spec, values, _item.entry.validator).isValid;
     final List<CodeLine> code = playgroundCode(
       item: _item,
-      source: _source,
-      colours: _colours,
+      source: PlateInputSource.keypadFirst,
       values: values,
       isValid: valid,
     );
@@ -126,10 +120,6 @@ class _PlaygroundPageState extends State<PlaygroundPage> {
                 _StageCard(
                   item: _item,
                   plate: _plate,
-                  source: _source,
-                  colours: _colours,
-                  onSource: (PlateInputSource s) => setState(() => _source = s),
-                  onColours: (ColoursMode c) => setState(() => _colours = c),
                 ),
                 if (narrow && !_codeOpen)
                   Align(
@@ -199,7 +189,7 @@ class _TopRow extends StatelessWidget {
             crossAxisAlignment: WrapCrossAlignment.center,
             children: <Widget>[
               PdLink(
-                'Plates',
+                'Countries',
                 onTap: () =>
                     nav.go(const PdLocation.landing(LandingAnchor.coverage)),
                 style: crumb,
@@ -235,31 +225,15 @@ class _TopRow extends StatelessWidget {
 }
 
 class _StageCard extends StatelessWidget {
-  const _StageCard({
-    required this.item,
-    required this.plate,
-    required this.source,
-    required this.colours,
-    required this.onSource,
-    required this.onColours,
-  });
+  const _StageCard({required this.item, required this.plate});
 
   final CatalogueItem item;
   final PlateController plate;
-  final PlateInputSource source;
-  final ColoursMode colours;
-  final ValueChanged<PlateInputSource> onSource;
-  final ValueChanged<ColoursMode> onColours;
 
   @override
   Widget build(BuildContext context) {
     final PdTokens t = context.tokens;
-    final bool hasTaxi = taxiColoursFor(item) != null;
     final double h1 = pdClamp(context, 24, 3, 36);
-
-    final Widget? keypad = source == PlateInputSource.packageKeypad
-        ? SlotKeypad(controller: plate)
-        : null;
 
     return Container(
       padding: EdgeInsets.all(pdClamp(context, 20, 3, 32)),
@@ -286,97 +260,15 @@ class _StageCard extends StatelessWidget {
           LivePlate(
             controller: plate,
             validName: validNameOf(item),
-            theme: themeFor(item, colours, plate.values),
+            theme: item.entry.themeFor(plate.values),
             country: item.entry.country,
             validator: item.entry.validator,
-            inputSource: source,
+            inputSource: PlateInputSource.keypadFirst,
             showInvalidNote: true,
-            keypadBelow: keypad,
-          ),
-          const SizedBox(height: 24),
-          _Segmented<PlateInputSource>(
-            label: 'Input',
-            value: source,
-            onChanged: onSource,
-            options: const <(PlateInputSource, String)>[
-              (PlateInputSource.system, 'System'),
-              (PlateInputSource.hardwareKeyboard, 'Hardware'),
-              (PlateInputSource.packageKeypad, 'Keypad'),
-            ],
-          ),
-          const SizedBox(height: 12),
-          _Segmented<ColoursMode>(
-            label: 'Colours',
-            value: colours,
-            onChanged: onColours,
-            options: <(ColoursMode, String)>[
-              (ColoursMode.country, 'Country'),
-              (ColoursMode.mono, 'Mono'),
-              if (hasTaxi) (ColoursMode.taxi, 'Taxi'),
-            ],
+            keypadBelow: SlotKeypad(controller: plate),
           ),
         ],
       ),
-    );
-  }
-}
-
-class _Segmented<T> extends StatelessWidget {
-  const _Segmented({
-    required this.label,
-    required this.value,
-    required this.options,
-    required this.onChanged,
-  });
-
-  final String label;
-  final T value;
-  final List<(T, String)> options;
-  final ValueChanged<T> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    final PdTokens t = context.tokens;
-    return Row(
-      children: <Widget>[
-        SizedBox(width: 72, child: Text(label, style: eyebrow(t))),
-        Flexible(
-          child: Container(
-            height: 44,
-            padding: const EdgeInsets.all(3),
-            decoration: BoxDecoration(
-              color: t.control,
-              borderRadius: BorderRadius.circular(PdRadius.card),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                for (final (T v, String name) in options)
-                  Flexible(
-                    child: PdTappable(
-                      onTap: () => onChanged(v),
-                      selected: v == value,
-                      semanticLabel: '$label: $name',
-                      color: v == value ? t.raised : null,
-                      padding: const EdgeInsets.symmetric(horizontal: 14),
-                      child: Center(
-                        widthFactor: 1,
-                        child: Text(
-                          name,
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: v == value ? t.text : t.muted,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

@@ -9,6 +9,7 @@ class PdNav extends InheritedWidget {
     super.key,
     required this.location,
     required this.go,
+    required this.openSearch,
     required this.searchFocus,
     required super.child,
   });
@@ -17,16 +18,11 @@ class PdNav extends InheritedWidget {
   final ValueChanged<PdLocation> go;
   final FocusNode searchFocus;
 
+  /// Opens the landing at #coverage and focuses its search field.
+  final VoidCallback openSearch;
+
   static PdNav of(BuildContext context) =>
       context.dependOnInheritedWidgetOfExactType<PdNav>()!;
-
-  /// Opens the landing at #coverage and focuses its search field.
-  void openSearch() {
-    go(const PdLocation.landing(LandingAnchor.coverage));
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) => searchFocus.requestFocus(),
-    );
-  }
 
   @override
   bool updateShouldNotify(PdNav oldWidget) => oldWidget.location != location;

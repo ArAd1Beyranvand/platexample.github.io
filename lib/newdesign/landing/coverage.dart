@@ -28,8 +28,8 @@ class _Row {
   /// A region opens even with no [item]; a country needs one.
   bool get opens => isRegion || item != null;
 
-  /// A region also matches on its members' names, so searching "spain"
-  /// surfaces Europe alongside Spain itself.
+  /// A region also matches on its members' names, so searching a member
+  /// surfaces Iranshahr alongside the member itself.
   late final List<String> _haystack = <String>[
     source.countryName,
     iso,
@@ -45,26 +45,23 @@ class _Row {
 }
 
 /// The head of the list, in the order the catalogue leads with: Iran, the two
-/// groups around it, Palestine, then the continents. A region is how you reach
-/// its countries without knowing their names, so it belongs in this same list
-/// rather than in a second one.
+/// groups around it, then Palestine.
 const List<String> _leadOrder = <String>[
   'Iran',
   'Iranshahr',
   'Yemen',
   'Palestine',
-  'Asia',
-  'Europe',
-  'America',
-  'Africa',
 ];
 
-/// The lead rows above, then everything else A–Z. An umbrella is one row; its
-/// members are reached through it, not listed beside it.
+/// The lead rows above, then every other country A–Z. Continents are spread
+/// into their countries; Iranshahr and Yemen stay one row each.
 final List<_Row> _rows = () {
   final List<GallerySource> all = <GallerySource>[
     for (final GallerySource s in gallerySources)
-      if (isUmbrella(s) || s.sections.isNotEmpty) s,
+      if (s is RegionSource)
+        ...s.members.where((GallerySource m) => m.sections.isNotEmpty)
+      else if (isUmbrella(s) || s.sections.isNotEmpty)
+        s,
   ];
   final List<GallerySource> lead = <GallerySource>[
     for (final String name in _leadOrder)
@@ -163,11 +160,13 @@ class _CoverageSectionState extends State<CoverageSection> {
                     style: body(t),
                   ),
                 )
-              : ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: rows.length,
-                  itemBuilder: (BuildContext context, int i) =>
-                      _CoverageRow(row: rows[i]),
+              : PdScrollHandoff(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: rows.length,
+                    itemBuilder: (BuildContext context, int i) =>
+                        _CoverageRow(row: rows[i]),
+                  ),
                 ),
         ),
       ],
@@ -197,51 +196,71 @@ class _CoverageRow extends StatelessWidget {
       child: PdTappable(
         onTap: row.opens ? () => nav.go(PdLocation.of(row.source)) : null,
         height: 60,
+        width: double.infinity,
         hoverColor: t.surface,
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Row(
           children: <Widget>[
-            Flexible(
-              child: Text(
-                row.source.countryName,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
-                  color: t.text,
-                ),
+            Expanded(
+              child: Row(
+                children: <Widget>[
+                  Flexible(
+                    child: Text(
+                      row.source.countryName,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                        color: t.text,
+                      ),
+                    ),
+                  ),
+                  if (row.native.isNotEmpty &&
+                      row.native != row.source.countryName)
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Text(
+                        row.native,
+                        style: TextStyle(
+                          fontFamily: PdFonts.persian,
+                          fontSize: 14,
+                          color: t.subtle,
+                        ),
+                      ),
+                    ),
+                  const SizedBox(width: 12),
+                  Flexible(
+                    child: Text(
+                      row.source.packageName,
+                      overflow: TextOverflow.ellipsis,
+                      style: monoStyle(t, size: 12).copyWith(color: t.muted),
+                    ),
+                  ),
+                ],
               ),
             ),
-            if (row.native.isNotEmpty && row.native != row.source.countryName)
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
+            DecoratedBox(
+              decoration: BoxDecoration(
+                border: Border.all(color: row.opens ? t.accent : t.divider),
+                borderRadius: BorderRadius.circular(14),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
                 child: Text(
-                  row.native,
+                  row.isRegion
+                      ? 'Region →'
+                      : row.opens
+                      ? 'Open →'
+                      : 'In package',
                   style: TextStyle(
-                    fontFamily: PdFonts.persian,
                     fontSize: 14,
-                    color: t.subtle,
+                    fontWeight: FontWeight.w600,
+                    color: row.opens ? t.accent : t.subtle,
                   ),
                 ),
-              ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Text(
-                row.source.packageName,
-                overflow: TextOverflow.ellipsis,
-                style: monoStyle(t, size: 12).copyWith(color: t.muted),
-              ),
-            ),
-            Text(
-              row.isRegion
-                  ? 'Region →'
-                  : row.opens
-                  ? 'Open →'
-                  : 'In package',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: row.opens ? t.accent : t.subtle,
               ),
             ),
           ],

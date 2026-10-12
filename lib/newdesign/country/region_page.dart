@@ -92,7 +92,7 @@ class _RegionPageState extends State<RegionPage> {
               children: <Widget>[
                 PdBreadcrumb(
                   trail: const <(String, PdLocation)>[
-                    ('Plates', PdLocation.landing(LandingAnchor.coverage)),
+                    ('Countries', PdLocation.landing(LandingAnchor.coverage)),
                   ],
                   current: region.countryName,
                 ),
@@ -161,7 +161,8 @@ class _RegionPageState extends State<RegionPage> {
                     minWidth: 260,
                     gap: 12,
                     children: <Widget>[
-                      for (final GallerySource m in shown) _CountryCard(source: m),
+                      for (final GallerySource m in shown)
+                        _CountryCard(source: m),
                     ],
                   ),
               ],

@@ -37,15 +37,27 @@ class PdRouterDelegate extends RouterDelegate<PdLocation>
   @override
   PdLocation get currentConfiguration => _location;
 
+  /// Whether the landing should focus its search once it has scrolled to
+  /// #coverage. Focusing earlier makes the field scroll itself to the bottom
+  /// edge, cutting the anchor scroll short.
+  bool _focusSearch = false;
+
   void go(PdLocation location) {
     _location = location;
+    _focusSearch = false;
     _visit++;
     notifyListeners();
+  }
+
+  void openSearch() {
+    go(const PdLocation.landing(LandingAnchor.coverage));
+    _focusSearch = true;
   }
 
   @override
   Future<void> setNewRoutePath(PdLocation configuration) {
     _location = configuration;
+    _focusSearch = false;
     _visit++;
     return SynchronousFuture<void>(null);
   }
@@ -69,6 +81,7 @@ class PdRouterDelegate extends RouterDelegate<PdLocation>
           child: SiteShell(
             location: location,
             go: go,
+            openSearch: openSearch,
             searchFocus: searchFocus,
             child: switch (location) {
               PdLocation(isPlayground: true) => PlaygroundPage(
@@ -80,7 +93,11 @@ class PdRouterDelegate extends RouterDelegate<PdLocation>
               PdLocation(isCountry: true) => CountryPage(
                 source: location.source!,
               ),
-              _ => LandingPage(anchor: location.anchor, visit: _visit),
+              _ => LandingPage(
+                anchor: location.anchor,
+                visit: _visit,
+                focusSearch: _focusSearch,
+              ),
             },
           ),
         ),

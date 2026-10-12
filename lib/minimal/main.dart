@@ -23,7 +23,7 @@ class MinimalApp extends StatelessWidget {
               // there is nothing to provide above it.
               // inputSource defaults per platform and can be overridden
               child: PlateCanvas(
-                spec: IranPlates.car,
+                spec: IranPlates.civil,
                 // The Iran car plate has a `chosen`-alphabet letter slot;
                 // core no longer ships a picker, so supply one.
                 onChooseCharacter: (alphabet) =>

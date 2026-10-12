@@ -7,7 +7,6 @@ import 'package:plate_core/plate_core.dart';
 import '../app/location.dart';
 import '../app/nav.dart';
 import '../app/pd_app.dart';
-import '../data/catalogue.dart';
 import '../design/tokens.dart';
 import '../widgets/controls.dart';
 
@@ -21,12 +20,14 @@ class SiteShell extends StatefulWidget {
     super.key,
     required this.location,
     required this.go,
+    required this.openSearch,
     required this.searchFocus,
     required this.child,
   });
 
   final PdLocation location;
   final ValueChanged<PdLocation> go;
+  final VoidCallback openSearch;
   final FocusNode searchFocus;
   final Widget child;
 
@@ -59,10 +60,7 @@ class _SiteShellState extends State<SiteShell> {
             focused.findAncestorWidgetOfExactType<PlateCanvas>() != null)) {
       return false;
     }
-    _go(const PdLocation.landing(LandingAnchor.coverage));
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) => widget.searchFocus.requestFocus(),
-    );
+    _openSearch();
     return true;
   }
 
@@ -71,12 +69,18 @@ class _SiteShellState extends State<SiteShell> {
     widget.go(location);
   }
 
+  void _openSearch() {
+    setState(() => _menuOpen = false);
+    widget.openSearch();
+  }
+
   @override
   Widget build(BuildContext context) {
     final PdTokens t = context.tokens;
     return PdNav(
       location: widget.location,
       go: _go,
+      openSearch: _openSearch,
       searchFocus: widget.searchFocus,
       child: Material(
         color: t.bg,
@@ -111,18 +115,9 @@ class _NavLink {
 
 final List<_NavLink> _links = <_NavLink>[
   _NavLink(
-    'Plates',
+    'Countries',
     () => const PdLocation.landing(LandingAnchor.coverage),
     (PdLocation l) => l.anchor == LandingAnchor.coverage && !l.isPlayground,
-  ),
-  _NavLink(
-    'Europe',
-    () => PdLocation.region(europeRegion),
-    // Active on the region and on any country inside it, since that country
-    // was reached through here.
-    (PdLocation l) =>
-        identical(l.source, europeRegion) ||
-        (l.source != null && identical(regionOf(l.source!), europeRegion)),
   ),
   _NavLink(
     'Playground',

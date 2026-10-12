@@ -8,6 +8,7 @@ import '../data/plate_code.dart';
 import '../design/tokens.dart';
 import '../plate/live_plate.dart';
 import '../widgets/controls.dart';
+import '../shell/site_shell.dart';
 import 'hero.dart';
 import 'text_styles.dart';
 
@@ -70,7 +71,7 @@ class WhySection extends StatelessWidget {
   Widget build(BuildContext context) {
     final PdTokens t = context.tokens;
     CatalogueItem? of(PlateSpec spec) => itemForSpec(spec);
-    final CatalogueItem? iran = of(IranPlates.car);
+    final CatalogueItem? iran = of(IranPlates.civil);
     final CatalogueItem? westBank = of(PSWestBankPlates.modernCar);
     final CatalogueItem? gaza = of(PSGazaPlates.car2012);
     // Northern specs are built per geometry, so there is no named constant.
@@ -160,10 +161,143 @@ class CompareSection extends StatefulWidget {
 
 class _CompareSectionState extends State<CompareSection> {
   final TextEditingController _text = TextEditingController(text: '12ب345AB67');
-  final PlateController _plate = PlateController(spec: IranPlates.car);
+  final PlateController _plate = PlateController(spec: IranPlates.civil);
+
+  final GlobalKey _plateKey = GlobalKey();
+
+  /// On a phone, brings the plate to the top once the keyboard has settled.
+  void _liftPlate() {
+    if (MediaQuery.sizeOf(context).width >= 600) return;
+    Future<void>.delayed(const Duration(milliseconds: 350), () {
+      final BuildContext? plate = _plateKey.currentContext;
+      if (!mounted || plate == null) return;
+      final ScrollPosition position = Scrollable.of(plate).position;
+      final double top = (plate.findRenderObject()! as RenderBox)
+          .localToGlobal(Offset.zero)
+          .dy;
+      final double target = position.pixels + top - kHeaderHeight - 16;
+      position.animateTo(
+        target.clamp(position.minScrollExtent, position.maxScrollExtent),
+        duration: const Duration(milliseconds: 250),
+        curve: Curves.easeOutCubic,
+      );
+    });
+  }
+
+  /// True when the field holds a character the plate refused.
+  bool _refused = false;
+  bool _syncing = false;
+
+  /// The slot values the field last fed the plate; a plate notification that
+  /// still matches them must not strip the field's refused characters.
+  String _fed = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _text.addListener(_textToPlate);
+    _plate.addListener(_plateToText);
+    _textToPlate();
+  }
+
+  /// A left-to-right mark after every character, so Persian letters and
+  /// Arabic-Indic digits keep typing order instead of forming an RTL run.
+  static const String _lrm = '\u200E';
+
+  static String _ltr(String raw) => raw.characters
+      .where((String c) => c != _lrm)
+      .map((String c) => '$c$_lrm')
+      .join();
+
+  /// The field's text as last written in [_ltr] form.
+  String _shown = '';
+
+  /// Rewrites what the user typed into [_ltr] form, keeping the caret after
+  /// the same real characters. A backspace that only took a mark takes the
+  /// character before it too.
+  void _keepLtr() {
+    String text = _text.text;
+    int caret = _text.selection.baseOffset.clamp(0, text.length);
+    if (text.length < _shown.length && _ltr(text) == _shown && caret > 0) {
+      final String head = text
+          .substring(0, caret)
+          .characters
+          .skipLast(1)
+          .string;
+      text = head + text.substring(caret);
+      caret = head.length;
+    }
+    final String shown = _ltr(text);
+    _shown = shown;
+    if (shown == _text.text) return;
+    _syncing = true;
+    _text.value = TextEditingValue(
+      text: shown,
+      selection: TextSelection.collapsed(
+        offset: _ltr(text.substring(0, caret)).length,
+      ),
+    );
+    _syncing = false;
+  }
+
+  /// The field's characters fed slot by slot, as [PlateController.fromText]
+  /// reads them; anything left over or refused marks the field.
+  void _textToPlate() {
+    if (_syncing) return;
+    _keepLtr();
+    final PlateSpec spec = _plate.spec;
+    final List<String?> values = List<String?>.filled(spec.slotCount, null);
+    bool refused = false;
+    int index = 0;
+    for (final String c in _text.text.characters) {
+      if (c == _lrm || c.trim().isEmpty) continue;
+      // A one-character alphabet is printed on the plate, not typed.
+      while (index < spec.slotCount &&
+          spec.slots[index].alphabet.characters.length == 1) {
+        index++;
+      }
+      final PlateAlphabet? alphabet = index < spec.slotCount
+          ? spec.slots[index].alphabet
+          : null;
+      if (alphabet == null || !alphabet.accepts(c)) {
+        refused = true;
+        continue;
+      }
+      final String value = (values[index] ?? '') + alphabet.canonical(c);
+      values[index] = value;
+      if (value.characters.length >= spec.slots[index].length) index++;
+    }
+    _syncing = true;
+    _plate.setValues(values);
+    _fed = values.whereType<String>().join();
+    _syncing = false;
+    if (refused != _refused) setState(() => _refused = refused);
+  }
+
+  /// A slot typed on the plate rewrites the field with the corrected value.
+  void _plateToText() {
+    if (_syncing) return;
+    final PlateSpec spec = _plate.spec;
+    final String next = <String?>[
+      for (int i = 0; i < spec.slotCount; i++)
+        if (spec.slots[i].alphabet.characters.length > 1) _plate.valueAt(i),
+    ].whereType<String>().join();
+    if (next == _fed) return;
+    final String shown = _ltr(next);
+    _shown = shown;
+    _syncing = true;
+    _text.value = TextEditingValue(
+      text: shown,
+      selection: TextSelection.collapsed(offset: shown.length),
+    );
+    _syncing = false;
+    if (_refused) setState(() => _refused = false);
+  }
 
   @override
   void dispose() {
+    _text.removeListener(_textToPlate);
+    _plate.removeListener(_plateToText);
     _text.dispose();
     _plate.dispose();
     super.dispose();
@@ -172,7 +306,7 @@ class _CompareSectionState extends State<CompareSection> {
   @override
   Widget build(BuildContext context) {
     final PdTokens t = context.tokens;
-    final CatalogueItem? iran = itemForSpec(IranPlates.car);
+    final CatalogueItem? iran = itemForSpec(IranPlates.civil);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -197,13 +331,17 @@ class _CompareSectionState extends State<CompareSection> {
                       controller: _text,
                       style: monoStyle(t, size: 16),
                       semanticLabel: 'Type a plate into a text field',
+                      error: _refused,
                     ),
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'Keeps every character. No slots, no alphabet, no '
-                    'direction, no colours.',
-                    style: body(t),
+                    _refused
+                        ? 'Holds characters this plate refuses. The plate '
+                              'shows only what fits.'
+                        : 'Keeps every character. No slots, no alphabet, no '
+                              'direction, no colours.',
+                    style: body(t).copyWith(color: _refused ? t.error : null),
                   ),
                 ],
               ),
@@ -212,15 +350,22 @@ class _CompareSectionState extends State<CompareSection> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  Text('PLATECANVAS · IRANPLATES.CAR', style: eyebrow(t)),
+                  Text('PLATECANVAS · IRANPLATES.CIVIL', style: eyebrow(t)),
                   const SizedBox(height: 16),
-                  LivePlate(
-                    controller: _plate,
-                    validName: iran == null ? 'Iran car' : validNameOf(iran),
-                    theme: iran?.entry.theme,
-                    country: iran?.entry.country,
-                    validator: iran?.entry.validator,
-                    inputSource: PlateInputSource.system,
+                  Listener(
+                    onPointerDown: (_) => _liftPlate(),
+                    child: KeyedSubtree(
+                      key: _plateKey,
+                      child: LivePlate(
+                        controller: _plate,
+                        validName:
+                            iran == null ? 'Iran car' : validNameOf(iran),
+                        theme: iran?.entry.theme,
+                        country: iran?.entry.country,
+                        validator: iran?.entry.validator,
+                        inputSource: PlateInputSource.system,
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 12),
                   Text(
@@ -248,6 +393,7 @@ class PdTextField extends StatelessWidget {
     this.style,
     this.semanticLabel,
     this.prefix,
+    this.error = false,
   });
 
   final TextEditingController controller;
@@ -256,6 +402,9 @@ class PdTextField extends StatelessWidget {
   final TextStyle? style;
   final String? semanticLabel;
   final Widget? prefix;
+
+  /// Paints the border in the error colour.
+  final bool error;
 
   @override
   Widget build(BuildContext context) {
@@ -280,8 +429,8 @@ class PdTextField extends StatelessWidget {
           filled: true,
           fillColor: t.bg,
           contentPadding: const EdgeInsets.symmetric(horizontal: 14),
-          enabledBorder: border(t.control),
-          focusedBorder: border(t.accent, 2),
+          enabledBorder: border(error ? t.error : t.control),
+          focusedBorder: border(error ? t.error : t.accent, 2),
         ),
       ),
     );
@@ -308,10 +457,10 @@ class StartSection extends StatelessWidget {
       (
         '02',
         'Render a plate',
-        'final controller = PlateController(spec: IranPlates.car);\n'
+        'final controller = PlateController(spec: IranPlates.civil);\n'
             '\n'
             'PlateCanvas(\n'
-            '  spec: IranPlates.car,\n'
+            '  spec: IranPlates.civil,\n'
             '  controller: controller,\n'
             '  onChooseCharacter: pickLetter,\n'
             ')',
@@ -383,7 +532,7 @@ class CodeBlock extends StatelessWidget {
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.fromLTRB(18, 16, 80, 16),
-            child: SelectableText(code, style: monoStyle(t, height: 22 / 13)),
+            child: PdCodeText(code, style: monoStyle(t, height: 22 / 13)),
           ),
           Positioned(top: 6, right: 6, child: PdCopyButton(text: () => code)),
         ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../app/location.dart';
+import '../app/nav.dart';
 import '../data/plate_code.dart';
 import '../design/tokens.dart';
 import '../shell/site_shell.dart';
@@ -11,12 +12,20 @@ import 'sections.dart';
 
 /// One scrolling page: hero, why, compare, #coverage, #start, #about.
 class LandingPage extends StatefulWidget {
-  const LandingPage({super.key, required this.anchor, required this.visit});
+  const LandingPage({
+    super.key,
+    required this.anchor,
+    required this.visit,
+    this.focusSearch = false,
+  });
 
   final LandingAnchor anchor;
 
   /// Changes on every navigation, so re-selecting an anchor scrolls again.
   final int visit;
+
+  /// Focus the coverage search once the scroll has arrived.
+  final bool focusSearch;
 
   @override
   State<LandingPage> createState() => _LandingPageState();
@@ -66,10 +75,18 @@ class _LandingPageState extends State<LandingPage> {
         context,
         const Duration(milliseconds: 400),
       );
+      final FocusNode? search = widget.focusSearch
+          ? PdNav.of(context).searchFocus
+          : null;
       if (!animate || d == Duration.zero) {
         _scroll.jumpTo(target);
+        search?.requestFocus();
       } else {
-        _scroll.animateTo(target, duration: d, curve: Curves.easeOutCubic);
+        _scroll.animateTo(target, duration: d, curve: Curves.easeOutCubic).then(
+          (_) {
+            if (mounted) search?.requestFocus();
+          },
+        );
       }
     });
   }
