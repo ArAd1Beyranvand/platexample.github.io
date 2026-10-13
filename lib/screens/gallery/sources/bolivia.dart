@@ -63,7 +63,7 @@ class BoliviaSource extends GallerySource {
           'Private · 1852PHD',
           BoliviaPlates.standard(),
           BoliviaThemes.standard,
-          values: <String?>['1', '8', '5', '2', 'P', 'H', 'D', 'L'],
+          values: <String?>['1852', 'PHD', 'L'],
         ),
         _entry(
           'standard3',

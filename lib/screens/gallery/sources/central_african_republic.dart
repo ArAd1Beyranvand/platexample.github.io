@@ -32,7 +32,7 @@ class CentralAfricanRepublicSource extends GallerySource {
           country:
               CentralAfricanRepublicCountry.centralAfricanRepublic,
           validator: const CentralAfricanRepublicValidator(),
-          sampleValues: 'A B 1 2 3 C D'.split(' '),
+          sampleValues: 'AB 123 CD'.split(' '),
         ),
       ],
     ),

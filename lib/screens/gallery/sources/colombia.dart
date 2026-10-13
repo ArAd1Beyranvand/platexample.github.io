@@ -73,7 +73,7 @@ class ColombiaSource extends GallerySource {
           ColombiaThemes.private,
           'ABC·123',
           city: 'ARMENIA',
-          values: <String?>['N', 'A', 'Z', '8', '2', '7'],
+          values: <String?>['NAZ', '827'],
         ),
         _series(
           ColombiaSeries.commercial,
@@ -145,7 +145,7 @@ class ColombiaSource extends GallerySource {
           ColombiaPlates.diplomatic,
           ColombiaThemes.diplomatic,
           validator: const ColombiaDiplomaticValidator(),
-          values: <String?>['A', 'F', 'R', '0', '0', '0'],
+          values: <String?>['A', 'FR', '000'],
         ),
         _entry(
           'police',

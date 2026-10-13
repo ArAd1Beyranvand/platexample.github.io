@@ -85,23 +85,11 @@ final Map<PlateSpec, String> specNames = Map<PlateSpec, String>.identity()
   ..putIfAbsent(AfghanistanPlates.kabul6, () => 'AfghanistanPlates.kabul6')
   ..putIfAbsent(AfghanistanPlates.cycle3, () => 'AfghanistanPlates.cycle3')
   ..putIfAbsent(AfghanistanPlates.cycle4, () => 'AfghanistanPlates.cycle4')
-  ..putIfAbsent(
-    AfghanistanPlates.diplomatic,
-    () => 'AfghanistanPlates.diplomatic',
-  )
-  ..putIfAbsent(
-    AfghanistanPlates.governmental,
-    () => 'AfghanistanPlates.governmental',
-  )
+  ..putIfAbsent(AfghanistanPlates.diplomatic, () => 'AfghanistanPlates.diplomatic')
+  ..putIfAbsent(AfghanistanPlates.governmental, () => 'AfghanistanPlates.governmental')
   ..putIfAbsent(AfghanistanPlates.un, () => 'AfghanistanPlates.un')
-  ..putIfAbsent(
-    AfghanistanPlates.temporary,
-    () => 'AfghanistanPlates.temporary',
-  )
-  ..putIfAbsent(
-    AfghanistanPlates.international,
-    () => 'AfghanistanPlates.international',
-  )
+  ..putIfAbsent(AfghanistanPlates.temporary, () => 'AfghanistanPlates.temporary')
+  ..putIfAbsent(AfghanistanPlates.international, () => 'AfghanistanPlates.international')
   ..putIfAbsent(ArmeniaPlates.car, () => 'ArmeniaPlates.car')
   ..putIfAbsent(ArmeniaPlates.carTwoRow, () => 'ArmeniaPlates.carTwoRow')
   ..putIfAbsent(ArmeniaPlates.motorcycle, () => 'ArmeniaPlates.motorcycle')
@@ -109,18 +97,12 @@ final Map<PlateSpec, String> specNames = Map<PlateSpec, String>.identity()
   ..putIfAbsent(ArmeniaPlates.trailer, () => 'ArmeniaPlates.trailer')
   ..putIfAbsent(ArmeniaPlates.bus, () => 'ArmeniaPlates.bus')
   ..putIfAbsent(ArmeniaPlates.diplomatic, () => 'ArmeniaPlates.diplomatic')
-  ..putIfAbsent(
-    ArmeniaPlates.diplomaticArm,
-    () => 'ArmeniaPlates.diplomaticArm',
-  )
+  ..putIfAbsent(ArmeniaPlates.diplomaticArm, () => 'ArmeniaPlates.diplomaticArm')
   ..putIfAbsent(ArmeniaPlates.un, () => 'ArmeniaPlates.un')
   ..putIfAbsent(ArmeniaPlates.military, () => 'ArmeniaPlates.military')
   ..putIfAbsent(AzerbaijanPlates.car, () => 'AzerbaijanPlates.car')
   ..putIfAbsent(AzerbaijanPlates.bicycle, () => 'AzerbaijanPlates.bicycle')
-  ..putIfAbsent(
-    AzerbaijanPlates.diplomatic,
-    () => 'AzerbaijanPlates.diplomatic',
-  )
+  ..putIfAbsent(AzerbaijanPlates.diplomatic, () => 'AzerbaijanPlates.diplomatic')
   ..putIfAbsent(AzerbaijanPlates.foreign, () => 'AzerbaijanPlates.foreign')
   ..putIfAbsent(BahrainPlates.eu, () => 'BahrainPlates.eu')
   ..putIfAbsent(BahrainPlates.us, () => 'BahrainPlates.us')
@@ -133,14 +115,8 @@ final Map<PlateSpec, String> specNames = Map<PlateSpec, String>.identity()
   ..putIfAbsent(IraqPlates.smallKurdistan, () => 'IraqPlates.smallKurdistan')
   ..putIfAbsent(IraqPlates.smallTemporary, () => 'IraqPlates.smallTemporary')
   ..putIfAbsent(KazakhstanPlates.private, () => 'KazakhstanPlates.private')
-  ..putIfAbsent(
-    KazakhstanPlates.nonPrivate,
-    () => 'KazakhstanPlates.nonPrivate',
-  )
-  ..putIfAbsent(
-    KazakhstanPlates.diplomatic,
-    () => 'KazakhstanPlates.diplomatic',
-  )
+  ..putIfAbsent(KazakhstanPlates.nonPrivate, () => 'KazakhstanPlates.nonPrivate')
+  ..putIfAbsent(KazakhstanPlates.diplomatic, () => 'KazakhstanPlates.diplomatic')
   ..putIfAbsent(KuwaitPlates.civilian, () => 'KuwaitPlates.civilian')
   ..putIfAbsent(KuwaitPlates.transport, () => 'KuwaitPlates.transport')
   ..putIfAbsent(KuwaitPlates.police, () => 'KuwaitPlates.police')
@@ -156,26 +132,11 @@ final Map<PlateSpec, String> specNames = Map<PlateSpec, String>.identity()
   ..putIfAbsent(KuwaitPlates.emiri, () => 'KuwaitPlates.emiri')
   ..putIfAbsent(KuwaitPlates.emiriGuard, () => 'KuwaitPlates.emiriGuard')
   ..putIfAbsent(KuwaitPlates.motorcycle, () => 'KuwaitPlates.motorcycle')
-  ..putIfAbsent(
-    KuwaitPlates.policeMotorcycle,
-    () => 'KuwaitPlates.policeMotorcycle',
-  )
-  ..putIfAbsent(
-    OmanPlates.fourDigitOneLetter,
-    () => 'OmanPlates.fourDigitOneLetter',
-  )
-  ..putIfAbsent(
-    OmanPlates.fourDigitTwoLetter,
-    () => 'OmanPlates.fourDigitTwoLetter',
-  )
-  ..putIfAbsent(
-    OmanPlates.fiveDigitOneLetter,
-    () => 'OmanPlates.fiveDigitOneLetter',
-  )
-  ..putIfAbsent(
-    OmanPlates.fiveDigitTwoLetter,
-    () => 'OmanPlates.fiveDigitTwoLetter',
-  )
+  ..putIfAbsent(KuwaitPlates.policeMotorcycle, () => 'KuwaitPlates.policeMotorcycle')
+  ..putIfAbsent(OmanPlates.fourDigitOneLetter, () => 'OmanPlates.fourDigitOneLetter')
+  ..putIfAbsent(OmanPlates.fourDigitTwoLetter, () => 'OmanPlates.fourDigitTwoLetter')
+  ..putIfAbsent(OmanPlates.fiveDigitOneLetter, () => 'OmanPlates.fiveDigitOneLetter')
+  ..putIfAbsent(OmanPlates.fiveDigitTwoLetter, () => 'OmanPlates.fiveDigitTwoLetter')
   ..putIfAbsent(QatarPlates.civilian, () => 'QatarPlates.civilian')
   ..putIfAbsent(QatarPlates.civilian4, () => 'QatarPlates.civilian4')
   ..putIfAbsent(QatarPlates.civilian3, () => 'QatarPlates.civilian3')
@@ -183,91 +144,43 @@ final Map<PlateSpec, String> specNames = Map<PlateSpec, String>.identity()
   ..putIfAbsent(QatarPlates.police, () => 'QatarPlates.police')
   ..putIfAbsent(TajikistanPlates.car, () => 'TajikistanPlates.car')
   ..putIfAbsent(TajikistanPlates.carTwoRow, () => 'TajikistanPlates.carTwoRow')
-  ..putIfAbsent(
-    TajikistanPlates.motorcycle,
-    () => 'TajikistanPlates.motorcycle',
-  )
+  ..putIfAbsent(TajikistanPlates.motorcycle, () => 'TajikistanPlates.motorcycle')
   ..putIfAbsent(TajikistanPlates.trailer, () => 'TajikistanPlates.trailer')
-  ..putIfAbsent(
-    TajikistanPlates.publicTransport,
-    () => 'TajikistanPlates.publicTransport',
-  )
+  ..putIfAbsent(TajikistanPlates.publicTransport, () => 'TajikistanPlates.publicTransport')
   ..putIfAbsent(TajikistanPlates.police, () => 'TajikistanPlates.police')
   ..putIfAbsent(TajikistanPlates.foreign, () => 'TajikistanPlates.foreign')
-  ..putIfAbsent(
-    TajikistanPlates.diplomatic,
-    () => 'TajikistanPlates.diplomatic',
-  )
-  ..putIfAbsent(
-    TajikistanPlates.governmental,
-    () => 'TajikistanPlates.governmental',
-  )
+  ..putIfAbsent(TajikistanPlates.diplomatic, () => 'TajikistanPlates.diplomatic')
+  ..putIfAbsent(TajikistanPlates.governmental, () => 'TajikistanPlates.governmental')
   ..putIfAbsent(TurkeyPlates.private, () => 'TurkeyPlates.private')
-  ..putIfAbsent(
-    TurkeyPlates.internationalOrganization,
-    () => 'TurkeyPlates.internationalOrganization',
-  )
+  ..putIfAbsent(TurkeyPlates.internationalOrganization, () => 'TurkeyPlates.internationalOrganization')
   ..putIfAbsent(TurkeyPlates.diplomatic, () => 'TurkeyPlates.diplomatic')
-  ..putIfAbsent(
-    TurkeyPlates.temporaryCustoms,
-    () => 'TurkeyPlates.temporaryCustoms',
-  )
-  ..putIfAbsent(
-    TurkeyPlates.foreignResident,
-    () => 'TurkeyPlates.foreignResident',
-  )
-  ..putIfAbsent(
-    TurkeyPlates.syrianResident,
-    () => 'TurkeyPlates.syrianResident',
-  )
+  ..putIfAbsent(TurkeyPlates.temporaryCustoms, () => 'TurkeyPlates.temporaryCustoms')
+  ..putIfAbsent(TurkeyPlates.foreignResident, () => 'TurkeyPlates.foreignResident')
+  ..putIfAbsent(TurkeyPlates.syrianResident, () => 'TurkeyPlates.syrianResident')
   ..putIfAbsent(TurkeyPlates.istanbulTaxi, () => 'TurkeyPlates.istanbulTaxi')
   ..putIfAbsent(TurkeyPlates.taxi, () => 'TurkeyPlates.taxi')
   ..putIfAbsent(TurkeyPlates.temporary, () => 'TurkeyPlates.temporary')
-  ..putIfAbsent(
-    TurkeyPlates.temporaryWithStrip,
-    () => 'TurkeyPlates.temporaryWithStrip',
-  )
+  ..putIfAbsent(TurkeyPlates.temporaryWithStrip, () => 'TurkeyPlates.temporaryWithStrip')
   ..putIfAbsent(TurkeyPlates.police, () => 'TurkeyPlates.police')
   ..putIfAbsent(TurkeyPlates.gendarmerie, () => 'TurkeyPlates.gendarmerie')
   ..putIfAbsent(TurkeyPlates.coastGuard, () => 'TurkeyPlates.coastGuard')
   ..putIfAbsent(TurkeyPlates.consulate, () => 'TurkeyPlates.consulate')
-  ..putIfAbsent(
-    TurkeyPlates.provincialGovernment,
-    () => 'TurkeyPlates.provincialGovernment',
-  )
+  ..putIfAbsent(TurkeyPlates.provincialGovernment, () => 'TurkeyPlates.provincialGovernment')
   ..putIfAbsent(TurkeyPlates.official, () => 'TurkeyPlates.official')
   ..putIfAbsent(TurkeyPlates.governor, () => 'TurkeyPlates.governor')
   ..putIfAbsent(TurkeyPlates.sample, () => 'TurkeyPlates.sample')
   ..putIfAbsent(TurkeyPlates.parliament, () => 'TurkeyPlates.parliament')
-  ..putIfAbsent(
-    TurkeyPlates.parliamentLabelled,
-    () => 'TurkeyPlates.parliamentLabelled',
-  )
+  ..putIfAbsent(TurkeyPlates.parliamentLabelled, () => 'TurkeyPlates.parliamentLabelled')
   ..putIfAbsent(TurkmenistanPlates.classic, () => 'TurkmenistanPlates.classic')
   ..putIfAbsent(TurkmenistanPlates.private, () => 'TurkmenistanPlates.private')
   ..putIfAbsent(TurkmenistanPlates.trailer, () => 'TurkmenistanPlates.trailer')
   ..putIfAbsent(TurkmenistanPlates.foreign, () => 'TurkmenistanPlates.foreign')
-  ..putIfAbsent(
-    TurkmenistanPlates.foreignTrailer,
-    () => 'TurkmenistanPlates.foreignTrailer',
-  )
+  ..putIfAbsent(TurkmenistanPlates.foreignTrailer, () => 'TurkmenistanPlates.foreignTrailer')
   ..putIfAbsent(TurkmenistanPlates.export, () => 'TurkmenistanPlates.export')
-  ..putIfAbsent(
-    TurkmenistanPlates.diplomatic,
-    () => 'TurkmenistanPlates.diplomatic',
-  )
-  ..putIfAbsent(
-    TurkmenistanPlates.government,
-    () => 'TurkmenistanPlates.government',
-  )
-  ..putIfAbsent(
-    TurkmenistanPlates.military,
-    () => 'TurkmenistanPlates.military',
-  )
-  ..putIfAbsent(
-    TurkmenistanPlates.ceremony,
-    () => 'TurkmenistanPlates.ceremony',
-  )
+  ..putIfAbsent(TurkmenistanPlates.diplomatic, () => 'TurkmenistanPlates.diplomatic')
+  ..putIfAbsent(TurkmenistanPlates.government, () => 'TurkmenistanPlates.government')
+  ..putIfAbsent(TurkmenistanPlates.military, () => 'TurkmenistanPlates.military')
+  ..putIfAbsent(TurkmenistanPlates.ceremony, () => 'TurkmenistanPlates.ceremony')
   ..putIfAbsent(UaePlates.abuDhabiLong, () => 'UaePlates.abuDhabiLong')
   ..putIfAbsent(UaePlates.abuDhabiShort, () => 'UaePlates.abuDhabiShort')
   ..putIfAbsent(UaePlates.ajmanLong, () => 'UaePlates.ajmanLong')
@@ -279,141 +192,57 @@ final Map<PlateSpec, String> specNames = Map<PlateSpec, String>.identity()
   ..putIfAbsent(UaePlates.ummAlQuwainLong, () => 'UaePlates.ummAlQuwainLong')
   ..putIfAbsent(UaePlates.ummAlQuwainShort, () => 'UaePlates.ummAlQuwainShort')
   ..putIfAbsent(UaePlates.rasAlKhaimahLong, () => 'UaePlates.rasAlKhaimahLong')
-  ..putIfAbsent(
-    UaePlates.rasAlKhaimahShort,
-    () => 'UaePlates.rasAlKhaimahShort',
-  )
+  ..putIfAbsent(UaePlates.rasAlKhaimahShort, () => 'UaePlates.rasAlKhaimahShort')
   ..putIfAbsent(UaePlates.sharjahLong, () => 'UaePlates.sharjahLong')
   ..putIfAbsent(UaePlates.sharjahShort, () => 'UaePlates.sharjahShort')
   ..putIfAbsent(UzbekistanPlates.passenger, () => 'UzbekistanPlates.passenger')
-  ..putIfAbsent(
-    UzbekistanPlates.foreignCitizen,
-    () => 'UzbekistanPlates.foreignCitizen',
-  )
-  ..putIfAbsent(
-    UzbekistanPlates.foreignCompany,
-    () => 'UzbekistanPlates.foreignCompany',
-  )
+  ..putIfAbsent(UzbekistanPlates.foreignCitizen, () => 'UzbekistanPlates.foreignCitizen')
+  ..putIfAbsent(UzbekistanPlates.foreignCompany, () => 'UzbekistanPlates.foreignCompany')
   ..putIfAbsent(UzbekistanPlates.temporary, () => 'UzbekistanPlates.temporary')
-  ..putIfAbsent(
-    UzbekistanPlates.ambassador,
-    () => 'UzbekistanPlates.ambassador',
-  )
+  ..putIfAbsent(UzbekistanPlates.ambassador, () => 'UzbekistanPlates.ambassador')
   ..putIfAbsent(UzbekistanPlates.diplomat, () => 'UzbekistanPlates.diplomat')
-  ..putIfAbsent(
-    UzbekistanPlates.unitedNations,
-    () => 'UzbekistanPlates.unitedNations',
-  )
+  ..putIfAbsent(UzbekistanPlates.unitedNations, () => 'UzbekistanPlates.unitedNations')
   ..putIfAbsent(UzbekistanPlates.trailer, () => 'UzbekistanPlates.trailer')
-  ..putIfAbsent(
-    UzbekistanPlates.motorcycle,
-    () => 'UzbekistanPlates.motorcycle',
-  )
+  ..putIfAbsent(UzbekistanPlates.motorcycle, () => 'UzbekistanPlates.motorcycle')
   ..putIfAbsent(GermanPlates.car, () => 'GermanPlates.car')
   ..putIfAbsent(PSGazaPlates.car2012, () => 'PSGazaPlates.car2012')
   ..putIfAbsent(PSGazaPlates.moto, () => 'PSGazaPlates.moto')
-  ..putIfAbsent(
-    PSGazaPlates.car2012TwoLine,
-    () => 'PSGazaPlates.car2012TwoLine',
-  )
-  ..putIfAbsent(
-    PSGazaPlates.car2021TwoLine,
-    () => 'PSGazaPlates.car2021TwoLine',
-  )
+  ..putIfAbsent(PSGazaPlates.car2012TwoLine, () => 'PSGazaPlates.car2012TwoLine')
+  ..putIfAbsent(PSGazaPlates.car2021TwoLine, () => 'PSGazaPlates.car2021TwoLine')
   ..putIfAbsent(PSWestBankPlates.modernCar, () => 'PSWestBankPlates.modernCar')
   ..putIfAbsent(PSWestBankPlates.legacyCar, () => 'PSWestBankPlates.legacyCar')
-  ..putIfAbsent(
-    PSWestBankPlates.modernCarTwoLine,
-    () => 'PSWestBankPlates.modernCarTwoLine',
-  )
-  ..putIfAbsent(
-    PSWestBankPlates.legacyCarTwoLine,
-    () => 'PSWestBankPlates.legacyCarTwoLine',
-  )
-  ..putIfAbsent(
-    PSWestBankPlates.modernMoto,
-    () => 'PSWestBankPlates.modernMoto',
-  )
-  ..putIfAbsent(
-    PSWestBankPlates.modernMotoTwoLine,
-    () => 'PSWestBankPlates.modernMotoTwoLine',
-  )
-  ..putIfAbsent(
-    PSWestBankPlates.modernTrade,
-    () => 'PSWestBankPlates.modernTrade',
-  )
+  ..putIfAbsent(PSWestBankPlates.modernCarTwoLine, () => 'PSWestBankPlates.modernCarTwoLine')
+  ..putIfAbsent(PSWestBankPlates.legacyCarTwoLine, () => 'PSWestBankPlates.legacyCarTwoLine')
+  ..putIfAbsent(PSWestBankPlates.modernMoto, () => 'PSWestBankPlates.modernMoto')
+  ..putIfAbsent(PSWestBankPlates.modernMotoTwoLine, () => 'PSWestBankPlates.modernMotoTwoLine')
+  ..putIfAbsent(PSWestBankPlates.modernTrade, () => 'PSWestBankPlates.modernTrade')
   ..putIfAbsent(YemenNorthernPlates.car, () => 'YemenNorthernPlates.car')
   ..putIfAbsent(RiyadhPlates.private, () => 'RiyadhPlates.private')
-  ..putIfAbsent(
-    RiyadhPlates.publicTransport,
-    () => 'RiyadhPlates.publicTransport',
-  )
+  ..putIfAbsent(RiyadhPlates.publicTransport, () => 'RiyadhPlates.publicTransport')
   ..putIfAbsent(RiyadhPlates.commercial, () => 'RiyadhPlates.commercial')
   ..putIfAbsent(RiyadhPlates.temporary, () => 'RiyadhPlates.temporary')
   ..putIfAbsent(RiyadhPlates.diplomatic, () => 'RiyadhPlates.diplomatic')
   ..putIfAbsent(RiyadhPlates.euPrivate, () => 'RiyadhPlates.euPrivate')
-  ..putIfAbsent(
-    RiyadhPlates.euPublicTransport,
-    () => 'RiyadhPlates.euPublicTransport',
-  )
+  ..putIfAbsent(RiyadhPlates.euPublicTransport, () => 'RiyadhPlates.euPublicTransport')
   ..putIfAbsent(RiyadhPlates.euCommercial, () => 'RiyadhPlates.euCommercial')
   ..putIfAbsent(RiyadhPlates.euTemporary, () => 'RiyadhPlates.euTemporary')
   ..putIfAbsent(RiyadhPlates.euDiplomatic, () => 'RiyadhPlates.euDiplomatic')
   ..putIfAbsent(YemenAdenPlates.oneLine, () => 'YemenAdenPlates.oneLine')
   ..putIfAbsent(YemenAdenPlates.twoLine, () => 'YemenAdenPlates.twoLine')
   ..putIfAbsent(YemenTaizPlates.temporary, () => 'YemenTaizPlates.temporary')
-  ..putIfAbsent(
-    YemenGovernoratePlates.hadhramaut,
-    () => 'YemenGovernoratePlates.hadhramaut',
-  )
-  ..putIfAbsent(
-    YemenGovernoratePlates.hadhramautFiveDigit,
-    () => 'YemenGovernoratePlates.hadhramautFiveDigit',
-  )
-  ..putIfAbsent(
-    YemenGovernoratePlates.hadhramautTemporary,
-    () => 'YemenGovernoratePlates.hadhramautTemporary',
-  )
-  ..putIfAbsent(
-    YemenGovernoratePlates.hadhramautPolice,
-    () => 'YemenGovernoratePlates.hadhramautPolice',
-  )
-  ..putIfAbsent(
-    YemenGovernoratePlates.hadhramautMotorcycle,
-    () => 'YemenGovernoratePlates.hadhramautMotorcycle',
-  )
-  ..putIfAbsent(
-    YemenGovernoratePlates.alMahrah,
-    () => 'YemenGovernoratePlates.alMahrah',
-  )
-  ..putIfAbsent(
-    YemenGovernoratePlates.alMahrahMotorcycle,
-    () => 'YemenGovernoratePlates.alMahrahMotorcycle',
-  )
-  ..putIfAbsent(
-    YemenGovernoratePlates.shabwah,
-    () => 'YemenGovernoratePlates.shabwah',
-  )
-  ..putIfAbsent(
-    YemenGovernoratePlates.shabwahTemporary,
-    () => 'YemenGovernoratePlates.shabwahTemporary',
-  )
-  ..putIfAbsent(
-    YemenGovernoratePlates.shabwahPolice,
-    () => 'YemenGovernoratePlates.shabwahPolice',
-  )
-  ..putIfAbsent(
-    YemenGovernoratePlates.shabwahMotorcycle,
-    () => 'YemenGovernoratePlates.shabwahMotorcycle',
-  )
-  ..putIfAbsent(
-    YemenGovernoratePlates.marib,
-    () => 'YemenGovernoratePlates.marib',
-  )
-  ..putIfAbsent(
-    YemenGovernoratePlates.maribMotorcycle,
-    () => 'YemenGovernoratePlates.maribMotorcycle',
-  )
+  ..putIfAbsent(YemenGovernoratePlates.hadhramaut, () => 'YemenGovernoratePlates.hadhramaut')
+  ..putIfAbsent(YemenGovernoratePlates.hadhramautFiveDigit, () => 'YemenGovernoratePlates.hadhramautFiveDigit')
+  ..putIfAbsent(YemenGovernoratePlates.hadhramautTemporary, () => 'YemenGovernoratePlates.hadhramautTemporary')
+  ..putIfAbsent(YemenGovernoratePlates.hadhramautPolice, () => 'YemenGovernoratePlates.hadhramautPolice')
+  ..putIfAbsent(YemenGovernoratePlates.hadhramautMotorcycle, () => 'YemenGovernoratePlates.hadhramautMotorcycle')
+  ..putIfAbsent(YemenGovernoratePlates.alMahrah, () => 'YemenGovernoratePlates.alMahrah')
+  ..putIfAbsent(YemenGovernoratePlates.alMahrahMotorcycle, () => 'YemenGovernoratePlates.alMahrahMotorcycle')
+  ..putIfAbsent(YemenGovernoratePlates.shabwah, () => 'YemenGovernoratePlates.shabwah')
+  ..putIfAbsent(YemenGovernoratePlates.shabwahTemporary, () => 'YemenGovernoratePlates.shabwahTemporary')
+  ..putIfAbsent(YemenGovernoratePlates.shabwahPolice, () => 'YemenGovernoratePlates.shabwahPolice')
+  ..putIfAbsent(YemenGovernoratePlates.shabwahMotorcycle, () => 'YemenGovernoratePlates.shabwahMotorcycle')
+  ..putIfAbsent(YemenGovernoratePlates.marib, () => 'YemenGovernoratePlates.marib')
+  ..putIfAbsent(YemenGovernoratePlates.maribMotorcycle, () => 'YemenGovernoratePlates.maribMotorcycle')
   ..putIfAbsent(YemenUnifiedPlates.car, () => 'YemenUnifiedPlates.car')
   ..putIfAbsent(YemenUnifiedPlates.moto, () => 'YemenUnifiedPlates.moto')
   ..putIfAbsent(LebanonPlates.oneLine, () => 'LebanonPlates.oneLine')
@@ -438,10 +267,7 @@ final Map<PlateSpec, String> specNames = Map<PlateSpec, String>.identity()
   ..putIfAbsent(BelarusPlates.car, () => 'BelarusPlates.car')
   ..putIfAbsent(BelarusPlates.electricCar, () => 'BelarusPlates.electricCar')
   ..putIfAbsent(BelarusPlates.truck, () => 'BelarusPlates.truck')
-  ..putIfAbsent(
-    BelarusPlates.electricTruck,
-    () => 'BelarusPlates.electricTruck',
-  )
+  ..putIfAbsent(BelarusPlates.electricTruck, () => 'BelarusPlates.electricTruck')
   ..putIfAbsent(BelarusPlates.trailer, () => 'BelarusPlates.trailer')
   ..putIfAbsent(BelarusPlates.taxi, () => 'BelarusPlates.taxi')
   ..putIfAbsent(BelarusPlates.diplomatic, () => 'BelarusPlates.diplomatic')
@@ -454,27 +280,15 @@ final Map<PlateSpec, String> specNames = Map<PlateSpec, String>.identity()
   ..putIfAbsent(NamibiaPlates.windhoek, () => 'NamibiaPlates.windhoek')
   ..putIfAbsent(NamibiaPlates.sixTwoLetter, () => 'NamibiaPlates.sixTwoLetter')
   ..putIfAbsent(NamibiaPlates.fiveDigit, () => 'NamibiaPlates.fiveDigit')
-  ..putIfAbsent(
-    NamibiaPlates.fourDigitTwoLetter,
-    () => 'NamibiaPlates.fourDigitTwoLetter',
-  )
-  ..putIfAbsent(
-    NamibiaPlates.personalisedSix,
-    () => 'NamibiaPlates.personalisedSix',
-  )
-  ..putIfAbsent(
-    NamibiaPlates.personalisedSeven,
-    () => 'NamibiaPlates.personalisedSeven',
-  )
+  ..putIfAbsent(NamibiaPlates.fourDigitTwoLetter, () => 'NamibiaPlates.fourDigitTwoLetter')
+  ..putIfAbsent(NamibiaPlates.personalisedSix, () => 'NamibiaPlates.personalisedSix')
+  ..putIfAbsent(NamibiaPlates.personalisedSeven, () => 'NamibiaPlates.personalisedSeven')
   ..putIfAbsent(NamibiaPlates.grn, () => 'NamibiaPlates.grn')
   ..putIfAbsent(NamibiaPlates.police, () => 'NamibiaPlates.police')
   ..putIfAbsent(NamibiaPlates.nam1, () => 'NamibiaPlates.nam1')
   ..putIfAbsent(NicaraguaPlates.managua, () => 'NicaraguaPlates.managua')
   ..putIfAbsent(NicaraguaPlates.department, () => 'NicaraguaPlates.department')
-  ..putIfAbsent(
-    NicaraguaPlates.departmentShort,
-    () => 'NicaraguaPlates.departmentShort',
-  )
+  ..putIfAbsent(NicaraguaPlates.departmentShort, () => 'NicaraguaPlates.departmentShort')
   ..putIfAbsent(SyriaPlates.transitional, () => 'SyriaPlates.transitional')
   ..putIfAbsent(TunisiaPlates.military, () => 'TunisiaPlates.military')
   ..putIfAbsent(BoliviaPlates.mercosur, () => 'BoliviaPlates.mercosur')
@@ -484,14 +298,8 @@ final Map<PlateSpec, String> specNames = Map<PlateSpec, String>.identity()
   ..putIfAbsent(SudanPlates.serial4, () => 'SudanPlates.serial4')
   ..putIfAbsent(NigerOtherPlates.state, () => 'NigerOtherPlates.state')
   ..putIfAbsent(NigerOtherPlates.military, () => 'NigerOtherPlates.military')
-  ..putIfAbsent(
-    NigerOtherPlates.diplomaticChief,
-    () => 'NigerOtherPlates.diplomaticChief',
-  )
-  ..putIfAbsent(
-    NigerOtherPlates.diplomaticStaff,
-    () => 'NigerOtherPlates.diplomaticStaff',
-  )
+  ..putIfAbsent(NigerOtherPlates.diplomaticChief, () => 'NigerOtherPlates.diplomaticChief')
+  ..putIfAbsent(NigerOtherPlates.diplomaticStaff, () => 'NigerOtherPlates.diplomaticStaff')
   ..putIfAbsent(NigerPlates.privateSpec, () => 'NigerPlates.privateSpec')
   ..putIfAbsent(NigerPlates.commercialSpec, () => 'NigerPlates.commercialSpec')
   ..putIfAbsent(KPPlates.regional, () => 'KPPlates.regional')
@@ -501,18 +309,12 @@ final Map<PlateSpec, String> specNames = Map<PlateSpec, String>.identity()
   ..putIfAbsent(MauritaniaPlates.blue, () => 'MauritaniaPlates.blue')
   ..putIfAbsent(MauritaniaPlates.red, () => 'MauritaniaPlates.red')
   ..putIfAbsent(BrazilPlates.mercosul, () => 'BrazilPlates.mercosul')
-  ..putIfAbsent(
-    BrazilPlates.mercosulNational,
-    () => 'BrazilPlates.mercosulNational',
-  )
+  ..putIfAbsent(BrazilPlates.mercosulNational, () => 'BrazilPlates.mercosulNational')
   ..putIfAbsent(ComorosPlates.standard, () => 'ComorosPlates.standard')
   ..putIfAbsent(ComorosPlates.square, () => 'ComorosPlates.square')
   ..putIfAbsent(SomaliaPlates.standard, () => 'SomaliaPlates.standard')
   ..putIfAbsent(GabonPlates.private, () => 'GabonPlates.private')
-  ..putIfAbsent(
-    EquatorialGuineaPlates.regular,
-    () => 'EquatorialGuineaPlates.regular',
-  )
+  ..putIfAbsent(EquatorialGuineaPlates.regular, () => 'EquatorialGuineaPlates.regular')
   ..putIfAbsent(ChadPlates.private, () => 'ChadPlates.private')
   ..putIfAbsent(ChadPlates.temporary, () => 'ChadPlates.temporary')
   ..putIfAbsent(CameroonPlates.private, () => 'CameroonPlates.private')
@@ -522,40 +324,22 @@ final Map<PlateSpec, String> specNames = Map<PlateSpec, String>.identity()
   ..putIfAbsent(CapeVerdePlates.military, () => 'CapeVerdePlates.military')
   ..putIfAbsent(CapeVerdePlates.diplomatic, () => 'CapeVerdePlates.diplomatic')
   ..putIfAbsent(BurkinaFasoPlates.private, () => 'BurkinaFasoPlates.private')
-  ..putIfAbsent(
-    BurkinaFasoPlates.commercial,
-    () => 'BurkinaFasoPlates.commercial',
-  )
+  ..putIfAbsent(BurkinaFasoPlates.commercial, () => 'BurkinaFasoPlates.commercial')
   ..putIfAbsent(BurkinaFasoPlates.police, () => 'BurkinaFasoPlates.police')
-  ..putIfAbsent(
-    BurkinaFasoPlates.gendarmerie,
-    () => 'BurkinaFasoPlates.gendarmerie',
-  )
+  ..putIfAbsent(BurkinaFasoPlates.gendarmerie, () => 'BurkinaFasoPlates.gendarmerie')
   ..putIfAbsent(EritreaPlates.standard, () => 'EritreaPlates.standard')
   ..putIfAbsent(DjiboutiPlates.standard, () => 'DjiboutiPlates.standard')
   ..putIfAbsent(KyrgyzstanPlates.private, () => 'KyrgyzstanPlates.private')
-  ..putIfAbsent(
-    KyrgyzstanPlates.government,
-    () => 'KyrgyzstanPlates.government',
-  )
+  ..putIfAbsent(KyrgyzstanPlates.government, () => 'KyrgyzstanPlates.government')
   ..putIfAbsent(KyrgyzstanPlates.eco, () => 'KyrgyzstanPlates.eco')
   ..putIfAbsent(KyrgyzstanPlates.president, () => 'KyrgyzstanPlates.president')
   ..putIfAbsent(KyrgyzstanPlates.foreign, () => 'KyrgyzstanPlates.foreign')
-  ..putIfAbsent(
-    KyrgyzstanPlates.diplomatic,
-    () => 'KyrgyzstanPlates.diplomatic',
-  )
+  ..putIfAbsent(KyrgyzstanPlates.diplomatic, () => 'KyrgyzstanPlates.diplomatic')
   ..putIfAbsent(KyrgyzstanPlates.honorary, () => 'KyrgyzstanPlates.honorary')
   ..putIfAbsent(KyrgyzstanPlates.mission, () => 'KyrgyzstanPlates.mission')
   ..putIfAbsent(KyrgyzstanPlates.square, () => 'KyrgyzstanPlates.square')
-  ..putIfAbsent(
-    KyrgyzstanPlates.squareGovernment,
-    () => 'KyrgyzstanPlates.squareGovernment',
-  )
-  ..putIfAbsent(
-    KyrgyzstanPlates.motorcycle,
-    () => 'KyrgyzstanPlates.motorcycle',
-  )
+  ..putIfAbsent(KyrgyzstanPlates.squareGovernment, () => 'KyrgyzstanPlates.squareGovernment')
+  ..putIfAbsent(KyrgyzstanPlates.motorcycle, () => 'KyrgyzstanPlates.motorcycle')
   ..putIfAbsent(ChilePlates.private, () => 'ChilePlates.private')
   ..putIfAbsent(ChilePlates.taxi, () => 'ChilePlates.taxi')
   ..putIfAbsent(ChilePlates.collectiveTaxi, () => 'ChilePlates.collectiveTaxi')
@@ -579,14 +363,8 @@ final Map<PlateSpec, String> specNames = Map<PlateSpec, String>.identity()
   ..putIfAbsent(SpainPlates.trailer, () => 'SpainPlates.trailer')
   ..putIfAbsent(SpainPlates.provisional, () => 'SpainPlates.provisional')
   ..putIfAbsent(SpainPlates.diplomatic, () => 'SpainPlates.diplomatic')
-  ..putIfAbsent(
-    RepublicOfIrelandPlates.standard,
-    () => 'RepublicOfIrelandPlates.standard',
-  )
-  ..putIfAbsent(
-    RepublicOfIrelandPlates.electric,
-    () => 'RepublicOfIrelandPlates.electric',
-  )
+  ..putIfAbsent(RepublicOfIrelandPlates.standard, () => 'RepublicOfIrelandPlates.standard')
+  ..putIfAbsent(RepublicOfIrelandPlates.electric, () => 'RepublicOfIrelandPlates.electric')
   ..putIfAbsent(ZimbabwePlates.row, () => 'ZimbabwePlates.row')
   ..putIfAbsent(ZimbabwePlates.stacked, () => 'ZimbabwePlates.stacked')
   ..putIfAbsent(AngolaPlates.standard, () => 'AngolaPlates.standard')
@@ -599,40 +377,16 @@ final Map<PlateSpec, String> specNames = Map<PlateSpec, String>.identity()
   ..putIfAbsent(BhutanPlates.police, () => 'BhutanPlates.police')
   ..putIfAbsent(BhutanPlates.diplomatic, () => 'BhutanPlates.diplomatic')
   ..putIfAbsent(BhutanPlates.royalGuard, () => 'BhutanPlates.royalGuard')
-  ..putIfAbsent(
-    BosniaAndHerzegovinaPlates.private,
-    () => 'BosniaAndHerzegovinaPlates.private',
-  )
-  ..putIfAbsent(
-    BosniaAndHerzegovinaPlates.taxi,
-    () => 'BosniaAndHerzegovinaPlates.taxi',
-  )
-  ..putIfAbsent(
-    BosniaAndHerzegovinaPlates.temporary,
-    () => 'BosniaAndHerzegovinaPlates.temporary',
-  )
-  ..putIfAbsent(
-    BosniaAndHerzegovinaPlates.agricultural,
-    () => 'BosniaAndHerzegovinaPlates.agricultural',
-  )
-  ..putIfAbsent(
-    BosniaAndHerzegovinaPlates.eupm,
-    () => 'BosniaAndHerzegovinaPlates.eupm',
-  )
-  ..putIfAbsent(
-    BosniaAndHerzegovinaPlates.diplomatic,
-    () => 'BosniaAndHerzegovinaPlates.diplomatic',
-  )
+  ..putIfAbsent(BosniaAndHerzegovinaPlates.private, () => 'BosniaAndHerzegovinaPlates.private')
+  ..putIfAbsent(BosniaAndHerzegovinaPlates.taxi, () => 'BosniaAndHerzegovinaPlates.taxi')
+  ..putIfAbsent(BosniaAndHerzegovinaPlates.temporary, () => 'BosniaAndHerzegovinaPlates.temporary')
+  ..putIfAbsent(BosniaAndHerzegovinaPlates.agricultural, () => 'BosniaAndHerzegovinaPlates.agricultural')
+  ..putIfAbsent(BosniaAndHerzegovinaPlates.eupm, () => 'BosniaAndHerzegovinaPlates.eupm')
+  ..putIfAbsent(BosniaAndHerzegovinaPlates.diplomatic, () => 'BosniaAndHerzegovinaPlates.diplomatic')
   ..putIfAbsent(BotswanaPlates.private, () => 'BotswanaPlates.private')
-  ..putIfAbsent(
-    BotswanaPlates.publicService,
-    () => 'BotswanaPlates.publicService',
-  )
+  ..putIfAbsent(BotswanaPlates.publicService, () => 'BotswanaPlates.publicService')
   ..putIfAbsent(BotswanaPlates.government, () => 'BotswanaPlates.government')
-  ..putIfAbsent(
-    CentralAfricanRepublicPlates.private,
-    () => 'CentralAfricanRepublicPlates.private',
-  )
+  ..putIfAbsent(CentralAfricanRepublicPlates.private, () => 'CentralAfricanRepublicPlates.private')
   ..putIfAbsent(EgyptPlates.car, () => 'EgyptPlates.car')
   ..putIfAbsent(EgyptPlates.cairo, () => 'EgyptPlates.cairo')
   ..putIfAbsent(EgyptPlates.giza, () => 'EgyptPlates.giza')
@@ -665,45 +419,24 @@ final Map<PlateSpec, String> specNames = Map<PlateSpec, String>.identity()
   ..putIfAbsent(MongoliaPlates.twoRow, () => 'MongoliaPlates.twoRow')
   ..putIfAbsent(MozambiquePlates.private, () => 'MozambiquePlates.private')
   ..putIfAbsent(MozambiquePlates.legacy, () => 'MozambiquePlates.legacy')
-  ..putIfAbsent(
-    MozambiquePlates.legacyOneRow,
-    () => 'MozambiquePlates.legacyOneRow',
-  )
+  ..putIfAbsent(MozambiquePlates.legacyOneRow, () => 'MozambiquePlates.legacyOneRow')
   ..putIfAbsent(MyanmarPlates.private, () => 'MyanmarPlates.private')
   ..putIfAbsent(MyanmarPlates.hire, () => 'MyanmarPlates.hire')
   ..putIfAbsent(MyanmarPlates.taxi, () => 'MyanmarPlates.taxi')
   ..putIfAbsent(MyanmarPlates.hearse, () => 'MyanmarPlates.hearse')
   ..putIfAbsent(MyanmarPlates.religious, () => 'MyanmarPlates.religious')
-  ..putIfAbsent(
-    MyanmarPlates.embossedPrivate,
-    () => 'MyanmarPlates.embossedPrivate',
-  )
-  ..putIfAbsent(
-    MyanmarPlates.embossedCommercial,
-    () => 'MyanmarPlates.embossedCommercial',
-  )
-  ..putIfAbsent(
-    MyanmarPlates.embossedTouring,
-    () => 'MyanmarPlates.embossedTouring',
-  )
+  ..putIfAbsent(MyanmarPlates.embossedPrivate, () => 'MyanmarPlates.embossedPrivate')
+  ..putIfAbsent(MyanmarPlates.embossedCommercial, () => 'MyanmarPlates.embossedCommercial')
+  ..putIfAbsent(MyanmarPlates.embossedTouring, () => 'MyanmarPlates.embossedTouring')
   ..putIfAbsent(MyanmarPlates.organisation, () => 'MyanmarPlates.organisation')
   ..putIfAbsent(MyanmarPlates.motorcycle, () => 'MyanmarPlates.motorcycle')
   ..putIfAbsent(MyanmarPlates.rickshaw, () => 'MyanmarPlates.rickshaw')
   ..putIfAbsent(NorwayPlates.private, () => 'NorwayPlates.private')
   ..putIfAbsent(NorwayPlates.electric, () => 'NorwayPlates.electric')
   ..putIfAbsent(NorwayPlates.diplomatic, () => 'NorwayPlates.diplomatic')
-  ..putIfAbsent(
-    RepublicOfTheCongoPlates.private,
-    () => 'RepublicOfTheCongoPlates.private',
-  )
-  ..putIfAbsent(
-    RepublicOfTheCongoPlates.privateTwoDigitArea,
-    () => 'RepublicOfTheCongoPlates.privateTwoDigitArea',
-  )
-  ..putIfAbsent(
-    SaintVincentAndTheGrenadinesPlates.private,
-    () => 'SaintVincentAndTheGrenadinesPlates.private',
-  )
+  ..putIfAbsent(RepublicOfTheCongoPlates.private, () => 'RepublicOfTheCongoPlates.private')
+  ..putIfAbsent(RepublicOfTheCongoPlates.privateTwoDigitArea, () => 'RepublicOfTheCongoPlates.privateTwoDigitArea')
+  ..putIfAbsent(SaintVincentAndTheGrenadinesPlates.private, () => 'SaintVincentAndTheGrenadinesPlates.private')
   ..putIfAbsent(SerbiaPlates.private, () => 'SerbiaPlates.private')
   ..putIfAbsent(SerbiaPlates.taxi, () => 'SerbiaPlates.taxi')
   ..putIfAbsent(SerbiaPlates.trailer, () => 'SerbiaPlates.trailer')
@@ -717,23 +450,11 @@ final Map<PlateSpec, String> specNames = Map<PlateSpec, String>.identity()
   ..putIfAbsent(SriLankaPlates.front, () => 'SriLankaPlates.front')
   ..putIfAbsent(SriLankaPlates.rear, () => 'SriLankaPlates.rear')
   ..putIfAbsent(TanzaniaPlates.private, () => 'TanzaniaPlates.private')
-  ..putIfAbsent(
-    TanzaniaPlates.privateTwoRow,
-    () => 'TanzaniaPlates.privateTwoRow',
-  )
-  ..putIfAbsent(
-    TanzaniaPlates.organisation,
-    () => 'TanzaniaPlates.organisation',
-  )
+  ..putIfAbsent(TanzaniaPlates.privateTwoRow, () => 'TanzaniaPlates.privateTwoRow')
+  ..putIfAbsent(TanzaniaPlates.organisation, () => 'TanzaniaPlates.organisation')
   ..putIfAbsent(TimorLestePlates.private, () => 'TimorLestePlates.private')
-  ..putIfAbsent(
-    TimorLestePlates.government,
-    () => 'TimorLestePlates.government',
-  )
-  ..putIfAbsent(
-    TimorLestePlates.portugueseStacked,
-    () => 'TimorLestePlates.portugueseStacked',
-  )
+  ..putIfAbsent(TimorLestePlates.government, () => 'TimorLestePlates.government')
+  ..putIfAbsent(TimorLestePlates.portugueseStacked, () => 'TimorLestePlates.portugueseStacked')
   ..putIfAbsent(UruguayPlates.private, () => 'UruguayPlates.private')
   ..putIfAbsent(UruguayPlates.official, () => 'UruguayPlates.official')
   ..putIfAbsent(UruguayPlates.ambulance, () => 'UruguayPlates.ambulance')
@@ -742,10 +463,7 @@ final Map<PlateSpec, String> specNames = Map<PlateSpec, String>.identity()
   ..putIfAbsent(UruguayPlates.president, () => 'UruguayPlates.president')
   ..putIfAbsent(UruguayPlates.remise, () => 'UruguayPlates.remise')
   ..putIfAbsent(UruguayPlates.taxi, () => 'UruguayPlates.taxi')
-  ..putIfAbsent(
-    UruguayPlates.publicTransport,
-    () => 'UruguayPlates.publicTransport',
-  )
+  ..putIfAbsent(UruguayPlates.publicTransport, () => 'UruguayPlates.publicTransport')
   ..putIfAbsent(UruguayPlates.school, () => 'UruguayPlates.school')
   ..putIfAbsent(UruguayPlates.tourist, () => 'UruguayPlates.tourist')
   ..putIfAbsent(UruguayPlates.truck, () => 'UruguayPlates.truck')
@@ -755,10 +473,7 @@ final Map<PlateSpec, String> specNames = Map<PlateSpec, String>.identity()
   ..putIfAbsent(VanuatuPlates.diplomatic, () => 'VanuatuPlates.diplomatic')
   ..putIfAbsent(VaticanCityPlates.private, () => 'VaticanCityPlates.private')
   ..putIfAbsent(VaticanCityPlates.papal, () => 'VaticanCityPlates.papal')
-  ..putIfAbsent(
-    VaticanCityPlates.government,
-    () => 'VaticanCityPlates.government',
-  )
+  ..putIfAbsent(VaticanCityPlates.government, () => 'VaticanCityPlates.government')
   ..putIfAbsent(VaticanCityPlates.official, () => 'VaticanCityPlates.official');
 
 /// The Dart name of every theme a country package exposes publicly.
@@ -768,26 +483,14 @@ final Map<PlateTheme, String> themeNames = Map<PlateTheme, String>.identity()
   ..putIfAbsent(IranThemes.whiteOnRed, () => 'IranThemes.whiteOnRed')
   ..putIfAbsent(IranThemes.whiteOnGreen, () => 'IranThemes.whiteOnGreen')
   ..putIfAbsent(IranThemes.blackOnTan, () => 'IranThemes.blackOnTan')
-  ..putIfAbsent(
-    IranThemes.whiteOnForcesBlue,
-    () => 'IranThemes.whiteOnForcesBlue',
-  )
+  ..putIfAbsent(IranThemes.whiteOnForcesBlue, () => 'IranThemes.whiteOnForcesBlue')
   ..putIfAbsent(IranThemes.blackOnCyan, () => 'IranThemes.blackOnCyan')
   ..putIfAbsent(IranThemes.whiteOnBrown, () => 'IranThemes.whiteOnBrown')
   ..putIfAbsent(IranThemes.motorcycle, () => 'IranThemes.motorcycle')
   ..putIfAbsent(AfghanistanThemes.civilian, () => 'AfghanistanThemes.civilian')
-  ..putIfAbsent(
-    AfghanistanThemes.transport,
-    () => 'AfghanistanThemes.transport',
-  )
-  ..putIfAbsent(
-    AfghanistanThemes.diplomatic,
-    () => 'AfghanistanThemes.diplomatic',
-  )
-  ..putIfAbsent(
-    AfghanistanThemes.governmental,
-    () => 'AfghanistanThemes.governmental',
-  )
+  ..putIfAbsent(AfghanistanThemes.transport, () => 'AfghanistanThemes.transport')
+  ..putIfAbsent(AfghanistanThemes.diplomatic, () => 'AfghanistanThemes.diplomatic')
+  ..putIfAbsent(AfghanistanThemes.governmental, () => 'AfghanistanThemes.governmental')
   ..putIfAbsent(AfghanistanThemes.un, () => 'AfghanistanThemes.un')
   ..putIfAbsent(ArmeniaThemes.civilian, () => 'ArmeniaThemes.civilian')
   ..putIfAbsent(ArmeniaThemes.bus, () => 'ArmeniaThemes.bus')
@@ -796,10 +499,7 @@ final Map<PlateTheme, String> themeNames = Map<PlateTheme, String>.identity()
   ..putIfAbsent(ArmeniaThemes.military, () => 'ArmeniaThemes.military')
   ..putIfAbsent(AzerbaijanThemes.civilian, () => 'AzerbaijanThemes.civilian')
   ..putIfAbsent(AzerbaijanThemes.transport, () => 'AzerbaijanThemes.transport')
-  ..putIfAbsent(
-    AzerbaijanThemes.diplomatic,
-    () => 'AzerbaijanThemes.diplomatic',
-  )
+  ..putIfAbsent(AzerbaijanThemes.diplomatic, () => 'AzerbaijanThemes.diplomatic')
   ..putIfAbsent(AzerbaijanThemes.foreign, () => 'AzerbaijanThemes.foreign')
   ..putIfAbsent(BahrainThemes.civilian, () => 'BahrainThemes.civilian')
   ..putIfAbsent(BahrainThemes.diplomatic, () => 'BahrainThemes.diplomatic')
@@ -808,14 +508,8 @@ final Map<PlateTheme, String> themeNames = Map<PlateTheme, String>.identity()
   ..putIfAbsent(IraqThemes.small, () => 'IraqThemes.small')
   ..putIfAbsent(IraqThemes.temporary, () => 'IraqThemes.temporary')
   ..putIfAbsent(KazakhstanThemes.private, () => 'KazakhstanThemes.private')
-  ..putIfAbsent(
-    KazakhstanThemes.diplomatic,
-    () => 'KazakhstanThemes.diplomatic',
-  )
-  ..putIfAbsent(
-    KazakhstanThemes.nonPrivate,
-    () => 'KazakhstanThemes.nonPrivate',
-  )
+  ..putIfAbsent(KazakhstanThemes.diplomatic, () => 'KazakhstanThemes.diplomatic')
+  ..putIfAbsent(KazakhstanThemes.nonPrivate, () => 'KazakhstanThemes.nonPrivate')
   ..putIfAbsent(KuwaitThemes.civilian, () => 'KuwaitThemes.civilian')
   ..putIfAbsent(KuwaitThemes.transport, () => 'KuwaitThemes.transport')
   ..putIfAbsent(KuwaitThemes.police, () => 'KuwaitThemes.police')
@@ -837,30 +531,15 @@ final Map<PlateTheme, String> themeNames = Map<PlateTheme, String>.identity()
   ..putIfAbsent(TajikistanThemes.civilian, () => 'TajikistanThemes.civilian')
   ..putIfAbsent(TajikistanThemes.transport, () => 'TajikistanThemes.transport')
   ..putIfAbsent(TajikistanThemes.foreign, () => 'TajikistanThemes.foreign')
-  ..putIfAbsent(
-    TajikistanThemes.diplomatic,
-    () => 'TajikistanThemes.diplomatic',
-  )
+  ..putIfAbsent(TajikistanThemes.diplomatic, () => 'TajikistanThemes.diplomatic')
   ..putIfAbsent(TajikistanThemes.police, () => 'TajikistanThemes.police')
-  ..putIfAbsent(
-    TajikistanThemes.governmental,
-    () => 'TajikistanThemes.governmental',
-  )
+  ..putIfAbsent(TajikistanThemes.governmental, () => 'TajikistanThemes.governmental')
   ..putIfAbsent(TurkeyThemes.civilian, () => 'TurkeyThemes.civilian')
-  ..putIfAbsent(
-    TurkeyThemes.internationalOrganization,
-    () => 'TurkeyThemes.internationalOrganization',
-  )
+  ..putIfAbsent(TurkeyThemes.internationalOrganization, () => 'TurkeyThemes.internationalOrganization')
   ..putIfAbsent(TurkeyThemes.diplomatic, () => 'TurkeyThemes.diplomatic')
   ..putIfAbsent(TurkeyThemes.temporary, () => 'TurkeyThemes.temporary')
-  ..putIfAbsent(
-    TurkeyThemes.temporaryCustoms,
-    () => 'TurkeyThemes.temporaryCustoms',
-  )
-  ..putIfAbsent(
-    TurkeyThemes.provincialGovernment,
-    () => 'TurkeyThemes.provincialGovernment',
-  )
+  ..putIfAbsent(TurkeyThemes.temporaryCustoms, () => 'TurkeyThemes.temporaryCustoms')
+  ..putIfAbsent(TurkeyThemes.provincialGovernment, () => 'TurkeyThemes.provincialGovernment')
   ..putIfAbsent(TurkeyThemes.police, () => 'TurkeyThemes.police')
   ..putIfAbsent(TurkeyThemes.consulate, () => 'TurkeyThemes.consulate')
   ..putIfAbsent(TurkeyThemes.official, () => 'TurkeyThemes.official')
@@ -868,39 +547,18 @@ final Map<PlateTheme, String> themeNames = Map<PlateTheme, String>.identity()
   ..putIfAbsent(TurkmenistanThemes.private, () => 'TurkmenistanThemes.private')
   ..putIfAbsent(TurkmenistanThemes.classic, () => 'TurkmenistanThemes.classic')
   ..putIfAbsent(TurkmenistanThemes.foreign, () => 'TurkmenistanThemes.foreign')
-  ..putIfAbsent(
-    TurkmenistanThemes.diplomatic,
-    () => 'TurkmenistanThemes.diplomatic',
-  )
-  ..putIfAbsent(
-    TurkmenistanThemes.government,
-    () => 'TurkmenistanThemes.government',
-  )
+  ..putIfAbsent(TurkmenistanThemes.diplomatic, () => 'TurkmenistanThemes.diplomatic')
+  ..putIfAbsent(TurkmenistanThemes.government, () => 'TurkmenistanThemes.government')
   ..putIfAbsent(UaeThemes.long, () => 'UaeThemes.long')
   ..putIfAbsent(UaeThemes.short, () => 'UaeThemes.short')
   ..putIfAbsent(UzbekistanThemes.passenger, () => 'UzbekistanThemes.passenger')
   ..putIfAbsent(UzbekistanThemes.temporary, () => 'UzbekistanThemes.temporary')
   ..putIfAbsent(UzbekistanThemes.trailer, () => 'UzbekistanThemes.trailer')
-  ..putIfAbsent(
-    UzbekistanThemes.motorcycle,
-    () => 'UzbekistanThemes.motorcycle',
-  )
-  ..putIfAbsent(
-    UzbekistanThemes.foreignCitizen,
-    () => 'UzbekistanThemes.foreignCitizen',
-  )
-  ..putIfAbsent(
-    UzbekistanThemes.foreignCompany,
-    () => 'UzbekistanThemes.foreignCompany',
-  )
-  ..putIfAbsent(
-    UzbekistanThemes.diplomatic,
-    () => 'UzbekistanThemes.diplomatic',
-  )
-  ..putIfAbsent(
-    UzbekistanThemes.unitedNations,
-    () => 'UzbekistanThemes.unitedNations',
-  )
+  ..putIfAbsent(UzbekistanThemes.motorcycle, () => 'UzbekistanThemes.motorcycle')
+  ..putIfAbsent(UzbekistanThemes.foreignCitizen, () => 'UzbekistanThemes.foreignCitizen')
+  ..putIfAbsent(UzbekistanThemes.foreignCompany, () => 'UzbekistanThemes.foreignCompany')
+  ..putIfAbsent(UzbekistanThemes.diplomatic, () => 'UzbekistanThemes.diplomatic')
+  ..putIfAbsent(UzbekistanThemes.unitedNations, () => 'UzbekistanThemes.unitedNations')
   ..putIfAbsent(PSThemes.greenOnWhite, () => 'PSThemes.greenOnWhite')
   ..putIfAbsent(PSThemes.whiteOnGreen, () => 'PSThemes.whiteOnGreen')
   ..putIfAbsent(PSThemes.redOnWhite, () => 'PSThemes.redOnWhite')
@@ -910,34 +568,13 @@ final Map<PlateTheme, String> themeNames = Map<PlateTheme, String>.identity()
   ..putIfAbsent(PSThemes.gazaBlue, () => 'PSThemes.gazaBlue')
   ..putIfAbsent(PSThemes.gazaRed, () => 'PSThemes.gazaRed')
   ..putIfAbsent(YemenThemes.unified, () => 'YemenThemes.unified')
-  ..putIfAbsent(
-    YemenThemes.northernPrivate,
-    () => 'YemenThemes.northernPrivate',
-  )
-  ..putIfAbsent(
-    YemenThemes.northernPrivateWhite,
-    () => 'YemenThemes.northernPrivateWhite',
-  )
-  ..putIfAbsent(
-    YemenThemes.northernForHire,
-    () => 'YemenThemes.northernForHire',
-  )
-  ..putIfAbsent(
-    YemenThemes.northernTransport,
-    () => 'YemenThemes.northernTransport',
-  )
-  ..putIfAbsent(
-    YemenThemes.northernGovernment,
-    () => 'YemenThemes.northernGovernment',
-  )
-  ..putIfAbsent(
-    YemenThemes.northernMilitaryClassic,
-    () => 'YemenThemes.northernMilitaryClassic',
-  )
-  ..putIfAbsent(
-    YemenThemes.northernMilitaryModern,
-    () => 'YemenThemes.northernMilitaryModern',
-  )
+  ..putIfAbsent(YemenThemes.northernPrivate, () => 'YemenThemes.northernPrivate')
+  ..putIfAbsent(YemenThemes.northernPrivateWhite, () => 'YemenThemes.northernPrivateWhite')
+  ..putIfAbsent(YemenThemes.northernForHire, () => 'YemenThemes.northernForHire')
+  ..putIfAbsent(YemenThemes.northernTransport, () => 'YemenThemes.northernTransport')
+  ..putIfAbsent(YemenThemes.northernGovernment, () => 'YemenThemes.northernGovernment')
+  ..putIfAbsent(YemenThemes.northernMilitaryClassic, () => 'YemenThemes.northernMilitaryClassic')
+  ..putIfAbsent(YemenThemes.northernMilitaryModern, () => 'YemenThemes.northernMilitaryModern')
   ..putIfAbsent(YemenThemes.southern, () => 'YemenThemes.southern')
   ..putIfAbsent(YemenThemes.aden, () => 'YemenThemes.aden')
   ..putIfAbsent(YemenThemes.taizPrivate, () => 'YemenThemes.taizPrivate')
@@ -946,14 +583,8 @@ final Map<PlateTheme, String> themeNames = Map<PlateTheme, String>.identity()
   ..putIfAbsent(LebanonThemes.private, () => 'LebanonThemes.private')
   ..putIfAbsent(LebanonThemes.consular, () => 'LebanonThemes.consular')
   ..putIfAbsent(LebanonThemes.diplomatic, () => 'LebanonThemes.diplomatic')
-  ..putIfAbsent(
-    LebanonThemes.publicInstitution,
-    () => 'LebanonThemes.publicInstitution',
-  )
-  ..putIfAbsent(
-    LebanonThemes.drivingSchool,
-    () => 'LebanonThemes.drivingSchool',
-  )
+  ..putIfAbsent(LebanonThemes.publicInstitution, () => 'LebanonThemes.publicInstitution')
+  ..putIfAbsent(LebanonThemes.drivingSchool, () => 'LebanonThemes.drivingSchool')
   ..putIfAbsent(LebanonThemes.transit, () => 'LebanonThemes.transit')
   ..putIfAbsent(LebanonThemes.temporary, () => 'LebanonThemes.temporary')
   ..putIfAbsent(LebanonThemes.tourism, () => 'LebanonThemes.tourism')
@@ -965,10 +596,7 @@ final Map<PlateTheme, String> themeNames = Map<PlateTheme, String>.identity()
   ..putIfAbsent(IndiaThemes.transport, () => 'IndiaThemes.transport')
   ..putIfAbsent(IndiaThemes.rental, () => 'IndiaThemes.rental')
   ..putIfAbsent(IndiaThemes.electric, () => 'IndiaThemes.electric')
-  ..putIfAbsent(
-    IndiaThemes.electricTransport,
-    () => 'IndiaThemes.electricTransport',
-  )
+  ..putIfAbsent(IndiaThemes.electricTransport, () => 'IndiaThemes.electricTransport')
   ..putIfAbsent(IndiaThemes.diplomatic, () => 'IndiaThemes.diplomatic')
   ..putIfAbsent(IndiaThemes.consular, () => 'IndiaThemes.consular')
   ..putIfAbsent(IndiaThemes.military, () => 'IndiaThemes.military')
@@ -987,32 +615,17 @@ final Map<PlateTheme, String> themeNames = Map<PlateTheme, String>.identity()
   ..putIfAbsent(IndonesiaThemes.private, () => 'IndonesiaThemes.private')
   ..putIfAbsent(IndonesiaThemes.public, () => 'IndonesiaThemes.public')
   ..putIfAbsent(IndonesiaThemes.government, () => 'IndonesiaThemes.government')
-  ..putIfAbsent(
-    IndonesiaThemes.freeTradeZone,
-    () => 'IndonesiaThemes.freeTradeZone',
-  )
+  ..putIfAbsent(IndonesiaThemes.freeTradeZone, () => 'IndonesiaThemes.freeTradeZone')
   ..putIfAbsent(IndonesiaThemes.privateEv, () => 'IndonesiaThemes.privateEv')
   ..putIfAbsent(IndonesiaThemes.publicEv, () => 'IndonesiaThemes.publicEv')
-  ..putIfAbsent(
-    IndonesiaThemes.governmentEv,
-    () => 'IndonesiaThemes.governmentEv',
-  )
-  ..putIfAbsent(
-    IndonesiaThemes.freeTradeZoneEv,
-    () => 'IndonesiaThemes.freeTradeZoneEv',
-  )
+  ..putIfAbsent(IndonesiaThemes.governmentEv, () => 'IndonesiaThemes.governmentEv')
+  ..putIfAbsent(IndonesiaThemes.freeTradeZoneEv, () => 'IndonesiaThemes.freeTradeZoneEv')
   ..putIfAbsent(IndonesiaThemes.diplomatic, () => 'IndonesiaThemes.diplomatic')
-  ..putIfAbsent(
-    IndonesiaThemes.diplomaticEv,
-    () => 'IndonesiaThemes.diplomaticEv',
-  )
+  ..putIfAbsent(IndonesiaThemes.diplomaticEv, () => 'IndonesiaThemes.diplomaticEv')
   ..putIfAbsent(IndonesiaThemes.army, () => 'IndonesiaThemes.army')
   ..putIfAbsent(IndonesiaThemes.navy, () => 'IndonesiaThemes.navy')
   ..putIfAbsent(IndonesiaThemes.airForce, () => 'IndonesiaThemes.airForce')
-  ..putIfAbsent(
-    IndonesiaThemes.armedForces,
-    () => 'IndonesiaThemes.armedForces',
-  )
+  ..putIfAbsent(IndonesiaThemes.armedForces, () => 'IndonesiaThemes.armedForces')
   ..putIfAbsent(IndonesiaThemes.police, () => 'IndonesiaThemes.police')
   ..putIfAbsent(BelarusThemes.standard, () => 'BelarusThemes.standard')
   ..putIfAbsent(BelarusThemes.electric, () => 'BelarusThemes.electric')
@@ -1029,15 +642,9 @@ final Map<PlateTheme, String> themeNames = Map<PlateTheme, String>.identity()
   ..putIfAbsent(SyriaThemes.private, () => 'SyriaThemes.private')
   ..putIfAbsent(SyriaThemes.commercial, () => 'SyriaThemes.commercial')
   ..putIfAbsent(SyriaThemes.aanesPrivate, () => 'SyriaThemes.aanesPrivate')
-  ..putIfAbsent(
-    SyriaThemes.aanesCommercial,
-    () => 'SyriaThemes.aanesCommercial',
-  )
+  ..putIfAbsent(SyriaThemes.aanesCommercial, () => 'SyriaThemes.aanesCommercial')
   ..putIfAbsent(SyriaThemes.aanesSecurity, () => 'SyriaThemes.aanesSecurity')
-  ..putIfAbsent(
-    SyriaThemes.aanesAdministrative,
-    () => 'SyriaThemes.aanesAdministrative',
-  )
+  ..putIfAbsent(SyriaThemes.aanesAdministrative, () => 'SyriaThemes.aanesAdministrative')
   ..putIfAbsent(TunisiaThemes.standard, () => 'TunisiaThemes.standard')
   ..putIfAbsent(TunisiaThemes.rental, () => 'TunisiaThemes.rental')
   ..putIfAbsent(TunisiaThemes.government, () => 'TunisiaThemes.government')
@@ -1055,10 +662,7 @@ final Map<PlateTheme, String> themeNames = Map<PlateTheme, String>.identity()
   ..putIfAbsent(ColombiaThemes.antique, () => 'ColombiaThemes.antique')
   ..putIfAbsent(ColombiaThemes.tank, () => 'ColombiaThemes.tank')
   ..putIfAbsent(ColombiaThemes.consular, () => 'ColombiaThemes.consular')
-  ..putIfAbsent(
-    ColombiaThemes.organization,
-    () => 'ColombiaThemes.organization',
-  )
+  ..putIfAbsent(ColombiaThemes.organization, () => 'ColombiaThemes.organization')
   ..putIfAbsent(ColombiaThemes.staff, () => 'ColombiaThemes.staff')
   ..putIfAbsent(ColombiaThemes.police, () => 'ColombiaThemes.police')
   ..putIfAbsent(ColombiaThemes.diplomatic, () => 'ColombiaThemes.diplomatic')
@@ -1084,10 +688,7 @@ final Map<PlateTheme, String> themeNames = Map<PlateTheme, String>.identity()
   ..putIfAbsent(BrazilThemes.diplomatic, () => 'BrazilThemes.diplomatic')
   ..putIfAbsent(BrazilThemes.dealer, () => 'BrazilThemes.dealer')
   ..putIfAbsent(BrazilThemes.collector, () => 'BrazilThemes.collector')
-  ..putIfAbsent(
-    BrazilThemes.collectorNational,
-    () => 'BrazilThemes.collectorNational',
-  )
+  ..putIfAbsent(BrazilThemes.collectorNational, () => 'BrazilThemes.collectorNational')
   ..putIfAbsent(ComorosThemes.standard, () => 'ComorosThemes.standard')
   ..putIfAbsent(ComorosThemes.square, () => 'ComorosThemes.square')
   ..putIfAbsent(SomaliaThemes.standard, () => 'SomaliaThemes.standard')
@@ -1113,10 +714,7 @@ final Map<PlateTheme, String> themeNames = Map<PlateTheme, String>.identity()
   ..putIfAbsent(VietnamThemes.blue, () => 'VietnamThemes.blue')
   ..putIfAbsent(VietnamThemes.red, () => 'VietnamThemes.red')
   ..putIfAbsent(GabonThemes.private, () => 'GabonThemes.private')
-  ..putIfAbsent(
-    EquatorialGuineaThemes.regular,
-    () => 'EquatorialGuineaThemes.regular',
-  )
+  ..putIfAbsent(EquatorialGuineaThemes.regular, () => 'EquatorialGuineaThemes.regular')
   ..putIfAbsent(ChadThemes.private, () => 'ChadThemes.private')
   ..putIfAbsent(ChadThemes.temporary, () => 'ChadThemes.temporary')
   ..putIfAbsent(CameroonThemes.private, () => 'CameroonThemes.private')
@@ -1125,34 +723,19 @@ final Map<PlateTheme, String> themeNames = Map<PlateTheme, String>.identity()
   ..putIfAbsent(CapeVerdeThemes.freeFont, () => 'CapeVerdeThemes.freeFont')
   ..putIfAbsent(CapeVerdeThemes.diplomatic, () => 'CapeVerdeThemes.diplomatic')
   ..putIfAbsent(BurkinaFasoThemes.private, () => 'BurkinaFasoThemes.private')
-  ..putIfAbsent(
-    BurkinaFasoThemes.commercial,
-    () => 'BurkinaFasoThemes.commercial',
-  )
+  ..putIfAbsent(BurkinaFasoThemes.commercial, () => 'BurkinaFasoThemes.commercial')
   ..putIfAbsent(BurkinaFasoThemes.police, () => 'BurkinaFasoThemes.police')
-  ..putIfAbsent(
-    BurkinaFasoThemes.gendarmerie,
-    () => 'BurkinaFasoThemes.gendarmerie',
-  )
+  ..putIfAbsent(BurkinaFasoThemes.gendarmerie, () => 'BurkinaFasoThemes.gendarmerie')
   ..putIfAbsent(EritreaThemes.standard, () => 'EritreaThemes.standard')
   ..putIfAbsent(DjiboutiThemes.current, () => 'DjiboutiThemes.current')
   ..putIfAbsent(DjiboutiThemes.legacy, () => 'DjiboutiThemes.legacy')
   ..putIfAbsent(KyrgyzstanThemes.private, () => 'KyrgyzstanThemes.private')
   ..putIfAbsent(KyrgyzstanThemes.square, () => 'KyrgyzstanThemes.square')
-  ..putIfAbsent(
-    KyrgyzstanThemes.motorcycle,
-    () => 'KyrgyzstanThemes.motorcycle',
-  )
+  ..putIfAbsent(KyrgyzstanThemes.motorcycle, () => 'KyrgyzstanThemes.motorcycle')
   ..putIfAbsent(KyrgyzstanThemes.eco, () => 'KyrgyzstanThemes.eco')
   ..putIfAbsent(KyrgyzstanThemes.foreign, () => 'KyrgyzstanThemes.foreign')
-  ..putIfAbsent(
-    KyrgyzstanThemes.diplomatic,
-    () => 'KyrgyzstanThemes.diplomatic',
-  )
-  ..putIfAbsent(
-    KyrgyzstanThemes.unitedNations,
-    () => 'KyrgyzstanThemes.unitedNations',
-  )
+  ..putIfAbsent(KyrgyzstanThemes.diplomatic, () => 'KyrgyzstanThemes.diplomatic')
+  ..putIfAbsent(KyrgyzstanThemes.unitedNations, () => 'KyrgyzstanThemes.unitedNations')
   ..putIfAbsent(ChileThemes.private, () => 'ChileThemes.private')
   ..putIfAbsent(ChileThemes.taxi, () => 'ChileThemes.taxi')
   ..putIfAbsent(ChileThemes.collectiveTaxi, () => 'ChileThemes.collectiveTaxi')
@@ -1178,15 +761,9 @@ final Map<PlateTheme, String> themeNames = Map<PlateTheme, String>.identity()
   ..putIfAbsent(SpainThemes.diplomatic, () => 'SpainThemes.diplomatic')
   ..putIfAbsent(SpainThemes.consular, () => 'SpainThemes.consular')
   ..putIfAbsent(SpainThemes.organisation, () => 'SpainThemes.organisation')
-  ..putIfAbsent(
-    RepublicOfIrelandThemes.standard,
-    () => 'RepublicOfIrelandThemes.standard',
-  )
+  ..putIfAbsent(RepublicOfIrelandThemes.standard, () => 'RepublicOfIrelandThemes.standard')
   ..putIfAbsent(ZimbabweThemes.yellow, () => 'ZimbabweThemes.yellow')
-  ..putIfAbsent(
-    ZimbabweThemes.yellowStacked,
-    () => 'ZimbabweThemes.yellowStacked',
-  )
+  ..putIfAbsent(ZimbabweThemes.yellowStacked, () => 'ZimbabweThemes.yellowStacked')
   ..putIfAbsent(ZimbabweThemes.white, () => 'ZimbabweThemes.white')
   ..putIfAbsent(ZimbabweThemes.commercial, () => 'ZimbabweThemes.commercial')
   ..putIfAbsent(AngolaThemes.standard, () => 'AngolaThemes.standard')
@@ -1199,50 +776,23 @@ final Map<PlateTheme, String> themeNames = Map<PlateTheme, String>.identity()
   ..putIfAbsent(BhutanThemes.police, () => 'BhutanThemes.police')
   ..putIfAbsent(BhutanThemes.diplomatic, () => 'BhutanThemes.diplomatic')
   ..putIfAbsent(BhutanThemes.royalGuard, () => 'BhutanThemes.royalGuard')
-  ..putIfAbsent(
-    BosniaAndHerzegovinaThemes.private,
-    () => 'BosniaAndHerzegovinaThemes.private',
-  )
-  ..putIfAbsent(
-    BosniaAndHerzegovinaThemes.taxi,
-    () => 'BosniaAndHerzegovinaThemes.taxi',
-  )
-  ..putIfAbsent(
-    BosniaAndHerzegovinaThemes.temporary,
-    () => 'BosniaAndHerzegovinaThemes.temporary',
-  )
-  ..putIfAbsent(
-    BosniaAndHerzegovinaThemes.agricultural,
-    () => 'BosniaAndHerzegovinaThemes.agricultural',
-  )
-  ..putIfAbsent(
-    BosniaAndHerzegovinaThemes.eupm,
-    () => 'BosniaAndHerzegovinaThemes.eupm',
-  )
-  ..putIfAbsent(
-    BosniaAndHerzegovinaThemes.diplomatic,
-    () => 'BosniaAndHerzegovinaThemes.diplomatic',
-  )
+  ..putIfAbsent(BosniaAndHerzegovinaThemes.private, () => 'BosniaAndHerzegovinaThemes.private')
+  ..putIfAbsent(BosniaAndHerzegovinaThemes.taxi, () => 'BosniaAndHerzegovinaThemes.taxi')
+  ..putIfAbsent(BosniaAndHerzegovinaThemes.temporary, () => 'BosniaAndHerzegovinaThemes.temporary')
+  ..putIfAbsent(BosniaAndHerzegovinaThemes.agricultural, () => 'BosniaAndHerzegovinaThemes.agricultural')
+  ..putIfAbsent(BosniaAndHerzegovinaThemes.eupm, () => 'BosniaAndHerzegovinaThemes.eupm')
+  ..putIfAbsent(BosniaAndHerzegovinaThemes.diplomatic, () => 'BosniaAndHerzegovinaThemes.diplomatic')
   ..putIfAbsent(BotswanaThemes.private, () => 'BotswanaThemes.private')
   ..putIfAbsent(BotswanaThemes.privateRear, () => 'BotswanaThemes.privateRear')
-  ..putIfAbsent(
-    BotswanaThemes.publicService,
-    () => 'BotswanaThemes.publicService',
-  )
+  ..putIfAbsent(BotswanaThemes.publicService, () => 'BotswanaThemes.publicService')
   ..putIfAbsent(BotswanaThemes.government, () => 'BotswanaThemes.government')
   ..putIfAbsent(CambodiaThemes.private, () => 'CambodiaThemes.private')
   ..putIfAbsent(CambodiaThemes.privateLong, () => 'CambodiaThemes.privateLong')
   ..putIfAbsent(CambodiaThemes.police, () => 'CambodiaThemes.police')
   ..putIfAbsent(CambodiaThemes.diplomatic, () => 'CambodiaThemes.diplomatic')
   ..putIfAbsent(CambodiaThemes.ngo, () => 'CambodiaThemes.ngo')
-  ..putIfAbsent(
-    CambodiaThemes.internationalMotorcycle,
-    () => 'CambodiaThemes.internationalMotorcycle',
-  )
-  ..putIfAbsent(
-    CentralAfricanRepublicThemes.private,
-    () => 'CentralAfricanRepublicThemes.private',
-  )
+  ..putIfAbsent(CambodiaThemes.internationalMotorcycle, () => 'CambodiaThemes.internationalMotorcycle')
+  ..putIfAbsent(CentralAfricanRepublicThemes.private, () => 'CentralAfricanRepublicThemes.private')
   ..putIfAbsent(EgyptThemes.standard, () => 'EgyptThemes.standard')
   ..putIfAbsent(JordanThemes.standard, () => 'JordanThemes.standard')
   ..putIfAbsent(MaltaThemes.private, () => 'MaltaThemes.private')
@@ -1256,38 +806,20 @@ final Map<PlateTheme, String> themeNames = Map<PlateTheme, String>.identity()
   ..putIfAbsent(MongoliaThemes.twoRow, () => 'MongoliaThemes.twoRow')
   ..putIfAbsent(MozambiqueThemes.private, () => 'MozambiqueThemes.private')
   ..putIfAbsent(MozambiqueThemes.legacy, () => 'MozambiqueThemes.legacy')
-  ..putIfAbsent(
-    MozambiqueThemes.legacyOneRow,
-    () => 'MozambiqueThemes.legacyOneRow',
-  )
+  ..putIfAbsent(MozambiqueThemes.legacyOneRow, () => 'MozambiqueThemes.legacyOneRow')
   ..putIfAbsent(MyanmarThemes.private, () => 'MyanmarThemes.private')
   ..putIfAbsent(MyanmarThemes.hire, () => 'MyanmarThemes.hire')
   ..putIfAbsent(MyanmarThemes.religious, () => 'MyanmarThemes.religious')
-  ..putIfAbsent(
-    MyanmarThemes.embossedPrivate,
-    () => 'MyanmarThemes.embossedPrivate',
-  )
-  ..putIfAbsent(
-    MyanmarThemes.embossedCommercial,
-    () => 'MyanmarThemes.embossedCommercial',
-  )
-  ..putIfAbsent(
-    MyanmarThemes.embossedTouring,
-    () => 'MyanmarThemes.embossedTouring',
-  )
+  ..putIfAbsent(MyanmarThemes.embossedPrivate, () => 'MyanmarThemes.embossedPrivate')
+  ..putIfAbsent(MyanmarThemes.embossedCommercial, () => 'MyanmarThemes.embossedCommercial')
+  ..putIfAbsent(MyanmarThemes.embossedTouring, () => 'MyanmarThemes.embossedTouring')
   ..putIfAbsent(MyanmarThemes.organisation, () => 'MyanmarThemes.organisation')
   ..putIfAbsent(MyanmarThemes.motorcycle, () => 'MyanmarThemes.motorcycle')
   ..putIfAbsent(MyanmarThemes.rickshaw, () => 'MyanmarThemes.rickshaw')
   ..putIfAbsent(NorwayThemes.private, () => 'NorwayThemes.private')
   ..putIfAbsent(NorwayThemes.diplomatic, () => 'NorwayThemes.diplomatic')
-  ..putIfAbsent(
-    RepublicOfTheCongoThemes.private,
-    () => 'RepublicOfTheCongoThemes.private',
-  )
-  ..putIfAbsent(
-    SaintVincentAndTheGrenadinesThemes.private,
-    () => 'SaintVincentAndTheGrenadinesThemes.private',
-  )
+  ..putIfAbsent(RepublicOfTheCongoThemes.private, () => 'RepublicOfTheCongoThemes.private')
+  ..putIfAbsent(SaintVincentAndTheGrenadinesThemes.private, () => 'SaintVincentAndTheGrenadinesThemes.private')
   ..putIfAbsent(SerbiaThemes.private, () => 'SerbiaThemes.private')
   ..putIfAbsent(SerbiaThemes.taxi, () => 'SerbiaThemes.taxi')
   ..putIfAbsent(SerbiaThemes.trailer, () => 'SerbiaThemes.trailer')
@@ -1301,14 +833,8 @@ final Map<PlateTheme, String> themeNames = Map<PlateTheme, String>.identity()
   ..putIfAbsent(SriLankaThemes.front, () => 'SriLankaThemes.front')
   ..putIfAbsent(SriLankaThemes.rear, () => 'SriLankaThemes.rear')
   ..putIfAbsent(TanzaniaThemes.private, () => 'TanzaniaThemes.private')
-  ..putIfAbsent(
-    TanzaniaThemes.privateTwoRow,
-    () => 'TanzaniaThemes.privateTwoRow',
-  )
-  ..putIfAbsent(
-    TanzaniaThemes.organisation,
-    () => 'TanzaniaThemes.organisation',
-  )
+  ..putIfAbsent(TanzaniaThemes.privateTwoRow, () => 'TanzaniaThemes.privateTwoRow')
+  ..putIfAbsent(TanzaniaThemes.organisation, () => 'TanzaniaThemes.organisation')
   ..putIfAbsent(ThailandThemes.private, () => 'ThailandThemes.private')
   ..putIfAbsent(ThailandThemes.van, () => 'ThailandThemes.van')
   ..putIfAbsent(ThailandThemes.pickup, () => 'ThailandThemes.pickup')
@@ -1319,24 +845,12 @@ final Map<PlateTheme, String> themeNames = Map<PlateTheme, String>.identity()
   ..putIfAbsent(ThailandThemes.tourist, () => 'ThailandThemes.tourist')
   ..putIfAbsent(ThailandThemes.trade, () => 'ThailandThemes.trade')
   ..putIfAbsent(ThailandThemes.motorcycle, () => 'ThailandThemes.motorcycle')
-  ..putIfAbsent(
-    ThailandThemes.truckPrivate,
-    () => 'ThailandThemes.truckPrivate',
-  )
+  ..putIfAbsent(ThailandThemes.truckPrivate, () => 'ThailandThemes.truckPrivate')
   ..putIfAbsent(ThailandThemes.truckHired, () => 'ThailandThemes.truckHired')
   ..putIfAbsent(TimorLesteThemes.private, () => 'TimorLesteThemes.private')
-  ..putIfAbsent(
-    TimorLesteThemes.government,
-    () => 'TimorLesteThemes.government',
-  )
-  ..putIfAbsent(
-    TimorLesteThemes.indonesian,
-    () => 'TimorLesteThemes.indonesian',
-  )
-  ..putIfAbsent(
-    TimorLesteThemes.portuguese,
-    () => 'TimorLesteThemes.portuguese',
-  )
+  ..putIfAbsent(TimorLesteThemes.government, () => 'TimorLesteThemes.government')
+  ..putIfAbsent(TimorLesteThemes.indonesian, () => 'TimorLesteThemes.indonesian')
+  ..putIfAbsent(TimorLesteThemes.portuguese, () => 'TimorLesteThemes.portuguese')
   ..putIfAbsent(UruguayThemes.private, () => 'UruguayThemes.private')
   ..putIfAbsent(UruguayThemes.official, () => 'UruguayThemes.official')
   ..putIfAbsent(UruguayThemes.medical, () => 'UruguayThemes.medical')
@@ -1352,10 +866,7 @@ final Map<PlateTheme, String> themeNames = Map<PlateTheme, String>.identity()
   ..putIfAbsent(VaticanCityThemes.private, () => 'VaticanCityThemes.private')
   ..putIfAbsent(VaticanCityThemes.official, () => 'VaticanCityThemes.official')
   ..putIfAbsent(VaticanCityThemes.papal, () => 'VaticanCityThemes.papal')
-  ..putIfAbsent(
-    VaticanCityThemes.government,
-    () => 'VaticanCityThemes.government',
-  );
+  ..putIfAbsent(VaticanCityThemes.government, () => 'VaticanCityThemes.government');
 
 /// Each package's git repository, from its pubspec `homepage`.
 const Map<String, String> packageRepos = <String, String>{

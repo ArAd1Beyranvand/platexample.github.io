@@ -1,5 +1,4 @@
 import 'package:gabon_plate/gabon_plate.dart';
-import 'package:plate_core/plate_core.dart';
 
 import '../catalogue.dart';
 
@@ -32,7 +31,7 @@ class GabonSource extends GallerySource {
           theme: GabonThemes.private,
           country: GabonCountry.gabon,
           validator: const GabonValidator(),
-          sampleValues: 'C C 4 4 4 A A'.split(' '),
+          sampleValues: 'CC 444 AA'.split(' '),
         ),
       ],
     ),

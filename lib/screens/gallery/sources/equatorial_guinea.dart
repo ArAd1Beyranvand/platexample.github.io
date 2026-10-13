@@ -1,5 +1,4 @@
 import 'package:equatorial_guinea_plate/equatorial_guinea_plate.dart';
-import 'package:plate_core/plate_core.dart';
 
 import '../catalogue.dart';
 
@@ -33,7 +32,7 @@ class EquatorialGuineaSource extends GallerySource {
           theme: EquatorialGuineaThemes.regular,
           country: EquatorialGuineaCountry.equatorial_guinea,
           validator: const EquatorialGuineaValidator(),
-          sampleValues: 'L T 5 5 7 G'.split(' '),
+          sampleValues: 'LT 557 G'.split(' '),
         ),
       ],
     ),

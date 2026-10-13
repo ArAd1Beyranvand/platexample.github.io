@@ -45,7 +45,7 @@ class CameroonSource extends GallerySource {
       note: 'Region code, number, series.',
       entries: <GalleryEntry>[
         _e('private', 'Private', CameroonPlates.private,
-            CameroonThemes.private, 'L T 1 2 8 A B',
+            CameroonThemes.private, 'LT 128 AB',
             const CameroonValidator()),
       ],
     ),
@@ -54,7 +54,7 @@ class CameroonSource extends GallerySource {
       note: 'CM D, a mission code and a suffix, white on green.',
       entries: <GalleryEntry>[
         _e('diplomatic', 'Diplomatic', CameroonPlates.diplomatic,
-            CameroonThemes.diplomatic, 'C M D 3 8 2',
+            CameroonThemes.diplomatic, 'CM D 38 2',
             const CameroonDiplomaticValidator()),
       ],
     ),
