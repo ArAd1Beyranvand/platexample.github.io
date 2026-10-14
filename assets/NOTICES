@@ -383,6 +383,7 @@ for details. All rights reserved. Use of this source code is governed by a
 BSD-style license that can be found in the LICENSE file.
 --------------------------------------------------------------------------------
 algeria_plate
+andorra_plate
 angola_plate
 belarus_plate
 benin_plate
@@ -405,17 +406,21 @@ djibouti_plate
 egypt_plate
 equatorial_guinea_plate
 eritrea_plate
+finland_plate
 gabon_plate
 germany_plate
+greece_plate
 guinea_plate
 indonesia_plate
 iran_plate
 italy_plate
+japan_plate
 jordan_plate
 kyrgyzstan_plate
 laos_plate
 lesotho_plate
 libya_plate
+liechtenstein_plate
 madagascar_plate
 malaysia_plate
 maldives_plate
@@ -429,6 +434,7 @@ myanmar_plate
 namibia_plate
 niger_plate
 norway_plate
+philippines_plate
 plate_alphabet
 plate_core
 plate_keypad
