@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="300">
+<desc>The flag of Azerbaijan: three equal horizontal bands - blue, red, green - with a white crescent and an eight-pointed star centred on the red. Official ratio 1:2, which is what PlateCountry.flagAspectRatio carries as 2. The crescent is a white disc with a red disc cut out of it by overpainting rather than by a path with a fill-rule, and the star is written out point by point: flutter_svg does not resolve use or xlink href, and a flag that silently loses half its artwork at plate scale is not obviously wrong to look at. Both discs sit inside the red band (y 105..195 of a band spanning 100..200), so the overpaint can never show against the wrong colour.</desc>
+<rect width="600" height="100" fill="#00b9e4"/>
+<rect y="100" width="600" height="100" fill="#ed2939"/>
+<rect y="200" width="600" height="100" fill="#509e2f"/>
+<circle cx="262" cy="150" r="45" fill="#ffffff"/>
+<circle cx="277" cy="150" r="36" fill="#ed2939"/>
+<polygon fill="#ffffff" points="322.00,120.00 326.75,138.54 343.21,128.79 333.46,145.25 352.00,150.00 333.46,154.75 343.21,171.21 326.75,161.46 322.00,180.00 317.25,161.46 300.79,171.21 310.54,154.75 292.00,150.00 310.54,145.25 300.79,128.79 317.25,138.54"/>
+</svg>

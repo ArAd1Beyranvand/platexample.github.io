@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="300">
+<desc>The flag of Armenia: three equal horizontal bands - red, blue, orange. Official ratio 1:2, which is what PlateCountry.flagAspectRatio carries as 2. The colours are the ones the 2006 law on the national flag fixes, and are the only three colours on the block at the hoist end of an Armenian plate.</desc>
+<rect width="600" height="100" fill="#D90012"/>
+<rect y="100" width="600" height="100" fill="#0033A0"/>
+<rect y="200" width="600" height="100" fill="#F2A800"/>
+</svg>
