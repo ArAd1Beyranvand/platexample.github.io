@@ -385,7 +385,11 @@ BSD-style license that can be found in the LICENSE file.
 algeria_plate
 andorra_plate
 angola_plate
+antigua_and_barbuda_plate
+bahamas_plate
+barbados_plate
 belarus_plate
+belize_plate
 benin_plate
 bhutan_plate
 bolivia_plate
@@ -396,6 +400,7 @@ brunei_plate
 burkina_faso_plate
 cambodia_plate
 cameroon_plate
+canada_plate
 cape_verde_plate
 central_african_republic_plate
 chad_plate
@@ -403,6 +408,8 @@ chile_plate
 colombia_plate
 comoros_plate
 djibouti_plate
+dominica_plate
+dominican_republic_plate
 egypt_plate
 equatorial_guinea_plate
 eritrea_plate
@@ -432,6 +439,7 @@ mongolia_plate
 mozambique_plate
 myanmar_plate
 namibia_plate
+netherlands_plate
 niger_plate
 norway_plate
 philippines_plate
@@ -442,6 +450,7 @@ plate_number_holder
 republic_of_ireland_plate
 republic_of_the_congo_plate
 saint_vincent_and_the_grenadines_plate
+san_marino_plate
 senegal_plate
 serbia_plate
 seychelles_plate
@@ -450,10 +459,12 @@ somalia_plate
 spain_plate
 sri_lanka_plate
 sudan_plate
+sweden_plate
 tanzania_plate
 thailand_plate
 timor_leste_plate
 tunisia_plate
+united_kingdom_plate
 uruguay_plate
 vanuatu_plate
 vatican_city_plate
