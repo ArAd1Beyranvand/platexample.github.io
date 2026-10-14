@@ -53,7 +53,7 @@ class MalaysiaSource extends GallerySource {
   @override
   List<GallerySection> get sections => _sections ??= <GallerySection>[
     GallerySection(
-      title: 'Single row — sized to the number',
+      title: 'Single row',
       note:
           'One design. The prefix is the state (W Kuala Lumpur, P Penang, '
           'S Sabah, Q Sarawak), then a number of up to four digits and an '
@@ -73,12 +73,12 @@ class MalaysiaSource extends GallerySource {
           'Sabah · suffix letter',
           MalaysiaPlates.singleRow(suffix: true),
           MalaysiaThemes.standard,
-          prefix: 'SA',
+          prefix: 'SAA',
         ),
         _entry(
           'short',
           'Kuala Lumpur · one letter',
-          MalaysiaPlates.singleRow(prefix: 1, digits: 3),
+          MalaysiaPlates.singleRow(),
           MalaysiaThemes.standard,
           prefix: 'W',
         ),
@@ -95,7 +95,7 @@ class MalaysiaSource extends GallerySource {
         _entry(
           'military',
           'Military · Z',
-          MalaysiaPlates.singleRow(prefix: 2),
+          MalaysiaPlates.singleRow(),
           MalaysiaThemes.standard,
           prefix: 'Z',
         ),
@@ -138,7 +138,7 @@ class MalaysiaSource extends GallerySource {
           theme: MalaysiaThemes.diplomatic,
           country: MalaysiaCountry.malaysia,
           validator: const MalaysiaDiplomaticValidator(),
-          sampleValues: const <String?>['9', '9', '6', '4', 'DC'],
+          sampleValues: const <String?>['99', '64', 'DC'],
         ),
         GalleryEntry(
           id: 'my.cc',
@@ -147,7 +147,7 @@ class MalaysiaSource extends GallerySource {
           theme: MalaysiaThemes.consular,
           country: MalaysiaCountry.malaysia,
           validator: const MalaysiaDiplomaticValidator(),
-          sampleValues: const <String?>['2', '1', '0', '7', 'CC'],
+          sampleValues: const <String?>['21', '07', 'CC'],
         ),
       ],
     ),

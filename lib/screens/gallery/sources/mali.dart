@@ -36,9 +36,7 @@ class MaliSource extends GallerySource {
           theme: MaliThemes.standard,
           country: MaliCountry.mali,
           validator: const MaliValidator(),
-          sampleValues: <String?>[
-            'A', 'B', '1', '2', '3', '4', 'M', 'D', //
-          ],
+          sampleValues: <String?>['AB', '1234', 'MD'],
         ),
       ],
     ),

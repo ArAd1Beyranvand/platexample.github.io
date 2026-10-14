@@ -33,7 +33,7 @@ class SomaliaSource extends GallerySource {
           theme: SomaliaThemes.standard,
           country: SomaliaCountry.somalia,
           validator: const SomaliaPlateValidator(),
-          sampleValues: 'AD4657'.split(''),
+          sampleValues: <String?>['AD', '4657'],
         ),
       ],
     ),

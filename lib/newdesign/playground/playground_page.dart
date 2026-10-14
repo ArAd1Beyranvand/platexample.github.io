@@ -104,7 +104,7 @@ class _PlaygroundPageState extends State<PlaygroundPage> {
 
     return SingleChildScrollView(
       padding: EdgeInsets.only(
-        top: kHeaderHeight + pdClamp(context, 20, 3, 40),
+        top: headerExtent(context) + pdClamp(context, 20, 3, 40),
         bottom: pdClamp(context, 48, 7, 96),
       ),
       child: PdContainer(
@@ -117,10 +117,7 @@ class _PlaygroundPageState extends State<PlaygroundPage> {
               minWidth: 460,
               gap: 24,
               children: <Widget>[
-                _StageCard(
-                  item: _item,
-                  plate: _plate,
-                ),
+                _StageCard(item: _item, plate: _plate),
                 if (narrow && !_codeOpen)
                   Align(
                     alignment: Alignment.centerLeft,

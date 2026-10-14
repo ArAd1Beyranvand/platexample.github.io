@@ -11,6 +11,7 @@ import 'maldives.dart';
 import 'malaysia.dart';
 import 'philippines.dart';
 import 'north_korea.dart';
+import 'south_korea.dart';
 import 'palestine.dart';
 import 'vietnam.dart';
 import 'yemen.dart';
@@ -22,6 +23,29 @@ import 'cameroon.dart';
 import 'chad.dart';
 import 'equatorial_guinea.dart';
 import 'gabon.dart';
+import 'zambia.dart';
+import 'madagascar.dart';
+import 'lesotho.dart';
+import 'senegal.dart';
+import 'mauritius.dart';
+import 'seychelles.dart';
+import 'guinea.dart';
+import 'andorra.dart';
+import 'greece.dart';
+import 'finland.dart';
+import 'japan.dart';
+import 'liechtenstein.dart';
+import 'canada.dart';
+import 'san_marino.dart';
+import 'bahamas.dart';
+import 'antigua_and_barbuda.dart';
+import 'barbados.dart';
+import 'belize.dart';
+import 'dominica.dart';
+import 'dominican_republic.dart';
+import 'sweden.dart';
+import 'netherlands.dart';
+import 'united_kingdom.dart';
 
 export '../catalogue.dart';
 export 'algeria.dart';
@@ -51,6 +75,7 @@ export 'mali.dart';
 export 'mauritania.dart';
 export 'niger.dart';
 export 'north_korea.dart';
+export 'south_korea.dart';
 export 'palestine.dart';
 export 'comoros.dart';
 export 'somalia.dart';
@@ -100,6 +125,29 @@ export 'cameroon.dart';
 export 'chad.dart';
 export 'equatorial_guinea.dart';
 export 'gabon.dart';
+export 'zambia.dart';
+export 'madagascar.dart';
+export 'lesotho.dart';
+export 'senegal.dart';
+export 'mauritius.dart';
+export 'seychelles.dart';
+export 'guinea.dart';
+export 'andorra.dart';
+export 'greece.dart';
+export 'finland.dart';
+export 'japan.dart';
+export 'liechtenstein.dart';
+export 'canada.dart';
+export 'san_marino.dart';
+export 'bahamas.dart';
+export 'antigua_and_barbuda.dart';
+export 'barbados.dart';
+export 'belize.dart';
+export 'dominica.dart';
+export 'dominican_republic.dart';
+export 'sweden.dart';
+export 'netherlands.dart';
+export 'united_kingdom.dart';
 
 /// Every country this app can draw, in the order the catalogue lists them.
 ///
@@ -134,6 +182,7 @@ final List<GallerySource> gallerySources = <GallerySource>[
   MaldivesSource(),
   NorthKoreaSource(),
   PhilippinesSource(),
+  SouthKoreaSource(),
   SyriaSource(),
   VanuatuSource(),
   VietnamSource(),
@@ -142,6 +191,28 @@ final List<GallerySource> gallerySources = <GallerySource>[
   ChadSource(),
   EquatorialGuineaSource(),
   GabonSource(),
+  ZambiaSource(),
+  MadagascarSource(),
+  LesothoSource(),
+  SenegalSource(),
+  MauritiusSource(),
+  SeychellesSource(),
+  AndorraSource(),
+  GreeceSource(),
+  FinlandSource(),
+  JapanSource(),
+  LiechtensteinSource(),
+  CanadaSource(),
+  SanMarinoSource(),
+  BahamasSource(),
+  AntiguaAndBarbudaSource(),
+  BarbadosSource(),
+  DominicaSource(),
+  DominicanRepublicSource(),
+  BelizeSource(),
+  SwedenSource(),
+  NetherlandsSource(),
+  UnitedKingdomSource(),
 ];
 
 /// Every source, umbrellas' members included — what a lookup by type wants.

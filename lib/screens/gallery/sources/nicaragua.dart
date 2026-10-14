@@ -17,7 +17,7 @@ class NicaraguaSource extends GallerySource {
       'The 2005 series: black on white, a department code of one or two '
       'letters, then the number. Managua runs six digits printed 3 + 3.';
 
-  static List<String?> _chars(String value) => value.split('');
+  static List<String?> _chars(String value) => value.split('|');
 
   @override
   List<GallerySection> get sections => _sections ??= <GallerySection>[
@@ -32,7 +32,7 @@ class NicaraguaSource extends GallerySource {
           theme: NicaraguaThemes.standard,
           country: NicaraguaCountry.nicaragua,
           validator: const NicaraguaValidator(),
-          sampleValues: _chars('M027557'),
+          sampleValues: _chars('M|027|557'),
         ),
         GalleryEntry(
           id: 'ni.department',
@@ -41,7 +41,7 @@ class NicaraguaSource extends GallerySource {
           theme: NicaraguaThemes.standard,
           country: NicaraguaCountry.nicaragua,
           validator: const NicaraguaValidator(),
-          sampleValues: _chars('CT4361'),
+          sampleValues: _chars('CT|4361'),
         ),
         GalleryEntry(
           id: 'ni.department_short',
@@ -50,7 +50,7 @@ class NicaraguaSource extends GallerySource {
           theme: NicaraguaThemes.standard,
           country: NicaraguaCountry.nicaragua,
           validator: const NicaraguaValidator(),
-          sampleValues: _chars('MY142'),
+          sampleValues: _chars('MY|142'),
         ),
       ],
     ),

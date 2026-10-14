@@ -51,7 +51,7 @@ class KyrgyzstanSource extends GallerySource {
           'Private · black on white',
           KyrgyzstanPlates.private,
           KyrgyzstanThemes.private,
-          '0 1 1 2 3 A B C',
+          '01 123 ABC',
           validator: const KyrgyzstanValidator(),
         ),
         _e(
@@ -59,7 +59,7 @@ class KyrgyzstanSource extends GallerySource {
           'Government · PT',
           KyrgyzstanPlates.government,
           KyrgyzstanThemes.private,
-          '0 2 0 1 2 P T',
+          '02 012 PT',
           validator: const KyrgyzstanValidator(),
         ),
         _e(
@@ -67,7 +67,7 @@ class KyrgyzstanSource extends GallerySource {
           'Electric · green strip',
           KyrgyzstanPlates.eco,
           KyrgyzstanThemes.eco,
-          '0 1 9 2 3 A R X',
+          '01 923 ARX',
           validator: const KyrgyzstanValidator(),
         ),
         _e(
@@ -75,7 +75,7 @@ class KyrgyzstanSource extends GallerySource {
           'President · flag block',
           KyrgyzstanPlates.president,
           KyrgyzstanThemes.private,
-          '0 1',
+          '01',
         ),
       ],
     ),
@@ -89,7 +89,7 @@ class KyrgyzstanSource extends GallerySource {
           'Foreign citizen (H)',
           KyrgyzstanPlates.foreign,
           KyrgyzstanThemes.foreign,
-          '0 1 1 2 3 4 H',
+          '01 1234 H',
           validator: const KyrgyzstanForeignValidator(),
         ),
         _e(
@@ -97,7 +97,7 @@ class KyrgyzstanSource extends GallerySource {
           'Foreign media (K)',
           KyrgyzstanPlates.foreign,
           KyrgyzstanThemes.foreign,
-          '0 1 1 2 3 4 K',
+          '01 1234 K',
           validator: const KyrgyzstanForeignValidator(),
         ),
         _e(
@@ -105,7 +105,7 @@ class KyrgyzstanSource extends GallerySource {
           'Foreign firm (M)',
           KyrgyzstanPlates.foreign,
           KyrgyzstanThemes.foreign,
-          '0 1 1 2 3 4 M',
+          '01 1234 M',
           validator: const KyrgyzstanForeignValidator(),
         ),
         _e(
@@ -113,7 +113,7 @@ class KyrgyzstanSource extends GallerySource {
           'Foreign resident (P)',
           KyrgyzstanPlates.foreign,
           KyrgyzstanThemes.foreign,
-          '0 1 1 2 3 4 P',
+          '01 1234 P',
           validator: const KyrgyzstanForeignValidator(),
         ),
       ],
@@ -128,7 +128,7 @@ class KyrgyzstanSource extends GallerySource {
           'Diplomatic (D)',
           KyrgyzstanPlates.diplomatic,
           KyrgyzstanThemes.diplomatic,
-          'D 0 1 0 0 1 0 5 1 6',
+          'D 01 001 05 16',
           validator: KyrgyzstanDiplomaticValidator.diplomatic,
         ),
         _e(
@@ -136,7 +136,7 @@ class KyrgyzstanSource extends GallerySource {
           'Consular (C)',
           KyrgyzstanPlates.diplomatic,
           KyrgyzstanThemes.diplomatic,
-          'C 0 1 0 0 1 0 5 1 6',
+          'C 01 001 05 16',
           validator: KyrgyzstanDiplomaticValidator.diplomatic,
         ),
         _e(
@@ -144,7 +144,7 @@ class KyrgyzstanSource extends GallerySource {
           'Technical staff (T)',
           KyrgyzstanPlates.diplomatic,
           KyrgyzstanThemes.diplomatic,
-          'T 0 1 0 0 1 0 5 1 6',
+          'T 01 001 05 16',
           validator: KyrgyzstanDiplomaticValidator.diplomatic,
         ),
         _e(
@@ -152,7 +152,7 @@ class KyrgyzstanSource extends GallerySource {
           'Diplomatic, UN (D)',
           KyrgyzstanPlates.diplomatic,
           KyrgyzstanThemes.unitedNations,
-          'D 0 1 0 0 1 0 5 1 6',
+          'D 01 001 05 16',
           validator: KyrgyzstanDiplomaticValidator.diplomatic,
         ),
         _e(
@@ -160,7 +160,7 @@ class KyrgyzstanSource extends GallerySource {
           'Technical staff, UN (T)',
           KyrgyzstanPlates.diplomatic,
           KyrgyzstanThemes.unitedNations,
-          'T 0 1 0 0 1 0 5 1 6',
+          'T 01 001 05 16',
           validator: KyrgyzstanDiplomaticValidator.diplomatic,
         ),
         _e(
@@ -168,7 +168,7 @@ class KyrgyzstanSource extends GallerySource {
           'Honorary consul (HC)',
           KyrgyzstanPlates.honorary,
           KyrgyzstanThemes.diplomatic,
-          'H C 1 0 0 1 0 5 1 6',
+          'HC 1001 05 16',
           validator: KyrgyzstanDiplomaticValidator.honorary,
         ),
         _e(
@@ -176,7 +176,7 @@ class KyrgyzstanSource extends GallerySource {
           'Head of mission (CMD)',
           KyrgyzstanPlates.mission,
           KyrgyzstanThemes.diplomatic,
-          'C M D 0 0 1',
+          'CMD 001',
           validator: KyrgyzstanDiplomaticValidator.mission,
         ),
         _e(
@@ -184,7 +184,7 @@ class KyrgyzstanSource extends GallerySource {
           'Head of mission, UN (CMD)',
           KyrgyzstanPlates.mission,
           KyrgyzstanThemes.unitedNations,
-          'C M D 0 0 1',
+          'CMD 001',
           validator: KyrgyzstanDiplomaticValidator.mission,
         ),
       ],
@@ -199,7 +199,7 @@ class KyrgyzstanSource extends GallerySource {
           'Square · private',
           KyrgyzstanPlates.square,
           KyrgyzstanThemes.square,
-          '0 1 1 2 3 A B C',
+          '01 123 ABC',
           validator: const KyrgyzstanValidator(),
         ),
         _e(
@@ -207,7 +207,7 @@ class KyrgyzstanSource extends GallerySource {
           'Square · government',
           KyrgyzstanPlates.squareGovernment,
           KyrgyzstanThemes.square,
-          '0 2 0 1 2 P T',
+          '02 012 PT',
           validator: const KyrgyzstanValidator(),
         ),
         _e(
@@ -215,7 +215,7 @@ class KyrgyzstanSource extends GallerySource {
           'Motorcycle',
           KyrgyzstanPlates.motorcycle,
           KyrgyzstanThemes.motorcycle,
-          '0 1 1 2 3 D Q',
+          '01 123 DQ',
           validator: const KyrgyzstanValidator(),
         ),
       ],

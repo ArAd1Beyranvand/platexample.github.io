@@ -26,7 +26,7 @@ class SudanSource extends GallerySource {
     List<String?> values,
     String format,
   ) => GalleryEntry(
-    id: 'sd.${usage.name}.${spec.slotCount - 2}',
+    id: 'sd.${usage.name}',
     label: '${usage.english} · $format',
     spec: spec,
     theme: SudanThemes.forUsage(usage),
@@ -45,14 +45,20 @@ class SudanSource extends GallerySource {
           'The Arabic serial reads about 72% of the real height: the stamped '
           'face is taller and narrower than any font drawn here.',
       entries: <GalleryEntry>[
-        _entry(SudanUsage.private, SudanPlates.serial5, <String?>[
-          '7', 'KH', '1', '0', '3', '4', '6', //
+        _entry(SudanUsage.private, SudanPlates.standard, <String?>[
+          '7',
+          'KH',
+          '10346',
         ], '7KH-10346'),
-        _entry(SudanUsage.transport, SudanPlates.serial4, <String?>[
-          '4', 'KH', '1', '2', '0', '9', //
+        _entry(SudanUsage.transport, SudanPlates.standard, <String?>[
+          '4',
+          'KH',
+          '1209',
         ], '4KH-1209'),
-        _entry(SudanUsage.commercial, SudanPlates.serial5, <String?>[
-          '8', 'RS', '2', '0', '3', '6', '8', //
+        _entry(SudanUsage.commercial, SudanPlates.standard, <String?>[
+          '8',
+          'RS',
+          '20368',
         ], '8RS-20368'),
       ],
     ),

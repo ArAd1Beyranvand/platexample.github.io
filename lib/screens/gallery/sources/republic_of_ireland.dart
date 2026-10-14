@@ -37,25 +37,25 @@ class RepublicOfIrelandSource extends GallerySource {
   List<GallerySection> get sections => _sections ??= <GallerySection>[
     GallerySection(
       title: 'Standard',
-      note: 'One design; the county sets the caption and the code length.',
+      note: 'One design; the county sets the caption; the code is one or two letters.',
       entries: <GalleryEntry>[
         _entry(
           'dublin',
           'Dublin',
           RepublicOfIrelandPlates.standard,
-          '2 5 2 D 2 3 4 5 6',
+          '252 D 23456',
         ),
         _entry(
           'waterford',
           'Waterford',
           RepublicOfIrelandPlates.standardFor('W'),
-          '1 3 1 W 1 2 3 4 5',
+          '131 W 12345',
         ),
         _entry(
           'clare',
           'Clare',
           RepublicOfIrelandPlates.standardFor('CE'),
-          '2 4 1 C E 6 7 8 9 0',
+          '241 CE 67890',
         ),
       ],
     ),
@@ -67,7 +67,7 @@ class RepublicOfIrelandSource extends GallerySource {
           'electric',
           'Dublin · electric',
           RepublicOfIrelandPlates.electric,
-          '2 5 2 D 2 3 4 5 6',
+          '252 D 23456',
         ),
       ],
     ),

@@ -44,14 +44,14 @@ class ThailandSource extends GallerySource {
       title: 'Standard — 340 × 150',
       note: 'Two Thai series letters and four digits over the province.',
       entries: <GalleryEntry>[
-        _e(ThailandCategory.private, 'ก ข 1 2 3 4'),
-        _e(ThailandCategory.van, 'ค ง 5 6 7 8'),
-        _e(ThailandCategory.pickup, 'จ ฉ 9 0 1 2'),
-        _e(ThailandCategory.tricycle, 'ช ฌ 3 4 5 6'),
-        _e(ThailandCategory.trailer, 'ฏ ฐ 7 8 9 0'),
-        _e(ThailandCategory.taxi, 'ณ ด 1 1 2 2'),
-        _e(ThailandCategory.tukTuk, 'ก ข 3 3 4 4'),
-        _e(ThailandCategory.tourist, 'ค ง 5 5 6 6'),
+        _e(ThailandCategory.private, 'ก ข 1234'),
+        _e(ThailandCategory.van, 'ค ง 5678'),
+        _e(ThailandCategory.pickup, 'จ ฉ 9012'),
+        _e(ThailandCategory.tricycle, 'ช ฌ 3456'),
+        _e(ThailandCategory.trailer, 'ฏ ฐ 7890'),
+        _e(ThailandCategory.taxi, 'ณ ด 1122'),
+        _e(ThailandCategory.tukTuk, 'ก ข 3344'),
+        _e(ThailandCategory.tourist, 'ค ง 5566'),
       ],
     ),
     GallerySection(
@@ -60,16 +60,16 @@ class ThailandSource extends GallerySource {
           'The trade plate carries one series letter; the motorcycle plate '
           'puts the series, the province and the serial on three rows.',
       entries: <GalleryEntry>[
-        _e(ThailandCategory.trade, 'ก 1 2 3 4'),
-        _e(ThailandCategory.motorcycle, 'ข ค ง 5 6 7 8'),
+        _e(ThailandCategory.trade, 'ก 1234'),
+        _e(ThailandCategory.motorcycle, 'ข ค ง 5678'),
       ],
     ),
     GallerySection(
       title: 'Truck and bus — 440 × 220',
       note: 'Two digits, a dash and four, the province beneath.',
       entries: <GalleryEntry>[
-        _e(ThailandCategory.truckPrivate, '1 0 2 3 4 5 6 7'),
-        _e(ThailandCategory.truckHired, '3 0 8 7 6 5 4 3'),
+        _e(ThailandCategory.truckPrivate, '10 23 4567'),
+        _e(ThailandCategory.truckHired, '30 87 6543'),
       ],
     ),
   ];

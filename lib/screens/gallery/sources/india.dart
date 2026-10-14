@@ -19,11 +19,8 @@ class IndiaSource extends GallerySource {
       'The HSRP plate: one row of characters, coloured by what the vehicle '
       'is for. Private plates carry the Ashoka Chakra hologram and IND.';
 
-  /// A space is an empty cell: diplomatic numbers are written without
-  /// leading zeros, so a short one leaves its cells blank.
-  static List<String?> _values(String value) => <String?>[
-    for (final c in value.split('')) c == ' ' ? null : c,
-  ];
+  /// One token per field, split on spaces.
+  static List<String?> _values(String value) => value.split(' ');
 
   static GalleryEntry _entry(
     String id,
@@ -57,35 +54,35 @@ class IndiaSource extends GallerySource {
           'Private',
           IndiaPlates.private,
           IndiaThemes.private,
-          'MH20DV2366',
+          'MH 20 DV 2366',
         ),
         _entry(
           'in.transport',
           'Commercial',
           IndiaPlates.standard,
           IndiaThemes.transport,
-          'MH12DV4353',
+          'MH 12 DV 4353',
         ),
         _entry(
           'in.rental',
           'Rental',
           IndiaPlates.standard,
           IndiaThemes.rental,
-          'MH09DV5346',
+          'MH 09 DV 5346',
         ),
         _entry(
           'in.electric',
           'Electric',
           IndiaPlates.standard,
           IndiaThemes.electric,
-          'MH04DV4321',
+          'MH 04 DV 4321',
         ),
         _entry(
           'in.electric.transport',
           'Electric commercial',
           IndiaPlates.standard,
           IndiaThemes.electricTransport,
-          'MH04DV4321',
+          'MH 04 DV 4321',
         ),
       ],
     ),
@@ -98,7 +95,7 @@ class IndiaSource extends GallerySource {
           'Bharat series',
           IndiaPlates.bharat,
           IndiaThemes.private,
-          '212345AA',
+          '21 2345 AA',
           note: 'Year, BH, number, series — valid in every state.',
         ),
         _entry(
@@ -106,49 +103,49 @@ class IndiaSource extends GallerySource {
           'Vintage series',
           IndiaPlates.vintage,
           IndiaThemes.private,
-          'MHAA0001',
+          'MH AA 0001',
         ),
         _entry(
           'in.diplomatic',
           'Embassy',
           IndiaPlates.diplomatic,
           IndiaThemes.diplomatic,
-          ' 52CD  19',
+          '52 CD 19',
         ),
         _entry(
           'in.consular',
           'Consulate',
           IndiaPlates.diplomatic,
           IndiaThemes.consular,
-          '199CC0123',
+          '199 CC 0123',
         ),
         _entry(
           'in.military',
           'Armed forces',
           IndiaPlates.military,
           IndiaThemes.military,
-          '02B084821H',
+          '02 B 084821 H',
         ),
         _entry(
           'in.military.police',
           'Military police',
           IndiaPlates.military,
           IndiaThemes.militaryPolice,
-          '24B123456Z',
+          '24 B 123456 Z',
         ),
         _entry(
           'in.temporary',
           'Temporary',
           IndiaPlates.temporary,
           IndiaThemes.temporary,
-          '1123KL5986KA',
+          '1123 KL 5986 KA',
         ),
         _entry(
           'in.trade',
           'Trade certificate',
           IndiaPlates.trade,
           IndiaThemes.trade,
-          'UP16C00020073',
+          'UP 16 C 0002 0073',
         ),
       ],
     ),

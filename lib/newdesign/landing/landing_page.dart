@@ -66,7 +66,7 @@ class _LandingPageState extends State<LandingPage> {
         final double top = box
             .localToGlobal(Offset.zero, ancestor: viewport)
             .dy;
-        target = (_scroll.offset + top - kHeaderHeight - 24).clamp(
+        target = (_scroll.offset + top - headerExtent(context) - 24).clamp(
           0,
           _scroll.position.maxScrollExtent,
         );
@@ -102,7 +102,7 @@ class _LandingPageState extends State<LandingPage> {
     return SingleChildScrollView(
       controller: _scroll,
       padding: EdgeInsets.only(
-        top: kHeaderHeight + pdClamp(context, 32, 5, 72),
+        top: headerExtent(context) + pdClamp(context, 32, 5, 72),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

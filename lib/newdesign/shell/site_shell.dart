@@ -11,6 +11,10 @@ import '../design/tokens.dart';
 import '../widgets/controls.dart';
 
 const double kHeaderHeight = 56;
+
+/// Header height plus the status-bar inset on edge-to-edge devices.
+double headerExtent(BuildContext context) =>
+    kHeaderHeight + MediaQuery.viewPaddingOf(context).top;
 const String kGithubUrl = 'https://github.com/ArAd1Beyranvand/plate-core';
 
 /// Every page: the sticky header over the page body, the `/` shortcut, and
@@ -88,7 +92,7 @@ class _SiteShellState extends State<SiteShell> {
           children: <Widget>[
             Positioned.fill(child: widget.child),
             if (_menuOpen)
-              Positioned.fill(top: kHeaderHeight, child: const _MenuSheet()),
+              Positioned.fill(top: headerExtent(context), child: const _MenuSheet()),
             Positioned(
               left: 0,
               right: 0,
@@ -151,13 +155,15 @@ class _Header extends StatelessWidget {
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
         child: Container(
-          height: kHeaderHeight,
+          height: headerExtent(context),
           decoration: BoxDecoration(
             color: t.bg.withValues(alpha: 0.85),
             border: Border(bottom: BorderSide(color: t.divider)),
           ),
-          padding: EdgeInsets.symmetric(
-            horizontal: pdClamp(context, 16, 3, 32),
+          padding: EdgeInsets.only(
+            left: pdClamp(context, 16, 3, 32),
+            right: pdClamp(context, 16, 3, 32),
+            top: MediaQuery.viewPaddingOf(context).top,
           ),
           child: Row(
             children: <Widget>[

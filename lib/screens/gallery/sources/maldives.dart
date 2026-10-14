@@ -30,7 +30,7 @@ class MaldivesSource extends GallerySource {
         theme: theme,
         country: MaldivesCountry.maldives,
         validator: const MaldivesPlateValidator(),
-        sampleValues: 'AB1A3665'.split(''),
+        sampleValues: 'A B 1 A 3665'.split(' '),
       );
 
   @override

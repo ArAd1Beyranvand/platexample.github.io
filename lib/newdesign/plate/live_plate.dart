@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart' show listEquals;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
@@ -466,6 +467,8 @@ class StaticPlate extends StatefulWidget {
     this.values,
     this.theme,
     this.country,
+    this.animation,
+    this.autoType = false,
   });
 
   final PlateSpec spec;
@@ -473,28 +476,98 @@ class StaticPlate extends StatefulWidget {
   final PlateTheme? theme;
   final PlateCountry? country;
 
+  /// Drives the parts' stagger, for a caller swapping plates in and out.
+  final PlateAnimationController? animation;
+
+  /// Starts empty and types [values] in one character at a time, then
+  /// clears and types them again, over and over.
+  final bool autoType;
+
   @override
   State<StaticPlate> createState() => _StaticPlateState();
 }
 
 class _StaticPlateState extends State<StaticPlate> {
   late final PlateController _c = PlateController(spec: widget.spec);
+  Timer? _typing;
+
+  static const Duration _lead = Duration(milliseconds: 600);
+  static const Duration _keystroke = Duration(milliseconds: 280);
+
+  /// How long the finished plate shows before it clears and types again.
+  static const Duration _hold = Duration(milliseconds: 2500);
 
   @override
   void initState() {
     super.initState();
-    if (widget.values != null) _c.setValues(widget.values!);
+    if (widget.autoType) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _show());
+    } else {
+      _show();
+    }
   }
 
   @override
   void didUpdateWidget(StaticPlate old) {
     super.didUpdateWidget(old);
-    if (!identical(old.spec, widget.spec)) _c.adoptSpec(widget.spec);
-    if (widget.values != null) _c.setValues(widget.values!);
+    final bool specChanged = !identical(old.spec, widget.spec);
+    if (specChanged) _c.adoptSpec(widget.spec);
+    if (widget.autoType &&
+        !specChanged &&
+        listEquals(old.values, widget.values)) {
+      return;
+    }
+    _show();
+  }
+
+  void _show() {
+    _typing?.cancel();
+    if (!mounted) return;
+    final List<String?>? values = widget.values;
+    if (values == null) return;
+    if (!widget.autoType || MediaQuery.disableAnimationsOf(context)) {
+      _c.setValues(values);
+      return;
+    }
+    // One keystroke per character, so a slot holding "123" types 1, 2, 3.
+    final List<List<String>> keys = <List<String>>[
+      for (final String? v in values) (v ?? '').characters.toList(),
+    ];
+    int slot = 0;
+    int typed = 0;
+    void next() {
+      while (slot < keys.length && typed >= keys[slot].length) {
+        slot++;
+        typed = 0;
+      }
+      if (slot >= keys.length) {
+        _typing = Timer(_hold, () {
+          _c.clear();
+          slot = 0;
+          typed = 0;
+          _typing = Timer(_lead, next);
+        });
+        return;
+      }
+      typed++;
+      _c.setValues(<String?>[
+        for (int i = 0; i < values.length; i++)
+          i < slot
+              ? values[i]
+              : i == slot
+              ? keys[i].take(typed).join()
+              : null,
+      ]);
+      _typing = Timer(_keystroke, next);
+    }
+
+    _c.clear();
+    _typing = Timer(_lead, next);
   }
 
   @override
   void dispose() {
+    _typing?.cancel();
     _c.dispose();
     super.dispose();
   }
@@ -507,6 +580,7 @@ class _StaticPlateState extends State<StaticPlate> {
       controller: _c,
       theme: widget.theme,
       country: widget.country,
+      animation: widget.animation,
       onChooseCharacter: (_) async => null,
     ),
   );

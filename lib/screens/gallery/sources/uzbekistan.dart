@@ -1,5 +1,5 @@
 import 'package:plate_core/plate_core.dart';
-import 'package:uzbekistan_plate/uzbekistan_plate.dart';
+import 'package:iranshahr_plate/iranshahr_plate.dart';
 
 import '../catalogue.dart';
 
@@ -45,7 +45,7 @@ class UzbekistanSource extends GallerySource {
       note: 'Region, series letter, serial, then the closing letters.',
       entries: <GalleryEntry>[
         _e('passenger', 'Passenger car', UzbekistanPlates.passenger,
-            UzbekistanThemes.passenger, '0 1 A 1 2 3 B C'),
+            UzbekistanThemes.passenger, '01 A 123 BC'),
       ],
     ),
     GallerySection(
@@ -54,12 +54,12 @@ class UzbekistanSource extends GallerySource {
       entries: <GalleryEntry>[
         _e('foreign_citizen', 'Foreign citizen',
             UzbekistanPlates.foreignCitizen, UzbekistanThemes.foreignCitizen,
-            '1 0 1 2 3 4 5 6'),
+            '10 123456'),
         _e('foreign_company', 'Foreign company',
             UzbekistanPlates.foreignCompany, UzbekistanThemes.foreignCompany,
-            '2 0 6 5 4 3 2 1'),
+            '20 654321'),
         _e('temporary', 'Temporary', UzbekistanPlates.temporary,
-            UzbekistanThemes.temporary, '3 0 1 1 2 2 3 3'),
+            UzbekistanThemes.temporary, '301122 33'),
       ],
     ),
     GallerySection(
@@ -67,14 +67,14 @@ class UzbekistanSource extends GallerySource {
       note: 'The ambassador, diplomat and United Nations registers.',
       entries: <GalleryEntry>[
         _e('ambassador', 'Ambassador', UzbekistanPlates.ambassador,
-            UzbekistanThemes.diplomatic, '0 0 1 0 0 1',
+            UzbekistanThemes.diplomatic, '001 001',
             validator: const UzbekistanDiplomaticValidator()),
         _e('diplomat', 'Diplomat', UzbekistanPlates.diplomat,
-            UzbekistanThemes.diplomatic, 'D 0 0 2 0 1 5',
+            UzbekistanThemes.diplomatic, 'D 002 015',
             validator: const UzbekistanDiplomaticValidator()),
         _e('united_nations', 'United Nations',
             UzbekistanPlates.unitedNations, UzbekistanThemes.unitedNations,
-            '1 2 3 4',
+            '1234',
             validator: const UzbekistanUnitedNationsValidator()),
       ],
     ),
@@ -83,9 +83,9 @@ class UzbekistanSource extends GallerySource {
       note: 'Shorter faces, the number stacked on two rows.',
       entries: <GalleryEntry>[
         _e('trailer', 'Trailer', UzbekistanPlates.trailer,
-            UzbekistanThemes.trailer, '0 1 2 3 A B 4 5'),
+            UzbekistanThemes.trailer, '0123 AB 45'),
         _e('motorcycle', 'Motorcycle', UzbekistanPlates.motorcycle,
-            UzbekistanThemes.motorcycle, '0 1 2 C D 3 4'),
+            UzbekistanThemes.motorcycle, '012 CD 34'),
       ],
     ),
   ];

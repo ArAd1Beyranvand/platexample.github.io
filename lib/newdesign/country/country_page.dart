@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:ui' show PathMetric;
+
 import 'package:flutter/material.dart';
 import 'package:plate_core/plate_core.dart';
 
@@ -38,6 +41,43 @@ class _CountryPageState extends State<CountryPage> {
   /// Null until the user picks one, so the first visible row leads.
   CatalogueItem? _selected;
 
+  final ScrollController _scroll = ScrollController();
+
+  /// Bumped once a picked row has scrolled the playground button into view,
+  /// which replays its beckon.
+  int _beckon = 0;
+
+  /// The latest pick still scrolling; the detail's plate holds the old type
+  /// until it lands, so it staggers over in view.
+  int _picks = 0;
+  bool _scrolling = false;
+
+  Future<void> _pick(CatalogueItem item) async {
+    final int pick = ++_picks;
+    setState(() {
+      _selected = item;
+      _scrolling = true;
+    });
+    await WidgetsBinding.instance.endOfFrame;
+    if (!mounted || pick != _picks) return;
+    if (!_scroll.hasClients) {
+      setState(() => _scrolling = false);
+      return;
+    }
+    final Duration d = PdMotion.of(context, const Duration(milliseconds: 450));
+    final double end = _scroll.position.maxScrollExtent;
+    if (d == Duration.zero) {
+      _scroll.jumpTo(end);
+    } else if (_scroll.offset < end) {
+      await _scroll.animateTo(end, duration: d, curve: Curves.easeInOutCubic);
+    }
+    if (!mounted || pick != _picks) return;
+    setState(() {
+      _scrolling = false;
+      _beckon++;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -57,6 +97,7 @@ class _CountryPageState extends State<CountryPage> {
   @override
   void dispose() {
     _q.dispose();
+    _scroll.dispose();
     super.dispose();
   }
 
@@ -98,6 +139,7 @@ class _CountryPageState extends State<CountryPage> {
     );
 
     return ListView(
+      controller: _scroll,
       padding: EdgeInsets.only(
         top: 16,
         bottom: 64,
@@ -185,7 +227,7 @@ class _CountryPageState extends State<CountryPage> {
                           _TypeRow(
                             item: item,
                             selected: identical(item, selected),
-                            onTap: () => setState(() => _selected = item),
+                            onTap: () => _pick(item),
                           ),
                           const SizedBox(height: 8),
                         ],
@@ -194,6 +236,8 @@ class _CountryPageState extends State<CountryPage> {
                     if (selected != null)
                       _TypeDetail(
                         item: selected,
+                        beckon: _beckon,
+                        hold: _scrolling,
                         onPlay: () => nav.go(PdLocation.playground(selected)),
                       ),
                   ],
@@ -312,6 +356,7 @@ class _TypeRow extends StatelessWidget {
               values: item.entry.sampleValues,
               theme: item.entry.theme,
               country: item.entry.country,
+              autoType: true,
             ),
           ),
           const SizedBox(width: 16),
@@ -354,9 +399,18 @@ class _TypeRow extends StatelessWidget {
 /// The selected type at full width, with the facts the playground would
 /// otherwise be the only place to read.
 class _TypeDetail extends StatelessWidget {
-  const _TypeDetail({required this.item, required this.onPlay});
+  const _TypeDetail({
+    required this.item,
+    required this.beckon,
+    required this.hold,
+    required this.onPlay,
+  });
 
   final CatalogueItem item;
+  final int beckon;
+
+  /// Keeps the plate on the previous type while the page scrolls.
+  final bool hold;
   final VoidCallback onPlay;
 
   @override
@@ -389,12 +443,7 @@ class _TypeDetail extends StatelessWidget {
           const SizedBox(height: 4),
           Text(entry.label, style: h3(t).copyWith(fontSize: 20, height: 1.3)),
           const SizedBox(height: 16),
-          StaticPlate(
-            spec: spec,
-            values: entry.sampleValues,
-            theme: entry.theme,
-            country: entry.country,
-          ),
+          _StaggeredPlate(entry: entry, hold: hold),
           if (entry.note != null) ...<Widget>[
             const SizedBox(height: 16),
             Text(entry.note!, style: body(t, size: 15)),
@@ -428,14 +477,214 @@ class _TypeDetail extends StatelessWidget {
           const SizedBox(height: 8),
           Align(
             alignment: Alignment.centerLeft,
-            child: PdButton(
-              label: 'Try in playground →',
-              onTap: onPlay,
-              kind: PdButtonKind.outline,
+            child: _Beckon(
+              trigger: beckon,
+              child: PdButton(
+                label: 'Try in playground →',
+                onTap: onPlay,
+                kind: PdButtonKind.outline,
+              ),
             ),
           ),
         ],
       ),
     );
   }
+}
+
+/// The detail's plate: a new [entry] staggers the old plate out part by part,
+/// then staggers its own in — even when both share a spec. Waits while
+/// [hold] is set.
+class _StaggeredPlate extends StatefulWidget {
+  const _StaggeredPlate({required this.entry, required this.hold});
+
+  final GalleryEntry entry;
+  final bool hold;
+
+  @override
+  State<_StaggeredPlate> createState() => _StaggeredPlateState();
+}
+
+class _StaggeredPlateState extends State<_StaggeredPlate> {
+  final PlateAnimationController _anim = PlateAnimationController();
+  late GalleryEntry _shown = widget.entry;
+
+  /// The entry the running (or finished) stagger is heading to.
+  late GalleryEntry _target = widget.entry;
+  Timer? _swap;
+
+  static const Duration _step = Duration(milliseconds: 40);
+
+  @override
+  void didUpdateWidget(_StaggeredPlate old) {
+    super.didUpdateWidget(old);
+    if (widget.hold || identical(_target, widget.entry)) return;
+    final GalleryEntry to = _target = widget.entry;
+    _swap?.cancel();
+    if (MediaQuery.disableAnimationsOf(context)) {
+      _anim.settleAll();
+      setState(() => _shown = to);
+      return;
+    }
+    final Map<PlatePartId, Duration> out = PlateStagger.sequence(
+      _shown.spec,
+      step: _step,
+      reverse: true,
+    );
+    _anim.goOutAll(delays: out);
+    _swap = Timer(plateCueLength(_anim.style, out.keys, out), () {
+      if (!mounted) return;
+      setState(() => _shown = to);
+      _anim.comeInAll(delays: PlateStagger.sequence(to.spec, step: _step));
+    });
+  }
+
+  @override
+  void dispose() {
+    _swap?.cancel();
+    _anim.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => StaticPlate(
+    spec: _shown.spec,
+    values: _shown.sampleValues,
+    theme: _shown.theme,
+    country: _shown.country,
+    animation: _anim,
+  );
+}
+
+/// Each new [trigger] bounces [child] and runs an accent ring around it: the
+/// ring grows from one point all the way round, then is erased from that same
+/// point in the same direction — the way a plate's border staggers in and out.
+class _Beckon extends StatefulWidget {
+  const _Beckon({required this.trigger, required this.child});
+
+  final int trigger;
+  final Widget child;
+
+  @override
+  State<_Beckon> createState() => _BeckonState();
+}
+
+class _BeckonState extends State<_Beckon> with SingleTickerProviderStateMixin {
+  late final AnimationController _c = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 1400),
+  );
+
+  static final Animatable<double> _bounce =
+      TweenSequence<double>(<TweenSequenceItem<double>>[
+        TweenSequenceItem<double>(
+          tween: Tween<double>(
+            begin: 1,
+            end: 1.08,
+          ).chain(CurveTween(curve: Curves.easeOut)),
+          weight: 1,
+        ),
+        TweenSequenceItem<double>(
+          tween: Tween<double>(
+            begin: 1.08,
+            end: 0.97,
+          ).chain(CurveTween(curve: Curves.easeInOut)),
+          weight: 1,
+        ),
+        TweenSequenceItem<double>(
+          tween: Tween<double>(
+            begin: 0.97,
+            end: 1,
+          ).chain(CurveTween(curve: Curves.easeOut)),
+          weight: 1,
+        ),
+        TweenSequenceItem<double>(tween: ConstantTween<double>(1), weight: 5),
+      ]);
+
+  @override
+  void didUpdateWidget(_Beckon old) {
+    super.didUpdateWidget(old);
+    if (old.trigger == widget.trigger) return;
+    if (MediaQuery.disableAnimationsOf(context)) return;
+    _c.forward(from: 0);
+  }
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final Color color = context.tokens.accent;
+    return AnimatedBuilder(
+      animation: _c,
+      child: widget.child,
+      builder: (BuildContext context, Widget? child) => Transform.scale(
+        scale: _bounce.evaluate(_c),
+        child: CustomPaint(
+          foregroundPainter: _BeckonRingPainter(progress: _c, color: color),
+          child: child,
+        ),
+      ),
+    );
+  }
+}
+
+class _BeckonRingPainter extends CustomPainter {
+  _BeckonRingPainter({required this.progress, required this.color})
+    : super(repaint: progress);
+
+  final Animation<double> progress;
+  final Color color;
+
+  static const double _gap = 3;
+  static const double _width = 2;
+
+  /// Where the ring starts, as a fraction of its length clockwise from the
+  /// top edge's left end.
+  static const double _startPoint = 0.6;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final double p = progress.value;
+    if (p <= 0 || p >= 1) return;
+    final double head = Curves.easeInOutCubic.transform(
+      (p / 0.55).clamp(0.0, 1.0),
+    );
+    final double tail = Curves.easeInOutCubic.transform(
+      ((p - 0.45) / 0.55).clamp(0.0, 1.0),
+    );
+    if (head <= tail) return;
+
+    final RRect ring = RRect.fromRectAndRadius(
+      (Offset.zero & size).inflate(_gap),
+      const Radius.circular(PdRadius.card + _gap),
+    );
+    final PathMetric metric = (Path()..addRRect(ring)).computeMetrics().first;
+    final double length = metric.length;
+    final double from = (_startPoint + tail) * length % length;
+    final double span = (head - tail) * length;
+    final Path segment = Path();
+    if (from + span <= length) {
+      segment.addPath(metric.extractPath(from, from + span), Offset.zero);
+    } else {
+      segment
+        ..addPath(metric.extractPath(from, length), Offset.zero)
+        ..addPath(metric.extractPath(0, from + span - length), Offset.zero);
+    }
+    canvas.drawPath(
+      segment,
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = _width
+        ..strokeCap = StrokeCap.round
+        ..color = color,
+    );
+  }
+
+  @override
+  bool shouldRepaint(_BeckonRingPainter old) =>
+      old.progress != progress || old.color != color;
 }

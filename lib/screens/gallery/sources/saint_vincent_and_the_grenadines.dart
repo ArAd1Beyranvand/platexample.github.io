@@ -32,7 +32,7 @@ class SaintVincentAndTheGrenadinesSource extends GallerySource {
           country: SaintVincentAndTheGrenadinesCountry
               .saint_vincent_and_the_grenadines,
           validator: const SaintVincentAndTheGrenadinesValidator(),
-          sampleValues: 'P 1 2 3 4'.split(' '),
+          sampleValues: 'P 1234'.split(' '),
         ),
       ],
     ),

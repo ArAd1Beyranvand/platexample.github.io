@@ -22,6 +22,10 @@ class YemenSource extends GallerySource {
   @override
   String get countryName => 'Yemen';
 
+  /// Riyadh plates make Saudi Arabia the second country.
+  @override
+  List<String> get countryNames => const <String>['Yemen', 'Saudi Arabia'];
+
   @override
   String get packageName => 'yemen_plate';
 

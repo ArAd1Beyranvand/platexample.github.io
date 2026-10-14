@@ -34,7 +34,7 @@ class NorwaySource extends GallerySource {
     theme: theme,
     country: NorwayCountry.norway,
     validator: const NorwayValidator(),
-    sampleValues: values.split(' '),
+    sampleValues: values.split('|'),
   );
 
   @override
@@ -43,18 +43,33 @@ class NorwaySource extends GallerySource {
       title: 'Private — 520 × 110',
       note: 'Two letters then five digits.',
       entries: <GalleryEntry>[
-        _e('private', 'Private car', NorwayPlates.private,
-            NorwayThemes.private, 'B C 1 2 3 4 5'),
-        _e('electric', 'Electric vehicle', NorwayPlates.electric,
-            NorwayThemes.private, 'E K 5 4 3 2 1'),
+        _e(
+          'private',
+          'Private car',
+          NorwayPlates.private,
+          NorwayThemes.private,
+          'BC|12345',
+        ),
+        _e(
+          'electric',
+          'Electric vehicle',
+          NorwayPlates.electric,
+          NorwayThemes.private,
+          'EK|54321',
+        ),
       ],
     ),
     GallerySection(
       title: 'Diplomatic',
       note: 'White on blue; the two letters are the status code.',
       entries: <GalleryEntry>[
-        _e('diplomatic', 'Diplomatic corps', NorwayPlates.diplomatic,
-            NorwayThemes.diplomatic, 'C D 0 1 2 3 4'),
+        _e(
+          'diplomatic',
+          'Diplomatic corps',
+          NorwayPlates.diplomatic,
+          NorwayThemes.diplomatic,
+          'CD|01|234',
+        ),
       ],
     ),
   ];

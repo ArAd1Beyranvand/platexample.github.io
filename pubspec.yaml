@@ -118,6 +118,52 @@ dependencies:
     path: ../laos_plate
   vietnam_plate:
     path: ../vietnam_plate
+  united_kingdom_plate:
+    path: ../united_kingdom_plate
+  netherlands_plate:
+    path: ../netherlands_plate
+  sweden_plate:
+    path: ../sweden_plate
+  dominican_republic_plate:
+    path: ../dominican_republic_plate
+  dominica_plate:
+    path: ../dominica_plate
+  belize_plate:
+    path: ../belize_plate
+  barbados_plate:
+    path: ../barbados_plate
+  antigua_and_barbuda_plate:
+    path: ../antigua_and_barbuda_plate
+  bahamas_plate:
+    path: ../bahamas_plate
+  san_marino_plate:
+    path: ../san_marino_plate
+  canada_plate:
+    path: ../canada_plate
+  japan_plate:
+    path: ../japan_plate
+  finland_plate:
+    path: ../finland_plate
+  greece_plate:
+    path: ../greece_plate
+  andorra_plate:
+    path: ../andorra_plate
+  liechtenstein_plate:
+    path: ../liechtenstein_plate
+  guinea_plate:
+    path: ../guinea_plate
+  seychelles_plate:
+    path: ../seychelles_plate
+  mauritius_plate:
+    path: ../mauritius_plate
+  senegal_plate:
+    path: ../senegal_plate
+  lesotho_plate:
+    path: ../lesotho_plate
+  madagascar_plate:
+    path: ../madagascar_plate
+  zambia_plate:
+    path: ../zambia_plate
   gabon_plate:
     path: ../gabon_plate
   equatorial_guinea_plate:
@@ -169,8 +215,6 @@ dependencies:
     path: ../egypt_plate
   jordan_plate:
     path: ../jordan_plate
-  kazakhstan_plate:
-    path: ../kazakhstan_plate
   malta_plate:
     path: ../malta_plate
   mongolia_plate:
@@ -195,12 +239,8 @@ dependencies:
     path: ../thailand_plate
   timor_leste_plate:
     path: ../timor_leste_plate
-  turkmenistan_plate:
-    path: ../turkmenistan_plate
   uruguay_plate:
     path: ../uruguay_plate
-  uzbekistan_plate:
-    path: ../uzbekistan_plate
   vanuatu_plate:
     path: ../vanuatu_plate
   vatican_city_plate:
@@ -260,8 +300,6 @@ dependency_overrides:
     path: ../egypt_plate
   jordan_plate:
     path: ../jordan_plate
-  kazakhstan_plate:
-    path: ../kazakhstan_plate
   malta_plate:
     path: ../malta_plate
   mongolia_plate:
@@ -286,12 +324,8 @@ dependency_overrides:
     path: ../thailand_plate
   timor_leste_plate:
     path: ../timor_leste_plate
-  turkmenistan_plate:
-    path: ../turkmenistan_plate
   uruguay_plate:
     path: ../uruguay_plate
-  uzbekistan_plate:
-    path: ../uzbekistan_plate
   vanuatu_plate:
     path: ../vanuatu_plate
   vatican_city_plate:

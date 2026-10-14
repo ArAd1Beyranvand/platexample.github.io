@@ -34,7 +34,7 @@ class LibyaSource extends GallerySource {
     theme: theme,
     country: LibyaCountry.libya,
     validator: const LibyaPlateValidator(),
-    sampleValues: values.split(''),
+    sampleValues: values.split(' '),
   );
 
   @override
@@ -54,21 +54,21 @@ class LibyaSource extends GallerySource {
             'Private · black on white',
             LibyaPlates.private(twoRow: two),
             LibyaThemes.white,
-            '8616192',
+            '8 616192',
           ),
           _entry(
             'foreign.${two ? 2 : 1}',
             'Foreign-owned · country code in blue',
             LibyaPlates.foreign(twoRow: two),
             LibyaThemes.white,
-            '3933123',
+            '39 3 3123',
           ),
           _entry(
             'diplomatic.${two ? 2 : 1}',
             'Diplomatic · هيئة سياسية',
             LibyaPlates.diplomatic(twoRow: two),
             LibyaThemes.red,
-            '1113',
+            '11 13',
           ),
           for (final LibyaClass c in LibyaClass.values)
             _entry(
@@ -76,7 +76,7 @@ class LibyaSource extends GallerySource {
               '${c.name} · ${c.letter}',
               LibyaPlates.lettered(c, twoRow: two),
               LibyaThemes.yellow,
-              '8123456',
+              '8 123456',
             ),
         ],
       ),

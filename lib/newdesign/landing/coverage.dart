@@ -135,6 +135,9 @@ class _CoverageSectionState extends State<CoverageSection> {
       ],
     );
 
+    final bool landscape =
+        MediaQuery.orientationOf(context) == Orientation.landscape;
+
     final Widget list = Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
@@ -150,7 +153,10 @@ class _CoverageSectionState extends State<CoverageSection> {
         ),
         const SizedBox(height: 12),
         ConstrainedBox(
-          constraints: const BoxConstraints(maxHeight: 480),
+          constraints: BoxConstraints(
+            maxHeight: 480,
+            minHeight: landscape ? 480 : 0,
+          ),
           child: rows.isEmpty
               ? Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
@@ -162,7 +168,7 @@ class _CoverageSectionState extends State<CoverageSection> {
                 )
               : PdScrollHandoff(
                   child: ListView.builder(
-                    shrinkWrap: true,
+                    shrinkWrap: !landscape,
                     itemCount: rows.length,
                     itemBuilder: (BuildContext context, int i) =>
                         _CoverageRow(row: rows[i]),

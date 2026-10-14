@@ -45,10 +45,10 @@ class MaltaSource extends GallerySource {
       note: 'Three letters then three digits.',
       entries: <GalleryEntry>[
         _e('private', 'Private car', MaltaPlates.private,
-            MaltaThemes.private, 'A B C 1 2 3'),
+            MaltaThemes.private, 'ABC 123'),
         _e('personalised', 'Personalised · eight cells',
             MaltaPlates.personalised, MaltaThemes.personalised,
-            'M A L T A 0 0 1'),
+            'MALTA001'),
       ],
     ),
     GallerySection(
@@ -57,11 +57,11 @@ class MaltaSource extends GallerySource {
           'island letter.',
       entries: <GalleryEntry>[
         _e('taxi', 'Taxi · white on red', MaltaPlates.taxi,
-            MaltaThemes.taxi, '4 5 6 M'),
+            MaltaThemes.taxi, '456 M'),
         _e('bus', 'Bus · black on green', MaltaPlates.bus,
-            MaltaThemes.bus, '7 8 9'),
+            MaltaThemes.bus, '789'),
         _e('trailer', 'Trailer · black on yellow', MaltaPlates.trailer,
-            MaltaThemes.trailer, '1 2 3 4'),
+            MaltaThemes.trailer, '1234'),
       ],
     ),
     GallerySection(
@@ -69,9 +69,9 @@ class MaltaSource extends GallerySource {
       note: 'The same six cells as the private plate, on a shorter face.',
       entries: <GalleryEntry>[
         _e('motorcycle', 'Motorcycle', MaltaPlates.motorcycle,
-            MaltaThemes.motorcycle, 'D E F 4 5 6'),
+            MaltaThemes.motorcycle, 'DEF 456'),
         _e('vintage', 'Vintage', MaltaPlates.vintage,
-            MaltaThemes.vintage, 'G H J 7 8 9'),
+            MaltaThemes.vintage, 'GHJ 789'),
       ],
     ),
   ];

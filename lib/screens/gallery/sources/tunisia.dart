@@ -55,25 +55,26 @@ class TunisiaSource extends GallerySource {
         _entry(
           'standard',
           'Private · white on black',
-          TunisiaPlates.standard(),
+          TunisiaPlates.standard,
           TunisiaThemes.standard,
         ),
         _entry(
           'standard2',
           'Private · two-digit series',
-          TunisiaPlates.standard(seriesDigits: 2),
+          TunisiaPlates.standard,
           TunisiaThemes.standard,
+          values: <String?>['73', '3294'],
         ),
         _entry(
           'rental',
           'Rental · white on blue',
-          TunisiaPlates.standard(),
+          TunisiaPlates.standard,
           TunisiaThemes.rental,
         ),
         _entry(
           'square',
           'Square rear · 275 × 200',
-          TunisiaPlates.square(),
+          TunisiaPlates.square,
           TunisiaThemes.standard,
         ),
       ],
@@ -86,7 +87,7 @@ class TunisiaSource extends GallerySource {
         _entry(
           'government',
           'Government · ministry and number',
-          TunisiaPlates.government(),
+          TunisiaPlates.government,
           TunisiaThemes.government,
           validator: const TunisiaGovernmentValidator(),
         ),
@@ -115,7 +116,8 @@ class TunisiaSource extends GallerySource {
               chief: m == TunisiaMission.chief,
             ),
             values: <String?>[
-              '4', '6', '0', if (m == TunisiaMission.chief) '1' else '2', //
+              '46',
+              if (m == TunisiaMission.chief) '01' else '02',
             ],
           ),
       ],

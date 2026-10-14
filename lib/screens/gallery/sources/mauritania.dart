@@ -31,7 +31,7 @@ class MauritaniaSource extends GallerySource {
     theme: theme,
     country: MauritaniaCountry.mauritania,
     validator: const MauritaniaPlateValidator(),
-    sampleValues: value.split(''),
+    sampleValues: value.split(' '),
   );
 
   @override
@@ -48,14 +48,14 @@ class MauritaniaSource extends GallerySource {
           'Blue',
           MauritaniaPlates.blue,
           MauritaniaThemes.blue,
-          '1234AB00',
+          '1234 AB 00',
         ),
         _entry(
           'red',
           'Red',
           MauritaniaPlates.red,
           MauritaniaThemes.red,
-          '1006TT05',
+          '1006 TT 05',
         ),
       ],
     ),

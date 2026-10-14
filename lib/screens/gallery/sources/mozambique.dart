@@ -45,7 +45,7 @@ class MozambiqueSource extends GallerySource {
       note: 'Letters, digits, then the province code.',
       entries: <GalleryEntry>[
         _e('private', 'Private car', MozambiquePlates.private,
-            MozambiqueThemes.private, 'A A B 1 2 3 M P'),
+            MozambiqueThemes.private, 'AAB 123 MP'),
       ],
     ),
     GallerySection(
@@ -53,11 +53,11 @@ class MozambiqueSource extends GallerySource {
       note: 'Three letters and four digits, black on white.',
       entries: <GalleryEntry>[
         _e('legacy', 'Legacy · two rows', MozambiquePlates.legacy,
-            MozambiqueThemes.legacy, 'M B A 1 2 3 4',
+            MozambiqueThemes.legacy, 'MBA 12 34',
             validator: const MozambiqueLegacyValidator()),
         _e('legacy_one_row', 'Legacy · one row',
             MozambiquePlates.legacyOneRow, MozambiqueThemes.legacyOneRow,
-            'M C D 5 6 7 8',
+            'MCD 56 78',
             validator: const MozambiqueLegacyValidator()),
       ],
     ),

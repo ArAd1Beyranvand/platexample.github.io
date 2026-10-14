@@ -43,10 +43,20 @@ class SriLankaSource extends GallerySource {
       title: 'Front and rear',
       note: 'The rear plate is yellow and carries one fewer letter.',
       entries: <GalleryEntry>[
-        _e('front', 'Front · white', SriLankaPlates.front,
-            SriLankaThemes.front, 'W P C A B 1 2 3 4'),
-        _e('rear', 'Rear · yellow', SriLankaPlates.rear,
-            SriLankaThemes.rear, 'W P A B 5 6 7 8'),
+        _e(
+          'front',
+          'Front · white',
+          SriLankaPlates.front,
+          SriLankaThemes.front,
+          'WP CAB 1234',
+        ),
+        _e(
+          'rear',
+          'Rear · yellow',
+          SriLankaPlates.rear,
+          SriLankaThemes.rear,
+          'WP AB 5678',
+        ),
       ],
     ),
   ];

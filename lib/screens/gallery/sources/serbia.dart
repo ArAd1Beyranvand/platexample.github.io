@@ -45,7 +45,7 @@ class SerbiaSource extends GallerySource {
       note: 'Region letters, four digits, two letters.',
       entries: <GalleryEntry>[
         _e('private', 'Private car', SerbiaPlates.private,
-            SerbiaThemes.private, 'B G 1 2 3 4 A B'),
+            SerbiaThemes.private, 'BG 1234 AB'),
       ],
     ),
     GallerySection(
@@ -53,17 +53,17 @@ class SerbiaSource extends GallerySource {
       note: 'The closing letters, not the colour, name the usage.',
       entries: <GalleryEntry>[
         _e('taxi', 'Taxi · closes with TX', SerbiaPlates.taxi,
-            SerbiaThemes.taxi, 'N S 1 2 3 4 5 T X'),
+            SerbiaThemes.taxi, 'NS 12345 T X'),
         _e('oldtimer', 'Oldtimer · closes with OT', SerbiaPlates.oldtimer,
-            SerbiaThemes.oldtimer, 'B G O T 1 2 3'),
+            SerbiaThemes.oldtimer, 'BG O T 123'),
         _e('trailer', 'Trailer', SerbiaPlates.trailer,
-            SerbiaThemes.trailer, 'A B 1 2 3 B G'),
+            SerbiaThemes.trailer, 'AB 123 BG'),
         _e('agricultural', 'Agricultural', SerbiaPlates.agricultural,
-            SerbiaThemes.agricultural, 'K G 1 2 A B C'),
+            SerbiaThemes.agricultural, 'KG 12 ABC'),
         _e('moped', 'Moped', SerbiaPlates.moped,
-            SerbiaThemes.moped, 'B G 1 2 3 4 5'),
+            SerbiaThemes.moped, 'BG 12 345'),
         _e('motorcycle', 'Motorcycle', SerbiaPlates.motorcycle,
-            SerbiaThemes.motorcycle, 'N S 5 4 3 2 1'),
+            SerbiaThemes.motorcycle, 'NS 54 321'),
       ],
     ),
     GallerySection(
@@ -71,11 +71,11 @@ class SerbiaSource extends GallerySource {
       note: 'The police, military and diplomatic registers.',
       entries: <GalleryEntry>[
         _e('police', 'Police · leads with П', SerbiaPlates.police,
-            SerbiaThemes.police, 'П 1 2 3 4 5 6'),
+            SerbiaThemes.police, 'П 123 456'),
         _e('military', 'Military', SerbiaPlates.military,
-            SerbiaThemes.military, 'A 1 2 3 4'),
+            SerbiaThemes.military, 'A 1234'),
         _e('diplomatic', 'Diplomatic corps', SerbiaPlates.diplomatic,
-            SerbiaThemes.diplomatic, 'B G 1 2 A 3 4 5 6 7'),
+            SerbiaThemes.diplomatic, 'B G 12 A 345 6 7'),
       ],
     ),
   ];

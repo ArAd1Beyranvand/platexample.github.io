@@ -44,9 +44,9 @@ class MongoliaSource extends GallerySource {
       note: 'One line, and the same register on two.',
       entries: <GalleryEntry>[
         _e('private', 'Private car', MongoliaPlates.private,
-            MongoliaThemes.private, '1 2 3 4 А Р А'),
+            MongoliaThemes.private, '1234 АР А'),
         _e('two_row', 'Two-row plate', MongoliaPlates.twoRow,
-            MongoliaThemes.twoRow, '5 6 7 8 Б Н Б'),
+            MongoliaThemes.twoRow, '5678 БН Б'),
       ],
     ),
   ];

@@ -1,8 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../design/theme_mode.dart';
 import '../design/tokens.dart';
 import 'router.dart';
+import 'startup_splash.dart';
 
 class PdApp extends StatefulWidget {
   const PdApp({super.key, this.initialRoute});
@@ -13,6 +15,12 @@ class PdApp extends StatefulWidget {
   @override
   State<PdApp> createState() => _PdAppState();
 }
+
+/// Web shows the HTML loading screen from index.html instead.
+final bool _mobile =
+    !kIsWeb &&
+    (defaultTargetPlatform == TargetPlatform.android ||
+        defaultTargetPlatform == TargetPlatform.iOS);
 
 class _PdAppState extends State<PdApp> {
   final PdRouterDelegate _router = PdRouterDelegate();
@@ -50,6 +58,10 @@ class _PdAppState extends State<PdApp> {
           routerDelegate: _router,
           routeInformationProvider: _routeProvider,
           routeInformationParser: const PdRouteParser(),
+          builder: _mobile
+              ? (BuildContext context, Widget? child) =>
+                    PdStartupSplash(child: child!)
+              : null,
         ),
       ),
     );

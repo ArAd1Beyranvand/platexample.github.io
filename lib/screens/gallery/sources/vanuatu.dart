@@ -17,8 +17,7 @@ class VanuatuSource extends GallerySource {
   @override
   String get note =>
       'Digits between two palm leaves with the country caption beneath. The '
-      'number runs from three digits to five, so the spec is built for the '
-      'length rather than padded to one. The diplomatic plate carries four '
+      'number runs from one digit to five in one field. The diplomatic plate carries four '
       'letters and a digit. Not drawn: the island code and the motorcycle '
       'plate.';
 
@@ -43,16 +42,12 @@ class VanuatuSource extends GallerySource {
   List<GallerySection> get sections => _sections ??= <GallerySection>[
     GallerySection(
       title: 'Standard',
-      note: 'One entry per registered number length.',
+      note: 'One to five digits in a single field.',
       entries: <GalleryEntry>[
-        for (final int digits in VanuatuPlates.digitLengths)
-          _e(
-            'standard.$digits',
-            'Standard · $digits digits',
-            VanuatuPlates.standard(digits: digits),
-            VanuatuThemes.standard,
-            List<String>.generate(digits, (int i) => '${i + 1}').join(' '),
-          ),
+        _e('standard', 'Standard', VanuatuPlates.standard,
+            VanuatuThemes.standard, '7906'),
+        _e('standard.short', 'Standard · short number',
+            VanuatuPlates.standard, VanuatuThemes.standard, '42'),
       ],
     ),
     GallerySection(
@@ -60,7 +55,7 @@ class VanuatuSource extends GallerySource {
       note: 'Four letters and a digit.',
       entries: <GalleryEntry>[
         _e('diplomatic', 'Diplomatic corps', VanuatuPlates.diplomatic,
-            VanuatuThemes.diplomatic, 'C O R P 1',
+            VanuatuThemes.diplomatic, 'CORP 1',
             validator: const VanuatuDiplomaticValidator()),
       ],
     ),

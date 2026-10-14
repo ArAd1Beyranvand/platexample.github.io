@@ -19,7 +19,8 @@ class VenezuelaSource extends GallerySource {
       'fall gives the category, and the last letter prints its state.';
 
   static List<String?> _values(String value) => <String?>[
-    for (final c in value.split('')) c,
+    value.substring(0, 6),
+    value.substring(6),
   ];
 
   /// Cached: the catalogue pairs highlights back to sections by identity.

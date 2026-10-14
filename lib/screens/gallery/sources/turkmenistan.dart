@@ -1,5 +1,5 @@
 import 'package:plate_core/plate_core.dart';
-import 'package:turkmenistan_plate/turkmenistan_plate.dart';
+import 'package:iranshahr_plate/iranshahr_plate.dart';
 
 import '../catalogue.dart';
 
@@ -46,13 +46,13 @@ class TurkmenistanSource extends GallerySource {
       note: 'The classic plate carries one region letter, the current two.',
       entries: <GalleryEntry>[
         _e('classic', 'Classic', TurkmenistanPlates.classic,
-            TurkmenistanThemes.classic, 'A 1 2 3 4 A G',
+            TurkmenistanThemes.classic, 'A 12 34 AG',
             TurkmenistanValidator.classic),
         _e('private', 'Private car', TurkmenistanPlates.private,
-            TurkmenistanThemes.private, 'A T 5 6 7 8 A G',
+            TurkmenistanThemes.private, 'AT 5678 AG',
             const TurkmenistanValidator()),
         _e('trailer', 'Trailer', TurkmenistanPlates.trailer,
-            TurkmenistanThemes.private, 'A T 1 1 2 2 B N',
+            TurkmenistanThemes.private, 'AT 1122 BN',
             TurkmenistanValidator.trailer),
       ],
     ),
@@ -61,13 +61,13 @@ class TurkmenistanSource extends GallerySource {
       note: 'The foreign plate leads with the status digit.',
       entries: <GalleryEntry>[
         _e('foreign', 'Foreign resident', TurkmenistanPlates.foreign,
-            TurkmenistanThemes.foreign, '1 H 2 3 4 5 6',
+            TurkmenistanThemes.foreign, '1 H 23456',
             TurkmenistanValidator.foreign),
         _e('foreign_trailer', 'Foreign trailer',
             TurkmenistanPlates.foreignTrailer, TurkmenistanThemes.foreign,
-            '2 H T 8 9 0 1', TurkmenistanValidator.foreignTrailer),
+            '2 HT 8901', TurkmenistanValidator.foreignTrailer),
         _e('export', 'Export', TurkmenistanPlates.export,
-            TurkmenistanThemes.foreign, 'A B C 1 2 3 4',
+            TurkmenistanThemes.foreign, 'ABC 1234',
             TurkmenistanValidator.export),
       ],
     ),
@@ -76,16 +76,16 @@ class TurkmenistanSource extends GallerySource {
       note: 'Diplomatic, government, military and ceremonial registers.',
       entries: <GalleryEntry>[
         _e('diplomatic', 'Diplomatic corps', TurkmenistanPlates.diplomatic,
-            TurkmenistanThemes.diplomatic, '1 2 C D 3 4 5',
+            TurkmenistanThemes.diplomatic, '12 CD 345',
             TurkmenistanValidator.diplomatic),
         _e('government', 'Government', TurkmenistanPlates.government,
-            TurkmenistanThemes.government, '1 2 3 4 A G A',
+            TurkmenistanThemes.government, '1234 AGA',
             TurkmenistanValidator.government),
         _e('military', 'Military', TurkmenistanPlates.military,
-            TurkmenistanThemes.government, '5 6 7 8 A G',
+            TurkmenistanThemes.government, '5678 AG',
             TurkmenistanValidator.military),
         _e('ceremony', 'Ceremonial', TurkmenistanPlates.ceremony,
-            TurkmenistanThemes.government, 'T U R K M E 1',
+            TurkmenistanThemes.government, 'TURKME 1',
             TurkmenistanValidator.ceremony),
       ],
     ),

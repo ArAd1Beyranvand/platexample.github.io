@@ -1,4 +1,4 @@
-import 'package:kazakhstan_plate/kazakhstan_plate.dart';
+import 'package:iranshahr_plate/iranshahr_plate.dart';
 import 'package:plate_core/plate_core.dart';
 
 import '../catalogue.dart';
@@ -49,7 +49,7 @@ class KazakhstanSource extends GallerySource {
           'Private car',
           KazakhstanPlates.private,
           KazakhstanThemes.private,
-          '0 1 7 A B C 0 2',
+          '017 ABC 02',
         ),
       ],
     ),
@@ -64,7 +64,7 @@ class KazakhstanSource extends GallerySource {
           'Commercial and state',
           KazakhstanPlates.nonPrivate,
           KazakhstanThemes.nonPrivate,
-          '0 5 0 A B 0 2',
+          '050 AB 02',
           validator: const KazakhstanValidator(letters: 2),
         ),
         _e(
@@ -72,7 +72,7 @@ class KazakhstanSource extends GallerySource {
           'Diplomatic corps',
           KazakhstanPlates.diplomatic,
           KazakhstanThemes.diplomatic,
-          'D 0 0 1 0 2 3',
+          'D 001 023',
           validator: const KazakhstanDiplomaticValidator(),
         ),
       ],

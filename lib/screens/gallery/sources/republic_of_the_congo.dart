@@ -43,9 +43,9 @@ class RepublicOfTheCongoSource extends GallerySource {
       note: 'The area number closes the register, on one digit or two.',
       entries: <GalleryEntry>[
         _e('private', 'Private car · one-digit area',
-            RepublicOfTheCongoPlates.private, '1 2 3 A B 4'),
+            RepublicOfTheCongoPlates.private, '123 AB 4'),
         _e('private2', 'Private car · two-digit area',
-            RepublicOfTheCongoPlates.privateTwoDigitArea, '5 6 7 C D 1 2'),
+            RepublicOfTheCongoPlates.private, '567 CD 12'),
       ],
     ),
   ];

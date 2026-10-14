@@ -42,19 +42,33 @@ class TanzaniaSource extends GallerySource {
       title: 'Private',
       note: 'The same register on one row and on two.',
       entries: <GalleryEntry>[
-        _e('private', 'Private car · one row', TanzaniaPlates.private,
-            TanzaniaThemes.private, '1 2 3 A B C'),
-        _e('private_two_row', 'Private car · two rows',
-            TanzaniaPlates.privateTwoRow, TanzaniaThemes.privateTwoRow,
-            '4 5 6 D E F'),
+        _e(
+          'private',
+          'Private car · one row',
+          TanzaniaPlates.private,
+          TanzaniaThemes.private,
+          '123 ABC',
+        ),
+        _e(
+          'private_two_row',
+          'Private car · two rows',
+          TanzaniaPlates.privateTwoRow,
+          TanzaniaThemes.privateTwoRow,
+          '456 DEF',
+        ),
       ],
     ),
     GallerySection(
       title: 'Organisation',
       note: 'Six digits, no letter block.',
       entries: <GalleryEntry>[
-        _e('organisation', 'Organisation', TanzaniaPlates.organisation,
-            TanzaniaThemes.organisation, '2 5 0 1 2 3'),
+        _e(
+          'organisation',
+          'Organisation',
+          TanzaniaPlates.organisation,
+          TanzaniaThemes.organisation,
+          '250 123',
+        ),
       ],
     ),
   ];

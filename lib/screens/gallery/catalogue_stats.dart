@@ -44,7 +44,7 @@ class CatalogueStats {
   final int packages;
 
   /// Distinct [GallerySource.countryNames], flattened — not one per source:
-  /// `iranshahr` alone ships eight.
+  /// `iranshahr` alone ships eleven.
   final int countries;
 
   /// Distinct plate spec ids (`entry.spec.id`) across every entry in every

@@ -23,8 +23,8 @@ class MyanmarSource extends GallerySource {
       'rickshaw plates are Burmese. Not drawn: the hand-painted older plates '
       'and the Burmese township glyph variants.';
 
-  /// The model field is a run of free-text cells, so a sample pads out to the
-  /// spec's own length rather than hard-coding how many blanks that is.
+  /// The model field is a run of single-symbol cells, so a sample pads out to
+  /// the spec's own length rather than hard-coding how many blanks that is.
   static List<String> _values(List<String> head, String model, PlateSpec spec) {
     final List<String> cells = <String>[...head, ...model.split('')];
     return <String>[
@@ -69,7 +69,7 @@ class MyanmarSource extends GallerySource {
           'Private car',
           MyanmarPlates.private,
           MyanmarThemes.private,
-          <String>['Y', 'G', 'N', '3', '6', 'A', 'B', '3', '4', '5', '6'],
+          <String>['YGN', '36', 'A', 'B', '3456'],
           'TOYOTA',
         ),
         _threeRow(
@@ -77,7 +77,7 @@ class MyanmarSource extends GallerySource {
           'Hire car',
           MyanmarPlates.hire,
           MyanmarThemes.hire,
-          <String>['M', 'D', 'Y', '1', '2', 'C', 'D', '7', '8', '9', '0'],
+          <String>['MDY', '12', 'C', 'D', '7890'],
           'NISSAN',
         ),
         _threeRow(
@@ -85,9 +85,7 @@ class MyanmarSource extends GallerySource {
           'Religious',
           MyanmarPlates.religious,
           MyanmarThemes.religious,
-          <String>[
-            'S', 'G', 'G', '0', '9', 'E', 'F', '5', '1', '2', '3', '4',
-          ],
+          <String>['SGG', '09', 'E', 'F', '5123'],
           'HINO',
         ),
       ],
@@ -101,28 +99,28 @@ class MyanmarSource extends GallerySource {
           'Embossed private · black',
           MyanmarPlates.embossedPrivate,
           MyanmarThemes.embossedPrivate,
-          'Y G N 1 A 2 3 4 5'.split(' '),
+          <String>['YGN', '1', 'A', '2345'],
         ),
         _e(
           'embossed_commercial',
           'Embossed commercial · red',
           MyanmarPlates.embossedCommercial,
           MyanmarThemes.embossedCommercial,
-          'M D Y 2 B 6 7 8 9'.split(' '),
+          <String>['MDY', '2', 'B', '6789'],
         ),
         _e(
           'embossed_touring',
           'Embossed touring · blue',
           MyanmarPlates.embossedTouring,
           MyanmarThemes.embossedTouring,
-          'S G G 3 C 1 2 3 4'.split(' '),
+          <String>['SGG', '3', 'C', '1234'],
         ),
         _e(
           'organisation',
           'Organisation',
           MyanmarPlates.organisation,
           MyanmarThemes.organisation,
-          'N P W 4 D 5 6 7 8'.split(' '),
+          <String>['NPW', '4', 'D', '5678'],
         ),
       ],
     ),
@@ -137,7 +135,7 @@ class MyanmarSource extends GallerySource {
           theme: MyanmarThemes.motorcycle,
           country: MyanmarCountry.myanmar,
           validator: const MyanmarBurmeseValidator(),
-          sampleValues: '1 2 3 4 5 6 7 8'.split(' '),
+          sampleValues: <String>['1', '2', '3', '45678'],
         ),
         GalleryEntry(
           id: 'mm.rickshaw',
@@ -146,7 +144,7 @@ class MyanmarSource extends GallerySource {
           theme: MyanmarThemes.rickshaw,
           country: MyanmarCountry.myanmar,
           validator: const MyanmarBurmeseValidator(),
-          sampleValues: '8 7 6 5 4 3 2 1'.split(' '),
+          sampleValues: <String>['8', '7', '6', '54321'],
         ),
       ],
     ),

@@ -39,6 +39,7 @@ const Map<String, (String iso, String native)> countryMeta =
       'Nicaragua': ('NI', 'Nicaragua'),
       'Niger': ('NE', 'Niger'),
       'North Korea': ('KP', '조선'),
+      'South Korea': ('KR', '대한민국'),
       'Oman': ('OM', 'عُمان'),
       'Palestine': ('PS', 'فلسطين'),
       'Philippines': ('PH', 'Pilipinas'),

@@ -14,18 +14,8 @@ class IranshahirSource extends GallerySource {
   String get countryName => 'Iranshahr';
 
   @override
-  List<String> get countryNames => const <String>[
-    'Bahrain',
-    'Azerbaijan',
-    'Afghanistan',
-    'Armenia',
-    'Tajikistan',
-    'Kuwait',
-    'Qatar',
-    'Iraq',
-    'United Arab Emirates',
-    'Turkey',
-    'Oman',
+  List<String> get countryNames => <String>[
+    for (final GallerySource member in members) ...member.countryNames,
   ];
 
   @override
@@ -69,7 +59,7 @@ class IranshahirSource extends GallerySource {
           label: 'Civilian (EU size)',
           spec: BahrainPlates.eu,
           theme: BahrainThemes.civilian,
-          sampleValues: const <String?>['1', '2', '3', '4', '5', '6'],
+          sampleValues: const <String?>['123456'],
         ),
         GalleryEntry(
           id: 'bh.us',
@@ -77,14 +67,14 @@ class IranshahirSource extends GallerySource {
           spec: BahrainPlates.us,
           theme: BahrainThemes.civilian,
           note: 'Same six digits as the EU size, re-laid in two bands.',
-          sampleValues: const <String?>['4', '0', '7', '2', '1', '9'],
+          sampleValues: const <String?>['407219'],
         ),
         GalleryEntry(
           id: 'bh.bicycle',
           label: 'Bicycle',
           spec: BahrainPlates.bicycle,
           theme: BahrainThemes.civilian,
-          sampleValues: const <String?>['8', '1', '3', '5'],
+          sampleValues: const <String?>['8135'],
         ),
         GalleryEntry(
           id: 'bh.diplomatic',
@@ -92,14 +82,14 @@ class IranshahirSource extends GallerySource {
           spec: BahrainPlates.diplomatic,
           theme: BahrainThemes.diplomatic,
           note: 'Green head band, wording reversed out white.',
-          sampleValues: const <String?>['0', '4', '2'],
+          sampleValues: const <String?>['042'],
         ),
         GalleryEntry(
           id: 'bh.police',
           label: 'Police',
           spec: BahrainPlates.police,
           theme: BahrainThemes.police,
-          sampleValues: const <String?>['2', '6', '0', '9'],
+          sampleValues: const <String?>['2609'],
         ),
       ],
     ),
@@ -117,7 +107,7 @@ class IranshahirSource extends GallerySource {
           label: 'Car',
           spec: AzerbaijanPlates.car,
           theme: AzerbaijanThemes.civilian,
-          sampleValues: const <String?>['8', '8', 'B', 'E', '1', '1', '4'],
+          sampleValues: const <String?>['88', 'BE', '114'],
         ),
         GalleryEntry(
           id: 'az.car.transport',
@@ -125,7 +115,7 @@ class IranshahirSource extends GallerySource {
           spec: AzerbaijanPlates.car,
           theme: AzerbaijanThemes.transport,
           note: 'The car spec, printed blue. Privately owned public transport.',
-          sampleValues: const <String?>['1', '0', 'T', 'H', '3', '0', '8'],
+          sampleValues: const <String?>['10', 'TH', '308'],
         ),
         GalleryEntry(
           id: 'az.bicycle',
@@ -133,7 +123,7 @@ class IranshahirSource extends GallerySource {
           spec: AzerbaijanPlates.bicycle,
           theme: AzerbaijanThemes.civilian,
           note: 'The same groups as the car, in two rows and one letter short.',
-          sampleValues: const <String?>['0', '7', 'T', '0', '9', '6'],
+          sampleValues: const <String?>['07', 'T', '096'],
         ),
         GalleryEntry(
           id: 'az.diplomatic',
@@ -142,7 +132,7 @@ class IranshahirSource extends GallerySource {
           theme: AzerbaijanThemes.diplomatic,
           note:
               'Mission code, class letter, serial — told apart by gaps, not hyphens.',
-          sampleValues: const <String?>['0', '1', '3', 'D', '0', '0', '4'],
+          sampleValues: const <String?>['013', 'D', '004'],
         ),
         GalleryEntry(
           id: 'az.foreign',
@@ -150,7 +140,7 @@ class IranshahirSource extends GallerySource {
           spec: AzerbaijanPlates.foreign,
           theme: AzerbaijanThemes.foreign,
           note: 'The one coloured field that keeps the civilian black ink.',
-          sampleValues: const <String?>['H', '0', '2', '3', '1', '4', '9'],
+          sampleValues: const <String?>['H', '023', '149'],
         ),
       ],
     ),
@@ -170,29 +160,29 @@ class IranshahirSource extends GallerySource {
         GalleryEntry(
           id: 'af.car5.private',
           label: 'Private (five figures)',
-          spec: AfghanistanPlates.car5,
+          spec: AfghanistanPlates.car,
           theme: AfghanistanThemes.civilian,
           country: AfghanistanProvince.herat.country(),
           note: 'The ordinary plate: `ش` over `PRV`, and Herat\'s block.',
-          sampleValues: const <String?>['1', '2', '3', '4', '6', 'P'],
+          sampleValues: const <String?>['12346', 'P'],
         ),
         GalleryEntry(
           id: 'af.car4.private',
           label: 'Private (four figures)',
-          spec: AfghanistanPlates.car4,
+          spec: AfghanistanPlates.car,
           theme: AfghanistanThemes.civilian,
           country: AfghanistanProvince.zabul.country(),
           note:
-              'Same design, one figure shorter — the figures spread, they do not grow.',
-          sampleValues: const <String?>['1', '2', '3', '4', 'P'],
+              'Same design, one figure shorter — the figures sit centred in the same field.',
+          sampleValues: const <String?>['1234', 'P'],
         ),
         GalleryEntry(
           id: 'af.car3.private',
           label: 'Private (three figures)',
-          spec: AfghanistanPlates.car3,
+          spec: AfghanistanPlates.car,
           theme: AfghanistanThemes.civilian,
           country: AfghanistanProvince.takhar.country(),
-          sampleValues: const <String?>['1', '2', '3', 'P'],
+          sampleValues: const <String?>['123', 'P'],
         ),
         GalleryEntry(
           id: 'af.kabul6',
@@ -202,62 +192,62 @@ class IranshahirSource extends GallerySource {
           country: AfghanistanProvince.kabul.country(),
           note:
               'Kabul exhausted five figures. The sixth is printed once, in Persian only, between two hyphens.',
-          sampleValues: const <String?>['5', '1', '2', '3', '4', '6', 'P'],
+          sampleValues: const <String?>['5', '12346', 'P'],
         ),
         GalleryEntry(
           id: 'af.car5.taxi',
           label: 'Taxi',
-          spec: AfghanistanPlates.car5,
+          spec: AfghanistanPlates.car,
           theme: AfghanistanThemes.transport,
           country: AfghanistanProvince.kabul.country(),
           note: 'The private geometry, printed yellow, with `ت` over `T`.',
-          sampleValues: const <String?>['1', '2', '3', '4', '6', 'T'],
+          sampleValues: const <String?>['12346', 'T'],
         ),
         GalleryEntry(
           id: 'af.car5.bus',
           label: 'Bus',
-          spec: AfghanistanPlates.car5,
+          spec: AfghanistanPlates.car,
           theme: AfghanistanThemes.transport,
           country: AfghanistanProvince.kabul.country(),
           note:
               'The same yellow field as the taxi. One character tells them apart: `ب` over `B`.',
-          sampleValues: const <String?>['1', '2', '3', '4', '6', 'B'],
+          sampleValues: const <String?>['12346', 'B'],
         ),
         GalleryEntry(
           id: 'af.car5.lorry',
           label: 'Lorry',
-          spec: AfghanistanPlates.car5,
+          spec: AfghanistanPlates.car,
           theme: AfghanistanThemes.civilian,
           country: AfghanistanProvince.kabul.country(),
-          sampleValues: const <String?>['1', '2', '3', '4', '6', 'L'],
+          sampleValues: const <String?>['12346', 'L'],
         ),
         GalleryEntry(
           id: 'af.car5.duplicate',
           label: 'Private duplicate',
-          spec: AfghanistanPlates.car5,
+          spec: AfghanistanPlates.car,
           theme: AfghanistanThemes.civilian,
           country: AfghanistanProvince.herat.country(),
           note:
               'The one class the Persian register cannot distinguish: `ش` above on both, `DUPL` below.',
-          sampleValues: const <String?>['1', '2', '3', '4', '6', 'D'],
+          sampleValues: const <String?>['12346', 'D'],
         ),
         GalleryEntry(
           id: 'af.cycle3',
           label: 'Motorcycle',
-          spec: AfghanistanPlates.cycle3,
+          spec: AfghanistanPlates.cycle,
           theme: AfghanistanThemes.civilian,
           country: AfghanistanProvince.nimruz.country(),
           note:
               'The two-wheeler plate: a longer, shallower rectangle, not a shrunk car plate.',
-          sampleValues: const <String?>['1', '2', '3', 'M'],
+          sampleValues: const <String?>['123', 'M'],
         ),
         GalleryEntry(
           id: 'af.cycle4',
           label: 'Rickshaw',
-          spec: AfghanistanPlates.cycle4,
+          spec: AfghanistanPlates.cycle,
           theme: AfghanistanThemes.civilian,
           country: AfghanistanProvince.nangarhar.country(),
-          sampleValues: const <String?>['1', '2', '3', '4', 'R'],
+          sampleValues: const <String?>['1234', 'R'],
         ),
         GalleryEntry(
           id: 'af.diplomatic',
@@ -269,7 +259,7 @@ class IranshahirSource extends GallerySource {
           ),
           note:
               'The only hyphenated Afghan number, and the only `CD` — printed once, with no Persian counterpart.',
-          sampleValues: const <String?>['1', '2', '3', '4'],
+          sampleValues: const <String?>['12', '34'],
         ),
         GalleryEntry(
           id: 'af.governmental',
@@ -281,7 +271,7 @@ class IranshahirSource extends GallerySource {
           ),
           note:
               'A government vehicle\'s type is not printed: a dash stands in both registers.',
-          sampleValues: const <String?>['1', '2', '3', '4'],
+          sampleValues: const <String?>['1234'],
         ),
         GalleryEntry(
           id: 'af.un',
@@ -291,7 +281,7 @@ class IranshahirSource extends GallerySource {
           country: AfghanistanProvince.kabul.country(),
           note:
               'The plainest of the eleven: the province block and the number, and nothing at the head.',
-          sampleValues: const <String?>['1', '2', '3', '4'],
+          sampleValues: const <String?>['1234'],
         ),
         GalleryEntry(
           id: 'af.temporary',
@@ -301,7 +291,7 @@ class IranshahirSource extends GallerySource {
           country: AfghanistanProvince.herat.country(showCode: false),
           note:
               'Issued from 2023, valid three years. The one Afghan plate printed in two inks.',
-          sampleValues: const <String?>['1', '2', '3', '4', '6'],
+          sampleValues: const <String?>['12346'],
         ),
         GalleryEntry(
           id: 'af.international',
@@ -311,7 +301,7 @@ class IranshahirSource extends GallerySource {
           country: AfghanistanProvince.herat.country(),
           note:
               'Latin figures and a spelled-out category, no Persian half. Reconstructed from text — no photograph exists.',
-          sampleValues: const <String?>['1', '2', '3', '4', '6', 'B'],
+          sampleValues: const <String?>['12346', 'B'],
         ),
       ],
     ),
@@ -336,7 +326,7 @@ class IranshahirSource extends GallerySource {
           theme: ArmeniaThemes.civilian,
           note:
               'The 2014 design: region code, two letters, three digits, and the silver band beside the flag.',
-          sampleValues: const <String?>['0', '1', 'A', 'D', '2', '3', '4'],
+          sampleValues: const <String?>['01', 'AD', '234'],
         ),
         GalleryEntry(
           id: 'am.carTwoRow',
@@ -345,7 +335,7 @@ class IranshahirSource extends GallerySource {
           theme: ArmeniaThemes.civilian,
           note:
               'The same seven characters in the same three groups, on a deeper canvas.',
-          sampleValues: const <String?>['0', '1', 'A', 'D', '2', '3', '4'],
+          sampleValues: const <String?>['01', 'AD', '234'],
         ),
         GalleryEntry(
           id: 'am.motorcycle',
@@ -354,7 +344,7 @@ class IranshahirSource extends GallerySource {
           theme: ArmeniaThemes.civilian,
           note:
               'The two-row plate was found too cumbersome to carry; the gap between region and letters was closed.',
-          sampleValues: const <String?>['0', '1', 'A', 'D', '2', '3', '4'],
+          sampleValues: const <String?>['01', 'AD', '234'],
         ),
         GalleryEntry(
           id: 'am.public',
@@ -363,7 +353,7 @@ class IranshahirSource extends GallerySource {
           theme: ArmeniaThemes.civilian,
           note:
               'The number reversed: `NN 01` names the institution, and only fourteen pairs are issued at all.',
-          sampleValues: const <String?>['0', '0', '1', 'N', 'N', '0', '1'],
+          sampleValues: const <String?>['001', 'NN', '01'],
         ),
         GalleryEntry(
           id: 'am.trailer',
@@ -372,7 +362,7 @@ class IranshahirSource extends GallerySource {
           theme: ArmeniaThemes.civilian,
           note:
               'A pre-2014 design: no identifier band, and the letter count cut to one — most often `L`.',
-          sampleValues: const <String?>['2', '9', '0', 'L', '0', '1'],
+          sampleValues: const <String?>['290', 'L', '01'],
         ),
         GalleryEntry(
           id: 'am.bus',
@@ -381,7 +371,7 @@ class IranshahirSource extends GallerySource {
           theme: ArmeniaThemes.bus,
           note:
               'The Soviet public-transport format Armenia kept: `S` for a city bus, `L` for a long-range coach.',
-          sampleValues: const <String?>['1', '2', '3', '4', 'S'],
+          sampleValues: const <String?>['1234', 'S'],
         ),
         GalleryEntry(
           id: 'am.diplomatic',
@@ -390,7 +380,7 @@ class IranshahirSource extends GallerySource {
           theme: ArmeniaThemes.diplomatic,
           note:
               'Mission code, `D` for a diplomat or `T` for a technician, serial, and Armenia\'s own code at the tail.',
-          sampleValues: const <String?>['0', '4', 'D', '0', '5', '7'],
+          sampleValues: const <String?>['04', 'D', '057'],
         ),
         GalleryEntry(
           id: 'am.diplomaticArm',
@@ -399,7 +389,7 @@ class IranshahirSource extends GallerySource {
           theme: ArmeniaThemes.diplomatic,
           note:
               'The same design; newer plates print `ARM` where the older ones print `AM`.',
-          sampleValues: const <String?>['0', '4', 'T', '0', '5', '7'],
+          sampleValues: const <String?>['04', 'T', '057'],
         ),
         GalleryEntry(
           id: 'am.un',
@@ -408,7 +398,7 @@ class IranshahirSource extends GallerySource {
           theme: ArmeniaThemes.un,
           note:
               'Three digits between two printed words. Nothing on this plate is chosen but the serial.',
-          sampleValues: const <String?>['0', '8', '0'],
+          sampleValues: const <String?>['080'],
         ),
         GalleryEntry(
           id: 'am.military',
@@ -418,7 +408,7 @@ class IranshahirSource extends GallerySource {
           note:
               'The one Armenian plate with no Latin on it: `ՊՆ` for the ministry, '
               '`Մ` for a passenger vehicle, `Տ` for a transport one.',
-          sampleValues: const <String?>['1', '0', '0', '7', 'M'],
+          sampleValues: const <String?>['1007', 'M'],
         ),
       ],
     ),
@@ -441,7 +431,7 @@ class IranshahirSource extends GallerySource {
 GallerySection _qatarSection() => GallerySection(
   title: 'Qatar',
   note:
-      'Five designs, and the only country block in this package that is not a '
+      'Three designs, and the only country block in this package that is not a '
       'rectangle. A Qatari car plate opens with the hoist end of the flag '
       'itself — a maroon column cut down its inboard edge by the flag\'s '
       'nine-point serration, with `QATAR` reversed out of it one letter per '
@@ -449,8 +439,7 @@ GallerySection _qatarSection() => GallerySection(
       '`QatarFlagEdgeClipper`, and its geometry is the official flag\'s own: '
       'nine triangles whose tips reach inboard of a spine at 22/28 of the '
       'block\'s width. After the block the plate is plain — `قطر`, then the '
-      'serial, at three, four or five digits; the figures spread *and* widen as '
-      'they get fewer, so every length fills the same room. The other two '
+      'serial, one field of three to five digits. The other two '
       'designs drop the block entirely: the motorcycle plate is near-square and '
       'names the country twice, and the police plate is a blue field ruled into '
       'a serial row over two wording cells.',
@@ -462,25 +451,25 @@ GallerySection _qatarSection() => GallerySection(
       theme: QatarThemes.civilian,
       note:
           'The everyday registration, and the longest Qatar issues: the serrated maroon block, `قطر`, five digits.',
-      sampleValues: const <String?>['2', '5', '7', '7', '7'],
+      sampleValues: const <String?>['25777'],
     ),
     GalleryEntry(
       id: 'qa.civilian4',
       label: 'Civilian (four digits)',
-      spec: QatarPlates.civilian4,
+      spec: QatarPlates.civilian,
       theme: QatarThemes.civilian,
       note:
-          'Identical furniture. The serial fills the same room, so the figures spread and widen together.',
-      sampleValues: const <String?>['4', '0', '7', '1'],
+          'Identical furniture. The serial is one field, so a shorter run sits centred in the same room.',
+      sampleValues: const <String?>['4071'],
     ),
     GalleryEntry(
       id: 'qa.civilian3',
       label: 'Civilian (three digits)',
-      spec: QatarPlates.civilian3,
+      spec: QatarPlates.civilian,
       theme: QatarThemes.civilian,
       note:
           'The shortest ordinary registration — below this, a serial belongs to the royal family.',
-      sampleValues: const <String?>['4', '1', '1'],
+      sampleValues: const <String?>['411'],
     ),
     GalleryEntry(
       id: 'qa.motorcycle',
@@ -489,7 +478,7 @@ GallerySection _qatarSection() => GallerySection(
       theme: QatarThemes.civilian,
       note:
           'A different plate, not a shorter one: near-square, no hoist block, `قطر` over the serial over `QATAR`.',
-      sampleValues: const <String?>['2', '5', '7', '7', '7'],
+      sampleValues: const <String?>['25777'],
     ),
     GalleryEntry(
       id: 'qa.police',
@@ -498,7 +487,7 @@ GallerySection _qatarSection() => GallerySection(
       theme: QatarThemes.police,
       note:
           'No block and no serration: a blue field ruled into a serial row over `قطر` and `شرطة`.',
-      sampleValues: const <String?>['7', '4', '6', '4'],
+      sampleValues: const <String?>['7464'],
     ),
   ],
 );
@@ -529,7 +518,7 @@ GallerySection _tajikistanSection() => GallerySection(
       theme: TajikistanThemes.civilian,
       note:
           'The commonest plate: `NNNN LL NN` — serial, two letters, region — with the flag block at the hoist end.',
-      sampleValues: const <String?>['9', '9', '9', '9', 'M', 'K', '0', '2'],
+      sampleValues: const <String?>['9999', 'MK', '02'],
     ),
     GalleryEntry(
       id: 'tj.carTwoRow',
@@ -538,7 +527,7 @@ GallerySection _tajikistanSection() => GallerySection(
       theme: TajikistanThemes.civilian,
       note:
           'The same eight characters and groups, broken across two rows for a vehicle with no room for a 520 mm plate.',
-      sampleValues: const <String?>['9', '9', '9', '9', 'M', 'K', '0', '2'],
+      sampleValues: const <String?>['9999', 'MK', '02'],
     ),
     GalleryEntry(
       id: 'tj.motorcycle',
@@ -546,7 +535,7 @@ GallerySection _tajikistanSection() => GallerySection(
       spec: TajikistanPlates.motorcycle,
       theme: TajikistanThemes.civilian,
       note: 'A three-digit serial over one letter and the region.',
-      sampleValues: const <String?>['3', '0', '4', 'A', '0', '3'],
+      sampleValues: const <String?>['304', 'A', '03'],
     ),
     GalleryEntry(
       id: 'tj.trailer',
@@ -555,7 +544,7 @@ GallerySection _tajikistanSection() => GallerySection(
       theme: TajikistanThemes.civilian,
       note:
           'The one two-row plate that leads with its region: `NN LL` up top, the four-digit serial to itself below.',
-      sampleValues: const <String?>['0', '7', 'A', 'A', '0', '7', '7', '6'],
+      sampleValues: const <String?>['07', 'AA', '0776'],
     ),
     GalleryEntry(
       id: 'tj.publicTransport',
@@ -564,7 +553,7 @@ GallerySection _tajikistanSection() => GallerySection(
       theme: TajikistanThemes.transport,
       note:
           'Black on amber, with the fixed `TT` marker printed between serial and region — a label, not a value anyone enters.',
-      sampleValues: const <String?>['9', '0', '0', '6', '0', '5'],
+      sampleValues: const <String?>['9006', '05'],
     ),
     GalleryEntry(
       id: 'tj.police',
@@ -573,7 +562,7 @@ GallerySection _tajikistanSection() => GallerySection(
       theme: TajikistanThemes.police,
       note:
           'White on blue: the flag block over the blue field, `TJ` reversed out white, one letter between serial and region.',
-      sampleValues: const <String?>['0', '2', '4', '5', 'M', '0', '1'],
+      sampleValues: const <String?>['0245', 'M', '01'],
     ),
     GalleryEntry(
       id: 'tj.foreign',
@@ -582,7 +571,7 @@ GallerySection _tajikistanSection() => GallerySection(
       theme: TajikistanThemes.foreign,
       note:
           'Black on yellow, no flag: a foreign vehicle carries no region, so the hoist end is bare and the number is `NNN L NNN`.',
-      sampleValues: const <String?>['2', '0', '0', 'P', '0', '0', '5'],
+      sampleValues: const <String?>['200', 'P', '005'],
     ),
     GalleryEntry(
       id: 'tj.diplomatic',
@@ -591,7 +580,7 @@ GallerySection _tajikistanSection() => GallerySection(
       theme: TajikistanThemes.diplomatic,
       note:
           'White on red, no flag: a serial, a class code — `CD`, `CMD`, `D`, `T` or `S` chosen as one glyph group — and a trailing digit.',
-      sampleValues: const <String?>['0', '9', '1', 'CMD', '1'],
+      sampleValues: const <String?>['091', 'CMD', '1'],
     ),
     GalleryEntry(
       id: 'tj.governmental',
@@ -600,7 +589,7 @@ GallerySection _tajikistanSection() => GallerySection(
       theme: TajikistanThemes.governmental,
       note:
           'The old Russian-derived layout: serial, two letters, then the region boxed off by a divider with `RT` beneath it.',
-      sampleValues: const <String?>['0', '0', '1', 'C', 'O', '0', '4'],
+      sampleValues: const <String?>['001', 'CO', '04'],
     ),
   ],
 );
@@ -652,7 +641,7 @@ class BahrainSource extends GallerySource {
           label: 'Civilian (EU size)',
           spec: BahrainPlates.eu,
           theme: BahrainThemes.civilian,
-          sampleValues: const <String?>['1', '2', '3', '4', '5', '6'],
+          sampleValues: const <String?>['123456'],
         ),
         GalleryEntry(
           id: 'bh.us',
@@ -660,14 +649,14 @@ class BahrainSource extends GallerySource {
           spec: BahrainPlates.us,
           theme: BahrainThemes.civilian,
           note: 'Same six digits as the EU size, re-laid in two bands.',
-          sampleValues: const <String?>['4', '0', '7', '2', '1', '9'],
+          sampleValues: const <String?>['407219'],
         ),
         GalleryEntry(
           id: 'bh.bicycle',
           label: 'Bicycle',
           spec: BahrainPlates.bicycle,
           theme: BahrainThemes.civilian,
-          sampleValues: const <String?>['8', '1', '3', '5'],
+          sampleValues: const <String?>['8135'],
         ),
         GalleryEntry(
           id: 'bh.diplomatic',
@@ -675,14 +664,14 @@ class BahrainSource extends GallerySource {
           spec: BahrainPlates.diplomatic,
           theme: BahrainThemes.diplomatic,
           note: 'Green head band, wording reversed out white.',
-          sampleValues: const <String?>['0', '4', '2'],
+          sampleValues: const <String?>['042'],
         ),
         GalleryEntry(
           id: 'bh.police',
           label: 'Police',
           spec: BahrainPlates.police,
           theme: BahrainThemes.police,
-          sampleValues: const <String?>['2', '6', '0', '9'],
+          sampleValues: const <String?>['2609'],
         ),
       ],
     ),
@@ -737,7 +726,7 @@ class AzerbaijanSource extends GallerySource {
           label: 'Car',
           spec: AzerbaijanPlates.car,
           theme: AzerbaijanThemes.civilian,
-          sampleValues: const <String?>['8', '8', 'B', 'E', '1', '1', '4'],
+          sampleValues: const <String?>['88', 'BE', '114'],
         ),
         GalleryEntry(
           id: 'az.car.transport',
@@ -745,7 +734,7 @@ class AzerbaijanSource extends GallerySource {
           spec: AzerbaijanPlates.car,
           theme: AzerbaijanThemes.transport,
           note: 'The car spec, printed blue. Privately owned public transport.',
-          sampleValues: const <String?>['1', '0', 'T', 'H', '3', '0', '8'],
+          sampleValues: const <String?>['10', 'TH', '308'],
         ),
         GalleryEntry(
           id: 'az.bicycle',
@@ -753,7 +742,7 @@ class AzerbaijanSource extends GallerySource {
           spec: AzerbaijanPlates.bicycle,
           theme: AzerbaijanThemes.civilian,
           note: 'The same groups as the car, in two rows and one letter short.',
-          sampleValues: const <String?>['0', '7', 'T', '0', '9', '6'],
+          sampleValues: const <String?>['07', 'T', '096'],
         ),
         GalleryEntry(
           id: 'az.diplomatic',
@@ -762,7 +751,7 @@ class AzerbaijanSource extends GallerySource {
           theme: AzerbaijanThemes.diplomatic,
           note:
               'Mission code, class letter, serial — told apart by gaps, not hyphens.',
-          sampleValues: const <String?>['0', '1', '3', 'D', '0', '0', '4'],
+          sampleValues: const <String?>['013', 'D', '004'],
         ),
         GalleryEntry(
           id: 'az.foreign',
@@ -770,7 +759,7 @@ class AzerbaijanSource extends GallerySource {
           spec: AzerbaijanPlates.foreign,
           theme: AzerbaijanThemes.foreign,
           note: 'The one coloured field that keeps the civilian black ink.',
-          sampleValues: const <String?>['H', '0', '2', '3', '1', '4', '9'],
+          sampleValues: const <String?>['H', '023', '149'],
         ),
       ],
     ),
@@ -826,29 +815,29 @@ class AfghanistanSource extends GallerySource {
         GalleryEntry(
           id: 'af.car5.private',
           label: 'Private (five figures)',
-          spec: AfghanistanPlates.car5,
+          spec: AfghanistanPlates.car,
           theme: AfghanistanThemes.civilian,
           country: AfghanistanProvince.herat.country(),
           note: 'The ordinary plate: `ش` over `PRV`, and Herat\'s block.',
-          sampleValues: const <String?>['1', '2', '3', '4', '6', 'P'],
+          sampleValues: const <String?>['12346', 'P'],
         ),
         GalleryEntry(
           id: 'af.car4.private',
           label: 'Private (four figures)',
-          spec: AfghanistanPlates.car4,
+          spec: AfghanistanPlates.car,
           theme: AfghanistanThemes.civilian,
           country: AfghanistanProvince.zabul.country(),
           note:
-              'Same design, one figure shorter — the figures spread, they do not grow.',
-          sampleValues: const <String?>['1', '2', '3', '4', 'P'],
+              'Same design, one figure shorter — the figures sit centred in the same field.',
+          sampleValues: const <String?>['1234', 'P'],
         ),
         GalleryEntry(
           id: 'af.car3.private',
           label: 'Private (three figures)',
-          spec: AfghanistanPlates.car3,
+          spec: AfghanistanPlates.car,
           theme: AfghanistanThemes.civilian,
           country: AfghanistanProvince.takhar.country(),
-          sampleValues: const <String?>['1', '2', '3', 'P'],
+          sampleValues: const <String?>['123', 'P'],
         ),
         GalleryEntry(
           id: 'af.kabul6',
@@ -858,62 +847,62 @@ class AfghanistanSource extends GallerySource {
           country: AfghanistanProvince.kabul.country(),
           note:
               'Kabul exhausted five figures. The sixth is printed once, in Persian only, between two hyphens.',
-          sampleValues: const <String?>['5', '1', '2', '3', '4', '6', 'P'],
+          sampleValues: const <String?>['5', '12346', 'P'],
         ),
         GalleryEntry(
           id: 'af.car5.taxi',
           label: 'Taxi',
-          spec: AfghanistanPlates.car5,
+          spec: AfghanistanPlates.car,
           theme: AfghanistanThemes.transport,
           country: AfghanistanProvince.kabul.country(),
           note: 'The private geometry, printed yellow, with `ت` over `T`.',
-          sampleValues: const <String?>['1', '2', '3', '4', '6', 'T'],
+          sampleValues: const <String?>['12346', 'T'],
         ),
         GalleryEntry(
           id: 'af.car5.bus',
           label: 'Bus',
-          spec: AfghanistanPlates.car5,
+          spec: AfghanistanPlates.car,
           theme: AfghanistanThemes.transport,
           country: AfghanistanProvince.kabul.country(),
           note:
               'The same yellow field as the taxi. One character tells them apart: `ب` over `B`.',
-          sampleValues: const <String?>['1', '2', '3', '4', '6', 'B'],
+          sampleValues: const <String?>['12346', 'B'],
         ),
         GalleryEntry(
           id: 'af.car5.lorry',
           label: 'Lorry',
-          spec: AfghanistanPlates.car5,
+          spec: AfghanistanPlates.car,
           theme: AfghanistanThemes.civilian,
           country: AfghanistanProvince.kabul.country(),
-          sampleValues: const <String?>['1', '2', '3', '4', '6', 'L'],
+          sampleValues: const <String?>['12346', 'L'],
         ),
         GalleryEntry(
           id: 'af.car5.duplicate',
           label: 'Private duplicate',
-          spec: AfghanistanPlates.car5,
+          spec: AfghanistanPlates.car,
           theme: AfghanistanThemes.civilian,
           country: AfghanistanProvince.herat.country(),
           note:
               'The one class the Persian register cannot distinguish: `ش` above on both, `DUPL` below.',
-          sampleValues: const <String?>['1', '2', '3', '4', '6', 'D'],
+          sampleValues: const <String?>['12346', 'D'],
         ),
         GalleryEntry(
           id: 'af.cycle3',
           label: 'Motorcycle',
-          spec: AfghanistanPlates.cycle3,
+          spec: AfghanistanPlates.cycle,
           theme: AfghanistanThemes.civilian,
           country: AfghanistanProvince.nimruz.country(),
           note:
               'The two-wheeler plate: a longer, shallower rectangle, not a shrunk car plate.',
-          sampleValues: const <String?>['1', '2', '3', 'M'],
+          sampleValues: const <String?>['123', 'M'],
         ),
         GalleryEntry(
           id: 'af.cycle4',
           label: 'Rickshaw',
-          spec: AfghanistanPlates.cycle4,
+          spec: AfghanistanPlates.cycle,
           theme: AfghanistanThemes.civilian,
           country: AfghanistanProvince.nangarhar.country(),
-          sampleValues: const <String?>['1', '2', '3', '4', 'R'],
+          sampleValues: const <String?>['1234', 'R'],
         ),
         GalleryEntry(
           id: 'af.diplomatic',
@@ -925,7 +914,7 @@ class AfghanistanSource extends GallerySource {
           ),
           note:
               'The only hyphenated Afghan number, and the only `CD` — printed once, with no Persian counterpart.',
-          sampleValues: const <String?>['1', '2', '3', '4'],
+          sampleValues: const <String?>['12', '34'],
         ),
         GalleryEntry(
           id: 'af.governmental',
@@ -937,7 +926,7 @@ class AfghanistanSource extends GallerySource {
           ),
           note:
               'A government vehicle\'s type is not printed: a dash stands in both registers.',
-          sampleValues: const <String?>['1', '2', '3', '4'],
+          sampleValues: const <String?>['1234'],
         ),
         GalleryEntry(
           id: 'af.un',
@@ -947,7 +936,7 @@ class AfghanistanSource extends GallerySource {
           country: AfghanistanProvince.kabul.country(),
           note:
               'The plainest of the eleven: the province block and the number, and nothing at the head.',
-          sampleValues: const <String?>['1', '2', '3', '4'],
+          sampleValues: const <String?>['1234'],
         ),
         GalleryEntry(
           id: 'af.temporary',
@@ -957,7 +946,7 @@ class AfghanistanSource extends GallerySource {
           country: AfghanistanProvince.herat.country(showCode: false),
           note:
               'Issued from 2023, valid three years. The one Afghan plate printed in two inks.',
-          sampleValues: const <String?>['1', '2', '3', '4', '6'],
+          sampleValues: const <String?>['12346'],
         ),
         GalleryEntry(
           id: 'af.international',
@@ -967,7 +956,7 @@ class AfghanistanSource extends GallerySource {
           country: AfghanistanProvince.herat.country(),
           note:
               'Latin figures and a spelled-out category, no Persian half. Reconstructed from text — no photograph exists.',
-          sampleValues: const <String?>['1', '2', '3', '4', '6', 'B'],
+          sampleValues: const <String?>['12346', 'B'],
         ),
       ],
     ),
@@ -1028,7 +1017,7 @@ class ArmeniaSource extends GallerySource {
           theme: ArmeniaThemes.civilian,
           note:
               'The 2014 design: region code, two letters, three digits, and the silver band beside the flag.',
-          sampleValues: const <String?>['0', '1', 'A', 'D', '2', '3', '4'],
+          sampleValues: const <String?>['01', 'AD', '234'],
         ),
         GalleryEntry(
           id: 'am.carTwoRow',
@@ -1037,7 +1026,7 @@ class ArmeniaSource extends GallerySource {
           theme: ArmeniaThemes.civilian,
           note:
               'The same seven characters in the same three groups, on a deeper canvas.',
-          sampleValues: const <String?>['0', '1', 'A', 'D', '2', '3', '4'],
+          sampleValues: const <String?>['01', 'AD', '234'],
         ),
         GalleryEntry(
           id: 'am.motorcycle',
@@ -1046,7 +1035,7 @@ class ArmeniaSource extends GallerySource {
           theme: ArmeniaThemes.civilian,
           note:
               'The two-row plate was found too cumbersome to carry; the gap between region and letters was closed.',
-          sampleValues: const <String?>['0', '1', 'A', 'D', '2', '3', '4'],
+          sampleValues: const <String?>['01', 'AD', '234'],
         ),
         GalleryEntry(
           id: 'am.public',
@@ -1055,7 +1044,7 @@ class ArmeniaSource extends GallerySource {
           theme: ArmeniaThemes.civilian,
           note:
               'The number reversed: `NN 01` names the institution, and only fourteen pairs are issued at all.',
-          sampleValues: const <String?>['0', '0', '1', 'N', 'N', '0', '1'],
+          sampleValues: const <String?>['001', 'NN', '01'],
         ),
         GalleryEntry(
           id: 'am.trailer',
@@ -1064,7 +1053,7 @@ class ArmeniaSource extends GallerySource {
           theme: ArmeniaThemes.civilian,
           note:
               'A pre-2014 design: no identifier band, and the letter count cut to one — most often `L`.',
-          sampleValues: const <String?>['2', '9', '0', 'L', '0', '1'],
+          sampleValues: const <String?>['290', 'L', '01'],
         ),
         GalleryEntry(
           id: 'am.bus',
@@ -1073,7 +1062,7 @@ class ArmeniaSource extends GallerySource {
           theme: ArmeniaThemes.bus,
           note:
               'The Soviet public-transport format Armenia kept: `S` for a city bus, `L` for a long-range coach.',
-          sampleValues: const <String?>['1', '2', '3', '4', 'S'],
+          sampleValues: const <String?>['1234', 'S'],
         ),
         GalleryEntry(
           id: 'am.diplomatic',
@@ -1082,7 +1071,7 @@ class ArmeniaSource extends GallerySource {
           theme: ArmeniaThemes.diplomatic,
           note:
               'Mission code, `D` for a diplomat or `T` for a technician, serial, and Armenia\'s own code at the tail.',
-          sampleValues: const <String?>['0', '4', 'D', '0', '5', '7'],
+          sampleValues: const <String?>['04', 'D', '057'],
         ),
         GalleryEntry(
           id: 'am.diplomaticArm',
@@ -1091,7 +1080,7 @@ class ArmeniaSource extends GallerySource {
           theme: ArmeniaThemes.diplomatic,
           note:
               'The same design; newer plates print `ARM` where the older ones print `AM`.',
-          sampleValues: const <String?>['0', '4', 'T', '0', '5', '7'],
+          sampleValues: const <String?>['04', 'T', '057'],
         ),
         GalleryEntry(
           id: 'am.un',
@@ -1100,7 +1089,7 @@ class ArmeniaSource extends GallerySource {
           theme: ArmeniaThemes.un,
           note:
               'Three digits between two printed words. Nothing on this plate is chosen but the serial.',
-          sampleValues: const <String?>['0', '8', '0'],
+          sampleValues: const <String?>['080'],
         ),
         GalleryEntry(
           id: 'am.military',
@@ -1110,7 +1099,7 @@ class ArmeniaSource extends GallerySource {
           note:
               'The one Armenian plate with no Latin on it: `ՊՆ` for the ministry, '
               '`Մ` for a passenger vehicle, `Տ` for a transport one.',
-          sampleValues: const <String?>['1', '0', '0', '7', 'M'],
+          sampleValues: const <String?>['1007', 'M'],
         ),
       ],
     ),
@@ -1150,7 +1139,7 @@ GallerySection _kuwaitSection() => GallerySection(
       theme: KuwaitThemes.civilian,
       note:
           'Standard private vehicle: black text on white field with flag block. Codes 1-89.',
-      sampleValues: const <String?>['1', '2', '4', '5', '6', '7', '8'],
+      sampleValues: const <String?>['12', '45678'],
     ),
     GalleryEntry(
       id: 'kw.transport',
@@ -1159,7 +1148,7 @@ GallerySection _kuwaitSection() => GallerySection(
       theme: KuwaitThemes.transport,
       note:
           'Taxis, buses, goods export: black text on yellow field. Codes 90-99.',
-      sampleValues: const <String?>['9', '2', '1', '2', '3', '4', '5'],
+      sampleValues: const <String?>['92', '12345'],
     ),
     GalleryEntry(
       id: 'kw.police',
@@ -1168,7 +1157,7 @@ GallerySection _kuwaitSection() => GallerySection(
       theme: KuwaitThemes.police,
       note:
           'Police vehicles: white text on black field, "POLICE شرطة" caption.',
-      sampleValues: const <String?>['5', '0', '1', '2', '3', '4'],
+      sampleValues: const <String?>['50123'],
     ),
     GalleryEntry(
       id: 'kw.policemotorcycle',
@@ -1177,7 +1166,7 @@ GallerySection _kuwaitSection() => GallerySection(
       theme: KuwaitThemes.police,
       note:
           'Police motorcycles: white text on black field, "شرطة" caption only.',
-      sampleValues: const <String?>['0', '1', '2', '3'],
+      sampleValues: const <String?>['0123'],
     ),
     GalleryEntry(
       id: 'kw.government',
@@ -1186,7 +1175,7 @@ GallerySection _kuwaitSection() => GallerySection(
       theme: KuwaitThemes.government,
       note:
           'Government vehicles: black text on blue field, "دولة الكويت — حكومة" caption.',
-      sampleValues: const <String?>['2', '3', '4', '5', '6'],
+      sampleValues: const <String?>['23456'],
     ),
     GalleryEntry(
       id: 'kw.diplomatic',
@@ -1195,7 +1184,7 @@ GallerySection _kuwaitSection() => GallerySection(
       theme: KuwaitThemes.diplomatic,
       note:
           'Diplomatic vehicles: blue text on white field, red band at the bottom, "هيئة دبلوماسية / C.D" caption.',
-      sampleValues: const <String?>['1', '2', '3', '4', '5', '6'],
+      sampleValues: const <String?>['123', '456'],
     ),
     GalleryEntry(
       id: 'kw.nationalguard',
@@ -1204,7 +1193,7 @@ GallerySection _kuwaitSection() => GallerySection(
       theme: KuwaitThemes.nationalGuard,
       note:
           'National guard vehicles: yellow text on green field, "الحرس الوطني" caption.',
-      sampleValues: const <String?>['3', '4', '5', '6', '7'],
+      sampleValues: const <String?>['34567'],
     ),
     GalleryEntry(
       id: 'kw.army',
@@ -1213,7 +1202,7 @@ GallerySection _kuwaitSection() => GallerySection(
       theme: KuwaitThemes.army,
       note:
           'Military vehicles: black text on beige field, "الجيش الكويتي" caption.',
-      sampleValues: const <String?>['7', '0', '1', '2', '3'],
+      sampleValues: const <String?>['70123'],
     ),
     GalleryEntry(
       id: 'kw.commercial',
@@ -1222,7 +1211,7 @@ GallerySection _kuwaitSection() => GallerySection(
       theme: KuwaitThemes.commercial,
       note:
           'Commercial vehicles: black text on pink field, "دولة الكويت — تجاري" caption.',
-      sampleValues: const <String?>['8', '0', '1', '2', '3'],
+      sampleValues: const <String?>['80123'],
     ),
     GalleryEntry(
       id: 'kw.construction',
@@ -1231,7 +1220,7 @@ GallerySection _kuwaitSection() => GallerySection(
       theme: KuwaitThemes.construction,
       note:
           'Construction vehicles: black text on orange field, "دولة الكويت — إنشاءت" caption.',
-      sampleValues: const <String?>['9', '5', '1', '2', '3'],
+      sampleValues: const <String?>['95123'],
     ),
     GalleryEntry(
       id: 'kw.firefighting',
@@ -1240,7 +1229,7 @@ GallerySection _kuwaitSection() => GallerySection(
       theme: KuwaitThemes.firefighting,
       note:
           'Firefighting vehicles: black text on red field, "FIRE — الإطفاء العام" caption.',
-      sampleValues: const <String?>['4', '5', '1', '2', '3'],
+      sampleValues: const <String?>['45123'],
     ),
     GalleryEntry(
       id: 'kw.export',
@@ -1249,7 +1238,7 @@ GallerySection _kuwaitSection() => GallerySection(
       theme: KuwaitThemes.export,
       note:
           'Export vehicles: black text on green field, "دولة الكويت — تصدير" caption.',
-      sampleValues: const <String?>['9', '5', '5', '1', '2'],
+      sampleValues: const <String?>['95512'],
     ),
     GalleryEntry(
       id: 'kw.customs',
@@ -1258,7 +1247,7 @@ GallerySection _kuwaitSection() => GallerySection(
       theme: KuwaitThemes.customs,
       note:
           'Temporary and customs vehicles: black text on purple field, "دولة الكويت — جمرك مؤقت" caption.',
-      sampleValues: const <String?>['9', '9', '1', '2', '3'],
+      sampleValues: const <String?>['99123'],
     ),
     GalleryEntry(
       id: 'kw.emiri',
@@ -1267,7 +1256,7 @@ GallerySection _kuwaitSection() => GallerySection(
       theme: KuwaitThemes.emiri,
       note:
           'Emiri Bureau vehicles: white text on blue field, "دولة الكويت — الديوان الأميري" caption.',
-      sampleValues: const <String?>['1', '0', '1', '2', '3'],
+      sampleValues: const <String?>['10123'],
     ),
     GalleryEntry(
       id: 'kw.emiriguard',
@@ -1276,7 +1265,7 @@ GallerySection _kuwaitSection() => GallerySection(
       theme: KuwaitThemes.emiriGuard,
       note:
           'Emiri Guard vehicles: white text on blue field, "الحرس — الأميري" caption.',
-      sampleValues: const <String?>['1', '1', '0', '2', '3'],
+      sampleValues: const <String?>['11023'],
     ),
     GalleryEntry(
       id: 'kw.motorcycle',
@@ -1285,7 +1274,7 @@ GallerySection _kuwaitSection() => GallerySection(
       theme: KuwaitThemes.civilian,
       note:
           'Motorcycles: black text on white field, "دولة الكويت / دراجة" caption. Codes 1-10.',
-      sampleValues: const <String?>['1', '2', '3', '4'],
+      sampleValues: const <String?>['1234'],
     ),
   ],
 );
@@ -1392,7 +1381,7 @@ GallerySection _iraqSection() => GallerySection(
       theme: IraqThemes.large,
       country: IraqCountry.private,
       note: 'Basra, 14. The band is white, so only the divider separates it.',
-      sampleValues: const <String?>['1', '4', 'G', '3', '4', '5', '6', '7'],
+      sampleValues: const <String?>['14', 'G', '34567'],
     ),
     GalleryEntry(
       id: 'iq.large.hire',
@@ -1401,7 +1390,7 @@ GallerySection _iraqSection() => GallerySection(
       theme: IraqThemes.large,
       country: IraqCountry.hire,
       note: 'Same spec, red band: taxis and other hire vehicles.',
-      sampleValues: const <String?>['1', '4', 'G', '3', '4', '5', '6', '7'],
+      sampleValues: const <String?>['14', 'G', '34567'],
     ),
     GalleryEntry(
       id: 'iq.large.government',
@@ -1409,7 +1398,7 @@ GallerySection _iraqSection() => GallerySection(
       spec: IraqPlates.large,
       theme: IraqThemes.large,
       country: IraqCountry.government,
-      sampleValues: const <String?>['1', '4', 'G', '3', '4', '5', '6', '7'],
+      sampleValues: const <String?>['14', 'G', '34567'],
     ),
     GalleryEntry(
       id: 'iq.large.trade',
@@ -1417,7 +1406,7 @@ GallerySection _iraqSection() => GallerySection(
       spec: IraqPlates.large,
       theme: IraqThemes.large,
       country: IraqCountry.trade,
-      sampleValues: const <String?>['1', '4', 'G', '3', '4', '5', '6', '7'],
+      sampleValues: const <String?>['14', 'G', '34567'],
     ),
     GalleryEntry(
       id: 'iq.large.agricultural',
@@ -1425,7 +1414,7 @@ GallerySection _iraqSection() => GallerySection(
       spec: IraqPlates.large,
       theme: IraqThemes.large,
       country: IraqCountry.agricultural,
-      sampleValues: const <String?>['1', '4', 'G', '3', '4', '5', '6', '7'],
+      sampleValues: const <String?>['14', 'G', '34567'],
     ),
     GalleryEntry(
       id: 'iq.large.kr',
@@ -1434,7 +1423,7 @@ GallerySection _iraqSection() => GallerySection(
       theme: IraqThemes.large,
       country: IraqCountry.private,
       note: 'Sulaymaniyah, 21. KR sits under IRQ, so the stack is shorter.',
-      sampleValues: const <String?>['2', '1', 'G', '3', '4', '5', '6', '7'],
+      sampleValues: const <String?>['21', 'G', '34567'],
     ),
     GalleryEntry(
       id: 'iq.small.private',
@@ -1443,7 +1432,7 @@ GallerySection _iraqSection() => GallerySection(
       theme: IraqThemes.small,
       country: IraqCountry.private,
       note: 'The same registration re-laid in two rows for a short bracket.',
-      sampleValues: const <String?>['1', '4', 'G', '3', '4', '5', '6', '7'],
+      sampleValues: const <String?>['14', 'G', '34567'],
     ),
     GalleryEntry(
       id: 'iq.small.hire',
@@ -1451,7 +1440,7 @@ GallerySection _iraqSection() => GallerySection(
       spec: IraqPlates.small,
       theme: IraqThemes.small,
       country: IraqCountry.hire,
-      sampleValues: const <String?>['1', '4', 'G', '3', '4', '5', '6', '7'],
+      sampleValues: const <String?>['14', 'G', '34567'],
     ),
     GalleryEntry(
       id: 'iq.small.kr',
@@ -1459,7 +1448,7 @@ GallerySection _iraqSection() => GallerySection(
       spec: IraqPlates.smallKurdistan,
       theme: IraqThemes.small,
       country: IraqCountry.government,
-      sampleValues: const <String?>['2', '1', 'G', '3', '4', '5', '6', '7'],
+      sampleValues: const <String?>['21', 'G', '34567'],
     ),
     GalleryEntry(
       id: 'iq.small.temporary',
@@ -1470,17 +1459,7 @@ GallerySection _iraqSection() => GallerySection(
       note:
           'Red ink on white, rim and divider included, with 22 as the expiry '
           'year where a permanent plate carries its class letter.',
-      sampleValues: const <String?>[
-        '2',
-        '1',
-        '2',
-        '2',
-        '3',
-        '4',
-        '5',
-        '6',
-        '7',
-      ],
+      sampleValues: const <String?>['21', '22', '34567'],
     ),
   ],
 );
@@ -1577,7 +1556,7 @@ GallerySection _uaeSection() => GallerySection(
       country: UaeCountry.uae,
       note:
           'White code on the red strip (long) or band (short), painted as background sections.',
-      sampleValues: const <String?>['1', '2', '2', '3', '4', '5', '6'],
+      sampleValues: const <String?>['12', '23456'],
     ),
     GalleryEntry(
       id: 'ae.abudhabi.short',
@@ -1585,7 +1564,7 @@ GallerySection _uaeSection() => GallerySection(
       spec: UaePlates.abuDhabiShort,
       theme: UaeThemes.short,
       country: UaeCountry.uae,
-      sampleValues: const <String?>['1', '2', '2', '3', '4', '5', '6'],
+      sampleValues: const <String?>['12', '23456'],
     ),
     GalleryEntry(
       id: 'ae.ajman.long',
@@ -1593,7 +1572,7 @@ GallerySection _uaeSection() => GallerySection(
       spec: UaePlates.ajmanLong,
       theme: UaeThemes.long,
       country: UaeCountry.uae,
-      sampleValues: const <String?>['A', '2', '3', '4', '5', '6'],
+      sampleValues: const <String?>['A', '23456'],
     ),
     GalleryEntry(
       id: 'ae.ajman.short',
@@ -1601,7 +1580,7 @@ GallerySection _uaeSection() => GallerySection(
       spec: UaePlates.ajmanShort,
       theme: UaeThemes.short,
       country: UaeCountry.uae,
-      sampleValues: const <String?>['A', '2', '3', '4', '5', '6'],
+      sampleValues: const <String?>['A', '23456'],
     ),
     GalleryEntry(
       id: 'ae.dubai.long',
@@ -1611,7 +1590,7 @@ GallerySection _uaeSection() => GallerySection(
       country: UaeCountry.uae,
       note:
           '"DUBAI" logotype set as bold text; single code letter only (AA-EE not laid out).',
-      sampleValues: const <String?>['A', '2', '3', '4', '5', '6'],
+      sampleValues: const <String?>['A', '23456'],
     ),
     GalleryEntry(
       id: 'ae.dubai.short',
@@ -1619,7 +1598,7 @@ GallerySection _uaeSection() => GallerySection(
       spec: UaePlates.dubaiShort,
       theme: UaeThemes.short,
       country: UaeCountry.uae,
-      sampleValues: const <String?>['A', '2', '3', '4', '5', '6'],
+      sampleValues: const <String?>['A', '23456'],
     ),
     GalleryEntry(
       id: 'ae.fujairah.long',
@@ -1627,7 +1606,7 @@ GallerySection _uaeSection() => GallerySection(
       spec: UaePlates.fujairahLong,
       theme: UaeThemes.long,
       country: UaeCountry.uae,
-      sampleValues: const <String?>['A', '2', '3', '4', '5', '6'],
+      sampleValues: const <String?>['A', '23456'],
     ),
     GalleryEntry(
       id: 'ae.fujairah.short',
@@ -1635,7 +1614,7 @@ GallerySection _uaeSection() => GallerySection(
       spec: UaePlates.fujairahShort,
       theme: UaeThemes.short,
       country: UaeCountry.uae,
-      sampleValues: const <String?>['A', '2', '3', '4', '5', '6'],
+      sampleValues: const <String?>['A', '23456'],
     ),
     GalleryEntry(
       id: 'ae.rasalkhaimah.long',
@@ -1643,7 +1622,7 @@ GallerySection _uaeSection() => GallerySection(
       spec: UaePlates.rasAlKhaimahLong,
       theme: UaeThemes.long,
       country: UaeCountry.uae,
-      sampleValues: const <String?>['A', '2', '3', '4', '5', '6'],
+      sampleValues: const <String?>['A', '23456'],
     ),
     GalleryEntry(
       id: 'ae.rasalkhaimah.short',
@@ -1651,7 +1630,7 @@ GallerySection _uaeSection() => GallerySection(
       spec: UaePlates.rasAlKhaimahShort,
       theme: UaeThemes.short,
       country: UaeCountry.uae,
-      sampleValues: const <String?>['A', '2', '3', '4', '5', '6'],
+      sampleValues: const <String?>['A', '23456'],
     ),
     GalleryEntry(
       id: 'ae.sharjah.long',
@@ -1660,7 +1639,7 @@ GallerySection _uaeSection() => GallerySection(
       theme: UaeThemes.long,
       country: UaeCountry.uae,
       note: 'Heavier frame; the one-digit code (1-4) is optional.',
-      sampleValues: const <String?>['1', '2', '3', '4', '5', '6'],
+      sampleValues: const <String?>['1', '23456'],
     ),
     GalleryEntry(
       id: 'ae.sharjah.short',
@@ -1668,7 +1647,7 @@ GallerySection _uaeSection() => GallerySection(
       spec: UaePlates.sharjahShort,
       theme: UaeThemes.short,
       country: UaeCountry.uae,
-      sampleValues: const <String?>['1', '2', '3', '4', '5', '6'],
+      sampleValues: const <String?>['1', '23456'],
     ),
     GalleryEntry(
       id: 'ae.ummalquwain.long',
@@ -1676,7 +1655,7 @@ GallerySection _uaeSection() => GallerySection(
       spec: UaePlates.ummAlQuwainLong,
       theme: UaeThemes.long,
       country: UaeCountry.uae,
-      sampleValues: const <String?>['A', '2', '3', '4', '5', '6'],
+      sampleValues: const <String?>['A', '23456'],
     ),
     GalleryEntry(
       id: 'ae.ummalquwain.short',
@@ -1684,7 +1663,7 @@ GallerySection _uaeSection() => GallerySection(
       spec: UaePlates.ummAlQuwainShort,
       theme: UaeThemes.short,
       country: UaeCountry.uae,
-      sampleValues: const <String?>['A', '2', '3', '4', '5', '6'],
+      sampleValues: const <String?>['A', '23456'],
     ),
   ],
 );
@@ -1735,7 +1714,7 @@ GalleryEntry _tr(
   theme: theme,
   country: TurkeyCountry.turkey,
   validator: validator,
-  sampleValues: values.split(''),
+  sampleValues: values.split(' '),
   note: note,
 );
 
@@ -1755,21 +1734,21 @@ GallerySection _turkeySection() => GallerySection(
       'Private',
       TurkeyPlates.private,
       TurkeyThemes.civilian,
-      '34AB1234',
+      '34 AB 1234',
     ),
     _tr(
       'tr.international',
       'International organisation',
       TurkeyPlates.internationalOrganization,
       TurkeyThemes.internationalOrganization,
-      '34B0426',
+      '34 B 0426',
     ),
     _tr(
       'tr.diplomatic',
       'Diplomatic (CD)',
       TurkeyPlates.diplomatic,
       TurkeyThemes.diplomatic,
-      '34CD012',
+      '34 CD 012',
       validator: TurkeyPlateValidator.diplomatic,
     ),
     _tr(
@@ -1777,7 +1756,7 @@ GallerySection _turkeySection() => GallerySection(
       'Consulate (CC)',
       TurkeyPlates.consulate,
       TurkeyThemes.consulate,
-      '34CC0001',
+      '34 CC 0001',
       validator: TurkeyPlateValidator.consulate,
     ),
     _tr(
@@ -1785,21 +1764,21 @@ GallerySection _turkeySection() => GallerySection(
       'Temporary',
       TurkeyPlates.temporary,
       TurkeyThemes.temporary,
-      '34G1234',
+      '34 G 1234',
     ),
     _tr(
       'tr.temporary.strip',
       'Temporary (with strip)',
       TurkeyPlates.temporaryWithStrip,
       TurkeyThemes.temporary,
-      '34G1234',
+      '34 G 1234',
     ),
     _tr(
       'tr.customs',
       'Temporary customs (GMR)',
       TurkeyPlates.temporaryCustoms,
       TurkeyThemes.temporaryCustoms,
-      '34GMR032',
+      '34 GMR 032',
       validator: TurkeyPlateValidator.temporaryCustoms,
     ),
     _tr(
@@ -1807,29 +1786,29 @@ GallerySection _turkeySection() => GallerySection(
       'Foreign resident',
       TurkeyPlates.foreignResident,
       TurkeyThemes.civilian,
-      '34MA012',
+      '34 MA 012',
     ),
     _tr(
       'tr.syrian',
       'Syrian resident',
       TurkeyPlates.syrianResident,
       TurkeyThemes.civilian,
-      '34SAB012',
+      '34 SAB 012',
     ),
-    _tr('tr.taxi', 'Taxi', TurkeyPlates.taxi, TurkeyThemes.civilian, '06T0123'),
+    _tr('tr.taxi', 'Taxi', TurkeyPlates.taxi, TurkeyThemes.civilian, '06 T 0123'),
     _tr(
       'tr.taxi.istanbul',
       'Istanbul taxi',
       TurkeyPlates.istanbulTaxi,
       TurkeyThemes.civilian,
-      '34TAB12',
+      '34 TAB 12',
     ),
     _tr(
       'tr.police',
       'Police',
       TurkeyPlates.police,
       TurkeyThemes.police,
-      '16A01234',
+      '16 A 01234',
       validator: TurkeyPlateValidator.police,
     ),
     _tr(
@@ -1837,7 +1816,7 @@ GallerySection _turkeySection() => GallerySection(
       'Gendarmerie (J)',
       TurkeyPlates.gendarmerie,
       TurkeyThemes.police,
-      '06JAA1234',
+      '06 JAA 1234',
       validator: TurkeyPlateValidator.gendarmerie,
     ),
     _tr(
@@ -1845,7 +1824,7 @@ GallerySection _turkeySection() => GallerySection(
       'Coast guard (SGH)',
       TurkeyPlates.coastGuard,
       TurkeyThemes.police,
-      '34SGH1234',
+      '34 SGH 1234',
       validator: TurkeyPlateValidator.coastGuard,
     ),
     _tr(
@@ -1853,21 +1832,21 @@ GallerySection _turkeySection() => GallerySection(
       'Provincial government',
       TurkeyPlates.provincialGovernment,
       TurkeyThemes.provincialGovernment,
-      '06AA012',
+      '06 AA 012',
     ),
     _tr(
       'tr.official',
       'Official',
       TurkeyPlates.official,
       TurkeyThemes.official,
-      '34AB123',
+      '34 AB 123',
     ),
     _tr(
       'tr.governor',
       'Province governor',
       TurkeyPlates.governor,
       TurkeyThemes.state,
-      '340001',
+      '34 0001',
     ),
     _tr(
       'tr.parliament',
@@ -1888,14 +1867,14 @@ GallerySection _turkeySection() => GallerySection(
       'Sample (NUMUNE PLAKA)',
       TurkeyPlates.sample,
       TurkeyThemes.civilian,
-      '34123',
+      '34 123',
     ),
     _tr(
       'tr.motorcycle',
       'Motorcycle',
-      TurkeyPlates.motorcycle(2, 4),
+      TurkeyPlates.motorcycle,
       TurkeyThemes.civilian,
-      '34UF2409',
+      '34 UF 2409',
     ),
   ],
 );
@@ -1938,81 +1917,45 @@ GallerySection _omanSection() => GallerySection(
   note:
       'The 2001 series: number, letters and عمان in three panels, in black '
       'on yellow (private) and white on red (taxi). The letters are printed '
-      'twice, Latin below and Arabic above in the opposite order. Four '
-      'digits with two letters and five with one are measured; the other two '
-      'use the same rule. Only A, B, K and M are sourced as letters.',
+      'twice, Latin below and Arabic above in the opposite order. The number is four or '
+      'five digits (one variable field) and the letters one or two, each picked; four digits with two letters '
+      'and five with one are measured. Only A, B, K and M are sourced as letters.',
   entries: <GalleryEntry>[
     GalleryEntry(
-      id: 'om.private.d4l1',
-      label: 'Four digits, one letter',
-      spec: OmanPlates.fourDigitOneLetter,
+      id: 'om.private',
+      label: 'Private · four digits, two letters',
+      spec: OmanPlates.twoLetters,
       theme: OmanThemes.private,
       country: OmanCountry.oman,
       validator: const OmanPlateValidator(),
-      sampleValues: <String?>['4', '5', '1', '7', 'B'],
+      sampleValues: <String?>['4517', 'B', 'M'],
     ),
     GalleryEntry(
-      id: 'om.private.d4l2',
-      label: 'Four digits, two letters',
-      spec: OmanPlates.fourDigitTwoLetter,
+      id: 'om.private.d5',
+      label: 'Private · five digits, one letter',
+      spec: OmanPlates.oneLetter,
       theme: OmanThemes.private,
       country: OmanCountry.oman,
       validator: const OmanPlateValidator(),
-      sampleValues: <String?>['4', '5', '1', '7', 'B', 'M'],
+      sampleValues: <String?>['91169', 'B'],
     ),
     GalleryEntry(
-      id: 'om.private.d5l1',
-      label: 'Five digits, one letter',
-      spec: OmanPlates.fiveDigitOneLetter,
-      theme: OmanThemes.private,
-      country: OmanCountry.oman,
-      validator: const OmanPlateValidator(),
-      sampleValues: <String?>['9', '1', '1', '6', '9', 'B'],
-    ),
-    GalleryEntry(
-      id: 'om.private.d5l2',
-      label: 'Five digits, two letters',
-      spec: OmanPlates.fiveDigitTwoLetter,
-      theme: OmanThemes.private,
-      country: OmanCountry.oman,
-      validator: const OmanPlateValidator(),
-      sampleValues: <String?>['9', '1', '1', '6', '9', 'B', 'M'],
-    ),
-    GalleryEntry(
-      id: 'om.taxi.d4l1',
-      label: 'Taxi · four digits, one letter',
-      spec: OmanPlates.fourDigitOneLetter,
-      theme: OmanThemes.taxi,
-      country: OmanCountry.oman,
-      validator: const OmanPlateValidator(),
-      sampleValues: <String?>['4', '5', '1', '7', 'K'],
-    ),
-    GalleryEntry(
-      id: 'om.taxi.d4l2',
+      id: 'om.taxi',
       label: 'Taxi · four digits, two letters',
-      spec: OmanPlates.fourDigitTwoLetter,
+      spec: OmanPlates.twoLetters,
       theme: OmanThemes.taxi,
       country: OmanCountry.oman,
       validator: const OmanPlateValidator(),
-      sampleValues: <String?>['4', '5', '1', '7', 'K', 'K'],
+      sampleValues: <String?>['4517', 'K', 'K'],
     ),
     GalleryEntry(
-      id: 'om.taxi.d5l1',
+      id: 'om.taxi.d5',
       label: 'Taxi · five digits, one letter',
-      spec: OmanPlates.fiveDigitOneLetter,
+      spec: OmanPlates.oneLetter,
       theme: OmanThemes.taxi,
       country: OmanCountry.oman,
       validator: const OmanPlateValidator(),
-      sampleValues: <String?>['9', '1', '1', '6', '9', 'K'],
-    ),
-    GalleryEntry(
-      id: 'om.taxi.d5l2',
-      label: 'Taxi · five digits, two letters',
-      spec: OmanPlates.fiveDigitTwoLetter,
-      theme: OmanThemes.taxi,
-      country: OmanCountry.oman,
-      validator: const OmanPlateValidator(),
-      sampleValues: <String?>['9', '1', '1', '6', '9', 'K', 'K'],
+      sampleValues: <String?>['91169', 'K'],
     ),
   ],
 );

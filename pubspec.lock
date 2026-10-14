@@ -8,10 +8,24 @@ packages:
       relative: true
     source: path
     version: "0.1.0"
+  andorra_plate:
+    dependency: "direct main"
+    description:
+      path: "../andorra_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
   angola_plate:
     dependency: "direct main"
     description:
       path: "../angola_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
+  antigua_and_barbuda_plate:
+    dependency: "direct main"
+    description:
+      path: "../antigua_and_barbuda_plate"
       relative: true
     source: path
     version: "0.1.0"
@@ -31,10 +45,31 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.13.1"
+  bahamas_plate:
+    dependency: "direct main"
+    description:
+      path: "../bahamas_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
+  barbados_plate:
+    dependency: "direct main"
+    description:
+      path: "../barbados_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
   belarus_plate:
     dependency: "direct main"
     description:
       path: "../belarus_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
+  belize_plate:
+    dependency: "direct main"
+    description:
+      path: "../belize_plate"
       relative: true
     source: path
     version: "0.1.0"
@@ -113,6 +148,13 @@ packages:
     dependency: "direct main"
     description:
       path: "../cameroon_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
+  canada_plate:
+    dependency: "direct main"
+    description:
+      path: "../canada_plate"
       relative: true
     source: path
     version: "0.1.0"
@@ -196,6 +238,20 @@ packages:
       relative: true
     source: path
     version: "0.1.0"
+  dominica_plate:
+    dependency: "direct main"
+    description:
+      path: "../dominica_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
+  dominican_republic_plate:
+    dependency: "direct main"
+    description:
+      path: "../dominican_republic_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
   egypt_plate:
     dependency: "direct main"
     description:
@@ -225,6 +281,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.3"
+  finland_plate:
+    dependency: "direct main"
+    description:
+      path: "../finland_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -270,6 +333,20 @@ packages:
       relative: true
     source: path
     version: "0.2.0"
+  greece_plate:
+    dependency: "direct main"
+    description:
+      path: "../greece_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
+  guinea_plate:
+    dependency: "direct main"
+    description:
+      path: "../guinea_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
   http:
     dependency: transitive
     description:
@@ -321,17 +398,17 @@ packages:
       relative: true
     source: path
     version: "0.1.0"
+  japan_plate:
+    dependency: "direct main"
+    description:
+      path: "../japan_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
   jordan_plate:
     dependency: "direct main"
     description:
       path: "../jordan_plate"
-      relative: true
-    source: path
-    version: "0.1.0"
-  kazakhstan_plate:
-    dependency: "direct main"
-    description:
-      path: "../kazakhstan_plate"
       relative: true
     source: path
     version: "0.1.0"
@@ -380,10 +457,24 @@ packages:
       relative: true
     source: path
     version: "0.1.0"
+  lesotho_plate:
+    dependency: "direct main"
+    description:
+      path: "../lesotho_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
   libya_plate:
     dependency: "direct main"
     description:
       path: "../libya_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
+  liechtenstein_plate:
+    dependency: "direct main"
+    description:
+      path: "../liechtenstein_plate"
       relative: true
     source: path
     version: "0.1.0"
@@ -395,6 +486,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.0"
+  madagascar_plate:
+    dependency: "direct main"
+    description:
+      path: "../madagascar_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
   malaysia_plate:
     dependency: "direct main"
     description:
@@ -446,6 +544,13 @@ packages:
       relative: true
     source: path
     version: "0.1.0"
+  mauritius_plate:
+    dependency: "direct main"
+    description:
+      path: "../mauritius_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
   meta:
     dependency: transitive
     description:
@@ -479,6 +584,13 @@ packages:
     dependency: "direct main"
     description:
       path: "../namibia_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
+  netherlands_plate:
+    dependency: "direct main"
+    description:
+      path: "../netherlands_plate"
       relative: true
     source: path
     version: "0.1.0"
@@ -541,6 +653,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.2"
+  philippines_plate:
+    dependency: "direct main"
+    description:
+      path: "../philippines_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
   plate_alphabet:
     dependency: "direct overridden"
     description:
@@ -591,10 +710,31 @@ packages:
       relative: true
     source: path
     version: "0.1.0"
+  san_marino_plate:
+    dependency: "direct main"
+    description:
+      path: "../san_marino_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
+  senegal_plate:
+    dependency: "direct main"
+    description:
+      path: "../senegal_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
   serbia_plate:
     dependency: "direct main"
     description:
       path: "../serbia_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
+  seychelles_plate:
+    dependency: "direct main"
+    description:
+      path: "../seychelles_plate"
       relative: true
     source: path
     version: "0.1.0"
@@ -670,6 +810,13 @@ packages:
       relative: true
     source: path
     version: "0.1.0"
+  sweden_plate:
+    dependency: "direct main"
+    description:
+      path: "../sweden_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
   syria_plate:
     dependency: "direct main"
     description:
@@ -721,13 +868,6 @@ packages:
       relative: true
     source: path
     version: "0.1.0"
-  turkmenistan_plate:
-    dependency: "direct main"
-    description:
-      path: "../turkmenistan_plate"
-      relative: true
-    source: path
-    version: "0.1.0"
   typed_data:
     dependency: transitive
     description:
@@ -736,6 +876,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.0"
+  united_kingdom_plate:
+    dependency: "direct main"
+    description:
+      path: "../united_kingdom_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
   url_launcher:
     dependency: "direct main"
     description:
@@ -804,13 +951,6 @@ packages:
     dependency: "direct main"
     description:
       path: "../uruguay_plate"
-      relative: true
-    source: path
-    version: "0.1.0"
-  uzbekistan_plate:
-    dependency: "direct main"
-    description:
-      path: "../uzbekistan_plate"
       relative: true
     source: path
     version: "0.1.0"
@@ -905,6 +1045,13 @@ packages:
       relative: true
     source: path
     version: "0.3.0"
+  zambia_plate:
+    dependency: "direct main"
+    description:
+      path: "../zambia_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
   zimbabwe_plate:
     dependency: "direct main"
     description:

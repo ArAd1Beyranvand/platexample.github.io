@@ -20,7 +20,7 @@ class NamibiaSource extends GallerySource {
       'black on yellow. Personalised plates are blue on white with the flag '
       'and NA; government plates white on green behind a printed prefix.';
 
-  static List<String?> _v(String s) => s.split('');
+  static List<String?> _v(String s) => s.split('|');
 
   static GalleryEntry _e(
     String id,
@@ -52,7 +52,7 @@ class NamibiaSource extends GallerySource {
           'Windhoek, six digits',
           NamibiaPlates.windhoek,
           NamibiaThemes.standard,
-          '108053W',
+          '108|053|W',
           validator: const NamibiaPlateValidator(),
         ),
         _e(
@@ -60,7 +60,7 @@ class NamibiaSource extends GallerySource {
           'Six digits, two-letter town',
           NamibiaPlates.sixTwoLetter,
           NamibiaThemes.standard,
-          '123456WB',
+          '123|456|WB',
           validator: const NamibiaPlateValidator(),
         ),
         _e(
@@ -68,7 +68,7 @@ class NamibiaSource extends GallerySource {
           'Five digits',
           NamibiaPlates.fiveDigit,
           NamibiaThemes.standard,
-          '12181S',
+          '12181|S',
           validator: const NamibiaPlateValidator(),
         ),
         _e(
@@ -76,7 +76,7 @@ class NamibiaSource extends GallerySource {
           'Four digits, two-letter town',
           NamibiaPlates.fourDigitTwoLetter,
           NamibiaThemes.standard,
-          '1234KM',
+          '1234|KM',
           validator: const NamibiaPlateValidator(),
         ),
       ],
@@ -104,7 +104,7 @@ class NamibiaSource extends GallerySource {
           'Diplomatic',
           NamibiaPlates.diplomatic,
           NamibiaThemes.diplomatic,
-          '01302',
+          '013|02',
         ),
         _e(
           'na.government.grn',

@@ -5,7 +5,7 @@
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Flutter license plate widgets for dozens of countries: browse every plate type, try them live in the playground, and add a country package with one command.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

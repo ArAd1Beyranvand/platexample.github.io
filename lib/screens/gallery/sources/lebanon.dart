@@ -93,8 +93,8 @@ class LebanonSource extends GallerySource {
 
   /// A short number on a full-size face — the geometry variants.
   List<GalleryEntry> _short() {
-    final PlateSpec parliament = LebanonPlates.oneLineOf(digits: 3)!;
-    final PlateSpec motorcycle = LebanonPlates.twoLineOf(digits: 4)!;
+    final PlateSpec parliament = LebanonPlates.oneLine;
+    final PlateSpec motorcycle = LebanonPlates.twoLine;
     return <GalleryEntry>[
       GalleryEntry(
         id: 'lb.short.mp',
@@ -120,11 +120,7 @@ class LebanonSource extends GallerySource {
         country: LebanonCountry.forUsage(LebanonUsage.private),
         theme: LebanonThemes.forUsage(LebanonUsage.private),
         validator: const LebanonValidator(),
-        sampleValues: LebanonSerialGenerator.generate(
-          motorcycle,
-          random: _rng,
-          letter: LebanonLetter.m,
-        ),
+        sampleValues: const <String?>['M', '4821'],
         note:
             'M plates have been issued with fewer than six digits since 2019.',
       ),

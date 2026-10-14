@@ -97,6 +97,7 @@ class WhySection extends StatelessWidget {
               values: item.entry.sampleValues,
               theme: theme ?? item.entry.theme,
               country: item.entry.country,
+              autoType: true,
             ),
           const SizedBox(height: 18),
           Text(title, style: h3(t)),
@@ -165,9 +166,14 @@ class _CompareSectionState extends State<CompareSection> {
 
   final GlobalKey _plateKey = GlobalKey();
 
+  /// Refuses focus while the plate is being filled, so rewriting the field's
+  /// text from the plate never pulls focus (and the page) over to it.
+  final FocusNode _fieldFocus = FocusNode();
+
   /// On a phone, brings the plate to the top once the keyboard has settled.
   void _liftPlate() {
     if (MediaQuery.sizeOf(context).width >= 600) return;
+    final double header = headerExtent(context);
     Future<void>.delayed(const Duration(milliseconds: 350), () {
       final BuildContext? plate = _plateKey.currentContext;
       if (!mounted || plate == null) return;
@@ -175,7 +181,7 @@ class _CompareSectionState extends State<CompareSection> {
       final double top = (plate.findRenderObject()! as RenderBox)
           .localToGlobal(Offset.zero)
           .dy;
-      final double target = position.pixels + top - kHeaderHeight - 16;
+      final double target = position.pixels + top - header - 16;
       position.animateTo(
         target.clamp(position.minScrollExtent, position.maxScrollExtent),
         duration: const Duration(milliseconds: 250),
@@ -299,6 +305,7 @@ class _CompareSectionState extends State<CompareSection> {
     _text.removeListener(_textToPlate);
     _plate.removeListener(_plateToText);
     _text.dispose();
+    _fieldFocus.dispose();
     _plate.dispose();
     super.dispose();
   }
@@ -327,11 +334,15 @@ class _CompareSectionState extends State<CompareSection> {
                   const SizedBox(height: 16),
                   SizedBox(
                     height: 48,
-                    child: PdTextField(
-                      controller: _text,
-                      style: monoStyle(t, size: 16),
-                      semanticLabel: 'Type a plate into a text field',
-                      error: _refused,
+                    child: Listener(
+                      onPointerDown: (_) => _fieldFocus.canRequestFocus = true,
+                      child: PdTextField(
+                        controller: _text,
+                        focusNode: _fieldFocus,
+                        style: monoStyle(t, size: 16),
+                        semanticLabel: 'Type a plate into a text field',
+                        error: _refused,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -353,13 +364,17 @@ class _CompareSectionState extends State<CompareSection> {
                   Text('PLATECANVAS · IRANPLATES.CIVIL', style: eyebrow(t)),
                   const SizedBox(height: 16),
                   Listener(
-                    onPointerDown: (_) => _liftPlate(),
+                    onPointerDown: (_) {
+                      _fieldFocus.canRequestFocus = false;
+                      _liftPlate();
+                    },
                     child: KeyedSubtree(
                       key: _plateKey,
                       child: LivePlate(
                         controller: _plate,
-                        validName:
-                            iran == null ? 'Iran car' : validNameOf(iran),
+                        validName: iran == null
+                            ? 'Iran car'
+                            : validNameOf(iran),
                         theme: iran?.entry.theme,
                         country: iran?.entry.country,
                         validator: iran?.entry.validator,

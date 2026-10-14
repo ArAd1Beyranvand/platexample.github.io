@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart' show OverflowBoxFit;
 import 'package:germany_plate/germany_plate.dart';
 import 'package:iran_plate/iran_plate.dart';
 import 'package:lebanon_plate/lebanon_plate.dart';
@@ -183,8 +184,16 @@ class _Stage extends StatefulWidget {
   State<_Stage> createState() => _StageState();
 }
 
-class _StageState extends State<_Stage> {
+class _StageState extends State<_Stage> with SingleTickerProviderStateMixin {
   int _index = 0;
+
+  /// Drives the chip row's bounce when the user steps with Previous / Next.
+  late final AnimationController _bounce = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 600),
+  );
+  double _bounceDir = 1;
+
   late final PlateController _plate = PlateController(
     spec: heroTour.first.entry.spec,
   );
@@ -193,50 +202,116 @@ class _StageState extends State<_Stage> {
   CatalogueItem get _item => heroTour[_index];
 
   /// How long each plate shows before the next one staggers in.
-  static const Duration _dwell = Duration(seconds: 5);
+  static const Duration _dwell = Duration(seconds: 7);
 
   /// How long autoplay waits after the user touches the plate or keypad.
-  static const Duration _idle = Duration(seconds: 10);
+  static const Duration _idle = Duration(seconds: 15);
 
   Timer? _autoplay;
+  Timer? _labelSwap;
+
+  /// The plate the name above the plate describes; follows [_item] once the
+  /// old plate has staggered out.
+  late CatalogueItem _labelItem = heroTour.first;
+  bool _labelVisible = true;
+
+  /// Set while [_select] changes the controller, so only the user's edits
+  /// hold autoplay back.
+  bool _selecting = false;
 
   @override
   void initState() {
     super.initState();
+    _plate.addListener(_edited);
     _schedule(_dwell);
   }
 
   @override
   void dispose() {
     _autoplay?.cancel();
+    _labelSwap?.cancel();
+    _plate.removeListener(_edited);
     _plate.dispose();
+    _bounce.dispose();
     super.dispose();
   }
 
+  void _edited() {
+    if (!_selecting) _schedule(_idle);
+  }
+
+  /// Waits [after], then moves on and waits the transition plus [_dwell].
   void _schedule(Duration after) {
     _autoplay?.cancel();
     _autoplay = Timer(after, () {
       if (!mounted) return;
-      _select((_index + 1) % heroTour.length);
-      _schedule(_dwell);
+      final Duration moved = _select((_index + 1) % heroTour.length);
+      _schedule(moved + _dwell);
     });
   }
 
-  void _select(int index) {
-    if (index == _index) return;
+  /// Upper bound of the stagger out of [from] and in of [to].
+  Duration _transitionLength(PlateSpec from, PlateSpec to) {
+    const PlateAnimationStyle style = PlateAnimationStyle();
+    const Duration step = Duration(milliseconds: 60);
+    final Map<PlatePartId, Duration> out = PlateStagger.sequence(
+      from,
+      step: step,
+      reverse: true,
+    );
+    final Map<PlatePartId, Duration> incoming = PlateStagger.sequence(
+      to,
+      step: step,
+    );
+    return plateCueLength(style, out.keys, out) +
+        plateCueLength(style, incoming.keys, incoming);
+  }
+
+  /// Chips shown on each side of the centred, selected one.
+  static const int _reach = 2;
+
+  /// Chip opacity by distance from the centre.
+  static const List<double> _fade = <double>[1, 0.6, 0.25];
+
+  CatalogueItem _at(int offset) =>
+      heroTour[(_index + offset) % heroTour.length];
+
+  void _step(int by) {
+    if (by == 0) return;
+    _bounceDir = by.sign.toDouble();
+    _bounce.forward(from: 0);
+    final Duration moved = _select((_index + by) % heroTour.length);
+    _schedule(moved + _idle);
+  }
+
+  /// Returns how long the plate takes to change over.
+  Duration _select(int index) {
+    if (index == _index) return Duration.zero;
     final PlateSpec next = heroTour[index].entry.spec;
+    final Duration length = _transitionLength(_item.entry.spec, next);
     final List<String?> carried = carryValues(_plate.values, next);
+    _selecting = true;
     setState(() {
       _index = index;
+      _labelVisible = false;
       _plate.adoptSpec(next, preserve: PlateValuePreservation.none);
       _plate.setValues(carried);
     });
+    _selecting = false;
+    _labelSwap?.cancel();
+    _labelSwap = Timer(length ~/ 2, () {
+      if (!mounted) return;
+      setState(() {
+        _labelItem = _item;
+        _labelVisible = true;
+      });
+    });
+    return length;
   }
 
   @override
   Widget build(BuildContext context) {
     final PdTokens t = context.tokens;
-    final PdNav nav = PdNav.of(context);
     final CatalogueItem item = _item;
     return Container(
       decoration: BoxDecoration(
@@ -251,13 +326,18 @@ class _StageState extends State<_Stage> {
           Row(
             children: <Widget>[
               Expanded(
-                child: Text(
-                  '${item.source.countryName} · ${item.entry.label}',
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w500,
-                    color: t.muted,
+                child: AnimatedOpacity(
+                  duration: const Duration(milliseconds: 300),
+                  opacity: _labelVisible ? 1 : 0,
+                  child: Text(
+                    '${_labelItem.source.countryName} · '
+                    '${_labelItem.entry.label}',
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                      color: t.muted,
+                    ),
                   ),
                 ),
               ),
@@ -269,7 +349,9 @@ class _StageState extends State<_Stage> {
           ),
           const SizedBox(height: 18),
           Listener(
+            behavior: HitTestBehavior.translucent,
             onPointerDown: (_) => _schedule(_idle),
+            onPointerUp: (_) => _schedule(_idle),
             child: LivePlate(
               controller: _plate,
               validName: validNameOf(item),
@@ -292,32 +374,50 @@ class _StageState extends State<_Stage> {
             ),
           ),
           const SizedBox(height: 20),
-          Wrap(
-            spacing: 6,
-            runSpacing: 6,
-            crossAxisAlignment: WrapCrossAlignment.center,
+          Row(
             children: <Widget>[
-              for (int i = 0; i < heroPlates.length; i++)
-                CountryChip(
-                  label: heroPlates[i].$1,
-                  selected: identical(heroPlates[i].$2.source, _item.source),
-                  onTap: () {
-                    final int at = heroTour.indexWhere(
-                      (CatalogueItem t) =>
-                          identical(t.source, heroPlates[i].$2.source),
-                    );
-                    if (at >= 0) _select(at);
-                    _schedule(_idle);
-                  },
-                ),
-              Padding(
-                padding: const EdgeInsets.only(left: 6),
-                child: PdLink(
-                  'All ${plateCountries.length} →',
-                  onTap: () =>
-                      nav.go(const PdLocation.landing(LandingAnchor.coverage)),
+              PdLink('← Previous', onTap: () => _step(-1)),
+              const SizedBox(width: 10),
+              Expanded(
+                child: AnimatedBuilder(
+                  animation: _bounce,
+                  builder: (BuildContext context, Widget? child) =>
+                      Transform.translate(
+                        offset: Offset(
+                          _bounceDir *
+                              -28 *
+                              (1 - Curves.elasticOut.transform(_bounce.value)),
+                          0,
+                        ),
+                        child: child,
+                      ),
+                  child: ClipRect(
+                    child: OverflowBox(
+                      maxWidth: double.infinity,
+                      fit: OverflowBoxFit.deferToChild,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          for (int o = -_reach; o <= _reach; o++) ...<Widget>[
+                            if (o > -_reach) const SizedBox(width: 6),
+                            AnimatedOpacity(
+                              duration: const Duration(milliseconds: 300),
+                              opacity: _fade[o.abs()],
+                              child: CountryChip(
+                                label: _at(o).source.countryName,
+                                selected: o == 0,
+                                onTap: () => _step(o),
+                              ),
+                            ),
+                          ],
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
               ),
+              const SizedBox(width: 10),
+              PdLink('Next →', onTap: () => _step(1)),
             ],
           ),
         ],
@@ -344,15 +444,18 @@ class CountryChip extends StatelessWidget {
     return PdTappable(
       onTap: onTap,
       selected: selected,
-      height: 32,
-      padding: const EdgeInsets.symmetric(horizontal: 12),
+      width: 112,
+      height: 60,
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       color: selected ? t.accentSoft : null,
       hoverColor: selected ? t.accentSoft : t.raised,
       border: selected ? t.accent : t.divider,
       child: Center(
-        widthFactor: 1,
         child: Text(
           label,
+          maxLines: 3,
+          textAlign: TextAlign.center,
+          overflow: TextOverflow.ellipsis,
           style: TextStyle(
             fontSize: 13,
             fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
