@@ -11,6 +11,7 @@ import 'package:cuba_plate/cuba_plate.dart';
 import 'package:venezuela_plate/venezuela_plate.dart';
 import 'package:india_plate/india_plate.dart';
 import 'package:malaysia_plate/malaysia_plate.dart';
+import 'package:philippines_plate/philippines_plate.dart';
 import 'package:algeria_plate/algeria_plate.dart';
 import 'package:indonesia_plate/indonesia_plate.dart';
 import 'package:belarus_plate/belarus_plate.dart';
@@ -260,6 +261,8 @@ final Map<PlateSpec, String> specNames = Map<PlateSpec, String>.identity()
   ..putIfAbsent(IndiaPlates.temporary, () => 'IndiaPlates.temporary')
   ..putIfAbsent(IndiaPlates.trade, () => 'IndiaPlates.trade')
   ..putIfAbsent(MalaysiaPlates.diplomatic, () => 'MalaysiaPlates.diplomatic')
+  ..putIfAbsent(PhilippinesPlates.vintage, () => 'PhilippinesPlates.vintage')
+  ..putIfAbsent(PhilippinesPlates.diplomatic, () => 'PhilippinesPlates.diplomatic')
   ..putIfAbsent(AlgeriaPlates.singleLine, () => 'AlgeriaPlates.singleLine')
   ..putIfAbsent(AlgeriaPlates.twoLine, () => 'AlgeriaPlates.twoLine')
   ..putIfAbsent(AlgeriaPlates.diplomatic, () => 'AlgeriaPlates.diplomatic')
@@ -608,6 +611,11 @@ final Map<PlateTheme, String> themeNames = Map<PlateTheme, String>.identity()
   ..putIfAbsent(MalaysiaThemes.diplomatic, () => 'MalaysiaThemes.diplomatic')
   ..putIfAbsent(MalaysiaThemes.consular, () => 'MalaysiaThemes.consular')
   ..putIfAbsent(MalaysiaThemes.ev, () => 'MalaysiaThemes.ev')
+  ..putIfAbsent(PhilippinesThemes.private, () => 'PhilippinesThemes.private')
+  ..putIfAbsent(PhilippinesThemes.electric, () => 'PhilippinesThemes.electric')
+  ..putIfAbsent(PhilippinesThemes.publicUtility, () => 'PhilippinesThemes.publicUtility')
+  ..putIfAbsent(PhilippinesThemes.government, () => 'PhilippinesThemes.government')
+  ..putIfAbsent(PhilippinesThemes.diplomatic, () => 'PhilippinesThemes.diplomatic')
   ..putIfAbsent(AlgeriaThemes.front, () => 'AlgeriaThemes.front')
   ..putIfAbsent(AlgeriaThemes.rear, () => 'AlgeriaThemes.rear')
   ..putIfAbsent(AlgeriaThemes.diplomatic, () => 'AlgeriaThemes.diplomatic')

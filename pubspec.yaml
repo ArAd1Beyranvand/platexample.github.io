@@ -72,6 +72,8 @@ dependencies:
     path: ../india_plate
   malaysia_plate:
     path: ../malaysia_plate
+  philippines_plate:
+    path: ../philippines_plate
   algeria_plate:
     path: ../algeria_plate
   indonesia_plate:
