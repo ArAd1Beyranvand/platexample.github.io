@@ -69,7 +69,8 @@ class BhutanSource extends GallerySource {
     ),
     GallerySection(
       title: 'Official',
-      note: 'Three letters for police and the royal guard; digits for '
+      note:
+          'Three letters for police and the royal guard; digits for '
           'diplomatic missions.',
       entries: <GalleryEntry>[
         _e(

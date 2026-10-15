@@ -37,7 +37,8 @@ class RepublicOfIrelandSource extends GallerySource {
   List<GallerySection> get sections => _sections ??= <GallerySection>[
     GallerySection(
       title: 'Standard',
-      note: 'One design; the county sets the caption; the code is one or two letters.',
+      note:
+          'One design; the county sets the caption; the code is one or two letters.',
       entries: <GalleryEntry>[
         _entry(
           'dublin',

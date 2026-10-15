@@ -42,7 +42,8 @@ class BotswanaSource extends GallerySource {
   List<GallerySection> get sections => _sections ??= <GallerySection>[
     GallerySection(
       title: 'Private',
-      note: 'White at the front, yellow at the rear — one geometry, two '
+      note:
+          'White at the front, yellow at the rear — one geometry, two '
           'liveries.',
       entries: <GalleryEntry>[
         _e(

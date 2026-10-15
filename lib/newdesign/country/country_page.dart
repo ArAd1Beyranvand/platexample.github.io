@@ -66,6 +66,16 @@ class _CountryPageState extends State<CountryPage> {
     }
     final Duration d = PdMotion.of(context, const Duration(milliseconds: 450));
     final double end = _scroll.position.maxScrollExtent;
+    // Side by side (see the PdAutoGrid below) the detail is already in view.
+    final double pad = pdClamp(context, 16, 3, 32);
+    final double content = (MediaQuery.sizeOf(context).width - 2 * pad).clamp(
+      0,
+      1200,
+    );
+    if (content >= 2 * 380 + 24) {
+      setState(() => _scrolling = false);
+      return;
+    }
     if (d == Duration.zero) {
       _scroll.jumpTo(end);
     } else if (_scroll.offset < end) {

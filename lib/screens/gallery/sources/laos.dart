@@ -73,11 +73,7 @@ class LaosSource extends GallerySource {
           'Private company · black on white',
           'ອ ທ 1234',
         ),
-        _provincial(
-          LaosCategory.companyEv,
-          'Private company EV',
-          'ອ ທ 0004',
-        ),
+        _provincial(LaosCategory.companyEv, 'Private company EV', 'ອ ທ 0004'),
         _provincial(
           LaosCategory.taxableCompany,
           'Company (1% tax) · blue on white',

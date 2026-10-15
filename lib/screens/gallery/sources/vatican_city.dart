@@ -42,20 +42,40 @@ class VaticanCitySource extends GallerySource {
       title: 'Private and state',
       note: 'CV for private, SCV for the state.',
       entries: <GalleryEntry>[
-        _e('private', 'Private · CV', VaticanCityPlates.private,
-            VaticanCityThemes.private, 'CV 12345'),
-        _e('government', 'State · SCV', VaticanCityPlates.government,
-            VaticanCityThemes.government, 'SCV 00123'),
-        _e('official', 'Official', VaticanCityPlates.official,
-            VaticanCityThemes.official, 'SCV 456 A'),
+        _e(
+          'private',
+          'Private · CV',
+          VaticanCityPlates.private,
+          VaticanCityThemes.private,
+          'CV 12345',
+        ),
+        _e(
+          'government',
+          'State · SCV',
+          VaticanCityPlates.government,
+          VaticanCityThemes.government,
+          'SCV 00123',
+        ),
+        _e(
+          'official',
+          'Official',
+          VaticanCityPlates.official,
+          VaticanCityThemes.official,
+          'SCV 456 A',
+        ),
       ],
     ),
     GallerySection(
       title: 'Papal',
       note: 'SCV 1, the Pope\'s own car.',
       entries: <GalleryEntry>[
-        _e('papal', 'Papal car', VaticanCityPlates.papal,
-            VaticanCityThemes.papal, 'SCV 1'),
+        _e(
+          'papal',
+          'Papal car',
+          VaticanCityPlates.papal,
+          VaticanCityThemes.papal,
+          'SCV 1',
+        ),
       ],
     ),
   ];

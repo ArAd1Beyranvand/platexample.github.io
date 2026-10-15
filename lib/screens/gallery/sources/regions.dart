@@ -1,4 +1,5 @@
 import '../catalogue.dart';
+import 'sources.dart';
 import 'algeria.dart';
 import 'angola.dart';
 import 'belarus.dart';
@@ -18,10 +19,12 @@ import 'cuba.dart';
 import 'djibouti.dart';
 import 'egypt.dart';
 import 'eritrea.dart';
+import 'gambia.dart';
 import 'germany.dart';
+import 'guinea.dart';
+import 'portugal.dart';
 import 'italy.dart';
 import 'jordan.dart';
-import 'kazakhstan.dart';
 import 'libya.dart';
 import 'mali.dart';
 import 'malta.dart';
@@ -46,9 +49,7 @@ import 'tanzania.dart';
 import 'thailand.dart';
 import 'timor_leste.dart';
 import 'tunisia.dart';
-import 'turkmenistan.dart';
 import 'uruguay.dart';
-import 'uzbekistan.dart';
 import 'vatican_city.dart';
 import 'venezuela.dart';
 import 'zimbabwe.dart';
@@ -58,13 +59,32 @@ import 'zimbabwe.dart';
 /// it. Unlike Iranshahr and Yemen it ships no package of its own — its
 /// sections are its members' sections, flattened.
 class RegionSource extends GallerySource {
-  RegionSource(this.countryName, this.members);
+  RegionSource(
+    this.countryName,
+    this._own, {
+    this.alsoNames = const <String>{},
+  });
 
   @override
   final String countryName;
 
+  final List<GallerySource> _own;
+
+  /// Countries that sit at the top level (or under Iranshahr) and also belong
+  /// here. They are the same instances as there, so each plate stays one item;
+  /// resolved on first read because [gallerySources] is built around this.
+  final Set<String> alsoNames;
+
   @override
-  final List<GallerySource> members;
+  late final List<GallerySource> members = <GallerySource>[
+    ..._own,
+    for (final GallerySource top in gallerySources)
+      if (top is! RegionSource)
+        for (final GallerySource s in <GallerySource>[top, ...top.members])
+          if (alsoNames.contains(s.countryName) &&
+              !_own.any((GallerySource o) => identical(o, s)))
+            s,
+  ];
 
   @override
   List<String> get countryNames => <String>[
@@ -113,6 +133,7 @@ final List<GallerySource> europeCountries = <GallerySource>[
   MaltaSource(),
   NorwaySource(),
   VaticanCitySource(),
+  PortugalSource(),
 ];
 
 final List<GallerySource> africaCountries = <GallerySource>[
@@ -138,6 +159,8 @@ final List<GallerySource> africaCountries = <GallerySource>[
   SomaliaSource(),
   DjiboutiSource(),
   EritreaSource(),
+  GambiaSource(),
+  GuineaSource(),
 ];
 
 final List<GallerySource> americaCountries = <GallerySource>[
@@ -158,9 +181,6 @@ final List<GallerySource> americaCountries = <GallerySource>[
 /// to reach, not easier.
 final List<GallerySource> asiaCountries = <GallerySource>[
   JordanSource(),
-  KazakhstanSource(),
-  TurkmenistanSource(),
-  UzbekistanSource(),
   MongoliaSource(),
   BhutanSource(),
   SriLankaSource(),

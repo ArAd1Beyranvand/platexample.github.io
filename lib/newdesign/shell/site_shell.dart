@@ -92,7 +92,10 @@ class _SiteShellState extends State<SiteShell> {
           children: <Widget>[
             Positioned.fill(child: widget.child),
             if (_menuOpen)
-              Positioned.fill(top: headerExtent(context), child: const _MenuSheet()),
+              Positioned.fill(
+                top: headerExtent(context),
+                child: const _MenuSheet(),
+              ),
             Positioned(
               left: 0,
               right: 0,

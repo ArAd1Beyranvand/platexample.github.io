@@ -2,6 +2,7 @@ import '../catalogue.dart';
 import 'iran.dart';
 import 'syria.dart';
 import 'iranshahr.dart';
+import 'korea.dart';
 import 'india.dart';
 import 'indonesia.dart';
 import 'lebanon.dart';
@@ -10,8 +11,6 @@ import 'laos.dart';
 import 'maldives.dart';
 import 'malaysia.dart';
 import 'philippines.dart';
-import 'north_korea.dart';
-import 'south_korea.dart';
 import 'palestine.dart';
 import 'vietnam.dart';
 import 'yemen.dart';
@@ -29,7 +28,6 @@ import 'lesotho.dart';
 import 'senegal.dart';
 import 'mauritius.dart';
 import 'seychelles.dart';
-import 'guinea.dart';
 import 'andorra.dart';
 import 'greece.dart';
 import 'finland.dart';
@@ -46,6 +44,9 @@ import 'dominican_republic.dart';
 import 'sweden.dart';
 import 'netherlands.dart';
 import 'united_kingdom.dart';
+import 'ukraine.dart';
+import 'slovakia.dart';
+import 'switzerland.dart';
 
 export '../catalogue.dart';
 export 'algeria.dart';
@@ -74,6 +75,7 @@ export 'philippines.dart';
 export 'mali.dart';
 export 'mauritania.dart';
 export 'niger.dart';
+export 'korea.dart';
 export 'north_korea.dart';
 export 'south_korea.dart';
 export 'palestine.dart';
@@ -102,7 +104,6 @@ export 'cambodia.dart';
 export 'central_african_republic.dart';
 export 'egypt.dart';
 export 'jordan.dart';
-export 'kazakhstan.dart';
 export 'malta.dart';
 export 'mongolia.dart';
 export 'mozambique.dart';
@@ -115,9 +116,7 @@ export 'sri_lanka.dart';
 export 'tanzania.dart';
 export 'thailand.dart';
 export 'timor_leste.dart';
-export 'turkmenistan.dart';
 export 'uruguay.dart';
-export 'uzbekistan.dart';
 export 'vanuatu.dart';
 export 'vatican_city.dart';
 export 'cape_verde.dart';
@@ -132,6 +131,8 @@ export 'senegal.dart';
 export 'mauritius.dart';
 export 'seychelles.dart';
 export 'guinea.dart';
+export 'gambia.dart';
+export 'portugal.dart';
 export 'andorra.dart';
 export 'greece.dart';
 export 'finland.dart';
@@ -148,6 +149,9 @@ export 'dominican_republic.dart';
 export 'sweden.dart';
 export 'netherlands.dart';
 export 'united_kingdom.dart';
+export 'ukraine.dart';
+export 'slovakia.dart';
+export 'switzerland.dart';
 
 /// Every country this app can draw, in the order the catalogue lists them.
 ///
@@ -168,10 +172,91 @@ final List<GallerySource> gallerySources = <GallerySource>[
   const IranshahirSource(),
   YemenSource(),
   PalestineSource(),
-  RegionSource('Asia', asiaCountries),
-  RegionSource('Europe', europeCountries),
-  RegionSource('America', americaCountries),
-  RegionSource('Africa', africaCountries),
+  RegionSource(
+    'Asia',
+    asiaCountries,
+    alsoNames: <String>{
+      'Iran',
+      'Yemen',
+      'Palestine',
+      'North Korea',
+      'South Korea',
+      'Japan',
+      'Brunei',
+      'India',
+      'Indonesia',
+      'Kyrgyzstan',
+      'Laos',
+      'Lebanon',
+      'Malaysia',
+      'Maldives',
+      'Philippines',
+      'Syria',
+      'Vanuatu',
+      'Vietnam',
+      'Bahrain',
+      'Azerbaijan',
+      'Afghanistan',
+      'Armenia',
+      'Tajikistan',
+      'Kuwait',
+      'Qatar',
+      'Iraq',
+      'United Arab Emirates',
+      'Turkey',
+      'Oman',
+      'Kazakhstan',
+      'Uzbekistan',
+      'Turkmenistan',
+    },
+  ),
+  RegionSource(
+    'Europe',
+    europeCountries,
+    alsoNames: <String>{
+      'Andorra',
+      'Greece',
+      'Finland',
+      'Liechtenstein',
+      'San Marino',
+      'Sweden',
+      'Netherlands',
+      'United Kingdom',
+      'Ukraine',
+      'Slovakia',
+      'Switzerland',
+    },
+  ),
+  RegionSource(
+    'America',
+    americaCountries,
+    alsoNames: <String>{
+      'Canada',
+      'Bahamas',
+      'Antigua and Barbuda',
+      'Barbados',
+      'Dominica',
+      'Dominican Republic',
+      'Belize',
+    },
+  ),
+  RegionSource(
+    'Africa',
+    africaCountries,
+    alsoNames: <String>{
+      'Cape Verde',
+      'Cameroon',
+      'Chad',
+      'Equatorial Guinea',
+      'Gabon',
+      'Zambia',
+      'Madagascar',
+      'Lesotho',
+      'Senegal',
+      'Mauritius',
+      'Seychelles',
+    },
+  ),
   BruneiSource(),
   IndiaSource(),
   IndonesiaSource(),
@@ -180,9 +265,8 @@ final List<GallerySource> gallerySources = <GallerySource>[
   LebanonSource(),
   MalaysiaSource(),
   MaldivesSource(),
-  NorthKoreaSource(),
+  KoreaSource(),
   PhilippinesSource(),
-  SouthKoreaSource(),
   SyriaSource(),
   VanuatuSource(),
   VietnamSource(),
@@ -213,15 +297,21 @@ final List<GallerySource> gallerySources = <GallerySource>[
   SwedenSource(),
   NetherlandsSource(),
   UnitedKingdomSource(),
+  UkraineSource(),
+  SlovakiaSource(),
+  SwitzerlandSource(),
 ];
 
 /// Every source, umbrellas' members included — what a lookup by type wants.
-final List<GallerySource> allGallerySources = <GallerySource>[
-  for (final GallerySource top in gallerySources) ...<GallerySource>[
-    top,
-    ...top.members,
-  ],
-];
+final List<GallerySource> allGallerySources = () {
+  final List<GallerySource> all = <GallerySource>[];
+  for (final GallerySource top in gallerySources) {
+    for (final GallerySource s in <GallerySource>[top, ...top.members]) {
+      if (!all.any((GallerySource a) => identical(a, s))) all.add(s);
+    }
+  }
+  return all;
+}();
 
 /// The ten countries within Iranshahr for the `/iranshahr/{country}` detail
 /// pages and the `/iranshahr` overview page showing them as country groups.
@@ -237,6 +327,9 @@ final List<GallerySource> iranshahirCountries = <GallerySource>[
   const UaeSource(),
   const TurkeySource(),
   const OmanSource(),
+  const KazakhstanSource(),
+  const UzbekistanSource(),
+  const TurkmenistanSource(),
 ];
 
 /// The source [source] is a member of, or null for a top-level one.

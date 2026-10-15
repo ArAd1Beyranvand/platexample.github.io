@@ -326,6 +326,13 @@ packages:
       relative: true
     source: path
     version: "0.1.0"
+  gambia_plate:
+    dependency: "direct main"
+    description:
+      path: "../gambia_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
   germany_plate:
     dependency: "direct main"
     description:
@@ -689,6 +696,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
+  portugal_plate:
+    dependency: "direct main"
+    description:
+      path: "../portugal_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
   republic_of_ireland_plate:
     dependency: "direct main"
     description:
@@ -743,6 +757,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  slovakia_plate:
+    dependency: "direct main"
+    description:
+      path: "../slovakia_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
   slovenia_plate:
     dependency: "direct main"
     description:
@@ -817,6 +838,13 @@ packages:
       relative: true
     source: path
     version: "0.1.0"
+  switzerland_plate:
+    dependency: "direct main"
+    description:
+      path: "../switzerland_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
   syria_plate:
     dependency: "direct main"
     description:
@@ -876,6 +904,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.0"
+  ukraine_plate:
+    dependency: "direct main"
+    description:
+      path: "../ukraine_plate"
+      relative: true
+    source: path
+    version: "0.1.0"
   united_kingdom_plate:
     dependency: "direct main"
     description:

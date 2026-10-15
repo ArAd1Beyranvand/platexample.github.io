@@ -44,19 +44,34 @@ class VanuatuSource extends GallerySource {
       title: 'Standard',
       note: 'One to five digits in a single field.',
       entries: <GalleryEntry>[
-        _e('standard', 'Standard', VanuatuPlates.standard,
-            VanuatuThemes.standard, '7906'),
-        _e('standard.short', 'Standard · short number',
-            VanuatuPlates.standard, VanuatuThemes.standard, '42'),
+        _e(
+          'standard',
+          'Standard',
+          VanuatuPlates.standard,
+          VanuatuThemes.standard,
+          '7906',
+        ),
+        _e(
+          'standard.short',
+          'Standard · short number',
+          VanuatuPlates.standard,
+          VanuatuThemes.standard,
+          '42',
+        ),
       ],
     ),
     GallerySection(
       title: 'Diplomatic',
       note: 'Four letters and a digit.',
       entries: <GalleryEntry>[
-        _e('diplomatic', 'Diplomatic corps', VanuatuPlates.diplomatic,
-            VanuatuThemes.diplomatic, 'CORP 1',
-            validator: const VanuatuDiplomaticValidator()),
+        _e(
+          'diplomatic',
+          'Diplomatic corps',
+          VanuatuPlates.diplomatic,
+          VanuatuThemes.diplomatic,
+          'CORP 1',
+          validator: const VanuatuDiplomaticValidator(),
+        ),
       ],
     ),
   ];

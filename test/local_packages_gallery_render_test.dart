@@ -16,7 +16,6 @@ final List<Type> _localSources = <Type>[
   CentralAfricanRepublicSource,
   EgyptSource,
   JordanSource,
-  KazakhstanSource,
   MaltaSource,
   MongoliaSource,
   MozambiqueSource,
@@ -29,9 +28,7 @@ final List<Type> _localSources = <Type>[
   TanzaniaSource,
   ThailandSource,
   TimorLesteSource,
-  TurkmenistanSource,
   UruguaySource,
-  UzbekistanSource,
   VanuatuSource,
   VaticanCitySource,
 ];

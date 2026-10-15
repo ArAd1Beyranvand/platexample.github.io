@@ -44,18 +44,28 @@ class CameroonSource extends GallerySource {
       title: 'Regular',
       note: 'Region code, number, series.',
       entries: <GalleryEntry>[
-        _e('private', 'Private', CameroonPlates.private,
-            CameroonThemes.private, 'LT 128 AB',
-            const CameroonValidator()),
+        _e(
+          'private',
+          'Private',
+          CameroonPlates.private,
+          CameroonThemes.private,
+          'LT 128 AB',
+          const CameroonValidator(),
+        ),
       ],
     ),
     GallerySection(
       title: 'Diplomatic',
       note: 'CM D, a mission code and a suffix, white on green.',
       entries: <GalleryEntry>[
-        _e('diplomatic', 'Diplomatic', CameroonPlates.diplomatic,
-            CameroonThemes.diplomatic, 'CM D 38 2',
-            const CameroonDiplomaticValidator()),
+        _e(
+          'diplomatic',
+          'Diplomatic',
+          CameroonPlates.diplomatic,
+          CameroonThemes.diplomatic,
+          'CM D 38 2',
+          const CameroonDiplomaticValidator(),
+        ),
       ],
     ),
   ];

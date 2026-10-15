@@ -44,34 +44,69 @@ class MaltaSource extends GallerySource {
       title: 'Private — 520 × 110',
       note: 'Three letters then three digits.',
       entries: <GalleryEntry>[
-        _e('private', 'Private car', MaltaPlates.private,
-            MaltaThemes.private, 'ABC 123'),
-        _e('personalised', 'Personalised · eight cells',
-            MaltaPlates.personalised, MaltaThemes.personalised,
-            'MALTA001'),
+        _e(
+          'private',
+          'Private car',
+          MaltaPlates.private,
+          MaltaThemes.private,
+          'ABC 123',
+        ),
+        _e(
+          'personalised',
+          'Personalised · eight cells',
+          MaltaPlates.personalised,
+          MaltaThemes.personalised,
+          'MALTA001',
+        ),
       ],
     ),
     GallerySection(
       title: 'Usage colours',
-      note: 'Digit-only series on a coloured field; the taxi closes with the '
+      note:
+          'Digit-only series on a coloured field; the taxi closes with the '
           'island letter.',
       entries: <GalleryEntry>[
-        _e('taxi', 'Taxi · white on red', MaltaPlates.taxi,
-            MaltaThemes.taxi, '456 M'),
-        _e('bus', 'Bus · black on green', MaltaPlates.bus,
-            MaltaThemes.bus, '789'),
-        _e('trailer', 'Trailer · black on yellow', MaltaPlates.trailer,
-            MaltaThemes.trailer, '1234'),
+        _e(
+          'taxi',
+          'Taxi · white on red',
+          MaltaPlates.taxi,
+          MaltaThemes.taxi,
+          '456 M',
+        ),
+        _e(
+          'bus',
+          'Bus · black on green',
+          MaltaPlates.bus,
+          MaltaThemes.bus,
+          '789',
+        ),
+        _e(
+          'trailer',
+          'Trailer · black on yellow',
+          MaltaPlates.trailer,
+          MaltaThemes.trailer,
+          '1234',
+        ),
       ],
     ),
     GallerySection(
       title: 'Motorcycle and vintage',
       note: 'The same six cells as the private plate, on a shorter face.',
       entries: <GalleryEntry>[
-        _e('motorcycle', 'Motorcycle', MaltaPlates.motorcycle,
-            MaltaThemes.motorcycle, 'DEF 456'),
-        _e('vintage', 'Vintage', MaltaPlates.vintage,
-            MaltaThemes.vintage, 'GHJ 789'),
+        _e(
+          'motorcycle',
+          'Motorcycle',
+          MaltaPlates.motorcycle,
+          MaltaThemes.motorcycle,
+          'DEF 456',
+        ),
+        _e(
+          'vintage',
+          'Vintage',
+          MaltaPlates.vintage,
+          MaltaThemes.vintage,
+          'GHJ 789',
+        ),
       ],
     ),
   ];

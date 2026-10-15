@@ -300,6 +300,7 @@ class _LivePlateState extends State<LivePlate> {
                 : PlateCharacterPicker.show(context, a),
           ),
         ),
+        RegionCaption(controller: _c, gap: 10),
         const SizedBox(height: 14),
         _statusBox(
           Semantics(
@@ -573,15 +574,70 @@ class _StaticPlateState extends State<StaticPlate> {
   }
 
   @override
-  Widget build(BuildContext context) => ExcludeFocus(
-    child: PlateCanvas(
-      spec: widget.spec,
-      mode: PlateMode.display,
-      controller: _c,
-      theme: widget.theme,
-      country: widget.country,
-      animation: widget.animation,
-      onChooseCharacter: (_) async => null,
-    ),
+  Widget build(BuildContext context) => Column(
+    mainAxisSize: MainAxisSize.min,
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: <Widget>[
+      ExcludeFocus(
+        child: PlateCanvas(
+          spec: widget.spec,
+          mode: PlateMode.display,
+          controller: _c,
+          theme: widget.theme,
+          country: widget.country,
+          animation: widget.animation,
+          onChooseCharacter: (_) async => null,
+        ),
+      ),
+      RegionCaption(controller: _c, gap: 6),
+    ],
   );
+}
+
+/// Where the typed characters say the plate was issued, for the plates that
+/// have no room to print it ([PlateSpec.resolveRegion]). Takes no space on a
+/// plate without a resolver; on one with it, the line is always reserved so
+/// the card does not jump as the caption comes and goes.
+class RegionCaption extends StatelessWidget {
+  const RegionCaption({super.key, required this.controller, this.gap = 8});
+
+  final PlateController controller;
+  final double gap;
+
+  static const double _size = 12;
+
+  @override
+  Widget build(BuildContext context) {
+    if (controller.spec.resolveRegion == null) return const SizedBox.shrink();
+    final PdTokens t = context.tokens;
+    return ListenableBuilder(
+      listenable: controller,
+      builder: (BuildContext context, Widget? _) {
+        final String? region = controller.regionCaption;
+        return Padding(
+          padding: EdgeInsets.only(top: gap),
+          child: SizedBox(
+            height: _size * 1.4,
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 200),
+              child: region == null
+                  ? const SizedBox.shrink(key: ValueKey<String>(''))
+                  : Text(
+                      region,
+                      key: ValueKey<String>(region),
+                      textAlign: TextAlign.center,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: _size,
+                        fontWeight: FontWeight.w600,
+                        color: t.muted,
+                      ),
+                    ),
+            ),
+          ),
+        );
+      },
+    );
+  }
 }

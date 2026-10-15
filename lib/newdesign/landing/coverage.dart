@@ -11,58 +11,116 @@ import 'text_styles.dart';
 
 class _Row {
   _Row(this.source)
-    : iso = countryMeta[source.countryName]?.$1 ?? '',
-      native = countryMeta[source.countryName]?.$2 ?? '',
-      item = firstItemOf(source);
+    : name = source.countryName,
+      package = source.packageName,
+      terms = source is RegionSource ? <String>[] : source.packageNames,
+      iso =
+          countryMeta[source.countryName == 'Korea'
+                  ? 'North Korea'
+                  : source.countryName]
+              ?.$1 ??
+          '',
+      native =
+          countryMeta[source.countryName == 'Korea'
+                  ? 'North Korea'
+                  : source.countryName]
+              ?.$2 ??
+          '',
+      item = firstItemOf(source),
+      alias = false;
+
+  /// A country that has no package of its own: it lives in [parent]'s, so the
+  /// row names the country and points at that package. It shows only in a
+  /// search, and opens [target].
+  _Row.alias(
+    this.source,
+    GallerySource parent, {
+    required this.name,
+    List<String> aka = const <String>[],
+  }) : package = parent.packageName,
+       terms = <String>[...parent.packageNames, ...aka],
+       iso = countryMeta[name]?.$1 ?? '',
+       native = countryMeta[name]?.$2 ?? '',
+       item = firstItemOf(source),
+       alias = true;
 
   final GallerySource source;
+  final String name;
+  final String package;
+  final List<String> terms;
   final String iso;
   final String native;
+  final bool alias;
 
   /// The country's leading plate, and null for a region (its plates are its
   /// members', so there is no one plate to call the region's own).
   final CatalogueItem? item;
 
-  bool get isRegion => isUmbrella(source);
+  bool get isRegion => !alias && isUmbrella(source);
 
   /// A region opens even with no [item]; a country needs one.
   bool get opens => isRegion || item != null;
 
-  /// A region also matches on its members' names, so searching a member
-  /// surfaces Iranshahr alongside the member itself.
   late final List<String> _haystack = <String>[
-    source.countryName,
+    name,
     iso,
-    ...source.packageNames,
+    ...terms,
     native,
-    for (final GallerySource m in source.members) m.countryName,
   ].map(normaliseQuery).toList();
 
-  bool matches(String q) =>
-      q.isEmpty ||
-      _haystack.any((String h) => h.contains(q)) ||
-      (q.length == 2 && iso.toLowerCase() == q);
+  bool get isLead => !alias && _leadOrder.contains(source.countryName);
+
+  /// With no query only the lead rows show; every other country is found by
+  /// searching.
+  bool matches(String q) => q.isEmpty
+      ? isLead
+      : _haystack.any((String h) => h.contains(q)) ||
+            (q.length == 2 && iso.toLowerCase() == q);
 }
 
 /// The head of the list, in the order the catalogue leads with: Iran, the two
-/// groups around it, then Palestine.
+/// groups around it, Palestine, North Korea, then the four continents.
 const List<String> _leadOrder = <String>[
   'Iran',
   'Iranshahr',
   'Yemen',
   'Palestine',
+  'Korea',
+  'Asia',
+  'Africa',
+  'Europe',
+  'America',
 ];
 
 /// The lead rows above, then every other country A–Z. Continents are spread
-/// into their countries; Iranshahr and Yemen stay one row each.
+/// into their countries as well as keeping a row of their own; Iranshahr and
+/// Yemen stay one row each.
 final List<_Row> _rows = () {
-  final List<GallerySource> all = <GallerySource>[
-    for (final GallerySource s in gallerySources)
-      if (s is RegionSource)
-        ...s.members.where((GallerySource m) => m.sections.isNotEmpty)
-      else if (isUmbrella(s) || s.sections.isNotEmpty)
-        s,
-  ];
+  final List<GallerySource> all = <GallerySource>[];
+  void add(GallerySource s) {
+    if (!all.any((GallerySource a) => identical(a, s))) all.add(s);
+  }
+
+  for (final GallerySource s in gallerySources) {
+    if (s is RegionSource) {
+      add(s);
+    } else if (isUmbrella(s) || s.sections.isNotEmpty) {
+      add(s);
+    }
+  }
+  // A continent's own countries (those with no top-level source). Iranshahr's
+  // members reach the list as aliases below, so they are skipped here.
+  for (final GallerySource s in gallerySources) {
+    if (s is! RegionSource) continue;
+    for (final GallerySource m in s.members) {
+      final bool underOther = gallerySources.any(
+        (GallerySource t) =>
+            t is! RegionSource &&
+            t.members.any((GallerySource x) => identical(x, m)),
+      );
+      if (m.sections.isNotEmpty && !underOther) add(m);
+    }
+  }
   final List<GallerySource> lead = <GallerySource>[
     for (final String name in _leadOrder)
       ...all.where((GallerySource s) => s.countryName == name),
@@ -77,6 +135,17 @@ final List<_Row> _rows = () {
       );
   return <_Row>[
     for (final GallerySource s in <GallerySource>[...lead, ...rest]) _Row(s),
+    for (final GallerySource s in all)
+      if (s is! RegionSource && s.countryName != 'Yemen')
+        for (final GallerySource m in s.members)
+          if (m.countryName != 'North Korea')
+            _Row.alias(m, s, name: m.countryName),
+    _Row.alias(
+      all.firstWhere((GallerySource s) => s.countryName == 'Yemen'),
+      all.firstWhere((GallerySource s) => s.countryName == 'Yemen'),
+      name: 'Riyadh',
+      aka: <String>['Saudi Arabia'],
+    ),
   ];
 }();
 
@@ -135,8 +204,6 @@ class _CoverageSectionState extends State<CoverageSection> {
       ],
     );
 
-    final bool landscape =
-        MediaQuery.orientationOf(context) == Orientation.landscape;
 
     final Widget list = Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -152,29 +219,17 @@ class _CoverageSectionState extends State<CoverageSection> {
           ),
         ),
         const SizedBox(height: 12),
-        ConstrainedBox(
-          constraints: BoxConstraints(
-            maxHeight: 480,
-            minHeight: landscape ? 480 : 0,
-          ),
-          child: rows.isEmpty
-              ? Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  child: Text(
-                    'No plate matches “${_q.text.trim()}”. Try a country '
-                    'name, an ISO code like DE, or a package name.',
-                    style: body(t),
-                  ),
-                )
-              : PdScrollHandoff(
-                  child: ListView.builder(
-                    shrinkWrap: !landscape,
-                    itemCount: rows.length,
-                    itemBuilder: (BuildContext context, int i) =>
-                        _CoverageRow(row: rows[i]),
-                  ),
-                ),
-        ),
+        if (rows.isEmpty)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            child: Text(
+              'No plate matches “${_q.text.trim()}”. Try a country '
+              'name, an ISO code like DE, or a package name.',
+              style: body(t),
+            ),
+          )
+        else
+          for (final _Row row in rows) _CoverageRow(row: row),
       ],
     );
 
@@ -212,7 +267,7 @@ class _CoverageRow extends StatelessWidget {
                 children: <Widget>[
                   Flexible(
                     child: Text(
-                      row.source.countryName,
+                      row.name,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontSize: 15,
@@ -221,8 +276,7 @@ class _CoverageRow extends StatelessWidget {
                       ),
                     ),
                   ),
-                  if (row.native.isNotEmpty &&
-                      row.native != row.source.countryName)
+                  if (row.native.isNotEmpty && row.native != row.name)
                     Padding(
                       padding: const EdgeInsets.only(left: 10),
                       child: Text(
@@ -237,7 +291,7 @@ class _CoverageRow extends StatelessWidget {
                   const SizedBox(width: 12),
                   Flexible(
                     child: Text(
-                      row.source.packageName,
+                      row.package,
                       overflow: TextOverflow.ellipsis,
                       style: monoStyle(t, size: 12).copyWith(color: t.muted),
                     ),

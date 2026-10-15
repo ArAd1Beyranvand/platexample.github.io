@@ -45,15 +45,11 @@ class CatalogueItem {
 /// A [RegionSource]'s sections are its members' own, so it gets no items of
 /// its own: each plate lives once, under its country.
 final List<CatalogueItem> catalogueItems = <CatalogueItem>[
-  for (final GallerySource source in <GallerySource>[
-    for (final GallerySource top in gallerySources) ...<GallerySource>[
-      if (top is! RegionSource) top,
-      ...top.members,
-    ],
-  ])
-    for (final GallerySection section in source.sections)
-      for (final GalleryEntry entry in section.entries)
-        CatalogueItem(source: source, section: section, entry: entry),
+  for (final GallerySource source in allGallerySources)
+    if (source is! RegionSource)
+      for (final GallerySection section in source.sections)
+        for (final GalleryEntry entry in section.entries)
+          CatalogueItem(source: source, section: section, entry: entry),
 ];
 
 /// The items matching a free-text [query] and an optional [country].

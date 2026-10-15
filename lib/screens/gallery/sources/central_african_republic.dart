@@ -29,8 +29,7 @@ class CentralAfricanRepublicSource extends GallerySource {
           label: 'Private car',
           spec: CentralAfricanRepublicPlates.private,
           theme: CentralAfricanRepublicThemes.private,
-          country:
-              CentralAfricanRepublicCountry.centralAfricanRepublic,
+          country: CentralAfricanRepublicCountry.centralAfricanRepublic,
           validator: const CentralAfricanRepublicValidator(),
           sampleValues: 'AB 123 CD'.split(' '),
         ),

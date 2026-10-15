@@ -25,13 +25,14 @@ class IranshahirSource extends GallerySource {
   List<GallerySource> get members => iranshahirCountries;
 
   @override
-  String get overviewTitle => 'Nine countries, one package';
+  String get overviewTitle => 'Fourteen countries, one package';
 
   @override
   String get note =>
-      'Eleven countries in one package: Bahrain, Azerbaijan, Afghanistan, '
-      'Armenia, Tajikistan, Kuwait, Qatar, Iraq, the UAE, Turkey and Oman. They share no '
-      'design; each has its own specs, colours and country block.';
+      'Fourteen countries in one package: Bahrain, Azerbaijan, Afghanistan, '
+      'Armenia, Tajikistan, Kuwait, Qatar, Iraq, the UAE, Turkey, Oman, '
+      'Kazakhstan, Uzbekistan and Turkmenistan. They share no design; each '
+      'has its own specs, colours and country block.';
 
   /// Built once, and returned by identity: the pickers select a section by
   /// equality, and a fresh list per read would make the selected one never
@@ -419,6 +420,9 @@ class IranshahirSource extends GallerySource {
     _uaeSection(),
     _turkeySection(),
     _omanSection(),
+    _kazakhstanSection(),
+    _uzbekistanSection(),
+    _turkmenistanSection(),
   ];
 }
 
@@ -1795,7 +1799,13 @@ GallerySection _turkeySection() => GallerySection(
       TurkeyThemes.civilian,
       '34 SAB 012',
     ),
-    _tr('tr.taxi', 'Taxi', TurkeyPlates.taxi, TurkeyThemes.civilian, '06 T 0123'),
+    _tr(
+      'tr.taxi',
+      'Taxi',
+      TurkeyPlates.taxi,
+      TurkeyThemes.civilian,
+      '06 T 0123',
+    ),
     _tr(
       'tr.taxi.istanbul',
       'Istanbul taxi',
@@ -1989,5 +1999,399 @@ class OmanSource extends GallerySource {
 
   static final List<GallerySection> _sections = <GallerySection>[
     _omanSection(),
+  ];
+}
+
+/// Kazakhstan's entries, built fresh each call for the same reason as the other
+/// country sections.
+GalleryEntry _kzEntry(
+  String id,
+  String label,
+  PlateSpec spec,
+  PlateTheme theme,
+  String values, {
+  PlateValidator validator = const KazakhstanValidator(),
+}) => GalleryEntry(
+  id: 'kz.$id',
+  label: label,
+  spec: spec,
+  theme: theme,
+  country: KazakhstanCountry.kazakhstan,
+  validator: validator,
+  sampleValues: values.split(' '),
+);
+
+List<GallerySection> _kzSections() => <GallerySection>[
+  GallerySection(
+    title: 'Private — 520 × 112',
+    note: 'Three digits, three letters, two digits.',
+    entries: <GalleryEntry>[
+      _kzEntry(
+        'private',
+        'Private car',
+        KazakhstanPlates.private,
+        KazakhstanThemes.private,
+        '017 ABC 02',
+      ),
+    ],
+  ),
+  GallerySection(
+    title: 'Non-private and diplomatic',
+    note:
+        'The non-private plate carries two letters rather than three; the '
+        'diplomatic plate leads with the status letter.',
+    entries: <GalleryEntry>[
+      _kzEntry(
+        'non_private',
+        'Commercial and state',
+        KazakhstanPlates.nonPrivate,
+        KazakhstanThemes.nonPrivate,
+        '050 AB 02',
+        validator: const KazakhstanValidator(letters: 2),
+      ),
+      _kzEntry(
+        'diplomatic',
+        'Diplomatic corps',
+        KazakhstanPlates.diplomatic,
+        KazakhstanThemes.diplomatic,
+        'D 001 023',
+        validator: const KazakhstanDiplomaticValidator(),
+      ),
+    ],
+  ),
+];
+
+const String _kazakhstanNote =
+    'A region number, a letter block and a two-digit tail, black on white '
+    'with the flag and the KZ code on the right. The non-private plate drops '
+    'a letter; the diplomatic plate leads with the status letter. Not drawn: '
+    'the Kazakh caption under the flag and the older Soviet-era formats.';
+
+GallerySection _kazakhstanSection() => GallerySection(
+  title: 'Kazakhstan',
+  note: _kazakhstanNote,
+  entries: <GalleryEntry>[
+    for (final GallerySection s in _kzSections()) ...s.entries,
+  ],
+);
+
+class KazakhstanSource extends GallerySource {
+  const KazakhstanSource();
+
+  @override
+  String get countryName => 'Kazakhstan';
+
+  @override
+  String get packageName => 'iranshahr_plate';
+
+  @override
+  String get note => _kazakhstanNote;
+
+  @override
+  List<GallerySection> get sections => _sections;
+
+  static final List<GallerySection> _sections = <GallerySection>[
+    _kazakhstanSection(),
+  ];
+}
+
+/// Uzbekistan's entries, built fresh each call for the same reason as the other
+/// country sections.
+GalleryEntry _uzEntry(
+  String id,
+  String label,
+  PlateSpec spec,
+  PlateTheme theme,
+  String values, {
+  PlateValidator validator = const UzbekistanValidator(),
+}) => GalleryEntry(
+  id: 'uz.$id',
+  label: label,
+  spec: spec,
+  theme: theme,
+  country: UzbekistanCountry.uzbekistan,
+  validator: validator,
+  sampleValues: values.split(' '),
+);
+
+List<GallerySection> _uzSections() => <GallerySection>[
+  GallerySection(
+    title: 'Passenger',
+    note: 'Region, series letter, serial, then the closing letters.',
+    entries: <GalleryEntry>[
+      _uzEntry(
+        'passenger',
+        'Passenger car',
+        UzbekistanPlates.passenger,
+        UzbekistanThemes.passenger,
+        '01 A 123 BC',
+      ),
+    ],
+  ),
+  GallerySection(
+    title: 'Foreign and temporary',
+    note: 'Digits only, on a coloured field.',
+    entries: <GalleryEntry>[
+      _uzEntry(
+        'foreign_citizen',
+        'Foreign citizen',
+        UzbekistanPlates.foreignCitizen,
+        UzbekistanThemes.foreignCitizen,
+        '10 123456',
+      ),
+      _uzEntry(
+        'foreign_company',
+        'Foreign company',
+        UzbekistanPlates.foreignCompany,
+        UzbekistanThemes.foreignCompany,
+        '20 654321',
+      ),
+      _uzEntry(
+        'temporary',
+        'Temporary',
+        UzbekistanPlates.temporary,
+        UzbekistanThemes.temporary,
+        '301122 33',
+      ),
+    ],
+  ),
+  GallerySection(
+    title: 'Diplomatic',
+    note: 'The ambassador, diplomat and United Nations registers.',
+    entries: <GalleryEntry>[
+      _uzEntry(
+        'ambassador',
+        'Ambassador',
+        UzbekistanPlates.ambassador,
+        UzbekistanThemes.diplomatic,
+        '001 001',
+        validator: const UzbekistanDiplomaticValidator(),
+      ),
+      _uzEntry(
+        'diplomat',
+        'Diplomat',
+        UzbekistanPlates.diplomat,
+        UzbekistanThemes.diplomatic,
+        'D 002 015',
+        validator: const UzbekistanDiplomaticValidator(),
+      ),
+      _uzEntry(
+        'united_nations',
+        'United Nations',
+        UzbekistanPlates.unitedNations,
+        UzbekistanThemes.unitedNations,
+        '1234',
+        validator: const UzbekistanUnitedNationsValidator(),
+      ),
+    ],
+  ),
+  GallerySection(
+    title: 'Trailer and motorcycle',
+    note: 'Shorter faces, the number stacked on two rows.',
+    entries: <GalleryEntry>[
+      _uzEntry(
+        'trailer',
+        'Trailer',
+        UzbekistanPlates.trailer,
+        UzbekistanThemes.trailer,
+        '0123 AB 45',
+      ),
+      _uzEntry(
+        'motorcycle',
+        'Motorcycle',
+        UzbekistanPlates.motorcycle,
+        UzbekistanThemes.motorcycle,
+        '012 CD 34',
+      ),
+    ],
+  ),
+];
+
+const String _uzbekistanNote =
+    'The region number leads, then the series letter, the serial and the '
+    'closing letters. The foreign and temporary plates are digits only, the '
+    'diplomatic plate leads with D or T. Not drawn: the UZ oval and the '
+    'older Soviet-era formats.';
+
+GallerySection _uzbekistanSection() => GallerySection(
+  title: 'Uzbekistan',
+  note: _uzbekistanNote,
+  entries: <GalleryEntry>[
+    for (final GallerySection s in _uzSections()) ...s.entries,
+  ],
+);
+
+class UzbekistanSource extends GallerySource {
+  const UzbekistanSource();
+
+  @override
+  String get countryName => 'Uzbekistan';
+
+  @override
+  String get packageName => 'iranshahr_plate';
+
+  @override
+  String get note => _uzbekistanNote;
+
+  @override
+  List<GallerySection> get sections => _sections;
+
+  static final List<GallerySection> _sections = <GallerySection>[
+    _uzbekistanSection(),
+  ];
+}
+
+/// Turkmenistan's entries, built fresh each call for the same reason as the other
+/// country sections.
+GalleryEntry _tmEntry(
+  String id,
+  String label,
+  PlateSpec spec,
+  PlateTheme theme,
+  String values,
+  TurkmenistanValidator validator,
+) => GalleryEntry(
+  id: 'tm.$id',
+  label: label,
+  spec: spec,
+  theme: theme,
+  country: TurkmenistanCountry.turkmenistan,
+  validator: validator,
+  sampleValues: values.split(' '),
+);
+
+List<GallerySection> _tmSections() => <GallerySection>[
+  GallerySection(
+    title: 'Private',
+    note: 'The classic plate carries one region letter, the current two.',
+    entries: <GalleryEntry>[
+      _tmEntry(
+        'classic',
+        'Classic',
+        TurkmenistanPlates.classic,
+        TurkmenistanThemes.classic,
+        'A 12 34 AG',
+        TurkmenistanValidator.classic,
+      ),
+      _tmEntry(
+        'private',
+        'Private car',
+        TurkmenistanPlates.private,
+        TurkmenistanThemes.private,
+        'AT 5678 AG',
+        const TurkmenistanValidator(),
+      ),
+      _tmEntry(
+        'trailer',
+        'Trailer',
+        TurkmenistanPlates.trailer,
+        TurkmenistanThemes.private,
+        'AT 1122 BN',
+        TurkmenistanValidator.trailer,
+      ),
+    ],
+  ),
+  GallerySection(
+    title: 'Foreign and export',
+    note: 'The foreign plate leads with the status digit.',
+    entries: <GalleryEntry>[
+      _tmEntry(
+        'foreign',
+        'Foreign resident',
+        TurkmenistanPlates.foreign,
+        TurkmenistanThemes.foreign,
+        '1 H 23456',
+        TurkmenistanValidator.foreign,
+      ),
+      _tmEntry(
+        'foreign_trailer',
+        'Foreign trailer',
+        TurkmenistanPlates.foreignTrailer,
+        TurkmenistanThemes.foreign,
+        '2 HT 8901',
+        TurkmenistanValidator.foreignTrailer,
+      ),
+      _tmEntry(
+        'export',
+        'Export',
+        TurkmenistanPlates.export,
+        TurkmenistanThemes.foreign,
+        'ABC 1234',
+        TurkmenistanValidator.export,
+      ),
+    ],
+  ),
+  GallerySection(
+    title: 'State',
+    note: 'Diplomatic, government, military and ceremonial registers.',
+    entries: <GalleryEntry>[
+      _tmEntry(
+        'diplomatic',
+        'Diplomatic corps',
+        TurkmenistanPlates.diplomatic,
+        TurkmenistanThemes.diplomatic,
+        '12 CD 345',
+        TurkmenistanValidator.diplomatic,
+      ),
+      _tmEntry(
+        'government',
+        'Government',
+        TurkmenistanPlates.government,
+        TurkmenistanThemes.government,
+        '1234 AGA',
+        TurkmenistanValidator.government,
+      ),
+      _tmEntry(
+        'military',
+        'Military',
+        TurkmenistanPlates.military,
+        TurkmenistanThemes.government,
+        '5678 AG',
+        TurkmenistanValidator.military,
+      ),
+      _tmEntry(
+        'ceremony',
+        'Ceremonial',
+        TurkmenistanPlates.ceremony,
+        TurkmenistanThemes.government,
+        'TURKME 1',
+        TurkmenistanValidator.ceremony,
+      ),
+    ],
+  ),
+];
+
+const String _turkmenistanNote =
+    'A region letter, four digits and the two-letter country code. Each '
+    'series reorders the register rather than only recolouring it — the '
+    'foreign plate leads with a digit, the government plate ends with the '
+    'letters. Not drawn: the crescent and stars in full detail and the '
+    'transit series.';
+
+GallerySection _turkmenistanSection() => GallerySection(
+  title: 'Turkmenistan',
+  note: _turkmenistanNote,
+  entries: <GalleryEntry>[
+    for (final GallerySection s in _tmSections()) ...s.entries,
+  ],
+);
+
+class TurkmenistanSource extends GallerySource {
+  const TurkmenistanSource();
+
+  @override
+  String get countryName => 'Turkmenistan';
+
+  @override
+  String get packageName => 'iranshahr_plate';
+
+  @override
+  String get note => _turkmenistanNote;
+
+  @override
+  List<GallerySection> get sections => _sections;
+
+  static final List<GallerySection> _sections = <GallerySection>[
+    _turkmenistanSection(),
   ];
 }

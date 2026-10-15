@@ -118,6 +118,12 @@ dependencies:
     path: ../laos_plate
   vietnam_plate:
     path: ../vietnam_plate
+  switzerland_plate:
+    path: ../switzerland_plate
+  slovakia_plate:
+    path: ../slovakia_plate
+  ukraine_plate:
+    path: ../ukraine_plate
   united_kingdom_plate:
     path: ../united_kingdom_plate
   netherlands_plate:
@@ -152,6 +158,10 @@ dependencies:
     path: ../liechtenstein_plate
   guinea_plate:
     path: ../guinea_plate
+  gambia_plate:
+    path: ../gambia_plate
+  portugal_plate:
+    path: ../portugal_plate
   seychelles_plate:
     path: ../seychelles_plate
   mauritius_plate:
