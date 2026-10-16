@@ -40,7 +40,7 @@ dependencies:
   # plate_core ships no country and no assets, so this app names every country
   # it draws. An app that draws one country depends on one.
   # ---------------------------------------------------------------------------
-  plate_core: ^0.11.5
+  plate_core: ^0.12.0
 
   # The optional on-screen keypad + slot picker, extracted from plate_core
   # in P7. Depends on plate_core for PlateAlphabet.
