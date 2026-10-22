@@ -26,12 +26,7 @@ class BahamasSource extends GallerySource {
       'truck series prefixes a T. Validity stickers and the 1992 tourism logo '
       'are not drawn.';
 
-  GalleryEntry _entry(
-    String id,
-    String label,
-    PlateSpec spec,
-    PlateTheme theme,
-  ) => GalleryEntry(
+  GalleryEntry _entry(String id, String label, PlateSpec spec, PlateTheme theme) => GalleryEntry(
     id: 'bs.$id',
     label: label,
     spec: spec,
@@ -49,36 +44,16 @@ class BahamasSource extends GallerySource {
           'The serial is about 75% of the real height: the plate face is '
           'condensed and a run wider than its box is scaled down.',
       entries: <GalleryEntry>[
-        _entry(
-          'yellow',
-          '1987 · black on yellow',
-          BahamasPlates.yellow,
-          BahamasThemes.yellow,
-        ),
-        _entry(
-          'green',
-          '1990 · white on green',
-          BahamasPlates.green,
-          BahamasThemes.green,
-        ),
-        _entry(
-          'pale',
-          '1977 · truck, black on pale cyan',
-          BahamasPlates.pale,
-          BahamasThemes.pale,
-        ),
+        _entry('yellow', '1987 · black on yellow', BahamasPlates.yellow, BahamasThemes.yellow),
+        _entry('green', '1990 · white on green', BahamasPlates.green, BahamasThemes.green),
+        _entry('pale', '1977 · truck, black on pale cyan', BahamasPlates.pale, BahamasThemes.pale),
         _entry(
           'landfall',
           '1992 · First Landfall truck',
           BahamasPlates.landfall,
           BahamasThemes.landfall,
         ),
-        _entry(
-          'blue',
-          '1997 · gold on blue',
-          BahamasPlates.blue,
-          BahamasThemes.blue,
-        ),
+        _entry('blue', '1997 · gold on blue', BahamasPlates.blue, BahamasThemes.blue),
       ],
     ),
   ];

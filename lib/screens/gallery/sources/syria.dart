@@ -66,53 +66,45 @@ class SyriaSource extends GallerySource {
           'Six digits; the region in Kurdish code, Arabic, and Syriac where '
           'the district has a Syriac name.',
       entries: <GalleryEntry>[
-        for (final (id, label, region, theme)
-            in <(String, String, AanesRegion, PlateTheme)>[
-              (
-                'aanes.private',
-                'Private · blue on white · Qamishli',
-                AanesRegion.qamishli,
-                SyriaThemes.aanesPrivate,
-              ),
-              (
-                'aanes.commercial',
-                'Commercial · red on white · Hasaka',
-                AanesRegion.hasaka,
-                SyriaThemes.aanesCommercial,
-              ),
-              (
-                'aanes.security',
-                'Security · white on blue · Qamishli',
-                AanesRegion.qamishli,
-                SyriaThemes.aanesSecurity,
-              ),
-              (
-                'aanes.administrative',
-                'Administrative · white on green · Hasaka',
-                AanesRegion.hasaka,
-                SyriaThemes.aanesAdministrative,
-              ),
-              (
-                'aanes.bilingual',
-                'Administrative · bilingual · Tabqa',
-                AanesRegion.tabqa,
-                SyriaThemes.aanesAdministrative,
-              ),
-              (
-                'aanes.kobani',
-                'Private · bilingual · Kobani',
-                AanesRegion.kobani,
-                SyriaThemes.aanesPrivate,
-              ),
-            ])
-          _entry(
-            id,
-            label,
-            SyriaPlates.aanes(region),
-            theme,
-            const AanesValidator(),
-            '123456',
+        for (final (id, label, region, theme) in <(String, String, AanesRegion, PlateTheme)>[
+          (
+            'aanes.private',
+            'Private · blue on white · Qamishli',
+            AanesRegion.qamishli,
+            SyriaThemes.aanesPrivate,
           ),
+          (
+            'aanes.commercial',
+            'Commercial · red on white · Hasaka',
+            AanesRegion.hasaka,
+            SyriaThemes.aanesCommercial,
+          ),
+          (
+            'aanes.security',
+            'Security · white on blue · Qamishli',
+            AanesRegion.qamishli,
+            SyriaThemes.aanesSecurity,
+          ),
+          (
+            'aanes.administrative',
+            'Administrative · white on green · Hasaka',
+            AanesRegion.hasaka,
+            SyriaThemes.aanesAdministrative,
+          ),
+          (
+            'aanes.bilingual',
+            'Administrative · bilingual · Tabqa',
+            AanesRegion.tabqa,
+            SyriaThemes.aanesAdministrative,
+          ),
+          (
+            'aanes.kobani',
+            'Private · bilingual · Kobani',
+            AanesRegion.kobani,
+            SyriaThemes.aanesPrivate,
+          ),
+        ])
+          _entry(id, label, SyriaPlates.aanes(region), theme, const AanesValidator(), '123456'),
         _entry(
           'aanes.motorcycle',
           'Motorcycle · Qamishli',

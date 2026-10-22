@@ -63,30 +63,21 @@ class _LandingPageState extends State<LandingPage> {
       if (widget.anchor != LandingAnchor.top && section != null) {
         final RenderBox box = section.findRenderObject()! as RenderBox;
         final RenderBox viewport = context.findRenderObject()! as RenderBox;
-        final double top = box
-            .localToGlobal(Offset.zero, ancestor: viewport)
-            .dy;
+        final double top = box.localToGlobal(Offset.zero, ancestor: viewport).dy;
         target = (_scroll.offset + top - headerExtent(context) - 24).clamp(
           0,
           _scroll.position.maxScrollExtent,
         );
       }
-      final Duration d = PdMotion.of(
-        context,
-        const Duration(milliseconds: 400),
-      );
-      final FocusNode? search = widget.focusSearch
-          ? PdNav.of(context).searchFocus
-          : null;
+      final Duration d = PdMotion.of(context, const Duration(milliseconds: 400));
+      final FocusNode? search = widget.focusSearch ? PdNav.of(context).searchFocus : null;
       if (!animate || d == Duration.zero) {
         _scroll.jumpTo(target);
         search?.requestFocus();
       } else {
-        _scroll.animateTo(target, duration: d, curve: Curves.easeOutCubic).then(
-          (_) {
-            if (mounted) search?.requestFocus();
-          },
-        );
+        _scroll.animateTo(target, duration: d, curve: Curves.easeOutCubic).then((_) {
+          if (mounted) search?.requestFocus();
+        });
       }
     });
   }
@@ -97,21 +88,19 @@ class _LandingPageState extends State<LandingPage> {
     Widget section(LandingAnchor? anchor, Widget child) => Padding(
       key: anchor == null ? null : _keys[anchor],
       padding: EdgeInsets.only(bottom: gap),
-      child: PdContainer(child: child),
+      // A layer per section, so a scroll frame shifts cached pictures instead
+      // of re-recording the whole page — ListView does this per child for free.
+      child: RepaintBoundary(child: PdContainer(child: child)),
     );
     return SingleChildScrollView(
       controller: _scroll,
-      padding: EdgeInsets.only(
-        top: headerExtent(context) + pdClamp(context, 32, 5, 72),
-      ),
+      padding: EdgeInsets.only(top: headerExtent(context) + pdClamp(context, 32, 5, 72)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           section(
             LandingAnchor.top,
-            LandingHero(
-              installLine: 'flutter pub add plate_core --git-url $kCoreRepo',
-            ),
+            LandingHero(installLine: 'flutter pub add plate_core --git-url $kCoreRepo'),
           ),
           section(null, const WhySection()),
           section(null, const CompareSection()),

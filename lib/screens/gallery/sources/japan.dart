@@ -106,20 +106,14 @@ class JapanSource extends GallerySource {
           'export plate replaces the kanji and hiragana with Roman letters '
           'and carries the flag.',
       entries: <GalleryEntry>[
-        _e(
-          'diplomatic',
-          'Diplomatic',
-          JapanPlates.diplomatic,
-          JapanThemes.diplomatic,
-          <String?>['13401'],
-        ),
-        _e(
-          'export',
-          'Export · Saitama Ōmiya',
-          JapanPlates.export,
-          JapanThemes.export,
-          <String?>['STO', 'HA', '3219'],
-        ),
+        _e('diplomatic', 'Diplomatic', JapanPlates.diplomatic, JapanThemes.diplomatic, <String?>[
+          '13401',
+        ]),
+        _e('export', 'Export · Saitama Ōmiya', JapanPlates.export, JapanThemes.export, <String?>[
+          'STO',
+          'HA',
+          '3219',
+        ]),
       ],
     ),
   ];

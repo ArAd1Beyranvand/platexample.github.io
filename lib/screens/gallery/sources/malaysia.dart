@@ -42,11 +42,7 @@ class MalaysiaSource extends GallerySource {
     theme: theme,
     country: MalaysiaCountry.malaysia,
     validator: const MalaysiaValidator(),
-    sampleValues: MalaysiaSerialGenerator.generate(
-      spec,
-      random: _rng,
-      prefix: prefix,
-    ),
+    sampleValues: MalaysiaSerialGenerator.generate(spec, random: _rng, prefix: prefix),
     note: note,
   );
 
@@ -108,20 +104,8 @@ class MalaysiaSource extends GallerySource {
           'JPJePlate, issued since September 2024, is European-sized and is '
           'the only Malaysian plate with a country strip.',
       entries: <GalleryEntry>[
-        _entry(
-          'twoRow',
-          'Two row',
-          MalaysiaPlates.twoRow(),
-          MalaysiaThemes.standard,
-          prefix: 'Q',
-        ),
-        _entry(
-          'ev',
-          'JPJePlate',
-          MalaysiaPlates.ev(),
-          MalaysiaThemes.ev,
-          prefix: 'V',
-        ),
+        _entry('twoRow', 'Two row', MalaysiaPlates.twoRow(), MalaysiaThemes.standard, prefix: 'Q'),
+        _entry('ev', 'JPJePlate', MalaysiaPlates.ev(), MalaysiaThemes.ev, prefix: 'V'),
       ],
     ),
     GallerySection(

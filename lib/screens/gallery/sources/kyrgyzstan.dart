@@ -43,8 +43,7 @@ class KyrgyzstanSource extends GallerySource {
   List<GallerySection> get sections => _sections ??= <GallerySection>[
     GallerySection(
       title: 'Registration',
-      note:
-          'Region code, digits and letters; the divider is painted by the background.',
+      note: 'Region code, digits and letters; the divider is painted by the background.',
       entries: <GalleryEntry>[
         _e(
           'private',

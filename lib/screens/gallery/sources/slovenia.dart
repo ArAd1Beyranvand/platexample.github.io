@@ -22,21 +22,16 @@ class SloveniaSource extends GallerySource {
       'CD. Not drawn: the crest, the export date stickers, and temporary, '
       'military and motorcycle plates.';
 
-  GalleryEntry _entry(
-    String id,
-    String label,
-    PlateSpec spec,
-    PlateTheme theme,
-    String values,
-  ) => GalleryEntry(
-    id: 'si.$id',
-    label: label,
-    spec: spec,
-    theme: theme,
-    country: SloveniaCountry.slovenia,
-    validator: const SloveniaValidator(),
-    sampleValues: values.split(' '),
-  );
+  GalleryEntry _entry(String id, String label, PlateSpec spec, PlateTheme theme, String values) =>
+      GalleryEntry(
+        id: 'si.$id',
+        label: label,
+        spec: spec,
+        theme: theme,
+        country: SloveniaCountry.slovenia,
+        validator: const SloveniaValidator(),
+        sampleValues: values.split(' '),
+      );
 
   @override
   List<GallerySection> get sections => _sections ??= <GallerySection>[
@@ -66,13 +61,7 @@ class SloveniaSource extends GallerySource {
       title: 'Official',
       note: 'Police lead with P; diplomatic plates with a green CD.',
       entries: <GalleryEntry>[
-        _entry(
-          'police',
-          'Police · blue',
-          SloveniaPlates.police,
-          SloveniaThemes.police,
-          'P 06 697',
-        ),
+        _entry('police', 'Police · blue', SloveniaPlates.police, SloveniaThemes.police, 'P 06 697'),
         _entry(
           'diplomatic',
           'Diplomatic · CD',

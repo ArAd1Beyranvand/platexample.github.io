@@ -33,6 +33,9 @@ class MyanmarSource extends GallerySource {
     ];
   }
 
+  /// Entries the country's shared validator does not cover.
+  static const Set<String> _unvalidated = <String>{'mm.religious'};
+
   static GalleryEntry _e(
     String id,
     String label,
@@ -45,7 +48,7 @@ class MyanmarSource extends GallerySource {
     spec: spec,
     theme: theme,
     country: MyanmarCountry.myanmar,
-    validator: const MyanmarValidator(),
+    validator: _unvalidated.contains('mm.$id') ? null : const MyanmarValidator(),
     sampleValues: values,
   );
 
@@ -64,22 +67,35 @@ class MyanmarSource extends GallerySource {
       title: 'Three rows, with the model spelled out',
       note: 'Region, township and serial over the model name.',
       entries: <GalleryEntry>[
-        _threeRow(
-          'private',
-          'Private car',
-          MyanmarPlates.private,
-          MyanmarThemes.private,
-          <String>['YGN', '36', 'A', 'B', '3456'],
-          'TOYOTA',
-        ),
-        _threeRow(
-          'hire',
-          'Hire car',
-          MyanmarPlates.hire,
-          MyanmarThemes.hire,
-          <String>['MDY', '12', 'C', 'D', '7890'],
-          'NISSAN',
-        ),
+        _threeRow('private', 'Private car', MyanmarPlates.private, MyanmarThemes.private, <String>[
+          'YGN',
+          '36',
+          'A',
+          'B',
+          '3456',
+        ], 'TOYOTA'),
+        _threeRow('hire', 'Hire car', MyanmarPlates.hire, MyanmarThemes.hire, <String>[
+          'MDY',
+          '12',
+          'C',
+          'D',
+          '7890',
+        ], 'NISSAN'),
+        _threeRow('taxi', 'Taxi', MyanmarPlates.taxi, MyanmarThemes.hire, <String>[
+          'YGN',
+          '36',
+          'E',
+          'E',
+          '5229',
+        ], 'TOYOTA PROBOX'),
+        _threeRow('hearse', 'Hearse', MyanmarPlates.hearse, MyanmarThemes.hire, <String>[
+          'TNI',
+          '10',
+          'H',
+          'S',
+          'E',
+          '3887',
+        ], 'TOYOTA ALPHARD'),
         _threeRow(
           'religious',
           'Religious',

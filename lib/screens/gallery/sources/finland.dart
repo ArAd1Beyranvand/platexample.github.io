@@ -45,46 +45,22 @@ class FinlandSource extends GallerySource {
       title: 'Regular — 520 × 110',
       note: 'Letters (two or three) and digits (one to three).',
       entries: <GalleryEntry>[
-        _e(
-          'private',
-          'Private car',
-          FinlandPlates.private,
-          FinlandThemes.private,
-          'BZM|184',
-        ),
-        _e(
-          'export',
-          'Export',
-          FinlandPlates.export,
-          FinlandThemes.private,
-          'A|6432',
-        ),
+        _e('private', 'Private car', FinlandPlates.private, FinlandThemes.private, 'BZM|184'),
+        _e('export', 'Export', FinlandPlates.export, FinlandThemes.private, 'A|6432'),
       ],
     ),
     GallerySection(
       title: 'Motorcycle — 164 × 200',
       note: 'Two letters over up to three digits.',
       entries: <GalleryEntry>[
-        _e(
-          'motorcycle',
-          'Motorcycle',
-          FinlandPlates.motorcycle,
-          FinlandThemes.private,
-          'CU|939',
-        ),
+        _e('motorcycle', 'Motorcycle', FinlandPlates.motorcycle, FinlandThemes.private, 'CU|939'),
       ],
     ),
     GallerySection(
       title: 'Åland and diplomatic',
       note: 'Blue ink on grey for Åland; white on blue for the corps.',
       entries: <GalleryEntry>[
-        _e(
-          'aland',
-          'Åland',
-          FinlandPlates.aland,
-          FinlandThemes.aland,
-          'ÅLG|798',
-        ),
+        _e('aland', 'Åland', FinlandPlates.aland, FinlandThemes.aland, 'ÅLG|798'),
         _e(
           'diplomatic',
           'Diplomatic corps',

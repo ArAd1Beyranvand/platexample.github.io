@@ -65,13 +65,7 @@ class CapeVerdeSource extends GallerySource {
           'Military plates carry the flag block and a fixed FA; diplomatic '
           'plates a fixed CD, the represented country, then a serial.',
       entries: <GalleryEntry>[
-        _e(
-          'military',
-          'Military · FA',
-          CapeVerdePlates.military,
-          CapeVerdeThemes.regular,
-          '06 86',
-        ),
+        _e('military', 'Military · FA', CapeVerdePlates.military, CapeVerdeThemes.regular, '06 86'),
         _e(
           'diplomatic',
           'Diplomatic · CD',

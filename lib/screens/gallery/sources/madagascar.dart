@@ -66,13 +66,10 @@ class MadagascarSource extends GallerySource {
           MadagascarThemes.temporary,
           <String?>['0554', 'WWT'],
         ),
-        _e(
-          'dealer',
-          'Dealer · W',
-          MadagascarPlates.dealer,
-          MadagascarThemes.dealer,
-          <String?>['474', 'T'],
-        ),
+        _e('dealer', 'Dealer · W', MadagascarPlates.dealer, MadagascarThemes.dealer, <String?>[
+          '474',
+          'T',
+        ]),
       ],
     ),
     GallerySection(

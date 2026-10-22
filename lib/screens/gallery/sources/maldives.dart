@@ -22,16 +22,15 @@ class MaldivesSource extends GallerySource {
       'the type letter tell the category apart. The article lists nothing '
       'Israel-specific, so nothing is refused.';
 
-  GalleryEntry _entry(MaldivesCategory c, String label, PlateTheme theme) =>
-      GalleryEntry(
-        id: 'mv.${c.id}',
-        label: label,
-        spec: MaldivesPlates.of(c),
-        theme: theme,
-        country: MaldivesCountry.maldives,
-        validator: const MaldivesPlateValidator(),
-        sampleValues: 'A B 1 A 3665'.split(' '),
-      );
+  GalleryEntry _entry(MaldivesCategory c, String label, PlateTheme theme) => GalleryEntry(
+    id: 'mv.${c.id}',
+    label: label,
+    spec: MaldivesPlates.of(c),
+    theme: theme,
+    country: MaldivesCountry.maldives,
+    validator: const MaldivesPlateValidator(),
+    sampleValues: 'A B 1 A 3665'.split(' '),
+  );
 
   @override
   List<GallerySection> get sections => _sections ??= <GallerySection>[
@@ -40,27 +39,11 @@ class MaldivesSource extends GallerySource {
       note: 'One design; only the field, the ink and the type letter change.',
       entries: <GalleryEntry>[
         _entry(MaldivesCategory.private, 'Private · P', MaldivesThemes.black),
-        _entry(
-          MaldivesCategory.commercial,
-          'Commercial · C',
-          MaldivesThemes.black,
-        ),
-        _entry(
-          MaldivesCategory.government,
-          'Government · G',
-          MaldivesThemes.black,
-        ),
+        _entry(MaldivesCategory.commercial, 'Commercial · C', MaldivesThemes.black),
+        _entry(MaldivesCategory.government, 'Government · G', MaldivesThemes.black),
         _entry(MaldivesCategory.police, 'Police · S', MaldivesThemes.black),
-        _entry(
-          MaldivesCategory.taxi,
-          'Taxi · T · black on yellow',
-          MaldivesThemes.yellow,
-        ),
-        _entry(
-          MaldivesCategory.diplomatic,
-          'Diplomatic · D · white on blue',
-          MaldivesThemes.blue,
-        ),
+        _entry(MaldivesCategory.taxi, 'Taxi · T · black on yellow', MaldivesThemes.yellow),
+        _entry(MaldivesCategory.diplomatic, 'Diplomatic · D · white on blue', MaldivesThemes.blue),
       ],
     ),
   ];

@@ -25,10 +25,9 @@ class PlaygroundPage extends StatefulWidget {
 }
 
 class _PlaygroundPageState extends State<PlaygroundPage> {
-  late final PlateController _plate = PlateController(
-    spec: widget.item.entry.spec,
-  )..addListener(_changed);
-  bool _codeOpen = false;
+  late final PlateController _plate = PlateController(spec: widget.item.entry.spec)
+    ..addListener(_changed);
+  bool _codeOpen = true;
 
   CatalogueItem get _item => widget.item;
   int get _index => playgroundItems.indexOf(_item);
@@ -92,8 +91,7 @@ class _PlaygroundPageState extends State<PlaygroundPage> {
     final List<String?> values = _plate.values;
     final bool complete = firstEmpty(values) == null;
     final bool valid =
-        complete &&
-        verdictOf(_item.entry.spec, values, _item.entry.validator).isValid;
+        complete && verdictOf(_item.entry.spec, values, _item.entry.validator).isValid;
     final List<CodeLine> code = playgroundCode(
       item: _item,
       source: PlateInputSource.keypadFirst,
@@ -107,39 +105,39 @@ class _PlaygroundPageState extends State<PlaygroundPage> {
         top: headerExtent(context) + pdClamp(context, 20, 3, 40),
         bottom: pdClamp(context, 48, 7, 96),
       ),
-      child: PdContainer(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            _TopRow(item: _item, index: _index, onStep: _step),
-            const SizedBox(height: 24),
-            PdAutoGrid(
-              minWidth: 460,
-              gap: 24,
-              children: <Widget>[
-                _StageCard(item: _item, plate: _plate),
-                if (narrow && !_codeOpen)
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: PdLink(
-                      '▸ Show code',
-                      onTap: () => setState(() => _codeOpen = true),
+      // Its own layer, so a scroll frame doesn't re-record the page.
+      child: RepaintBoundary(
+        child: PdContainer(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              _TopRow(item: _item, index: _index, onStep: _step),
+              const SizedBox(height: 24),
+              PdAutoGrid(
+                minWidth: 460,
+                gap: 24,
+                children: <Widget>[
+                  _StageCard(item: _item, plate: _plate),
+                  if (narrow && !_codeOpen)
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: PdLink('▸ Show code', onTap: () => setState(() => _codeOpen = true)),
+                    )
+                  else
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        _CodePanel(lines: code),
+                        const SizedBox(height: 16),
+                        _SlotsView(spec: _item.entry.spec, values: values),
+                      ],
                     ),
-                  )
-                else
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      _CodePanel(lines: code),
-                      const SizedBox(height: 16),
-                      _SlotsView(spec: _item.entry.spec, values: values),
-                    ],
-                  ),
-              ],
-            ),
-            const SizedBox(height: 32),
-            _Facts(item: _item),
-          ],
+                ],
+              ),
+              const SizedBox(height: 32),
+              _Facts(item: _item),
+            ],
+          ),
         ),
       ),
     );
@@ -147,11 +145,7 @@ class _PlaygroundPageState extends State<PlaygroundPage> {
 }
 
 class _TopRow extends StatelessWidget {
-  const _TopRow({
-    required this.item,
-    required this.index,
-    required this.onStep,
-  });
+  const _TopRow({required this.item, required this.index, required this.onStep});
 
   final CatalogueItem item;
   final int index;
@@ -173,7 +167,7 @@ class _TopRow extends StatelessWidget {
           width: 44,
           height: 44,
           border: t.divider,
-          hoverColor: t.surface,
+          hoverColor: t.hover,
           child: Icon(icon, size: 18, color: t.text),
         ),
       );
@@ -187,8 +181,7 @@ class _TopRow extends StatelessWidget {
             children: <Widget>[
               PdLink(
                 'Countries',
-                onTap: () =>
-                    nav.go(const PdLocation.landing(LandingAnchor.coverage)),
+                onTap: () => nav.go(const PdLocation.landing(LandingAnchor.coverage)),
                 style: crumb,
               ),
               Text('  /  ', style: crumb),
@@ -200,10 +193,7 @@ class _TopRow extends StatelessWidget {
               Text('  /  ', style: crumb),
               Text(
                 item.entry.label,
-                style: crumb.copyWith(
-                  color: t.text,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: crumb.copyWith(color: t.text, fontWeight: FontWeight.w600),
               ),
             ],
           ),
@@ -300,10 +290,7 @@ class _CodePanelState extends State<_CodePanel> {
   @override
   Widget build(BuildContext context) {
     final PdTokens t = context.tokens;
-    final Duration flash = PdMotion.of(
-      context,
-      const Duration(milliseconds: 600),
-    );
+    final Duration flash = PdMotion.of(context, const Duration(milliseconds: 600));
     return Container(
       decoration: BoxDecoration(
         color: t.code,
@@ -326,10 +313,7 @@ class _CodePanelState extends State<_CodePanel> {
                     style: TextStyle(fontSize: 13, color: t.muted),
                   ),
                 ),
-                PdCopyButton(
-                  text: () =>
-                      widget.lines.map((CodeLine l) => l.text).join('\n'),
-                ),
+                PdCopyButton(text: () => widget.lines.map((CodeLine l) => l.text).join('\n')),
               ],
             ),
           ),
@@ -341,30 +325,25 @@ class _CodePanelState extends State<_CodePanel> {
               children: <Widget>[
                 for (int i = 0; i < widget.lines.length; i++)
                   TweenAnimationBuilder<double>(
-                    key: ValueKey<String>(
-                      _changed.contains(i) ? 'f$_generation-$i' : 's$i',
-                    ),
+                    key: ValueKey<String>(_changed.contains(i) ? 'f$_generation-$i' : 's$i'),
                     tween: Tween<double>(
-                      begin: _changed.contains(i) && flash > Duration.zero
-                          ? 1
-                          : 0,
+                      begin: _changed.contains(i) && flash > Duration.zero ? 1 : 0,
                       end: 0,
                     ),
                     duration: flash,
-                    builder: (BuildContext context, double v, Widget? child) =>
-                        ColoredBox(
-                          color: t.accentSoft.withValues(
-                            alpha: t.accentSoft.a * v,
-                          ),
-                          child: child,
-                        ),
+                    builder: (BuildContext context, double v, Widget? child) => ColoredBox(
+                      color: t.accentSoft.withValues(alpha: t.accentSoft.a * v),
+                      child: child,
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Text(
                         widget.lines[i].text,
-                        style: monoStyle(t, size: 13, height: 22 / 13).copyWith(
-                          color: widget.lines[i].comment ? t.subtle : t.text,
-                        ),
+                        style: monoStyle(
+                          t,
+                          size: 13,
+                          height: 22 / 13,
+                        ).copyWith(color: widget.lines[i].comment ? t.subtle : t.text),
                       ),
                     ),
                   ),
@@ -398,8 +377,7 @@ class _SlotsView extends StatelessWidget {
           children: <Widget>[
             for (int i = 0; i < spec.slotCount; i++)
               Tooltip(
-                message:
-                    'Slot ${i + 1}: ${describeSlots(spec.slots[i].alphabet, 1)}',
+                message: 'Slot ${i + 1}: ${describeSlots(spec.slots[i].alphabet, 1)}',
                 child: Container(
                   width: 40,
                   padding: const EdgeInsets.symmetric(vertical: 6),
@@ -418,10 +396,7 @@ class _SlotsView extends StatelessWidget {
                           color: values[i] == null ? t.subtle : t.text,
                         ),
                       ),
-                      Text(
-                        '${i + 1}',
-                        style: monoStyle(t, size: 10).copyWith(color: t.subtle),
-                      ),
+                      Text('${i + 1}', style: monoStyle(t, size: 10).copyWith(color: t.subtle)),
                     ],
                   ),
                 ),
@@ -442,14 +417,13 @@ class _Facts extends StatelessWidget {
   Widget build(BuildContext context) {
     final PdTokens t = context.tokens;
     final String package = packageOf(item);
-    final String link = 'platexample.ir${PdLocation.playground(item).path}';
-    final List<(String, String, VoidCallback?)> rows =
-        <(String, String, VoidCallback?)>[
-          ('Spec', specName(item) ?? item.entry.spec.id, null),
-          ('Package', package, () => openExternal(repoOf(package))),
-          ('Slots', slotPattern(item.entry.spec), null),
-          ('Deep link', link, () => openExternal('https://$link')),
-        ];
+    final String link = 'platexample.ir/#${PdLocation.playground(item).path}';
+    final List<(String, String, VoidCallback?)> rows = <(String, String, VoidCallback?)>[
+      ('Spec', specName(item) ?? item.entry.spec.id, null),
+      ('Package', package, () => openExternal(repoOf(package))),
+      ('Slots', slotPattern(item.entry.spec), null),
+      ('Deep link', link, () => openExternal('https://$link')),
+    ];
     return Column(
       children: <Widget>[
         for (final (String k, String v, VoidCallback? tap) in rows)
@@ -463,11 +437,7 @@ class _Facts extends StatelessWidget {
                 SizedBox(width: 120, child: Text(k, style: body(t))),
                 Expanded(
                   child: tap == null
-                      ? Text(
-                          v,
-                          overflow: TextOverflow.ellipsis,
-                          style: monoStyle(t),
-                        )
+                      ? Text(v, overflow: TextOverflow.ellipsis, style: monoStyle(t))
                       : Align(
                           alignment: Alignment.centerLeft,
                           child: PdLink(

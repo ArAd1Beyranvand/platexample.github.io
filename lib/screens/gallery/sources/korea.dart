@@ -18,10 +18,7 @@ class KoreaSource extends GallerySource {
   String get packageName => 'north_korea_plate';
 
   @override
-  late final List<GallerySource> members = <GallerySource>[
-    NorthKoreaSource(),
-    SouthKoreaSource(),
-  ];
+  late final List<GallerySource> members = <GallerySource>[NorthKoreaSource(), SouthKoreaSource()];
 
   @override
   String get overviewTitle => 'Two countries, one package';

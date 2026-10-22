@@ -35,10 +35,7 @@ class EritreaSource extends GallerySource {
           theme: EritreaThemes.standard,
           country: EritreaCountry.eritrea,
           validator: const EritreaValidator(),
-          sampleValues: EritreaSerialGenerator.generate(
-            EritreaPlates.standard,
-            random: _rng,
-          ),
+          sampleValues: EritreaSerialGenerator.generate(EritreaPlates.standard, random: _rng),
           note: 'Colours sampled from the colour-balanced photo.',
         ),
       ],

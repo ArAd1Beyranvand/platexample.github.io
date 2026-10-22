@@ -47,8 +47,7 @@ final List<GallerySource> plateCountries = <GallerySource>[
 /// A source that stands for several countries: the continents, and the two
 /// top-level groups — Iranshahr and Yemen — that are umbrellas without being
 /// [RegionSource]s. Coverage lists these as one row, not as their members.
-bool isUmbrella(GallerySource source) =>
-    source is RegionSource || source.members.isNotEmpty;
+bool isUmbrella(GallerySource source) => source is RegionSource || source.members.isNotEmpty;
 
 /// Every plate, in catalogue order, as the playground pages through them.
 final List<CatalogueItem> playgroundItems = <CatalogueItem>[
@@ -57,35 +56,36 @@ final List<CatalogueItem> playgroundItems = <CatalogueItem>[
 ];
 
 extension GallerySourceSlug on GallerySource {
-  String get slug => slugify(countryName);
+  /// A region named after one of its own countries (Russia, China) gets a
+  /// `-region` suffix, so `/plates/russia` stays the country's page.
+  String get slug =>
+      this is RegionSource &&
+          allGallerySources.any(
+            (GallerySource s) => s is! RegionSource && s.countryName == countryName,
+          )
+      ? '${slugify(countryName)}-region'
+      : slugify(countryName);
 }
 
 /// A label that romanises to nothing nameable falls back to the entry id.
 String _shortName(CatalogueItem item) {
   final String fromLabel = slugify(item.entry.label);
-  final bool nameable = fromLabel.codeUnits.any(
-    (int unit) => unit >= 0x61 && unit <= 0x7a,
-  );
+  final bool nameable = fromLabel.codeUnits.any((int unit) => unit >= 0x61 && unit <= 0x7a);
   return nameable ? fromLabel : slugify(item.entry.id);
 }
 
 /// Labels repeat within a country (three Iranshahr members have a
 /// `Diplomatic corps`); only the collisions get their section as a prefix.
 final Map<CatalogueItem, String> _plateSlugs = () {
-  final Map<String, List<CatalogueItem>> byShortName =
-      <String, List<CatalogueItem>>{};
+  final Map<String, List<CatalogueItem>> byShortName = <String, List<CatalogueItem>>{};
   for (final CatalogueItem item in catalogueItems) {
-    byShortName
-        .putIfAbsent('${item.source.slug}/${_shortName(item)}', () => [])
-        .add(item);
+    byShortName.putIfAbsent('${item.source.slug}/${_shortName(item)}', () => []).add(item);
   }
   final Map<CatalogueItem, String> slugs = <CatalogueItem, String>{};
   for (final List<CatalogueItem> sharing in byShortName.values) {
     for (final CatalogueItem item in sharing) {
       final String short = _shortName(item);
-      slugs[item] = sharing.length > 1
-          ? '${slugify(item.section.title)}-$short'
-          : short;
+      slugs[item] = sharing.length > 1 ? '${slugify(item.section.title)}-$short' : short;
     }
   }
   return slugs;
@@ -126,12 +126,14 @@ RegionSource? regionBySlug(String slug) {
 /// Yemen and the rest of Asia sit at the top level). Used for the country
 /// page's breadcrumb, which gains a region crumb only where there is one.
 GallerySource? regionOf(GallerySource source) {
+  GallerySource? best;
   for (final GallerySource region in gallerySources) {
-    if (region.members.any((GallerySource m) => identical(m, source))) {
-      return region;
+    if (region.members.any((GallerySource m) => identical(m, source)) &&
+        (best == null || region.members.length < best.members.length)) {
+      best = region;
     }
   }
-  return null;
+  return best;
 }
 
 GallerySource? countryBySlug(String slug) {

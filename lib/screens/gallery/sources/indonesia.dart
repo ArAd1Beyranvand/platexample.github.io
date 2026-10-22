@@ -40,24 +40,19 @@ class IndonesiaSource extends GallerySource {
     theme: theme,
     country: IndonesiaCountry.indonesia,
     validator: const IndonesiaValidator(),
-    sampleValues: IndonesiaSerialGenerator.generate(
-      spec,
-      random: _rng,
-      area: area,
-    ),
+    sampleValues: IndonesiaSerialGenerator.generate(spec, random: _rng, area: area),
     note: note,
   );
 
-  GalleryEntry _diplomatic(String id, String label, PlateTheme theme) =>
-      GalleryEntry(
-        id: 'id.$id',
-        label: label,
-        spec: IndonesiaPlates.diplomatic,
-        theme: theme,
-        country: IndonesiaCountry.indonesia,
-        validator: const IndonesiaDiplomaticValidator(),
-        sampleValues: const <String?>['CD', '19', '001', '08', '28'],
-      );
+  GalleryEntry _diplomatic(String id, String label, PlateTheme theme) => GalleryEntry(
+    id: 'id.$id',
+    label: label,
+    spec: IndonesiaPlates.diplomatic,
+    theme: theme,
+    country: IndonesiaCountry.indonesia,
+    validator: const IndonesiaDiplomaticValidator(),
+    sampleValues: const <String?>['CD', '19', '001', '08', '28'],
+  );
 
   GalleryEntry _service(
     String id,
@@ -92,12 +87,7 @@ class IndonesiaSource extends GallerySource {
           IndonesiaThemes.private,
           area: 'B',
         ),
-        _entry(
-          'public',
-          'Public · black on yellow',
-          IndonesiaPlates.car,
-          IndonesiaThemes.public,
-        ),
+        _entry('public', 'Public · black on yellow', IndonesiaPlates.car, IndonesiaThemes.public),
         _entry(
           'government',
           'Government · white on red',
@@ -118,12 +108,7 @@ class IndonesiaSource extends GallerySource {
           IndonesiaThemes.privateEv,
           area: 'B',
         ),
-        _entry(
-          'publicEv',
-          'Electric · public',
-          IndonesiaPlates.carEv,
-          IndonesiaThemes.publicEv,
-        ),
+        _entry('publicEv', 'Electric · public', IndonesiaPlates.carEv, IndonesiaThemes.publicEv),
         _entry(
           'governmentEv',
           'Electric · government',
@@ -143,18 +128,8 @@ class IndonesiaSource extends GallerySource {
       title: 'Motorcycles — 275 × 115',
       note: 'The same registration in DIN, with the expiry set to the right.',
       entries: <GalleryEntry>[
-        _entry(
-          'motoPrivate',
-          'Private',
-          IndonesiaPlates.motorcycle,
-          IndonesiaThemes.private,
-        ),
-        _entry(
-          'motoPublic',
-          'Public',
-          IndonesiaPlates.motorcycle,
-          IndonesiaThemes.public,
-        ),
+        _entry('motoPrivate', 'Private', IndonesiaPlates.motorcycle, IndonesiaThemes.private),
+        _entry('motoPublic', 'Public', IndonesiaPlates.motorcycle, IndonesiaThemes.public),
         _entry(
           'motoGovernment',
           'Government',
@@ -190,11 +165,7 @@ class IndonesiaSource extends GallerySource {
           'for an electric vehicle.',
       entries: <GalleryEntry>[
         _diplomatic('cd', 'Diplomatic corps', IndonesiaThemes.diplomatic),
-        _diplomatic(
-          'cdEv',
-          'Diplomatic · electric',
-          IndonesiaThemes.diplomaticEv,
-        ),
+        _diplomatic('cdEv', 'Diplomatic · electric', IndonesiaThemes.diplomaticEv),
       ],
     ),
     GallerySection(

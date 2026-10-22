@@ -49,13 +49,7 @@ class IndiaSource extends GallerySource {
           'State, RTO, series, number. The colour says who may drive it; '
           'only the private plate carries the badge.',
       entries: <GalleryEntry>[
-        _entry(
-          'in.private',
-          'Private',
-          IndiaPlates.private,
-          IndiaThemes.private,
-          'MH 20 DV 2366',
-        ),
+        _entry('in.private', 'Private', IndiaPlates.private, IndiaThemes.private, 'MH 20 DV 2366'),
         _entry(
           'in.transport',
           'Commercial',
@@ -63,13 +57,7 @@ class IndiaSource extends GallerySource {
           IndiaThemes.transport,
           'MH 12 DV 4353',
         ),
-        _entry(
-          'in.rental',
-          'Rental',
-          IndiaPlates.standard,
-          IndiaThemes.rental,
-          'MH 09 DV 5346',
-        ),
+        _entry('in.rental', 'Rental', IndiaPlates.standard, IndiaThemes.rental, 'MH 09 DV 5346'),
         _entry(
           'in.electric',
           'Electric',

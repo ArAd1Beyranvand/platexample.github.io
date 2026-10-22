@@ -38,8 +38,7 @@ class ColombiaSource extends GallerySource {
     theme: theme,
     country: ColombiaCountry.colombia,
     validator: validator,
-    sampleValues:
-        values ?? ColombiaSerialGenerator.generate(spec, random: _rng),
+    sampleValues: values ?? ColombiaSerialGenerator.generate(spec, random: _rng),
   );
 
   GalleryEntry _series(
@@ -75,17 +74,8 @@ class ColombiaSource extends GallerySource {
           city: 'ARMENIA',
           values: <String?>['NAZ', '827'],
         ),
-        _series(
-          ColombiaSeries.commercial,
-          ColombiaThemes.commercial,
-          'ABC·123',
-        ),
-        _series(
-          ColombiaSeries.official,
-          ColombiaThemes.official,
-          'OAB·123',
-          city: 'PEREIRA',
-        ),
+        _series(ColombiaSeries.commercial, ColombiaThemes.commercial, 'ABC·123'),
+        _series(ColombiaSeries.official, ColombiaThemes.official, 'OAB·123', city: 'PEREIRA'),
         _series(ColombiaSeries.antiqueCar, ColombiaThemes.antique, 'ABC·123'),
       ],
     ),
@@ -111,18 +101,8 @@ class ColombiaSource extends GallerySource {
           labelSuffix: ', commercial',
           city: 'SINCELEJO',
         ),
-        _series(
-          ColombiaSeries.trailer,
-          ColombiaThemes.official,
-          'R·12345',
-          city: 'CALI',
-        ),
-        _series(
-          ColombiaSeries.tankTruck,
-          ColombiaThemes.tank,
-          'T·1234',
-          city: 'MEDELLIN',
-        ),
+        _series(ColombiaSeries.trailer, ColombiaThemes.official, 'R·12345', city: 'CALI'),
+        _series(ColombiaSeries.tankTruck, ColombiaThemes.tank, 'T·1234', city: 'MEDELLIN'),
       ],
     ),
     GallerySection(
@@ -133,11 +113,7 @@ class ColombiaSource extends GallerySource {
           'the newer banded plate; the police their own green on white.',
       entries: <GalleryEntry>[
         _series(ColombiaSeries.consular, ColombiaThemes.consular, 'CC·1234'),
-        _series(
-          ColombiaSeries.organization,
-          ColombiaThemes.organization,
-          'OI·1234',
-        ),
+        _series(ColombiaSeries.organization, ColombiaThemes.organization, 'OI·1234'),
         _series(ColombiaSeries.staff, ColombiaThemes.staff, 'AT·1234'),
         _entry(
           'cd',

@@ -44,13 +44,7 @@ class CambodiaSource extends GallerySource {
       title: 'Private',
       note: 'The one-line plate, and the long plate with two series letters.',
       entries: <GalleryEntry>[
-        _e(
-          'private',
-          'Private car',
-          CambodiaPlates.private,
-          CambodiaThemes.private,
-          '2 A 1234',
-        ),
+        _e('private', 'Private car', CambodiaPlates.private, CambodiaThemes.private, '2 A 1234'),
         _e(
           'privatelong',
           'Private · long',
@@ -64,13 +58,7 @@ class CambodiaSource extends GallerySource {
       title: 'Official and stacked',
       note: 'Police, diplomatic, NGO and the two-row motorcycle plate.',
       entries: <GalleryEntry>[
-        _e(
-          'police',
-          'Police · red',
-          CambodiaPlates.police,
-          CambodiaThemes.police,
-          '1 2345',
-        ),
+        _e('police', 'Police · red', CambodiaPlates.police, CambodiaThemes.police, '1 2345'),
         _e(
           'diplomatic',
           'Diplomatic',

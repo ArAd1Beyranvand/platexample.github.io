@@ -24,21 +24,16 @@ class SlovakiaSource extends GallerySource {
       'photograph), sports, trailer and motorcycle plates, the temporary '
       'date stickers and the officials town arms.';
 
-  GalleryEntry _entry(
-    String id,
-    String label,
-    PlateSpec spec,
-    PlateTheme theme,
-    String values,
-  ) => GalleryEntry(
-    id: 'sk.$id',
-    label: label,
-    spec: spec,
-    theme: theme,
-    country: SlovakiaCountry.slovakia,
-    validator: const SlovakiaValidator(),
-    sampleValues: values.split(' '),
-  );
+  GalleryEntry _entry(String id, String label, PlateSpec spec, PlateTheme theme, String values) =>
+      GalleryEntry(
+        id: 'sk.$id',
+        label: label,
+        spec: spec,
+        theme: theme,
+        country: SlovakiaCountry.slovakia,
+        validator: const SlovakiaValidator(),
+        sampleValues: values.split(' '),
+      );
 
   @override
   List<GallerySection> get sections => _sections ??= <GallerySection>[
@@ -80,6 +75,7 @@ class SlovakiaSource extends GallerySource {
       title: 'Official',
       note: 'Officials carry an X after the code.',
       entries: <GalleryEntry>[
+        _entry('legacy', 'Legacy', SlovakiaPlates.legacy, SlovakiaThemes.legacy, 'NR 755 BZ'),
         _entry(
           'officials',
           'Officials · X',
@@ -87,13 +83,7 @@ class SlovakiaSource extends GallerySource {
           SlovakiaThemes.private,
           'BA X 171',
         ),
-        _entry(
-          'military',
-          'Military',
-          SlovakiaPlates.military,
-          SlovakiaThemes.private,
-          '60 14108',
-        ),
+        _entry('military', 'Military', SlovakiaPlates.military, SlovakiaThemes.private, '60 14108'),
         _entry(
           'diplomatic',
           'Diplomatic · yellow on blue',
@@ -114,13 +104,7 @@ class SlovakiaSource extends GallerySource {
           SlovakiaThemes.temporary,
           'TS V 356',
         ),
-        _entry(
-          'dealer',
-          'Dealer · red',
-          SlovakiaPlates.dealer,
-          SlovakiaThemes.dealer,
-          'PP M 082',
-        ),
+        _entry('dealer', 'Dealer · red', SlovakiaPlates.dealer, SlovakiaThemes.dealer, 'PP M 082'),
         _entry(
           'imported',
           'Import · green',

@@ -22,21 +22,16 @@ class ChileSource extends GallerySource {
       'fire brigade and army plates. Diplomatic mission 39 (Israel) is '
       'refused with PlateRestriction.';
 
-  GalleryEntry _entry(
-    String id,
-    String label,
-    PlateSpec spec,
-    PlateTheme theme,
-    String values,
-  ) => GalleryEntry(
-    id: 'cl.$id',
-    label: label,
-    spec: spec,
-    theme: theme,
-    country: ChileCountry.chile,
-    validator: const ChileValidator(),
-    sampleValues: values.split(' '),
-  );
+  GalleryEntry _entry(String id, String label, PlateSpec spec, PlateTheme theme, String values) =>
+      GalleryEntry(
+        id: 'cl.$id',
+        label: label,
+        spec: spec,
+        theme: theme,
+        country: ChileCountry.chile,
+        validator: const ChileValidator(),
+        sampleValues: values.split(' '),
+      );
 
   @override
   List<GallerySection> get sections => _sections ??= <GallerySection>[
@@ -46,20 +41,8 @@ class ChileSource extends GallerySource {
           'Four consonants and two digits; the colour says the use. Ink is '
           'about 74% of the reference height.',
       entries: <GalleryEntry>[
-        _entry(
-          'private',
-          'Private',
-          ChilePlates.private,
-          ChileThemes.private,
-          'BB BB 10',
-        ),
-        _entry(
-          'taxi',
-          'Basic taxi',
-          ChilePlates.taxi,
-          ChileThemes.taxi,
-          'BP CW 17',
-        ),
+        _entry('private', 'Private', ChilePlates.private, ChileThemes.private, 'BB BB 10'),
+        _entry('taxi', 'Basic taxi', ChilePlates.taxi, ChileThemes.taxi, 'BP CW 17'),
         _entry(
           'collective_taxi',
           'Collective taxi',
@@ -74,13 +57,7 @@ class ChileSource extends GallerySource {
           ChileThemes.radiotaxi,
           'CT YS 61',
         ),
-        _entry(
-          'bus',
-          'Transantiago bus',
-          ChilePlates.bus,
-          ChileThemes.bus,
-          'DH RJ 52',
-        ),
+        _entry('bus', 'Transantiago bus', ChilePlates.bus, ChileThemes.bus, 'DH RJ 52'),
         _entry(
           'free_zone',
           'Free-zone vehicles',
@@ -123,13 +100,7 @@ class ChileSource extends GallerySource {
           ChileThemes.diplomatic,
           'CD 24 01',
         ),
-        _entry(
-          'police',
-          'Carabineros',
-          ChilePlates.police,
-          ChileThemes.police,
-          'RP 2560',
-        ),
+        _entry('police', 'Carabineros', ChilePlates.police, ChileThemes.police, 'RP 2560'),
         _entry(
           'provisional',
           'Provisional',

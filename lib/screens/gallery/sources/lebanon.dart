@@ -65,31 +65,24 @@ class LebanonSource extends GallerySource {
   /// slot and it refuses both at once, so a class that pins its own letter
   /// (consular `C`, diplomatic `D`) passes the usage and everything else passes
   /// the town.
-  List<GalleryEntry> _liveries(
-    PlateSpec spec,
-    String form,
-    Iterable<LebanonUsage> usages,
-  ) => <GalleryEntry>[
-    for (final LebanonUsage usage in usages)
-      GalleryEntry(
-        id: 'lb.$form.${usage.name}',
-        label: _label(usage),
-        spec: spec,
-        country: LebanonCountry.forUsage(usage),
-        theme: LebanonThemes.forUsage(usage),
-        validator: const LebanonValidator(),
-        sampleValues: usage.letter != null
-            ? LebanonSerialGenerator.generate(spec, random: _rng, usage: usage)
-            : LebanonSerialGenerator.generate(
-                spec,
-                random: _rng,
-                letter: _town,
-              ),
-        note: usage.arabic == null && !usage.isWhite
-            ? 'No source names the Arabic word on this band, so it carries لبنان alone.'
-            : null,
-      ),
-  ];
+  List<GalleryEntry> _liveries(PlateSpec spec, String form, Iterable<LebanonUsage> usages) =>
+      <GalleryEntry>[
+        for (final LebanonUsage usage in usages)
+          GalleryEntry(
+            id: 'lb.$form.${usage.name}',
+            label: _label(usage),
+            spec: spec,
+            country: LebanonCountry.forUsage(usage),
+            theme: LebanonThemes.forUsage(usage),
+            validator: const LebanonValidator(),
+            sampleValues: usage.letter != null
+                ? LebanonSerialGenerator.generate(spec, random: _rng, usage: usage)
+                : LebanonSerialGenerator.generate(spec, random: _rng, letter: _town),
+            note: usage.arabic == null && !usage.isWhite
+                ? 'No source names the Arabic word on this band, so it carries لبنان alone.'
+                : null,
+          ),
+      ];
 
   /// A short number on a full-size face — the geometry variants.
   List<GalleryEntry> _short() {
@@ -121,8 +114,7 @@ class LebanonSource extends GallerySource {
         theme: LebanonThemes.forUsage(LebanonUsage.private),
         validator: const LebanonValidator(),
         sampleValues: const <String?>['M', '4821'],
-        note:
-            'M plates have been issued with fewer than six digits since 2019.',
+        note: 'M plates have been issued with fewer than six digits since 2019.',
       ),
     ];
   }

@@ -10,7 +10,6 @@ import '../landing/text_styles.dart';
 import '../plate/live_plate.dart';
 import '../widgets/controls.dart';
 import 'breadcrumb.dart';
-import 'filter_chips.dart';
 
 /// A region's countries, one card each, filtered by name, endonym or ISO
 /// code. Every card opens that country's own page.
@@ -26,11 +25,6 @@ class RegionPage extends StatefulWidget {
 class _RegionPageState extends State<RegionPage> {
   final TextEditingController _q = TextEditingController();
 
-  /// The package selected, or null for "All". A region's countries split by
-  /// the package that ships them, which is the division a reader of the
-  /// catalogue actually acts on.
-  String? _package;
-
   @override
   void initState() {
     super.initState();
@@ -42,7 +36,6 @@ class _RegionPageState extends State<RegionPage> {
     super.didUpdateWidget(old);
     if (!identical(old.region, widget.region)) {
       _q.clear();
-      _package = null;
     }
   }
 
@@ -59,21 +52,17 @@ class _RegionPageState extends State<RegionPage> {
     final String q = normaliseQuery(_q.text);
 
     final List<GallerySource> members = region.members;
-    final List<String> packages = <String>{
-      for (final GallerySource m in members) ...m.packageNames,
-    }.toList();
 
     final List<GallerySource> shown = <GallerySource>[
       for (final GallerySource m in members)
-        if (_package == null || m.packageNames.contains(_package))
-          if (q.isEmpty ||
-              <String>[
-                m.countryName,
-                countryMeta[m.countryName]?.$1 ?? '',
-                countryMeta[m.countryName]?.$2 ?? '',
-                ...m.packageNames,
-              ].any((String h) => normaliseQuery(h).contains(q)))
-            m,
+        if (q.isEmpty ||
+            <String>[
+              m.countryName,
+              countryMeta[m.countryName]?.$1 ?? '',
+              countryMeta[m.countryName]?.$2 ?? '',
+              ...m.packageNames,
+            ].any((String h) => normaliseQuery(h).contains(q)))
+          m,
     ];
 
     return ListView(
@@ -118,34 +107,16 @@ class _RegionPageState extends State<RegionPage> {
                   ),
                 ),
                 const SizedBox(height: 24),
-                SizedBox(
-                  width: 320,
-                  height: 40,
-                  child: PdTextField(
-                    controller: _q,
-                    hint: 'Country or code',
-                    semanticLabel: 'Filter countries',
+                if (region.countryName != 'Korea')
+                  SizedBox(
+                    width: 320,
+                    height: 40,
+                    child: PdTextField(
+                      controller: _q,
+                      hint: 'Country or code',
+                      semanticLabel: 'Filter countries',
+                    ),
                   ),
-                ),
-                if (packages.length > 1) ...<Widget>[
-                  const SizedBox(height: 12),
-                  PdFilterRow(
-                    children: <Widget>[
-                      PdFilterChip(
-                        label: 'All',
-                        count: members.length,
-                        selected: _package == null,
-                        onTap: () => setState(() => _package = null),
-                      ),
-                      for (final String p in packages)
-                        PdFilterChip(
-                          label: p,
-                          selected: _package == p,
-                          onTap: () => setState(() => _package = p),
-                        ),
-                    ],
-                  ),
-                ],
                 const SizedBox(height: 24),
                 if (shown.isEmpty)
                   Padding(
@@ -161,8 +132,7 @@ class _RegionPageState extends State<RegionPage> {
                     minWidth: 260,
                     gap: 12,
                     children: <Widget>[
-                      for (final GallerySource m in shown)
-                        _CountryCard(source: m),
+                      for (final GallerySource m in shown) _CountryCard(source: m),
                     ],
                   ),
               ],
@@ -185,9 +155,7 @@ class _CountryCard extends StatelessWidget {
     final PdNav nav = PdNav.of(context);
     final CatalogueItem? lead = firstItemOf(source);
     final String native = countryMeta[source.countryName]?.$2 ?? '';
-    final int types = catalogueItems
-        .where((CatalogueItem i) => identical(i.source, source))
-        .length;
+    final int types = catalogueItems.where((CatalogueItem i) => identical(i.source, source)).length;
 
     return PdTappable(
       onTap: lead == null ? null : () => nav.go(PdLocation.country(source)),
@@ -204,6 +172,7 @@ class _CountryCard extends StatelessWidget {
               values: lead.entry.sampleValues,
               theme: lead.entry.theme,
               country: lead.entry.country,
+              autoType: true,
             ),
           const SizedBox(height: 12),
           Wrap(
@@ -212,20 +181,12 @@ class _CountryCard extends StatelessWidget {
             children: <Widget>[
               Text(
                 source.countryName,
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
-                  color: t.text,
-                ),
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: t.text),
               ),
               if (native.isNotEmpty && native != source.countryName)
                 Text(
                   native,
-                  style: TextStyle(
-                    fontFamily: PdFonts.persian,
-                    fontSize: 14,
-                    color: t.subtle,
-                  ),
+                  style: TextStyle(fontFamily: PdFonts.persian, fontSize: 14, color: t.subtle),
                 ),
             ],
           ),

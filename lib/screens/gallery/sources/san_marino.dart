@@ -42,27 +42,9 @@ class SanMarinoSource extends GallerySource {
       title: 'Vehicles',
       note: 'A letter and up to four digits.',
       entries: <GalleryEntry>[
-        _e(
-          'private',
-          'Private',
-          SanMarinoPlates.private,
-          SanMarinoThemes.private,
-          'L 3237',
-        ),
-        _e(
-          'trailer',
-          'Trailer · R',
-          SanMarinoPlates.trailer,
-          SanMarinoThemes.trailer,
-          'R 2558',
-        ),
-        _e(
-          'export',
-          'Export · E',
-          SanMarinoPlates.export,
-          SanMarinoThemes.export,
-          'E 2001',
-        ),
+        _e('private', 'Private', SanMarinoPlates.private, SanMarinoThemes.private, 'L 3237'),
+        _e('trailer', 'Trailer · R', SanMarinoPlates.trailer, SanMarinoThemes.trailer, 'R 2558'),
+        _e('export', 'Export · E', SanMarinoPlates.export, SanMarinoThemes.export, 'E 2001'),
         _e(
           'electric',
           'Electric · VE',
@@ -90,13 +72,7 @@ class SanMarinoSource extends GallerySource {
           SanMarinoThemes.redCross,
           'CRS 16',
         ),
-        _e(
-          'police',
-          'Police',
-          SanMarinoPlates.police,
-          SanMarinoThemes.police,
-          'POLIZIA 145',
-        ),
+        _e('police', 'Police', SanMarinoPlates.police, SanMarinoThemes.police, 'POLIZIA 145'),
       ],
     ),
   ];

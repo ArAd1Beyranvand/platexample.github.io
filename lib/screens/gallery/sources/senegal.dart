@@ -45,20 +45,8 @@ class SenegalSource extends GallerySource {
           'Region code, four digits and one or two letters, white on blue; '
           'DK is Dakar.',
       entries: <GalleryEntry>[
-        _e(
-          'old',
-          'Old · two letters',
-          SenegalPlates.old,
-          SenegalThemes.old,
-          'DK 1234 AB',
-        ),
-        _e(
-          'oldSingle',
-          'Old · one letter',
-          SenegalPlates.old,
-          SenegalThemes.old,
-          'TH 1234 A',
-        ),
+        _e('old', 'Old · two letters', SenegalPlates.old, SenegalThemes.old, 'DK 1234 AB'),
+        _e('oldSingle', 'Old · one letter', SenegalPlates.old, SenegalThemes.old, 'TH 1234 A'),
       ],
     ),
     GallerySection(
@@ -69,13 +57,7 @@ class SenegalSource extends GallerySource {
           'front and the two-row plate behind; motorcycles the small two-row '
           'plate.',
       entries: <GalleryEntry>[
-        _e(
-          'current',
-          'Front',
-          SenegalPlates.current,
-          SenegalThemes.current,
-          'AA 012 BC DK 01',
-        ),
+        _e('current', 'Front', SenegalPlates.current, SenegalThemes.current, 'AA 012 BC DK 01'),
         _e(
           'truckRear',
           'Truck and bus rear',

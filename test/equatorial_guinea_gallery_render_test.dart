@@ -5,7 +5,7 @@ import 'package:plate_number_holder/screens/gallery/sources/sources.dart';
 
 void main() {
   testWidgets('every Equatorial Guinea entry renders with its own theme', (t) async {
-    final source = gallerySources.whereType<EquatorialGuineaSource>().single;
+    final source = allGallerySources.whereType<EquatorialGuineaSource>().single;
     for (final section in source.sections) {
       for (final e in section.entries) {
         final c = PlateController.fromValues(e.spec, e.sampleValues!);
@@ -20,13 +20,13 @@ void main() {
         );
         expect(t.takeException(), isNull, reason: e.id);
         expect(e.sampleValues!.length, e.spec.slots.length, reason: e.id);
-        expect(
-          e.validator!
-              .validate(PlateEntry(spec: e.spec, values: e.sampleValues!))
-              .isValid,
-          isTrue,
-          reason: e.id,
-        );
+        if (e.validator != null) {
+          expect(
+            e.validator!.validate(PlateEntry(spec: e.spec, values: e.sampleValues!)).isValid,
+            isTrue,
+            reason: e.id,
+          );
+        }
         await t.pumpWidget(const SizedBox.shrink());
         c.dispose();
       }

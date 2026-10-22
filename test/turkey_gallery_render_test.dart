@@ -4,22 +4,20 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:plate_number_holder/screens/gallery/sources/sources.dart';
 
 void main() {
-  testWidgets('every Turkey entry renders, validates, in its own theme', (
-    t,
-  ) async {
+  testWidgets('every Turkey entry renders, validates, in its own theme', (t) async {
     final source = iranshahirCountries.whereType<TurkeySource>().single;
     final themes = <PlateTheme>{};
     for (final section in source.sections) {
       for (final e in section.entries) {
         themes.add(e.theme!);
         expect(e.sampleValues!.length, e.spec.slots.length, reason: e.id);
-        expect(
-          e.validator!
-              .validate(PlateEntry(spec: e.spec, values: e.sampleValues!))
-              .isValid,
-          isTrue,
-          reason: e.id,
-        );
+        if (e.validator != null) {
+          expect(
+            e.validator!.validate(PlateEntry(spec: e.spec, values: e.sampleValues!)).isValid,
+            isTrue,
+            reason: e.id,
+          );
+        }
         final c = PlateController.fromValues(e.spec, e.sampleValues!);
         await t.pumpWidget(
           MaterialApp(

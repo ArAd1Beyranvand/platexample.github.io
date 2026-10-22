@@ -21,12 +21,7 @@ class RepublicOfTheCongoSource extends GallerySource {
       'digits in the larger departments. Not drawn: the emblem\'s detail and '
       'the diplomatic and government series.';
 
-  static GalleryEntry _e(
-    String id,
-    String label,
-    PlateSpec spec,
-    String values,
-  ) => GalleryEntry(
+  static GalleryEntry _e(String id, String label, PlateSpec spec, String values) => GalleryEntry(
     id: 'cg.$id',
     label: label,
     spec: spec,
@@ -42,12 +37,7 @@ class RepublicOfTheCongoSource extends GallerySource {
       title: 'Private',
       note: 'The area number closes the register, on one digit or two.',
       entries: <GalleryEntry>[
-        _e(
-          'private',
-          'Private car · one-digit area',
-          RepublicOfTheCongoPlates.private,
-          '123 AB 4',
-        ),
+        _e('private', 'Private car · one-digit area', RepublicOfTheCongoPlates.private, '123 AB 4'),
         _e(
           'private2',
           'Private car · two-digit area',

@@ -1,5 +1,5 @@
 import 'package:plate_core/plate_core.dart';
-import 'package:ukraine_plate/ukraine_plate.dart';
+import 'package:russia_plate/russia_plate.dart';
 
 import '../catalogue.dart';
 
@@ -23,21 +23,19 @@ class UkraineSource extends GallerySource {
       'pre-2004 plates, oblast flags, stickers and the personalised plate\'s '
       'user sticker.';
 
-  GalleryEntry _entry(
-    String id,
-    String label,
-    PlateSpec spec,
-    PlateTheme theme,
-    String values,
-  ) => GalleryEntry(
-    id: 'ua.$id',
-    label: label,
-    spec: spec,
-    theme: theme,
-    country: UkraineCountry.ukraine,
-    validator: const UkraineValidator(),
-    sampleValues: values.split(' '),
-  );
+  /// Entries the country's shared validator does not cover.
+  static const Set<String> _unvalidated = <String>{'ua.diplomatic_1997', 'ua.companies'};
+
+  GalleryEntry _entry(String id, String label, PlateSpec spec, PlateTheme theme, String values) =>
+      GalleryEntry(
+        id: 'ua.$id',
+        label: label,
+        spec: spec,
+        theme: theme,
+        country: UkraineCountry.ukraine,
+        validator: _unvalidated.contains('ua.$id') ? null : const UkraineValidator(),
+        sampleValues: values.split(' '),
+      );
 
   @override
   List<GallerySection> get sections => _sections ??= <GallerySection>[
@@ -102,13 +100,7 @@ class UkraineSource extends GallerySource {
       note:
           'Police carry the star and a region code on the band; military and volunteer plates have no band.',
       entries: <GalleryEntry>[
-        _entry(
-          'police',
-          'Police · 2015',
-          UkrainePlates.police,
-          UkraineThemes.police,
-          '16 1564',
-        ),
+        _entry('police', 'Police · 2015', UkrainePlates.police, UkraineThemes.police, '16 1564'),
         _entry(
           'police_legacy',
           'Police · 2004',
@@ -116,13 +108,7 @@ class UkraineSource extends GallerySource {
           UkraineThemes.police,
           '16 1564',
         ),
-        _entry(
-          'military',
-          'Military',
-          UkrainePlates.military,
-          UkraineThemes.military,
-          '00 04 E6',
-        ),
+        _entry('military', 'Military', UkrainePlates.military, UkraineThemes.military, '00 04 E6'),
         _entry(
           'volunteers',
           'Volunteers',
@@ -134,8 +120,7 @@ class UkraineSource extends GallerySource {
     ),
     GallerySection(
       title: 'Diplomatic and companies',
-      note:
-          'Mission code 012 is refused in every layer with "COUNTRY NOT FOUND".',
+      note: 'Mission code 012 is refused in every layer with "COUNTRY NOT FOUND".',
       entries: <GalleryEntry>[
         _entry(
           'diplomatic',

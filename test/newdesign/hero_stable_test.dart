@@ -15,10 +15,7 @@ void main() {
       await tester.pumpWidget(const PdApp());
       await tester.pumpAndSettle();
       final Finder chips = find.byType(CountryChip);
-      final Finder card = find.ancestor(
-        of: chips.first,
-        matching: find.byType(Container),
-      ).last;
+      final Finder card = find.ancestor(of: chips.first, matching: find.byType(Container)).last;
       Size? first;
       for (int i = 0; i < heroPlates.length; i++) {
         await tester.ensureVisible(chips.at(i));

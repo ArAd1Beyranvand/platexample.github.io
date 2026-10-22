@@ -23,22 +23,17 @@ class GreeceSource extends GallerySource {
       'Prefecture letters, a dash and four digits, black on white with the '
       'euroband. Only the fourteen Greek capitals that look Latin are used.';
 
-  GalleryEntry _entry(
-    String id,
-    String label,
-    PlateSpec spec,
-    PlateTheme theme, {
-    String? note,
-  }) => GalleryEntry(
-    id: 'gr.$id',
-    label: label,
-    spec: spec,
-    theme: theme,
-    country: GreeceCountry.greece,
-    validator: const GreeceValidator(),
-    sampleValues: GreeceSerialGenerator.generate(spec, random: _rng),
-    note: note,
-  );
+  GalleryEntry _entry(String id, String label, PlateSpec spec, PlateTheme theme, {String? note}) =>
+      GalleryEntry(
+        id: 'gr.$id',
+        label: label,
+        spec: spec,
+        theme: theme,
+        country: GreeceCountry.greece,
+        validator: const GreeceValidator(),
+        sampleValues: GreeceSerialGenerator.generate(spec, random: _rng),
+        note: note,
+      );
 
   @override
   List<GallerySection> get sections => _sections ??= <GallerySection>[
@@ -49,18 +44,8 @@ class GreeceSource extends GallerySource {
           'seal above the dash. The trailer plate has one letter and five '
           'digits.',
       entries: <GalleryEntry>[
-        _entry(
-          'private',
-          'Private · ΑΒΓ-1234',
-          GreecePlates.private,
-          GreeceThemes.private,
-        ),
-        _entry(
-          'trailer',
-          'Trailer over 3.5 t',
-          GreecePlates.trailer,
-          GreeceThemes.trailer,
-        ),
+        _entry('private', 'Private · ΑΒΓ-1234', GreecePlates.private, GreeceThemes.private),
+        _entry('trailer', 'Trailer over 3.5 t', GreecePlates.trailer, GreeceThemes.trailer),
       ],
     ),
     GallerySection(
@@ -69,12 +54,7 @@ class GreeceSource extends GallerySource {
           'Government (orange), police (blue) and the US forces\' AFG '
           'motorcycle plate, whose digits run from one to three.',
       entries: <GalleryEntry>[
-        _entry(
-          'government',
-          'Government',
-          GreecePlates.government,
-          GreeceThemes.government,
-        ),
+        _entry('government', 'Government', GreecePlates.government, GreeceThemes.government),
         _entry('police', 'Police', GreecePlates.police, GreeceThemes.police),
         _entry('afg', 'AFG motorcycle', GreecePlates.afg, GreeceThemes.afg),
       ],

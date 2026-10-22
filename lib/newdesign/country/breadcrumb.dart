@@ -72,11 +72,7 @@ class PdInstallBar extends StatelessWidget {
             child: Text(
               command,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontFamily: PdFonts.mono,
-                fontSize: 13,
-                color: t.text,
-              ),
+              style: TextStyle(fontFamily: PdFonts.mono, fontSize: 13, color: t.text),
             ),
           ),
           const SizedBox(width: 8),

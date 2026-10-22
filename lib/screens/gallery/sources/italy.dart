@@ -24,21 +24,18 @@ class ItalySource extends GallerySource {
       'and the special series (police, military, fire brigade, diplomatic and '
       'the rest).';
 
-  GalleryEntry _entry(
-    String id,
-    String label,
-    PlateSpec spec,
-    PlateTheme theme,
-    String values,
-  ) => GalleryEntry(
-    id: 'it.$id',
-    label: label,
-    spec: spec,
-    theme: theme,
-    country: ItalyCountry.italy,
-    validator: const ItalyValidator(),
-    sampleValues: values.split(' '),
-  );
+  GalleryEntry _entry(String id, String label, PlateSpec spec, PlateTheme theme, String values) =>
+      GalleryEntry(
+        id: 'it.$id',
+        label: label,
+        spec: spec,
+        theme: theme,
+        country: ItalyCountry.italy,
+        validator: spec.id == 'it.private' || spec.id == 'it.twoline' || spec.id == 'it.motorcycle'
+            ? const ItalyValidator()
+            : null,
+        sampleValues: values.split(' '),
+      );
 
   @override
   List<GallerySection> get sections => _sections ??= <GallerySection>[
@@ -46,13 +43,7 @@ class ItalySource extends GallerySource {
       title: 'Car — 520 × 110',
       note: 'The rear plate; ink is ~70% of the reference height.',
       entries: <GalleryEntry>[
-        _entry(
-          'private',
-          'Private car',
-          ItalyPlates.private,
-          ItalyThemes.private,
-          'CZ 889 KF',
-        ),
+        _entry('private', 'Private car', ItalyPlates.private, ItalyThemes.private, 'CZ 889 KF'),
       ],
     ),
     GallerySection(
@@ -74,6 +65,47 @@ class ItalySource extends GallerySource {
           ItalyPlates.motorcycle,
           ItalyThemes.motorcycle,
           'BB 03813',
+        ),
+      ],
+    ),
+    GallerySection(
+      title: 'Diplomatic and United Nations',
+      note: 'A blue prefix, a country or mission code and two letters.',
+      entries: <GalleryEntry>[
+        _entry(
+          'diplomatic',
+          'Diplomatic corps (CD)',
+          ItalyPlates.diplomatic,
+          ItalyThemes.diplomatic,
+          '0213 XG',
+        ),
+        _entry(
+          'consular',
+          'Consular corps (CC)',
+          ItalyPlates.consular,
+          ItalyThemes.diplomatic,
+          '0213 AF',
+        ),
+        _entry(
+          'un',
+          'United Nations (UN)',
+          ItalyPlates.unitedNations,
+          ItalyThemes.diplomatic,
+          '147 AA',
+        ),
+        _entry(
+          'unp',
+          'UN specialists (UNP)',
+          ItalyPlates.unitedNationsSpecialists,
+          ItalyThemes.diplomatic,
+          '147 AA',
+        ),
+        _entry(
+          'unt',
+          'UN transit (UNT)',
+          ItalyPlates.unitedNationsTransit,
+          ItalyThemes.diplomatic,
+          '147 AA',
         ),
       ],
     ),

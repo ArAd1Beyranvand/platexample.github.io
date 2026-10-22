@@ -65,24 +65,13 @@ class TunisiaSource extends GallerySource {
           TunisiaThemes.standard,
           values: <String?>['73', '3294'],
         ),
-        _entry(
-          'rental',
-          'Rental · white on blue',
-          TunisiaPlates.standard,
-          TunisiaThemes.rental,
-        ),
-        _entry(
-          'square',
-          'Square rear · 275 × 200',
-          TunisiaPlates.square,
-          TunisiaThemes.standard,
-        ),
+        _entry('rental', 'Rental · white on blue', TunisiaPlates.standard, TunisiaThemes.rental),
+        _entry('square', 'Square rear · 275 × 200', TunisiaPlates.square, TunisiaThemes.standard),
       ],
     ),
     GallerySection(
       title: 'State',
-      note:
-          'Red on white with a dash for ministries; white on black behind the flag for the army.',
+      note: 'Red on white with a dash for ministries; white on black behind the flag for the army.',
       entries: <GalleryEntry>[
         _entry(
           'government',
@@ -112,13 +101,8 @@ class TunisiaSource extends GallerySource {
             '${m.latin} · ${m.arabic}',
             TunisiaPlates.diplomatic(m),
             TunisiaThemes.diplomatic,
-            validator: TunisiaDiplomaticValidator(
-              chief: m == TunisiaMission.chief,
-            ),
-            values: <String?>[
-              '46',
-              if (m == TunisiaMission.chief) '01' else '02',
-            ],
+            validator: TunisiaDiplomaticValidator(chief: m == TunisiaMission.chief),
+            values: <String?>['46', if (m == TunisiaMission.chief) '01' else '02'],
           ),
       ],
     ),

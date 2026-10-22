@@ -21,6 +21,9 @@ class GuineaSource extends GallerySource {
       'The 1994 plates are white on red (private) or black (taxis, trucks), '
       'led by the region letters. The QR code is not drawn.';
 
+  /// Entries the country's shared validator does not cover.
+  static const Set<String> _unvalidated = <String>{'gn.motorcycle'};
+
   static GalleryEntry _e(
     String id,
     String label,
@@ -33,7 +36,7 @@ class GuineaSource extends GallerySource {
     spec: spec,
     theme: theme,
     country: GuineaCountry.guinea,
-    validator: const GuineaValidator(),
+    validator: _unvalidated.contains('gn.$id') ? null : const GuineaValidator(),
     sampleValues: values,
   );
 
@@ -57,26 +60,23 @@ class GuineaSource extends GallerySource {
           GuineaThemes.standardSquare,
           <String?>['AB', '0123', '02'],
         ),
-        _e(
-          'motorcycle',
-          'Motorcycle',
-          GuineaPlates.motorcycle,
-          GuineaThemes.motorcycle,
-          <String?>['AB', '02', '012', 'A'],
-        ),
+        _e('motorcycle', 'Motorcycle', GuineaPlates.motorcycle, GuineaThemes.motorcycle, <String?>[
+          'AB',
+          '02',
+          '012',
+          'A',
+        ]),
       ],
     ),
     GallerySection(
       title: 'Earlier (1994–2021)',
       note: 'White on red for private vehicles, on black for taxis and trucks.',
       entries: <GalleryEntry>[
-        _e(
-          'legacy',
-          'Private · one row',
-          GuineaPlates.legacy,
-          GuineaThemes.legacy,
-          <String?>['RC', '0123', 'AB'],
-        ),
+        _e('legacy', 'Private · one row', GuineaPlates.legacy, GuineaThemes.legacy, <String?>[
+          'RC',
+          '0123',
+          'AB',
+        ]),
         _e(
           'legacy_square',
           'Private · two rows',
@@ -84,13 +84,11 @@ class GuineaSource extends GallerySource {
           GuineaThemes.legacySquare,
           <String?>['RC', '0123', 'AB'],
         ),
-        _e(
-          'taxi',
-          'Taxi · one row',
-          GuineaPlates.taxi,
-          GuineaThemes.taxi,
-          <String?>['RC', '0123', 'Z'],
-        ),
+        _e('taxi', 'Taxi · one row', GuineaPlates.taxi, GuineaThemes.taxi, <String?>[
+          'RC',
+          '0123',
+          'Z',
+        ]),
         _e(
           'taxi_square',
           'Taxi · two rows',

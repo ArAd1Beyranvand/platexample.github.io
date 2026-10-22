@@ -73,17 +73,11 @@ class _PdTappableState extends State<PdTappable> {
       decoration: BoxDecoration(
         color: fill ?? Colors.transparent,
         borderRadius: r,
-        border: widget.border == null
-            ? null
-            : Border.all(color: widget.border!),
+        border: widget.border == null ? null : Border.all(color: widget.border!),
       ),
       child: widget.child,
     );
-    box = AnimatedScale(
-      duration: d,
-      scale: _down && enabled ? widget.pressScale : 1,
-      child: box,
-    );
+    box = AnimatedScale(duration: d, scale: _down && enabled ? widget.pressScale : 1, child: box);
     box = Stack(
       clipBehavior: Clip.none,
       children: <Widget>[
@@ -117,9 +111,7 @@ class _PdTappableState extends State<PdTappable> {
         onShowHoverHighlight: (bool v) => setState(() => _hover = v),
         onShowFocusHighlight: (bool v) => setState(() => _focus = v),
         actions: <Type, Action<Intent>>{
-          ActivateIntent: CallbackAction<ActivateIntent>(
-            onInvoke: (_) => widget.onTap?.call(),
-          ),
+          ActivateIntent: CallbackAction<ActivateIntent>(onInvoke: (_) => widget.onTap?.call()),
         },
         child: GestureDetector(
           behavior: HitTestBehavior.opaque,
@@ -159,7 +151,7 @@ class PdButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       color: primary ? t.accent : null,
       brighten: primary,
-      hoverColor: primary ? null : t.surface,
+      hoverColor: primary ? null : t.hover,
       border: primary ? null : t.control,
       pressScale: 0.98,
       child: Center(
@@ -214,7 +206,7 @@ class _PdCopyButtonState extends State<PdCopyButton> {
       onTap: _copy,
       height: 32,
       padding: const EdgeInsets.symmetric(horizontal: 10),
-      hoverColor: t.surface,
+      hoverColor: t.hover,
       border: t.divider,
       child: Center(
         widthFactor: 1,
@@ -254,8 +246,7 @@ class PdLink extends StatelessWidget {
   );
 }
 
-Future<void> openExternal(String url) =>
-    launchUrl(Uri.parse(url), webOnlyWindowName: '_blank');
+Future<void> openExternal(String url) => launchUrl(Uri.parse(url), webOnlyWindowName: '_blank');
 
 /// The DS section container: max 1200, centred, padding x clamp(16,3vw,32).
 class PdContainer extends StatelessWidget {
@@ -294,17 +285,11 @@ class PdAutoGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) => LayoutBuilder(
     builder: (BuildContext context, BoxConstraints c) {
-      final int cols = ((c.maxWidth + gap) / (minWidth + gap)).floor().clamp(
-        1,
-        children.length,
-      );
+      final int cols = ((c.maxWidth + gap) / (minWidth + gap)).floor().clamp(1, children.length);
       final double w = (c.maxWidth - gap * (cols - 1)) / cols;
       final List<Widget> rows = <Widget>[];
       for (int i = 0; i < children.length; i += cols) {
-        final List<Widget> cells = children.sublist(
-          i,
-          (i + cols).clamp(0, children.length),
-        );
+        final List<Widget> cells = children.sublist(i, (i + cols).clamp(0, children.length));
         rows.add(
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -351,10 +336,7 @@ class PdScrollHandoff extends StatelessWidget {
           final ScrollPosition? outer = Scrollable.maybeOf(context)?.position;
           if (outer == null || outer.axis != n.metrics.axis) return false;
           outer.jumpTo(
-            (outer.pixels + n.overscroll).clamp(
-              outer.minScrollExtent,
-              outer.maxScrollExtent,
-            ),
+            (outer.pixels + n.overscroll).clamp(outer.minScrollExtent, outer.maxScrollExtent),
           );
           return true;
         },
@@ -378,8 +360,6 @@ class PdCodeText extends StatelessWidget {
       TargetPlatform.android || TargetPlatform.iOS => true,
       _ => false,
     };
-    return touch
-        ? Text(text, style: style)
-        : SelectableText(text, style: style);
+    return touch ? Text(text, style: style) : SelectableText(text, style: style);
   }
 }

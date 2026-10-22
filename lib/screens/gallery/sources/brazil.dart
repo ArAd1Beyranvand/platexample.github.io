@@ -19,21 +19,16 @@ class BrazilSource extends GallerySource {
       'ABC1D23 under the blue BRASIL band, the flag at the right and the '
       'Mercosul logo at the left. The ink colour gives the category.';
 
-  GalleryEntry _entry(
-    String id,
-    String label,
-    PlateSpec spec,
-    PlateTheme theme,
-    String value,
-  ) => GalleryEntry(
-    id: 'br.$id',
-    label: label,
-    spec: spec,
-    theme: theme,
-    country: BrazilCountry.brazil,
-    validator: const BrazilPlateValidator(),
-    sampleValues: value.split(''),
-  );
+  GalleryEntry _entry(String id, String label, PlateSpec spec, PlateTheme theme, String value) =>
+      GalleryEntry(
+        id: 'br.$id',
+        label: label,
+        spec: spec,
+        theme: theme,
+        country: BrazilCountry.brazil,
+        validator: const BrazilPlateValidator(),
+        sampleValues: value.split(''),
+      );
 
   @override
   List<GallerySection> get sections => _sections ??= <GallerySection>[
@@ -72,13 +67,7 @@ class BrazilSource extends GallerySource {
           BrazilThemes.diplomatic,
           'OYW4R26',
         ),
-        _entry(
-          'dealer',
-          'Dealer · green',
-          BrazilPlates.mercosul,
-          BrazilThemes.dealer,
-          'MSK9B10',
-        ),
+        _entry('dealer', 'Dealer · green', BrazilPlates.mercosul, BrazilThemes.dealer, 'MSK9B10'),
         _entry(
           'collector',
           'Collector · grey',

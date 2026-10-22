@@ -50,6 +50,16 @@ dependencies:
   # The country packages, extracted from plate_core in P8. Each owns its own
   # plate specs, alphabets and flag/sticker assets, and depends on plate_core
   # and nothing else — not on the keypad, and not on each other.
+  caribbean_plate:
+    path: ../caribbean_plate
+  indian_ocean_plate:
+    path: ../indian_ocean_plate
+  kanak_plate:
+    path: ../kanak_plate
+  polynesia_plate:
+    path: ../polynesia_plate
+  sahara_plate:
+    path: ../sahara_plate
   iran_plate:
     path: ../iran_plate
   iranshahr_plate:
@@ -78,8 +88,6 @@ dependencies:
     path: ../algeria_plate
   indonesia_plate:
     path: ../indonesia_plate
-  belarus_plate:
-    path: ../belarus_plate
   namibia_plate:
     path: ../namibia_plate
   nicaragua_plate:
@@ -118,12 +126,138 @@ dependencies:
     path: ../laos_plate
   vietnam_plate:
     path: ../vietnam_plate
+  canary_islands_plate:
+    path: ../canary_islands_plate
+  suriname_plate:
+    path: ../suriname_plate
+  nepal_plate:
+    path: ../nepal_plate
+  luxembourg_plate:
+    path: ../luxembourg_plate
+  iceland_plate:
+    path: ../iceland_plate
+  cyprus_plate:
+    path: ../cyprus_plate
+  croatia_plate:
+    path: ../croatia_plate
+  burundi_plate:
+    path: ../burundi_plate
+  belgium_plate:
+    path: ../belgium_plate
+  fiji_plate:
+    path: ../fiji_plate
+  liberia_plate:
+    path: ../liberia_plate
+  new_zealand_plate:
+    path: ../new_zealand_plate
+  samoa_plate:
+    path: ../samoa_plate
+  solomon_islands_plate:
+    path: ../solomon_islands_plate
+  federated_states_of_micronesia_plate:
+    path: ../federated_states_of_micronesia_plate
+  sovereign_military_order_of_malta_plate:
+    path: ../sovereign_military_order_of_malta_plate
+  madeira_plate:
+    path: ../madeira_plate
+  romania_plate:
+    path: ../romania_plate
+  poland_plate:
+    path: ../poland_plate
+  tuvalu_plate:
+    path: ../tuvalu_plate
+  trinidad_and_tobago_plate:
+    path: ../trinidad_and_tobago_plate
+  tonga_plate:
+    path: ../tonga_plate
+  togo_plate:
+    path: ../togo_plate
+  saint_lucia_plate:
+    path: ../saint_lucia_plate
+  saint_kitts_and_nevis_plate:
+    path: ../saint_kitts_and_nevis_plate
+  rwanda_plate:
+    path: ../rwanda_plate
+  peru_plate:
+    path: ../peru_plate
+  papua_new_guinea_plate:
+    path: ../papua_new_guinea_plate
+  panama_plate:
+    path: ../panama_plate
+  palau_plate:
+    path: ../palau_plate
+  north_macedonia_plate:
+    path: ../north_macedonia_plate
+  france_plate:
+    path: ../france_plate
+  china_plate:
+    path: ../china_plate
+  montenegro_plate:
+    path: ../montenegro_plate
+  latvia_plate:
+    path: ../latvia_plate
+  honduras_plate:
+    path: ../honduras_plate
+  haiti_plate:
+    path: ../haiti_plate
+  nauru_plate:
+    path: ../nauru_plate
+  monaco_plate:
+    path: ../monaco_plate
+  marshall_islands_plate:
+    path: ../marshall_islands_plate
+  lithuania_plate:
+    path: ../lithuania_plate
+  kiribati_plate:
+    path: ../kiribati_plate
+  guyana_plate:
+    path: ../guyana_plate
+  grenada_plate:
+    path: ../grenada_plate
+  ethiopia_plate:
+    path: ../ethiopia_plate
+  australia_plate:
+    path: ../australia_plate
+  moldova_plate:
+    path: ../moldova_plate
+  georgia_country_plate:
+    path: ../georgia_country_plate
+  singapore_plate:
+    path: ../singapore_plate
+  denmark_plate:
+    path: ../denmark_plate
+  paraguay_plate:
+    path: ../paraguay_plate
+  hungary_plate:
+    path: ../hungary_plate
+  czech_republic_plate:
+    path: ../czech_republic_plate
+  guatemala_plate:
+    path: ../guatemala_plate
+  ivory_coast_plate:
+    path: ../ivory_coast_plate
+  ghana_plate:
+    path: ../ghana_plate
+  morocco_plate:
+    path: ../morocco_plate
+  uganda_plate:
+    path: ../uganda_plate
+  south_africa_plate:
+    path: ../south_africa_plate
+  democratic_republic_of_the_congo_plate:
+    path: ../democratic_republic_of_the_congo_plate
+  mexico_plate:
+    path: ../mexico_plate
+  nigeria_plate:
+    path: ../nigeria_plate
+  pakistan_plate:
+    path: ../pakistan_plate
   switzerland_plate:
     path: ../switzerland_plate
   slovakia_plate:
     path: ../slovakia_plate
-  ukraine_plate:
-    path: ../ukraine_plate
+  russia_plate:
+    path: ../russia_plate
   united_kingdom_plate:
     path: ../united_kingdom_plate
   netherlands_plate:
@@ -172,6 +306,8 @@ dependencies:
     path: ../lesotho_plate
   madagascar_plate:
     path: ../madagascar_plate
+  malawi_plate:
+    path: ../malawi_plate
   zambia_plate:
     path: ../zambia_plate
   gabon_plate:
@@ -204,6 +340,8 @@ dependencies:
     path: ../republic_of_ireland_plate
   zimbabwe_plate:
     path: ../zimbabwe_plate
+  kenya_plate:
+    path: ../kenya_plate
 
   # The rest of the catalogue: one package per country, every one a local
   # path checkout like the blocks above.
@@ -258,6 +396,32 @@ dependencies:
 
   url_launcher: ^6.3.2
   web: ^1.1.1
+  albania_plate:
+    path: ../albania_plate
+  argentina_plate:
+    path: ../argentina_plate
+  austria_plate:
+    path: ../austria_plate
+  bangladesh_plate:
+    path: ../bangladesh_plate
+  bulgaria_plate:
+    path: ../bulgaria_plate
+  costa_rica_plate:
+    path: ../costa_rica_plate
+  ecuador_plate:
+    path: ../ecuador_plate
+  el_salvador_plate:
+    path: ../el_salvador_plate
+  estonia_plate:
+    path: ../estonia_plate
+  eswatini_plate:
+    path: ../eswatini_plate
+  jamaica_plate:
+    path: ../jamaica_plate
+  saint_helena_plate:
+    path: ../saint_helena_plate
+  south_sudan_plate:
+    path: ../south_sudan_plate
 
 dev_dependencies:
   flutter_test:
@@ -268,6 +432,8 @@ dev_dependencies:
 # yemen_plate and lebanon_plate still use path dependencies until they are published on
 # pub.dev. plate_core is now published and uses the versioned dependency above.
 dependency_overrides:
+  portugal_plate:
+    path: ../portugal_plate
   # Local development only: this stage's PlateController/PlateView API is not
   # published yet, so plate_core resolves to the sibling checkout.
   plate_core:
@@ -286,8 +452,6 @@ dependency_overrides:
     path: ../yemen_plate
   lebanon_plate:
     path: ../lebanon_plate
-  belarus_plate:
-    path: ../belarus_plate
   namibia_plate:
     path: ../namibia_plate
   nicaragua_plate:

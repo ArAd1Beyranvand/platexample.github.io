@@ -10,18 +10,15 @@ import 'sources/sources.dart';
 /// three nested loops re-walked on every keystroke.
 @immutable
 class CatalogueItem {
-  CatalogueItem({
-    required this.source,
-    required this.section,
-    required this.entry,
-  }) : haystack = <String>[
-         entry.label,
-         entry.note ?? '',
-         entry.spec.id,
-         section.title,
-         source.countryName,
-         source.packageName,
-       ].join(' ').toLowerCase();
+  CatalogueItem({required this.source, required this.section, required this.entry})
+    : haystack = <String>[
+        entry.label,
+        entry.note ?? '',
+        entry.spec.id,
+        section.title,
+        source.countryName,
+        source.packageName,
+      ].join(' ').toLowerCase();
 
   final GallerySource source;
   final GallerySection section;
@@ -57,10 +54,7 @@ final List<CatalogueItem> catalogueItems = <CatalogueItem>[
 /// Terms are ANDed, so "yemen moto" narrows rather than widens — the
 /// behaviour anyone who has used a search box expects, and the reason this
 /// isn't a single `contains`.
-List<CatalogueItem> searchCatalogue({
-  String query = '',
-  GallerySource? country,
-}) {
+List<CatalogueItem> searchCatalogue({String query = '', GallerySource? country}) {
   final List<String> terms = query
       .toLowerCase()
       .split(' ')
@@ -81,9 +75,7 @@ extension CatalogueSourceLook on GallerySource {
   /// and to open it into a detail page.
   List<CatalogueItem> get highlightItems => <CatalogueItem>[
     for (final GalleryEntry entry in highlights)
-      catalogueItems.firstWhere(
-        (CatalogueItem item) => identical(item.entry, entry),
-      ),
+      catalogueItems.firstWhere((CatalogueItem item) => identical(item.entry, entry)),
   ];
 
   /// The colour this country is keyed with in the chrome — its own leading

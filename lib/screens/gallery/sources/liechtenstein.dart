@@ -80,7 +80,7 @@ class LiechtensteinSource extends GallerySource {
           LiechtensteinPlates.motorcycle,
           _std,
           LiechtensteinValidator.standard,
-          '1234',
+          '2345',
         ),
         _e(
           'trailer',

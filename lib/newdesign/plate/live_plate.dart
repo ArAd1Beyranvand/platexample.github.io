@@ -41,8 +41,7 @@ String scriptOf(PlateAlphabet alphabet) {
 /// A letter the user picks rather than types (Persian series letters,
 /// Lao provinces), or any non-Latin letter slot.
 bool isPickedAlphabet(PlateAlphabet alphabet) =>
-    !alphabet.isNumeric &&
-    (alphabet.input == AlphabetInput.chosen || scriptOf(alphabet) != 'A–Z');
+    !alphabet.isNumeric && (alphabet.input == AlphabetInput.chosen || scriptOf(alphabet) != 'A–Z');
 
 int? firstEmpty(List<String?> values) {
   for (int i = 0; i < values.length; i++) {
@@ -53,15 +52,9 @@ int? firstEmpty(List<String?> values) {
 
 /// The verdict on a full plate: the entry's validator, else the spec's
 /// restrictions, else valid.
-PlateValidation verdictOf(
-  PlateSpec spec,
-  List<String?> values,
-  PlateValidator? validator,
-) {
+PlateValidation verdictOf(PlateSpec spec, List<String?> values, PlateValidator? validator) {
   final PlateEntry entry = PlateEntry(spec: spec, values: values);
-  return validator?.validate(entry) ??
-      restrictionVerdict(entry) ??
-      const PlateValidation.valid();
+  return validator?.validate(entry) ?? restrictionVerdict(entry) ?? const PlateValidation.valid();
 }
 
 /// A live PlateCanvas with the DS status line under it and, when the next
@@ -147,8 +140,7 @@ class _LivePlateState extends State<LivePlate> {
   void _changed() => _safeSetState(() {});
 
   void _safeSetState(VoidCallback fn) {
-    if (SchedulerBinding.instance.schedulerPhase !=
-        SchedulerPhase.persistentCallbacks) {
+    if (SchedulerBinding.instance.schedulerPhase != SchedulerPhase.persistentCallbacks) {
       setState(fn);
       return;
     }
@@ -262,9 +254,7 @@ class _LivePlateState extends State<LivePlate> {
     }
 
     final int? pickAt = _next;
-    final PlateAlphabet? pickAlphabet = pickAt == null
-        ? null
-        : spec.slotAt(pickAt)?.alphabet;
+    final PlateAlphabet? pickAlphabet = pickAt == null ? null : spec.slotAt(pickAt)?.alphabet;
     // A keypad already offers the letters; the chips would repeat it.
     final bool showPicker =
         !widget.fixedSize &&
@@ -286,21 +276,13 @@ class _LivePlateState extends State<LivePlate> {
             inputSource: widget.inputSource,
             validator: widget.validator,
             animation: _anim,
-            specTransition: const PlateSpecTransition(
-              keepIdentical: true,
-              morphBackground: true,
-            ),
+            specTransition: const PlateSpecTransition(keepIdentical: true, morphBackground: true),
             onChooseCharacter: (PlateAlphabet a) => scriptOf(a) == 'Persian'
-                ? LetterSheet.show(
-                    context,
-                    a,
-                    slot: _c.activeIndex,
-                    slotCount: spec.slotCount,
-                  )
+                ? LetterSheet.show(context, a, slot: _c.activeIndex, slotCount: spec.slotCount)
                 : PlateCharacterPicker.show(context, a),
           ),
         ),
-        RegionCaption(controller: _c, gap: 10),
+        RegionCaption(controller: _c, gap: 10, reserve: widget.fixedSize),
         const SizedBox(height: 14),
         _statusBox(
           Semantics(
@@ -313,10 +295,7 @@ class _LivePlateState extends State<LivePlate> {
                   child: Container(
                     width: 8,
                     height: 8,
-                    decoration: BoxDecoration(
-                      color: dot,
-                      shape: BoxShape.circle,
-                    ),
+                    decoration: BoxDecoration(color: dot, shape: BoxShape.circle),
                   ),
                 ),
                 const SizedBox(width: 10),
@@ -327,21 +306,14 @@ class _LivePlateState extends State<LivePlate> {
                         if (word != null)
                           TextSpan(
                             text: '$word · ',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              color: wordColor,
-                            ),
+                            style: TextStyle(fontWeight: FontWeight.w700, color: wordColor),
                           ),
                         TextSpan(text: text),
                       ],
                     ),
                     maxLines: widget.fixedSize ? 2 : null,
                     overflow: widget.fixedSize ? TextOverflow.ellipsis : null,
-                    style: TextStyle(
-                      fontSize: 14,
-                      height: 1.45,
-                      color: t.muted,
-                    ),
+                    style: TextStyle(fontSize: 14, height: 1.45, color: t.muted),
                   ),
                 ),
               ],
@@ -383,9 +355,7 @@ class SlotKeypad extends StatelessWidget {
 
   Widget _buildKeypad(BuildContext context, Widget? _) {
     final PlateSpec spec = controller.spec;
-    final Iterable<PlateAlphabet> all = spec.slots.map(
-      (PlateSlot s) => s.alphabet,
-    );
+    final Iterable<PlateAlphabet> all = spec.slots.map((PlateSlot s) => s.alphabet);
     final PlateAlphabet digits = all.firstWhere(
       (PlateAlphabet a) => a.isNumeric,
       orElse: () => all.first,
@@ -447,11 +417,7 @@ class LetterPicker extends StatelessWidget {
             child: Center(
               child: Text(
                 alphabet.render(c),
-                style: TextStyle(
-                  fontFamily: PdFonts.persian,
-                  fontSize: 17,
-                  color: t.text,
-                ),
+                style: TextStyle(fontFamily: PdFonts.persian, fontSize: 17, color: t.text),
               ),
             ),
           ),
@@ -469,6 +435,7 @@ class StaticPlate extends StatefulWidget {
     this.theme,
     this.country,
     this.animation,
+    this.specTransition,
     this.autoType = false,
   });
 
@@ -479,6 +446,9 @@ class StaticPlate extends StatefulWidget {
 
   /// Drives the parts' stagger, for a caller swapping plates in and out.
   final PlateAnimationController? animation;
+
+  /// How the canvas moves between specs; null keeps the canvas default.
+  final PlateSpecTransition? specTransition;
 
   /// Starts empty and types [values] in one character at a time, then
   /// clears and types them again, over and over.
@@ -513,9 +483,7 @@ class _StaticPlateState extends State<StaticPlate> {
     super.didUpdateWidget(old);
     final bool specChanged = !identical(old.spec, widget.spec);
     if (specChanged) _c.adoptSpec(widget.spec);
-    if (widget.autoType &&
-        !specChanged &&
-        listEquals(old.values, widget.values)) {
+    if (widget.autoType && !specChanged && listEquals(old.values, widget.values)) {
       return;
     }
     _show();
@@ -586,6 +554,7 @@ class _StaticPlateState extends State<StaticPlate> {
           theme: widget.theme,
           country: widget.country,
           animation: widget.animation,
+          specTransition: widget.specTransition,
           onChooseCharacter: (_) async => null,
         ),
       ),
@@ -599,16 +568,21 @@ class _StaticPlateState extends State<StaticPlate> {
 /// plate without a resolver; on one with it, the line is always reserved so
 /// the card does not jump as the caption comes and goes.
 class RegionCaption extends StatelessWidget {
-  const RegionCaption({super.key, required this.controller, this.gap = 8});
+  const RegionCaption({super.key, required this.controller, this.gap = 8, this.reserve = false});
 
   final PlateController controller;
   final double gap;
+
+  /// Keeps the line's height even on a plate with no resolver.
+  final bool reserve;
 
   static const double _size = 12;
 
   @override
   Widget build(BuildContext context) {
-    if (controller.spec.resolveRegion == null) return const SizedBox.shrink();
+    if (controller.spec.resolveRegion == null) {
+      return reserve ? SizedBox(height: gap + _size * 1.4) : const SizedBox.shrink();
+    }
     final PdTokens t = context.tokens;
     return ListenableBuilder(
       listenable: controller,

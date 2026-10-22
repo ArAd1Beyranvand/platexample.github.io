@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../country/country_page.dart';
 import '../country/region_page.dart';
 import '../data/catalogue.dart';
+import '../debug/render_check_page.dart';
 import '../landing/landing_page.dart';
 import '../playground/playground_page.dart';
 import '../shell/site_shell.dart';
@@ -71,6 +72,15 @@ class PdRouterDelegate extends RouterDelegate<PdLocation>
   @override
   Widget build(BuildContext context) {
     final PdLocation location = _location;
+    if (location.isRenderCheck) {
+      return Navigator(
+        key: navigatorKey,
+        pages: const <Page<void>>[
+          NoTransitionPage(key: ValueKey<String>('render-check'), child: RenderCheckPage()),
+        ],
+        onDidRemovePage: (Page<Object?> page) {},
+      );
+    }
     return Navigator(
       key: navigatorKey,
       pages: <Page<void>>[
@@ -84,20 +94,10 @@ class PdRouterDelegate extends RouterDelegate<PdLocation>
             openSearch: openSearch,
             searchFocus: searchFocus,
             child: switch (location) {
-              PdLocation(isPlayground: true) => PlaygroundPage(
-                item: location.item!,
-              ),
-              PdLocation(isRegion: true) => RegionPage(
-                region: location.source!,
-              ),
-              PdLocation(isCountry: true) => CountryPage(
-                source: location.source!,
-              ),
-              _ => LandingPage(
-                anchor: location.anchor,
-                visit: _visit,
-                focusSearch: _focusSearch,
-              ),
+              PdLocation(isPlayground: true) => PlaygroundPage(item: location.item!),
+              PdLocation(isRegion: true) => RegionPage(region: location.source!),
+              PdLocation(isCountry: true) => CountryPage(source: location.source!),
+              _ => LandingPage(anchor: location.anchor, visit: _visit, focusSearch: _focusSearch),
             },
           ),
         ),

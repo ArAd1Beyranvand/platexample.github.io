@@ -44,13 +44,7 @@ class AndorraSource extends GallerySource {
       title: 'Standard — 340 × 120',
       note: 'A letter and four digits.',
       entries: <GalleryEntry>[
-        _e(
-          'standard',
-          'Standard',
-          AndorraPlates.standard,
-          AndorraThemes.standard,
-          'L 3705',
-        ),
+        _e('standard', 'Standard', AndorraPlates.standard, AndorraThemes.standard, 'L 3705'),
       ],
     ),
     GallerySection(

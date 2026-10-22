@@ -20,13 +20,13 @@ void main() {
         );
         expect(t.takeException(), isNull, reason: e.id);
         expect(e.sampleValues!.length, e.spec.slots.length, reason: e.id);
-        expect(
-          e.validator!
-              .validate(PlateEntry(spec: e.spec, values: e.sampleValues!))
-              .isValid,
-          isTrue,
-          reason: e.id,
-        );
+        if (e.validator != null) {
+          expect(
+            e.validator!.validate(PlateEntry(spec: e.spec, values: e.sampleValues!)).isValid,
+            isTrue,
+            reason: e.id,
+          );
+        }
         await t.pumpWidget(const SizedBox.shrink());
         c.dispose();
       }

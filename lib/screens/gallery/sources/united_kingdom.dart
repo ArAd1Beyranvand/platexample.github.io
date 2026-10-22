@@ -159,13 +159,9 @@ class UnitedKingdomSource extends GallerySource {
           UnitedKingdomThemes.rear,
           <String?>['C', '335004'],
         ),
-        _e(
-          'gb.trade',
-          'Trade',
-          UnitedKingdomPlates.trade,
-          UnitedKingdomThemes.trade,
-          <String?>['65591'],
-        ),
+        _e('gb.trade', 'Trade', UnitedKingdomPlates.trade, UnitedKingdomThemes.trade, <String?>[
+          '65591',
+        ]),
       ],
     ),
   ];

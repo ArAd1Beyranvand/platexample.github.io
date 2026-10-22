@@ -21,28 +21,20 @@ class LibyaSource extends GallerySource {
       'red for diplomats and yellow, with a class letter, for commercial '
       'vehicles. The digits read short: the plates use a condensed face.';
 
-  GalleryEntry _entry(
-    String id,
-    String label,
-    PlateSpec spec,
-    PlateTheme theme,
-    String values,
-  ) => GalleryEntry(
-    id: 'ly.$id',
-    label: label,
-    spec: spec,
-    theme: theme,
-    country: LibyaCountry.libya,
-    validator: const LibyaPlateValidator(),
-    sampleValues: values.split(' '),
-  );
+  GalleryEntry _entry(String id, String label, PlateSpec spec, PlateTheme theme, String values) =>
+      GalleryEntry(
+        id: 'ly.$id',
+        label: label,
+        spec: spec,
+        theme: theme,
+        country: LibyaCountry.libya,
+        validator: const LibyaPlateValidator(),
+        sampleValues: values.split(' '),
+      );
 
   @override
   List<GallerySection> get sections => _sections ??= <GallerySection>[
-    for (final (two, size) in const <(bool, String)>[
-      (false, '520 × 110'),
-      (true, '270 × 150'),
-    ])
+    for (final (two, size) in const <(bool, String)>[(false, '520 × 110'), (true, '270 × 150')])
       GallerySection(
         title: two ? 'Two rows — $size' : 'One row — $size',
         note: two

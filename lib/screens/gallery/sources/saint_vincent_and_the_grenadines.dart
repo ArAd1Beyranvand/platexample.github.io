@@ -29,8 +29,7 @@ class SaintVincentAndTheGrenadinesSource extends GallerySource {
           label: 'Private car',
           spec: SaintVincentAndTheGrenadinesPlates.private,
           theme: SaintVincentAndTheGrenadinesThemes.private,
-          country: SaintVincentAndTheGrenadinesCountry
-              .saint_vincent_and_the_grenadines,
+          country: SaintVincentAndTheGrenadinesCountry.saint_vincent_and_the_grenadines,
           validator: const SaintVincentAndTheGrenadinesValidator(),
           sampleValues: 'P 1234'.split(' '),
         ),

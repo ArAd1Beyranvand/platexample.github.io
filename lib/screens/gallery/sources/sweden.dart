@@ -48,28 +48,10 @@ class SwedenSource extends GallerySource {
           'Three letters, two digits and a digit or letter; the short form '
           'is 300 mm wide.',
       entries: <GalleryEntry>[
-        _e(
-          'private',
-          'Private car',
-          SwedenPlates.private,
-          SwedenThemes.private,
-          'ABC|12|A',
-        ),
-        _e(
-          'american',
-          'Short plate',
-          SwedenPlates.american,
-          SwedenThemes.private,
-          'EPR|47|9',
-        ),
+        _e('private', 'Private car', SwedenPlates.private, SwedenThemes.private, 'ABC|12|A'),
+        _e('american', 'Short plate', SwedenPlates.american, SwedenThemes.private, 'EPR|47|9'),
         _e('taxi', 'Taxi', SwedenPlates.taxi, SwedenThemes.taxi, 'MLB|94|2'),
-        _e(
-          'dealer',
-          'Dealer',
-          SwedenPlates.dealer,
-          SwedenThemes.dealer,
-          'MLB|206',
-        ),
+        _e('dealer', 'Dealer', SwedenPlates.dealer, SwedenThemes.dealer, 'MLB|206'),
       ],
     ),
     GallerySection(
@@ -90,13 +72,7 @@ class SwedenSource extends GallerySource {
           SwedenThemes.temporary,
           '25|09|MLB|426|2002|B',
         ),
-        _e(
-          'military',
-          'Military',
-          SwedenPlates.military,
-          SwedenThemes.military,
-          '118076',
-        ),
+        _e('military', 'Military', SwedenPlates.military, SwedenThemes.military, '118076'),
       ],
     ),
   ];

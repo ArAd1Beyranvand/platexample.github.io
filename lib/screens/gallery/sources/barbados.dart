@@ -23,8 +23,7 @@ class BarbadosSource extends GallerySource {
   List<GallerySection> get sections => _sections ??= <GallerySection>[
     GallerySection(
       title: 'Private',
-      note:
-          'The leading letter is the parish: L is Saint Lucy, A Saint Andrew.',
+      note: 'The leading letter is the parish: L is Saint Lucy, A Saint Andrew.',
       entries: <GalleryEntry>[
         GalleryEntry(
           id: 'bb.black',

@@ -23,20 +23,16 @@ class DjiboutiSource extends GallerySource {
       'same value mirrored in Arabic. The serial reads about three quarters '
       'of the real height.';
 
-  GalleryEntry _entry(String id, String label, PlateTheme theme, String note) =>
-      GalleryEntry(
-        id: 'dj.$id',
-        label: label,
-        spec: DjiboutiPlates.standard,
-        theme: theme,
-        country: DjiboutiCountry.djibouti,
-        validator: const DjiboutiValidator(),
-        sampleValues: DjiboutiSerialGenerator.generate(
-          DjiboutiPlates.standard,
-          random: _rng,
-        ),
-        note: note,
-      );
+  GalleryEntry _entry(String id, String label, PlateTheme theme, String note) => GalleryEntry(
+    id: 'dj.$id',
+    label: label,
+    spec: DjiboutiPlates.standard,
+    theme: theme,
+    country: DjiboutiCountry.djibouti,
+    validator: const DjiboutiValidator(),
+    sampleValues: DjiboutiSerialGenerator.generate(DjiboutiPlates.standard, random: _rng),
+    note: note,
+  );
 
   @override
   List<GallerySection> get sections => _sections ??= <GallerySection>[

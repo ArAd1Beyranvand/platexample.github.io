@@ -47,13 +47,11 @@ class NigerSource extends GallerySource {
           'the plate is only 110 tall and the engine sets a glyph at 72% of '
           'its box.',
       entries: <GalleryEntry>[
-        _entry(
-          NigerUsage.private,
-          NigerPlates.privateSpec,
-          NigerCountry.private,
-          <String?>['8', 'H', '7654'],
-          '8H-7654',
-        ),
+        _entry(NigerUsage.private, NigerPlates.privateSpec, NigerCountry.private, <String?>[
+          '8',
+          'H',
+          '7654',
+        ], '8H-7654'),
         _entry(
           NigerUsage.commercial,
           NigerPlates.commercialSpec,

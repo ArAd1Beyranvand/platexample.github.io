@@ -42,13 +42,7 @@ class AngolaSource extends GallerySource {
       title: 'Registration',
       note: 'The same characters on one row and stacked over two.',
       entries: <GalleryEntry>[
-        _e(
-          'standard',
-          'Private car',
-          AngolaPlates.standard,
-          AngolaThemes.standard,
-          'LD 42 81 MA',
-        ),
+        _e('standard', 'Private car', AngolaPlates.standard, AngolaThemes.standard, 'LD 42 81 MA'),
         _e(
           'stacked',
           'Motorcycle · stacked',

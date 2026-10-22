@@ -9,8 +9,7 @@ const String kCoreRepo = 'https://github.com/ArAd1Beyranvand/plate-core';
 /// package builds it in a way that has no public name.
 String? specName(CatalogueItem item) => specNames[item.entry.spec];
 
-String repoOf(String package) =>
-    packageRepos[package] ?? 'https://github.com/ArAd1Beyranvand';
+String repoOf(String package) => packageRepos[package] ?? 'https://github.com/ArAd1Beyranvand';
 
 /// The package that ships [item]: the source's own, or for an umbrella the
 /// first package name (Iranshahr ships every member from one package).
@@ -37,8 +36,7 @@ List<CodeLine> playgroundCode({
   final String package = packageOf(item);
   final String name = specName(item) ?? "/* '${spec.id}' from $package */ spec";
   final bool keypad =
-      source == PlateInputSource.packageKeypad ||
-      source == PlateInputSource.keypadFirst;
+      source == PlateInputSource.packageKeypad || source == PlateInputSource.keypadFirst;
 
   final String? theme = switch (item.entry.theme) {
     null => null,
@@ -66,12 +64,8 @@ List<CodeLine> playgroundCode({
     c(')'),
   ];
   if (keypad) {
-    final int digit = spec.slots.indexWhere(
-      (PlateSlot s) => s.alphabet.isNumeric,
-    );
-    final int letter = spec.slots.indexWhere(
-      (PlateSlot s) => !s.alphabet.isNumeric,
-    );
+    final int digit = spec.slots.indexWhere((PlateSlot s) => s.alphabet.isNumeric);
+    final int letter = spec.slots.indexWhere((PlateSlot s) => !s.alphabet.isNumeric);
     lines.addAll(<CodeLine>[
       c(''),
       c('PlateKeypad('),
@@ -88,10 +82,10 @@ List<CodeLine> playgroundCode({
       c(')'),
     ]);
   }
-  final String value = values.map((String? v) => v ?? '').join();
+  final String value = values.map((String? v) => v ?? '').join(' ');
   lines.addAll(<CodeLine>[
     c(''),
-    k('// controller.text(sep: \'\'): "$value"'),
+    k('// controller.text(sep: \' \'): "$value"'),
     k('// isValid: $isValid'),
   ]);
   return lines;

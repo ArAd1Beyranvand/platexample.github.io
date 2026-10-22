@@ -74,8 +74,7 @@ class CatalogueStats {
   /// the shelf: "motorcycle", "moto" or "bicycle" somewhere in the entry's id,
   /// its label or its section's title. Everything else is a car-family plate.
   static String _formFactorOf(GalleryEntry entry, GallerySection section) {
-    final String haystack = '${entry.id} ${entry.label} ${section.title}'
-        .toLowerCase();
+    final String haystack = '${entry.id} ${entry.label} ${section.title}'.toLowerCase();
     final bool isTwoWheeler =
         haystack.contains('motorcycle') ||
         haystack.contains('moto') ||

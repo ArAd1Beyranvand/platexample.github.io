@@ -21,8 +21,7 @@ class PdNav extends InheritedWidget {
   /// Opens the landing at #coverage and focuses its search field.
   final VoidCallback openSearch;
 
-  static PdNav of(BuildContext context) =>
-      context.dependOnInheritedWidgetOfExactType<PdNav>()!;
+  static PdNav of(BuildContext context) => context.dependOnInheritedWidgetOfExactType<PdNav>()!;
 
   @override
   bool updateShouldNotify(PdNav oldWidget) => oldWidget.location != location;

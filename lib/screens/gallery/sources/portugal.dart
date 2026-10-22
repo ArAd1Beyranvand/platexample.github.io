@@ -23,21 +23,16 @@ class PortugalSource extends GallerySource {
       'white on black. Cape Verde, Mozambique and Angola plates belong to '
       'their own packages.';
 
-  GalleryEntry _entry(
-    String id,
-    String label,
-    PlateSpec spec,
-    PlateTheme theme,
-    String values,
-  ) => GalleryEntry(
-    id: 'pt.$id',
-    label: label,
-    spec: spec,
-    theme: theme,
-    country: PortugalCountry.portugal,
-    validator: const PortugalValidator(),
-    sampleValues: values.split(' '),
-  );
+  GalleryEntry _entry(String id, String label, PlateSpec spec, PlateTheme theme, String values) =>
+      GalleryEntry(
+        id: 'pt.$id',
+        label: label,
+        spec: spec,
+        theme: theme,
+        country: PortugalCountry.portugal,
+        validator: const PortugalValidator(),
+        sampleValues: values.split(' '),
+      );
 
   @override
   List<GallerySection> get sections => _sections ??= <GallerySection>[
@@ -86,20 +81,8 @@ class PortugalSource extends GallerySource {
           PortugalThemes.private,
           'A1 23 BC 05 01',
         ),
-        _entry(
-          'gnr',
-          'GNR',
-          PortugalPlates.gnr,
-          PortugalThemes.private,
-          'J 2558',
-        ),
-        _entry(
-          'trailer',
-          'Trailer',
-          PortugalPlates.trailer,
-          PortugalThemes.private,
-          'L 186880',
-        ),
+        _entry('gnr', 'GNR', PortugalPlates.gnr, PortugalThemes.private, 'J 2558'),
+        _entry('trailer', 'Trailer', PortugalPlates.trailer, PortugalThemes.private, 'L 186880'),
         _entry(
           'diplomatic',
           'Diplomatic · CD',

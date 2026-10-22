@@ -1,4 +1,4 @@
-import 'package:belarus_plate/belarus_plate.dart';
+import 'package:russia_plate/russia_plate.dart';
 import 'package:plate_core/plate_core.dart';
 
 import '../catalogue.dart';
@@ -47,13 +47,7 @@ class BelarusSource extends GallerySource {
       title: 'One line — 520 × 110',
       note: 'The documented size; ink is ~75% of the reference height.',
       entries: <GalleryEntry>[
-        _e(
-          'by.car',
-          'Private car',
-          BelarusPlates.car,
-          BelarusThemes.standard,
-          '1234AB7',
-        ),
+        _e('by.car', 'Private car', BelarusPlates.car, BelarusThemes.standard, '1234AB7'),
         _e(
           'by.car.electric',
           'Electric car',
@@ -61,13 +55,7 @@ class BelarusSource extends GallerySource {
           BelarusThemes.electric,
           'E123AB7',
         ),
-        _e(
-          'by.truck',
-          'Truck / bus',
-          BelarusPlates.truck,
-          BelarusThemes.standard,
-          'AB12347',
-        ),
+        _e('by.truck', 'Truck / bus', BelarusPlates.truck, BelarusThemes.standard, 'AB12347'),
         _e(
           'by.truck.electric',
           'Electric truck',
@@ -75,13 +63,7 @@ class BelarusSource extends GallerySource {
           BelarusThemes.electric,
           'EB12347',
         ),
-        _e(
-          'by.trailer',
-          'Trailer',
-          BelarusPlates.trailer,
-          BelarusThemes.standard,
-          'A1234B5',
-        ),
+        _e('by.trailer', 'Trailer', BelarusPlates.trailer, BelarusThemes.standard, 'A1234B5'),
         _e('by.taxi', 'Taxi', BelarusPlates.taxi, BelarusThemes.taxi, '71234'),
         _e(
           'by.diplomatic',

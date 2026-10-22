@@ -24,21 +24,16 @@ class SpainSource extends GallerySource {
       'refused with "COUNTRY NOT FOUND". Not drawn: historic, police, moped, '
       'dealer and temporary plates.';
 
-  GalleryEntry _entry(
-    String id,
-    String label,
-    PlateSpec spec,
-    PlateTheme theme,
-    String values,
-  ) => GalleryEntry(
-    id: 'es.$id',
-    label: label,
-    spec: spec,
-    theme: theme,
-    country: SpainCountry.spain,
-    validator: const SpainValidator(),
-    sampleValues: values.split(' '),
-  );
+  GalleryEntry _entry(String id, String label, PlateSpec spec, PlateTheme theme, String values) =>
+      GalleryEntry(
+        id: 'es.$id',
+        label: label,
+        spec: spec,
+        theme: theme,
+        country: SpainCountry.spain,
+        validator: const SpainValidator(),
+        sampleValues: values.split(' '),
+      );
 
   @override
   List<GallerySection> get sections => _sections ??= <GallerySection>[
@@ -63,20 +58,8 @@ class SpainSource extends GallerySource {
           'Four digits and three letters on a plain field; the trailer and '
           'provisional plates lead with a fixed R or P.',
       entries: <GalleryEntry>[
-        _entry(
-          'taxi',
-          'Taxi · light on blue',
-          SpainPlates.taxi,
-          SpainThemes.taxi,
-          '6334 HRD',
-        ),
-        _entry(
-          'trailer',
-          'Trailer · R',
-          SpainPlates.trailer,
-          SpainThemes.trailer,
-          '7286 BBW',
-        ),
+        _entry('taxi', 'Taxi · light on blue', SpainPlates.taxi, SpainThemes.taxi, '6334 HRD'),
+        _entry('trailer', 'Trailer · R', SpainPlates.trailer, SpainThemes.trailer, '7286 BBW'),
         _entry(
           'provisional',
           'Provisional · P',
@@ -92,20 +75,8 @@ class SpainSource extends GallerySource {
           'Prefix, embassy code of one to three digits, car number. Code 83 '
           'is refused.',
       entries: <GalleryEntry>[
-        _entry(
-          'cd',
-          'Diplomatic · CD',
-          SpainPlates.diplomatic,
-          SpainThemes.diplomatic,
-          'CD 1 001',
-        ),
-        _entry(
-          'cc',
-          'Consular · CC',
-          SpainPlates.diplomatic,
-          SpainThemes.consular,
-          'CC 10 014',
-        ),
+        _entry('cd', 'Diplomatic · CD', SpainPlates.diplomatic, SpainThemes.diplomatic, 'CD 1 001'),
+        _entry('cc', 'Consular · CC', SpainPlates.diplomatic, SpainThemes.consular, 'CC 10 014'),
         _entry(
           'oi',
           'International organisation · OI',

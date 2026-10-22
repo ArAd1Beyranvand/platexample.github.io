@@ -15,17 +15,9 @@ class _Row {
       package = source.packageName,
       terms = source is RegionSource ? <String>[] : source.packageNames,
       iso =
-          countryMeta[source.countryName == 'Korea'
-                  ? 'North Korea'
-                  : source.countryName]
-              ?.$1 ??
-          '',
+          countryMeta[source.countryName == 'Korea' ? 'North Korea' : source.countryName]?.$1 ?? '',
       native =
-          countryMeta[source.countryName == 'Korea'
-                  ? 'North Korea'
-                  : source.countryName]
-              ?.$2 ??
-          '',
+          countryMeta[source.countryName == 'Korea' ? 'North Korea' : source.countryName]?.$2 ?? '',
       item = firstItemOf(source),
       alias = false;
 
@@ -68,28 +60,35 @@ class _Row {
     native,
   ].map(normaliseQuery).toList();
 
-  bool get isLead => !alias && _leadOrder.contains(source.countryName);
+  /// Russia and China share their names with their regions; only the
+  /// region leads.
+  bool get isLead =>
+      !alias &&
+      _leadOrder.contains(source.countryName) &&
+      ((source.countryName != 'Russia' && source.countryName != 'China') || isRegion);
 
   /// With no query only the lead rows show; every other country is found by
   /// searching.
   bool matches(String q) => q.isEmpty
       ? isLead
-      : _haystack.any((String h) => h.contains(q)) ||
-            (q.length == 2 && iso.toLowerCase() == q);
+      : _haystack.any((String h) => h.contains(q)) || (q.length == 2 && iso.toLowerCase() == q);
 }
 
 /// The head of the list, in the order the catalogue leads with: Iran, the two
-/// groups around it, Palestine, North Korea, then the four continents.
+/// groups around it, Palestine, Russia, North Korea, then the four continents.
 const List<String> _leadOrder = <String>[
   'Iran',
   'Iranshahr',
   'Yemen',
   'Palestine',
+  'Russia',
+  'China',
   'Korea',
   'Asia',
   'Africa',
   'Europe',
   'America',
+  'Oceania',
 ];
 
 /// The lead rows above, then every other country A–Z. Continents are spread
@@ -115,31 +114,31 @@ final List<_Row> _rows = () {
     for (final GallerySource m in s.members) {
       final bool underOther = gallerySources.any(
         (GallerySource t) =>
-            t is! RegionSource &&
-            t.members.any((GallerySource x) => identical(x, m)),
+            t is! RegionSource && t.members.any((GallerySource x) => identical(x, m)),
       );
       if (m.sections.isNotEmpty && !underOther) add(m);
     }
   }
+  // A country that heads a region of the same name is reached through it.
+  all.removeWhere(
+    (GallerySource s) =>
+        s is! RegionSource &&
+        all.any((GallerySource r) => r is RegionSource && r.countryName == s.countryName),
+  );
   final List<GallerySource> lead = <GallerySource>[
     for (final String name in _leadOrder)
-      ...all.where((GallerySource s) => s.countryName == name),
+      ...all.where((GallerySource s) => s.countryName == name).take(1),
   ];
-  final List<GallerySource> rest =
-      <GallerySource>[
-        for (final GallerySource s in all)
-          if (!lead.any((GallerySource l) => identical(l, s))) s,
-      ]..sort(
-        (GallerySource a, GallerySource b) =>
-            a.countryName.compareTo(b.countryName),
-      );
+  final List<GallerySource> rest = <GallerySource>[
+    for (final GallerySource s in all)
+      if (!lead.any((GallerySource l) => identical(l, s))) s,
+  ]..sort((GallerySource a, GallerySource b) => a.countryName.compareTo(b.countryName));
   return <_Row>[
     for (final GallerySource s in <GallerySource>[...lead, ...rest]) _Row(s),
     for (final GallerySource s in all)
       if (s is! RegionSource && s.countryName != 'Yemen')
         for (final GallerySource m in s.members)
-          if (m.countryName != 'North Korea')
-            _Row.alias(m, s, name: m.countryName),
+          if (m.countryName != 'North Korea') _Row.alias(m, s, name: m.countryName),
     _Row.alias(
       all.firstWhere((GallerySource s) => s.countryName == 'Yemen'),
       all.firstWhere((GallerySource s) => s.countryName == 'Yemen'),
@@ -182,10 +181,7 @@ class _CoverageSectionState extends State<CoverageSection> {
     final Widget intro = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          '${stats.countries} countries · ${stats.specs} plate types',
-          style: h2(context),
-        ),
+        Text('${stats.countries} countries · ${stats.specs} plate types', style: h2(context)),
         const SizedBox(height: 12),
         Text.rich(
           TextSpan(
@@ -203,7 +199,6 @@ class _CoverageSectionState extends State<CoverageSection> {
         ),
       ],
     );
-
 
     final Widget list = Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -258,7 +253,7 @@ class _CoverageRow extends StatelessWidget {
         onTap: row.opens ? () => nav.go(PdLocation.of(row.source)) : null,
         height: 60,
         width: double.infinity,
-        hoverColor: t.surface,
+        hoverColor: t.hover,
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Row(
           children: <Widget>[
@@ -269,11 +264,7 @@ class _CoverageRow extends StatelessWidget {
                     child: Text(
                       row.name,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                        color: t.text,
-                      ),
+                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: t.text),
                     ),
                   ),
                   if (row.native.isNotEmpty && row.native != row.name)
@@ -305,10 +296,7 @@ class _CoverageRow extends StatelessWidget {
                 borderRadius: BorderRadius.circular(14),
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 6,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 child: Text(
                   row.isRegion
                       ? 'Region →'

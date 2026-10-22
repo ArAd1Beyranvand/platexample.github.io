@@ -44,14 +44,9 @@ class CanadaSource extends GallerySource {
           'Canadian Forces Registration: the last five digits, under CANADA '
           'and two maple leaves.',
       entries: <GalleryEntry>[
-        _e(
-          'ca.federal',
-          'Federal (DND)',
-          CanadaPlates.federal,
-          CanadaThemes.federal,
-          <String?>['78759'],
-          const CanadaFederalValidator(),
-        ),
+        _e('ca.federal', 'Federal (DND)', CanadaPlates.federal, CanadaThemes.federal, <String?>[
+          '78759',
+        ], const CanadaFederalValidator()),
       ],
     ),
     GallerySection(

@@ -100,31 +100,20 @@ class GermanySource extends GallerySource {
         _entry(
           'de.car.a',
           'Short · M A 1',
-          GermanPlates.carFor(
-            districtLetters: 1,
-            group: GermanIdentifierGroup.a,
-            digits: 1,
-          ),
+          GermanPlates.carFor(districtLetters: 1, group: GermanIdentifierGroup.a, digits: 1),
           const <String?>['M', 'A', '1'],
           note: 'Three characters — the shortest plate the law issues.',
         ),
         _entry(
           'de.car.b',
           'Two letters, two digits · FR OM 93',
-          GermanPlates.carFor(
-            districtLetters: 2,
-            group: GermanIdentifierGroup.b,
-            digits: 2,
-          ),
+          GermanPlates.carFor(districtLetters: 2, group: GermanIdentifierGroup.b, digits: 2),
           const <String?>['F', 'R', 'O', 'M', '9', '3'],
         ),
         _entry(
           'de.car.c',
           'Three-letter area code · CUX DP 150',
-          GermanPlates.carFor(
-            districtLetters: 3,
-            group: GermanIdentifierGroup.c,
-          ),
+          GermanPlates.carFor(districtLetters: 3, group: GermanIdentifierGroup.c),
           const <String?>['C', 'U', 'X', 'D', 'P', '1', '5', '0'],
           note:
               'Eight characters, the cap. Group e behind a three-letter code would be nine, and throws.',
@@ -132,10 +121,7 @@ class GermanySource extends GallerySource {
         _entry(
           'de.car.e',
           'Longest identifier · KA AB 1234',
-          GermanPlates.carFor(
-            districtLetters: 2,
-            group: GermanIdentifierGroup.e,
-          ),
+          GermanPlates.carFor(districtLetters: 2, group: GermanIdentifierGroup.e),
           const <String?>['K', 'A', 'A', 'B', '1', '2', '3', '4'],
         ),
       ],
@@ -161,11 +147,7 @@ class GermanySource extends GallerySource {
         _entry(
           'de.car.historic',
           'Historic · HL TL 15H',
-          GermanPlates.historicFor(
-            districtLetters: 2,
-            group: GermanIdentifierGroup.b,
-            digits: 2,
-          ),
+          GermanPlates.historicFor(districtLetters: 2, group: GermanIdentifierGroup.b, digits: 2),
           const <String?>['H', 'L', 'T', 'L', '1', '5'],
           note:
               'Thirty years old and preservation-worthy. The H is printed hard against the serial.',
@@ -173,32 +155,15 @@ class GermanySource extends GallerySource {
         _entry(
           'de.car.electric',
           'Electric · LER OO 39E',
-          GermanPlates.electricFor(
-            districtLetters: 3,
-            group: GermanIdentifierGroup.b,
-            digits: 2,
-          ),
+          GermanPlates.electricFor(districtLetters: 3, group: GermanIdentifierGroup.b, digits: 2),
           const <String?>['L', 'E', 'R', 'O', 'O', '3', '9'],
-          note:
-              'Plug-in, per the 2015 Electric Mobility Act. Eight characters with the E counted.',
+          note: 'Plug-in, per the 2015 Electric Mobility Act. Eight characters with the E counted.',
         ),
         _entry(
           'de.car.seasonal',
           'Seasonal · March to October',
           GermanPlates.seasonalFor(),
-          const <String?>[
-            'M',
-            'K',
-            'S',
-            '8',
-            '1',
-            '1',
-            '2',
-            '0',
-            '3',
-            '1',
-            '0',
-          ],
+          const <String?>['M', 'K', 'S', '8', '1', '1', '2', '0', '3', '1', '0'],
           note:
               'Two months, rule between them. 11 over 03 is a winter vehicle — neither has to precede the other.',
         ),
@@ -213,20 +178,21 @@ class GermanySource extends GallerySource {
           'vehicle, so GermanSerialPlateValidator judges them and the '
           'registration rules do not apply.',
       entries: <GalleryEntry>[
-        _entry(
-          'de.dealer',
-          'Dealer · 06',
-          GermanPlates.dealerFor(),
-          const <String?>['D', 'A', '0', '6', '7', '4', '1'],
-          note: 'Moved between vehicles for test drives and transfers.',
-        ),
+        _entry('de.dealer', 'Dealer · 06', GermanPlates.dealerFor(), const <String?>[
+          'D',
+          'A',
+          '0',
+          '6',
+          '7',
+          '4',
+          '1',
+        ], note: 'Moved between vehicles for test drives and transfers.'),
         _entry(
           'de.collector',
           'Collector · 07',
           GermanPlates.collectorFor(),
           const <String?>['S', 'B', '0', '7', '2', '1', '9'],
-          note:
-              'The seal alone, no inspection sticker: these vehicles are not in regular service.',
+          note: 'The seal alone, no inspection sticker: these vehicles are not in regular service.',
         ),
       ],
     ),
@@ -243,43 +209,14 @@ class GermanySource extends GallerySource {
           'de.shortterm',
           'Short-term · 04 · yellow band',
           GermanPlates.shortTermFor(),
-          const <String?>[
-            'M',
-            'K',
-            '0',
-            '4',
-            '4',
-            '0',
-            '1',
-            '2',
-            '9',
-            '0',
-            '9',
-            '2',
-            '6',
-          ],
-          note:
-              'Four weeks at most — transfers, test drives, temporary registration.',
+          const <String?>['M', 'K', '0', '4', '4', '0', '1', '2', '9', '0', '9', '2', '6'],
+          note: 'Four weeks at most — transfers, test drives, temporary registration.',
         ),
         _entry(
           'de.export',
           'Export · red band',
           GermanPlates.exportFor(),
-          const <String?>[
-            'H',
-            'H',
-            '1',
-            '7',
-            '8',
-            '2',
-            '3',
-            '3',
-            '1',
-            '1',
-            '2',
-            '2',
-            '6',
-          ],
+          const <String?>['H', 'H', '1', '7', '8', '2', '3', '3', '1', '1', '2', '2', '6'],
           note:
               'Ausfuhrkennzeichen, up to a year. The same plate as the 04; the band colour is the difference.',
         ),
@@ -294,14 +231,15 @@ class GermanySource extends GallerySource {
           'armed forces\' mark since 1956 and stands for nothing: it was '
           'picked because no district used it.',
       entries: <GalleryEntry>[
-        _entry(
-          'de.bundeswehr',
-          'Y-751 957',
-          GermanPlates.bundeswehrFor(),
-          const <String?>['Y', '7', '5', '1', '9', '5', '7'],
-          note:
-              'The Y is a slot, and GermanBundeswehrValidator is what says it must read Y.',
-        ),
+        _entry('de.bundeswehr', 'Y-751 957', GermanPlates.bundeswehrFor(), const <String?>[
+          'Y',
+          '7',
+          '5',
+          '1',
+          '9',
+          '5',
+          '7',
+        ], note: 'The Y is a slot, and GermanBundeswehrValidator is what says it must read Y.'),
       ],
     ),
   ];

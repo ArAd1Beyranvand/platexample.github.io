@@ -16,11 +16,7 @@ void main() {
             home: SizedBox(
               width: 460,
               height: 200,
-              child: PlateView(
-                controller: c,
-                theme: e.theme!,
-                country: e.country,
-              ),
+              child: PlateView(controller: c, theme: e.theme!, country: e.country),
             ),
           ),
         );

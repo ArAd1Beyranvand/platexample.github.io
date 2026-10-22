@@ -30,19 +30,13 @@ class PdFilterChip extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12),
       color: selected ? t.accentSoft : null,
       border: selected ? t.accent : t.divider,
-      hoverColor: selected ? null : t.surface,
+      hoverColor: selected ? null : t.hover,
       child: Center(
         widthFactor: 1,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 14,
-                color: selected ? t.text : t.muted,
-              ),
-            ),
+            Text(label, style: TextStyle(fontSize: 14, color: selected ? t.text : t.muted)),
             if (count != null) ...<Widget>[
               const SizedBox(width: 6),
               Text('$count', style: TextStyle(fontSize: 12, color: t.subtle)),
@@ -61,6 +55,5 @@ class PdFilterRow extends StatelessWidget {
   final List<Widget> children;
 
   @override
-  Widget build(BuildContext context) =>
-      Wrap(spacing: 6, runSpacing: 6, children: children);
+  Widget build(BuildContext context) => Wrap(spacing: 6, runSpacing: 6, children: children);
 }

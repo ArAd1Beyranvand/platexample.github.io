@@ -44,18 +44,14 @@ final List<(String, CatalogueItem)> heroPlates = <(String, CatalogueItem)>[
 final List<CatalogueItem> heroTour = () {
   final List<CatalogueItem> tour = <CatalogueItem>[
     for (final GallerySource country in plateCountries)
-      if (playgroundItems
-              .where((CatalogueItem i) => identical(i.source, country))
-              .firstOrNull
+      if (playgroundItems.where((CatalogueItem i) => identical(i.source, country)).firstOrNull
           case final CatalogueItem item)
         item,
   ];
   final int start = tour.indexWhere(
     (CatalogueItem i) => identical(i.source, heroPlates.first.$2.source),
   );
-  return start <= 0
-      ? tour
-      : <CatalogueItem>[...tour.sublist(start), ...tour.sublist(0, start)];
+  return start <= 0 ? tour : <CatalogueItem>[...tour.sublist(start), ...tour.sublist(0, start)];
 }();
 
 String validNameOf(CatalogueItem item) =>
@@ -104,8 +100,7 @@ class LandingHero extends StatelessWidget {
           children: <Widget>[
             PdButton(
               label: 'Get started',
-              onTap: () =>
-                  nav.go(const PdLocation.landing(LandingAnchor.start)),
+              onTap: () => nav.go(const PdLocation.landing(LandingAnchor.start)),
             ),
             PdButton(
               label: 'Open playground',
@@ -194,9 +189,7 @@ class _StageState extends State<_Stage> with SingleTickerProviderStateMixin {
   );
   double _bounceDir = 1;
 
-  late final PlateController _plate = PlateController(
-    spec: heroTour.first.entry.spec,
-  );
+  late final PlateController _plate = PlateController(spec: heroTour.first.entry.spec);
 
   /// Index into [heroTour].
   CatalogueItem get _item => heroTour[_index];
@@ -254,17 +247,9 @@ class _StageState extends State<_Stage> with SingleTickerProviderStateMixin {
   Duration _transitionLength(PlateSpec from, PlateSpec to) {
     const PlateAnimationStyle style = PlateAnimationStyle();
     const Duration step = Duration(milliseconds: 60);
-    final Map<PlatePartId, Duration> out = PlateStagger.sequence(
-      from,
-      step: step,
-      reverse: true,
-    );
-    final Map<PlatePartId, Duration> incoming = PlateStagger.sequence(
-      to,
-      step: step,
-    );
-    return plateCueLength(style, out.keys, out) +
-        plateCueLength(style, incoming.keys, incoming);
+    final Map<PlatePartId, Duration> out = PlateStagger.sequence(from, step: step, reverse: true);
+    final Map<PlatePartId, Duration> incoming = PlateStagger.sequence(to, step: step);
+    return plateCueLength(style, out.keys, out) + plateCueLength(style, incoming.keys, incoming);
   }
 
   /// Chips shown on each side of the centred, selected one.
@@ -273,8 +258,7 @@ class _StageState extends State<_Stage> with SingleTickerProviderStateMixin {
   /// Chip opacity by distance from the centre.
   static const List<double> _fade = <double>[1, 0.6, 0.25];
 
-  CatalogueItem _at(int offset) =>
-      heroTour[(_index + offset) % heroTour.length];
+  CatalogueItem _at(int offset) => heroTour[(_index + offset) % heroTour.length];
 
   void _step(int by) {
     if (by == 0) return;
@@ -333,18 +317,11 @@ class _StageState extends State<_Stage> with SingleTickerProviderStateMixin {
                     '${_labelItem.source.countryName} · '
                     '${_labelItem.entry.label}',
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w500,
-                      color: t.muted,
-                    ),
+                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: t.muted),
                   ),
                 ),
               ),
-              Text(
-                'Tap the plate and type',
-                style: TextStyle(fontSize: 12, color: t.subtle),
-              ),
+              Text('Tap the plate and type', style: TextStyle(fontSize: 12, color: t.subtle)),
             ],
           ),
           const SizedBox(height: 18),
@@ -358,17 +335,14 @@ class _StageState extends State<_Stage> with SingleTickerProviderStateMixin {
               theme: item.entry.themeFor(_plate.values),
               country: item.entry.country,
               validator: item.entry.validator,
-              inputSource: PlateInputSource.packageKeypad,
+              inputSource: PlateInputSource.keypadFirst,
               fixedSize: true,
               keypadBelow: SizedBox(
                 height: kHeroKeypadHeight,
                 child: FittedBox(
                   fit: BoxFit.scaleDown,
-                  alignment: Alignment.topCenter,
-                  child: SizedBox(
-                    width: 320,
-                    child: SlotKeypad(controller: _plate),
-                  ),
+                  alignment: Alignment.center,
+                  child: SizedBox(width: 320, child: SlotKeypad(controller: _plate)),
                 ),
               ),
             ),
@@ -381,16 +355,13 @@ class _StageState extends State<_Stage> with SingleTickerProviderStateMixin {
               Expanded(
                 child: AnimatedBuilder(
                   animation: _bounce,
-                  builder: (BuildContext context, Widget? child) =>
-                      Transform.translate(
-                        offset: Offset(
-                          _bounceDir *
-                              -28 *
-                              (1 - Curves.elasticOut.transform(_bounce.value)),
-                          0,
-                        ),
-                        child: child,
-                      ),
+                  builder: (BuildContext context, Widget? child) => Transform.translate(
+                    offset: Offset(
+                      _bounceDir * -28 * (1 - Curves.elasticOut.transform(_bounce.value)),
+                      0,
+                    ),
+                    child: child,
+                  ),
                   child: ClipRect(
                     child: OverflowBox(
                       maxWidth: double.infinity,
@@ -427,12 +398,7 @@ class _StageState extends State<_Stage> with SingleTickerProviderStateMixin {
 }
 
 class CountryChip extends StatelessWidget {
-  const CountryChip({
-    super.key,
-    required this.label,
-    required this.selected,
-    required this.onTap,
-  });
+  const CountryChip({super.key, required this.label, required this.selected, required this.onTap});
 
   final String label;
   final bool selected;
@@ -448,7 +414,7 @@ class CountryChip extends StatelessWidget {
       height: 60,
       padding: const EdgeInsets.symmetric(horizontal: 8),
       color: selected ? t.accentSoft : null,
-      hoverColor: selected ? t.accentSoft : t.raised,
+      hoverColor: selected ? t.accentSoft : t.hover,
       border: selected ? t.accent : t.divider,
       child: Center(
         child: Text(

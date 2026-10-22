@@ -22,21 +22,16 @@ class ZimbabweSource extends GallerySource {
       'military colours are unsampled. The article lists nothing '
       'Israel-specific, so nothing is refused.';
 
-  GalleryEntry _entry(
-    String id,
-    String label,
-    PlateSpec spec,
-    PlateTheme theme,
-    String values,
-  ) => GalleryEntry(
-    id: 'zw.$id',
-    label: label,
-    spec: spec,
-    theme: theme,
-    country: ZimbabweCountry.zimbabwe,
-    validator: const ZimbabweValidator(),
-    sampleValues: values.split(' '),
-  );
+  GalleryEntry _entry(String id, String label, PlateSpec spec, PlateTheme theme, String values) =>
+      GalleryEntry(
+        id: 'zw.$id',
+        label: label,
+        spec: spec,
+        theme: theme,
+        country: ZimbabweCountry.zimbabwe,
+        validator: const ZimbabweValidator(),
+        sampleValues: values.split(' '),
+      );
 
   @override
   List<GallerySection> get sections => _sections ??= <GallerySection>[

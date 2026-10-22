@@ -49,20 +49,8 @@ class SwitzerlandSource extends GallerySource {
       title: 'Rear, two rows — 300 × 160',
       note: 'Utility and exceptional transport differ only in the field.',
       entries: <GalleryEntry>[
-        _e(
-          'ch.high',
-          'Private',
-          SwitzerlandPlates.high,
-          SwitzerlandThemes.standard,
-          'ZH 123456',
-        ),
-        _e(
-          'ch.utility',
-          'Utility',
-          SwitzerlandPlates.high,
-          SwitzerlandThemes.utility,
-          'ZH 4229',
-        ),
+        _e('ch.high', 'Private', SwitzerlandPlates.high, SwitzerlandThemes.standard, 'ZH 123456'),
+        _e('ch.utility', 'Utility', SwitzerlandPlates.high, SwitzerlandThemes.utility, 'ZH 4229'),
         _e(
           'ch.exceptional',
           'Exceptional transport',
@@ -88,23 +76,10 @@ class SwitzerlandSource extends GallerySource {
     ),
     GallerySection(
       title: 'Rear, one row — 500 × 110',
-      note:
-          'Cantonal one-row rear plate, plus the bicycle-carrier, military and customs plates.',
+      note: 'Cantonal one-row rear plate, plus the bicycle-carrier, military and customs plates.',
       entries: <GalleryEntry>[
-        _e(
-          'ch.long',
-          'Private',
-          SwitzerlandPlates.long,
-          SwitzerlandThemes.standard,
-          'SG 123456',
-        ),
-        _e(
-          'ch.red',
-          'Bicycle carrier',
-          SwitzerlandPlates.long,
-          SwitzerlandThemes.red,
-          'SG 123456',
-        ),
+        _e('ch.long', 'Private', SwitzerlandPlates.long, SwitzerlandThemes.standard, 'SG 123456'),
+        _e('ch.red', 'Bicycle carrier', SwitzerlandPlates.long, SwitzerlandThemes.red, 'SG 123456'),
         _e(
           'ch.military',
           'Military',
@@ -126,13 +101,7 @@ class SwitzerlandSource extends GallerySource {
       title: 'Front, small — 300 × 80',
       note: 'The short front plate.',
       entries: <GalleryEntry>[
-        _e(
-          'ch.front',
-          'Front',
-          SwitzerlandPlates.front,
-          SwitzerlandThemes.standard,
-          'GR 1999',
-        ),
+        _e('ch.front', 'Front', SwitzerlandPlates.front, SwitzerlandThemes.standard, 'GR 1999'),
         _e(
           'ch.agricultural',
           'Agricultural front',

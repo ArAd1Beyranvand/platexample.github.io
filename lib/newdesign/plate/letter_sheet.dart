@@ -23,12 +23,7 @@ const Map<String, ({IconData? icon, String mark, String label})> _special =
 /// The Iran letter sheet: every letter visible at once, one tap commits and
 /// closes. Dismissing returns null and leaves the slot empty.
 class LetterSheet extends StatelessWidget {
-  const LetterSheet({
-    super.key,
-    required this.alphabet,
-    this.slot,
-    this.slotCount,
-  });
+  const LetterSheet({super.key, required this.alphabet, this.slot, this.slotCount});
 
   final PlateAlphabet alphabet;
   final int? slot;
@@ -44,17 +39,14 @@ class LetterSheet extends StatelessWidget {
     isScrollControlled: true,
     backgroundColor: Colors.transparent,
     constraints: const BoxConstraints(maxWidth: 480),
-    builder: (_) =>
-        LetterSheet(alphabet: alphabet, slot: slot, slotCount: slotCount),
+    builder: (_) => LetterSheet(alphabet: alphabet, slot: slot, slotCount: slotCount),
   );
 
   @override
   Widget build(BuildContext context) {
     final PdTokens t = context.tokens;
     final List<String> letters =
-        alphabet.characters
-            .where((String c) => !_special.containsKey(c))
-            .toList()
+        alphabet.characters.where((String c) => !_special.containsKey(c)).toList()
           ..sort((String a, String b) {
             int rank(String c) {
               final int i = _persianOrder.indexOf(c);
@@ -63,16 +55,12 @@ class LetterSheet extends StatelessWidget {
 
             return rank(a).compareTo(rank(b));
           });
-    final List<String> specials = alphabet.characters
-        .where(_special.containsKey)
-        .toList();
+    final List<String> specials = alphabet.characters.where(_special.containsKey).toList();
 
     return Container(
       decoration: BoxDecoration(
         color: t.raised,
-        borderRadius: const BorderRadius.vertical(
-          top: Radius.circular(PdRadius.stage),
-        ),
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(PdRadius.stage)),
         border: Border.all(color: t.divider),
       ),
       child: SafeArea(
@@ -99,10 +87,7 @@ class LetterSheet extends StatelessWidget {
               _LetterGrid(alphabet: alphabet, letters: letters),
               if (specials.isNotEmpty) ...<Widget>[
                 const SizedBox(height: 18),
-                Text(
-                  'Special plates',
-                  style: TextStyle(fontSize: 13, color: t.muted),
-                ),
+                Text('Special plates', style: TextStyle(fontSize: 13, color: t.muted)),
                 const SizedBox(height: 8),
                 for (final String c in specials) ...<Widget>[
                   _SpecialRow(character: c),
@@ -135,18 +120,12 @@ class _Header extends StatelessWidget {
             children: <Widget>[
               Text(
                 'Choose a letter',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: t.text,
-                ),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: t.text),
               ),
               if (slot != null) ...<Widget>[
                 const SizedBox(height: 4),
                 Text(
-                  slotCount == null
-                      ? 'Slot ${slot! + 1}'
-                      : 'Slot ${slot! + 1} of $slotCount',
+                  slotCount == null ? 'Slot ${slot! + 1}' : 'Slot ${slot! + 1} of $slotCount',
                   style: TextStyle(fontSize: 13, color: t.muted),
                 ),
               ],
@@ -158,7 +137,7 @@ class _Header extends StatelessWidget {
           semanticLabel: 'Close',
           width: 32,
           height: 32,
-          hoverColor: t.surface,
+          hoverColor: t.hover,
           child: Icon(Icons.close, size: 18, color: t.muted),
         ),
       ],
@@ -197,11 +176,7 @@ class _LetterGrid extends StatelessWidget {
 }
 
 class _LetterKey extends StatelessWidget {
-  const _LetterKey({
-    required this.label,
-    required this.width,
-    required this.onTap,
-  });
+  const _LetterKey({required this.label, required this.width, required this.onTap});
 
   final String label;
   final double width;
@@ -242,8 +217,7 @@ class _SpecialRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final PdTokens t = context.tokens;
-    final ({IconData? icon, String mark, String label}) s =
-        _special[character]!;
+    final ({IconData? icon, String mark, String label}) s = _special[character]!;
     return PdTappable(
       onTap: () => Navigator.of(context).pop(character),
       semanticLabel: '${s.label} plate',
@@ -261,22 +235,14 @@ class _SpecialRow extends StatelessWidget {
                 : Text(
                     s.mark,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w700,
-                      color: t.text,
-                    ),
+                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700, color: t.text),
                   ),
           ),
           const SizedBox(width: 14),
           Expanded(
             child: Text(
               s.label,
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w500,
-                color: t.text,
-              ),
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: t.text),
             ),
           ),
           Icon(Icons.chevron_right, size: 20, color: t.muted),

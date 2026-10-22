@@ -16,10 +16,7 @@ void main() {
         PdApp(initialRoute: PdLocation.playground(playgroundItems.first).path),
       );
       await tester.pumpAndSettle();
-      expect(
-        find.textContaining('of ${playgroundItems.length}'),
-        findsOneWidget,
-      );
+      expect(find.textContaining('of ${playgroundItems.length}'), findsOneWidget);
       for (int i = 1; i < playgroundItems.length; i++) {
         await tester.tap(find.bySemanticsLabel('Next plate'));
         await tester.pump();
@@ -29,11 +26,7 @@ void main() {
           findsOneWidget,
           reason: 'Next did not advance to ${i + 1}',
         );
-        expect(
-          tester.takeException(),
-          isNull,
-          reason: playgroundItems[i].entry.id,
-        );
+        expect(tester.takeException(), isNull, reason: playgroundItems[i].entry.id);
       }
       await tester.ensureVisible(find.text('Keypad'));
       await tester.tap(find.text('Keypad'));

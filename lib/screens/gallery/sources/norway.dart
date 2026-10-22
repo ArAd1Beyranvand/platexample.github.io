@@ -43,20 +43,8 @@ class NorwaySource extends GallerySource {
       title: 'Private — 520 × 110',
       note: 'Two letters then five digits.',
       entries: <GalleryEntry>[
-        _e(
-          'private',
-          'Private car',
-          NorwayPlates.private,
-          NorwayThemes.private,
-          'BC|12345',
-        ),
-        _e(
-          'electric',
-          'Electric vehicle',
-          NorwayPlates.electric,
-          NorwayThemes.private,
-          'EK|54321',
-        ),
+        _e('private', 'Private car', NorwayPlates.private, NorwayThemes.private, 'BC|12345'),
+        _e('electric', 'Electric vehicle', NorwayPlates.electric, NorwayThemes.private, 'EK|54321'),
       ],
     ),
     GallerySection(

@@ -2,12 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../design/tokens.dart';
 
-TextStyle eyebrow(PdTokens t) => TextStyle(
-  fontSize: 12,
-  fontWeight: FontWeight.w600,
-  letterSpacing: 0.72,
-  color: t.subtle,
-);
+TextStyle eyebrow(PdTokens t) =>
+    TextStyle(fontSize: 12, fontWeight: FontWeight.w600, letterSpacing: 0.72, color: t.subtle);
 
 TextStyle h2(BuildContext context) => TextStyle(
   fontSize: pdClamp(context, 22, 2.6, 28),
@@ -28,9 +24,4 @@ TextStyle body(PdTokens t, {double size = 14}) =>
     TextStyle(fontSize: size, height: 1.55, color: t.muted);
 
 TextStyle monoStyle(PdTokens t, {double size = 13, double? height}) =>
-    TextStyle(
-      fontFamily: PdFonts.mono,
-      fontSize: size,
-      height: height,
-      color: t.text,
-    );
+    TextStyle(fontFamily: PdFonts.mono, fontSize: size, height: height, color: t.text);

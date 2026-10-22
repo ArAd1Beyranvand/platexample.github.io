@@ -44,13 +44,7 @@ class VanuatuSource extends GallerySource {
       title: 'Standard',
       note: 'One to five digits in a single field.',
       entries: <GalleryEntry>[
-        _e(
-          'standard',
-          'Standard',
-          VanuatuPlates.standard,
-          VanuatuThemes.standard,
-          '7906',
-        ),
+        _e('standard', 'Standard', VanuatuPlates.standard, VanuatuThemes.standard, '7906'),
         _e(
           'standard.short',
           'Standard · short number',

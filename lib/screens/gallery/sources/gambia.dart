@@ -83,13 +83,7 @@ class GambiaSource extends GallerySource {
       title: 'Motorcycle',
       note: 'Black on white, 240×130 mm, with MC before the region.',
       entries: <GalleryEntry>[
-        _e(
-          'motorcycle',
-          'Motorcycle',
-          GambiaPlates.motorcycle,
-          GambiaThemes.private,
-          'BJL 0123 A',
-        ),
+        _e('motorcycle', 'Motorcycle', GambiaPlates.motorcycle, GambiaThemes.private, 'BJL 0123 A'),
       ],
     ),
   ];

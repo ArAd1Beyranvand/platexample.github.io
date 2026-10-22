@@ -90,10 +90,7 @@ class YemenSource extends GallerySource {
             whiteBackground: white,
           ),
           validator: const YemenNorthernValidator(),
-          sampleValues: YemenNorthernSerialGenerator.generate(
-            spec,
-            random: _rng,
-          ),
+          sampleValues: YemenNorthernSerialGenerator.generate(spec, random: _rng),
         ),
   ];
 
@@ -111,34 +108,16 @@ class YemenSource extends GallerySource {
     country: country,
     theme: theme,
     validator: const YemenSouthernValidator(),
-    sampleValues: <String?>[
-      for (int i = 0; i < spec.slotCount; i++) '${1 + _rng.nextInt(9)}',
-    ],
+    sampleValues: <String?>[for (int i = 0; i < spec.slotCount; i++) '${1 + _rng.nextInt(9)}'],
   );
 
   List<GalleryEntry> _governorates() => <GalleryEntry>[
     for (final (String key, YemenSouthernGovernorate g, PlateSpec car)
         in <(String, YemenSouthernGovernorate, PlateSpec)>[
-          (
-            'hadhramaut',
-            YemenSouthernGovernorate.hadhramaut,
-            YemenGovernoratePlates.hadhramaut,
-          ),
-          (
-            'mahrah',
-            YemenSouthernGovernorate.alMahrah,
-            YemenGovernoratePlates.alMahrah,
-          ),
-          (
-            'shabwah',
-            YemenSouthernGovernorate.shabwah,
-            YemenGovernoratePlates.shabwah,
-          ),
-          (
-            'marib',
-            YemenSouthernGovernorate.marib,
-            YemenGovernoratePlates.marib,
-          ),
+          ('hadhramaut', YemenSouthernGovernorate.hadhramaut, YemenGovernoratePlates.hadhramaut),
+          ('mahrah', YemenSouthernGovernorate.alMahrah, YemenGovernoratePlates.alMahrah),
+          ('shabwah', YemenSouthernGovernorate.shabwah, YemenGovernoratePlates.shabwah),
+          ('marib', YemenSouthernGovernorate.marib, YemenGovernoratePlates.marib),
         ])
       for (final YemenUsage usage in const <YemenUsage>[
         YemenUsage.private,
@@ -189,12 +168,7 @@ class YemenSource extends GallerySource {
       YemenGovernoratePlates.shabwahMotorcycle,
       YemenGovernoratePlates.maribMotorcycle,
     ])
-      _southern(
-        moto.id,
-        '${moto.id.split('.')[1]} · motorcycle',
-        moto,
-        moto.country,
-      ),
+      _southern(moto.id, '${moto.id.split('.')[1]} · motorcycle', moto, moto.country),
   ];
 
   List<GalleryEntry> _adenTaiz() => <GalleryEntry>[

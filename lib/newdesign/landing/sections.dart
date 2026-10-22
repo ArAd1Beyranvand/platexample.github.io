@@ -76,18 +76,10 @@ class WhySection extends StatelessWidget {
     final CatalogueItem? gaza = of(PSGazaPlates.car2012);
     // Northern specs are built per geometry, so there is no named constant.
     final CatalogueItem? yemenNorth = catalogueItems
-        .where(
-          (CatalogueItem i) =>
-              i.entry.id.startsWith('ye.northern.car.private.blue'),
-        )
+        .where((CatalogueItem i) => i.entry.id.startsWith('ye.northern.car.private.blue'))
         .firstOrNull;
 
-    Widget card(
-      CatalogueItem? item,
-      String title,
-      String text, {
-      PlateTheme? theme,
-    }) => PdCard(
+    Widget card(CatalogueItem? item, String title, String text, {PlateTheme? theme}) => PdCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -121,16 +113,10 @@ class WhySection extends StatelessWidget {
           gap: 16,
           children: <Widget>[
             card(
-              iran,
-              'Its own alphabet',
-              'Iran’s letter slot takes one of a fixed set of Persian '
-                  'letters, chosen from a picker. A–Z is wrong here.',
-            ),
-            card(
-              westBank,
-              'One country, two systems',
-              'Palestine issues West Bank and Gaza plates. Each is its own '
-                  'spec in the same package; pick the one the car carries.',
+              yemenNorth,
+              'Right-to-left',
+              'Two rows, mirroring each other. The plate lays itself out '
+                  'right to left.',
             ),
             card(
               gaza,
@@ -139,10 +125,16 @@ class WhySection extends StatelessWidget {
                   'spec draws it; you never place an image yourself.',
             ),
             card(
-              yemenNorth,
-              'Right-to-left',
-              'Arabic script and Arabic-Indic digits. The plate draws its own '
-                  'direction; the page never overrides it.',
+              westBank,
+              'One country, two systems',
+              'Palestine issues West Bank and Gaza plates. Each is its own '
+                  'spec in the same package; pick the one the car carries.',
+            ),
+            card(
+              iran,
+              'Its own alphabet',
+              'Iran’s letter slot takes one of a fixed set of Persian '
+                  'letters, chosen from a picker. A–Z is wrong here.',
             ),
           ],
         ),
@@ -161,7 +153,7 @@ class CompareSection extends StatefulWidget {
 }
 
 class _CompareSectionState extends State<CompareSection> {
-  final TextEditingController _text = TextEditingController(text: '12ب345AB67');
+  final TextEditingController _text = TextEditingController(text: '12ب3ABcd');
   final PlateController _plate = PlateController(spec: IranPlates.civil);
 
   final GlobalKey _plateKey = GlobalKey();
@@ -178,9 +170,7 @@ class _CompareSectionState extends State<CompareSection> {
       final BuildContext? plate = _plateKey.currentContext;
       if (!mounted || plate == null) return;
       final ScrollPosition position = Scrollable.of(plate).position;
-      final double top = (plate.findRenderObject()! as RenderBox)
-          .localToGlobal(Offset.zero)
-          .dy;
+      final double top = (plate.findRenderObject()! as RenderBox).localToGlobal(Offset.zero).dy;
       final double target = position.pixels + top - header - 16;
       position.animateTo(
         target.clamp(position.minScrollExtent, position.maxScrollExtent),
@@ -210,10 +200,8 @@ class _CompareSectionState extends State<CompareSection> {
   /// Arabic-Indic digits keep typing order instead of forming an RTL run.
   static const String _lrm = '\u200E';
 
-  static String _ltr(String raw) => raw.characters
-      .where((String c) => c != _lrm)
-      .map((String c) => '$c$_lrm')
-      .join();
+  static String _ltr(String raw) =>
+      raw.characters.where((String c) => c != _lrm).map((String c) => '$c$_lrm').join();
 
   /// The field's text as last written in [_ltr] form.
   String _shown = '';
@@ -225,11 +213,7 @@ class _CompareSectionState extends State<CompareSection> {
     String text = _text.text;
     int caret = _text.selection.baseOffset.clamp(0, text.length);
     if (text.length < _shown.length && _ltr(text) == _shown && caret > 0) {
-      final String head = text
-          .substring(0, caret)
-          .characters
-          .skipLast(1)
-          .string;
+      final String head = text.substring(0, caret).characters.skipLast(1).string;
       text = head + text.substring(caret);
       caret = head.length;
     }
@@ -239,9 +223,7 @@ class _CompareSectionState extends State<CompareSection> {
     _syncing = true;
     _text.value = TextEditingValue(
       text: shown,
-      selection: TextSelection.collapsed(
-        offset: _ltr(text.substring(0, caret)).length,
-      ),
+      selection: TextSelection.collapsed(offset: _ltr(text.substring(0, caret)).length),
     );
     _syncing = false;
   }
@@ -258,13 +240,10 @@ class _CompareSectionState extends State<CompareSection> {
     for (final String c in _text.text.characters) {
       if (c == _lrm || c.trim().isEmpty) continue;
       // A one-character alphabet is printed on the plate, not typed.
-      while (index < spec.slotCount &&
-          spec.slots[index].alphabet.characters.length == 1) {
+      while (index < spec.slotCount && spec.slots[index].alphabet.characters.length == 1) {
         index++;
       }
-      final PlateAlphabet? alphabet = index < spec.slotCount
-          ? spec.slots[index].alphabet
-          : null;
+      final PlateAlphabet? alphabet = index < spec.slotCount ? spec.slots[index].alphabet : null;
       if (alphabet == null || !alphabet.accepts(c)) {
         refused = true;
         continue;
@@ -372,9 +351,7 @@ class _CompareSectionState extends State<CompareSection> {
                       key: _plateKey,
                       child: LivePlate(
                         controller: _plate,
-                        validName: iran == null
-                            ? 'Iran car'
-                            : validNameOf(iran),
+                        validName: iran == null ? 'Iran car' : validNameOf(iran),
                         theme: iran?.entry.theme,
                         country: iran?.entry.country,
                         validator: iran?.entry.validator,
@@ -484,7 +461,7 @@ class StartSection extends StatelessWidget {
         '03',
         'Read the value',
         'controller.values        // one entry per slot\n'
-            "controller.text(sep: '') // the plate as a string\n"
+            "controller.text(sep: ' ') // the plate as a string\n"
             'controller.isCompleted   // every slot filled',
       ),
     ];
@@ -575,11 +552,7 @@ class AboutSection extends StatelessWidget {
             const SizedBox(height: 10),
             Text(
               'Arad Beyranvand',
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.w700,
-                color: t.text,
-              ),
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: t.text),
             ),
             const SizedBox(height: 6),
             Text('Flutter developer, Iran. Sole author.', style: body(t)),
@@ -589,14 +562,8 @@ class AboutSection extends StatelessWidget {
               runSpacing: 8,
               children: <Widget>[
                 PdLink('GitHub ↗', onTap: () => openExternal(kAuthorGithub)),
-                PdLink(
-                  kAuthorEmail,
-                  onTap: () => openExternal('mailto:$kAuthorEmail'),
-                ),
-                PdLink(
-                  'MIT licence ↗',
-                  onTap: () => openExternal('$kCoreRepo/blob/main/LICENSE'),
-                ),
+                PdLink(kAuthorEmail, onTap: () => openExternal('mailto:$kAuthorEmail')),
+                PdLink('MIT licence ↗', onTap: () => openExternal('$kCoreRepo/blob/main/LICENSE')),
               ],
             ),
           ],

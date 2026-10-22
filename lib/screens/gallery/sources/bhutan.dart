@@ -44,27 +44,15 @@ class BhutanSource extends GallerySource {
       title: 'Civil',
       note: 'BP, a region digit, a class letter and four digits.',
       entries: <GalleryEntry>[
-        _e(
-          'private',
-          'Private · white',
-          BhutanPlates.private,
-          BhutanThemes.private,
-          'B P 1 A 2 3 4 5',
-        ),
+        _e('private', 'Private · white', BhutanPlates.private, BhutanThemes.private, 'BP 1 A 2345'),
         _e(
           'government',
           'Government · red',
           BhutanPlates.government,
           BhutanThemes.government,
-          'B G 2 B 3 4 5 6',
+          'BG 2 B 3456',
         ),
-        _e(
-          'taxi',
-          'Taxi · yellow',
-          BhutanPlates.taxi,
-          BhutanThemes.taxi,
-          'B T 3 C 4 5 6 7',
-        ),
+        _e('taxi', 'Taxi · yellow', BhutanPlates.taxi, BhutanThemes.taxi, 'BT 3 C 4567'),
       ],
     ),
     GallerySection(
@@ -78,7 +66,7 @@ class BhutanSource extends GallerySource {
           'Police · blue',
           BhutanPlates.police,
           BhutanThemes.police,
-          'R B P 1 2 3 4',
+          'RBP 1234',
           validator: const BhutanValidator.police(),
         ),
         _e(
@@ -86,7 +74,7 @@ class BhutanSource extends GallerySource {
           'Royal guard',
           BhutanPlates.royalGuard,
           BhutanThemes.royalGuard,
-          'R B G 5 6 7 8',
+          'RBG 5678',
           validator: const BhutanValidator.royalGuard(),
         ),
         _e(
@@ -94,7 +82,7 @@ class BhutanSource extends GallerySource {
           'Diplomatic',
           BhutanPlates.diplomatic,
           BhutanThemes.diplomatic,
-          '1 2 3 4',
+          '12 34',
           validator: const BhutanDiplomaticValidator(),
         ),
       ],

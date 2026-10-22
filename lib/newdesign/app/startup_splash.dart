@@ -19,12 +19,8 @@ const Duration _cycle = Duration(milliseconds: 3200);
 /// The splash leaves once the progress bar is full (85% of the cycle).
 const double _end = 0.85;
 
-class _PdStartupSplashState extends State<PdStartupSplash>
-    with TickerProviderStateMixin {
-  late final AnimationController _play = AnimationController(
-    vsync: this,
-    duration: _cycle,
-  );
+class _PdStartupSplashState extends State<PdStartupSplash> with TickerProviderStateMixin {
+  late final AnimationController _play = AnimationController(vsync: this, duration: _cycle);
   late final AnimationController _fade = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 500),
@@ -100,9 +96,7 @@ class _SplashView extends StatelessWidget {
           children: <Widget>[
             LayoutBuilder(
               builder: (BuildContext context, BoxConstraints c) {
-                final double w = c.maxWidth * 0.86 < 560
-                    ? c.maxWidth * 0.86
-                    : 560;
+                final double w = c.maxWidth * 0.86 < 560 ? c.maxWidth * 0.86 : 560;
                 return _Plate(width: w, t: t);
               },
             ),
@@ -151,11 +145,7 @@ class _SplashView extends StatelessWidget {
                 const SizedBox(width: 10),
                 Opacity(
                   opacity: caretOn ? 1 : 0,
-                  child: const SizedBox(
-                    width: 2,
-                    height: 15,
-                    child: ColoredBox(color: _teal),
-                  ),
+                  child: const SizedBox(width: 2, height: 15, child: ColoredBox(color: _teal)),
                 ),
               ],
             ),
@@ -196,10 +186,7 @@ class _Plate extends StatelessWidget {
             Container(
               width: width * 0.13,
               color: const Color(0xFF1F3FA8),
-              padding: EdgeInsets.symmetric(
-                vertical: width * 0.06,
-                horizontal: width * 0.02,
-              ),
+              padding: EdgeInsets.symmetric(vertical: width * 0.06, horizontal: width * 0.02),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -279,14 +266,7 @@ class _Plate extends StatelessWidget {
 
 /// One plate group: a grey "?" that gives way to the real characters.
 class _Slot extends StatelessWidget {
-  const _Slot(
-    this.q,
-    this.value,
-    this.underlineEm,
-    this.size,
-    this.t,
-    this.delaySeconds,
-  );
+  const _Slot(this.q, this.value, this.underlineEm, this.size, this.t, this.delaySeconds);
 
   final String q;
   final String value;
@@ -337,10 +317,7 @@ class _Slot extends StatelessWidget {
           children: <Widget>[
             Opacity(
               opacity: q0,
-              child: Text(
-                q,
-                style: style.copyWith(color: const Color(0xFFC9CCD3)),
-              ),
+              child: Text(q, style: style.copyWith(color: const Color(0xFFC9CCD3))),
             ),
             Transform.translate(
               offset: Offset(0, rise),
@@ -352,11 +329,7 @@ class _Slot extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 4),
-        Container(
-          width: underlineEm * size,
-          height: 2,
-          color: const Color(0xFFD9DCE2),
-        ),
+        Container(width: underlineEm * size, height: 2, color: const Color(0xFFD9DCE2)),
       ],
     );
   }

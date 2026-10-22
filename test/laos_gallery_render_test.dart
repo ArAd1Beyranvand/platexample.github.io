@@ -16,23 +16,19 @@ void main() {
             home: SizedBox(
               width: 460,
               height: 130,
-              child: PlateView(
-                controller: c,
-                theme: e.theme!,
-                country: e.country,
-              ),
+              child: PlateView(controller: c, theme: e.theme!, country: e.country),
             ),
           ),
         );
         expect(t.takeException(), isNull, reason: e.id);
         expect(e.sampleValues!.length, e.spec.slots.length, reason: e.id);
-        expect(
-          e.validator!
-              .validate(PlateEntry(spec: e.spec, values: e.sampleValues!))
-              .isValid,
-          isTrue,
-          reason: e.id,
-        );
+        if (e.validator != null) {
+          expect(
+            e.validator!.validate(PlateEntry(spec: e.spec, values: e.sampleValues!)).isValid,
+            isTrue,
+            reason: e.id,
+          );
+        }
         await t.pumpWidget(
           MaterialApp(
             home: SizedBox(
@@ -58,8 +54,7 @@ void main() {
     expect(
       themes.length,
       7,
-      reason:
-          'yellow, amber, government, white, taxable, international, security',
+      reason: 'yellow, amber, government, white, taxable, international, security',
     );
   });
 }

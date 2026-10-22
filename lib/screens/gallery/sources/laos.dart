@@ -22,30 +22,22 @@ class LaosSource extends GallerySource {
       'since 2024. The article lists nothing Israel-specific, so nothing is '
       'refused.';
 
-  GalleryEntry _entry(
-    LaosCategory c,
-    String label,
-    String values,
-    PlateValidator validator,
-  ) => GalleryEntry(
-    id: 'la.${c.id}',
-    label: label,
-    spec: LaosPlates.of(c),
-    theme: LaosPlates.themeOf(c),
-    country: LaosCountry.laos,
-    validator: validator,
-    sampleValues: values.split(' '),
-  );
+  GalleryEntry _entry(LaosCategory c, String label, String values, PlateValidator validator) =>
+      GalleryEntry(
+        id: 'la.${c.id}',
+        label: label,
+        spec: LaosPlates.of(c),
+        theme: LaosPlates.themeOf(c),
+        country: LaosCountry.laos,
+        validator: validator,
+        sampleValues: values.split(' '),
+      );
 
   GalleryEntry _provincial(LaosCategory c, String label, String values) =>
       _entry(c, label, values, const LaosValidator());
 
-  GalleryEntry _prefixed(LaosCategory c, String values) => _entry(
-    c,
-    '${c.meaning} · ${c.prefix}',
-    values,
-    const LaosPrefixedValidator(),
-  );
+  GalleryEntry _prefixed(LaosCategory c, String values) =>
+      _entry(c, '${c.meaning} · ${c.prefix}', values, const LaosPrefixedValidator());
 
   @override
   List<GallerySection> get sections => _sections ??= <GallerySection>[
@@ -53,32 +45,12 @@ class LaosSource extends GallerySource {
       title: 'Provincial',
       note: 'One design; the field, the ink and the EV badge change.',
       entries: <GalleryEntry>[
-        _provincial(
-          LaosCategory.private,
-          'Private · black on yellow',
-          'ຮ ຍ 8118',
-        ),
-        _provincial(
-          LaosCategory.privateEv,
-          'Private EV · black on amber',
-          'ຂ ກ 4714',
-        ),
-        _provincial(
-          LaosCategory.government,
-          'Government · white on blue',
-          'ກ ກ 6884',
-        ),
-        _provincial(
-          LaosCategory.company,
-          'Private company · black on white',
-          'ອ ທ 1234',
-        ),
+        _provincial(LaosCategory.private, 'Private · black on yellow', 'ຮ ຍ 8118'),
+        _provincial(LaosCategory.privateEv, 'Private EV · black on amber', 'ຂ ກ 4714'),
+        _provincial(LaosCategory.government, 'Government · white on blue', 'ກ ກ 6884'),
+        _provincial(LaosCategory.company, 'Private company · black on white', 'ອ ທ 1234'),
         _provincial(LaosCategory.companyEv, 'Private company EV', 'ອ ທ 0004'),
-        _provincial(
-          LaosCategory.taxableCompany,
-          'Company (1% tax) · blue on white',
-          'ກ ກ 2662',
-        ),
+        _provincial(LaosCategory.taxableCompany, 'Company (1% tax) · blue on white', 'ກ ກ 2662'),
       ],
     ),
     GallerySection(

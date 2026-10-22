@@ -56,9 +56,7 @@ class IranSource extends GallerySource {
         if (entry.id == id) return entry;
       }
     }
-    throw StateError(
-      'IranSource has no entry for $id; every IranUsage must sit in a section.',
-    );
+    throw StateError('IranSource has no entry for $id; every IranUsage must sit in a section.');
   }
 
   static final List<GalleryEntry> _highlights = <GalleryEntry>[
@@ -69,12 +67,7 @@ class IranSource extends GallerySource {
 
   /// Four fields on the shared 520x110 blank: `12 ب 345 - 11`, the number the
   /// article's own reference images carry.
-  static const List<String?> _standardValues = <String?>[
-    '12',
-    null,
-    '345',
-    '11',
-  ];
+  static const List<String?> _standardValues = <String?>['12', null, '345', '11'];
 
   /// The five digits of a protocol or historic plate.
   static const List<String?> _fiveDigits = <String?>['13901'];
@@ -113,8 +106,9 @@ class IranSource extends GallerySource {
     _ => 'Civil',
   };
 
-  static List<GalleryEntry> _entriesFor(List<IranUsage> usages) =>
-      <GalleryEntry>[for (final IranUsage usage in usages) _entry(usage)];
+  static List<GalleryEntry> _entriesFor(List<IranUsage> usages) => <GalleryEntry>[
+    for (final IranUsage usage in usages) _entry(usage),
+  ];
 
   static final List<GallerySection> _sections = <GallerySection>[
     GallerySection(

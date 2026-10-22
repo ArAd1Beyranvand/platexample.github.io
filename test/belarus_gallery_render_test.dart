@@ -14,11 +14,7 @@ void main() {
               width: 520,
               child: AspectRatio(
                 aspectRatio: entry.spec.canvasWidth / entry.spec.canvasHeight,
-                child: PlateView(
-                  controller: c,
-                  theme: entry.theme!,
-                  country: entry.country,
-                ),
+                child: PlateView(controller: c, theme: entry.theme!, country: entry.country),
               ),
             ),
           ),
@@ -26,9 +22,7 @@ void main() {
       );
       expect(tester.takeException(), isNull);
       expect(
-        entry.validator!
-            .validate(PlateEntry(spec: entry.spec, values: c.values))
-            .isValid,
+        entry.validator!.validate(PlateEntry(spec: entry.spec, values: c.values)).isValid,
         isTrue,
       );
       await tester.pumpWidget(const SizedBox.shrink());

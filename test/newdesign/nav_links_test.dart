@@ -3,9 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:plate_number_holder/newdesign/app/pd_app.dart';
 
 void main() {
-  testWidgets('header links scroll to their sections', (
-    WidgetTester tester,
-  ) async {
+  testWidgets('header links scroll to their sections', (WidgetTester tester) async {
     tester.view.physicalSize = const Size(1280, 900);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);

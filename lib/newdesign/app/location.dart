@@ -28,29 +28,40 @@ enum LandingAnchor { top, coverage, start, about }
 class PdLocation {
   const PdLocation.landing([this.anchor = LandingAnchor.top])
     : item = null,
-      source = null;
+      source = null,
+      isRenderCheck = false;
+
+  /// `/render-check`: a test page listing every plate (see RenderCheckPage).
+  const PdLocation.renderCheck()
+    : anchor = LandingAnchor.top,
+      item = null,
+      source = null,
+      isRenderCheck = true;
 
   const PdLocation.playground(CatalogueItem this.item)
     : anchor = LandingAnchor.top,
-      source = null;
+      source = null,
+      isRenderCheck = false;
 
   /// A country's own page: every plate type it ships.
   const PdLocation.country(GallerySource this.source)
     : anchor = LandingAnchor.top,
-      item = null;
+      item = null,
+      isRenderCheck = false;
 
   /// A region's overview: one card per member country. [source] is a
   /// umbrella (a continent, Iranshahr, Yemen); [PdLocation.of] is what callers normally use.
   const PdLocation.region(GallerySource this.source)
     : anchor = LandingAnchor.top,
-      item = null;
+      item = null,
+      isRenderCheck = false;
 
   /// The page for [source], whichever of the two it is.
-  factory PdLocation.of(GallerySource source) => isUmbrella(source)
-      ? PdLocation.region(source)
-      : PdLocation.country(source);
+  factory PdLocation.of(GallerySource source) =>
+      isUmbrella(source) ? PdLocation.region(source) : PdLocation.country(source);
 
   final LandingAnchor anchor;
+  final bool isRenderCheck;
   final CatalogueItem? item;
 
   /// The country or region this location is for, on those two pages only.
@@ -60,11 +71,10 @@ class PdLocation {
   bool get isRegion => source != null && isUmbrella(source!);
   bool get isCountry => source != null && !isRegion;
 
-  static final PdLocation defaultPlayground = PdLocation.playground(
-    playgroundItems.first,
-  );
+  static final PdLocation defaultPlayground = PdLocation.playground(playgroundItems.first);
 
   String get path {
+    if (isRenderCheck) return '/render-check';
     final CatalogueItem? item = this.item;
     if (item != null) return '/plates/${item.source.slug}/${item.slug}';
     final GallerySource? source = this.source;
@@ -84,6 +94,8 @@ class PdLocation {
     ];
     if (s.isEmpty) return const PdLocation.landing();
     switch (s.first) {
+      case 'render-check':
+        return const PdLocation.renderCheck();
       case 'start':
         return const PdLocation.landing(LandingAnchor.start);
       case 'about':
@@ -116,12 +128,9 @@ class PdLocation {
     final GallerySource? country = countryBySlug(rest.first);
     if (country == null) return coverage;
     if (rest.length == 1) {
-      return firstItemOf(country) == null
-          ? coverage
-          : PdLocation.country(country);
+      return firstItemOf(country) == null ? coverage : PdLocation.country(country);
     }
-    final CatalogueItem? item =
-        itemBySlug(country, rest[1]) ?? firstItemOf(country);
+    final CatalogueItem? item = itemBySlug(country, rest[1]) ?? firstItemOf(country);
     return item == null ? coverage : PdLocation.playground(item);
   }
 
@@ -129,10 +138,11 @@ class PdLocation {
   bool operator ==(Object other) =>
       other is PdLocation &&
       other.anchor == anchor &&
+      other.isRenderCheck == isRenderCheck &&
       identical(other.item, item) &&
       identical(other.source, source);
 
   @override
   int get hashCode =>
-      Object.hash(anchor, identityHashCode(item), identityHashCode(source));
+      Object.hash(anchor, isRenderCheck, identityHashCode(item), identityHashCode(source));
 }

@@ -45,13 +45,11 @@ class SouthKoreaSource extends GallerySource {
       title: 'Current plates',
       note: 'Heights follow each photograph: 335×155, 335×170 and 520×110.',
       entries: <GalleryEntry>[
-        _e(
-          'kr.private',
-          'Private',
-          SouthKoreaPlates.private,
-          SouthKoreaThemes.private,
-          <String?>['12', '가', '3456'],
-        ),
+        _e('kr.private', 'Private', SouthKoreaPlates.private, SouthKoreaThemes.private, <String?>[
+          '12',
+          '가',
+          '3456',
+        ]),
         _e(
           'kr.commercial',
           'Commercial',
@@ -80,13 +78,11 @@ class SouthKoreaSource extends GallerySource {
           SouthKoreaThemes.usForces,
           <String?>['1', '6047'],
         ),
-        _e(
-          'kr.neon',
-          'Neon green',
-          SouthKoreaPlates.neon,
-          SouthKoreaThemes.neon,
-          <String?>['177', '호', '1336'],
-        ),
+        _e('kr.neon', 'Neon green', SouthKoreaPlates.neon, SouthKoreaThemes.neon, <String?>[
+          '177',
+          '호',
+          '1336',
+        ]),
       ],
     ),
   ];

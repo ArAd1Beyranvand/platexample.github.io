@@ -10,12 +10,10 @@ import '../data/catalogue.dart';
 import '../data/country_meta.dart';
 import '../data/plate_code.dart';
 import '../design/tokens.dart';
-import '../landing/sections.dart';
 import '../landing/text_styles.dart';
 import '../plate/live_plate.dart';
 import '../widgets/controls.dart';
 import 'breadcrumb.dart';
-import 'filter_chips.dart';
 
 /// One country's plate types: the list on the left, the selected type's
 /// facts on the right.
@@ -33,11 +31,6 @@ class CountryPage extends StatefulWidget {
 }
 
 class _CountryPageState extends State<CountryPage> {
-  final TextEditingController _q = TextEditingController();
-
-  /// The section title selected, or null for "All".
-  String? _category;
-
   /// Null until the user picks one, so the first visible row leads.
   CatalogueItem? _selected;
 
@@ -68,12 +61,12 @@ class _CountryPageState extends State<CountryPage> {
     final double end = _scroll.position.maxScrollExtent;
     // Side by side (see the PdAutoGrid below) the detail is already in view.
     final double pad = pdClamp(context, 16, 3, 32);
-    final double content = (MediaQuery.sizeOf(context).width - 2 * pad).clamp(
-      0,
-      1200,
-    );
+    final double content = (MediaQuery.sizeOf(context).width - 2 * pad).clamp(0, 1200);
     if (content >= 2 * 380 + 24) {
-      setState(() => _scrolling = false);
+      setState(() {
+        _scrolling = false;
+        _beckon++;
+      });
       return;
     }
     if (d == Duration.zero) {
@@ -89,24 +82,15 @@ class _CountryPageState extends State<CountryPage> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    _q.addListener(() => setState(() {}));
-  }
-
-  @override
   void didUpdateWidget(CountryPage old) {
     super.didUpdateWidget(old);
     if (!identical(old.source, widget.source)) {
-      _q.clear();
-      _category = null;
       _selected = null;
     }
   }
 
   @override
   void dispose() {
-    _q.dispose();
     _scroll.dispose();
     super.dispose();
   }
@@ -118,26 +102,11 @@ class _CountryPageState extends State<CountryPage> {
 
   @override
   Widget build(BuildContext context) {
-    final PdTokens t = context.tokens;
     final PdNav nav = PdNav.of(context);
     final GallerySource source = widget.source;
     final List<CatalogueItem> items = _items;
 
-    // Section order, deduplicated: a section is one category chip.
-    final List<String> categories = <String>{
-      for (final CatalogueItem item in items) item.section.title,
-    }.toList();
-
-    final String q = normaliseQuery(_q.text);
-    final List<CatalogueItem> shown = <CatalogueItem>[
-      for (final CatalogueItem item in items)
-        if (_category == null || item.section.title == _category)
-          if (q.isEmpty ||
-              normaliseQuery(
-                '${item.entry.label} ${item.section.title}',
-              ).contains(q))
-            item,
-    ];
+    final List<CatalogueItem> shown = items;
     final CatalogueItem? selected = shown.contains(_selected)
         ? _selected
         : (shown.isNotEmpty ? shown.first : null);
@@ -146,6 +115,63 @@ class _CountryPageState extends State<CountryPage> {
     final (String iso, String native) = (
       countryMeta[source.countryName]?.$1 ?? '',
       countryMeta[source.countryName]?.$2 ?? '',
+    );
+
+    final double viewport = MediaQuery.sizeOf(context).width;
+    final bool sideTwo = viewport - 2 * pdClamp(context, 16, 3, 32) >= 2 * 380 + 24;
+    final bool sidePager = viewport >= 1700;
+    // Beside the detail the list's last types drop under the big plate.
+    final int tail = sideTwo && shown.length > 4 ? 2 : 0;
+    final List<CatalogueItem> listed = shown.sublist(0, shown.length - tail);
+    final List<CatalogueItem> under = shown.sublist(shown.length - tail);
+    Widget row(CatalogueItem item) => Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: _TypeRow(item: item, selected: identical(item, selected), onTap: () => _pick(item)),
+    );
+
+    final Widget content = ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 1200),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          PdBreadcrumb(
+            trail: <(String, PdLocation)>[
+              ('Countries', const PdLocation.landing(LandingAnchor.coverage)),
+              if (region != null) (region.countryName, PdLocation.region(region)),
+            ],
+            current: source.countryName,
+          ),
+          const SizedBox(height: 24),
+          _Header(source: source, native: native, iso: iso, types: items.length),
+          const SizedBox(height: 24),
+          const SizedBox(height: 24),
+          PdAutoGrid(
+            minWidth: 380,
+            gap: 24,
+            children: <Widget>[
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[for (final CatalogueItem i in listed) row(i)],
+              ),
+              if (selected != null)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    _TypeDetail(
+                      item: selected,
+                      beckon: _beckon,
+                      hold: _scrolling,
+                      onPlay: () => nav.go(PdLocation.playground(selected)),
+                    ),
+                    if (under.isNotEmpty) const SizedBox(height: 24),
+                    for (final CatalogueItem i in under) row(i),
+                  ],
+                ),
+            ],
+          ),
+          if (!sidePager) ...<Widget>[const SizedBox(height: 32), _CountryPager(source: source)],
+        ],
+      ),
     );
 
     return ListView(
@@ -158,105 +184,143 @@ class _CountryPageState extends State<CountryPage> {
       ),
       children: <Widget>[
         Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 1200),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                PdBreadcrumb(
-                  trail: <(String, PdLocation)>[
-                    (
-                      'Countries',
-                      const PdLocation.landing(LandingAnchor.coverage),
-                    ),
-                    if (region != null)
-                      (region.countryName, PdLocation.region(region)),
-                  ],
-                  current: source.countryName,
-                ),
-                const SizedBox(height: 24),
-                _Header(
-                  source: source,
-                  native: native,
-                  iso: iso,
-                  types: items.length,
-                ),
-                const SizedBox(height: 24),
-                SizedBox(
-                  width: 320,
-                  height: 40,
-                  child: PdTextField(
-                    controller: _q,
-                    hint: 'Filter plate types',
-                    semanticLabel: 'Filter plate types',
-                  ),
-                ),
-                if (categories.length > 1) ...<Widget>[
-                  const SizedBox(height: 12),
-                  PdFilterRow(
-                    children: <Widget>[
-                      PdFilterChip(
-                        label: 'All',
-                        count: items.length,
-                        selected: _category == null,
-                        onTap: () => setState(() => _category = null),
-                      ),
-                      for (final String c in categories)
-                        PdFilterChip(
-                          label: c,
-                          count: items
-                              .where((CatalogueItem i) => i.section.title == c)
-                              .length,
-                          selected: _category == c,
-                          onTap: () => setState(() => _category = c),
-                        ),
-                    ],
-                  ),
-                ],
-                const SizedBox(height: 24),
-                PdAutoGrid(
-                  minWidth: 380,
-                  gap: 24,
+          child: sidePager
+              ? Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        if (shown.isEmpty)
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 16,
-                            ),
-                            child: Text(
-                              'No plate type matches '
-                              '“${_q.text.trim()}”.',
-                              style: body(t),
-                            ),
-                          ),
-                        for (final CatalogueItem item in shown) ...<Widget>[
-                          _TypeRow(
-                            item: item,
-                            selected: identical(item, selected),
-                            onTap: () => _pick(item),
-                          ),
-                          const SizedBox(height: 8),
-                        ],
-                      ],
-                    ),
-                    if (selected != null)
-                      _TypeDetail(
-                        item: selected,
-                        beckon: _beckon,
-                        hold: _scrolling,
-                        onPlay: () => nav.go(PdLocation.playground(selected)),
-                      ),
+                    _SidePager(source: source, forward: false),
+                    const SizedBox(width: 24),
+                    Flexible(child: content),
+                    const SizedBox(width: 24),
+                    _SidePager(source: source, forward: true),
                   ],
-                ),
-              ],
+                )
+              : content,
+        ),
+      ],
+    );
+  }
+}
+
+/// Previous / next country in catalogue order, wrapping at the ends. Two
+/// cards share the row on narrow viewports; on wide ones they sit at either
+/// edge of the content column.
+class _CountryPager extends StatelessWidget {
+  const _CountryPager({required this.source});
+
+  final GallerySource source;
+
+  @override
+  Widget build(BuildContext context) {
+    final int i = plateCountries.indexWhere((GallerySource c) => identical(c, source));
+    if (i < 0 || plateCountries.length < 2) return const SizedBox.shrink();
+    final int n = plateCountries.length;
+    final GallerySource prev = plateCountries[(i - 1 + n) % n];
+    final GallerySource next = plateCountries[(i + 1) % n];
+    final PdNav nav = PdNav.of(context);
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: _PagerCard(
+              target: prev,
+              forward: false,
+              onTap: () => nav.go(PdLocation.of(prev)),
+            ),
+          ),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: _PagerCard(
+              target: next,
+              forward: true,
+              onTap: () => nav.go(PdLocation.of(next)),
             ),
           ),
         ),
       ],
+    );
+  }
+}
+
+/// One pager card in the margin beside the content on wide viewports.
+class _SidePager extends StatelessWidget {
+  const _SidePager({required this.source, required this.forward});
+
+  final GallerySource source;
+  final bool forward;
+
+  @override
+  Widget build(BuildContext context) {
+    final int i = plateCountries.indexWhere((GallerySource c) => identical(c, source));
+    final int n = plateCountries.length;
+    if (i < 0 || n < 2) return const SizedBox.shrink();
+    final GallerySource target = plateCountries[(i + (forward ? 1 : n - 1)) % n];
+    return Padding(
+      padding: const EdgeInsets.only(top: 200),
+      child: _PagerCard(
+        target: target,
+        forward: forward,
+        onTap: () => PdNav.of(context).go(PdLocation.of(target)),
+      ),
+    );
+  }
+}
+
+class _PagerCard extends StatelessWidget {
+  const _PagerCard({required this.target, required this.forward, required this.onTap});
+
+  final GallerySource target;
+  final bool forward;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final PdTokens t = context.tokens;
+    final Widget arrow = Icon(
+      forward ? Icons.arrow_forward_rounded : Icons.arrow_back_rounded,
+      size: 20,
+      color: t.accent,
+    );
+    final Widget label = Flexible(
+      child: Column(
+        crossAxisAlignment: forward ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Text(
+            forward ? 'Next country' : 'Previous country',
+            style: TextStyle(fontSize: 12, color: t.subtle),
+          ),
+          const SizedBox(height: 2),
+          Text(
+            target.countryName,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: t.text),
+          ),
+        ],
+      ),
+    );
+    return ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 320),
+      child: PdTappable(
+        onTap: onTap,
+        radius: PdRadius.card,
+        border: t.divider,
+        hoverColor: t.hover,
+        semanticLabel: '${forward ? 'Next' : 'Previous'} country: ${target.countryName}',
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: forward
+              ? <Widget>[label, const SizedBox(width: 12), arrow]
+              : <Widget>[arrow, const SizedBox(width: 12), label],
+        ),
+      ),
     );
   }
 }
@@ -304,11 +368,7 @@ class _Header extends StatelessWidget {
                 if (native.isNotEmpty && native != source.countryName)
                   Text(
                     native,
-                    style: TextStyle(
-                      fontFamily: PdFonts.persian,
-                      fontSize: 20,
-                      color: t.muted,
-                    ),
+                    style: TextStyle(fontFamily: PdFonts.persian, fontSize: 20, color: t.muted),
                   ),
               ],
             ),
@@ -335,11 +395,7 @@ class _Header extends StatelessWidget {
 /// One plate type: its plate at thumbnail width, its label, its section and
 /// the spec the developer would name.
 class _TypeRow extends StatelessWidget {
-  const _TypeRow({
-    required this.item,
-    required this.selected,
-    required this.onTap,
-  });
+  const _TypeRow({required this.item, required this.selected, required this.onTap});
 
   final CatalogueItem item;
   final bool selected;
@@ -354,7 +410,7 @@ class _TypeRow extends StatelessWidget {
       radius: PdRadius.card,
       selected: selected,
       color: selected ? t.surface : null,
-      hoverColor: selected ? null : t.surface,
+      hoverColor: selected ? null : t.hover,
       border: selected ? t.accent : t.divider,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       child: Row(
@@ -376,11 +432,7 @@ class _TypeRow extends StatelessWidget {
               children: <Widget>[
                 Text(
                   item.entry.label,
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                    color: t.text,
-                  ),
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: t.text),
                 ),
                 const SizedBox(height: 2),
                 Text(
@@ -391,11 +443,7 @@ class _TypeRow extends StatelessWidget {
                 Text(
                   specName(item) ?? spec.id,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontFamily: PdFonts.mono,
-                    fontSize: 12,
-                    color: t.subtle,
-                  ),
+                  style: TextStyle(fontFamily: PdFonts.mono, fontSize: 12, color: t.subtle),
                 ),
               ],
             ),
@@ -446,10 +494,7 @@ class _TypeDetail extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            item.section.title,
-            style: TextStyle(fontSize: 13, color: t.subtle),
-          ),
+          Text(item.section.title, style: TextStyle(fontSize: 13, color: t.subtle)),
           const SizedBox(height: 4),
           Text(entry.label, style: h3(t).copyWith(fontSize: 20, height: 1.3)),
           const SizedBox(height: 16),
@@ -467,18 +512,13 @@ class _TypeDetail extends StatelessWidget {
                 children: <Widget>[
                   SizedBox(
                     width: 72,
-                    child: Text(
-                      k,
-                      style: TextStyle(fontSize: 14, color: t.subtle),
-                    ),
+                    child: Text(k, style: TextStyle(fontSize: 14, color: t.subtle)),
                   ),
                   const SizedBox(width: 16),
                   Expanded(
                     child: Text(
                       v,
-                      style: mono
-                          ? monoStyle(t, size: 13)
-                          : TextStyle(fontSize: 14, color: t.text),
+                      style: mono ? monoStyle(t, size: 13) : TextStyle(fontSize: 14, color: t.text),
                     ),
                   ),
                 ],
@@ -502,9 +542,9 @@ class _TypeDetail extends StatelessWidget {
   }
 }
 
-/// The detail's plate: a new [entry] staggers the old plate out part by part,
-/// then staggers its own in — even when both share a spec. Waits while
-/// [hold] is set.
+/// The detail's plate: a new [entry] morphs in place like the landing hero,
+/// so identical parts and the background stay still. Waits while [hold] is
+/// set.
 class _StaggeredPlate extends StatefulWidget {
   const _StaggeredPlate({required this.entry, required this.hold});
 
@@ -519,39 +559,14 @@ class _StaggeredPlateState extends State<_StaggeredPlate> {
   final PlateAnimationController _anim = PlateAnimationController();
   late GalleryEntry _shown = widget.entry;
 
-  /// The entry the running (or finished) stagger is heading to.
-  late GalleryEntry _target = widget.entry;
-  Timer? _swap;
-
-  static const Duration _step = Duration(milliseconds: 40);
-
   @override
   void didUpdateWidget(_StaggeredPlate old) {
     super.didUpdateWidget(old);
-    if (widget.hold || identical(_target, widget.entry)) return;
-    final GalleryEntry to = _target = widget.entry;
-    _swap?.cancel();
-    if (MediaQuery.disableAnimationsOf(context)) {
-      _anim.settleAll();
-      setState(() => _shown = to);
-      return;
-    }
-    final Map<PlatePartId, Duration> out = PlateStagger.sequence(
-      _shown.spec,
-      step: _step,
-      reverse: true,
-    );
-    _anim.goOutAll(delays: out);
-    _swap = Timer(plateCueLength(_anim.style, out.keys, out), () {
-      if (!mounted) return;
-      setState(() => _shown = to);
-      _anim.comeInAll(delays: PlateStagger.sequence(to.spec, step: _step));
-    });
+    if (!widget.hold) _shown = widget.entry;
   }
 
   @override
   void dispose() {
-    _swap?.cancel();
     _anim.dispose();
     super.dispose();
   }
@@ -563,6 +578,7 @@ class _StaggeredPlateState extends State<_StaggeredPlate> {
     theme: _shown.theme,
     country: _shown.country,
     animation: _anim,
+    specTransition: const PlateSpecTransition(keepIdentical: true, morphBackground: true),
   );
 }
 
@@ -585,31 +601,21 @@ class _BeckonState extends State<_Beckon> with SingleTickerProviderStateMixin {
     duration: const Duration(milliseconds: 1400),
   );
 
-  static final Animatable<double> _bounce =
-      TweenSequence<double>(<TweenSequenceItem<double>>[
-        TweenSequenceItem<double>(
-          tween: Tween<double>(
-            begin: 1,
-            end: 1.08,
-          ).chain(CurveTween(curve: Curves.easeOut)),
-          weight: 1,
-        ),
-        TweenSequenceItem<double>(
-          tween: Tween<double>(
-            begin: 1.08,
-            end: 0.97,
-          ).chain(CurveTween(curve: Curves.easeInOut)),
-          weight: 1,
-        ),
-        TweenSequenceItem<double>(
-          tween: Tween<double>(
-            begin: 0.97,
-            end: 1,
-          ).chain(CurveTween(curve: Curves.easeOut)),
-          weight: 1,
-        ),
-        TweenSequenceItem<double>(tween: ConstantTween<double>(1), weight: 5),
-      ]);
+  static final Animatable<double> _bounce = TweenSequence<double>(<TweenSequenceItem<double>>[
+    TweenSequenceItem<double>(
+      tween: Tween<double>(begin: 1, end: 1.08).chain(CurveTween(curve: Curves.easeOut)),
+      weight: 1,
+    ),
+    TweenSequenceItem<double>(
+      tween: Tween<double>(begin: 1.08, end: 0.97).chain(CurveTween(curve: Curves.easeInOut)),
+      weight: 1,
+    ),
+    TweenSequenceItem<double>(
+      tween: Tween<double>(begin: 0.97, end: 1).chain(CurveTween(curve: Curves.easeOut)),
+      weight: 1,
+    ),
+    TweenSequenceItem<double>(tween: ConstantTween<double>(1), weight: 5),
+  ]);
 
   @override
   void didUpdateWidget(_Beckon old) {
@@ -643,8 +649,7 @@ class _BeckonState extends State<_Beckon> with SingleTickerProviderStateMixin {
 }
 
 class _BeckonRingPainter extends CustomPainter {
-  _BeckonRingPainter({required this.progress, required this.color})
-    : super(repaint: progress);
+  _BeckonRingPainter({required this.progress, required this.color}) : super(repaint: progress);
 
   final Animation<double> progress;
   final Color color;
@@ -660,12 +665,8 @@ class _BeckonRingPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final double p = progress.value;
     if (p <= 0 || p >= 1) return;
-    final double head = Curves.easeInOutCubic.transform(
-      (p / 0.55).clamp(0.0, 1.0),
-    );
-    final double tail = Curves.easeInOutCubic.transform(
-      ((p - 0.45) / 0.55).clamp(0.0, 1.0),
-    );
+    final double head = Curves.easeInOutCubic.transform((p / 0.55).clamp(0.0, 1.0));
+    final double tail = Curves.easeInOutCubic.transform(((p - 0.45) / 0.55).clamp(0.0, 1.0));
     if (head <= tail) return;
 
     final RRect ring = RRect.fromRectAndRadius(
@@ -695,6 +696,5 @@ class _BeckonRingPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(_BeckonRingPainter old) =>
-      old.progress != progress || old.color != color;
+  bool shouldRepaint(_BeckonRingPainter old) => old.progress != progress || old.color != color;
 }

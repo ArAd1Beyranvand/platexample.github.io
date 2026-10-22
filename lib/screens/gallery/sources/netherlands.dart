@@ -112,20 +112,8 @@ class NetherlandsSource extends GallerySource {
       title: 'Special plates',
       note: 'Royal, trailer, protocol, dealer and BFG.',
       entries: <GalleryEntry>[
-        _e(
-          'royal',
-          'Royal family',
-          NetherlandsPlates.royal,
-          NetherlandsThemes.standard,
-          'AA|86',
-        ),
-        _e(
-          'trailer',
-          'Trailer',
-          NetherlandsPlates.trailer,
-          NetherlandsThemes.standard,
-          'WX|12|NZ',
-        ),
+        _e('royal', 'Royal family', NetherlandsPlates.royal, NetherlandsThemes.standard, 'AA|86'),
+        _e('trailer', 'Trailer', NetherlandsPlates.trailer, NetherlandsThemes.standard, 'WX|12|NZ'),
         _e(
           'special',
           'Special (GV, BN, ZZ)',
@@ -147,13 +135,7 @@ class NetherlandsSource extends GallerySource {
           NetherlandsThemes.standard,
           'CDJ|253',
         ),
-        _e(
-          'dealer',
-          'Dealer',
-          NetherlandsPlates.dealer,
-          NetherlandsThemes.dealer,
-          '49|47|HA',
-        ),
+        _e('dealer', 'Dealer', NetherlandsPlates.dealer, NetherlandsThemes.dealer, '49|47|HA'),
         _e(
           'bfg',
           'British Forces Germany',

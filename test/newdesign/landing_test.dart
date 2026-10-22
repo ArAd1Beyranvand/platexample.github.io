@@ -4,9 +4,7 @@ import 'package:plate_number_holder/newdesign/app/pd_app.dart';
 
 void main() {
   for (final Size size in const <Size>[Size(1280, 900), Size(390, 844)]) {
-    testWidgets('landing renders at ${size.width}', (
-      WidgetTester tester,
-    ) async {
+    testWidgets('landing renders at ${size.width}', (WidgetTester tester) async {
       tester.view.physicalSize = size;
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.reset);

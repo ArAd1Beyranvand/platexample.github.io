@@ -1,5 +1,6 @@
 import '../catalogue.dart';
 import 'iran.dart';
+import 'new_caledonia.dart';
 import 'syria.dart';
 import 'iranshahr.dart';
 import 'korea.dart';
@@ -43,10 +44,69 @@ import 'dominica.dart';
 import 'dominican_republic.dart';
 import 'sweden.dart';
 import 'netherlands.dart';
-import 'united_kingdom.dart';
-import 'ukraine.dart';
 import 'slovakia.dart';
 import 'switzerland.dart';
+import 'pakistan.dart';
+import 'nigeria.dart';
+import 'mexico.dart';
+import 'democratic_republic_of_the_congo.dart';
+import 'south_africa.dart';
+import 'uganda.dart';
+import 'morocco.dart';
+import 'ghana.dart';
+import 'ivory_coast.dart';
+import 'guatemala.dart';
+import 'czech_republic.dart';
+import 'hungary.dart';
+import 'paraguay.dart';
+import 'denmark.dart';
+import 'singapore.dart';
+import 'georgia_country.dart';
+import 'moldova.dart';
+import 'australia.dart';
+import 'ethiopia.dart';
+import 'grenada.dart';
+import 'kiribati.dart';
+import 'lithuania.dart';
+import 'marshall_islands.dart';
+import 'monaco.dart';
+import 'nauru.dart';
+import 'haiti.dart';
+import 'honduras.dart';
+import 'latvia.dart';
+import 'montenegro.dart';
+import 'france.dart';
+import 'north_macedonia.dart';
+import 'palau.dart';
+import 'panama.dart';
+import 'papua_new_guinea.dart';
+import 'peru.dart';
+import 'rwanda.dart';
+import 'saint_kitts_and_nevis.dart';
+import 'saint_lucia.dart';
+import 'togo.dart';
+import 'tonga.dart';
+import 'trinidad_and_tobago.dart';
+import 'tuvalu.dart';
+import 'poland.dart';
+import 'romania.dart';
+import 'madeira.dart';
+import 'canary_islands.dart';
+import 'suriname.dart';
+import 'nepal.dart';
+import 'luxembourg.dart';
+import 'iceland.dart';
+import 'croatia.dart';
+import 'burundi.dart';
+import 'belgium.dart';
+import 'fiji.dart';
+import 'liberia.dart';
+import 'new_zealand.dart';
+import 'samoa.dart';
+import 'solomon_islands.dart';
+import 'federated_states_of_micronesia.dart';
+import 'sovereign_military_order_of_malta.dart';
+import 'sahrawi_arab_democratic_republic.dart';
 
 export '../catalogue.dart';
 export 'algeria.dart';
@@ -84,8 +144,55 @@ export 'somalia.dart';
 export 'sudan.dart';
 export 'vietnam.dart';
 export 'yemen.dart';
+export 'kenya.dart';
 export 'zimbabwe.dart';
 export 'regions.dart';
+export 'albania.dart';
+export 'anguilla.dart';
+export 'argentina.dart';
+export 'ascension_island.dart';
+export 'austria.dart';
+export 'bangladesh.dart';
+export 'bermuda.dart';
+export 'bonaire.dart';
+export 'british_virgin_islands.dart';
+export 'bulgaria.dart';
+export 'cayman_islands.dart';
+export 'christmas_island.dart';
+export 'falkland_islands.dart';
+export 'isle_of_man.dart';
+export 'turks_and_caicos_islands.dart';
+export 'cocos_keeling_islands.dart';
+export 'collectivity_of_saint_martin.dart';
+export 'cook_islands.dart';
+export 'costa_rica.dart';
+export 'easter_island.dart';
+export 'ecuador.dart';
+export 'el_salvador.dart';
+export 'estonia.dart';
+export 'eswatini.dart';
+export 'french_guiana.dart';
+export 'french_polynesia.dart';
+export 'gibraltar.dart';
+export 'guernsey.dart';
+export 'hong_kong.dart';
+export 'jamaica.dart';
+export 'jersey.dart';
+export 'macau.dart';
+export 'mayotte.dart';
+export 'montserrat.dart';
+export 'new_caledonia.dart';
+export 'niue.dart';
+export 'norfolk_island.dart';
+export 'northern_cyprus.dart';
+export 'saba_island.dart';
+export 'saint_helena.dart';
+export 'sint_eustatius.dart';
+export 'sint_maarten.dart';
+export 'south_ossetia.dart';
+export 'south_sudan.dart';
+export 'tristan_da_cunha.dart';
+export 'wallis_and_futuna.dart';
 export 'republic_of_ireland.dart';
 export 'spain.dart';
 export 'italy.dart';
@@ -125,6 +232,7 @@ export 'chad.dart';
 export 'equatorial_guinea.dart';
 export 'gabon.dart';
 export 'zambia.dart';
+export 'malawi.dart';
 export 'madagascar.dart';
 export 'lesotho.dart';
 export 'senegal.dart';
@@ -149,9 +257,81 @@ export 'dominican_republic.dart';
 export 'sweden.dart';
 export 'netherlands.dart';
 export 'united_kingdom.dart';
+export 'russia.dart';
 export 'ukraine.dart';
 export 'slovakia.dart';
 export 'switzerland.dart';
+export 'pakistan.dart';
+export 'nigeria.dart';
+export 'mexico.dart';
+export 'democratic_republic_of_the_congo.dart';
+export 'south_africa.dart';
+export 'uganda.dart';
+export 'morocco.dart';
+export 'ghana.dart';
+export 'ivory_coast.dart';
+export 'guatemala.dart';
+export 'czech_republic.dart';
+export 'hungary.dart';
+export 'paraguay.dart';
+export 'denmark.dart';
+export 'singapore.dart';
+export 'georgia_country.dart';
+export 'moldova.dart';
+export 'australia.dart';
+export 'ethiopia.dart';
+export 'grenada.dart';
+export 'guyana.dart';
+export 'kiribati.dart';
+export 'kosovo.dart';
+export 'lithuania.dart';
+export 'marshall_islands.dart';
+export 'monaco.dart';
+export 'nauru.dart';
+export 'haiti.dart';
+export 'honduras.dart';
+export 'latvia.dart';
+export 'montenegro.dart';
+export 'china.dart';
+export 'france.dart';
+export 'north_macedonia.dart';
+export 'palau.dart';
+export 'panama.dart';
+export 'papua_new_guinea.dart';
+export 'peru.dart';
+export 'rwanda.dart';
+export 'saint_kitts_and_nevis.dart';
+export 'saint_lucia.dart';
+export 'taiwan.dart';
+export 'togo.dart';
+export 'tonga.dart';
+export 'trinidad_and_tobago.dart';
+export 'tuvalu.dart';
+export 'poland.dart';
+export 'romania.dart';
+export 'madeira.dart';
+export 'canary_islands.dart';
+export 'suriname.dart';
+export 'somaliland.dart';
+export 'nepal.dart';
+export 'luxembourg.dart';
+export 'iceland.dart';
+export 'cyprus.dart';
+export 'croatia.dart';
+export 'burundi.dart';
+export 'belgium.dart';
+export 'ceuta.dart';
+export 'melilla.dart';
+export 'fiji.dart';
+export 'liberia.dart';
+export 'new_zealand.dart';
+export 'samoa.dart';
+export 'solomon_islands.dart';
+export 'federated_states_of_micronesia.dart';
+export 'sovereign_military_order_of_malta.dart';
+export 'abkhazia.dart';
+export 'sahrawi_arab_democratic_republic.dart';
+export 'transnistria.dart';
 
 /// Every country this app can draw, in the order the catalogue lists them.
 ///
@@ -178,7 +358,8 @@ final List<GallerySource> gallerySources = <GallerySource>[
     alsoNames: <String>{
       'Iran',
       'Yemen',
-      'Palestine',
+      'Palestine · West Bank',
+      'Palestine · Gaza',
       'North Korea',
       'South Korea',
       'Japan',
@@ -192,7 +373,6 @@ final List<GallerySource> gallerySources = <GallerySource>[
       'Maldives',
       'Philippines',
       'Syria',
-      'Vanuatu',
       'Vietnam',
       'Bahrain',
       'Azerbaijan',
@@ -208,6 +388,10 @@ final List<GallerySource> gallerySources = <GallerySource>[
       'Kazakhstan',
       'Uzbekistan',
       'Turkmenistan',
+      'Pakistan',
+      'Singapore',
+      'Georgia',
+      'Nepal',
     },
   ),
   RegionSource(
@@ -222,11 +406,86 @@ final List<GallerySource> gallerySources = <GallerySource>[
       'Sweden',
       'Netherlands',
       'United Kingdom',
-      'Ukraine',
       'Slovakia',
       'Switzerland',
+      'Czech Republic',
+      'Hungary',
+      'Denmark',
+      'Moldova',
+      'Kosovo',
+      'Lithuania',
+      'Monaco',
+      'Latvia',
+      'Montenegro',
+      'France',
+      'North Macedonia',
+      'Poland',
+      'Romania',
+      'Madeira',
+      'Canary Islands',
+      'Luxembourg',
+      'Iceland',
+      'Cyprus',
+      'Croatia',
+      'Belgium',
+      'Ceuta',
+      'Melilla',
+      'Sovereign Military Order of Malta',
     },
   ),
+  RegionSource(
+    'Russia',
+    <GallerySource>[
+      russiaSource,
+      belarusSource,
+      ukraineSource,
+      abkhaziaSource,
+      southOssetiaSource,
+      transnistriaSource,
+    ],
+    alsoNames: <String>{'Kyrgyzstan'},
+  ),
+  RegionSource('China', <GallerySource>[chinaSource, taiwanSource, hongKongSource, macauSource]),
+  RegionSource('Spain', <GallerySource>[spainSource, gibraltarSource, ceutaSource, melillaSource]),
+  RegionSource('Serbia', <GallerySource>[serbiaSource, kosovoSource]),
+  RegionSource('Cyprus', <GallerySource>[cyprusSource, northernCyprusSource]),
+  RegionSource('Somalia', <GallerySource>[somaliaSource, somalilandSource]),
+  RegionSource('Argentina', <GallerySource>[argentinaSource, falklandIslandsSource]),
+  RegionSource('United Kingdom', <GallerySource>[
+    unitedKingdomSource,
+    isleOfManSource,
+    jerseySource,
+    guernseySource,
+  ]),
+  RegionSource('Guyana', <GallerySource>[guyanaSource, frenchGuianaSource]),
+  RegionSource('Comoros', <GallerySource>[comorosSource, mayotteSource]),
+  RegionSource('Chile', <GallerySource>[chileSource, easterIslandSource]),
+  RegionSource('Saint Helena', <GallerySource>[
+    saintHelenaSource,
+    ascensionIslandSource,
+    tristanDaCunhaSource,
+  ]),
+  RegionSource('Caribbean', <GallerySource>[
+    anguillaSource,
+    bermudaSource,
+    britishVirginIslandsSource,
+    caymanIslandsSource,
+    montserratSource,
+    turksAndCaicosIslandsSource,
+    sintMaartenSource,
+    bonaireSource,
+    sabaIslandSource,
+    sintEustatiusSource,
+    collectivityOfSaintMartinSource,
+  ]),
+  RegionSource('Polynesia', <GallerySource>[
+    frenchPolynesiaSource,
+    wallisAndFutunaSource,
+    cookIslandsSource,
+    niueSource,
+    norfolkIslandSource,
+  ]),
+  RegionSource('Indian Ocean', <GallerySource>[christmasIslandSource, cocosKeelingIslandsSource]),
   RegionSource(
     'America',
     americaCountries,
@@ -238,6 +497,20 @@ final List<GallerySource> gallerySources = <GallerySource>[
       'Dominica',
       'Dominican Republic',
       'Belize',
+      'Mexico',
+      'Guatemala',
+      'Paraguay',
+      'Grenada',
+      'Guyana',
+      'Haiti',
+      'Honduras',
+      'Panama',
+      'Peru',
+      'Saint Kitts and Nevis',
+      'Saint Lucia',
+      'Trinidad and Tobago',
+      'Suriname',
+      'Easter Island',
     },
   ),
   RegionSource(
@@ -255,6 +528,48 @@ final List<GallerySource> gallerySources = <GallerySource>[
       'Senegal',
       'Mauritius',
       'Seychelles',
+      'Nigeria',
+      'Democratic Republic of the Congo',
+      'South Africa',
+      'Uganda',
+      'Morocco',
+      'Ghana',
+      'Ivory Coast',
+      'Ethiopia',
+      'Rwanda',
+      'Togo',
+      'Burundi',
+      'Liberia',
+      'Somaliland',
+      'Sahrawi Arab Democratic Republic',
+    },
+  ),
+  RegionSource(
+    'Oceania',
+    oceaniaCountries,
+    alsoNames: <String>{
+      'Australia',
+      'Kiribati',
+      'Marshall Islands',
+      'Nauru',
+      'Palau',
+      'Papua New Guinea',
+      'Tonga',
+      'Tuvalu',
+      'Fiji',
+      'New Zealand',
+      'Samoa',
+      'Solomon Islands',
+      'Federated States of Micronesia',
+      'Vanuatu',
+      'Christmas Island',
+      'Cocos (Keeling) Islands',
+      'Cook Islands',
+      'French Polynesia',
+      'New Caledonia',
+      'Niue',
+      'Norfolk Island',
+      'Wallis and Futuna',
     },
   ),
   BruneiSource(),
@@ -296,10 +611,70 @@ final List<GallerySource> gallerySources = <GallerySource>[
   BelizeSource(),
   SwedenSource(),
   NetherlandsSource(),
-  UnitedKingdomSource(),
-  UkraineSource(),
   SlovakiaSource(),
   SwitzerlandSource(),
+  PakistanSource(),
+  NigeriaSource(),
+  MexicoSource(),
+  DemocraticRepublicOfTheCongoSource(),
+  SouthAfricaSource(),
+  UgandaSource(),
+  MoroccoSource(),
+  GhanaSource(),
+  IvoryCoastSource(),
+  GuatemalaSource(),
+  CzechRepublicSource(),
+  HungarySource(),
+  ParaguaySource(),
+  DenmarkSource(),
+  SingaporeSource(),
+  GeorgiaCountrySource(),
+  MoldovaSource(),
+  AustraliaSource(),
+  EthiopiaSource(),
+  GrenadaSource(),
+  KiribatiSource(),
+  LithuaniaSource(),
+  MarshallIslandsSource(),
+  MonacoSource(),
+  NauruSource(),
+  HaitiSource(),
+  HondurasSource(),
+  LatviaSource(),
+  MontenegroSource(),
+  FranceSource(),
+  NorthMacedoniaSource(),
+  PalauSource(),
+  PanamaSource(),
+  PapuaNewGuineaSource(),
+  PeruSource(),
+  RwandaSource(),
+  SaintKittsAndNevisSource(),
+  SaintLuciaSource(),
+  TogoSource(),
+  TongaSource(),
+  TrinidadAndTobagoSource(),
+  TuvaluSource(),
+  PolandSource(),
+  RomaniaSource(),
+  MadeiraSource(),
+  CanaryIslandsSource(),
+  SurinameSource(),
+  NepalSource(),
+  LuxembourgSource(),
+  IcelandSource(),
+  CroatiaSource(),
+  BurundiSource(),
+  BelgiumSource(),
+  FijiSource(),
+  LiberiaSource(),
+  NewZealandSource(),
+  SamoaSource(),
+  SolomonIslandsSource(),
+  FederatedStatesOfMicronesiaSource(),
+  SovereignMilitaryOrderOfMaltaSource(),
+  SahrawiArabDemocraticRepublicSource(),
+  NewCaledoniaSource(),
 ];
 
 /// Every source, umbrellas' members included — what a lookup by type wants.

@@ -20,20 +20,16 @@ class SudanSource extends GallerySource {
       'One value printed twice: Arabic above, Latin below — type in either '
       'row and the other follows. The grey strip is the hologram.';
 
-  GalleryEntry _entry(
-    SudanUsage usage,
-    PlateSpec spec,
-    List<String?> values,
-    String format,
-  ) => GalleryEntry(
-    id: 'sd.${usage.name}',
-    label: '${usage.english} · $format',
-    spec: spec,
-    theme: SudanThemes.forUsage(usage),
-    country: SudanCountry.sudan,
-    validator: const SudanValidator(),
-    sampleValues: values,
-  );
+  GalleryEntry _entry(SudanUsage usage, PlateSpec spec, List<String?> values, String format) =>
+      GalleryEntry(
+        id: 'sd.${usage.name}',
+        label: '${usage.english} · $format',
+        spec: spec,
+        theme: SudanThemes.forUsage(usage),
+        country: SudanCountry.sudan,
+        validator: const SudanValidator(),
+        sampleValues: values,
+      );
 
   @override
   List<GallerySection> get sections => _sections ??= <GallerySection>[

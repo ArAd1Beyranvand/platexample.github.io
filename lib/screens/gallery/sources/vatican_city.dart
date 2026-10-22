@@ -69,13 +69,7 @@ class VaticanCitySource extends GallerySource {
       title: 'Papal',
       note: 'SCV 1, the Pope\'s own car.',
       entries: <GalleryEntry>[
-        _e(
-          'papal',
-          'Papal car',
-          VaticanCityPlates.papal,
-          VaticanCityThemes.papal,
-          'SCV 1',
-        ),
+        _e('papal', 'Papal car', VaticanCityPlates.papal, VaticanCityThemes.papal, 'SCV 1'),
       ],
     ),
   ];

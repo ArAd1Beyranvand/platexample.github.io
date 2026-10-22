@@ -26,13 +26,10 @@ class _PdAppState extends State<PdApp> {
   final PdRouterDelegate _router = PdRouterDelegate();
   final PdThemeMode _themeMode = PdThemeMode();
 
-  late final PlatformRouteInformationProvider? _routeProvider =
-      widget.initialRoute == null
+  late final PlatformRouteInformationProvider? _routeProvider = widget.initialRoute == null
       ? null
       : PlatformRouteInformationProvider(
-          initialRouteInformation: RouteInformation(
-            uri: Uri.parse(widget.initialRoute!),
-          ),
+          initialRouteInformation: RouteInformation(uri: Uri.parse(widget.initialRoute!)),
         );
 
   @override
@@ -59,8 +56,7 @@ class _PdAppState extends State<PdApp> {
           routeInformationProvider: _routeProvider,
           routeInformationParser: const PdRouteParser(),
           builder: _mobile
-              ? (BuildContext context, Widget? child) =>
-                    PdStartupSplash(child: child!)
+              ? (BuildContext context, Widget? child) => PdStartupSplash(child: child!)
               : null,
         ),
       ),
@@ -69,11 +65,7 @@ class _PdAppState extends State<PdApp> {
 }
 
 class PdThemeScope extends InheritedNotifier<PdThemeMode> {
-  const PdThemeScope({
-    super.key,
-    required super.notifier,
-    required super.child,
-  });
+  const PdThemeScope({super.key, required super.notifier, required super.child});
 
   static PdThemeMode of(BuildContext context) =>
       context.dependOnInheritedWidgetOfExactType<PdThemeScope>()!.notifier!;

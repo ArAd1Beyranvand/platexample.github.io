@@ -50,13 +50,7 @@ class PhilippinesSource extends GallerySource {
           'The serial is ~60% of the reference height: the reference face '
           'is condensed and the bundled one is not.',
       entries: <GalleryEntry>[
-        _e(
-          'ph.car',
-          'Private',
-          PhilippinesPlates.car(),
-          PhilippinesThemes.private,
-          'NBC1234',
-        ),
+        _e('ph.car', 'Private', PhilippinesPlates.car(), PhilippinesThemes.private, 'NBC1234'),
         _e(
           'ph.car.3',
           'Vanity, three digits',

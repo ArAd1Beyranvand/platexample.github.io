@@ -15,6 +15,7 @@ class PdTokens extends ThemeExtension<PdTokens> {
     required this.accent,
     required this.onAccent,
     required this.accentSoft,
+    required this.hover,
     required this.ok,
     required this.error,
     required this.code,
@@ -32,6 +33,7 @@ class PdTokens extends ThemeExtension<PdTokens> {
     accent: Color(0xFF2FD4CF),
     onAccent: Color(0xFF050608),
     accentSoft: Color(0xFF0F3F42),
+    hover: Color(0xFF0C2A2F),
     ok: Color(0xFF4ADE80),
     error: Color(0xFFF87171),
     code: Color(0xFF0A0D13),
@@ -48,7 +50,8 @@ class PdTokens extends ThemeExtension<PdTokens> {
     control: Color(0xFF737D8C),
     accent: Color(0xFF0B7C86),
     onAccent: Color(0xFFFFFFFF),
-    accentSoft: Color(0xFFDDF4F3),
+    accentSoft: Color(0xFFBDE6E4),
+    hover: Color(0xFFCFEEEC),
     ok: Color(0xFF15803D),
     error: Color(0xFFB91C1C),
     code: Color(0xFFF6F7F9),
@@ -65,6 +68,9 @@ class PdTokens extends ThemeExtension<PdTokens> {
   final Color accent;
   final Color onAccent;
   final Color accentSoft;
+
+  /// Turquoise-tinted fill for hovered rows, chips and buttons.
+  final Color hover;
   final Color ok;
   final Color error;
   final Color code;
@@ -88,6 +94,7 @@ class PdTokens extends ThemeExtension<PdTokens> {
       accent: l(accent, other.accent),
       onAccent: l(onAccent, other.onAccent),
       accentSoft: l(accentSoft, other.accentSoft),
+      hover: l(hover, other.hover),
       ok: l(ok, other.ok),
       error: l(error, other.error),
       code: l(code, other.code),
@@ -126,9 +133,7 @@ extension PdTokensContext on BuildContext {
 }
 
 ThemeData pdTheme(Brightness brightness) {
-  final PdTokens t = brightness == Brightness.dark
-      ? PdTokens.dark
-      : PdTokens.light;
+  final PdTokens t = brightness == Brightness.dark ? PdTokens.dark : PdTokens.light;
   final ThemeData base = ThemeData(
     brightness: brightness,
     fontFamily: PdFonts.ui,
@@ -145,6 +150,20 @@ ThemeData pdTheme(Brightness brightness) {
     ),
     dividerColor: t.divider,
     splashFactory: NoSplash.splashFactory,
+    hoverColor: t.hover,
+    focusColor: t.accentSoft,
+    highlightColor: t.accentSoft,
+    scrollbarTheme: ScrollbarThemeData(
+      thumbColor: WidgetStateProperty.resolveWith(
+        (Set<WidgetState> s) => s.contains(WidgetState.dragged)
+            ? t.accent
+            : s.contains(WidgetState.hovered)
+            ? t.accent.withValues(alpha: 0.8)
+            : t.accent.withValues(alpha: 0.45),
+      ),
+      trackColor: WidgetStatePropertyAll<Color>(t.accentSoft),
+      radius: const Radius.circular(8),
+    ),
     extensions: <ThemeExtension<dynamic>>[t],
   );
   return base.copyWith(
@@ -152,6 +171,7 @@ ThemeData pdTheme(Brightness brightness) {
     textSelectionTheme: TextSelectionThemeData(
       cursorColor: t.accent,
       selectionColor: t.accentSoft,
+      selectionHandleColor: t.accent,
     ),
   );
 }

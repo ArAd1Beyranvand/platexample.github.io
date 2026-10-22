@@ -11,8 +11,7 @@ import 'package:plate_number_holder/screens/gallery/sources/sources.dart';
 /// one of the three fails here and nowhere else.
 void main() {
   final List<GalleryEntry> entries = <GalleryEntry>[
-    for (final GallerySection section in IndiaSource().sections)
-      ...section.entries,
+    for (final GallerySection section in IndiaSource().sections) ...section.entries,
   ];
 
   test('every Indian entry is wired to a theme and a country', () {

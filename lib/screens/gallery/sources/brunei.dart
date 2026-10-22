@@ -31,11 +31,7 @@ class BruneiSource extends GallerySource {
     bool suffix = false,
     String? note,
   }) {
-    final PlateSpec spec = BruneiPlates.singleRow(
-      prefix: prefix,
-      digits: digits,
-      suffix: suffix,
-    );
+    final PlateSpec spec = BruneiPlates.singleRow(prefix: prefix, digits: digits, suffix: suffix);
     return GalleryEntry(
       id: 'bn.$id',
       label: label,
@@ -48,20 +44,16 @@ class BruneiSource extends GallerySource {
     );
   }
 
-  GalleryEntry _diplomatic(
-    String id,
-    String label,
-    String values,
-    int missionDigits,
-  ) => GalleryEntry(
-    id: 'bn.$id',
-    label: label,
-    spec: BruneiPlates.diplomatic(missionDigits: missionDigits),
-    theme: BruneiThemes.diplomatic,
-    country: BruneiCountry.brunei,
-    validator: const BruneiDiplomaticValidator(),
-    sampleValues: values.split(''),
-  );
+  GalleryEntry _diplomatic(String id, String label, String values, int missionDigits) =>
+      GalleryEntry(
+        id: 'bn.$id',
+        label: label,
+        spec: BruneiPlates.diplomatic(missionDigits: missionDigits),
+        theme: BruneiThemes.diplomatic,
+        country: BruneiCountry.brunei,
+        validator: const BruneiDiplomaticValidator(),
+        sampleValues: values.split(''),
+      );
 
   @override
   List<GallerySection> get sections => _sections ??= <GallerySection>[
@@ -74,22 +66,8 @@ class BruneiSource extends GallerySource {
           'about three quarters of the real height, which the engine cannot '
           'reach on a 152 mm plate.',
       entries: <GalleryEntry>[
-        _single(
-          'private',
-          'Private · white on black',
-          'KA51',
-          2,
-          2,
-          BruneiThemes.standard,
-        ),
-        _single(
-          'long',
-          'Private · three letters',
-          'BAA1234',
-          3,
-          4,
-          BruneiThemes.standard,
-        ),
+        _single('private', 'Private · white on black', 'KA51', 2, 2, BruneiThemes.standard),
+        _single('long', 'Private · three letters', 'BAA1234', 3, 4, BruneiThemes.standard),
         _single(
           'military',
           'Military · MOD',
@@ -109,14 +87,7 @@ class BruneiSource extends GallerySource {
           BruneiThemes.taxi,
           note: 'Sampled from one small photograph of a bus.',
         ),
-        _single(
-          'yellow',
-          'BX series · black on yellow',
-          'BX9096',
-          2,
-          4,
-          BruneiThemes.yellow,
-        ),
+        _single('yellow', 'BX series · black on yellow', 'BX9096', 2, 4, BruneiThemes.yellow),
       ],
     ),
     GallerySection(

@@ -41,13 +41,12 @@ class BoliviaSource extends GallerySource {
     sampleValues: values ?? BoliviaSerialGenerator.generate(spec, random: _rng),
   );
 
-  static final Map<BoliviaMission, PlateTheme> _missionThemes =
-      <BoliviaMission, PlateTheme>{
-        BoliviaMission.consular: BoliviaThemes.consular,
-        BoliviaMission.diplomatic: BoliviaThemes.diplomatic,
-        BoliviaMission.international: BoliviaThemes.mission,
-        BoliviaMission.organization: BoliviaThemes.organization,
-      };
+  static final Map<BoliviaMission, PlateTheme> _missionThemes = <BoliviaMission, PlateTheme>{
+    BoliviaMission.consular: BoliviaThemes.consular,
+    BoliviaMission.diplomatic: BoliviaThemes.diplomatic,
+    BoliviaMission.international: BoliviaThemes.mission,
+    BoliviaMission.organization: BoliviaThemes.organization,
+  };
 
   @override
   List<GallerySection> get sections => _sections ??= <GallerySection>[
