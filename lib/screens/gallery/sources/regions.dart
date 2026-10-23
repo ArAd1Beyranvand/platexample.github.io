@@ -355,17 +355,12 @@ final GibraltarSource gibraltarSource = GibraltarSource();
 final CeutaSource ceutaSource = CeutaSource();
 final MelillaSource melillaSource = MelillaSource();
 final KosovoSource kosovoSource = KosovoSource();
-final NorthernCyprusSource northernCyprusSource = NorthernCyprusSource();
 final SomalilandSource somalilandSource = SomalilandSource();
-final FalklandIslandsSource falklandIslandsSource = FalklandIslandsSource();
 final IsleOfManSource isleOfManSource = IsleOfManSource();
 final JerseySource jerseySource = JerseySource();
 final GuernseySource guernseySource = GuernseySource();
-final FrenchGuianaSource frenchGuianaSource = FrenchGuianaSource();
 final MayotteSource mayotteSource = MayotteSource();
 final EasterIslandSource easterIslandSource = EasterIslandSource();
-final AscensionIslandSource ascensionIslandSource = AscensionIslandSource();
-final TristanDaCunhaSource tristanDaCunhaSource = TristanDaCunhaSource();
 final AnguillaSource anguillaSource = AnguillaSource();
 final BermudaSource bermudaSource = BermudaSource();
 final BritishVirginIslandsSource britishVirginIslandsSource = BritishVirginIslandsSource();
@@ -399,6 +394,11 @@ final UkraineSource ukraineSource = UkraineSource();
 final AbkhaziaSource abkhaziaSource = AbkhaziaSource();
 final SouthOssetiaSource southOssetiaSource = SouthOssetiaSource();
 final TransnistriaSource transnistriaSource = TransnistriaSource();
+final TristanDaCunhaSource tristanDaCunhaSource = TristanDaCunhaSource();
+final AscensionIslandSource ascensionIslandSource = AscensionIslandSource();
+final FrenchGuianaSource frenchGuianaSource = FrenchGuianaSource();
+final FalklandIslandsSource falklandIslandsSource = FalklandIslandsSource();
+final NorthernCyprusSource northernCyprusSource = NorthernCyprusSource();
 final ChinaSource chinaSource = ChinaSource();
 final TaiwanSource taiwanSource = TaiwanSource();
 final HongKongSource hongKongSource = HongKongSource();
@@ -411,7 +411,6 @@ final List<GallerySource> europeCountries = <GallerySource>[
   southOssetiaSource,
   transnistriaSource,
   kosovoSource,
-  northernCyprusSource,
   gibraltarSource,
   ceutaSource,
   melillaSource,
@@ -419,6 +418,7 @@ final List<GallerySource> europeCountries = <GallerySource>[
   jerseySource,
   guernseySource,
   cyprusSource,
+  northernCyprusSource,
   unitedKingdomSource,
   const GermanySource(),
   russiaSource,
@@ -475,8 +475,6 @@ final List<GallerySource> africaCountries = <GallerySource>[
 ];
 
 final List<GallerySource> americaCountries = <GallerySource>[
-  falklandIslandsSource,
-  frenchGuianaSource,
   easterIslandSource,
   anguillaSource,
   bermudaSource,
@@ -490,6 +488,7 @@ final List<GallerySource> americaCountries = <GallerySource>[
   sintEustatiusSource,
   collectivityOfSaintMartinSource,
   guyanaSource,
+  frenchGuianaSource,
   CubaSource(),
   SaintVincentAndTheGrenadinesSource(),
   VenezuelaSource(),
@@ -500,6 +499,7 @@ final List<GallerySource> americaCountries = <GallerySource>[
   chileSource,
   UruguaySource(),
   argentinaSource,
+  falklandIslandsSource,
   CostaRicaSource(),
   EcuadorSource(),
   ElSalvadorSource(),

@@ -54,8 +54,6 @@ dependencies:
     path: ../caribbean_plate
   indian_ocean_plate:
     path: ../indian_ocean_plate
-  kanak_plate:
-    path: ../kanak_plate
   polynesia_plate:
     path: ../polynesia_plate
   sahara_plate:
@@ -192,6 +190,8 @@ dependencies:
     path: ../france_plate
   china_plate:
     path: ../china_plate
+  kanak_plate:
+    path: ../kanak_plate
   montenegro_plate:
     path: ../montenegro_plate
   latvia_plate:

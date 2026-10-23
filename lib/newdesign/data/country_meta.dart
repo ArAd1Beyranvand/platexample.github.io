@@ -102,6 +102,12 @@ const Map<String, (String iso, String native)> countryMeta = <String, (String, S
   'Sint Maarten': ('SX', 'Sint Maarten'),
   'South Sudan': ('SS', 'South Sudan'),
   'Tristan da Cunha': ('TA', 'Tristan da Cunha'),
+  'Taiwan': ('TW', '臺灣'),
+  'Ukraine': ('UA', 'Україна'),
+  'Abkhazia': ('AB', 'Аҧсны'),
+  'South Ossetia': ('OS', 'Хуссар Ирыстон'),
+  'Transnistria': ('PMR', 'Приднестровье'),
+  'Northern Cyprus': ('KKTC', 'KKTC'),
   'Wallis and Futuna': ('WF', 'Wallis-et-Futuna'),
 };
 

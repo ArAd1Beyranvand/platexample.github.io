@@ -1,6 +1,5 @@
 import '../catalogue.dart';
 import 'iran.dart';
-import 'new_caledonia.dart';
 import 'syria.dart';
 import 'iranshahr.dart';
 import 'korea.dart';
@@ -44,6 +43,7 @@ import 'dominica.dart';
 import 'dominican_republic.dart';
 import 'sweden.dart';
 import 'netherlands.dart';
+import 'new_caledonia.dart';
 import 'slovakia.dart';
 import 'switzerland.dart';
 import 'pakistan.dart';
@@ -147,10 +147,10 @@ export 'yemen.dart';
 export 'kenya.dart';
 export 'zimbabwe.dart';
 export 'regions.dart';
+export 'abkhazia.dart';
 export 'albania.dart';
 export 'anguilla.dart';
 export 'argentina.dart';
-export 'ascension_island.dart';
 export 'austria.dart';
 export 'bangladesh.dart';
 export 'bermuda.dart';
@@ -159,9 +159,11 @@ export 'british_virgin_islands.dart';
 export 'bulgaria.dart';
 export 'cayman_islands.dart';
 export 'christmas_island.dart';
-export 'falkland_islands.dart';
 export 'isle_of_man.dart';
 export 'turks_and_caicos_islands.dart';
+export 'south_ossetia.dart';
+export 'transnistria.dart';
+export 'ukraine.dart';
 export 'cocos_keeling_islands.dart';
 export 'collectivity_of_saint_martin.dart';
 export 'cook_islands.dart';
@@ -171,27 +173,20 @@ export 'ecuador.dart';
 export 'el_salvador.dart';
 export 'estonia.dart';
 export 'eswatini.dart';
-export 'french_guiana.dart';
 export 'french_polynesia.dart';
 export 'gibraltar.dart';
 export 'guernsey.dart';
-export 'hong_kong.dart';
 export 'jamaica.dart';
 export 'jersey.dart';
-export 'macau.dart';
 export 'mayotte.dart';
 export 'montserrat.dart';
-export 'new_caledonia.dart';
 export 'niue.dart';
 export 'norfolk_island.dart';
-export 'northern_cyprus.dart';
 export 'saba_island.dart';
 export 'saint_helena.dart';
 export 'sint_eustatius.dart';
 export 'sint_maarten.dart';
-export 'south_ossetia.dart';
 export 'south_sudan.dart';
-export 'tristan_da_cunha.dart';
 export 'wallis_and_futuna.dart';
 export 'republic_of_ireland.dart';
 export 'spain.dart';
@@ -256,9 +251,9 @@ export 'dominica.dart';
 export 'dominican_republic.dart';
 export 'sweden.dart';
 export 'netherlands.dart';
+export 'new_caledonia.dart';
 export 'united_kingdom.dart';
 export 'russia.dart';
-export 'ukraine.dart';
 export 'slovakia.dart';
 export 'switzerland.dart';
 export 'pakistan.dart';
@@ -293,6 +288,14 @@ export 'honduras.dart';
 export 'latvia.dart';
 export 'montenegro.dart';
 export 'china.dart';
+export 'tristan_da_cunha.dart';
+export 'ascension_island.dart';
+export 'french_guiana.dart';
+export 'falkland_islands.dart';
+export 'northern_cyprus.dart';
+export 'taiwan.dart';
+export 'macau.dart';
+export 'hong_kong.dart';
 export 'france.dart';
 export 'north_macedonia.dart';
 export 'palau.dart';
@@ -302,7 +305,6 @@ export 'peru.dart';
 export 'rwanda.dart';
 export 'saint_kitts_and_nevis.dart';
 export 'saint_lucia.dart';
-export 'taiwan.dart';
 export 'togo.dart';
 export 'tonga.dart';
 export 'trinidad_and_tobago.dart';
@@ -329,9 +331,7 @@ export 'samoa.dart';
 export 'solomon_islands.dart';
 export 'federated_states_of_micronesia.dart';
 export 'sovereign_military_order_of_malta.dart';
-export 'abkhazia.dart';
 export 'sahrawi_arab_democratic_republic.dart';
-export 'transnistria.dart';
 
 /// Every country this app can draw, in the order the catalogue lists them.
 ///
@@ -446,18 +446,18 @@ final List<GallerySource> gallerySources = <GallerySource>[
     alsoNames: <String>{'Kyrgyzstan'},
   ),
   RegionSource('China', <GallerySource>[chinaSource, taiwanSource, hongKongSource, macauSource]),
+  RegionSource('Cyprus', <GallerySource>[cyprusSource, northernCyprusSource]),
+  RegionSource('Argentina', <GallerySource>[argentinaSource, falklandIslandsSource]),
+  RegionSource('Guyana', <GallerySource>[guyanaSource, frenchGuianaSource]),
   RegionSource('Spain', <GallerySource>[spainSource, gibraltarSource, ceutaSource, melillaSource]),
   RegionSource('Serbia', <GallerySource>[serbiaSource, kosovoSource]),
-  RegionSource('Cyprus', <GallerySource>[cyprusSource, northernCyprusSource]),
   RegionSource('Somalia', <GallerySource>[somaliaSource, somalilandSource]),
-  RegionSource('Argentina', <GallerySource>[argentinaSource, falklandIslandsSource]),
   RegionSource('United Kingdom', <GallerySource>[
     unitedKingdomSource,
     isleOfManSource,
     jerseySource,
     guernseySource,
   ]),
-  RegionSource('Guyana', <GallerySource>[guyanaSource, frenchGuianaSource]),
   RegionSource('Comoros', <GallerySource>[comorosSource, mayotteSource]),
   RegionSource('Chile', <GallerySource>[chileSource, easterIslandSource]),
   RegionSource('Saint Helena', <GallerySource>[
@@ -669,12 +669,12 @@ final List<GallerySource> gallerySources = <GallerySource>[
   FijiSource(),
   LiberiaSource(),
   NewZealandSource(),
+  NewCaledoniaSource(),
   SamoaSource(),
   SolomonIslandsSource(),
   FederatedStatesOfMicronesiaSource(),
   SovereignMilitaryOrderOfMaltaSource(),
   SahrawiArabDemocraticRepublicSource(),
-  NewCaledoniaSource(),
 ];
 
 /// Every source, umbrellas' members included — what a lookup by type wants.

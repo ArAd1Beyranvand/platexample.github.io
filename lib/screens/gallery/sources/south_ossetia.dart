@@ -34,7 +34,7 @@ class SouthOssetiaSource extends GallerySource {
           label: 'Standard · А733АН',
           spec: SouthOssetiaPlates.standard,
           theme: SouthOssetiaThemes.standard,
-          country: SouthOssetiaCountry.south_ossetia,
+          country: SouthOssetiaCountry.southOssetia,
           validator: const SouthOssetiaValidator(),
           sampleValues: SouthOssetiaSerialGenerator.generate(
             SouthOssetiaPlates.standard,
