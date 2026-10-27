@@ -3,7 +3,7 @@ import 'package:plate_core/plate_core.dart';
 
 import '../catalogue.dart';
 
-/// `isle_of_man_plate`: white front, yellow rear and the white-on-black
+/// `united_kingdom_plate`: white front, yellow rear and the white-on-black
 /// classic plate, all with the red Manx flag strip over `GBM`.
 class IsleOfManSource extends GallerySource {
   IsleOfManSource();
@@ -12,7 +12,7 @@ class IsleOfManSource extends GallerySource {
   String get countryName => 'Isle of Man';
 
   @override
-  String get packageName => 'isle_of_man_plate';
+  String get packageName => 'united_kingdom_plate';
 
   @override
   String get note =>

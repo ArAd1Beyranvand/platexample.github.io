@@ -3,7 +3,7 @@ import 'package:plate_core/plate_core.dart';
 
 import '../catalogue.dart';
 
-/// `kosovo_plate`: the RKS series. One entry per design and livery; the
+/// `serbia_plate`: the RKS series. One entry per design and livery; the
 /// UNMIK-style plate appears in white and in the customs-guard blue.
 class KosovoSource extends GallerySource {
   KosovoSource();
@@ -12,7 +12,7 @@ class KosovoSource extends GallerySource {
   String get countryName => 'Kosovo';
 
   @override
-  String get packageName => 'kosovo_plate';
+  String get packageName => 'serbia_plate';
 
   @override
   String get note =>

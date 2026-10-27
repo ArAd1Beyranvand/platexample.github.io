@@ -5,7 +5,7 @@ import 'package:plate_core/plate_core.dart';
 
 import '../catalogue.dart';
 
-/// `abkhazia_plate`: the standard plate and the diplomatic plate.
+/// `russia_plate`: the standard plate and the diplomatic plate.
 class AbkhaziaSource extends GallerySource {
   AbkhaziaSource();
 
@@ -16,7 +16,7 @@ class AbkhaziaSource extends GallerySource {
   String get countryName => 'Abkhazia';
 
   @override
-  String get packageName => 'abkhazia_plate';
+  String get packageName => 'russia_plate';
 
   @override
   String get note =>

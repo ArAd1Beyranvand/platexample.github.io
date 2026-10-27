@@ -22,6 +22,7 @@ class GalleryEntry {
     this.sampleValues,
     this.themeForValues,
     this.note,
+    this.bands = const <(String, PlateCountry)>[],
   });
 
   /// Stable across runs, for goldens and deep links. Never the spec's id
@@ -57,6 +58,10 @@ class GalleryEntry {
 
   /// A line of small print under the label, where the entry needs one.
   final String? note;
+
+  /// Panel blocks the user picks between, where the class is the band colour
+  /// and nothing typed decides it (Iraq). Empty for every other entry.
+  final List<(String, PlateCountry)> bands;
 
   /// The livery to paint this entry in, given what is currently in its slots.
   PlateTheme? themeFor(List<String?> values) => themeForValues?.call(values) ?? theme;

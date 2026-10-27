@@ -3,7 +3,7 @@ import 'package:plate_core/plate_core.dart';
 
 import '../catalogue.dart';
 
-/// `somaliland_plate`: Somaliland's plates, one entry per category.
+/// `somalia_plate`: Somaliland's plates, one entry per category.
 class SomalilandSource extends GallerySource {
   SomalilandSource();
 
@@ -11,10 +11,10 @@ class SomalilandSource extends GallerySource {
   String get countryName => 'Somaliland';
 
   @override
-  String get packageName => 'somaliland_plate';
+  String get packageName => 'somalia_plate';
 
   @override
-  String get note => "Somaliland's plates as drawn by somaliland_plate, one entry per category.";
+  String get note => "Somaliland's plates as drawn by somalia_plate, one entry per category.";
 
   static GalleryEntry _e(
     String id,

@@ -3,7 +3,7 @@ import 'package:plate_core/plate_core.dart';
 
 import '../catalogue.dart';
 
-/// `falkland_islands_plate`: black on yellow at the rear, black on white at
+/// `argentina_plate`: black on yellow at the rear, black on white at
 /// the front, and the four-digit government plate.
 class FalklandIslandsSource extends GallerySource {
   FalklandIslandsSource();
@@ -12,7 +12,7 @@ class FalklandIslandsSource extends GallerySource {
   String get countryName => 'Falkland Islands';
 
   @override
-  String get packageName => 'falkland_islands_plate';
+  String get packageName => 'argentina_plate';
 
   @override
   String get note =>

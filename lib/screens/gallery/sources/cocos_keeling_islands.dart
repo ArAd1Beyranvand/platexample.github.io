@@ -2,7 +2,7 @@ import 'package:indian_ocean_plate/indian_ocean_plate.dart';
 
 import '../catalogue.dart';
 
-/// `cocos_keeling_islands_plate`: blue on pale grey, `C · 400`.
+/// `indian_ocean_plate`: blue on pale grey, `C · 400`.
 class CocosKeelingIslandsSource extends GallerySource {
   CocosKeelingIslandsSource();
 
@@ -10,7 +10,7 @@ class CocosKeelingIslandsSource extends GallerySource {
   String get countryName => 'Cocos (Keeling) Islands';
 
   @override
-  String get packageName => 'cocos_keeling_islands_plate';
+  String get packageName => 'indian_ocean_plate';
 
   @override
   String get note =>

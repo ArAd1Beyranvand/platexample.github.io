@@ -3,7 +3,7 @@ import 'package:plate_core/plate_core.dart';
 
 import '../catalogue.dart';
 
-/// `cayman_islands_plate`: three geometries, five liveries.
+/// `caribbean_plate`: three geometries, five liveries.
 class CaymanIslandsSource extends GallerySource {
   CaymanIslandsSource();
 
@@ -11,7 +11,7 @@ class CaymanIslandsSource extends GallerySource {
   String get countryName => 'Cayman Islands';
 
   @override
-  String get packageName => 'cayman_islands_plate';
+  String get packageName => 'caribbean_plate';
 
   @override
   String get note =>

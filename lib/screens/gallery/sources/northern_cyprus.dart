@@ -5,7 +5,7 @@ import 'package:plate_core/plate_core.dart';
 
 import '../catalogue.dart';
 
-/// `northern_cyprus_plate`: the 2018 blue-strip series.
+/// `cyprus_plate`: the 2018 blue-strip series.
 class NorthernCyprusSource extends GallerySource {
   NorthernCyprusSource();
 
@@ -16,7 +16,7 @@ class NorthernCyprusSource extends GallerySource {
   String get countryName => 'Northern Cyprus';
 
   @override
-  String get packageName => 'northern_cyprus_plate';
+  String get packageName => 'cyprus_plate';
 
   @override
   String get note =>

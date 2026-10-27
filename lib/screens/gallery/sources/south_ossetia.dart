@@ -4,7 +4,7 @@ import 'package:russia_plate/russia_plate.dart';
 
 import '../catalogue.dart';
 
-/// `south_ossetia_plate`: the standard plate.
+/// `russia_plate`: the standard plate.
 class SouthOssetiaSource extends GallerySource {
   SouthOssetiaSource();
 
@@ -15,7 +15,7 @@ class SouthOssetiaSource extends GallerySource {
   String get countryName => 'South Ossetia';
 
   @override
-  String get packageName => 'south_ossetia_plate';
+  String get packageName => 'russia_plate';
 
   @override
   String get note =>

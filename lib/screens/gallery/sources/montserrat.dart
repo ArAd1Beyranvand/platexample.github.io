@@ -3,7 +3,7 @@ import 'package:plate_core/plate_core.dart';
 
 import '../catalogue.dart';
 
-/// `montserrat_plate`: One type letter and up to four digits.
+/// `caribbean_plate`: One type letter and up to four digits.
 class MontserratSource extends GallerySource {
   MontserratSource();
 
@@ -11,7 +11,7 @@ class MontserratSource extends GallerySource {
   String get countryName => 'Montserrat';
 
   @override
-  String get packageName => 'montserrat_plate';
+  String get packageName => 'caribbean_plate';
 
   @override
   String get note => 'One type letter and up to four digits.';

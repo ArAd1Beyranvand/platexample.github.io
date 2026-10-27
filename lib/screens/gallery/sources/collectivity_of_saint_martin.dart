@@ -3,7 +3,7 @@ import 'package:plate_core/plate_core.dart';
 
 import '../catalogue.dart';
 
-/// `collectivity_of_saint_martin_plate`: The French-style plate of Saint Martin: three or four digits and two or three letters.
+/// `caribbean_plate`: The French-style plate of Saint Martin: three or four digits and two or three letters.
 class CollectivityOfSaintMartinSource extends GallerySource {
   CollectivityOfSaintMartinSource();
 
@@ -11,7 +11,7 @@ class CollectivityOfSaintMartinSource extends GallerySource {
   String get countryName => 'Collectivity of Saint Martin';
 
   @override
-  String get packageName => 'collectivity_of_saint_martin_plate';
+  String get packageName => 'caribbean_plate';
 
   @override
   String get note =>

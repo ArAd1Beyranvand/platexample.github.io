@@ -3,7 +3,7 @@ import 'package:plate_core/plate_core.dart';
 
 import '../catalogue.dart';
 
-/// `french_polynesia_plate`: Six digits and a letter; yellow at the front and white at the rear.
+/// `polynesia_plate`: Six digits and a letter; yellow at the front and white at the rear.
 class FrenchPolynesiaSource extends GallerySource {
   FrenchPolynesiaSource();
 
@@ -11,7 +11,7 @@ class FrenchPolynesiaSource extends GallerySource {
   String get countryName => 'French Polynesia';
 
   @override
-  String get packageName => 'french_polynesia_plate';
+  String get packageName => 'polynesia_plate';
 
   @override
   String get note => 'Six digits and a letter; yellow at the front and white at the rear.';

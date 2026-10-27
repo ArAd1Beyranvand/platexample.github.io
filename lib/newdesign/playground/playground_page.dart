@@ -89,7 +89,7 @@ class _PlaygroundPageState extends State<PlaygroundPage> {
   @override
   Widget build(BuildContext context) {
     final List<String?> values = _plate.values;
-    final bool complete = firstEmpty(values) == null;
+    final bool complete = firstEmpty(_item.entry.spec, values) == null;
     final bool valid =
         complete && verdictOf(_item.entry.spec, values, _item.entry.validator).isValid;
     final List<CodeLine> code = playgroundCode(
@@ -211,14 +211,30 @@ class _TopRow extends StatelessWidget {
   }
 }
 
-class _StageCard extends StatelessWidget {
+class _StageCard extends StatefulWidget {
   const _StageCard({required this.item, required this.plate});
 
   final CatalogueItem item;
   final PlateController plate;
 
   @override
+  State<_StageCard> createState() => _StageCardState();
+}
+
+class _StageCardState extends State<_StageCard> {
+  PlateCountry? _band;
+
+  @override
+  void didUpdateWidget(_StageCard old) {
+    super.didUpdateWidget(old);
+    if (old.item != widget.item) _band = null;
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final CatalogueItem item = widget.item;
+    final PlateController plate = widget.plate;
+    final PlateCountry? country = _band ?? item.entry.country;
     final PdTokens t = context.tokens;
     final double h1 = pdClamp(context, 24, 3, 36);
 
@@ -243,12 +259,27 @@ class _StageCard extends StatelessWidget {
               color: t.text,
             ),
           ),
+          if (item.entry.bands.isNotEmpty) ...<Widget>[
+            const SizedBox(height: 16),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: <Widget>[
+                for (final (String label, PlateCountry band) in item.entry.bands)
+                  ChoiceChip(
+                    label: Text(label),
+                    selected: band == country,
+                    onSelected: (_) => setState(() => _band = band),
+                  ),
+              ],
+            ),
+          ],
           const SizedBox(height: 24),
           LivePlate(
             controller: plate,
             validName: validNameOf(item),
             theme: item.entry.themeFor(plate.values),
-            country: item.entry.country,
+            country: country,
             validator: item.entry.validator,
             inputSource: PlateInputSource.keypadFirst,
             showInvalidNote: true,

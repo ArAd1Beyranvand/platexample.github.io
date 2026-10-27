@@ -3,7 +3,7 @@ import 'package:plate_core/plate_core.dart';
 
 import '../catalogue.dart';
 
-/// `cook_islands_plate`: the car plate (372 × 134) and the motorcycle plate
+/// `polynesia_plate`: the car plate (372 × 134) and the motorcycle plate
 /// (an assumed 200 × 145).
 class CookIslandsSource extends GallerySource {
   CookIslandsSource();
@@ -12,7 +12,7 @@ class CookIslandsSource extends GallerySource {
   String get countryName => 'Cook Islands';
 
   @override
-  String get packageName => 'cook_islands_plate';
+  String get packageName => 'polynesia_plate';
 
   @override
   String get note =>

@@ -3,7 +3,7 @@ import 'package:plate_core/plate_core.dart';
 
 import '../catalogue.dart';
 
-/// `jersey_plate`: the silver front and yellow rear plates.
+/// `united_kingdom_plate`: the silver front and yellow rear plates.
 class JerseySource extends GallerySource {
   JerseySource();
 
@@ -11,7 +11,7 @@ class JerseySource extends GallerySource {
   String get countryName => 'Jersey';
 
   @override
-  String get packageName => 'jersey_plate';
+  String get packageName => 'united_kingdom_plate';
 
   @override
   String get note =>

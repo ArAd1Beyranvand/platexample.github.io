@@ -3,7 +3,7 @@ import 'package:plate_core/plate_core.dart';
 
 import '../catalogue.dart';
 
-/// `british_virgin_islands_plate`: 300 × 152 — a class prefix and a serial
+/// `caribbean_plate`: 300 × 152 — a class prefix and a serial
 /// between `VIRGIN ISLANDS` and `NATURE'S LITTLE SECRETS`, one colour per class.
 class BritishVirginIslandsSource extends GallerySource {
   BritishVirginIslandsSource();
@@ -12,7 +12,7 @@ class BritishVirginIslandsSource extends GallerySource {
   String get countryName => 'British Virgin Islands';
 
   @override
-  String get packageName => 'british_virgin_islands_plate';
+  String get packageName => 'caribbean_plate';
 
   @override
   String get note =>

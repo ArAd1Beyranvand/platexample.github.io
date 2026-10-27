@@ -3,7 +3,7 @@ import 'package:plate_core/plate_core.dart';
 
 import '../catalogue.dart';
 
-/// `guernsey_plate`: the white front, yellow rear and Alderney plates.
+/// `united_kingdom_plate`: the white front, yellow rear and Alderney plates.
 class GuernseySource extends GallerySource {
   GuernseySource();
 
@@ -11,7 +11,7 @@ class GuernseySource extends GallerySource {
   String get countryName => 'Guernsey';
 
   @override
-  String get packageName => 'guernsey_plate';
+  String get packageName => 'united_kingdom_plate';
 
   @override
   String get note =>

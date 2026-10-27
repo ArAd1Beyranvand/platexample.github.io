@@ -3,7 +3,7 @@ import 'package:plate_core/plate_core.dart';
 
 import '../catalogue.dart';
 
-/// `bermuda_plate`: black on white, 520 × 110 — five digits, a class prefix
+/// `caribbean_plate`: black on white, 520 × 110 — five digits, a class prefix
 /// and digits, or digits and a cycle suffix.
 class BermudaSource extends GallerySource {
   BermudaSource();
@@ -12,7 +12,7 @@ class BermudaSource extends GallerySource {
   String get countryName => 'Bermuda';
 
   @override
-  String get packageName => 'bermuda_plate';
+  String get packageName => 'caribbean_plate';
 
   @override
   String get note =>

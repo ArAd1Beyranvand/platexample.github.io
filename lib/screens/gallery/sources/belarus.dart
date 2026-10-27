@@ -3,7 +3,7 @@ import 'package:plate_core/plate_core.dart';
 
 import '../catalogue.dart';
 
-/// `belarus_plate`: the 2004 series. The diplomatic entry's validator and
+/// `russia_plate`: the 2004 series. The diplomatic entry's validator and
 /// spec both refuse mission code 09 with "COUNTRY NOT FOUND".
 class BelarusSource extends GallerySource {
   BelarusSource();
@@ -12,7 +12,7 @@ class BelarusSource extends GallerySource {
   String get countryName => 'Belarus';
 
   @override
-  String get packageName => 'belarus_plate';
+  String get packageName => 'russia_plate';
 
   @override
   String get note =>

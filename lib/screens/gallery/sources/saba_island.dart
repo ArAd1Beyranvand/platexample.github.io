@@ -3,7 +3,7 @@ import 'package:caribbean_plate/caribbean_plate.dart';
 
 import '../catalogue.dart';
 
-/// `saba_island_plate`: Saba's 2011 green plate and 1978 cream plate
+/// `caribbean_plate`: Saba's 2011 green plate and 1978 cream plate
 /// (520 × 256).
 class SabaIslandSource extends GallerySource {
   SabaIslandSource();
@@ -12,7 +12,7 @@ class SabaIslandSource extends GallerySource {
   String get countryName => 'Saba (island)';
 
   @override
-  String get packageName => 'saba_island_plate';
+  String get packageName => 'caribbean_plate';
 
   @override
   String get note =>

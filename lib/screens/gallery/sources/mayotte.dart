@@ -2,7 +2,7 @@ import 'package:comoros_plate/comoros_plate.dart';
 
 import '../catalogue.dart';
 
-/// `mayotte_plate`: the French SIV plate with the département 976 and the
+/// `comoros_plate`: the French SIV plate with the département 976 and the
 /// Mayotte logo on the right band.
 class MayotteSource extends GallerySource {
   MayotteSource();
@@ -11,7 +11,7 @@ class MayotteSource extends GallerySource {
   String get countryName => 'Mayotte';
 
   @override
-  String get packageName => 'mayotte_plate';
+  String get packageName => 'comoros_plate';
 
   @override
   String get note =>

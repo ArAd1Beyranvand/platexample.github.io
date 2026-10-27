@@ -3,7 +3,7 @@ import 'package:plate_core/plate_core.dart';
 
 import '../catalogue.dart';
 
-/// `melilla_plate`: Spain's national series as issued in Melilla. Diplomatic embassy
+/// `spain_plate`: Spain's national series as issued in Melilla. Diplomatic embassy
 /// code 83 is refused with "COUNTRY NOT FOUND" by the spec and the validator.
 class MelillaSource extends GallerySource {
   MelillaSource();
@@ -12,7 +12,7 @@ class MelillaSource extends GallerySource {
   String get countryName => 'Melilla';
 
   @override
-  String get packageName => 'melilla_plate';
+  String get packageName => 'spain_plate';
 
   @override
   String get note =>

@@ -3,7 +3,7 @@ import 'package:plate_core/plate_core.dart';
 
 import '../catalogue.dart';
 
-/// `easter_island_plate`: the two provincial plates, 520 × 259.
+/// `chile_plate`: the two provincial plates, 520 × 259.
 class EasterIslandSource extends GallerySource {
   EasterIslandSource();
 
@@ -11,7 +11,7 @@ class EasterIslandSource extends GallerySource {
   String get countryName => 'Easter Island';
 
   @override
-  String get packageName => 'easter_island_plate';
+  String get packageName => 'chile_plate';
 
   @override
   String get note =>

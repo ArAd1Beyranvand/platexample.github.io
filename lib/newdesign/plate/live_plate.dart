@@ -43,9 +43,10 @@ String scriptOf(PlateAlphabet alphabet) {
 bool isPickedAlphabet(PlateAlphabet alphabet) =>
     !alphabet.isNumeric && (alphabet.input == AlphabetInput.chosen || scriptOf(alphabet) != 'A–Z');
 
-int? firstEmpty(List<String?> values) {
+/// The first slot still short of its minimum length.
+int? firstEmpty(PlateSpec spec, List<String?> values) {
   for (int i = 0; i < values.length; i++) {
-    if (values[i] == null || values[i]!.isEmpty) return i;
+    if (!spec.slots[i].isComplete(values[i])) return i;
   }
   return null;
 }
@@ -180,7 +181,7 @@ class _LivePlateState extends State<LivePlate> {
   int? get _next {
     final int? active = _c.activeIndex;
     if (active != null) return active;
-    return firstEmpty(_c.values);
+    return firstEmpty(_c.spec, _c.values);
   }
 
   void _pick(String character) {
@@ -208,14 +209,14 @@ class _LivePlateState extends State<LivePlate> {
   }
 
   Widget _statusBox(Widget status) =>
-      widget.fixedSize ? SizedBox(height: 44, child: status) : status;
+      widget.fixedSize ? SizedBox(height: 56, child: status) : status;
 
   @override
   Widget build(BuildContext context) {
     final PdTokens t = context.tokens;
     final PlateSpec spec = _c.spec;
     final List<String?> values = _c.values;
-    final int? next = firstEmpty(values);
+    final int? next = firstEmpty(spec, values);
     final PlateValidation? verdict = next == null
         ? verdictOf(spec, values, widget.validator)
         : null;
@@ -242,7 +243,7 @@ class _LivePlateState extends State<LivePlate> {
       final PlateAlphabet a = spec.slots[next!].alphabet;
       int run = 0;
       while (next + run < spec.slotCount &&
-          values[next + run] == null &&
+          !spec.slots[next + run].isComplete(values[next + run]) &&
           identical(spec.slots[next + run].alphabet, a) &&
           identical(spec.groupAt(next + run), spec.groupAt(next))) {
         run++;
@@ -313,7 +314,7 @@ class _LivePlateState extends State<LivePlate> {
                     ),
                     maxLines: widget.fixedSize ? 2 : null,
                     overflow: widget.fixedSize ? TextOverflow.ellipsis : null,
-                    style: TextStyle(fontSize: 14, height: 1.45, color: t.muted),
+                    style: TextStyle(fontSize: 19, height: 1.45, color: t.muted),
                   ),
                 ),
               ],
@@ -360,12 +361,13 @@ class SlotKeypad extends StatelessWidget {
       (PlateAlphabet a) => a.isNumeric,
       orElse: () => all.first,
     );
-    final PlateAlphabet letters = all.firstWhere(
-      (PlateAlphabet a) => !a.isNumeric,
-      orElse: () => digits,
-    );
-    final int? at = controller.activeIndex ?? firstEmpty(controller.values);
+    final int? at = controller.activeIndex ?? firstEmpty(controller.spec, controller.values);
     final PlateAlphabet? active = at == null ? null : spec.slotAt(at)?.alphabet;
+    // The focused slot's letters when it takes letters, so a second lettered
+    // slot (a province) gets its own keys.
+    final PlateAlphabet letters = active != null && !active.isNumeric
+        ? active
+        : all.firstWhere((PlateAlphabet a) => !a.isNumeric, orElse: () => digits);
     return Align(
       alignment: Alignment.topCenter,
       child: ConstrainedBox(

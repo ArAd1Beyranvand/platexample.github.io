@@ -2,7 +2,7 @@ import 'package:polynesia_plate/polynesia_plate.dart';
 
 import '../catalogue.dart';
 
-/// `norfolk_island_plate`: the `3◆203` plate, black on yellow.
+/// `polynesia_plate`: the `3◆203` plate, black on yellow.
 class NorfolkIslandSource extends GallerySource {
   NorfolkIslandSource();
 
@@ -10,7 +10,7 @@ class NorfolkIslandSource extends GallerySource {
   String get countryName => 'Norfolk Island';
 
   @override
-  String get packageName => 'norfolk_island_plate';
+  String get packageName => 'polynesia_plate';
 
   @override
   String get note =>

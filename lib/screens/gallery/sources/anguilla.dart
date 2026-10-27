@@ -4,7 +4,7 @@ import 'package:caribbean_plate/caribbean_plate.dart';
 
 import '../catalogue.dart';
 
-/// `anguilla_plate`: the 2007 plate, one design.
+/// `caribbean_plate`: the 2007 plate, one design.
 class AnguillaSource extends GallerySource {
   AnguillaSource();
 
@@ -15,7 +15,7 @@ class AnguillaSource extends GallerySource {
   String get countryName => 'Anguilla';
 
   @override
-  String get packageName => 'anguilla_plate';
+  String get packageName => 'caribbean_plate';
 
   @override
   String get note =>

@@ -3,7 +3,7 @@ import 'package:plate_core/plate_core.dart';
 
 import '../catalogue.dart';
 
-/// `niue_plate`: Four digits beside the NIUE caption.
+/// `polynesia_plate`: Four digits beside the NIUE caption.
 class NiueSource extends GallerySource {
   NiueSource();
 
@@ -11,7 +11,7 @@ class NiueSource extends GallerySource {
   String get countryName => 'Niue';
 
   @override
-  String get packageName => 'niue_plate';
+  String get packageName => 'polynesia_plate';
 
   @override
   String get note => 'Four digits beside the NIUE caption.';

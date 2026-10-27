@@ -3,7 +3,7 @@ import 'package:plate_core/plate_core.dart';
 
 import '../catalogue.dart';
 
-/// `macau_plate`: the `MA-12-34` series in white and yellow, the moped plate
+/// `china_plate`: the `MA-12-34` series in white and yellow, the moped plate
 /// and the mainland supplement plate.
 class MacauSource extends GallerySource {
   MacauSource();
@@ -12,7 +12,7 @@ class MacauSource extends GallerySource {
   String get countryName => 'Macau';
 
   @override
-  String get packageName => 'macau_plate';
+  String get packageName => 'china_plate';
 
   @override
   String get note =>

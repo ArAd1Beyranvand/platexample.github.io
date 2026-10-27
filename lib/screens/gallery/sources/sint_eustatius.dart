@@ -3,7 +3,7 @@ import 'package:plate_core/plate_core.dart';
 
 import '../catalogue.dart';
 
-/// `sint_eustatius_plate`: The Statia plate and the bicentennial one, both prefixed E.
+/// `caribbean_plate`: The Statia plate and the bicentennial one, both prefixed E.
 class SintEustatiusSource extends GallerySource {
   SintEustatiusSource();
 
@@ -11,7 +11,7 @@ class SintEustatiusSource extends GallerySource {
   String get countryName => 'Sint Eustatius';
 
   @override
-  String get packageName => 'sint_eustatius_plate';
+  String get packageName => 'caribbean_plate';
 
   @override
   String get note => 'The Statia plate and the bicentennial one, both prefixed E.';

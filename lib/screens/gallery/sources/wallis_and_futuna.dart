@@ -3,7 +3,7 @@ import 'package:plate_core/plate_core.dart';
 
 import '../catalogue.dart';
 
-/// `wallis_and_futuna_plate`: Four digits and the WF mark; yellow at the front and white at the rear.
+/// `polynesia_plate`: Four digits and the WF mark; yellow at the front and white at the rear.
 class WallisAndFutunaSource extends GallerySource {
   WallisAndFutunaSource();
 
@@ -11,7 +11,7 @@ class WallisAndFutunaSource extends GallerySource {
   String get countryName => 'Wallis and Futuna';
 
   @override
-  String get packageName => 'wallis_and_futuna_plate';
+  String get packageName => 'polynesia_plate';
 
   @override
   String get note => 'Four digits and the WF mark; yellow at the front and white at the rear.';

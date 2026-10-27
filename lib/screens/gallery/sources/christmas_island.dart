@@ -3,7 +3,7 @@ import 'package:plate_core/plate_core.dart';
 
 import '../catalogue.dart';
 
-/// `christmas_island_plate`: the current `CI•1234` series, 372 × 134 mm.
+/// `indian_ocean_plate`: the current `CI•1234` series, 372 × 134 mm.
 class ChristmasIslandSource extends GallerySource {
   ChristmasIslandSource();
 
@@ -11,7 +11,7 @@ class ChristmasIslandSource extends GallerySource {
   String get countryName => 'Christmas Island';
 
   @override
-  String get packageName => 'christmas_island_plate';
+  String get packageName => 'indian_ocean_plate';
 
   @override
   String get note =>

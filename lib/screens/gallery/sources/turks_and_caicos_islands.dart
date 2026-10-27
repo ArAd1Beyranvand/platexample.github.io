@@ -3,7 +3,7 @@ import 'package:caribbean_plate/caribbean_plate.dart';
 
 import '../catalogue.dart';
 
-/// `turks_and_caicos_islands_plate`: the modern five-digit plate under
+/// `caribbean_plate`: the modern five-digit plate under
 /// "Beautiful by Nature", and the `TC`-prefixed series.
 class TurksAndCaicosIslandsSource extends GallerySource {
   TurksAndCaicosIslandsSource();
@@ -12,7 +12,7 @@ class TurksAndCaicosIslandsSource extends GallerySource {
   String get countryName => 'Turks and Caicos Islands';
 
   @override
-  String get packageName => 'turks_and_caicos_islands_plate';
+  String get packageName => 'caribbean_plate';
 
   @override
   String get note =>

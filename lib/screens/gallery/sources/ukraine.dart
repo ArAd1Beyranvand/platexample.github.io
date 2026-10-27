@@ -3,7 +3,7 @@ import 'package:russia_plate/russia_plate.dart';
 
 import '../catalogue.dart';
 
-/// `ukraine_plate`: the 2015 and 2004 designs, one line, two lines and three
+/// `russia_plate`: the 2015 and 2004 designs, one line, two lines and three
 /// lines. Mission code 012 is refused with "COUNTRY NOT FOUND".
 class UkraineSource extends GallerySource {
   UkraineSource();
@@ -12,7 +12,7 @@ class UkraineSource extends GallerySource {
   String get countryName => 'Ukraine';
 
   @override
-  String get packageName => 'ukraine_plate';
+  String get packageName => 'russia_plate';
 
   @override
   String get note =>

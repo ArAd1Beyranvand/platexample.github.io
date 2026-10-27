@@ -3,7 +3,7 @@ import 'package:plate_core/plate_core.dart';
 
 import '../catalogue.dart';
 
-/// `ceuta_plate`: Spain's national series as issued in Ceuta. Diplomatic embassy
+/// `spain_plate`: Spain's national series as issued in Ceuta. Diplomatic embassy
 /// code 83 is refused with "COUNTRY NOT FOUND" by the spec and the validator.
 class CeutaSource extends GallerySource {
   CeutaSource();
@@ -12,7 +12,7 @@ class CeutaSource extends GallerySource {
   String get countryName => 'Ceuta';
 
   @override
-  String get packageName => 'ceuta_plate';
+  String get packageName => 'spain_plate';
 
   @override
   String get note =>

@@ -3,7 +3,7 @@ import 'package:sahara_plate/sahara_plate.dart';
 
 import '../catalogue.dart';
 
-/// `sahrawi_arab_democratic_republic_plate`: private and government plates
+/// `sahara_plate`: private and government plates
 /// (a prefix, two digits, five digits) and the army's nine digits.
 class SahrawiArabDemocraticRepublicSource extends GallerySource {
   SahrawiArabDemocraticRepublicSource();
@@ -12,7 +12,7 @@ class SahrawiArabDemocraticRepublicSource extends GallerySource {
   String get countryName => 'Sahrawi Arab Democratic Republic';
 
   @override
-  String get packageName => 'sahrawi_arab_democratic_republic_plate';
+  String get packageName => 'sahara_plate';
 
   @override
   String get note =>

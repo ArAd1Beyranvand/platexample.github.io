@@ -3,7 +3,7 @@ import 'package:plate_core/plate_core.dart';
 
 import '../catalogue.dart';
 
-/// `ascension_island_plate`: one design in two liveries.
+/// `saint_helena_plate`: one design in two liveries.
 class AscensionIslandSource extends GallerySource {
   AscensionIslandSource();
 
@@ -11,7 +11,7 @@ class AscensionIslandSource extends GallerySource {
   String get countryName => 'Ascension Island';
 
   @override
-  String get packageName => 'ascension_island_plate';
+  String get packageName => 'saint_helena_plate';
 
   @override
   String get note =>

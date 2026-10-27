@@ -3,7 +3,7 @@ import 'package:plate_core/plate_core.dart';
 
 import '../catalogue.dart';
 
-/// `bonaire_plate`: the Caribbean Netherlands' plates — the 2013 white plate,
+/// `caribbean_plate`: the Caribbean Netherlands' plates — the 2013 white plate,
 /// the navy 2005–2007 plate and the St. Eustatius and Saba island plates
 /// (520 × 256).
 class BonaireSource extends GallerySource {
@@ -13,7 +13,7 @@ class BonaireSource extends GallerySource {
   String get countryName => 'Bonaire';
 
   @override
-  String get packageName => 'bonaire_plate';
+  String get packageName => 'caribbean_plate';
 
   @override
   String get note =>

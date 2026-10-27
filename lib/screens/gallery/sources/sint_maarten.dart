@@ -3,7 +3,7 @@ import 'package:plate_core/plate_core.dart';
 
 import '../catalogue.dart';
 
-/// `sint_maarten_plate`: A one- or two-letter prefix and up to four digits.
+/// `caribbean_plate`: A one- or two-letter prefix and up to four digits.
 class SintMaartenSource extends GallerySource {
   SintMaartenSource();
 
@@ -11,7 +11,7 @@ class SintMaartenSource extends GallerySource {
   String get countryName => 'Sint Maarten';
 
   @override
-  String get packageName => 'sint_maarten_plate';
+  String get packageName => 'caribbean_plate';
 
   @override
   String get note => 'A one- or two-letter prefix and up to four digits.';

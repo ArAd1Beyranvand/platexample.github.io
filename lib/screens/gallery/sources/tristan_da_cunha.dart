@@ -3,7 +3,7 @@ import 'package:saint_helena_plate/saint_helena_plate.dart';
 
 import '../catalogue.dart';
 
-/// `tristan_da_cunha_plate`: "T.D.C." and up to three digits in one row.
+/// `saint_helena_plate`: "T.D.C." and up to three digits in one row.
 class TristanDaCunhaSource extends GallerySource {
   TristanDaCunhaSource();
 
@@ -11,7 +11,7 @@ class TristanDaCunhaSource extends GallerySource {
   String get countryName => 'Tristan da Cunha';
 
   @override
-  String get packageName => 'tristan_da_cunha_plate';
+  String get packageName => 'saint_helena_plate';
 
   @override
   String get note =>

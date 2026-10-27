@@ -2,7 +2,7 @@ import 'package:guyana_plate/guyana_plate.dart';
 
 import '../catalogue.dart';
 
-/// `french_guiana_plate`: the French SIV plate with the département 973 and
+/// `guyana_plate`: the French SIV plate with the département 973 and
 /// the Guyane logo on the right band.
 class FrenchGuianaSource extends GallerySource {
   FrenchGuianaSource();
@@ -11,7 +11,7 @@ class FrenchGuianaSource extends GallerySource {
   String get countryName => 'French Guiana';
 
   @override
-  String get packageName => 'french_guiana_plate';
+  String get packageName => 'guyana_plate';
 
   @override
   String get note =>

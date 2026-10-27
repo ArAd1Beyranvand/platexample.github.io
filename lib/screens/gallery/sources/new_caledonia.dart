@@ -2,7 +2,7 @@ import 'package:kanak_plate/kanak_plate.dart';
 
 import '../catalogue.dart';
 
-/// `new_caledonia_plate`: the six-digit serial followed by the printed `NC`.
+/// `kanak_plate`: the six-digit serial followed by the printed `NC`.
 class NewCaledoniaSource extends GallerySource {
   NewCaledoniaSource();
 
@@ -10,7 +10,7 @@ class NewCaledoniaSource extends GallerySource {
   String get countryName => 'New Caledonia';
 
   @override
-  String get packageName => 'new_caledonia_plate';
+  String get packageName => 'kanak_plate';
 
   @override
   String get note =>

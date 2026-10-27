@@ -3,7 +3,7 @@ import 'package:china_plate/china_plate.dart';
 
 import '../catalogue.dart';
 
-/// `taiwan_plate`: the 380×160 plate in six colourways, the electric-vehicle
+/// `china_plate`: the 380×160 plate in six colourways, the electric-vehicle
 /// stripe, the 1992 plate and the 使 / 外 protocol plates.
 class TaiwanSource extends GallerySource {
   TaiwanSource();
@@ -12,7 +12,7 @@ class TaiwanSource extends GallerySource {
   String get countryName => 'Taiwan';
 
   @override
-  String get packageName => 'taiwan_plate';
+  String get packageName => 'china_plate';
 
   @override
   String get note =>

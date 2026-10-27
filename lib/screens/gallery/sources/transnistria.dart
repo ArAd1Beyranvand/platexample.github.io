@@ -3,7 +3,7 @@ import 'package:russia_plate/russia_plate.dart';
 
 import '../catalogue.dart';
 
-/// `transnistria_plate`: the current series, a flag and no band. Every field
+/// `russia_plate`: the current series, a flag and no band. Every field
 /// is one slot, so a value is one token per field (`['T', '001', 'AA']`).
 class TransnistriaSource extends GallerySource {
   TransnistriaSource();
@@ -12,7 +12,7 @@ class TransnistriaSource extends GallerySource {
   String get countryName => 'Transnistria';
 
   @override
-  String get packageName => 'transnistria_plate';
+  String get packageName => 'russia_plate';
 
   @override
   String get note =>

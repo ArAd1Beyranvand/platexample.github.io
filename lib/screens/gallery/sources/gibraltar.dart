@@ -3,7 +3,7 @@ import 'package:plate_core/plate_core.dart';
 
 import '../catalogue.dart';
 
-/// `gibraltar_plate`: white front and yellow rear, with the `GBZ` band.
+/// `spain_plate`: white front and yellow rear, with the `GBZ` band.
 class GibraltarSource extends GallerySource {
   GibraltarSource();
 
@@ -11,7 +11,7 @@ class GibraltarSource extends GallerySource {
   String get countryName => 'Gibraltar';
 
   @override
-  String get packageName => 'gibraltar_plate';
+  String get packageName => 'spain_plate';
 
   @override
   String get note =>
