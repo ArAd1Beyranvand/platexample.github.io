@@ -49,14 +49,14 @@ class BotswanaSource extends GallerySource {
         _e(
           'private',
           'Private · front',
-          BotswanaPlates.private,
+          BotswanaPlates.civil,
           BotswanaThemes.private,
           'B 123 ABC',
         ),
         _e(
           'privaterear',
           'Private · rear',
-          BotswanaPlates.private,
+          BotswanaPlates.civil,
           BotswanaThemes.privateRear,
           'B 123 ABC',
         ),
@@ -69,7 +69,7 @@ class BotswanaSource extends GallerySource {
         _e(
           'publicservice',
           'Public service · blue',
-          BotswanaPlates.publicService,
+          BotswanaPlates.civil,
           BotswanaThemes.publicService,
           'B 456 DEF',
         ),

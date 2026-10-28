@@ -40,7 +40,7 @@ class FijiSource extends GallerySource {
       note: '',
       entries: <GalleryEntry>[
         _e('fj.general', 'General', FijiPlates.general, FijiThemes.general, <String?>['FQ', '587']),
-        _e('fj.government', 'Government', FijiPlates.government, FijiThemes.government, <String?>[
+        _e('fj.government', 'Government', FijiPlates.general, FijiThemes.government, <String?>[
           'GI',
           '001',
         ]),

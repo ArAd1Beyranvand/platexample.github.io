@@ -39,12 +39,12 @@ class BurundiSource extends GallerySource {
       title: 'Plates',
       note: '',
       entries: <GalleryEntry>[
-        _e('bi.front', 'Front', BurundiPlates.front, BurundiThemes.front, <String?>[
+        _e('bi.front', 'Front', BurundiPlates.standard, BurundiThemes.front, <String?>[
           'A',
           '0412',
           'A',
         ]),
-        _e('bi.rear', 'Rear', BurundiPlates.rear, BurundiThemes.rear, <String?>['B', '6232', 'A']),
+        _e('bi.rear', 'Rear', BurundiPlates.standard, BurundiThemes.rear, <String?>['B', '6232', 'A']),
       ],
     ),
   ];

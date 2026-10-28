@@ -17,7 +17,7 @@ class UruguaySource extends GallerySource {
   @override
   String get note =>
       'The first letter is the department, then two series letters and four '
-      'digits. Every usage shares that register and changes only the field '
+      'digits. Every usage shares that register (identical captions share a spec) and changes only the field '
       'colour, which is why they are one geometry here. The Mercosur plate '
       'moves the number behind the regional band. Not drawn: the department '
       'caption and the motorcycle plate.';
@@ -54,12 +54,12 @@ class UruguaySource extends GallerySource {
       entries: <GalleryEntry>[
         _e('taxi', 'Taxi · yellow', UruguayPlates.taxi, UruguayThemes.yellow, 'B FG 1122'),
         _e('school', 'School transport', UruguayPlates.school, UruguayThemes.yellow, 'C HJ 3344'),
-        _e('doctor', 'Doctor', UruguayPlates.doctor, UruguayThemes.medical, 'L ME 1096'),
+        _e('doctor', 'Doctor', UruguayPlates.ambulance, UruguayThemes.medical, 'L ME 1096'),
         _e('remise', 'Remise', UruguayPlates.remise, UruguayThemes.yellow, 'L RE 1058'),
         _e(
           'transport',
           'Public transport',
-          UruguayPlates.publicTransport,
+          UruguayPlates.private,
           UruguayThemes.yellow,
           'L TC 1033',
         ),
@@ -84,7 +84,7 @@ class UruguaySource extends GallerySource {
         _e(
           'diplomatic',
           'Diplomatic corps',
-          UruguayPlates.diplomatic,
+          UruguayPlates.private,
           UruguayThemes.diplomatic,
           'A VW 9012',
         ),

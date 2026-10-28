@@ -45,8 +45,6 @@ class LatviaSource extends GallerySource {
       note: 'Two letters and one to four digits.',
       entries: <GalleryEntry>[
         _e('private', 'Private car', LatviaPlates.private, LatviaThemes.private, 'FM|4763'),
-        _e('taxi', 'Taxi', LatviaPlates.taxi, LatviaThemes.taxi, 'TX|1234'),
-        _e('electric', 'Electric', LatviaPlates.electric, LatviaThemes.electric, 'EX|1234'),
         _e(
           'diplomatic',
           'Diplomatic corps',

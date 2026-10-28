@@ -42,18 +42,18 @@ class ChileSource extends GallerySource {
           'about 74% of the reference height.',
       entries: <GalleryEntry>[
         _entry('private', 'Private', ChilePlates.private, ChileThemes.private, 'BB BB 10'),
-        _entry('taxi', 'Basic taxi', ChilePlates.taxi, ChileThemes.taxi, 'BP CW 17'),
+        _entry('taxi', 'Basic taxi', ChilePlates.private, ChileThemes.taxi, 'BP CW 17'),
         _entry(
           'collective_taxi',
           'Collective taxi',
-          ChilePlates.collectiveTaxi,
+          ChilePlates.private,
           ChileThemes.collectiveTaxi,
           'CD JL 70',
         ),
         _entry(
           'radiotaxi',
           'Radio taxi and tourism',
-          ChilePlates.radiotaxi,
+          ChilePlates.private,
           ChileThemes.radiotaxi,
           'CT YS 61',
         ),
@@ -61,7 +61,7 @@ class ChileSource extends GallerySource {
         _entry(
           'free_zone',
           'Free-zone vehicles',
-          ChilePlates.freeZone,
+          ChilePlates.private,
           ChileThemes.freeZone,
           'DZ GF 45',
         ),

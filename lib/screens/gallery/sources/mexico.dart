@@ -40,113 +40,30 @@ class MexicoSource extends GallerySource {
   @override
   List<GallerySection> get sections => _sections ??= <GallerySection>[
     GallerySection(
-      title: 'ABC-12-34',
-      note: 'Three letters, two digits, two digits: most states.',
+      title: 'State plates',
+      note:
+          'The state is a choice in the name row and picks the livery. '
+          'ABC-12-34 (16 states), AB-12-345 (Coahuila, Zacatecas), '
+          'ABC-123-A (Nuevo León, Quintana Roo); Yucatán has a banded top; '
+          'Sinaloa, Baja California Sur and Mexico City have their own serials.',
       entries: <GalleryEntry>[
-        _e('bc', 'Baja California', MexicoPlates.bajaCalifornia, MexicoThemes.standard, <String?>[
+        _e('state', 'State plates', MexicoPlates.standard, MexicoThemes.standard, <String?>[
           'AHD',
           '41',
           '02',
+          'BAJA CALIFORNIA',
         ]),
-        _e('camp', 'Campeche', MexicoPlates.campeche, MexicoThemes.campeche, <String?>[
-          'DFF',
-          '81',
-          '88',
-        ]),
-        _e('chis', 'Chiapas', MexicoPlates.chiapas, MexicoThemes.standard, <String?>[
-          'DMT',
-          '60',
-          '00',
-        ]),
-        _e('chih', 'Chihuahua', MexicoPlates.chihuahua, MexicoThemes.standard, <String?>[
-          'DZG',
-          '20',
-          '01',
-        ]),
-        _e('gro', 'Guerrero', MexicoPlates.guerrero, MexicoThemes.standard, <String?>[
-          'HFT',
-          '42',
-          '43',
-        ]),
-        _e('jal', 'Jalisco', MexicoPlates.jalisco, MexicoThemes.standard, <String?>[
-          'JDS',
-          '80',
-          '80',
-        ]),
-        _e('mex', 'Estado de México', MexicoPlates.stateOfMexico, MexicoThemes.standard, <String?>[
-          'NCM',
-          '68',
-          '10',
-        ]),
-        _e('mich', 'Michoacán', MexicoPlates.michoacan, MexicoThemes.standard, <String?>[
-          'PFR',
-          '15',
-          '18',
-        ]),
-        _e('mor', 'Morelos', MexicoPlates.morelos, MexicoThemes.standard, <String?>[
-          'PXR',
-          '84',
-          '44',
-        ]),
-        _e('oax', 'Oaxaca', MexicoPlates.oaxaca, MexicoThemes.oaxaca, <String?>['TJK', '89', '22']),
-        _e('pue', 'Puebla', MexicoPlates.puebla, MexicoThemes.standard, <String?>[
-          'TVN',
-          '84',
-          '08',
-        ]),
-        _e('qro', 'Querétaro', MexicoPlates.queretaro, MexicoThemes.standard, <String?>[
-          'UNR',
-          '61',
-          '98',
-        ]),
-        _e(
-          'slp',
-          'San Luis Potosí',
-          MexicoPlates.sanLuisPotosi,
-          MexicoThemes.sanLuisPotosi,
-          <String?>['UYT', '00', '00'],
-        ),
-        _e('son', 'Sonora', MexicoPlates.sonora, MexicoThemes.sonora, <String?>['VUK', '17', '75']),
-        _e('tab', 'Tabasco', MexicoPlates.tabasco, MexicoThemes.standard, <String?>[
-          'WLU',
-          '94',
-          '69',
-        ]),
-        _e('ver', 'Veracruz', MexicoPlates.veracruz, MexicoThemes.veracruz, <String?>[
-          'YBU',
-          '80',
-          '66',
-        ]),
-      ],
-    ),
-    GallerySection(
-      title: 'Other serials',
-      note:
-          'Two letters, two and three digits (Coahuila, Zacatecas); three '
-          'letters, three digits, a letter (Nuevo León, Quintana Roo, '
-          'Yucatán); two letters, four digits, a letter (Sinaloa); two '
-          'digits twice, three letters (Baja California Sur); Mexico City '
-          'prints three digits and three letters, without I, O or Q.',
-      entries: <GalleryEntry>[
-        _e('coah', 'Coahuila', MexicoPlates.coahuila, MexicoThemes.standard, <String?>[
+        _e('state_aa', 'Coahuila, Zacatecas', MexicoPlates.twoLetters, MexicoThemes.standard, <String?>[
           'EN',
           '86',
           '000',
+          'COAHUILA',
         ], format: MexicoFormat.letters2Digits2Digits3),
-        _e('zac', 'Zacatecas', MexicoPlates.zacatecas, MexicoThemes.standard, <String?>[
-          'ZA',
-          '65',
-          '576',
-        ], format: MexicoFormat.letters2Digits2Digits3),
-        _e('nl', 'Nuevo León', MexicoPlates.nuevoLeon, MexicoThemes.standard, <String?>[
+        _e('state_aaa_a', 'Nuevo León, Quintana Roo', MexicoPlates.threeDigits, MexicoThemes.standard, <String?>[
           'SYY',
           '677',
           'A',
-        ], format: MexicoFormat.letters3Digits3Letter1),
-        _e('qroo', 'Quintana Roo', MexicoPlates.quintanaRoo, MexicoThemes.standard, <String?>[
-          'URU',
-          '197',
-          'A',
+          'NUEVO LEÓN',
         ], format: MexicoFormat.letters3Digits3Letter1),
         _e('yuc', 'Yucatán', MexicoPlates.yucatan, MexicoThemes.standard, <String?>[
           'ZCT',

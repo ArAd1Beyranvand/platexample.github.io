@@ -46,14 +46,14 @@ class BeninSource extends GallerySource {
         _e(
           'private',
           'Private · black on white',
-          BeninPlates.private,
+          BeninPlates.standard,
           BeninThemes.private,
           'AB 1234',
         ),
         _e(
           'commercial',
           'Commercial · black on orange',
-          BeninPlates.commercial,
+          BeninPlates.standard,
           BeninThemes.commercial,
           'CD 5678',
         ),

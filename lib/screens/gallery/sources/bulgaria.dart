@@ -65,7 +65,7 @@ class BulgariaSource extends GallerySource {
         _entry(
           'repeater',
           'Repeater · red',
-          BulgariaPlates.repeater,
+          BulgariaPlates.private,
           BulgariaThemes.repeater,
           <String?>['CB', '2830', 'KP'],
         ),

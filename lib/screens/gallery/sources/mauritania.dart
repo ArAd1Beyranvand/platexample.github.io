@@ -38,8 +38,8 @@ class MauritaniaSource extends GallerySource {
           'about 66% of the real height. '
           'and the article does not say what the red series is for.',
       entries: <GalleryEntry>[
-        _entry('blue', 'Blue', MauritaniaPlates.blue, MauritaniaThemes.blue, '1234 AB 00'),
-        _entry('red', 'Red', MauritaniaPlates.red, MauritaniaThemes.red, '1006 TT 05'),
+        _entry('blue', 'Blue', MauritaniaPlates.standard, MauritaniaThemes.blue, '1234 AB 00'),
+        _entry('red', 'Red', MauritaniaPlates.standard, MauritaniaThemes.red, '1006 TT 05'),
       ],
     ),
   ];

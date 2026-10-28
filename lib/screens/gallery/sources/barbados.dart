@@ -28,7 +28,7 @@ class BarbadosSource extends GallerySource {
         GalleryEntry(
           id: 'bb.black',
           label: 'Front and rear',
-          spec: BarbadosPlates.black,
+          spec: BarbadosPlates.standard,
           theme: BarbadosThemes.black,
           country: BarbadosCountry.barbados,
           validator: const BarbadosValidator(),
@@ -37,7 +37,7 @@ class BarbadosSource extends GallerySource {
         GalleryEntry(
           id: 'bb.white',
           label: 'Front',
-          spec: BarbadosPlates.white,
+          spec: BarbadosPlates.standard,
           theme: BarbadosThemes.white,
           country: BarbadosCountry.barbados,
           validator: const BarbadosValidator(),

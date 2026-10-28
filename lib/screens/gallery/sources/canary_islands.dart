@@ -66,14 +66,14 @@ class CanaryIslandsSource extends GallerySource {
           'Trailer',
           CanaryIslandsPlates.trailer,
           CanaryIslandsThemes.trailer,
-          <String?>['7286', 'BBW'],
+          <String?>['R', '7286', 'BBW'],
         ),
         _e(
           'ic.provisional',
           'Provisional',
-          CanaryIslandsPlates.provisional,
+          CanaryIslandsPlates.trailer,
           CanaryIslandsThemes.provisional,
-          <String?>['1588', 'BBS'],
+          <String?>['P', '1588', 'BBS'],
         ),
         _e('ic.dealer', 'Dealer', CanaryIslandsPlates.dealer, CanaryIslandsThemes.dealer, <String?>[
           '1746',

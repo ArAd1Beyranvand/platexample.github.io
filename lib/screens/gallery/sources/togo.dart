@@ -43,7 +43,7 @@ class TogoSource extends GallerySource {
       note: 'Blue on white for private vehicles, red on yellow for commercial.',
       entries: <GalleryEntry>[
         _e('regular', 'Regular', TogoPlates.regular, TogoThemes.regular, '9867 AE'),
-        _e('commercial', 'Commercial', TogoPlates.commercial, TogoThemes.commercial, '2574 AL'),
+        _e('commercial', 'Commercial', TogoPlates.regular, TogoThemes.commercial, '2574 AL'),
       ],
     ),
   ];

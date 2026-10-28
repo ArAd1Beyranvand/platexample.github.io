@@ -44,12 +44,12 @@ class BelgiumSource extends GallerySource {
           'ABC',
           '003',
         ]),
-        _e('be.dealer', 'Dealer', BelgiumPlates.dealer, BelgiumThemes.dealer, <String?>[
+        _e('be.dealer', 'Dealer · Z', BelgiumPlates.plain, BelgiumThemes.dealer, <String?>[
           '1',
           'ZAV',
           '257',
         ]),
-        _e('be.trailer', 'Trailer', BelgiumPlates.trailer, BelgiumThemes.private, <String?>[
+        _e('be.trailer', 'Trailer · Q', BelgiumPlates.plain, BelgiumThemes.private, <String?>[
           '1',
           'QAA',
           '620',

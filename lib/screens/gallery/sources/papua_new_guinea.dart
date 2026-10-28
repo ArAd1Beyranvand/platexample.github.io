@@ -94,7 +94,7 @@ class PapuaNewGuineaSource extends GallerySource {
         _e(
           'pmv_blue',
           'PMV · blue',
-          PapuaNewGuineaPlates.publicMotorVehicle,
+          PapuaNewGuineaPlates.hire,
           PapuaNewGuineaThemes.pmvBlue,
           const PapuaNewGuineaValidator.publicMotorVehicle(),
           'P 0001',
@@ -102,7 +102,7 @@ class PapuaNewGuineaSource extends GallerySource {
         _e(
           'pmv_orange',
           'PMV · orange',
-          PapuaNewGuineaPlates.publicMotorVehicle,
+          PapuaNewGuineaPlates.hire,
           PapuaNewGuineaThemes.pmvOrange,
           const PapuaNewGuineaValidator.publicMotorVehicle(),
           'P 6870',
@@ -124,7 +124,7 @@ class PapuaNewGuineaSource extends GallerySource {
         _e(
           'provincial',
           'Provincial government',
-          PapuaNewGuineaPlates.provincial,
+          PapuaNewGuineaPlates.general,
           PapuaNewGuineaThemes.provincial,
           const PapuaNewGuineaValidator.provincial(),
           'PAD 000',
@@ -132,7 +132,7 @@ class PapuaNewGuineaSource extends GallerySource {
         _e(
           'consular',
           'Consular corps',
-          PapuaNewGuineaPlates.consular,
+          PapuaNewGuineaPlates.motorcycle,
           PapuaNewGuineaThemes.consular,
           const PapuaNewGuineaValidator.consular(),
           'CC 199',
@@ -154,7 +154,7 @@ class PapuaNewGuineaSource extends GallerySource {
         _e(
           'trade',
           'Trade',
-          PapuaNewGuineaPlates.trade,
+          PapuaNewGuineaPlates.trailer,
           PapuaNewGuineaThemes.trade,
           const PapuaNewGuineaValidator.trade(),
           'TT 3447',

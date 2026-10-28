@@ -39,8 +39,8 @@ class RepublicOfIrelandSource extends GallerySource {
       note: 'One design; the county sets the caption; the code is one or two letters.',
       entries: <GalleryEntry>[
         _entry('dublin', 'Dublin', RepublicOfIrelandPlates.standard, '252 D 23456'),
-        _entry('waterford', 'Waterford', RepublicOfIrelandPlates.standardFor('W'), '131 W 12345'),
-        _entry('clare', 'Clare', RepublicOfIrelandPlates.standardFor('CE'), '241 CE 67890'),
+        _entry('waterford', 'Waterford', RepublicOfIrelandPlates.standard, '131 W 12345'),
+        _entry('clare', 'Clare', RepublicOfIrelandPlates.standard, '241 CE 67890'),
       ],
     ),
     GallerySection(

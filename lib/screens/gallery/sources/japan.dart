@@ -93,7 +93,7 @@ class JapanSource extends GallerySource {
         _e(
           'motorcycle_commercial',
           'Commercial · white on green',
-          JapanPlates.motorcycleCommercial,
+          JapanPlates.motorcycle,
           JapanThemes.motorcycleCommercial,
           <String?>['松本', 'ゆ', '46', '49'],
         ),

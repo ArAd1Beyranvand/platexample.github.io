@@ -49,7 +49,7 @@ class PolandSource extends GallerySource {
         _e(
           'electric',
           'Electric and hydrogen',
-          PolandPlates.electric,
+          PolandPlates.private,
           PolandThemes.electric,
           'DWR|7545G',
         ),

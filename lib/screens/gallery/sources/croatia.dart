@@ -56,7 +56,7 @@ class CroatiaSource extends GallerySource {
           '881',
           'EB',
         ]),
-        _e('hr.army', 'Army', CroatiaPlates.army, CroatiaThemes.army, <String?>[
+        _e('hr.army', 'Army', CroatiaPlates.classic, CroatiaThemes.army, <String?>[
           'HV',
           '489',
           'LV',

@@ -81,7 +81,7 @@ class MyanmarSource extends GallerySource {
           'D',
           '7890',
         ], 'NISSAN'),
-        _threeRow('taxi', 'Taxi', MyanmarPlates.taxi, MyanmarThemes.hire, <String>[
+        _threeRow('taxi', 'Taxi', MyanmarPlates.hire, MyanmarThemes.hire, <String>[
           'YGN',
           '36',
           'E',
@@ -99,7 +99,7 @@ class MyanmarSource extends GallerySource {
         _threeRow(
           'religious',
           'Religious',
-          MyanmarPlates.religious,
+          MyanmarPlates.hearse,
           MyanmarThemes.religious,
           <String>['SGG', '09', 'E', 'F', '5123'],
           'HINO',
@@ -113,28 +113,28 @@ class MyanmarSource extends GallerySource {
         _e(
           'embossed_private',
           'Embossed private · black',
-          MyanmarPlates.embossedPrivate,
+          MyanmarPlates.embossed,
           MyanmarThemes.embossedPrivate,
           <String>['YGN', '1', 'A', '2345'],
         ),
         _e(
           'embossed_commercial',
           'Embossed commercial · red',
-          MyanmarPlates.embossedCommercial,
+          MyanmarPlates.embossed,
           MyanmarThemes.embossedCommercial,
           <String>['MDY', '2', 'B', '6789'],
         ),
         _e(
           'embossed_touring',
           'Embossed touring · blue',
-          MyanmarPlates.embossedTouring,
+          MyanmarPlates.embossed,
           MyanmarThemes.embossedTouring,
           <String>['SGG', '3', 'C', '1234'],
         ),
         _e(
           'organisation',
           'Organisation',
-          MyanmarPlates.organisation,
+          MyanmarPlates.embossed,
           MyanmarThemes.organisation,
           <String>['NPW', '4', 'D', '5678'],
         ),
@@ -147,7 +147,7 @@ class MyanmarSource extends GallerySource {
         GalleryEntry(
           id: 'mm.motorcycle',
           label: 'Motorcycle',
-          spec: MyanmarPlates.motorcycle,
+          spec: MyanmarPlates.burmese,
           theme: MyanmarThemes.motorcycle,
           country: MyanmarCountry.myanmar,
           validator: const MyanmarBurmeseValidator(),
@@ -156,7 +156,7 @@ class MyanmarSource extends GallerySource {
         GalleryEntry(
           id: 'mm.rickshaw',
           label: 'Rickshaw',
-          spec: MyanmarPlates.rickshaw,
+          spec: MyanmarPlates.burmese,
           theme: MyanmarThemes.rickshaw,
           country: MyanmarCountry.myanmar,
           validator: const MyanmarBurmeseValidator(),

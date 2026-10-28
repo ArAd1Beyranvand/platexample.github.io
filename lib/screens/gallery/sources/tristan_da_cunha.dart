@@ -52,14 +52,14 @@ class TristanDaCunhaSource extends GallerySource {
         _e(
           'on_white',
           'Black on white',
-          TristanDaCunhaPlates.onWhite,
+          TristanDaCunhaPlates.standard,
           TristanDaCunhaThemes.onWhite,
           '45',
         ),
         _e(
           'on_yellow',
           'Black on yellow',
-          TristanDaCunhaPlates.onYellow,
+          TristanDaCunhaPlates.standard,
           TristanDaCunhaThemes.onYellow,
           '7',
         ),

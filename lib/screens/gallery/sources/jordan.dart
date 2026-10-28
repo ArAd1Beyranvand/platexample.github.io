@@ -63,15 +63,12 @@ class JordanSource extends GallerySource {
       title: 'Official',
       note: 'The letter series, and the red plates of the state.',
       entries: <GalleryEntry>[
-        _e('executive', 'Executive', JordanPlates.executive, JordanCountry.red, 'PM 12345'),
-        _e('legislative', 'Legislative', JordanPlates.legislative, JordanCountry.red, 'PR 12345'),
-        _e('judicial', 'Judicial', JordanPlates.judicial, JordanCountry.red, 'JC 12345'),
         _e(
           'governmental',
-          'Governmental',
+          'State · PM PR JC GV AQ',
           JordanPlates.governmental,
           JordanCountry.red,
-          'GV 12345',
+          'PM 12345',
         ),
         _e(
           'diplomatic',
@@ -80,7 +77,6 @@ class JordanSource extends GallerySource {
           JordanCountry.diplomatic,
           'CD 12345',
         ),
-        _e('aqaba', 'Aqaba zone', JordanPlates.aqaba, JordanCountry.plain, 'AQ 12345'),
         _e('police', 'Police', JordanPlates.police, JordanCountry.red, '99 23456'),
         _e('ambulance', 'Civil defence', JordanPlates.ambulance, JordanCountry.red, '95 23456'),
         _e('gendarmerie', 'Gendarmerie', JordanPlates.gendarmerie, JordanCountry.red, '96 23456'),

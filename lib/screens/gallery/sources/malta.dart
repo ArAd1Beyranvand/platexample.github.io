@@ -76,7 +76,7 @@ class MaltaSource extends GallerySource {
       note: 'The same six cells as the private plate, on a shorter face.',
       entries: <GalleryEntry>[
         _e('motorcycle', 'Motorcycle', MaltaPlates.motorcycle, MaltaThemes.motorcycle, 'DEF 456'),
-        _e('vintage', 'Vintage', MaltaPlates.vintage, MaltaThemes.vintage, 'GHJ 789'),
+        _e('vintage', 'Vintage', MaltaPlates.motorcycle, MaltaThemes.vintage, 'GHJ 789'),
       ],
     ),
   ];

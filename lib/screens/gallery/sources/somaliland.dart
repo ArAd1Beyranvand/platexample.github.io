@@ -44,20 +44,11 @@ class SomalilandSource extends GallerySource {
           'AW',
         ]),
         _e(
-          'sl.government',
-          'Government',
-          SomalilandPlates.government,
+          'sl.official',
+          'Government, NGO, UN, diplomatic',
+          SomalilandPlates.official,
           SomalilandThemes.government,
           <String?>['B1234'],
-        ),
-        _e('sl.ngo', 'Ngo', SomalilandPlates.ngo, SomalilandThemes.ngo, <String?>['C1234']),
-        _e('sl.un', 'Un', SomalilandPlates.un, SomalilandThemes.un, <String?>['D1234']),
-        _e(
-          'sl.diplomatic',
-          'Diplomatic',
-          SomalilandPlates.diplomatic,
-          SomalilandThemes.diplomatic,
-          <String?>['E1234'],
         ),
         _e('sl.bilingual', 'Bilingual', SomalilandPlates.bilingual, SomalilandThemes.ngo, <String?>[
           'B',

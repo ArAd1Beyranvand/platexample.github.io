@@ -61,21 +61,21 @@ class BosniaAndHerzegovinaSource extends GallerySource {
     ),
     GallerySection(
       title: 'Digit series',
-      note: 'Taxi, temporary, EUPM and diplomatic plates carry no letters.',
+      note: 'Taxi/temporary share one plate (the class letter picks the ink); EUPM and diplomatic carry no letters.',
       entries: <GalleryEntry>[
         _e(
           'taxi',
           'Taxi',
-          BosniaAndHerzegovinaPlates.taxi,
+          BosniaAndHerzegovinaPlates.taxiTemporary,
           BosniaAndHerzegovinaThemes.taxi,
-          '1 2 3 4 5 6',
+          'A 1 2 3 4 5 6',
         ),
         _e(
           'temporary',
           'Temporary',
-          BosniaAndHerzegovinaPlates.temporary,
+          BosniaAndHerzegovinaPlates.taxiTemporary,
           BosniaAndHerzegovinaThemes.temporary,
-          '6 5 4 3 2 1',
+          'T 6 5 4 3 2 1',
         ),
         _e(
           'eupm',

@@ -44,7 +44,7 @@ class BahamasSource extends GallerySource {
           'The serial is about 75% of the real height: the plate face is '
           'condensed and a run wider than its box is scaled down.',
       entries: <GalleryEntry>[
-        _entry('yellow', '1987 · black on yellow', BahamasPlates.yellow, BahamasThemes.yellow),
+        _entry('yellow', '1987 · black on yellow', BahamasPlates.nassau, BahamasThemes.yellow),
         _entry('green', '1990 · white on green', BahamasPlates.green, BahamasThemes.green),
         _entry('pale', '1977 · truck, black on pale cyan', BahamasPlates.pale, BahamasThemes.pale),
         _entry(
@@ -53,7 +53,7 @@ class BahamasSource extends GallerySource {
           BahamasPlates.landfall,
           BahamasThemes.landfall,
         ),
-        _entry('blue', '1997 · gold on blue', BahamasPlates.blue, BahamasThemes.blue),
+        _entry('blue', '1997 · gold on blue', BahamasPlates.nassau, BahamasThemes.blue),
       ],
     ),
   ];
