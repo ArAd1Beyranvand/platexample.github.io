@@ -60,9 +60,17 @@ class YemenSource extends GallerySource {
       ),
   ];
 
-  /// System B's field colour *is* the usage class; one colour (`private`,
-  /// blue, and its white variant) stands for the format.
-  static const YemenUsage _northernUsage = YemenUsage.private;
+  /// System B's field colour *is* the usage class, so each usage is a band
+  /// with its own livery; private and military have a second printing.
+  static final List<GalleryBand> _northernBands = <GalleryBand>[
+    for (final YemenUsage u in YemenUsage.northern) ...<GalleryBand>[
+      (u.name, YemenCountry.northernFor(u), YemenThemes.forNorthernUsage(u)),
+      if (u == YemenUsage.private)
+        ('private · white', YemenCountry.northernPrivate, YemenThemes.northernPrivateWhite),
+      if (u == YemenUsage.military)
+        ('military · red', YemenCountry.northernMilitaryModern, YemenThemes.northernMilitaryModern),
+    ],
+  ];
 
   List<GalleryEntry> _northern() => <GalleryEntry>[
     for (final (String form, PlateSpec spec) in <(String, PlateSpec)>[
@@ -70,28 +78,16 @@ class YemenSource extends GallerySource {
       // ignore: deprecated_member_use
       ('moto', YemenNorthernPlates.moto),
     ])
-      for (final bool white in const <bool>[false, true])
-        GalleryEntry(
-          id: <String>[
-            'ye.northern.$form',
-            _northernUsage.name,
-            white ? 'white' : 'blue',
-          ].join('.'),
-          label: <String>[
-            _word(_northernUsage, unified: false),
-            form,
-            white ? 'white' : 'blue',
-          ].join(' · '),
-          spec: spec,
-          country: YemenCountry.northernFor(_northernUsage),
-          theme: YemenThemes.forNorthernUsage(
-            _northernUsage,
-            style: YemenMilitaryStyle.classic,
-            whiteBackground: white,
-          ),
-          validator: const YemenNorthernValidator(),
-          sampleValues: YemenNorthernSerialGenerator.generate(spec, random: _rng),
-        ),
+      GalleryEntry(
+        id: 'ye.northern.$form',
+        label: form,
+        spec: spec,
+        country: YemenCountry.northernPrivate,
+        theme: YemenThemes.northernPrivate,
+        bands: _northernBands,
+        validator: const YemenNorthernValidator(),
+        sampleValues: YemenNorthernSerialGenerator.generate(spec, random: _rng),
+      ),
   ];
 
   /// A southern entry: digits only, so the sample is drawn here.
@@ -111,6 +107,13 @@ class YemenSource extends GallerySource {
     sampleValues: <String?>[for (int i = 0; i < spec.slotCount; i++) '${1 + _rng.nextInt(9)}'],
   );
 
+  static List<GalleryBand> _strips(bool banded) => <GalleryBand>[
+    ('private', YemenCountry.southernPrivate, null),
+    ('hire', YemenCountry.southernForHire, null),
+    ('commercial', YemenCountry.southernCommercial, null),
+    if (!banded) ('government', YemenCountry.southernGovernment, null),
+  ];
+
   List<GalleryEntry> _governorates() => <GalleryEntry>[
     for (final (String key, YemenSouthernGovernorate g, PlateSpec car)
         in <(String, YemenSouthernGovernorate, PlateSpec)>[
@@ -119,25 +122,18 @@ class YemenSource extends GallerySource {
           ('shabwah', YemenSouthernGovernorate.shabwah, YemenGovernoratePlates.shabwah),
           ('marib', YemenSouthernGovernorate.marib, YemenGovernoratePlates.marib),
         ])
-      for (final YemenUsage usage in const <YemenUsage>[
-        YemenUsage.private,
-        YemenUsage.forHire,
-        YemenUsage.transport,
-        YemenUsage.government,
-      ])
-        if (!(g.banded && usage == YemenUsage.government))
-          _southern(
-            'ye.$key.${usage.name}',
-            '$key · ${usage.name}',
-            car,
-            YemenCountry.southernFor(usage),
-          ),
-    _southern(
-      'ye.hadhramaut.private.5',
-      'hadhramaut · private · 5 digits',
-      YemenGovernoratePlates.hadhramautFiveDigit,
-      YemenCountry.southernPrivate,
-    ),
+      GalleryEntry(
+        id: 'ye.$key',
+        label: key,
+        spec: car,
+        country: YemenCountry.southernPrivate,
+        theme: YemenThemes.southern,
+        bands: _strips(g.banded),
+        validator: const YemenSouthernValidator(),
+        sampleValues: car.slotCount == 1
+            ? <String?>['12345']
+            : <String?>[for (int i = 0; i < car.slotCount; i++) '${1 + _rng.nextInt(9)}'],
+      ),
     _southern(
       'ye.hadhramaut.temporary',
       'hadhramaut · temporary',
@@ -209,45 +205,40 @@ class YemenSource extends GallerySource {
     for (final GallerySection section in sections) section.entries.first,
   ];
 
+  /// The strip colour is the category; the symbol slot is picked to match.
+  static final List<GalleryBand> _riyadhBands = <GalleryBand>[
+    ('Private', RiyadhCountry.private, null),
+    ('Public transport', RiyadhCountry.publicTransport, null),
+    ('Commercial', RiyadhCountry.commercial, null),
+    ('Temporary', RiyadhCountry.temporary, null),
+  ];
+
   List<GalleryEntry> _riyadh() => <GalleryEntry>[
-    for (final (String size, String values, List<PlateSpec> specs)
-        in <(String, String, List<PlateSpec>)>[
-          (
-            'us',
-            'T N J 7 6 5 3',
-            <PlateSpec>[
-              RiyadhPlates.private,
-              RiyadhPlates.publicTransport,
-              RiyadhPlates.commercial,
-              RiyadhPlates.temporary,
-              RiyadhPlates.diplomatic,
-            ],
-          ),
-          (
-            'eu',
-            'T N J 7 3 5 6',
-            <PlateSpec>[
-              RiyadhPlates.euPrivate,
-              RiyadhPlates.euPublicTransport,
-              RiyadhPlates.euCommercial,
-              RiyadhPlates.euTemporary,
-              RiyadhPlates.euDiplomatic,
-            ],
-          ),
-        ])
-      for (final (int i, MapEntry<String, PlateCountry> category)
-          in RiyadhCountry.byCategory.entries.indexed)
-        GalleryEntry(
-          id: 'ye.riyadh.$size.${category.key}',
-          label:
-              '${category.key.replaceAll('_', ' ')} · '
-              '${size == 'us' ? '335 × 155' : '550 × 110'}',
-          spec: specs[i],
-          theme: RiyadhThemes.standard,
-          country: category.value,
-          validator: const RiyadhValidator(),
-          sampleValues: values.split(' '),
-        ),
+    for (final (String size, String label, String values, PlateSpec spec, PlateSpec diplomatic)
+        in <(String, String, String, PlateSpec, PlateSpec)>[
+          ('us', '335 × 155', 'T N J 7 6 5 3', RiyadhPlates.us, RiyadhPlates.diplomatic),
+          ('eu', '550 × 110', 'T N J 7 3 5 6', RiyadhPlates.eu, RiyadhPlates.euDiplomatic),
+        ]) ...<GalleryEntry>[
+      GalleryEntry(
+        id: 'ye.riyadh.$size',
+        label: label,
+        spec: spec,
+        theme: RiyadhThemes.standard,
+        country: RiyadhCountry.private,
+        bands: _riyadhBands,
+        validator: const RiyadhValidator(),
+        sampleValues: '$values ●'.split(' '),
+      ),
+      GalleryEntry(
+        id: 'ye.riyadh.$size.diplomatic',
+        label: 'diplomatic · $label',
+        spec: diplomatic,
+        theme: RiyadhThemes.standard,
+        country: RiyadhCountry.diplomatic,
+        validator: const RiyadhValidator(),
+        sampleValues: values.split(' '),
+      ),
+    ],
   ];
 
   @override
@@ -266,18 +257,19 @@ class YemenSource extends GallerySource {
       note:
           'Still in force across the Houthi-controlled north, and still the '
           'larger share of the fleet. Governorate code above the rule, serial '
-          'below; the field colour is the usage class, shown here in blue and '
-          'white (private). The motorcycle geometry is unverified — a guess, marked '
-          'as one in the package.',
+          'below; the field colour is the usage class, picked with the band '
+          'chips. The motorcycle geometry is unverified — a guess, marked as '
+          'one in the package.',
       entries: _northern(),
     ),
     GallerySection(
       title: 'Hadhramaut, Al Mahrah, Shabwah, Marib',
       note:
-          'The coloured-strip governorate plates. The strip is the usage: '
-          'blue private, yellow for hire, red commercial, green government. '
-          'Temporary, police and motorcycle layouts where the article shows '
-          'them.',
+          'The coloured-strip governorate plates. The strip is the usage, '
+          'picked with the band chips: blue private, yellow for hire, red '
+          'commercial, green government (not Marib). Hadhramaut prints four or '
+          'five digits. Temporary, police and motorcycle layouts where the '
+          'article shows them.',
       entries: _governorates(),
     ),
     GallerySection(
@@ -291,9 +283,9 @@ class YemenSource extends GallerySource {
       title: 'Riyadh',
       note:
           'Black on white, Arabic over a Latin echo, with a strip carrying '
-          'the emblem and a category symbol; the strip colour is the '
-          'category. US size with the strip on the right, EU size with it in '
-          'the middle.',
+          'the emblem and the car-type symbol; pick the strip colour with the '
+          'band chips. Diplomatic plates are green with no symbol. US size '
+          'with the strip on the right, EU size with it in the middle.',
       entries: _riyadh(),
     ),
   ];

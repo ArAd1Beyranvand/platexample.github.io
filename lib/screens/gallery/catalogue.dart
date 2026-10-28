@@ -1,6 +1,9 @@
 import 'package:plate_core/plate_core.dart';
 import 'package:flutter/foundation.dart';
 
+/// A band chip: its label, the panel block it picks, and an optional livery.
+typedef GalleryBand = (String, PlateCountry, PlateTheme?);
+
 /// One entry in the gallery: everything needed to draw one plate and say what
 /// it is.
 ///
@@ -22,7 +25,7 @@ class GalleryEntry {
     this.sampleValues,
     this.themeForValues,
     this.note,
-    this.bands = const <(String, PlateCountry)>[],
+    this.bands = const <GalleryBand>[],
   });
 
   /// Stable across runs, for goldens and deep links. Never the spec's id
@@ -60,8 +63,9 @@ class GalleryEntry {
   final String? note;
 
   /// Panel blocks the user picks between, where the class is the band colour
-  /// and nothing typed decides it (Iraq). Empty for every other entry.
-  final List<(String, PlateCountry)> bands;
+  /// and nothing typed decides it (Iraq). A band may bring its own livery
+  /// (Yemen's northern field); null keeps [theme]. The first is the default.
+  final List<GalleryBand> bands;
 
   /// The livery to paint this entry in, given what is currently in its slots.
   PlateTheme? themeFor(List<String?> values) => themeForValues?.call(values) ?? theme;

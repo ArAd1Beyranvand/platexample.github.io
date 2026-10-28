@@ -41,6 +41,6 @@ void main() {
         c.dispose();
       }
     }
-    expect(themes.length, 10);
+    expect(themes.length, 7);
   });
 }

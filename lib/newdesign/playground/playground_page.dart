@@ -222,19 +222,21 @@ class _StageCard extends StatefulWidget {
 }
 
 class _StageCardState extends State<_StageCard> {
-  PlateCountry? _band;
+  int _band = 0;
 
   @override
   void didUpdateWidget(_StageCard old) {
     super.didUpdateWidget(old);
-    if (old.item != widget.item) _band = null;
+    if (old.item != widget.item) _band = 0;
   }
 
   @override
   Widget build(BuildContext context) {
     final CatalogueItem item = widget.item;
     final PlateController plate = widget.plate;
-    final PlateCountry? country = _band ?? item.entry.country;
+    final bands = item.entry.bands;
+    final band = bands.isEmpty ? null : bands[_band];
+    final PlateCountry? country = band?.$2 ?? item.entry.country;
     final PdTokens t = context.tokens;
     final double h1 = pdClamp(context, 24, 3, 36);
 
@@ -265,11 +267,11 @@ class _StageCardState extends State<_StageCard> {
               spacing: 8,
               runSpacing: 8,
               children: <Widget>[
-                for (final (String label, PlateCountry band) in item.entry.bands)
+                for (final (int i, GalleryBand b) in bands.indexed)
                   ChoiceChip(
-                    label: Text(label),
-                    selected: band == country,
-                    onSelected: (_) => setState(() => _band = band),
+                    label: Text(b.$1),
+                    selected: i == _band,
+                    onSelected: (_) => setState(() => _band = i),
                   ),
               ],
             ),
@@ -278,7 +280,7 @@ class _StageCardState extends State<_StageCard> {
           LivePlate(
             controller: plate,
             validName: validNameOf(item),
-            theme: item.entry.themeFor(plate.values),
+            theme: band?.$3 ?? item.entry.themeFor(plate.values),
             country: country,
             validator: item.entry.validator,
             inputSource: PlateInputSource.keypadFirst,

@@ -258,7 +258,7 @@ GallerySection _afghanistanSection() => GallerySection(
 GallerySection _armeniaSection() => GallerySection(
   title: 'Armenia',
   note:
-      'Ten designs on a German-style face: flag over `AM`, a silver '
+      'Nine designs on a German-style face: flag over `AM`, a silver '
       'identifier band, and `NN LL NNN` told apart by gaps alone — no '
       'hyphen, no divider. Two things here are rules rather than shapes. '
       'The letters are Latin because the four the system opened with in '
@@ -329,17 +329,8 @@ GallerySection _armeniaSection() => GallerySection(
       spec: ArmeniaPlates.diplomatic,
       theme: ArmeniaThemes.diplomatic,
       note:
-          'Mission code, `D` for a diplomat or `T` for a technician, serial, and Armenia\'s own code at the tail.',
-      sampleValues: const <String?>['04', 'D', '057'],
-    ),
-    GalleryEntry(
-      id: 'am.diplomaticArm',
-      label: 'Diplomatic corps (current)',
-      spec: ArmeniaPlates.diplomaticArm,
-      theme: ArmeniaThemes.diplomatic,
-      note:
-          'The same design; newer plates print `ARM` where the older ones print `AM`.',
-      sampleValues: const <String?>['04', 'T', '057'],
+          'Mission code, `D` for a diplomat or `T` for a technician, serial, and Armenia\'s own code at the tail: `AM`, or `ARM` on newer plates.',
+      sampleValues: const <String?>['04', 'D', '057', 'AM'],
     ),
     GalleryEntry(
       id: 'am.un',
@@ -387,30 +378,12 @@ GallerySection _qatarSection() => GallerySection(
   entries: <GalleryEntry>[
     GalleryEntry(
       id: 'qa.civilian',
-      label: 'Civilian (five digits)',
+      label: 'Civilian',
       spec: QatarPlates.civilian,
       theme: QatarThemes.civilian,
       note:
-          'The everyday registration, and the longest Qatar issues: the serrated maroon block, `قطر`, five digits.',
+          'The serrated maroon block, `قطر`, and three to five digits centred in the same room. Below three, a serial belongs to the royal family.',
       sampleValues: const <String?>['25777'],
-    ),
-    GalleryEntry(
-      id: 'qa.civilian4',
-      label: 'Civilian (four digits)',
-      spec: QatarPlates.civilian,
-      theme: QatarThemes.civilian,
-      note:
-          'Identical furniture. The serial is one field, so a shorter run sits centred in the same room.',
-      sampleValues: const <String?>['4071'],
-    ),
-    GalleryEntry(
-      id: 'qa.civilian3',
-      label: 'Civilian (three digits)',
-      spec: QatarPlates.civilian,
-      theme: QatarThemes.civilian,
-      note:
-          'The shortest ordinary registration — below this, a serial belongs to the royal family.',
-      sampleValues: const <String?>['411'],
     ),
     GalleryEntry(
       id: 'qa.motorcycle',
@@ -650,7 +623,7 @@ class ArmeniaSource extends GallerySource {
 
   @override
   String get note =>
-      'Ten designs on a German-style face: flag over AM, a silver '
+      'Nine designs on a German-style face: flag over AM, a silver '
       'identifier band, and NN LL NNN told apart by gaps alone.';
 
   /// Built once, and returned by identity: [catalogueItems] resolves a
@@ -848,12 +821,12 @@ class KuwaitSource extends GallerySource {
 ///
 /// Class is the band, not the field, and nothing typed decides it, so the five
 /// permanent classes are band chips on one entry per size.
-const List<(String, PlateCountry)> _iraqBands = <(String, PlateCountry)>[
-  ('Private', IraqCountry.private),
-  ('Hire', IraqCountry.hire),
-  ('Government', IraqCountry.government),
-  ('Trade', IraqCountry.trade),
-  ('Agricultural', IraqCountry.agricultural),
+const List<GalleryBand> _iraqBands = <GalleryBand>[
+  ('Private', IraqCountry.private, null),
+  ('Hire', IraqCountry.hire, null),
+  ('Government', IraqCountry.government, null),
+  ('Trade', IraqCountry.trade, null),
+  ('Agricultural', IraqCountry.agricultural, null),
 ];
 
 GallerySection _iraqSection() => GallerySection(
@@ -913,7 +886,7 @@ class QatarSource extends GallerySource {
 
   @override
   String get note =>
-      'Five designs. The country block is the maroon hoist of the flag, cut '
+      'Three designs. The country block is the maroon hoist of the flag, cut '
       'by its nine-point serration, with QATAR set one letter per line.';
 
   /// Built once, and returned by identity: [catalogueItems] resolves a
@@ -1154,46 +1127,36 @@ GalleryEntry _tr(
   note: note,
 );
 
-/// Turkey's section: every spec, every theme, each entry in its own livery.
+/// Turkey's section: one entry per shape and livery that nothing typed decides.
 GallerySection _turkeySection() => GallerySection(
   title: 'Turkey',
   note:
       'A two-digit province code, one to three letters and a serial, on a '
       '520 × 110 plate. Most classes keep the blue TR strip; police, '
       'consulate, official and state plates drop it for a coloured field. '
-      'Diplomatic plates have been numbered at random since 2004, so no code '
-      'identifies a mission and nothing here is Israel-specific. Ink is ~90% '
-      'of the reference height, set in Roboto rather than the plate face.',
+      'The letters name several classes: CD turns the strip plate green, GMR '
+      'red on green, T adds the taxi rule, CC turns the stripless plate '
+      'green. Diplomatic plates have been numbered at random since 2004, so '
+      'no code identifies a mission. Ink is ~90% of the reference height, set '
+      'in Roboto rather than the plate face.',
   entries: <GalleryEntry>[
     _tr(
       'tr.private',
-      'Private',
-      TurkeyPlates.private,
+      'Private, taxi, diplomatic, customs, residents',
+      TurkeyPlates.strip,
       TurkeyThemes.civilian,
       '34 AB 1234',
+      note:
+          'Type CD for the green diplomatic plate, GMR for temporary customs, '
+          'T for a taxi. MA–MZ and SAA–SZZ are foreign and Syrian residents, '
+          'TAA–TKZ Istanbul taxis.',
     ),
     _tr(
       'tr.international',
       'International organisation',
-      TurkeyPlates.internationalOrganization,
+      TurkeyPlates.strip,
       TurkeyThemes.internationalOrganization,
       '34 B 0426',
-    ),
-    _tr(
-      'tr.diplomatic',
-      'Diplomatic (CD)',
-      TurkeyPlates.diplomatic,
-      TurkeyThemes.diplomatic,
-      '34 CD 012',
-      validator: TurkeyPlateValidator.diplomatic,
-    ),
-    _tr(
-      'tr.consulate',
-      'Consulate (CC)',
-      TurkeyPlates.consulate,
-      TurkeyThemes.consulate,
-      '34 CC 0001',
-      validator: TurkeyPlateValidator.consulate,
     ),
     _tr(
       'tr.temporary',
@@ -1210,76 +1173,25 @@ GallerySection _turkeySection() => GallerySection(
       '34 G 1234',
     ),
     _tr(
-      'tr.customs',
-      'Temporary customs (GMR)',
-      TurkeyPlates.temporaryCustoms,
-      TurkeyThemes.temporaryCustoms,
-      '34 GMR 032',
-      validator: TurkeyPlateValidator.temporaryCustoms,
-    ),
-    _tr(
-      'tr.foreign',
-      'Foreign resident',
-      TurkeyPlates.foreignResident,
-      TurkeyThemes.civilian,
-      '34 MA 012',
-    ),
-    _tr(
-      'tr.syrian',
-      'Syrian resident',
-      TurkeyPlates.syrianResident,
-      TurkeyThemes.civilian,
-      '34 SAB 012',
-    ),
-    _tr(
-      'tr.taxi',
-      'Taxi',
-      TurkeyPlates.taxi,
-      TurkeyThemes.civilian,
-      '06 T 0123',
-    ),
-    _tr(
-      'tr.taxi.istanbul',
-      'Istanbul taxi',
-      TurkeyPlates.istanbulTaxi,
-      TurkeyThemes.civilian,
-      '34 TAB 12',
-    ),
-    _tr(
       'tr.police',
-      'Police',
-      TurkeyPlates.police,
+      'Police, gendarmerie, coast guard, consulate',
+      TurkeyPlates.plain,
       TurkeyThemes.police,
       '16 A 01234',
       validator: TurkeyPlateValidator.police,
-    ),
-    _tr(
-      'tr.gendarmerie',
-      'Gendarmerie (J)',
-      TurkeyPlates.gendarmerie,
-      TurkeyThemes.police,
-      '06 JAA 1234',
-      validator: TurkeyPlateValidator.gendarmerie,
-    ),
-    _tr(
-      'tr.coastguard',
-      'Coast guard (SGH)',
-      TurkeyPlates.coastGuard,
-      TurkeyThemes.police,
-      '34 SGH 1234',
-      validator: TurkeyPlateValidator.coastGuard,
+      note: 'Gendarmerie JAA, coast guard SGH; CC turns it into the green consulate plate.',
     ),
     _tr(
       'tr.provincial',
       'Provincial government',
-      TurkeyPlates.provincialGovernment,
+      TurkeyPlates.plain,
       TurkeyThemes.provincialGovernment,
       '06 AA 012',
     ),
     _tr(
       'tr.official',
       'Official',
-      TurkeyPlates.official,
+      TurkeyPlates.plain,
       TurkeyThemes.official,
       '34 AB 123',
     ),
@@ -1333,7 +1245,7 @@ class TurkeySource extends GallerySource {
   @override
   String get note =>
       'Province code, letters and serial behind the blue TR strip, in ten '
-      'liveries. Diplomatic numbers are random, so there is no '
+      'liveries; the class letters pick several of them. Diplomatic numbers are random, so there is no '
       'Israel-specific value to refuse.';
 
   /// Built once, and returned by identity, as for the other sources.
@@ -1359,46 +1271,23 @@ GallerySection _omanSection() => GallerySection(
   note:
       'The 2001 series: number, letters and عمان in three panels, in black '
       'on yellow (private) and white on red (taxi). The letters are printed '
-      'twice, Latin below and Arabic above in the opposite order. The number is four or '
-      'five digits (one variable field) and the letters one or two, each picked; four digits with two letters '
-      'and five with one are measured. Only A, B, K and M are sourced as letters.',
+      'twice, Latin below and Arabic above in the opposite order. The number is '
+      'four or five digits and the letter code one or two letters, picked from '
+      'the codes the article shows: A, B, K, M, BM and KK.',
   entries: <GalleryEntry>[
-    GalleryEntry(
-      id: 'om.private',
-      label: 'Private · four digits, two letters',
-      spec: OmanPlates.twoLetters,
-      theme: OmanThemes.private,
-      country: OmanCountry.oman,
-      validator: const OmanPlateValidator(),
-      sampleValues: <String?>['4517', 'B', 'M'],
-    ),
-    GalleryEntry(
-      id: 'om.private.d5',
-      label: 'Private · five digits, one letter',
-      spec: OmanPlates.oneLetter,
-      theme: OmanThemes.private,
-      country: OmanCountry.oman,
-      validator: const OmanPlateValidator(),
-      sampleValues: <String?>['91169', 'B'],
-    ),
-    GalleryEntry(
-      id: 'om.taxi',
-      label: 'Taxi · four digits, two letters',
-      spec: OmanPlates.twoLetters,
-      theme: OmanThemes.taxi,
-      country: OmanCountry.oman,
-      validator: const OmanPlateValidator(),
-      sampleValues: <String?>['4517', 'K', 'K'],
-    ),
-    GalleryEntry(
-      id: 'om.taxi.d5',
-      label: 'Taxi · five digits, one letter',
-      spec: OmanPlates.oneLetter,
-      theme: OmanThemes.taxi,
-      country: OmanCountry.oman,
-      validator: const OmanPlateValidator(),
-      sampleValues: <String?>['91169', 'K'],
-    ),
+    for (final (id, label, theme, values) in <(String, String, PlateTheme, List<String?>)>[
+      ('om.private', 'Private', OmanThemes.private, ['4517', 'BM']),
+      ('om.taxi', 'Taxi', OmanThemes.taxi, ['91169', 'K']),
+    ])
+      GalleryEntry(
+        id: id,
+        label: label,
+        spec: OmanPlates.standard,
+        theme: theme,
+        country: OmanCountry.oman,
+        validator: const OmanPlateValidator(),
+        sampleValues: values,
+      ),
   ],
 );
 
@@ -1414,8 +1303,8 @@ class OmanSource extends GallerySource {
   @override
   String get note =>
       'One three-panel design — number, letters, عمان — in black on yellow '
-      '(private) and white on red (taxi), with four or five digits and one '
-      'or two letters.';
+      '(private) and white on red (taxi), with four or five digits and a '
+      'one- or two-letter code.';
 
   /// Built once, and returned by identity, as for the other sources.
   @override
@@ -1424,8 +1313,8 @@ class OmanSource extends GallerySource {
   @override
   List<GalleryEntry> get highlights => <GalleryEntry>[
     if (sections.isNotEmpty && sections[0].entries.length > 1) ...[
+      sections[0].entries[0],
       sections[0].entries[1],
-      sections[0].entries[2],
     ],
   ];
 
@@ -1562,21 +1451,14 @@ List<GallerySection> _uzSections() => <GallerySection>[
   ),
   GallerySection(
     title: 'Foreign and temporary',
-    note: 'Digits only, on a coloured field.',
+    note: 'H (citizen) prints on yellow, M (company) on green.',
     entries: <GalleryEntry>[
       _uzEntry(
-        'foreign_citizen',
-        'Foreign citizen',
-        UzbekistanPlates.foreignCitizen,
+        'foreign',
+        'Foreign citizen or company',
+        UzbekistanPlates.foreign,
         UzbekistanThemes.foreignCitizen,
-        '10 123456',
-      ),
-      _uzEntry(
-        'foreign_company',
-        'Foreign company',
-        UzbekistanPlates.foreignCompany,
-        UzbekistanThemes.foreignCompany,
-        '20 654321',
+        '10 M 123456',
       ),
       _uzEntry(
         'temporary',
@@ -1641,7 +1523,7 @@ List<GallerySection> _uzSections() => <GallerySection>[
 
 const String _uzbekistanNote =
     'The region number leads, then the series letter, the serial and the '
-    'closing letters. The foreign and temporary plates are digits only, the '
+    'closing letters. The foreign plate prints H or M before its digits, the '
     'diplomatic plate leads with D or T. Not drawn: the UZ oval and the '
     'older Soviet-era formats.';
 
