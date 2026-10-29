@@ -26,6 +26,7 @@ class PlaygroundPage extends StatefulWidget {
 
 class _PlaygroundPageState extends State<PlaygroundPage> {
   late final PlateController _plate = PlateController(spec: widget.item.entry.spec)
+    ..hints.value = widget.item.entry.sampleValues
     ..addListener(_changed);
   bool _codeOpen = true;
 
@@ -43,9 +44,8 @@ class _PlaygroundPageState extends State<PlaygroundPage> {
     super.didUpdateWidget(old);
     if (identical(old.item, _item)) return;
     final PlateSpec next = _item.entry.spec;
-    final List<String?> carried = carryValues(_plate.values, next);
     _plate.adoptSpec(next, preserve: PlateValuePreservation.none);
-    _plate.setValues(carried);
+    _plate.hints.value = _item.entry.sampleValues;
   }
 
   @override

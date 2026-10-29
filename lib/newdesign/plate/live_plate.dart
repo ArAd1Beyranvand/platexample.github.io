@@ -495,6 +495,7 @@ class _StaticPlateState extends State<StaticPlate> {
     _typing?.cancel();
     if (!mounted) return;
     final List<String?>? values = widget.values;
+    _c.hints.value = values;
     if (values == null) return;
     if (!widget.autoType || MediaQuery.disableAnimationsOf(context)) {
       _c.setValues(values);

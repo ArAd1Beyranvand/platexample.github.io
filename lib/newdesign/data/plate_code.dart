@@ -109,17 +109,3 @@ String slotPattern(PlateSpec spec) {
   }
   return '${sizes.join(' + ')} = ${spec.slotCount}';
 }
-
-/// The typed characters, in order, that still fit [next]'s slots: each goes
-/// into the next slot if that slot's alphabet takes it, and is dropped if not.
-List<String?> carryValues(List<String?> values, PlateSpec next) {
-  final List<String?> out = List<String?>.filled(next.slotCount, null);
-  int i = 0;
-  for (final String? v in values) {
-    if (v == null || v.isEmpty) continue;
-    if (i >= next.slotCount) break;
-    final PlateAlphabet a = next.slots[i].alphabet;
-    if (a.accepts(v)) out[i++] = a.canonical(v);
-  }
-  return out;
-}

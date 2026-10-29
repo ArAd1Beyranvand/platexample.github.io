@@ -232,9 +232,9 @@ class _Plate extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    _Slot('?', '۱۲', 2.2, 56 * k, t, 0),
-                    _Slot('؟', 'ب', 1.1, 56 * k, t, 0.25),
-                    _Slot('?', '۳۴۵', 3, 56 * k, t, 0.5),
+                    _Slot('۱۲', 2.2, 56 * k, t, 0),
+                    _Slot('ب', 1.1, 56 * k, t, 0.25),
+                    _Slot('۳۴۵', 3, 56 * k, t, 0.5),
                   ],
                 ),
               ),
@@ -253,7 +253,7 @@ class _Plate extends StatelessWidget {
                       decoration: TextDecoration.none,
                     ),
                   ),
-                  _Slot('?', '۶۷', 1.8, 42 * k, t, 0.75),
+                  _Slot('۶۷', 1.8, 42 * k, t, 0.75),
                 ],
               ),
             ),
@@ -264,11 +264,11 @@ class _Plate extends StatelessWidget {
   }
 }
 
-/// One plate group: a grey "?" that gives way to the real characters.
+/// One plate group: its characters in grey, with the same characters rising
+/// onto them in ink.
 class _Slot extends StatelessWidget {
-  const _Slot(this.q, this.value, this.underlineEm, this.size, this.t, this.delaySeconds);
+  const _Slot(this.value, this.underlineEm, this.size, this.t, this.delaySeconds);
 
-  final String q;
   final String value;
   final double underlineEm;
   final double size;
@@ -290,13 +290,6 @@ class _Slot extends StatelessWidget {
     } else {
       fill = 1 - (p - 0.85) / 0.15;
     }
-    final double q0 = p < 0.12
-        ? 1
-        : p < 0.20
-        ? 1 - (p - 0.12) / 0.08
-        : p < 0.85
-        ? 0
-        : (p - 0.85) / 0.15;
     final double rise = p < 0.12
         ? 6
         : p < 0.20
@@ -315,10 +308,7 @@ class _Slot extends StatelessWidget {
         Stack(
           alignment: Alignment.topCenter,
           children: <Widget>[
-            Opacity(
-              opacity: q0,
-              child: Text(q, style: style.copyWith(color: const Color(0xFFC9CCD3))),
-            ),
+            Text(value, style: style.copyWith(color: const Color(0xFFC9CCD3))),
             Transform.translate(
               offset: Offset(0, rise),
               child: Opacity(

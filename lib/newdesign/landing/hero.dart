@@ -12,7 +12,6 @@ import 'package:yemen_plate/yemen_plate.dart';
 import '../app/location.dart';
 import '../app/nav.dart';
 import '../data/catalogue.dart';
-import '../data/plate_code.dart';
 import '../design/tokens.dart';
 import '../plate/live_plate.dart';
 import '../widgets/controls.dart';
@@ -208,7 +207,7 @@ class _StageState extends State<_Stage> with SingleTickerProviderStateMixin {
 
   late final PlateController _plate = PlateController(
     spec: heroTour.first.entry.spec,
-  );
+  )..hints.value = heroTour.first.entry.sampleValues;
 
   /// Index into [heroTour].
   CatalogueItem get _item => heroTour[_index];
@@ -301,13 +300,12 @@ class _StageState extends State<_Stage> with SingleTickerProviderStateMixin {
     if (index == _index) return Duration.zero;
     final PlateSpec next = heroTour[index].entry.spec;
     final Duration length = _transitionLength(_item.entry.spec, next);
-    final List<String?> carried = carryValues(_plate.values, next);
     _selecting = true;
     setState(() {
       _index = index;
       _labelVisible = false;
       _plate.adoptSpec(next, preserve: PlateValuePreservation.none);
-      _plate.setValues(carried);
+      _plate.hints.value = heroTour[index].entry.sampleValues;
     });
     _selecting = false;
     _labelSwap?.cancel();

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iran_plate/iran_plate.dart';
 import 'package:palestine_plate/palestine_plate.dart';
 import 'package:plate_core/plate_core.dart';
+import 'package:yemen_plate/yemen_plate.dart';
 
 import '../data/catalogue.dart';
 import '../data/plate_code.dart';
@@ -74,10 +75,7 @@ class WhySection extends StatelessWidget {
     final CatalogueItem? iran = of(IranPlates.civil);
     final CatalogueItem? westBank = of(PSWestBankPlates.modernCar);
     final CatalogueItem? gaza = of(PSGazaPlates.car2012);
-    // Northern specs are built per geometry, so there is no named constant.
-    final CatalogueItem? yemenNorth = catalogueItems
-        .where((CatalogueItem i) => i.entry.id.startsWith('ye.northern.car.private.blue'))
-        .firstOrNull;
+    final CatalogueItem? yemenNorth = of(YemenNorthernPlates.car);
 
     Widget card(CatalogueItem? item, String title, String text, {PlateTheme? theme}) => PdCard(
       child: Column(
@@ -154,7 +152,11 @@ class CompareSection extends StatefulWidget {
 
 class _CompareSectionState extends State<CompareSection> {
   final TextEditingController _text = TextEditingController(text: '12ب3ABcd');
-  final PlateController _plate = PlateController(spec: IranPlates.civil);
+  final PlateController _plate = PlateController(spec: IranPlates.civil)
+    ..hints.value = catalogueItems
+        .firstWhere((CatalogueItem item) => identical(item.entry.spec, IranPlates.civil))
+        .entry
+        .sampleValues;
 
   final GlobalKey _plateKey = GlobalKey();
 
