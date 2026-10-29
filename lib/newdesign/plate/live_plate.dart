@@ -22,6 +22,9 @@ String describeSlots(PlateAlphabet alphabet, int count) {
   return count == 1 ? 'a $script letter' : '$count $script letters';
 }
 
+// TODO(py): [H7] script by code-point range; Python iterates code points already, ranges port as is.
+// TODO(ts): [H7] Array.from(all).some(...) for ranges; the Persian RegExp needs no flag (all BMP).
+// TODO(kt): [H7] codePoints() for ranges; Persian letters are BMP so chars would also work.
 /// "A–Z" for Latin capitals, otherwise the script's English name.
 String scriptOf(PlateAlphabet alphabet) {
   final String all = alphabet.characters.join();
@@ -51,6 +54,9 @@ int? firstEmpty(PlateSpec spec, List<String?> values) {
   return null;
 }
 
+// TODO(py): [D4-code] verdict order: entry validator, then restriction, then valid; same in every port.
+// TODO(ts): [D4-code] verdict order: entry validator, then restriction, then valid; same in every port.
+// TODO(kt): [D4-code] verdict order: entry validator, then restriction, then valid; same in every port.
 /// The verdict on a full plate: the entry's validator, else the spec's
 /// restrictions, else valid.
 PlateValidation verdictOf(PlateSpec spec, List<String?> values, PlateValidator? validator) {
@@ -58,6 +64,9 @@ PlateValidation verdictOf(PlateSpec spec, List<String?> values, PlateValidator? 
   return validator?.validate(entry) ?? restrictionVerdict(entry) ?? const PlateValidation.valid();
 }
 
+// TODO(py): [D8] QWidget: plate + status line + keypad; the hint timer is a QTimer.singleShot.
+// TODO(ts): [D8] component: plate + status line; hint via setTimeout; key observer via keydown on document.
+// TODO(kt): [D8] @Composable LivePlate; the key observer is Modifier.onPreviewKeyEvent, never consuming.
 /// A live PlateCanvas with the DS status line under it and, when the next
 /// slot takes a picked letter, the inline letter picker.
 class LivePlate extends StatefulWidget {
@@ -140,6 +149,9 @@ class _LivePlateState extends State<LivePlate> {
   /// synchronous setState would assert; those rebuilds wait for the frame.
   void _changed() => _safeSetState(() {});
 
+  // TODO(py): drop — Qt repaints are queued; no build phase to defer past.
+  // TODO(ts): drop — signals notify outside any render pass; no post-frame hack.
+  // TODO(kt): drop — Compose state writes are snapshot-safe; no post-frame hack.
   void _safeSetState(VoidCallback fn) {
     if (SchedulerBinding.instance.schedulerPhase != SchedulerPhase.persistentCallbacks) {
       setState(fn);
@@ -155,6 +167,9 @@ class _LivePlateState extends State<LivePlate> {
     if (r != null) _flash(r.reason);
   }
 
+  // TODO(py): [H14] observe keyPressEvent before the QLineEdit; ignore() so the slot still gets the key.
+  // TODO(ts): [H14] document keydown listener, passive; check event.key.length via Array.from, not .length.
+  // TODO(kt): [H14] onPreviewKeyEvent returning false; compare utf16CodePoint, not a Char.
   /// Observes (never consumes) keys typed into the focused plate, to explain
   /// a character the slot refuses. The canvas itself just ignores it.
   bool _onKey(KeyEvent event) {
@@ -342,6 +357,9 @@ class _LivePlateState extends State<LivePlate> {
   }
 }
 
+// TODO(py): [D1] which alphabets the keypad shows (digits, active letters) is model logic, not UI.
+// TODO(ts): [D1] same: derive {digits, letters, active, showLetters} in the model, the DOM only paints.
+// TODO(kt): [D1] same: derive {digits, letters, active, showLetters} in the model, Compose only paints.
 /// The package keypad wired to [controller], showing the alphabets of the
 /// spec's slots and highlighting the one the next character goes into.
 class SlotKeypad extends StatelessWidget {
@@ -428,6 +446,9 @@ class LetterPicker extends StatelessWidget {
   }
 }
 
+// TODO(py): [D7] auto-type demo = QTimer chain; values typed per code point, then clear and repeat.
+// TODO(ts): [D7] auto-type demo = setTimeout chain; split values with Array.from (H7), then clear and repeat.
+// TODO(kt): [D7] auto-type demo = LaunchedEffect loop with delay(); split values by code points (H7).
 /// A plate in display mode with fixed values (the landing's example cards).
 class StaticPlate extends StatefulWidget {
   const StaticPlate({
@@ -501,6 +522,9 @@ class _StaticPlateState extends State<StaticPlate> {
       _c.setValues(values);
       return;
     }
+    // TODO(py): [H7] one keystroke per character: list(v) is code points; Persian combining marks are rare here.
+    // TODO(ts): [H7] Array.from(v), never v.split(''): surrogate pairs and combining marks.
+    // TODO(kt): [H7] v.codePoints() to strings, not v.toList(): chars split surrogate pairs.
     // One keystroke per character, so a slot holding "123" types 1, 2, 3.
     final List<List<String>> keys = <List<String>>[
       for (final String? v in values) (v ?? '').characters.toList(),
@@ -566,6 +590,9 @@ class _StaticPlateState extends State<StaticPlate> {
   );
 }
 
+// TODO(py): [D4-table] caption = spec.resolve_region(group) or None; fade via QVariantAnimation 200 ms.
+// TODO(ts): [D4-table] caption from the exported table; cross-fade 200 ms with CSS opacity.
+// TODO(kt): [D4-table] caption from the exported table; AnimatedContent 200 ms.
 /// Where the typed characters say the plate was issued, for the plates that
 /// have no room to print it ([PlateSpec.resolveRegion]). Takes no space on a
 /// plate without a resolver; on one with it, the line is always reserved so

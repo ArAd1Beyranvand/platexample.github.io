@@ -8,6 +8,9 @@ void main() {
   runApp(const MinimalApp());
 }
 
+// TODO(py): [D2] holder = one PySide6 window: plate, keypad, verdict line; see ROADMAP "Holder spec".
+// TODO(ts): [D2] holder = Vite + vanilla TS page: plate SVG, DOM inputs, keypad, verdict; ROADMAP "Holder spec".
+// TODO(kt): [D2] holder = Compose Desktop window first, Android second; ROADMAP "Holder spec".
 class MinimalApp extends StatelessWidget {
   const MinimalApp({super.key});
 
