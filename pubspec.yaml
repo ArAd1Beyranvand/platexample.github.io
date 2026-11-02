@@ -45,383 +45,383 @@ dependencies:
   # The optional on-screen keypad + slot picker, extracted from plate_core
   # in P7. Depends on plate_core for PlateAlphabet.
   plate_keypad:
-    path: ../plate_keypad
+    path: ../plate_keypad/flutter
 
   # The country packages, extracted from plate_core in P8. Each owns its own
   # plate specs, alphabets and flag/sticker assets, and depends on plate_core
   # and nothing else — not on the keypad, and not on each other.
   caribbean_plate:
-    path: ../caribbean_plate
+    path: ../caribbean_plate/flutter
   indian_ocean_plate:
-    path: ../indian_ocean_plate
+    path: ../indian_ocean_plate/flutter
   polynesia_plate:
-    path: ../polynesia_plate
+    path: ../polynesia_plate/flutter
   sahara_plate:
-    path: ../sahara_plate
+    path: ../sahara_plate/flutter
   iran_plate:
-    path: ../iran_plate
+    path: ../iran_plate/flutter
   iranshahr_plate:
-    path: ../iranshahr_plate
+    path: ../iranshahr_plate/flutter
   germany_plate:
-    path: ../germany_plate
+    path: ../germany_plate/flutter
 
   palestine_plate:
-    path: ../palestine_plate
+    path: ../palestine_plate/flutter
   yemen_plate:
-    path: ../yemen_plate
+    path: ../yemen_plate/flutter
 
   lebanon_plate:
-    path: ../lebanon_plate
+    path: ../lebanon_plate/flutter
   cuba_plate:
-    path: ../cuba_plate
+    path: ../cuba_plate/flutter
   venezuela_plate:
-    path: ../venezuela_plate
+    path: ../venezuela_plate/flutter
   india_plate:
-    path: ../india_plate
+    path: ../india_plate/flutter
   malaysia_plate:
-    path: ../malaysia_plate
+    path: ../malaysia_plate/flutter
   philippines_plate:
-    path: ../philippines_plate
+    path: ../philippines_plate/flutter
   algeria_plate:
-    path: ../algeria_plate
+    path: ../algeria_plate/flutter
   indonesia_plate:
-    path: ../indonesia_plate
+    path: ../indonesia_plate/flutter
   namibia_plate:
-    path: ../namibia_plate
+    path: ../namibia_plate/flutter
   nicaragua_plate:
-    path: ../nicaragua_plate
+    path: ../nicaragua_plate/flutter
   syria_plate:
-    path: ../syria_plate
+    path: ../syria_plate/flutter
   tunisia_plate:
-    path: ../tunisia_plate
+    path: ../tunisia_plate/flutter
   bolivia_plate:
-    path: ../bolivia_plate
+    path: ../bolivia_plate/flutter
   colombia_plate:
-    path: ../colombia_plate
+    path: ../colombia_plate/flutter
   sudan_plate:
-    path: ../sudan_plate
+    path: ../sudan_plate/flutter
   niger_plate:
-    path: ../niger_plate
+    path: ../niger_plate/flutter
   mali_plate:
-    path: ../mali_plate
+    path: ../mali_plate/flutter
   north_korea_plate:
-    path: ../north_korea_plate
+    path: ../north_korea_plate/flutter
   mauritania_plate:
-    path: ../mauritania_plate
+    path: ../mauritania_plate/flutter
   brazil_plate:
-    path: ../brazil_plate
+    path: ../brazil_plate/flutter
   comoros_plate:
-    path: ../comoros_plate
+    path: ../comoros_plate/flutter
   somalia_plate:
-    path: ../somalia_plate
+    path: ../somalia_plate/flutter
   libya_plate:
-    path: ../libya_plate
+    path: ../libya_plate/flutter
   brunei_plate:
-    path: ../brunei_plate
+    path: ../brunei_plate/flutter
   maldives_plate:
-    path: ../maldives_plate
+    path: ../maldives_plate/flutter
   laos_plate:
-    path: ../laos_plate
+    path: ../laos_plate/flutter
   vietnam_plate:
-    path: ../vietnam_plate
+    path: ../vietnam_plate/flutter
   canary_islands_plate:
-    path: ../canary_islands_plate
+    path: ../canary_islands_plate/flutter
   suriname_plate:
-    path: ../suriname_plate
+    path: ../suriname_plate/flutter
   nepal_plate:
-    path: ../nepal_plate
+    path: ../nepal_plate/flutter
   luxembourg_plate:
-    path: ../luxembourg_plate
+    path: ../luxembourg_plate/flutter
   iceland_plate:
-    path: ../iceland_plate
+    path: ../iceland_plate/flutter
   cyprus_plate:
-    path: ../cyprus_plate
+    path: ../cyprus_plate/flutter
   croatia_plate:
-    path: ../croatia_plate
+    path: ../croatia_plate/flutter
   burundi_plate:
-    path: ../burundi_plate
+    path: ../burundi_plate/flutter
   belgium_plate:
-    path: ../belgium_plate
+    path: ../belgium_plate/flutter
   fiji_plate:
-    path: ../fiji_plate
+    path: ../fiji_plate/flutter
   liberia_plate:
-    path: ../liberia_plate
+    path: ../liberia_plate/flutter
   new_zealand_plate:
-    path: ../new_zealand_plate
+    path: ../new_zealand_plate/flutter
   samoa_plate:
-    path: ../samoa_plate
+    path: ../samoa_plate/flutter
   solomon_islands_plate:
-    path: ../solomon_islands_plate
+    path: ../solomon_islands_plate/flutter
   federated_states_of_micronesia_plate:
-    path: ../federated_states_of_micronesia_plate
+    path: ../federated_states_of_micronesia_plate/flutter
   sovereign_military_order_of_malta_plate:
-    path: ../sovereign_military_order_of_malta_plate
+    path: ../sovereign_military_order_of_malta_plate/flutter
   madeira_plate:
-    path: ../madeira_plate
+    path: ../madeira_plate/flutter
   romania_plate:
-    path: ../romania_plate
+    path: ../romania_plate/flutter
   poland_plate:
-    path: ../poland_plate
+    path: ../poland_plate/flutter
   tuvalu_plate:
-    path: ../tuvalu_plate
+    path: ../tuvalu_plate/flutter
   trinidad_and_tobago_plate:
-    path: ../trinidad_and_tobago_plate
+    path: ../trinidad_and_tobago_plate/flutter
   tonga_plate:
-    path: ../tonga_plate
+    path: ../tonga_plate/flutter
   togo_plate:
-    path: ../togo_plate
+    path: ../togo_plate/flutter
   saint_lucia_plate:
-    path: ../saint_lucia_plate
+    path: ../saint_lucia_plate/flutter
   saint_kitts_and_nevis_plate:
-    path: ../saint_kitts_and_nevis_plate
+    path: ../saint_kitts_and_nevis_plate/flutter
   rwanda_plate:
-    path: ../rwanda_plate
+    path: ../rwanda_plate/flutter
   peru_plate:
-    path: ../peru_plate
+    path: ../peru_plate/flutter
   papua_new_guinea_plate:
-    path: ../papua_new_guinea_plate
+    path: ../papua_new_guinea_plate/flutter
   panama_plate:
-    path: ../panama_plate
+    path: ../panama_plate/flutter
   palau_plate:
-    path: ../palau_plate
+    path: ../palau_plate/flutter
   north_macedonia_plate:
-    path: ../north_macedonia_plate
+    path: ../north_macedonia_plate/flutter
   france_plate:
-    path: ../france_plate
+    path: ../france_plate/flutter
   china_plate:
-    path: ../china_plate
+    path: ../china_plate/flutter
   kanak_plate:
-    path: ../kanak_plate
+    path: ../kanak_plate/flutter
   montenegro_plate:
-    path: ../montenegro_plate
+    path: ../montenegro_plate/flutter
   latvia_plate:
-    path: ../latvia_plate
+    path: ../latvia_plate/flutter
   honduras_plate:
-    path: ../honduras_plate
+    path: ../honduras_plate/flutter
   haiti_plate:
-    path: ../haiti_plate
+    path: ../haiti_plate/flutter
   nauru_plate:
-    path: ../nauru_plate
+    path: ../nauru_plate/flutter
   monaco_plate:
-    path: ../monaco_plate
+    path: ../monaco_plate/flutter
   marshall_islands_plate:
-    path: ../marshall_islands_plate
+    path: ../marshall_islands_plate/flutter
   lithuania_plate:
-    path: ../lithuania_plate
+    path: ../lithuania_plate/flutter
   kiribati_plate:
-    path: ../kiribati_plate
+    path: ../kiribati_plate/flutter
   guyana_plate:
-    path: ../guyana_plate
+    path: ../guyana_plate/flutter
   grenada_plate:
-    path: ../grenada_plate
+    path: ../grenada_plate/flutter
   ethiopia_plate:
-    path: ../ethiopia_plate
+    path: ../ethiopia_plate/flutter
   australia_plate:
-    path: ../australia_plate
+    path: ../australia_plate/flutter
   moldova_plate:
-    path: ../moldova_plate
+    path: ../moldova_plate/flutter
   georgia_country_plate:
-    path: ../georgia_country_plate
+    path: ../georgia_country_plate/flutter
   singapore_plate:
-    path: ../singapore_plate
+    path: ../singapore_plate/flutter
   denmark_plate:
-    path: ../denmark_plate
+    path: ../denmark_plate/flutter
   paraguay_plate:
-    path: ../paraguay_plate
+    path: ../paraguay_plate/flutter
   hungary_plate:
-    path: ../hungary_plate
+    path: ../hungary_plate/flutter
   czech_republic_plate:
-    path: ../czech_republic_plate
+    path: ../czech_republic_plate/flutter
   guatemala_plate:
-    path: ../guatemala_plate
+    path: ../guatemala_plate/flutter
   ivory_coast_plate:
-    path: ../ivory_coast_plate
+    path: ../ivory_coast_plate/flutter
   ghana_plate:
-    path: ../ghana_plate
+    path: ../ghana_plate/flutter
   morocco_plate:
-    path: ../morocco_plate
+    path: ../morocco_plate/flutter
   uganda_plate:
-    path: ../uganda_plate
+    path: ../uganda_plate/flutter
   south_africa_plate:
-    path: ../south_africa_plate
+    path: ../south_africa_plate/flutter
   democratic_republic_of_the_congo_plate:
-    path: ../democratic_republic_of_the_congo_plate
+    path: ../democratic_republic_of_the_congo_plate/flutter
   mexico_plate:
-    path: ../mexico_plate
+    path: ../mexico_plate/flutter
   nigeria_plate:
-    path: ../nigeria_plate
+    path: ../nigeria_plate/flutter
   pakistan_plate:
-    path: ../pakistan_plate
+    path: ../pakistan_plate/flutter
   switzerland_plate:
-    path: ../switzerland_plate
+    path: ../switzerland_plate/flutter
   slovakia_plate:
-    path: ../slovakia_plate
+    path: ../slovakia_plate/flutter
   russia_plate:
-    path: ../russia_plate
+    path: ../russia_plate/flutter
   united_kingdom_plate:
-    path: ../united_kingdom_plate
+    path: ../united_kingdom_plate/flutter
   netherlands_plate:
-    path: ../netherlands_plate
+    path: ../netherlands_plate/flutter
   sweden_plate:
-    path: ../sweden_plate
+    path: ../sweden_plate/flutter
   dominican_republic_plate:
-    path: ../dominican_republic_plate
+    path: ../dominican_republic_plate/flutter
   dominica_plate:
-    path: ../dominica_plate
+    path: ../dominica_plate/flutter
   belize_plate:
-    path: ../belize_plate
+    path: ../belize_plate/flutter
   barbados_plate:
-    path: ../barbados_plate
+    path: ../barbados_plate/flutter
   antigua_and_barbuda_plate:
-    path: ../antigua_and_barbuda_plate
+    path: ../antigua_and_barbuda_plate/flutter
   bahamas_plate:
-    path: ../bahamas_plate
+    path: ../bahamas_plate/flutter
   san_marino_plate:
-    path: ../san_marino_plate
+    path: ../san_marino_plate/flutter
   canada_plate:
-    path: ../canada_plate
+    path: ../canada_plate/flutter
   japan_plate:
-    path: ../japan_plate
+    path: ../japan_plate/flutter
   finland_plate:
-    path: ../finland_plate
+    path: ../finland_plate/flutter
   greece_plate:
-    path: ../greece_plate
+    path: ../greece_plate/flutter
   andorra_plate:
-    path: ../andorra_plate
+    path: ../andorra_plate/flutter
   liechtenstein_plate:
-    path: ../liechtenstein_plate
+    path: ../liechtenstein_plate/flutter
   guinea_plate:
-    path: ../guinea_plate
+    path: ../guinea_plate/flutter
   gambia_plate:
-    path: ../gambia_plate
+    path: ../gambia_plate/flutter
   portugal_plate:
-    path: ../portugal_plate
+    path: ../portugal_plate/flutter
   seychelles_plate:
-    path: ../seychelles_plate
+    path: ../seychelles_plate/flutter
   mauritius_plate:
-    path: ../mauritius_plate
+    path: ../mauritius_plate/flutter
   senegal_plate:
-    path: ../senegal_plate
+    path: ../senegal_plate/flutter
   lesotho_plate:
-    path: ../lesotho_plate
+    path: ../lesotho_plate/flutter
   madagascar_plate:
-    path: ../madagascar_plate
+    path: ../madagascar_plate/flutter
   malawi_plate:
-    path: ../malawi_plate
+    path: ../malawi_plate/flutter
   zambia_plate:
-    path: ../zambia_plate
+    path: ../zambia_plate/flutter
   gabon_plate:
-    path: ../gabon_plate
+    path: ../gabon_plate/flutter
   equatorial_guinea_plate:
-    path: ../equatorial_guinea_plate
+    path: ../equatorial_guinea_plate/flutter
   chad_plate:
-    path: ../chad_plate
+    path: ../chad_plate/flutter
   cameroon_plate:
-    path: ../cameroon_plate
+    path: ../cameroon_plate/flutter
   cape_verde_plate:
-    path: ../cape_verde_plate
+    path: ../cape_verde_plate/flutter
   burkina_faso_plate:
-    path: ../burkina_faso_plate
+    path: ../burkina_faso_plate/flutter
   eritrea_plate:
-    path: ../eritrea_plate
+    path: ../eritrea_plate/flutter
   djibouti_plate:
-    path: ../djibouti_plate
+    path: ../djibouti_plate/flutter
   kyrgyzstan_plate:
-    path: ../kyrgyzstan_plate
+    path: ../kyrgyzstan_plate/flutter
   chile_plate:
-    path: ../chile_plate
+    path: ../chile_plate/flutter
   slovenia_plate:
-    path: ../slovenia_plate
+    path: ../slovenia_plate/flutter
   italy_plate:
-    path: ../italy_plate
+    path: ../italy_plate/flutter
   spain_plate:
-    path: ../spain_plate
+    path: ../spain_plate/flutter
   republic_of_ireland_plate:
-    path: ../republic_of_ireland_plate
+    path: ../republic_of_ireland_plate/flutter
   zimbabwe_plate:
-    path: ../zimbabwe_plate
+    path: ../zimbabwe_plate/flutter
   kenya_plate:
-    path: ../kenya_plate
+    path: ../kenya_plate/flutter
 
   # The rest of the catalogue: one package per country, every one a local
   # path checkout like the blocks above.
   angola_plate:
-    path: ../angola_plate
+    path: ../angola_plate/flutter
   benin_plate:
-    path: ../benin_plate
+    path: ../benin_plate/flutter
   bhutan_plate:
-    path: ../bhutan_plate
+    path: ../bhutan_plate/flutter
   bosnia_and_herzegovina_plate:
-    path: ../bosnia_and_herzegovina_plate
+    path: ../bosnia_and_herzegovina_plate/flutter
   botswana_plate:
-    path: ../botswana_plate
+    path: ../botswana_plate/flutter
   cambodia_plate:
-    path: ../cambodia_plate
+    path: ../cambodia_plate/flutter
   central_african_republic_plate:
-    path: ../central_african_republic_plate
+    path: ../central_african_republic_plate/flutter
   egypt_plate:
-    path: ../egypt_plate
+    path: ../egypt_plate/flutter
   jordan_plate:
-    path: ../jordan_plate
+    path: ../jordan_plate/flutter
   malta_plate:
-    path: ../malta_plate
+    path: ../malta_plate/flutter
   mongolia_plate:
-    path: ../mongolia_plate
+    path: ../mongolia_plate/flutter
   mozambique_plate:
-    path: ../mozambique_plate
+    path: ../mozambique_plate/flutter
   myanmar_plate:
-    path: ../myanmar_plate
+    path: ../myanmar_plate/flutter
   norway_plate:
-    path: ../norway_plate
+    path: ../norway_plate/flutter
   republic_of_the_congo_plate:
-    path: ../republic_of_the_congo_plate
+    path: ../republic_of_the_congo_plate/flutter
   saint_vincent_and_the_grenadines_plate:
-    path: ../saint_vincent_and_the_grenadines_plate
+    path: ../saint_vincent_and_the_grenadines_plate/flutter
   serbia_plate:
-    path: ../serbia_plate
+    path: ../serbia_plate/flutter
   sri_lanka_plate:
-    path: ../sri_lanka_plate
+    path: ../sri_lanka_plate/flutter
   tanzania_plate:
-    path: ../tanzania_plate
+    path: ../tanzania_plate/flutter
   thailand_plate:
-    path: ../thailand_plate
+    path: ../thailand_plate/flutter
   timor_leste_plate:
-    path: ../timor_leste_plate
+    path: ../timor_leste_plate/flutter
   uruguay_plate:
-    path: ../uruguay_plate
+    path: ../uruguay_plate/flutter
   vanuatu_plate:
-    path: ../vanuatu_plate
+    path: ../vanuatu_plate/flutter
   vatican_city_plate:
-    path: ../vatican_city_plate
+    path: ../vatican_city_plate/flutter
 
   url_launcher: ^6.3.2
   web: ^1.1.1
   albania_plate:
-    path: ../albania_plate
+    path: ../albania_plate/flutter
   argentina_plate:
-    path: ../argentina_plate
+    path: ../argentina_plate/flutter
   austria_plate:
-    path: ../austria_plate
+    path: ../austria_plate/flutter
   bangladesh_plate:
-    path: ../bangladesh_plate
+    path: ../bangladesh_plate/flutter
   bulgaria_plate:
-    path: ../bulgaria_plate
+    path: ../bulgaria_plate/flutter
   costa_rica_plate:
-    path: ../costa_rica_plate
+    path: ../costa_rica_plate/flutter
   ecuador_plate:
-    path: ../ecuador_plate
+    path: ../ecuador_plate/flutter
   el_salvador_plate:
-    path: ../el_salvador_plate
+    path: ../el_salvador_plate/flutter
   estonia_plate:
-    path: ../estonia_plate
+    path: ../estonia_plate/flutter
   eswatini_plate:
-    path: ../eswatini_plate
+    path: ../eswatini_plate/flutter
   jamaica_plate:
-    path: ../jamaica_plate
+    path: ../jamaica_plate/flutter
   saint_helena_plate:
-    path: ../saint_helena_plate
+    path: ../saint_helena_plate/flutter
   south_sudan_plate:
-    path: ../south_sudan_plate
+    path: ../south_sudan_plate/flutter
 
 dev_dependencies:
   flutter_test:
@@ -434,77 +434,77 @@ dev_dependencies:
 # pub.dev. plate_core is now published and uses the versioned dependency above.
 dependency_overrides:
   portugal_plate:
-    path: ../portugal_plate
+    path: ../portugal_plate/flutter
   # Local development only: this stage's PlateController/PlateView API is not
   # published yet, so plate_core resolves to the sibling checkout.
   plate_core:
-    path: ../plate_core
+    path: ../plate_core/flutter
   plate_keypad:
-    path: ../plate_keypad
+    path: ../plate_keypad/flutter
   iran_plate:
-    path: ../iran_plate
+    path: ../iran_plate/flutter
   iranshahr_plate:
-    path: ../iranshahr_plate
+    path: ../iranshahr_plate/flutter
   germany_plate:
-    path: ../germany_plate
+    path: ../germany_plate/flutter
   palestine_plate:
-    path: ../palestine_plate
+    path: ../palestine_plate/flutter
   yemen_plate:
-    path: ../yemen_plate
+    path: ../yemen_plate/flutter
   lebanon_plate:
-    path: ../lebanon_plate
+    path: ../lebanon_plate/flutter
   namibia_plate:
-    path: ../namibia_plate
+    path: ../namibia_plate/flutter
   nicaragua_plate:
-    path: ../nicaragua_plate
+    path: ../nicaragua_plate/flutter
   angola_plate:
-    path: ../angola_plate
+    path: ../angola_plate/flutter
   benin_plate:
-    path: ../benin_plate
+    path: ../benin_plate/flutter
   bhutan_plate:
-    path: ../bhutan_plate
+    path: ../bhutan_plate/flutter
   bosnia_and_herzegovina_plate:
-    path: ../bosnia_and_herzegovina_plate
+    path: ../bosnia_and_herzegovina_plate/flutter
   botswana_plate:
-    path: ../botswana_plate
+    path: ../botswana_plate/flutter
   cambodia_plate:
-    path: ../cambodia_plate
+    path: ../cambodia_plate/flutter
   central_african_republic_plate:
-    path: ../central_african_republic_plate
+    path: ../central_african_republic_plate/flutter
   egypt_plate:
-    path: ../egypt_plate
+    path: ../egypt_plate/flutter
   jordan_plate:
-    path: ../jordan_plate
+    path: ../jordan_plate/flutter
   malta_plate:
-    path: ../malta_plate
+    path: ../malta_plate/flutter
   mongolia_plate:
-    path: ../mongolia_plate
+    path: ../mongolia_plate/flutter
   mozambique_plate:
-    path: ../mozambique_plate
+    path: ../mozambique_plate/flutter
   myanmar_plate:
-    path: ../myanmar_plate
+    path: ../myanmar_plate/flutter
   norway_plate:
-    path: ../norway_plate
+    path: ../norway_plate/flutter
   republic_of_the_congo_plate:
-    path: ../republic_of_the_congo_plate
+    path: ../republic_of_the_congo_plate/flutter
   saint_vincent_and_the_grenadines_plate:
-    path: ../saint_vincent_and_the_grenadines_plate
+    path: ../saint_vincent_and_the_grenadines_plate/flutter
   serbia_plate:
-    path: ../serbia_plate
+    path: ../serbia_plate/flutter
   sri_lanka_plate:
-    path: ../sri_lanka_plate
+    path: ../sri_lanka_plate/flutter
   tanzania_plate:
-    path: ../tanzania_plate
+    path: ../tanzania_plate/flutter
   thailand_plate:
-    path: ../thailand_plate
+    path: ../thailand_plate/flutter
   timor_leste_plate:
-    path: ../timor_leste_plate
+    path: ../timor_leste_plate/flutter
   uruguay_plate:
-    path: ../uruguay_plate
+    path: ../uruguay_plate/flutter
   vanuatu_plate:
-    path: ../vanuatu_plate
+    path: ../vanuatu_plate/flutter
   vatican_city_plate:
-    path: ../vatican_city_plate
+    path: ../vatican_city_plate/flutter
 
   # Not a dependency this app names — it reaches it through the country
   # packages, every one of which takes its digit and letter alphabets from it.
@@ -514,7 +514,7 @@ dependency_overrides:
   # entry `package:plate_alphabet/...` is missing from this app's package
   # config and every country package fails to compile.
   plate_alphabet:
-    path: ../plate_alphabet
+    path: ../plate_alphabet/flutter
 
 flutter:
   uses-material-design: true
