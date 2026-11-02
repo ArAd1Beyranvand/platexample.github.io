@@ -4,42 +4,42 @@ packages:
   albania_plate:
     dependency: "direct main"
     description:
-      path: "../albania_plate"
+      path: "../albania_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   algeria_plate:
     dependency: "direct main"
     description:
-      path: "../algeria_plate"
+      path: "../algeria_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   andorra_plate:
     dependency: "direct main"
     description:
-      path: "../andorra_plate"
+      path: "../andorra_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   angola_plate:
     dependency: "direct main"
     description:
-      path: "../angola_plate"
+      path: "../angola_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   antigua_and_barbuda_plate:
     dependency: "direct main"
     description:
-      path: "../antigua_and_barbuda_plate"
+      path: "../antigua_and_barbuda_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   argentina_plate:
     dependency: "direct main"
     description:
-      path: "../argentina_plate"
+      path: "../argentina_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
@@ -62,70 +62,70 @@ packages:
   australia_plate:
     dependency: "direct main"
     description:
-      path: "../australia_plate"
+      path: "../australia_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   austria_plate:
     dependency: "direct main"
     description:
-      path: "../austria_plate"
+      path: "../austria_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   bahamas_plate:
     dependency: "direct main"
     description:
-      path: "../bahamas_plate"
+      path: "../bahamas_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   bangladesh_plate:
     dependency: "direct main"
     description:
-      path: "../bangladesh_plate"
+      path: "../bangladesh_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   barbados_plate:
     dependency: "direct main"
     description:
-      path: "../barbados_plate"
+      path: "../barbados_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   belgium_plate:
     dependency: "direct main"
     description:
-      path: "../belgium_plate"
+      path: "../belgium_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   belize_plate:
     dependency: "direct main"
     description:
-      path: "../belize_plate"
+      path: "../belize_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   benin_plate:
     dependency: "direct main"
     description:
-      path: "../benin_plate"
+      path: "../benin_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   bhutan_plate:
     dependency: "direct main"
     description:
-      path: "../bhutan_plate"
+      path: "../bhutan_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   bolivia_plate:
     dependency: "direct main"
     description:
-      path: "../bolivia_plate"
+      path: "../bolivia_plate/flutter"
       relative: true
     source: path
     version: "0.1.1"
@@ -140,105 +140,105 @@ packages:
   bosnia_and_herzegovina_plate:
     dependency: "direct main"
     description:
-      path: "../bosnia_and_herzegovina_plate"
+      path: "../bosnia_and_herzegovina_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   botswana_plate:
     dependency: "direct main"
     description:
-      path: "../botswana_plate"
+      path: "../botswana_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   brazil_plate:
     dependency: "direct main"
     description:
-      path: "../brazil_plate"
+      path: "../brazil_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   brunei_plate:
     dependency: "direct main"
     description:
-      path: "../brunei_plate"
+      path: "../brunei_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   bulgaria_plate:
     dependency: "direct main"
     description:
-      path: "../bulgaria_plate"
+      path: "../bulgaria_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   burkina_faso_plate:
     dependency: "direct main"
     description:
-      path: "../burkina_faso_plate"
+      path: "../burkina_faso_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   burundi_plate:
     dependency: "direct main"
     description:
-      path: "../burundi_plate"
+      path: "../burundi_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   cambodia_plate:
     dependency: "direct main"
     description:
-      path: "../cambodia_plate"
+      path: "../cambodia_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   cameroon_plate:
     dependency: "direct main"
     description:
-      path: "../cameroon_plate"
+      path: "../cameroon_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   canada_plate:
     dependency: "direct main"
     description:
-      path: "../canada_plate"
+      path: "../canada_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   canary_islands_plate:
     dependency: "direct main"
     description:
-      path: "../canary_islands_plate"
+      path: "../canary_islands_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   cape_verde_plate:
     dependency: "direct main"
     description:
-      path: "../cape_verde_plate"
+      path: "../cape_verde_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   caribbean_plate:
     dependency: "direct main"
     description:
-      path: "../caribbean_plate"
+      path: "../caribbean_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   central_african_republic_plate:
     dependency: "direct main"
     description:
-      path: "../central_african_republic_plate"
+      path: "../central_african_republic_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   chad_plate:
     dependency: "direct main"
     description:
-      path: "../chad_plate"
+      path: "../chad_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
@@ -253,14 +253,14 @@ packages:
   chile_plate:
     dependency: "direct main"
     description:
-      path: "../chile_plate"
+      path: "../chile_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   china_plate:
     dependency: "direct main"
     description:
-      path: "../china_plate"
+      path: "../china_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
@@ -283,140 +283,140 @@ packages:
   colombia_plate:
     dependency: "direct main"
     description:
-      path: "../colombia_plate"
+      path: "../colombia_plate/flutter"
       relative: true
     source: path
     version: "0.1.1"
   comoros_plate:
     dependency: "direct main"
     description:
-      path: "../comoros_plate"
+      path: "../comoros_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   costa_rica_plate:
     dependency: "direct main"
     description:
-      path: "../costa_rica_plate"
+      path: "../costa_rica_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   croatia_plate:
     dependency: "direct main"
     description:
-      path: "../croatia_plate"
+      path: "../croatia_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   cuba_plate:
     dependency: "direct main"
     description:
-      path: "../cuba_plate"
+      path: "../cuba_plate/flutter"
       relative: true
     source: path
     version: "0.1.1"
   cyprus_plate:
     dependency: "direct main"
     description:
-      path: "../cyprus_plate"
+      path: "../cyprus_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   czech_republic_plate:
     dependency: "direct main"
     description:
-      path: "../czech_republic_plate"
+      path: "../czech_republic_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   democratic_republic_of_the_congo_plate:
     dependency: "direct main"
     description:
-      path: "../democratic_republic_of_the_congo_plate"
+      path: "../democratic_republic_of_the_congo_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   denmark_plate:
     dependency: "direct main"
     description:
-      path: "../denmark_plate"
+      path: "../denmark_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   djibouti_plate:
     dependency: "direct main"
     description:
-      path: "../djibouti_plate"
+      path: "../djibouti_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   dominica_plate:
     dependency: "direct main"
     description:
-      path: "../dominica_plate"
+      path: "../dominica_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   dominican_republic_plate:
     dependency: "direct main"
     description:
-      path: "../dominican_republic_plate"
+      path: "../dominican_republic_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   ecuador_plate:
     dependency: "direct main"
     description:
-      path: "../ecuador_plate"
+      path: "../ecuador_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   egypt_plate:
     dependency: "direct main"
     description:
-      path: "../egypt_plate"
+      path: "../egypt_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   el_salvador_plate:
     dependency: "direct main"
     description:
-      path: "../el_salvador_plate"
+      path: "../el_salvador_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   equatorial_guinea_plate:
     dependency: "direct main"
     description:
-      path: "../equatorial_guinea_plate"
+      path: "../equatorial_guinea_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   eritrea_plate:
     dependency: "direct main"
     description:
-      path: "../eritrea_plate"
+      path: "../eritrea_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   estonia_plate:
     dependency: "direct main"
     description:
-      path: "../estonia_plate"
+      path: "../estonia_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   eswatini_plate:
     dependency: "direct main"
     description:
-      path: "../eswatini_plate"
+      path: "../eswatini_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   ethiopia_plate:
     dependency: "direct main"
     description:
-      path: "../ethiopia_plate"
+      path: "../ethiopia_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
@@ -431,21 +431,21 @@ packages:
   federated_states_of_micronesia_plate:
     dependency: "direct main"
     description:
-      path: "../federated_states_of_micronesia_plate"
+      path: "../federated_states_of_micronesia_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   fiji_plate:
     dependency: "direct main"
     description:
-      path: "../fiji_plate"
+      path: "../fiji_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   finland_plate:
     dependency: "direct main"
     description:
-      path: "../finland_plate"
+      path: "../finland_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
@@ -483,91 +483,91 @@ packages:
   france_plate:
     dependency: "direct main"
     description:
-      path: "../france_plate"
+      path: "../france_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   gabon_plate:
     dependency: "direct main"
     description:
-      path: "../gabon_plate"
+      path: "../gabon_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   gambia_plate:
     dependency: "direct main"
     description:
-      path: "../gambia_plate"
+      path: "../gambia_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   georgia_country_plate:
     dependency: "direct main"
     description:
-      path: "../georgia_country_plate"
+      path: "../georgia_country_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   germany_plate:
     dependency: "direct main"
     description:
-      path: "../germany_plate"
+      path: "../germany_plate/flutter"
       relative: true
     source: path
     version: "0.2.0"
   ghana_plate:
     dependency: "direct main"
     description:
-      path: "../ghana_plate"
+      path: "../ghana_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   greece_plate:
     dependency: "direct main"
     description:
-      path: "../greece_plate"
+      path: "../greece_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   grenada_plate:
     dependency: "direct main"
     description:
-      path: "../grenada_plate"
+      path: "../grenada_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   guatemala_plate:
     dependency: "direct main"
     description:
-      path: "../guatemala_plate"
+      path: "../guatemala_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   guinea_plate:
     dependency: "direct main"
     description:
-      path: "../guinea_plate"
+      path: "../guinea_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   guyana_plate:
     dependency: "direct main"
     description:
-      path: "../guyana_plate"
+      path: "../guyana_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   haiti_plate:
     dependency: "direct main"
     description:
-      path: "../haiti_plate"
+      path: "../haiti_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   honduras_plate:
     dependency: "direct main"
     description:
-      path: "../honduras_plate"
+      path: "../honduras_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
@@ -590,126 +590,126 @@ packages:
   hungary_plate:
     dependency: "direct main"
     description:
-      path: "../hungary_plate"
+      path: "../hungary_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   iceland_plate:
     dependency: "direct main"
     description:
-      path: "../iceland_plate"
+      path: "../iceland_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   india_plate:
     dependency: "direct main"
     description:
-      path: "../india_plate"
+      path: "../india_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   indian_ocean_plate:
     dependency: "direct main"
     description:
-      path: "../indian_ocean_plate"
+      path: "../indian_ocean_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   indonesia_plate:
     dependency: "direct main"
     description:
-      path: "../indonesia_plate"
+      path: "../indonesia_plate/flutter"
       relative: true
     source: path
     version: "0.2.0"
   iran_plate:
     dependency: "direct main"
     description:
-      path: "../iran_plate"
+      path: "../iran_plate/flutter"
       relative: true
     source: path
     version: "0.6.0"
   iranshahr_plate:
     dependency: "direct main"
     description:
-      path: "../iranshahr_plate"
+      path: "../iranshahr_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   italy_plate:
     dependency: "direct main"
     description:
-      path: "../italy_plate"
+      path: "../italy_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   ivory_coast_plate:
     dependency: "direct main"
     description:
-      path: "../ivory_coast_plate"
+      path: "../ivory_coast_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   jamaica_plate:
     dependency: "direct main"
     description:
-      path: "../jamaica_plate"
+      path: "../jamaica_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   japan_plate:
     dependency: "direct main"
     description:
-      path: "../japan_plate"
+      path: "../japan_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   jordan_plate:
     dependency: "direct main"
     description:
-      path: "../jordan_plate"
+      path: "../jordan_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   kanak_plate:
     dependency: "direct main"
     description:
-      path: "../kanak_plate"
+      path: "../kanak_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   kenya_plate:
     dependency: "direct main"
     description:
-      path: "../kenya_plate"
+      path: "../kenya_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   kiribati_plate:
     dependency: "direct main"
     description:
-      path: "../kiribati_plate"
+      path: "../kiribati_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   kyrgyzstan_plate:
     dependency: "direct main"
     description:
-      path: "../kyrgyzstan_plate"
+      path: "../kyrgyzstan_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   laos_plate:
     dependency: "direct main"
     description:
-      path: "../laos_plate"
+      path: "../laos_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   latvia_plate:
     dependency: "direct main"
     description:
-      path: "../latvia_plate"
+      path: "../latvia_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
@@ -740,35 +740,35 @@ packages:
   lebanon_plate:
     dependency: "direct main"
     description:
-      path: "../lebanon_plate"
+      path: "../lebanon_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   lesotho_plate:
     dependency: "direct main"
     description:
-      path: "../lesotho_plate"
+      path: "../lesotho_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   liberia_plate:
     dependency: "direct main"
     description:
-      path: "../liberia_plate"
+      path: "../liberia_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   libya_plate:
     dependency: "direct main"
     description:
-      path: "../libya_plate"
+      path: "../libya_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   liechtenstein_plate:
     dependency: "direct main"
     description:
-      path: "../liechtenstein_plate"
+      path: "../liechtenstein_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
@@ -783,70 +783,70 @@ packages:
   lithuania_plate:
     dependency: "direct main"
     description:
-      path: "../lithuania_plate"
+      path: "../lithuania_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   luxembourg_plate:
     dependency: "direct main"
     description:
-      path: "../luxembourg_plate"
+      path: "../luxembourg_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   madagascar_plate:
     dependency: "direct main"
     description:
-      path: "../madagascar_plate"
+      path: "../madagascar_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   madeira_plate:
     dependency: "direct main"
     description:
-      path: "../madeira_plate"
+      path: "../madeira_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   malawi_plate:
     dependency: "direct main"
     description:
-      path: "../malawi_plate"
+      path: "../malawi_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   malaysia_plate:
     dependency: "direct main"
     description:
-      path: "../malaysia_plate"
+      path: "../malaysia_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   maldives_plate:
     dependency: "direct main"
     description:
-      path: "../maldives_plate"
+      path: "../maldives_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   mali_plate:
     dependency: "direct main"
     description:
-      path: "../mali_plate"
+      path: "../mali_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   malta_plate:
     dependency: "direct main"
     description:
-      path: "../malta_plate"
+      path: "../malta_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   marshall_islands_plate:
     dependency: "direct main"
     description:
-      path: "../marshall_islands_plate"
+      path: "../marshall_islands_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
@@ -869,14 +869,14 @@ packages:
   mauritania_plate:
     dependency: "direct main"
     description:
-      path: "../mauritania_plate"
+      path: "../mauritania_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   mauritius_plate:
     dependency: "direct main"
     description:
-      path: "../mauritius_plate"
+      path: "../mauritius_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
@@ -891,175 +891,175 @@ packages:
   mexico_plate:
     dependency: "direct main"
     description:
-      path: "../mexico_plate"
+      path: "../mexico_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   moldova_plate:
     dependency: "direct main"
     description:
-      path: "../moldova_plate"
+      path: "../moldova_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   monaco_plate:
     dependency: "direct main"
     description:
-      path: "../monaco_plate"
+      path: "../monaco_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   mongolia_plate:
     dependency: "direct main"
     description:
-      path: "../mongolia_plate"
+      path: "../mongolia_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   montenegro_plate:
     dependency: "direct main"
     description:
-      path: "../montenegro_plate"
+      path: "../montenegro_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   morocco_plate:
     dependency: "direct main"
     description:
-      path: "../morocco_plate"
+      path: "../morocco_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   mozambique_plate:
     dependency: "direct main"
     description:
-      path: "../mozambique_plate"
+      path: "../mozambique_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   myanmar_plate:
     dependency: "direct main"
     description:
-      path: "../myanmar_plate"
+      path: "../myanmar_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   namibia_plate:
     dependency: "direct main"
     description:
-      path: "../namibia_plate"
+      path: "../namibia_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   nauru_plate:
     dependency: "direct main"
     description:
-      path: "../nauru_plate"
+      path: "../nauru_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   nepal_plate:
     dependency: "direct main"
     description:
-      path: "../nepal_plate"
+      path: "../nepal_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   netherlands_plate:
     dependency: "direct main"
     description:
-      path: "../netherlands_plate"
+      path: "../netherlands_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   new_zealand_plate:
     dependency: "direct main"
     description:
-      path: "../new_zealand_plate"
+      path: "../new_zealand_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   nicaragua_plate:
     dependency: "direct main"
     description:
-      path: "../nicaragua_plate"
+      path: "../nicaragua_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   niger_plate:
     dependency: "direct main"
     description:
-      path: "../niger_plate"
+      path: "../niger_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   nigeria_plate:
     dependency: "direct main"
     description:
-      path: "../nigeria_plate"
+      path: "../nigeria_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   north_korea_plate:
     dependency: "direct main"
     description:
-      path: "../north_korea_plate"
+      path: "../north_korea_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   north_macedonia_plate:
     dependency: "direct main"
     description:
-      path: "../north_macedonia_plate"
+      path: "../north_macedonia_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   norway_plate:
     dependency: "direct main"
     description:
-      path: "../norway_plate"
+      path: "../norway_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   pakistan_plate:
     dependency: "direct main"
     description:
-      path: "../pakistan_plate"
+      path: "../pakistan_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   palau_plate:
     dependency: "direct main"
     description:
-      path: "../palau_plate"
+      path: "../palau_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   palestine_plate:
     dependency: "direct main"
     description:
-      path: "../palestine_plate"
+      path: "../palestine_plate/flutter"
       relative: true
     source: path
     version: "0.3.0"
   panama_plate:
     dependency: "direct main"
     description:
-      path: "../panama_plate"
+      path: "../panama_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   papua_new_guinea_plate:
     dependency: "direct main"
     description:
-      path: "../papua_new_guinea_plate"
+      path: "../papua_new_guinea_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   paraguay_plate:
     dependency: "direct main"
     description:
-      path: "../paraguay_plate"
+      path: "../paraguay_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
@@ -1082,7 +1082,7 @@ packages:
   peru_plate:
     dependency: "direct main"
     description:
-      path: "../peru_plate"
+      path: "../peru_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
@@ -1097,28 +1097,28 @@ packages:
   philippines_plate:
     dependency: "direct main"
     description:
-      path: "../philippines_plate"
+      path: "../philippines_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   plate_alphabet:
     dependency: "direct overridden"
     description:
-      path: "../plate_alphabet"
+      path: "../plate_alphabet/flutter"
       relative: true
     source: path
     version: "0.1.2"
   plate_core:
     dependency: "direct main"
     description:
-      path: "../plate_core"
+      path: "../plate_core/flutter"
       relative: true
     source: path
     version: "0.12.1"
   plate_keypad:
     dependency: "direct main"
     description:
-      path: "../plate_keypad"
+      path: "../plate_keypad/flutter"
       relative: true
     source: path
     version: "0.1.3"
@@ -1133,133 +1133,133 @@ packages:
   poland_plate:
     dependency: "direct main"
     description:
-      path: "../poland_plate"
+      path: "../poland_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   polynesia_plate:
     dependency: "direct main"
     description:
-      path: "../polynesia_plate"
+      path: "../polynesia_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   portugal_plate:
     dependency: "direct main"
     description:
-      path: "../portugal_plate"
+      path: "../portugal_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   republic_of_ireland_plate:
     dependency: "direct main"
     description:
-      path: "../republic_of_ireland_plate"
+      path: "../republic_of_ireland_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   republic_of_the_congo_plate:
     dependency: "direct main"
     description:
-      path: "../republic_of_the_congo_plate"
+      path: "../republic_of_the_congo_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   romania_plate:
     dependency: "direct main"
     description:
-      path: "../romania_plate"
+      path: "../romania_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   russia_plate:
     dependency: "direct main"
     description:
-      path: "../russia_plate"
+      path: "../russia_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   rwanda_plate:
     dependency: "direct main"
     description:
-      path: "../rwanda_plate"
+      path: "../rwanda_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   sahara_plate:
     dependency: "direct main"
     description:
-      path: "../sahara_plate"
+      path: "../sahara_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   saint_helena_plate:
     dependency: "direct main"
     description:
-      path: "../saint_helena_plate"
+      path: "../saint_helena_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   saint_kitts_and_nevis_plate:
     dependency: "direct main"
     description:
-      path: "../saint_kitts_and_nevis_plate"
+      path: "../saint_kitts_and_nevis_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   saint_lucia_plate:
     dependency: "direct main"
     description:
-      path: "../saint_lucia_plate"
+      path: "../saint_lucia_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   saint_vincent_and_the_grenadines_plate:
     dependency: "direct main"
     description:
-      path: "../saint_vincent_and_the_grenadines_plate"
+      path: "../saint_vincent_and_the_grenadines_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   samoa_plate:
     dependency: "direct main"
     description:
-      path: "../samoa_plate"
+      path: "../samoa_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   san_marino_plate:
     dependency: "direct main"
     description:
-      path: "../san_marino_plate"
+      path: "../san_marino_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   senegal_plate:
     dependency: "direct main"
     description:
-      path: "../senegal_plate"
+      path: "../senegal_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   serbia_plate:
     dependency: "direct main"
     description:
-      path: "../serbia_plate"
+      path: "../serbia_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   seychelles_plate:
     dependency: "direct main"
     description:
-      path: "../seychelles_plate"
+      path: "../seychelles_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   singapore_plate:
     dependency: "direct main"
     description:
-      path: "../singapore_plate"
+      path: "../singapore_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
@@ -1271,28 +1271,28 @@ packages:
   slovakia_plate:
     dependency: "direct main"
     description:
-      path: "../slovakia_plate"
+      path: "../slovakia_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   slovenia_plate:
     dependency: "direct main"
     description:
-      path: "../slovenia_plate"
+      path: "../slovenia_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   solomon_islands_plate:
     dependency: "direct main"
     description:
-      path: "../solomon_islands_plate"
+      path: "../solomon_islands_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   somalia_plate:
     dependency: "direct main"
     description:
-      path: "../somalia_plate"
+      path: "../somalia_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
@@ -1307,35 +1307,35 @@ packages:
   south_africa_plate:
     dependency: "direct main"
     description:
-      path: "../south_africa_plate"
+      path: "../south_africa_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   south_sudan_plate:
     dependency: "direct main"
     description:
-      path: "../south_sudan_plate"
+      path: "../south_sudan_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   sovereign_military_order_of_malta_plate:
     dependency: "direct main"
     description:
-      path: "../sovereign_military_order_of_malta_plate"
+      path: "../sovereign_military_order_of_malta_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   spain_plate:
     dependency: "direct main"
     description:
-      path: "../spain_plate"
+      path: "../spain_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   sri_lanka_plate:
     dependency: "direct main"
     description:
-      path: "../sri_lanka_plate"
+      path: "../sri_lanka_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
@@ -1366,42 +1366,42 @@ packages:
   sudan_plate:
     dependency: "direct main"
     description:
-      path: "../sudan_plate"
+      path: "../sudan_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   suriname_plate:
     dependency: "direct main"
     description:
-      path: "../suriname_plate"
+      path: "../suriname_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   sweden_plate:
     dependency: "direct main"
     description:
-      path: "../sweden_plate"
+      path: "../sweden_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   switzerland_plate:
     dependency: "direct main"
     description:
-      path: "../switzerland_plate"
+      path: "../switzerland_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   syria_plate:
     dependency: "direct main"
     description:
-      path: "../syria_plate"
+      path: "../syria_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   tanzania_plate:
     dependency: "direct main"
     description:
-      path: "../tanzania_plate"
+      path: "../tanzania_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
@@ -1424,49 +1424,49 @@ packages:
   thailand_plate:
     dependency: "direct main"
     description:
-      path: "../thailand_plate"
+      path: "../thailand_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   timor_leste_plate:
     dependency: "direct main"
     description:
-      path: "../timor_leste_plate"
+      path: "../timor_leste_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   togo_plate:
     dependency: "direct main"
     description:
-      path: "../togo_plate"
+      path: "../togo_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   tonga_plate:
     dependency: "direct main"
     description:
-      path: "../tonga_plate"
+      path: "../tonga_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   trinidad_and_tobago_plate:
     dependency: "direct main"
     description:
-      path: "../trinidad_and_tobago_plate"
+      path: "../trinidad_and_tobago_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   tunisia_plate:
     dependency: "direct main"
     description:
-      path: "../tunisia_plate"
+      path: "../tunisia_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   tuvalu_plate:
     dependency: "direct main"
     description:
-      path: "../tuvalu_plate"
+      path: "../tuvalu_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
@@ -1481,14 +1481,14 @@ packages:
   uganda_plate:
     dependency: "direct main"
     description:
-      path: "../uganda_plate"
+      path: "../uganda_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   united_kingdom_plate:
     dependency: "direct main"
     description:
-      path: "../united_kingdom_plate"
+      path: "../united_kingdom_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
@@ -1559,21 +1559,21 @@ packages:
   uruguay_plate:
     dependency: "direct main"
     description:
-      path: "../uruguay_plate"
+      path: "../uruguay_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   vanuatu_plate:
     dependency: "direct main"
     description:
-      path: "../vanuatu_plate"
+      path: "../vanuatu_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   vatican_city_plate:
     dependency: "direct main"
     description:
-      path: "../vatican_city_plate"
+      path: "../vatican_city_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
@@ -1612,14 +1612,14 @@ packages:
   venezuela_plate:
     dependency: "direct main"
     description:
-      path: "../venezuela_plate"
+      path: "../venezuela_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   vietnam_plate:
     dependency: "direct main"
     description:
-      path: "../vietnam_plate"
+      path: "../vietnam_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
@@ -1650,21 +1650,21 @@ packages:
   yemen_plate:
     dependency: "direct main"
     description:
-      path: "../yemen_plate"
+      path: "../yemen_plate/flutter"
       relative: true
     source: path
     version: "0.3.0"
   zambia_plate:
     dependency: "direct main"
     description:
-      path: "../zambia_plate"
+      path: "../zambia_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
   zimbabwe_plate:
     dependency: "direct main"
     description:
-      path: "../zimbabwe_plate"
+      path: "../zimbabwe_plate/flutter"
       relative: true
     source: path
     version: "0.1.0"
