@@ -79,3 +79,5 @@ design_ref/*
 !docs/
 !pics/
 all_publish_warnings.txt
+/web/components
+/web/shared

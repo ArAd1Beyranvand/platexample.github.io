@@ -51,13 +51,19 @@ class PdBreadcrumb extends StatelessWidget {
 /// The `flutter pub add ...` line with its Copy button, as the country page
 /// and the playground both head their page with.
 class PdInstallBar extends StatelessWidget {
-  const PdInstallBar({super.key, required this.command});
+  const PdInstallBar({super.key, required this.command, this.stable = 0, this.swap});
 
   final String command;
+
+  /// Leading characters of [command] that stay put while [swap] wraps the
+  /// rest, so only the part that changed animates.
+  final int stable;
+  final Widget Function(Widget tail)? swap;
 
   @override
   Widget build(BuildContext context) {
     final PdTokens t = context.tokens;
+    final TextStyle style = TextStyle(fontFamily: PdFonts.mono, fontSize: 13, color: t.text);
     return Container(
       height: 44,
       padding: const EdgeInsets.only(left: 14, right: 6),
@@ -69,11 +75,22 @@ class PdInstallBar extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Expanded(
-            child: Text(
-              command,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontFamily: PdFonts.mono, fontSize: 13, color: t.text),
-            ),
+            child: swap == null
+                ? Text(command, overflow: TextOverflow.ellipsis, style: style)
+                : Row(
+                    children: <Widget>[
+                      Text(command.substring(0, stable), style: style),
+                      Flexible(
+                        child: swap!(
+                          Text(
+                            command.substring(stable),
+                            overflow: TextOverflow.ellipsis,
+                            style: style,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
           ),
           const SizedBox(width: 8),
           PdCopyButton(text: () => command),

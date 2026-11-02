@@ -13,7 +13,9 @@ import '../design/tokens.dart';
 import '../landing/text_styles.dart';
 import '../plate/live_plate.dart';
 import '../widgets/controls.dart';
+import '../embed/language_tabs.dart';
 import 'breadcrumb.dart';
+import 'swap.dart';
 
 /// One country's plate types: the list on the left, the selected type's
 /// facts on the right.
@@ -22,15 +24,36 @@ import 'breadcrumb.dart';
 /// the section titles the packages already group them under — nothing here is
 /// a second list of plates to keep in step with the sources.
 class CountryPage extends StatefulWidget {
-  const CountryPage({super.key, required this.source});
+  const CountryPage({super.key, required this.source, this.lang});
 
   final GallerySource source;
+
+  /// The language tab from the URL; null is the in-app Flutter page.
+  final String? lang;
 
   @override
   State<CountryPage> createState() => _CountryPageState();
 }
 
-class _CountryPageState extends State<CountryPage> {
+class _CountryPageState extends State<CountryPage> with SingleTickerProviderStateMixin {
+  /// Drives every swap on the page; a new [_wave] starts each country change.
+  late final AnimationController _clock =
+      AnimationController(vsync: this, value: 1, duration: PdSwapScope.span(PdSwap.maxOrder))
+        ..addStatusListener((AnimationStatus s) {
+          if (s == AnimationStatus.completed && _rowsKept > 0) setState(() => _rowsKept = 0);
+        });
+  int _wave = 0;
+
+  void _startWave() {
+    _wave++;
+    if (MediaQuery.disableAnimationsOf(context)) {
+      _clock.value = 1;
+      _rowsKept = 0;
+    } else {
+      _clock.forward(from: 0);
+    }
+  }
+
   /// Null until the user picks one, so the first visible row leads.
   CatalogueItem? _selected;
 
@@ -50,6 +73,7 @@ class _CountryPageState extends State<CountryPage> {
     setState(() {
       _selected = item;
       _scrolling = true;
+      _startWave();
     });
     await WidgetsBinding.instance.endOfFrame;
     if (!mounted || pick != _picks) return;
@@ -84,20 +108,30 @@ class _CountryPageState extends State<CountryPage> {
   @override
   void didUpdateWidget(CountryPage old) {
     super.didUpdateWidget(old);
-    if (!identical(old.source, widget.source)) {
-      _selected = null;
-    }
+    if (identical(old.source, widget.source)) return;
+    _selected = null;
+    _picks++;
+    _scrolling = false;
+    // The old country's extra rows stay mounted long enough to stagger out.
+    _rowsKept = _itemsOf(old.source).length;
+    _startWave();
   }
+
+  /// Rows the previous country had, kept while its extras stagger out.
+  int _rowsKept = 0;
 
   @override
   void dispose() {
     _scroll.dispose();
+    _clock.dispose();
     super.dispose();
   }
 
-  List<CatalogueItem> get _items => <CatalogueItem>[
+  List<CatalogueItem> get _items => _itemsOf(widget.source);
+
+  static List<CatalogueItem> _itemsOf(GallerySource source) => <CatalogueItem>[
     for (final CatalogueItem item in catalogueItems)
-      if (identical(item.source, widget.source)) item,
+      if (identical(item.source, source)) item,
   ];
 
   @override
@@ -118,16 +152,27 @@ class _CountryPageState extends State<CountryPage> {
     );
 
     final double viewport = MediaQuery.sizeOf(context).width;
-    final bool sideTwo = viewport - 2 * pdClamp(context, 16, 3, 32) >= 2 * 380 + 24;
     final bool sidePager = viewport >= 1700;
-    // Beside the detail the list's last types drop under the big plate.
-    final int tail = sideTwo && shown.length > 4 ? 2 : 0;
-    final List<CatalogueItem> listed = shown.sublist(0, shown.length - tail);
-    final List<CatalogueItem> under = shown.sublist(shown.length - tail);
-    Widget row(CatalogueItem item) => Padding(
-      padding: const EdgeInsets.only(bottom: 8),
-      child: _TypeRow(item: item, selected: identical(item, selected), onTap: () => _pick(item)),
-    );
+    Widget row(int i) {
+      final CatalogueItem? item = i < shown.length ? shown[i] : null;
+      // A row the other country also has stays put and swaps its insides;
+      // only rows one side lacks fade in or out as a whole.
+      return PdSwap(
+        id: item != null,
+        order: 3 + i.clamp(0, 10),
+        child: item == null
+            ? null
+            : Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: _TypeRow(
+                  item: item,
+                  order: 3 + i.clamp(0, 10),
+                  selected: identical(item, selected),
+                  onTap: () => _pick(item),
+                ),
+              ),
+      );
+    }
 
     final Widget content = ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 1200),
@@ -145,60 +190,71 @@ class _CountryPageState extends State<CountryPage> {
           _Header(source: source, native: native, iso: iso, types: items.length),
           const SizedBox(height: 24),
           const SizedBox(height: 24),
-          PdAutoGrid(
-            minWidth: 380,
-            gap: 24,
-            children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[for (final CatalogueItem i in listed) row(i)],
-              ),
-              if (selected != null)
+          LanguageTabs(
+            source: source,
+            lang: widget.lang,
+            onLang: (String? lang) =>
+                Router.neglect(context, () => nav.go(PdLocation.country(source, lang))),
+            flutter: PdAutoGrid(
+              minWidth: 380,
+              gap: 24,
+              children: <Widget>[
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    _TypeDetail(
-                      item: selected,
-                      beckon: _beckon,
-                      hold: _scrolling,
-                      onPlay: () => nav.go(PdLocation.playground(selected)),
-                    ),
-                    if (under.isNotEmpty) const SizedBox(height: 24),
-                    for (final CatalogueItem i in under) row(i),
+                    for (int i = 0; i < (shown.length > _rowsKept ? shown.length : _rowsKept); i++)
+                      row(i),
                   ],
                 ),
-            ],
+                if (selected != null)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      _TypeDetail(
+                        item: selected,
+                        beckon: _beckon,
+                        hold: _scrolling,
+                        onPlay: () => nav.go(PdLocation.playground(selected)),
+                      ),
+                    ],
+                  ),
+              ],
+            ),
           ),
           if (!sidePager) ...<Widget>[const SizedBox(height: 32), _CountryPager(source: source)],
         ],
       ),
     );
 
-    return ListView(
-      controller: _scroll,
-      padding: EdgeInsets.only(
-        top: 16,
-        bottom: 64,
-        left: pdClamp(context, 16, 3, 32),
-        right: pdClamp(context, 16, 3, 32),
-      ),
-      children: <Widget>[
-        Center(
-          child: sidePager
-              ? Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    _SidePager(source: source, forward: false),
-                    const SizedBox(width: 24),
-                    Flexible(child: content),
-                    const SizedBox(width: 24),
-                    _SidePager(source: source, forward: true),
-                  ],
-                )
-              : content,
+    return PdSwapScope(
+      clock: _clock,
+      generation: _wave,
+      child: ListView(
+        controller: _scroll,
+        padding: EdgeInsets.only(
+          top: 16,
+          bottom: 64,
+          left: pdClamp(context, 16, 3, 32),
+          right: pdClamp(context, 16, 3, 32),
         ),
-      ],
+        children: <Widget>[
+          Center(
+            child: sidePager
+                ? Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      _SidePager(source: source, forward: false),
+                      const SizedBox(width: 24),
+                      Flexible(child: content),
+                      const SizedBox(width: 24),
+                      _SidePager(source: source, forward: true),
+                    ],
+                  )
+                : content,
+          ),
+        ],
+      ),
     );
   }
 }
@@ -296,11 +352,14 @@ class _PagerCard extends StatelessWidget {
             style: TextStyle(fontSize: 12, color: t.subtle),
           ),
           const SizedBox(height: 2),
-          Text(
-            target.countryName,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: t.text),
+          PdSwap(
+            id: target,
+            child: Text(
+              target.countryName,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: t.text),
+            ),
           ),
         ],
       ),
@@ -342,6 +401,7 @@ class _Header extends StatelessWidget {
   Widget build(BuildContext context) {
     final PdTokens t = context.tokens;
     final String packages = source.packageNames.join(' ');
+    Widget swap(int order, Widget child) => PdSwap(id: source, order: order, child: child);
     return PdAutoGrid(
       minWidth: 340,
       gap: 48,
@@ -355,37 +415,55 @@ class _Header extends StatelessWidget {
               runSpacing: 4,
               crossAxisAlignment: WrapCrossAlignment.end,
               children: <Widget>[
-                Text(
-                  source.countryName,
-                  style: TextStyle(
-                    fontSize: pdClamp(context, 28, 4, 40),
-                    height: 1.15,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: -0.02 * pdClamp(context, 28, 4, 40),
-                    color: t.text,
+                swap(
+                  0,
+                  Text(
+                    source.countryName,
+                    style: TextStyle(
+                      fontSize: pdClamp(context, 28, 4, 40),
+                      height: 1.15,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: -0.02 * pdClamp(context, 28, 4, 40),
+                      color: t.text,
+                    ),
                   ),
                 ),
-                if (native.isNotEmpty && native != source.countryName)
-                  Text(
-                    native,
-                    style: TextStyle(fontFamily: PdFonts.persian, fontSize: 20, color: t.muted),
-                  ),
+                swap(
+                  1,
+                  native.isNotEmpty && native != source.countryName
+                      ? Text(
+                          native,
+                          style: TextStyle(
+                            fontFamily: PdFonts.persian,
+                            fontSize: 20,
+                            color: t.muted,
+                          ),
+                        )
+                      : const SizedBox.shrink(),
+                ),
               ],
             ),
             const SizedBox(height: 8),
-            Text(
-              <String>[
-                '$types plate ${types == 1 ? 'type' : 'types'}',
-                if (iso.isNotEmpty) iso,
-                ...source.packageNames,
-              ].join(' · '),
-              style: body(t),
+            swap(
+              2,
+              Text(
+                <String>[
+                  '$types plate ${types == 1 ? 'type' : 'types'}',
+                  if (iso.isNotEmpty) iso,
+                  ...source.packageNames,
+                ].join(' · '),
+                style: body(t),
+              ),
             ),
           ],
         ),
         Align(
           alignment: Alignment.bottomLeft,
-          child: PdInstallBar(command: 'flutter pub add plate_core $packages'),
+          child: PdInstallBar(
+            command: 'flutter pub add plate_core $packages',
+            stable: 'flutter pub add plate_core '.length,
+            swap: (Widget tail) => swap(1, tail),
+          ),
         ),
       ],
     );
@@ -395,9 +473,15 @@ class _Header extends StatelessWidget {
 /// One plate type: its plate at thumbnail width, its label, its section and
 /// the spec the developer would name.
 class _TypeRow extends StatelessWidget {
-  const _TypeRow({required this.item, required this.selected, required this.onTap});
+  const _TypeRow({
+    required this.item,
+    required this.order,
+    required this.selected,
+    required this.onTap,
+  });
 
   final CatalogueItem item;
+  final int order;
   final bool selected;
   final VoidCallback onTap;
 
@@ -417,33 +501,39 @@ class _TypeRow extends StatelessWidget {
         children: <Widget>[
           SizedBox(
             width: 132,
-            child: StaticPlate(
-              spec: spec,
-              values: item.entry.sampleValues,
-              theme: item.entry.theme,
-              country: item.entry.country,
-              autoType: true,
-            ),
+            child: _StaggeredPlate(entry: item.entry, hold: false, autoType: true),
           ),
           const SizedBox(width: 16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
-                  item.entry.label,
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: t.text),
+                PdSwap(
+                  id: item,
+                  order: order,
+                  child: Text(
+                    item.entry.label,
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: t.text),
+                  ),
                 ),
                 const SizedBox(height: 2),
-                Text(
-                  '${item.section.title} · ${spec.slotCount} slots',
-                  style: TextStyle(fontSize: 13, color: t.muted),
+                PdSwap(
+                  id: item,
+                  order: order + 1,
+                  child: Text(
+                    '${item.section.title} · ${spec.slotCount} slots',
+                    style: TextStyle(fontSize: 13, color: t.muted),
+                  ),
                 ),
                 const SizedBox(height: 2),
-                Text(
-                  specName(item) ?? spec.id,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontFamily: PdFonts.mono, fontSize: 12, color: t.subtle),
+                PdSwap(
+                  id: item,
+                  order: order + 2,
+                  child: Text(
+                    specName(item) ?? spec.id,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontFamily: PdFonts.mono, fontSize: 12, color: t.subtle),
+                  ),
                 ),
               ],
             ),
@@ -484,6 +574,7 @@ class _TypeDetail extends StatelessWidget {
       ('Package', package, true),
       ('Route', PdLocation.playground(item).path, true),
     ];
+    Widget swap(int order, Widget child) => PdSwap(id: item, order: order, child: child);
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -494,17 +585,17 @@ class _TypeDetail extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(item.section.title, style: TextStyle(fontSize: 13, color: t.subtle)),
+          swap(0, Text(item.section.title, style: TextStyle(fontSize: 13, color: t.subtle))),
           const SizedBox(height: 4),
-          Text(entry.label, style: h3(t).copyWith(fontSize: 20, height: 1.3)),
+          swap(1, Text(entry.label, style: h3(t).copyWith(fontSize: 20, height: 1.3))),
           const SizedBox(height: 16),
           _StaggeredPlate(entry: entry, hold: hold),
           if (entry.note != null) ...<Widget>[
             const SizedBox(height: 16),
-            Text(entry.note!, style: body(t, size: 15)),
+            swap(2, Text(entry.note!, style: body(t, size: 15))),
           ],
           const SizedBox(height: 16),
-          for (final (String k, String v, bool mono) in facts)
+          for (final (int i, (String k, String v, bool mono)) in facts.indexed)
             Padding(
               padding: const EdgeInsets.only(bottom: 8),
               child: Row(
@@ -516,9 +607,15 @@ class _TypeDetail extends StatelessWidget {
                   ),
                   const SizedBox(width: 16),
                   Expanded(
-                    child: Text(
-                      v,
-                      style: mono ? monoStyle(t, size: 13) : TextStyle(fontSize: 14, color: t.text),
+                    child: PdSwap(
+                      id: v,
+                      order: 3 + i,
+                      child: Text(
+                        v,
+                        style: mono
+                            ? monoStyle(t, size: 13)
+                            : TextStyle(fontSize: 14, color: t.text),
+                      ),
                     ),
                   ),
                 ],
@@ -546,10 +643,11 @@ class _TypeDetail extends StatelessWidget {
 /// so identical parts and the background stay still. Waits while [hold] is
 /// set.
 class _StaggeredPlate extends StatefulWidget {
-  const _StaggeredPlate({required this.entry, required this.hold});
+  const _StaggeredPlate({required this.entry, required this.hold, this.autoType = false});
 
   final GalleryEntry entry;
   final bool hold;
+  final bool autoType;
 
   @override
   State<_StaggeredPlate> createState() => _StaggeredPlateState();
@@ -577,6 +675,7 @@ class _StaggeredPlateState extends State<_StaggeredPlate> {
     values: _shown.sampleValues,
     theme: _shown.theme,
     country: _shown.country,
+    autoType: widget.autoType,
     animation: _anim,
     specTransition: const PlateSpecTransition(keepIdentical: true, morphBackground: true),
   );

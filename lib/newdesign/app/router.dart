@@ -94,9 +94,15 @@ class PdRouterDelegate extends RouterDelegate<PdLocation>
             openSearch: openSearch,
             searchFocus: searchFocus,
             child: switch (location) {
-              PdLocation(isPlayground: true) => PlaygroundPage(item: location.item!),
+              PdLocation(isPlayground: true) => PlaygroundPage(
+                item: location.item!,
+                lang: location.lang,
+              ),
               PdLocation(isRegion: true) => RegionPage(region: location.source!),
-              PdLocation(isCountry: true) => CountryPage(source: location.source!),
+              PdLocation(isCountry: true) => CountryPage(
+                source: location.source!,
+                lang: location.lang,
+              ),
               _ => LandingPage(anchor: location.anchor, visit: _visit, focusSearch: _focusSearch),
             },
           ),
@@ -107,12 +113,13 @@ class PdRouterDelegate extends RouterDelegate<PdLocation>
   }
 }
 
-/// Which of the four pages [location] is, as a page key. The country and
-/// region keys carry the slug: moving from one country to the next is a new
-/// page, not a scroll position to keep.
+/// Which of the four pages [location] is, as a page key. Every country shares
+/// one key, so stepping between countries keeps the page and only its
+/// country-specific parts swap; region keys carry the slug.
 String _kindOf(PdLocation location) {
   if (location.isPlayground) return 'play';
   final GallerySource? source = location.source;
+  if (location.isCountry) return 'country';
   if (source != null) return 'source/${source.slug}';
   return 'landing';
 }

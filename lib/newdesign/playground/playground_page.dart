@@ -7,6 +7,10 @@ import '../app/nav.dart';
 import '../data/catalogue.dart';
 import '../data/plate_code.dart';
 import '../design/tokens.dart';
+import '../embed/embed_host.dart';
+import '../embed/embed_loader.dart';
+import '../embed/protocol.dart';
+import '../embed/registry.dart';
 import '../landing/hero.dart' show validNameOf;
 import '../landing/text_styles.dart';
 import '../plate/live_plate.dart';
@@ -16,9 +20,12 @@ import '../widgets/controls.dart';
 /// One plate at a time: the live plate and its controls beside the code that
 /// reproduces it.
 class PlaygroundPage extends StatefulWidget {
-  const PlaygroundPage({super.key, required this.item});
+  const PlaygroundPage({super.key, required this.item, this.lang});
 
   final CatalogueItem item;
+
+  /// Built language shown on the stage; null is Flutter.
+  final String? lang;
 
   @override
   State<PlaygroundPage> createState() => _PlaygroundPageState();
@@ -82,7 +89,7 @@ class _PlaygroundPageState extends State<PlaygroundPage> {
   bool _step(int by) {
     final int i = _index + by;
     if (i < 0 || i >= playgroundItems.length) return false;
-    PdNav.of(context).go(PdLocation.playground(playgroundItems[i]));
+    PdNav.of(context).go(PdLocation.playground(playgroundItems[i], widget.lang));
     return true;
   }
 
@@ -117,13 +124,13 @@ class _PlaygroundPageState extends State<PlaygroundPage> {
                 minWidth: 460,
                 gap: 24,
                 children: <Widget>[
-                  _StageCard(item: _item, plate: _plate),
+                  _StageCard(item: _item, plate: _plate, lang: widget.lang),
                   if (narrow && !_codeOpen)
                     Align(
                       alignment: Alignment.centerLeft,
                       child: PdLink('▸ Show code', onTap: () => setState(() => _codeOpen = true)),
                     )
-                  else
+                  else if (widget.lang == null)
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
@@ -131,7 +138,9 @@ class _PlaygroundPageState extends State<PlaygroundPage> {
                         const SizedBox(height: 16),
                         _SlotsView(spec: _item.entry.spec, values: values),
                       ],
-                    ),
+                    )
+                  else
+                    const SizedBox.shrink(),
                 ],
               ),
               const SizedBox(height: 32),
@@ -212,10 +221,11 @@ class _TopRow extends StatelessWidget {
 }
 
 class _StageCard extends StatefulWidget {
-  const _StageCard({required this.item, required this.plate});
+  const _StageCard({required this.item, required this.plate, required this.lang});
 
   final CatalogueItem item;
   final PlateController plate;
+  final String? lang;
 
   @override
   State<_StageCard> createState() => _StageCardState();
@@ -276,19 +286,205 @@ class _StageCardState extends State<_StageCard> {
               ],
             ),
           ],
+          const SizedBox(height: 16),
+          _LanguageRow(item: item, lang: widget.lang),
           const SizedBox(height: 24),
-          LivePlate(
-            controller: plate,
-            validName: validNameOf(item),
-            theme: band?.$3 ?? item.entry.themeFor(plate.values),
-            country: country,
-            validator: item.entry.validator,
-            inputSource: PlateInputSource.keypadFirst,
-            showInvalidNote: true,
-            keypadBelow: SlotKeypad(controller: plate),
+          AnimatedSwitcher(
+            duration: PdMotion.of(context, const Duration(milliseconds: 220)),
+            reverseDuration: PdMotion.of(
+              context,
+              const Duration(milliseconds: 900),
+            ),
+            transitionBuilder: (Widget child, Animation<double> animation) =>
+                child is _Embed
+                ? _Outro(animation: animation, child: child)
+                : FadeTransition(opacity: animation, child: child),
+            child: widget.lang == null
+                ? LivePlate(
+                    key: const ValueKey<String>('flutter'),
+                    controller: plate,
+                    validName: validNameOf(item),
+                    theme: band?.$3 ?? item.entry.themeFor(plate.values),
+                    country: country,
+                    validator: item.entry.validator,
+                    inputSource: PlateInputSource.keypadFirst,
+                    showInvalidNote: true,
+                    keypadBelow: SlotKeypad(controller: plate),
+                  )
+                : _Embed(
+                    key: ValueKey<String>('${item.source.slug}/${widget.lang}'),
+                    item: item,
+                    lang: widget.lang!,
+                  ),
           ),
         ],
       ),
+    );
+  }
+}
+
+/// The stage's language switcher: a segmented control with every language, so
+/// the choice is always visible. Languages not built for this country are dimmed
+/// and explain themselves. Only the route parameter changes, so the page stays put.
+class _LanguageRow extends StatelessWidget {
+  const _LanguageRow({required this.item, required this.lang});
+
+  final CatalogueItem item;
+  final String? lang;
+
+  static const Map<String, String> _hints = <String, String>{
+    'flutter': 'Dart package, rendered by Flutter',
+    'typescript': 'TypeScript port, rendered in the DOM',
+    'kotlin': 'Kotlin port: Wasm where supported, JS otherwise',
+    'python': 'Python port, running in the browser',
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    final PdTokens t = context.tokens;
+    final EmbedRegistryLoader loader = EmbedRegistryLoader.instance..ensureLoaded();
+    return ValueListenableBuilder<EmbedRegistry>(
+      valueListenable: loader.registry,
+      builder: (BuildContext context, EmbedRegistry registry, _) {
+        final List<String> built = registry.languagesOf(item.source.slug);
+        final String active = lang ?? embedLanguageFlutter;
+        return Wrap(
+          crossAxisAlignment: WrapCrossAlignment.center,
+          spacing: 12,
+          runSpacing: 8,
+          children: <Widget>[
+            Text('Language', style: eyebrow(t)),
+            Container(
+              padding: const EdgeInsets.all(3),
+              decoration: BoxDecoration(
+                color: t.raised,
+                borderRadius: BorderRadius.circular(PdRadius.card),
+                border: Border.all(color: t.divider),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  for (final String l in embedLanguages)
+                    _LangButton(
+                      label: embedLanguageLabels[l]!,
+                      selected: l == active,
+                      enabled: built.contains(l),
+                      hint: built.contains(l)
+                          ? _hints[l]!
+                          : '${embedLanguageLabels[l]} build not available for ${item.source.countryName} yet',
+                      onTap: () => PdNav.of(
+                        context,
+                      ).go(PdLocation.playground(item, l == embedLanguageFlutter ? null : l)),
+                    ),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class _LangButton extends StatelessWidget {
+  const _LangButton({
+    required this.label,
+    required this.selected,
+    required this.enabled,
+    required this.hint,
+    required this.onTap,
+  });
+
+  final String label;
+  final bool selected;
+  final bool enabled;
+  final String hint;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final PdTokens t = context.tokens;
+    return Tooltip(
+      message: hint,
+      child: Opacity(
+        opacity: enabled ? 1 : 0.4,
+        child: MouseRegion(
+          cursor: enabled && !selected ? SystemMouseCursors.click : SystemMouseCursors.basic,
+          child: GestureDetector(
+            onTap: enabled && !selected ? onTap : null,
+            child: AnimatedContainer(
+              duration: PdMotion.of(context, const Duration(milliseconds: 160)),
+              height: 32,
+              padding: const EdgeInsets.symmetric(horizontal: 14),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: selected ? t.accentSoft : Colors.transparent,
+                borderRadius: BorderRadius.circular(PdRadius.chip),
+              ),
+              child: Text(
+                label,
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
+                  color: selected ? t.accent : t.muted,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// An embed held on screen, unfaded, while it plays its outro.
+class _Outro extends StatelessWidget {
+  const _Outro({required this.animation, required this.child});
+
+  final Animation<double> animation;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => AnimatedBuilder(
+    animation: animation,
+    builder: (BuildContext context, Widget? child) => EmbedLeaving(
+      leaving: animation.status == AnimationStatus.reverse,
+      child: child!,
+    ),
+    child: child,
+  );
+}
+
+/// The plate and keypad of a built language, in an iframe opened on [item]'s
+/// spec. A language the registry lacks falls back to Flutter.
+class _Embed extends StatelessWidget {
+  const _Embed({super.key, required this.item, required this.lang});
+
+  final CatalogueItem item;
+  final String lang;
+
+  @override
+  Widget build(BuildContext context) {
+    final EmbedRegistryLoader loader = EmbedRegistryLoader.instance..ensureLoaded();
+    return ValueListenableBuilder<EmbedRegistry>(
+      valueListenable: loader.registry,
+      builder: (BuildContext context, EmbedRegistry registry, _) {
+        final EmbedComponent? component = registry.of(item.source.slug, lang);
+        if (component == null) {
+          if (!identical(registry, EmbedRegistry.unloaded)) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (context.mounted) PdNav.of(context).go(PdLocation.playground(item));
+            });
+          }
+          return const SizedBox(height: 320);
+        }
+        return EmbedHost(
+          key: ValueKey<String>('${item.source.slug}/${item.slug}/$lang'),
+          component: component,
+          spec: item.slug,
+          title: '${item.source.countryName} ${item.entry.label} · ${embedLanguageLabels[lang]}',
+        );
+      },
     );
   }
 }

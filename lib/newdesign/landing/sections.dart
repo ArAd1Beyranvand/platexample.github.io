@@ -170,7 +170,7 @@ class _CompareSectionState extends State<CompareSection> {
     final double header = headerExtent(context);
     Future<void>.delayed(const Duration(milliseconds: 350), () {
       final BuildContext? plate = _plateKey.currentContext;
-      if (!mounted || plate == null) return;
+      if (!mounted || plate == null || !plate.mounted) return;
       final ScrollPosition position = Scrollable.of(plate).position;
       final double top = (plate.findRenderObject()! as RenderBox).localToGlobal(Offset.zero).dy;
       final double target = position.pixels + top - header - 16;

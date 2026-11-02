@@ -427,6 +427,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
+  flutter_svg: ^2.0.0
 
 # Local development only: plate_keypad, iran_plate, iranshahr_plate, palestine_plate,
 # yemen_plate and lebanon_plate still use path dependencies until they are published on

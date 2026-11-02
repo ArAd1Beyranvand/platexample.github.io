@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 import '../data/catalogue.dart';
+import '../embed/protocol.dart';
 
 /// A section of the landing page a URL can point at.
 enum LandingAnchor { top, coverage, start, about }
@@ -12,7 +13,8 @@ enum LandingAnchor { top, coverage, start, about }
 /// /plates                  Landing #coverage
 /// /plates/:region          Region (a continent's countries)
 /// /plates/:country         Country (its plate types)
-/// /plates/:country/:spec   Playground
+/// /plates/:country/:lang   Country, in a built language (typescript, kotlin, python)
+/// /plates/:country/:spec[/:lang]   Playground
 /// /start, /about           Landing #start / #about
 /// ```
 ///
@@ -28,6 +30,7 @@ enum LandingAnchor { top, coverage, start, about }
 class PdLocation {
   const PdLocation.landing([this.anchor = LandingAnchor.top])
     : item = null,
+      lang = null,
       source = null,
       isRenderCheck = false;
 
@@ -36,15 +39,18 @@ class PdLocation {
     : anchor = LandingAnchor.top,
       item = null,
       source = null,
+      lang = null,
       isRenderCheck = true;
 
-  const PdLocation.playground(CatalogueItem this.item)
+  /// One plate type. [lang] picks a built language for the stage; null is Flutter.
+  const PdLocation.playground(CatalogueItem this.item, [this.lang])
     : anchor = LandingAnchor.top,
       source = null,
       isRenderCheck = false;
 
-  /// A country's own page: every plate type it ships.
-  const PdLocation.country(GallerySource this.source)
+  /// A country's own page: every plate type it ships. [lang] picks a
+  /// non-Flutter tab (`typescript`, `kotlin`, `python`); null is Flutter.
+  const PdLocation.country(GallerySource this.source, [this.lang])
     : anchor = LandingAnchor.top,
       item = null,
       isRenderCheck = false;
@@ -54,6 +60,7 @@ class PdLocation {
   const PdLocation.region(GallerySource this.source)
     : anchor = LandingAnchor.top,
       item = null,
+      lang = null,
       isRenderCheck = false;
 
   /// The page for [source], whichever of the two it is.
@@ -63,6 +70,9 @@ class PdLocation {
   final LandingAnchor anchor;
   final bool isRenderCheck;
   final CatalogueItem? item;
+
+  /// The country page's language tab; null for the in-app Flutter one.
+  final String? lang;
 
   /// The country or region this location is for, on those two pages only.
   final GallerySource? source;
@@ -76,9 +86,10 @@ class PdLocation {
   String get path {
     if (isRenderCheck) return '/render-check';
     final CatalogueItem? item = this.item;
-    if (item != null) return '/plates/${item.source.slug}/${item.slug}';
+    if (item != null)
+      return '/plates/${item.source.slug}/${item.slug}${lang == null ? '' : '/$lang'}';
     final GallerySource? source = this.source;
-    if (source != null) return '/plates/${source.slug}';
+    if (source != null) return '/plates/${source.slug}${lang == null ? '' : '/$lang'}';
     return switch (anchor) {
       LandingAnchor.top => '/',
       LandingAnchor.coverage => '/plates',
@@ -130,8 +141,16 @@ class PdLocation {
     if (rest.length == 1) {
       return firstItemOf(country) == null ? coverage : PdLocation.country(country);
     }
+    // `flutter` is the country page itself; the registry decides later
+    // whether a built language is really there.
+    if (rest.length == 2 && embedLanguages.contains(rest[1])) {
+      if (firstItemOf(country) == null) return coverage;
+      return PdLocation.country(country, rest[1] == embedLanguageFlutter ? null : rest[1]);
+    }
     final CatalogueItem? item = itemBySlug(country, rest[1]) ?? firstItemOf(country);
-    return item == null ? coverage : PdLocation.playground(item);
+    if (item == null) return coverage;
+    final String? lang = rest.length == 3 && embedLanguages.contains(rest[2]) ? rest[2] : null;
+    return PdLocation.playground(item, lang == embedLanguageFlutter ? null : lang);
   }
 
   @override
@@ -139,10 +158,11 @@ class PdLocation {
       other is PdLocation &&
       other.anchor == anchor &&
       other.isRenderCheck == isRenderCheck &&
+      other.lang == lang &&
       identical(other.item, item) &&
       identical(other.source, source);
 
   @override
   int get hashCode =>
-      Object.hash(anchor, isRenderCheck, identityHashCode(item), identityHashCode(source));
+      Object.hash(anchor, isRenderCheck, lang, identityHashCode(item), identityHashCode(source));
 }
