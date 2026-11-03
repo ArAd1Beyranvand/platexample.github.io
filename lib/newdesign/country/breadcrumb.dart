@@ -51,7 +51,12 @@ class PdBreadcrumb extends StatelessWidget {
 /// The `flutter pub add ...` line with its Copy button, as the country page
 /// and the playground both head their page with.
 class PdInstallBar extends StatelessWidget {
-  const PdInstallBar({super.key, required this.command, this.stable = 0, this.swap});
+  const PdInstallBar({
+    super.key,
+    required this.command,
+    this.stable = 0,
+    this.swap,
+  });
 
   final String command;
 
@@ -63,7 +68,11 @@ class PdInstallBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final PdTokens t = context.tokens;
-    final TextStyle style = TextStyle(fontFamily: PdFonts.mono, fontSize: 13, color: t.text);
+    final TextStyle style = TextStyle(
+      fontFamily: PdFonts.mono,
+      fontSize: 13,
+      color: t.text,
+    );
     return Container(
       height: 44,
       padding: const EdgeInsets.only(left: 14, right: 6),

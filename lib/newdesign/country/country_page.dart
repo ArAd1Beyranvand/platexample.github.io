@@ -35,13 +35,19 @@ class CountryPage extends StatefulWidget {
   State<CountryPage> createState() => _CountryPageState();
 }
 
-class _CountryPageState extends State<CountryPage> with SingleTickerProviderStateMixin {
+class _CountryPageState extends State<CountryPage>
+    with SingleTickerProviderStateMixin {
   /// Drives every swap on the page; a new [_wave] starts each country change.
   late final AnimationController _clock =
-      AnimationController(vsync: this, value: 1, duration: PdSwapScope.span(PdSwap.maxOrder))
-        ..addStatusListener((AnimationStatus s) {
-          if (s == AnimationStatus.completed && _rowsKept > 0) setState(() => _rowsKept = 0);
-        });
+      AnimationController(
+        vsync: this,
+        value: 1,
+        duration: PdSwapScope.span(PdSwap.maxOrder),
+      )..addStatusListener((AnimationStatus s) {
+        if (s == AnimationStatus.completed && _rowsKept > 0) {
+          setState(() => _rowsKept = 0);
+        }
+      });
   int _wave = 0;
 
   void _startWave() {
@@ -85,7 +91,10 @@ class _CountryPageState extends State<CountryPage> with SingleTickerProviderStat
     final double end = _scroll.position.maxScrollExtent;
     // Side by side (see the PdAutoGrid below) the detail is already in view.
     final double pad = pdClamp(context, 16, 3, 32);
-    final double content = (MediaQuery.sizeOf(context).width - 2 * pad).clamp(0, 1200);
+    final double content = (MediaQuery.sizeOf(context).width - 2 * pad).clamp(
+      0,
+      1200,
+    );
     if (content >= 2 * 380 + 24) {
       setState(() {
         _scrolling = false;
@@ -182,46 +191,59 @@ class _CountryPageState extends State<CountryPage> with SingleTickerProviderStat
           PdBreadcrumb(
             trail: <(String, PdLocation)>[
               ('Countries', const PdLocation.landing(LandingAnchor.coverage)),
-              if (region != null) (region.countryName, PdLocation.region(region)),
+              if (region != null)
+                (region.countryName, PdLocation.region(region)),
             ],
             current: source.countryName,
           ),
           const SizedBox(height: 24),
-          _Header(source: source, native: native, iso: iso, types: items.length),
+          _Header(
+            source: source,
+            native: native,
+            iso: iso,
+            types: items.length,
+          ),
           const SizedBox(height: 24),
           const SizedBox(height: 24),
           LanguageTabs(
             source: source,
             lang: widget.lang,
-            onLang: (String? lang) =>
-                Router.neglect(context, () => nav.go(PdLocation.country(source, lang))),
-            flutter: PdAutoGrid(
+            onLang: (String? lang) => Router.neglect(
+              context,
+              () => nav.go(PdLocation.country(source, lang)),
+            ),
+            spec: selected?.entry.id,
+            flutter: selected == null
+                ? const SizedBox.shrink()
+                : _TypeDetail(
+                    item: selected,
+                    beckon: _beckon,
+                    hold: _scrolling,
+                    onPlay: () => nav.go(PdLocation.playground(selected)),
+                  ),
+            page: (Widget detail) => PdAutoGrid(
               minWidth: 380,
               gap: 24,
               children: <Widget>[
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    for (int i = 0; i < (shown.length > _rowsKept ? shown.length : _rowsKept); i++)
+                    for (
+                      int i = 0;
+                      i < (shown.length > _rowsKept ? shown.length : _rowsKept);
+                      i++
+                    )
                       row(i),
                   ],
                 ),
-                if (selected != null)
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      _TypeDetail(
-                        item: selected,
-                        beckon: _beckon,
-                        hold: _scrolling,
-                        onPlay: () => nav.go(PdLocation.playground(selected)),
-                      ),
-                    ],
-                  ),
+                if (selected != null) detail,
               ],
             ),
           ),
-          if (!sidePager) ...<Widget>[const SizedBox(height: 32), _CountryPager(source: source)],
+          if (!sidePager) ...<Widget>[
+            const SizedBox(height: 32),
+            _CountryPager(source: source),
+          ],
         ],
       ),
     );
@@ -269,7 +291,9 @@ class _CountryPager extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final int i = plateCountries.indexWhere((GallerySource c) => identical(c, source));
+    final int i = plateCountries.indexWhere(
+      (GallerySource c) => identical(c, source),
+    );
     if (i < 0 || plateCountries.length < 2) return const SizedBox.shrink();
     final int n = plateCountries.length;
     final GallerySource prev = plateCountries[(i - 1 + n) % n];
@@ -312,10 +336,13 @@ class _SidePager extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final int i = plateCountries.indexWhere((GallerySource c) => identical(c, source));
+    final int i = plateCountries.indexWhere(
+      (GallerySource c) => identical(c, source),
+    );
     final int n = plateCountries.length;
     if (i < 0 || n < 2) return const SizedBox.shrink();
-    final GallerySource target = plateCountries[(i + (forward ? 1 : n - 1)) % n];
+    final GallerySource target =
+        plateCountries[(i + (forward ? 1 : n - 1)) % n];
     return Padding(
       padding: const EdgeInsets.only(top: 200),
       child: _PagerCard(
@@ -328,7 +355,11 @@ class _SidePager extends StatelessWidget {
 }
 
 class _PagerCard extends StatelessWidget {
-  const _PagerCard({required this.target, required this.forward, required this.onTap});
+  const _PagerCard({
+    required this.target,
+    required this.forward,
+    required this.onTap,
+  });
 
   final GallerySource target;
   final bool forward;
@@ -344,7 +375,9 @@ class _PagerCard extends StatelessWidget {
     );
     final Widget label = Flexible(
       child: Column(
-        crossAxisAlignment: forward ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        crossAxisAlignment: forward
+            ? CrossAxisAlignment.end
+            : CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Text(
@@ -358,7 +391,11 @@ class _PagerCard extends StatelessWidget {
               target.countryName,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: t.text),
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: t.text,
+              ),
             ),
           ),
         ],
@@ -371,7 +408,8 @@ class _PagerCard extends StatelessWidget {
         radius: PdRadius.card,
         border: t.divider,
         hoverColor: t.hover,
-        semanticLabel: '${forward ? 'Next' : 'Previous'} country: ${target.countryName}',
+        semanticLabel:
+            '${forward ? 'Next' : 'Previous'} country: ${target.countryName}',
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -401,7 +439,8 @@ class _Header extends StatelessWidget {
   Widget build(BuildContext context) {
     final PdTokens t = context.tokens;
     final String packages = source.packageNames.join(' ');
-    Widget swap(int order, Widget child) => PdSwap(id: source, order: order, child: child);
+    Widget swap(int order, Widget child) =>
+        PdSwap(id: source, order: order, child: child);
     return PdAutoGrid(
       minWidth: 340,
       gap: 48,
@@ -501,7 +540,11 @@ class _TypeRow extends StatelessWidget {
         children: <Widget>[
           SizedBox(
             width: 132,
-            child: _StaggeredPlate(entry: item.entry, hold: false, autoType: true),
+            child: _StaggeredPlate(
+              entry: item.entry,
+              hold: false,
+              autoType: true,
+            ),
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -513,7 +556,11 @@ class _TypeRow extends StatelessWidget {
                   order: order,
                   child: Text(
                     item.entry.label,
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: t.text),
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      color: t.text,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 2),
@@ -532,7 +579,11 @@ class _TypeRow extends StatelessWidget {
                   child: Text(
                     specName(item) ?? spec.id,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontFamily: PdFonts.mono, fontSize: 12, color: t.subtle),
+                    style: TextStyle(
+                      fontFamily: PdFonts.mono,
+                      fontSize: 12,
+                      color: t.subtle,
+                    ),
                   ),
                 ),
               ],
@@ -574,7 +625,8 @@ class _TypeDetail extends StatelessWidget {
       ('Package', package, true),
       ('Route', PdLocation.playground(item).path, true),
     ];
-    Widget swap(int order, Widget child) => PdSwap(id: item, order: order, child: child);
+    Widget swap(int order, Widget child) =>
+        PdSwap(id: item, order: order, child: child);
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -585,9 +637,18 @@ class _TypeDetail extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          swap(0, Text(item.section.title, style: TextStyle(fontSize: 13, color: t.subtle))),
+          swap(
+            0,
+            Text(
+              item.section.title,
+              style: TextStyle(fontSize: 13, color: t.subtle),
+            ),
+          ),
           const SizedBox(height: 4),
-          swap(1, Text(entry.label, style: h3(t).copyWith(fontSize: 20, height: 1.3))),
+          swap(
+            1,
+            Text(entry.label, style: h3(t).copyWith(fontSize: 20, height: 1.3)),
+          ),
           const SizedBox(height: 16),
           _StaggeredPlate(entry: entry, hold: hold),
           if (entry.note != null) ...<Widget>[
@@ -603,7 +664,10 @@ class _TypeDetail extends StatelessWidget {
                 children: <Widget>[
                   SizedBox(
                     width: 72,
-                    child: Text(k, style: TextStyle(fontSize: 14, color: t.subtle)),
+                    child: Text(
+                      k,
+                      style: TextStyle(fontSize: 14, color: t.subtle),
+                    ),
                   ),
                   const SizedBox(width: 16),
                   Expanded(
@@ -643,7 +707,11 @@ class _TypeDetail extends StatelessWidget {
 /// so identical parts and the background stay still. Waits while [hold] is
 /// set.
 class _StaggeredPlate extends StatefulWidget {
-  const _StaggeredPlate({required this.entry, required this.hold, this.autoType = false});
+  const _StaggeredPlate({
+    required this.entry,
+    required this.hold,
+    this.autoType = false,
+  });
 
   final GalleryEntry entry;
   final bool hold;
@@ -677,7 +745,10 @@ class _StaggeredPlateState extends State<_StaggeredPlate> {
     country: _shown.country,
     autoType: widget.autoType,
     animation: _anim,
-    specTransition: const PlateSpecTransition(keepIdentical: true, morphBackground: true),
+    specTransition: const PlateSpecTransition(
+      keepIdentical: true,
+      morphBackground: true,
+    ),
   );
 }
 
@@ -700,21 +771,31 @@ class _BeckonState extends State<_Beckon> with SingleTickerProviderStateMixin {
     duration: const Duration(milliseconds: 1400),
   );
 
-  static final Animatable<double> _bounce = TweenSequence<double>(<TweenSequenceItem<double>>[
-    TweenSequenceItem<double>(
-      tween: Tween<double>(begin: 1, end: 1.08).chain(CurveTween(curve: Curves.easeOut)),
-      weight: 1,
-    ),
-    TweenSequenceItem<double>(
-      tween: Tween<double>(begin: 1.08, end: 0.97).chain(CurveTween(curve: Curves.easeInOut)),
-      weight: 1,
-    ),
-    TweenSequenceItem<double>(
-      tween: Tween<double>(begin: 0.97, end: 1).chain(CurveTween(curve: Curves.easeOut)),
-      weight: 1,
-    ),
-    TweenSequenceItem<double>(tween: ConstantTween<double>(1), weight: 5),
-  ]);
+  static final Animatable<double> _bounce =
+      TweenSequence<double>(<TweenSequenceItem<double>>[
+        TweenSequenceItem<double>(
+          tween: Tween<double>(
+            begin: 1,
+            end: 1.08,
+          ).chain(CurveTween(curve: Curves.easeOut)),
+          weight: 1,
+        ),
+        TweenSequenceItem<double>(
+          tween: Tween<double>(
+            begin: 1.08,
+            end: 0.97,
+          ).chain(CurveTween(curve: Curves.easeInOut)),
+          weight: 1,
+        ),
+        TweenSequenceItem<double>(
+          tween: Tween<double>(
+            begin: 0.97,
+            end: 1,
+          ).chain(CurveTween(curve: Curves.easeOut)),
+          weight: 1,
+        ),
+        TweenSequenceItem<double>(tween: ConstantTween<double>(1), weight: 5),
+      ]);
 
   @override
   void didUpdateWidget(_Beckon old) {
@@ -748,7 +829,8 @@ class _BeckonState extends State<_Beckon> with SingleTickerProviderStateMixin {
 }
 
 class _BeckonRingPainter extends CustomPainter {
-  _BeckonRingPainter({required this.progress, required this.color}) : super(repaint: progress);
+  _BeckonRingPainter({required this.progress, required this.color})
+    : super(repaint: progress);
 
   final Animation<double> progress;
   final Color color;
@@ -764,8 +846,12 @@ class _BeckonRingPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final double p = progress.value;
     if (p <= 0 || p >= 1) return;
-    final double head = Curves.easeInOutCubic.transform((p / 0.55).clamp(0.0, 1.0));
-    final double tail = Curves.easeInOutCubic.transform(((p - 0.45) / 0.55).clamp(0.0, 1.0));
+    final double head = Curves.easeInOutCubic.transform(
+      (p / 0.55).clamp(0.0, 1.0),
+    );
+    final double tail = Curves.easeInOutCubic.transform(
+      ((p - 0.45) / 0.55).clamp(0.0, 1.0),
+    );
     if (head <= tail) return;
 
     final RRect ring = RRect.fromRectAndRadius(
@@ -795,5 +881,6 @@ class _BeckonRingPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(_BeckonRingPainter old) => old.progress != progress || old.color != color;
+  bool shouldRepaint(_BeckonRingPainter old) =>
+      old.progress != progress || old.color != color;
 }

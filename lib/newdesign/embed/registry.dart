@@ -12,8 +12,12 @@ class EmbedComponent {
   /// [url] resolved against [base], with `?v=hash`.
   Uri resolve(Uri base) {
     // Named explicitly: dev servers answer a bare folder with the gallery's own index.
-    final Uri u = base.removeFragment().resolve(url.endsWith('/') ? '${url}index.html' : url);
-    return hash.isEmpty ? u : u.replace(queryParameters: <String, String>{'v': hash});
+    final Uri u = base.removeFragment().resolve(
+      url.endsWith('/') ? '${url}index.html' : url,
+    );
+    return hash.isEmpty
+        ? u
+        : u.replace(queryParameters: <String, String>{'v': hash});
   }
 }
 
@@ -21,10 +25,14 @@ class EmbedComponent {
 class EmbedRegistry {
   const EmbedRegistry(this._components);
 
-  static const EmbedRegistry empty = EmbedRegistry(<String, Map<String, EmbedComponent>>{});
+  static const EmbedRegistry empty = EmbedRegistry(
+    <String, Map<String, EmbedComponent>>{},
+  );
 
   /// Before the fetch finishes; compared by identity.
-  static const EmbedRegistry unloaded = EmbedRegistry(<String, Map<String, EmbedComponent>>{});
+  static const EmbedRegistry unloaded = EmbedRegistry(
+    <String, Map<String, EmbedComponent>>{},
+  );
 
   final Map<String, Map<String, EmbedComponent>> _components;
 
@@ -32,12 +40,15 @@ class EmbedRegistry {
   static EmbedRegistry? parse(String body) {
     try {
       final Object? json = jsonDecode(body);
-      if (json is! Map || json['version'] != 1 || json['components'] is! Map) return null;
+      if (json is! Map || json['version'] != 1 || json['components'] is! Map)
+        return null;
       return EmbedRegistry(<String, Map<String, EmbedComponent>>{
-        for (final MapEntry<Object?, Object?> c in (json['components'] as Map).entries)
+        for (final MapEntry<Object?, Object?> c
+            in (json['components'] as Map).entries)
           if (c.key is String && c.value is Map)
             c.key as String: <String, EmbedComponent>{
-              for (final MapEntry<Object?, Object?> l in (c.value as Map).entries)
+              for (final MapEntry<Object?, Object?> l
+                  in (c.value as Map).entries)
                 if (embedLanguages.contains(l.key) &&
                     l.value is Map &&
                     (l.value as Map)['url'] is String)
@@ -54,7 +65,8 @@ class EmbedRegistry {
 
   bool get isEmpty => _components.isEmpty;
 
-  EmbedComponent? of(String country, String lang) => _components[country]?[lang];
+  EmbedComponent? of(String country, String lang) =>
+      _components[country]?[lang];
 
   /// Tabs for [country]: Flutter first (always there), then every built language.
   List<String> languagesOf(String country) => <String>[

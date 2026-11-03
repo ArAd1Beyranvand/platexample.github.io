@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:plate_core/plate_core.dart';
 
 import 'catalogue.dart';
@@ -9,7 +11,8 @@ const String kCoreRepo = 'https://github.com/ArAd1Beyranvand/plate-core';
 /// package builds it in a way that has no public name.
 String? specName(CatalogueItem item) => specNames[item.entry.spec];
 
-String repoOf(String package) => packageRepos[package] ?? 'https://github.com/ArAd1Beyranvand';
+String repoOf(String package) =>
+    packageRepos[package] ?? 'https://github.com/ArAd1Beyranvand';
 
 /// The package that ships [item]: the source's own, or for an umbrella the
 /// first package name (Iranshahr ships every member from one package).
@@ -36,7 +39,8 @@ List<CodeLine> playgroundCode({
   final String package = packageOf(item);
   final String name = specName(item) ?? "/* '${spec.id}' from $package */ spec";
   final bool keypad =
-      source == PlateInputSource.packageKeypad || source == PlateInputSource.keypadFirst;
+      source == PlateInputSource.packageKeypad ||
+      source == PlateInputSource.keypadFirst;
 
   final String? theme = switch (item.entry.theme) {
     null => null,
@@ -64,8 +68,12 @@ List<CodeLine> playgroundCode({
     c(')'),
   ];
   if (keypad) {
-    final int digit = spec.slots.indexWhere((PlateSlot s) => s.alphabet.isNumeric);
-    final int letter = spec.slots.indexWhere((PlateSlot s) => !s.alphabet.isNumeric);
+    final int digit = spec.slots.indexWhere(
+      (PlateSlot s) => s.alphabet.isNumeric,
+    );
+    final int letter = spec.slots.indexWhere(
+      (PlateSlot s) => !s.alphabet.isNumeric,
+    );
     lines.addAll(<CodeLine>[
       c(''),
       c('PlateKeypad('),
@@ -89,6 +97,56 @@ List<CodeLine> playgroundCode({
     k('// isValid: $isValid'),
   ]);
   return lines;
+}
+
+/// The same panel for a built language, from the values its component reported.
+List<CodeLine> embedCode({
+  required String lang,
+  required CatalogueItem item,
+  required List<String?> values,
+  required bool isValid,
+}) {
+  final String country = item.source.slug.replaceAll('-', '_');
+  final String id = item.entry.spec.id;
+  final String list = jsonEncode(values);
+  final String text = values.map((String? v) => v ?? '').join(' ');
+  CodeLine c(String t) => (text: t, comment: false);
+  CodeLine k(String t) => (text: t, comment: true);
+  final String note = lang == 'python' ? '#' : '//';
+
+  return <CodeLine>[
+    ...switch (lang) {
+      'typescript' => <CodeLine>[
+        c("import country from './countries/$country';"),
+        c("import { PlateController } from './core/input/plate_controller';"),
+        c(''),
+        c("const spec = country.specs.get('$id')!;"),
+        c('const controller = new PlateController({ spec });'),
+        c('controller.setValues($list);'),
+      ],
+      'python' => <CodeLine>[
+        c('from plates.countries.$country.data import SPECS'),
+        c('from plates.core.input.plate_controller import PlateController'),
+        c(''),
+        c('spec = SPECS["$id"]'),
+        c('controller = PlateController(spec)'),
+        c('controller.set_values($list)'),
+      ],
+      _ => <CodeLine>[
+        c('import plates.countries.$country.country'),
+        c('import plates.core.input.PlateController'),
+        c(''),
+        c('val spec = country.specs["$id"]!!'),
+        c('val controller = PlateController(spec)'),
+        c(
+          'controller.setValues(listOf(${values.map((String? v) => v == null ? 'null' : jsonEncode(v)).join(', ')}))',
+        ),
+      ],
+    },
+    c(''),
+    k('$note controller.text(): "$text"'),
+    k('$note valid: $isValid'),
+  ];
 }
 
 /// "2 + 1 + 3 + 2 = 8": the spec's text groups, or runs of one alphabet.

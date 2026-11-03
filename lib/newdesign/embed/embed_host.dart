@@ -19,6 +19,7 @@ class EmbedHost extends StatefulWidget {
     required this.component,
     required this.title,
     this.spec,
+    this.onChange,
     this.helloTimeout = const Duration(seconds: 15),
   });
 
@@ -27,6 +28,9 @@ class EmbedHost extends StatefulWidget {
 
   /// The plate type the component opens on; null leaves its default.
   final String? spec;
+
+  /// Called with the component's `change` payload: values and validity.
+  final void Function(List<String?> values, bool? valid)? onChange;
   final Duration helloTimeout;
 
   @override
@@ -40,12 +44,28 @@ class EmbedLeaving extends InheritedWidget {
 
   final bool leaving;
 
-  static bool of(BuildContext context) =>
-      context.dependOnInheritedWidgetOfExactType<EmbedLeaving>()?.leaving ??
-      false;
+  static bool of(BuildContext context) => maybeOf(context) ?? false;
+
+  /// Null outside a switcher.
+  static bool? maybeOf(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<EmbedLeaving>()?.leaving;
 
   @override
   bool updateShouldNotify(EmbedLeaving old) => leaving != old.leaving;
+}
+
+/// Told by an ancestor switcher that the previous component is still playing
+/// its outro: the iframe may load, but `init` waits so the intro plays in view.
+class EmbedHeld extends InheritedWidget {
+  const EmbedHeld({super.key, required this.held, required super.child});
+
+  final bool held;
+
+  static bool of(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<EmbedHeld>()?.held ?? false;
+
+  @override
+  bool updateShouldNotify(EmbedHeld old) => held != old.held;
 }
 
 enum _Phase { loading, booting, failed }
@@ -59,6 +79,8 @@ class _EmbedHostState extends State<EmbedHost> {
   String? _error;
   Timer? _timer;
   EmbedFrameConfig? _config;
+  bool _helloed = false;
+  bool _inited = false;
 
   @override
   void initState() {
@@ -84,6 +106,7 @@ class _EmbedHostState extends State<EmbedHost> {
     _phase = _Phase.loading;
     _error = null;
     _attempt++;
+    _helloed = _inited = false;
     _config = null;
     _arm();
   });
@@ -94,17 +117,46 @@ class _EmbedHostState extends State<EmbedHost> {
     switch (m.type) {
       case 'hello':
         _timer?.cancel();
-        _config?.send?.call(
-          initMessage(
-            dark: Theme.of(context).brightness == Brightness.dark,
-            spec: widget.spec,
-          ),
-        );
+        _helloed = true;
+        _init();
         setState(() => _phase = _Phase.booting);
       case 'ready' || 'resize':
         setState(() => _height = m.height < _minHeight ? _minHeight : m.height);
+      case 'change':
+        widget.onChange?.call(
+          (m.payload['values'] as List).cast<String?>(),
+          m.payload['valid'] as bool?,
+        );
       case 'error' when m.fatal:
         _fail(m.payload['message'] as String);
+    }
+  }
+
+  void _init() {
+    if (!_helloed || _inited || EmbedHeld.of(context)) return;
+    _inited = true;
+    _config?.send?.call(
+      initMessage(
+        dark: Theme.of(context).brightness == Brightness.dark,
+        spec: widget.spec,
+      ),
+    );
+  }
+
+  @override
+  void didUpdateWidget(EmbedHost old) {
+    super.didUpdateWidget(old);
+    final String? spec = widget.spec;
+    if (spec != null && spec != old.spec && _inited) {
+      _config?.send?.call(<String, Object?>{
+        'ns': 'plate-embed',
+        'v': 1,
+        'type': 'action',
+        'payload': <String, Object?>{
+          'name': 'setSpec',
+          'args': <String, Object?>{'spec': spec},
+        },
+      });
     }
   }
 
@@ -113,13 +165,17 @@ class _EmbedHostState extends State<EmbedHost> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    _init();
     if (!_left && EmbedLeaving.of(context)) {
       _left = true;
       _config?.send?.call(<String, Object?>{
         'ns': 'plate-embed',
         'v': 1,
         'type': 'action',
-        'payload': <String, Object?>{'name': 'leave', 'args': <String, Object?>{}},
+        'payload': <String, Object?>{
+          'name': 'leave',
+          'args': <String, Object?>{},
+        },
       });
     }
   }

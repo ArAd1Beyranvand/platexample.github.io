@@ -15,4 +15,8 @@ class EmbedFrameConfig {
 
   /// Posts to the iframe at its own origin; set by the platform view.
   void Function(Object message)? send;
+
+  /// Hides the component's plate-type chooser; set by the platform view.
+  /// Components built before they honoured `init.spec` still draw one.
+  void Function()? hideChooser;
 }

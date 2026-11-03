@@ -46,12 +46,14 @@ void main() {
   });
 
   group('routes', () {
-    test('language segment', () {
+    test('language parameter', () {
       final String slug = plateCountries.first.slug;
-      final PdLocation l = PdLocation.fromUri(Uri.parse('/plates/$slug/python'));
+      final PdLocation l = PdLocation.fromUri(Uri.parse('/plates/$slug?language=python'));
       expect(l.isCountry, isTrue);
       expect(l.lang, 'python');
-      expect(l.path, '/plates/$slug/python');
+      expect(l.path, '/plates/$slug?language=python');
+      expect(PdLocation.fromUri(Uri.parse('/plates/$slug/python')).lang, 'python');
+      expect(PdLocation.fromUri(Uri.parse('/plates/$slug?language=flutter')).lang, isNull);
       expect(PdLocation.fromUri(Uri.parse('/plates/$slug/flutter')).lang, isNull);
       expect(PdLocation.fromUri(Uri.parse('/plates/$slug')).path, '/plates/$slug');
     });

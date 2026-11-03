@@ -8,6 +8,7 @@ import '../data/catalogue.dart';
 import '../data/plate_code.dart';
 import '../design/tokens.dart';
 import '../embed/embed_host.dart';
+import '../embed/handover.dart';
 import '../embed/embed_loader.dart';
 import '../embed/protocol.dart';
 import '../embed/registry.dart';
@@ -32,10 +33,13 @@ class PlaygroundPage extends StatefulWidget {
 }
 
 class _PlaygroundPageState extends State<PlaygroundPage> {
-  late final PlateController _plate = PlateController(spec: widget.item.entry.spec)
-    ..hints.value = widget.item.entry.sampleValues
-    ..addListener(_changed);
+  late final PlateController _plate =
+      PlateController(spec: widget.item.entry.spec)
+        ..hints.value = widget.item.entry.sampleValues
+        ..addListener(_changed);
   bool _codeOpen = true;
+  List<String?>? _embedValues;
+  bool _embedValid = false;
 
   CatalogueItem get _item => widget.item;
   int get _index => playgroundItems.indexOf(_item);
@@ -53,7 +57,13 @@ class _PlaygroundPageState extends State<PlaygroundPage> {
     final PlateSpec next = _item.entry.spec;
     _plate.adoptSpec(next, preserve: PlateValuePreservation.none);
     _plate.hints.value = _item.entry.sampleValues;
+    _embedValues = null;
   }
+
+  void _embedChanged(List<String?> values, bool? valid) => setState(() {
+    _embedValues = values;
+    _embedValid = valid ?? false;
+  });
 
   @override
   void dispose() {
@@ -89,7 +99,9 @@ class _PlaygroundPageState extends State<PlaygroundPage> {
   bool _step(int by) {
     final int i = _index + by;
     if (i < 0 || i >= playgroundItems.length) return false;
-    PdNav.of(context).go(PdLocation.playground(playgroundItems[i], widget.lang));
+    PdNav.of(
+      context,
+    ).go(PdLocation.playground(playgroundItems[i], widget.lang));
     return true;
   }
 
@@ -98,13 +110,25 @@ class _PlaygroundPageState extends State<PlaygroundPage> {
     final List<String?> values = _plate.values;
     final bool complete = firstEmpty(_item.entry.spec, values) == null;
     final bool valid =
-        complete && verdictOf(_item.entry.spec, values, _item.entry.validator).isValid;
+        complete &&
+        verdictOf(_item.entry.spec, values, _item.entry.validator).isValid;
     final List<CodeLine> code = playgroundCode(
       item: _item,
       source: PlateInputSource.keypadFirst,
       values: values,
       isValid: valid,
     );
+    final String? lang = widget.lang;
+    final List<CodeLine> shown = lang == null
+        ? code
+        : embedCode(
+            lang: lang,
+            item: _item,
+            values:
+                _embedValues ??
+                List<String?>.filled(_item.entry.spec.slotCount, null),
+            isValid: _embedValid,
+          );
     final bool narrow = MediaQuery.sizeOf(context).width < 600;
 
     return SingleChildScrollView(
@@ -124,23 +148,31 @@ class _PlaygroundPageState extends State<PlaygroundPage> {
                 minWidth: 460,
                 gap: 24,
                 children: <Widget>[
-                  _StageCard(item: _item, plate: _plate, lang: widget.lang),
+                  _StageCard(
+                    item: _item,
+                    plate: _plate,
+                    lang: widget.lang,
+                    onEmbedChange: _embedChanged,
+                  ),
                   if (narrow && !_codeOpen)
                     Align(
                       alignment: Alignment.centerLeft,
-                      child: PdLink('▸ Show code', onTap: () => setState(() => _codeOpen = true)),
+                      child: PdLink(
+                        '▸ Show code',
+                        onTap: () => setState(() => _codeOpen = true),
+                      ),
                     )
-                  else if (widget.lang == null)
+                  else
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
-                        _CodePanel(lines: code),
-                        const SizedBox(height: 16),
-                        _SlotsView(spec: _item.entry.spec, values: values),
+                        _CodePanel(lines: shown),
+                        if (lang == null) ...<Widget>[
+                          const SizedBox(height: 16),
+                          _SlotsView(spec: _item.entry.spec, values: values),
+                        ],
                       ],
-                    )
-                  else
-                    const SizedBox.shrink(),
+                    ),
                 ],
               ),
               const SizedBox(height: 32),
@@ -154,7 +186,11 @@ class _PlaygroundPageState extends State<PlaygroundPage> {
 }
 
 class _TopRow extends StatelessWidget {
-  const _TopRow({required this.item, required this.index, required this.onStep});
+  const _TopRow({
+    required this.item,
+    required this.index,
+    required this.onStep,
+  });
 
   final CatalogueItem item;
   final int index;
@@ -190,7 +226,8 @@ class _TopRow extends StatelessWidget {
             children: <Widget>[
               PdLink(
                 'Countries',
-                onTap: () => nav.go(const PdLocation.landing(LandingAnchor.coverage)),
+                onTap: () =>
+                    nav.go(const PdLocation.landing(LandingAnchor.coverage)),
                 style: crumb,
               ),
               Text('  /  ', style: crumb),
@@ -202,7 +239,10 @@ class _TopRow extends StatelessWidget {
               Text('  /  ', style: crumb),
               Text(
                 item.entry.label,
-                style: crumb.copyWith(color: t.text, fontWeight: FontWeight.w600),
+                style: crumb.copyWith(
+                  color: t.text,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ],
           ),
@@ -221,11 +261,17 @@ class _TopRow extends StatelessWidget {
 }
 
 class _StageCard extends StatefulWidget {
-  const _StageCard({required this.item, required this.plate, required this.lang});
+  const _StageCard({
+    required this.item,
+    required this.plate,
+    required this.lang,
+    required this.onEmbedChange,
+  });
 
   final CatalogueItem item;
   final PlateController plate;
   final String? lang;
+  final void Function(List<String?> values, bool? valid) onEmbedChange;
 
   @override
   State<_StageCard> createState() => _StageCardState();
@@ -289,16 +335,8 @@ class _StageCardState extends State<_StageCard> {
           const SizedBox(height: 16),
           _LanguageRow(item: item, lang: widget.lang),
           const SizedBox(height: 24),
-          AnimatedSwitcher(
-            duration: PdMotion.of(context, const Duration(milliseconds: 220)),
-            reverseDuration: PdMotion.of(
-              context,
-              const Duration(milliseconds: 900),
-            ),
-            transitionBuilder: (Widget child, Animation<double> animation) =>
-                child is _Embed
-                ? _Outro(animation: animation, child: child)
-                : FadeTransition(opacity: animation, child: child),
+          EmbedHandover(
+            embed: widget.lang != null,
             child: widget.lang == null
                 ? LivePlate(
                     key: const ValueKey<String>('flutter'),
@@ -315,6 +353,7 @@ class _StageCardState extends State<_StageCard> {
                     key: ValueKey<String>('${item.source.slug}/${widget.lang}'),
                     item: item,
                     lang: widget.lang!,
+                    onChange: widget.onEmbedChange,
                   ),
           ),
         ],
@@ -342,7 +381,8 @@ class _LanguageRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final PdTokens t = context.tokens;
-    final EmbedRegistryLoader loader = EmbedRegistryLoader.instance..ensureLoaded();
+    final EmbedRegistryLoader loader = EmbedRegistryLoader.instance
+      ..ensureLoaded();
     return ValueListenableBuilder<EmbedRegistry>(
       valueListenable: loader.registry,
       builder: (BuildContext context, EmbedRegistry registry, _) {
@@ -372,9 +412,12 @@ class _LanguageRow extends StatelessWidget {
                       hint: built.contains(l)
                           ? _hints[l]!
                           : '${embedLanguageLabels[l]} build not available for ${item.source.countryName} yet',
-                      onTap: () => PdNav.of(
-                        context,
-                      ).go(PdLocation.playground(item, l == embedLanguageFlutter ? null : l)),
+                      onTap: () => PdNav.of(context).go(
+                        PdLocation.playground(
+                          item,
+                          l == embedLanguageFlutter ? null : l,
+                        ),
+                      ),
                     ),
                 ],
               ),
@@ -409,7 +452,9 @@ class _LangButton extends StatelessWidget {
       child: Opacity(
         opacity: enabled ? 1 : 0.4,
         child: MouseRegion(
-          cursor: enabled && !selected ? SystemMouseCursors.click : SystemMouseCursors.basic,
+          cursor: enabled && !selected
+              ? SystemMouseCursors.click
+              : SystemMouseCursors.basic,
           child: GestureDetector(
             onTap: enabled && !selected ? onTap : null,
             child: AnimatedContainer(
@@ -437,35 +482,24 @@ class _LangButton extends StatelessWidget {
   }
 }
 
-/// An embed held on screen, unfaded, while it plays its outro.
-class _Outro extends StatelessWidget {
-  const _Outro({required this.animation, required this.child});
-
-  final Animation<double> animation;
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) => AnimatedBuilder(
-    animation: animation,
-    builder: (BuildContext context, Widget? child) => EmbedLeaving(
-      leaving: animation.status == AnimationStatus.reverse,
-      child: child!,
-    ),
-    child: child,
-  );
-}
-
 /// The plate and keypad of a built language, in an iframe opened on [item]'s
 /// spec. A language the registry lacks falls back to Flutter.
 class _Embed extends StatelessWidget {
-  const _Embed({super.key, required this.item, required this.lang});
+  const _Embed({
+    super.key,
+    required this.item,
+    required this.lang,
+    required this.onChange,
+  });
 
   final CatalogueItem item;
   final String lang;
+  final void Function(List<String?> values, bool? valid) onChange;
 
   @override
   Widget build(BuildContext context) {
-    final EmbedRegistryLoader loader = EmbedRegistryLoader.instance..ensureLoaded();
+    final EmbedRegistryLoader loader = EmbedRegistryLoader.instance
+      ..ensureLoaded();
     return ValueListenableBuilder<EmbedRegistry>(
       valueListenable: loader.registry,
       builder: (BuildContext context, EmbedRegistry registry, _) {
@@ -473,7 +507,8 @@ class _Embed extends StatelessWidget {
         if (component == null) {
           if (!identical(registry, EmbedRegistry.unloaded)) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
-              if (context.mounted) PdNav.of(context).go(PdLocation.playground(item));
+              if (context.mounted)
+                PdNav.of(context).go(PdLocation.playground(item));
             });
           }
           return const SizedBox(height: 320);
@@ -481,8 +516,10 @@ class _Embed extends StatelessWidget {
         return EmbedHost(
           key: ValueKey<String>('${item.source.slug}/${item.slug}/$lang'),
           component: component,
-          spec: item.slug,
-          title: '${item.source.countryName} ${item.entry.label} · ${embedLanguageLabels[lang]}',
+          spec: item.entry.id,
+          onChange: onChange,
+          title:
+              '${item.source.countryName} ${item.entry.label} · ${embedLanguageLabels[lang]}',
         );
       },
     );
@@ -500,6 +537,7 @@ class _CodePanel extends StatefulWidget {
 }
 
 class _CodePanelState extends State<_CodePanel> {
+  static const int _codeLines = 24;
   Set<int> _changed = <int>{};
   int _generation = 0;
 
@@ -519,7 +557,10 @@ class _CodePanelState extends State<_CodePanel> {
   @override
   Widget build(BuildContext context) {
     final PdTokens t = context.tokens;
-    final Duration flash = PdMotion.of(context, const Duration(milliseconds: 600));
+    final Duration flash = PdMotion.of(
+      context,
+      const Duration(milliseconds: 600),
+    );
     return Container(
       decoration: BoxDecoration(
         color: t.code,
@@ -542,41 +583,56 @@ class _CodePanelState extends State<_CodePanel> {
                     style: TextStyle(fontSize: 13, color: t.muted),
                   ),
                 ),
-                PdCopyButton(text: () => widget.lines.map((CodeLine l) => l.text).join('\n')),
+                PdCopyButton(
+                  text: () =>
+                      widget.lines.map((CodeLine l) => l.text).join('\n'),
+                ),
               ],
             ),
           ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(vertical: 12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                for (int i = 0; i < widget.lines.length; i++)
-                  TweenAnimationBuilder<double>(
-                    key: ValueKey<String>(_changed.contains(i) ? 'f$_generation-$i' : 's$i'),
-                    tween: Tween<double>(
-                      begin: _changed.contains(i) && flash > Duration.zero ? 1 : 0,
-                      end: 0,
-                    ),
-                    duration: flash,
-                    builder: (BuildContext context, double v, Widget? child) => ColoredBox(
-                      color: t.accentSoft.withValues(alpha: t.accentSoft.a * v),
-                      child: child,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Text(
-                        widget.lines[i].text,
-                        style: monoStyle(
-                          t,
-                          size: 13,
-                          height: 22 / 13,
-                        ).copyWith(color: widget.lines[i].comment ? t.subtle : t.text),
+          SizedBox(
+            height: _codeLines * 22 + 24,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  for (int i = 0; i < widget.lines.length; i++)
+                    TweenAnimationBuilder<double>(
+                      key: ValueKey<String>(
+                        _changed.contains(i) ? 'f$_generation-$i' : 's$i',
+                      ),
+                      tween: Tween<double>(
+                        begin: _changed.contains(i) && flash > Duration.zero
+                            ? 1
+                            : 0,
+                        end: 0,
+                      ),
+                      duration: flash,
+                      builder:
+                          (BuildContext context, double v, Widget? child) =>
+                              ColoredBox(
+                                color: t.accentSoft.withValues(
+                                  alpha: t.accentSoft.a * v,
+                                ),
+                                child: child,
+                              ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Text(
+                          widget.lines[i].text,
+                          style: monoStyle(t, size: 13, height: 22 / 13)
+                              .copyWith(
+                                color: widget.lines[i].comment
+                                    ? t.subtle
+                                    : t.text,
+                              ),
+                        ),
                       ),
                     ),
-                  ),
-              ],
+                ],
+              ),
             ),
           ),
         ],
@@ -606,7 +662,8 @@ class _SlotsView extends StatelessWidget {
           children: <Widget>[
             for (int i = 0; i < spec.slotCount; i++)
               Tooltip(
-                message: 'Slot ${i + 1}: ${describeSlots(spec.slots[i].alphabet, 1)}',
+                message:
+                    'Slot ${i + 1}: ${describeSlots(spec.slots[i].alphabet, 1)}',
                 child: Container(
                   width: 40,
                   padding: const EdgeInsets.symmetric(vertical: 6),
@@ -625,7 +682,10 @@ class _SlotsView extends StatelessWidget {
                           color: values[i] == null ? t.subtle : t.text,
                         ),
                       ),
-                      Text('${i + 1}', style: monoStyle(t, size: 10).copyWith(color: t.subtle)),
+                      Text(
+                        '${i + 1}',
+                        style: monoStyle(t, size: 10).copyWith(color: t.subtle),
+                      ),
                     ],
                   ),
                 ),
@@ -647,12 +707,13 @@ class _Facts extends StatelessWidget {
     final PdTokens t = context.tokens;
     final String package = packageOf(item);
     final String link = 'platexample.ir/#${PdLocation.playground(item).path}';
-    final List<(String, String, VoidCallback?)> rows = <(String, String, VoidCallback?)>[
-      ('Spec', specName(item) ?? item.entry.spec.id, null),
-      ('Package', package, () => openExternal(repoOf(package))),
-      ('Slots', slotPattern(item.entry.spec), null),
-      ('Deep link', link, () => openExternal('https://$link')),
-    ];
+    final List<(String, String, VoidCallback?)> rows =
+        <(String, String, VoidCallback?)>[
+          ('Spec', specName(item) ?? item.entry.spec.id, null),
+          ('Package', package, () => openExternal(repoOf(package))),
+          ('Slots', slotPattern(item.entry.spec), null),
+          ('Deep link', link, () => openExternal('https://$link')),
+        ];
     return Column(
       children: <Widget>[
         for (final (String k, String v, VoidCallback? tap) in rows)
@@ -666,7 +727,11 @@ class _Facts extends StatelessWidget {
                 SizedBox(width: 120, child: Text(k, style: body(t))),
                 Expanded(
                   child: tap == null
-                      ? Text(v, overflow: TextOverflow.ellipsis, style: monoStyle(t))
+                      ? Text(
+                          v,
+                          overflow: TextOverflow.ellipsis,
+                          style: monoStyle(t),
+                        )
                       : Align(
                           alignment: Alignment.centerLeft,
                           child: PdLink(

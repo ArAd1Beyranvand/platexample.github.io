@@ -8,6 +8,7 @@ import 'package:plate_core/plate_core.dart';
 import 'package:plate_keypad/plate_keypad.dart';
 
 import '../design/tokens.dart';
+import '../embed/embed_host.dart' show EmbedLeaving;
 import '../widgets/controls.dart';
 import 'letter_sheet.dart';
 
@@ -81,6 +82,7 @@ class LivePlate extends StatefulWidget {
     this.showInvalidNote = false,
     this.keypadBelow,
     this.fixedSize = false,
+    this.animation,
   });
 
   final PlateController controller;
@@ -103,6 +105,9 @@ class LivePlate extends StatefulWidget {
   /// the inline letter picker.
   final bool fixedSize;
 
+  /// Lets the owner cue the plate's parts, e.g. to stagger it out on leaving.
+  final PlateAnimationController? animation;
+
   @override
   State<LivePlate> createState() => _LivePlateState();
 }
@@ -114,7 +119,8 @@ class _LivePlateState extends State<LivePlate> {
   PlateController get _c => widget.controller;
 
   /// Plays the stagger out and in when the spec changes.
-  final PlateAnimationController _anim = PlateAnimationController();
+  late final PlateAnimationController _anim =
+      widget.animation ?? PlateAnimationController();
 
   @override
   void initState() {
@@ -122,6 +128,34 @@ class _LivePlateState extends State<LivePlate> {
     _c.addListener(_changed);
     _c.rejection.addListener(_rejected);
     HardwareKeyboard.instance.addHandler(_onKey);
+  }
+
+  bool _switcherSeen = false;
+  bool _left = false;
+
+  /// Inside a language switcher the plate staggers in when it mounts and out
+  /// when told it is leaving, as the iframe components do.
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final bool? leaving = EmbedLeaving.maybeOf(context);
+    if (leaving == null) return;
+    final PlateSpec spec = _c.spec;
+    if (!_switcherSeen) {
+      _switcherSeen = true;
+      // Mounting is the heaviest frame; the parts wait out of sight until it is
+      // painted, so the stagger does not start under it and skip frames.
+      for (final PlatePartId id in PlatePartId.allOf(spec)) {
+        _anim.hide(id);
+      }
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) _anim.comeInAll(delays: PlateStagger.sequence(spec));
+      });
+    }
+    if (leaving && !_left) {
+      _left = true;
+      _anim.goOutAll(delays: PlateStagger.sequence(spec, reverse: true));
+    }
   }
 
   @override
@@ -138,7 +172,7 @@ class _LivePlateState extends State<LivePlate> {
   @override
   void dispose() {
     _hintTimer?.cancel();
-    _anim.dispose();
+    if (widget.animation == null) _anim.dispose();
     HardwareKeyboard.instance.removeHandler(_onKey);
     _c.removeListener(_changed);
     _c.rejection.removeListener(_rejected);

@@ -13,8 +13,8 @@ enum LandingAnchor { top, coverage, start, about }
 /// /plates                  Landing #coverage
 /// /plates/:region          Region (a continent's countries)
 /// /plates/:country         Country (its plate types)
-/// /plates/:country/:lang   Country, in a built language (typescript, kotlin, python)
-/// /plates/:country/:spec[/:lang]   Playground
+/// /plates/:country?language=kotlin   Country, in a built language (typescript, kotlin, python)
+/// /plates/:country/:spec[?language=kotlin]   Playground
 /// /start, /about           Landing #start / #about
 /// ```
 ///
@@ -85,11 +85,11 @@ class PdLocation {
 
   String get path {
     if (isRenderCheck) return '/render-check';
+    final String query = lang == null ? '' : '?language=$lang';
     final CatalogueItem? item = this.item;
-    if (item != null)
-      return '/plates/${item.source.slug}/${item.slug}${lang == null ? '' : '/$lang'}';
+    if (item != null) return '/plates/${item.source.slug}/${item.slug}$query';
     final GallerySource? source = this.source;
-    if (source != null) return '/plates/${source.slug}${lang == null ? '' : '/$lang'}';
+    if (source != null) return '/plates/${source.slug}$query';
     return switch (anchor) {
       LandingAnchor.top => '/',
       LandingAnchor.coverage => '/plates',
@@ -112,7 +112,7 @@ class PdLocation {
       case 'about':
         return const PdLocation.landing(LandingAnchor.about);
       case 'plates':
-        return _plate(s.skip(1).toList());
+        return _plate(s.skip(1).toList(), uri.queryParameters['language']?.toLowerCase());
       case 'discover':
         // Old shape: /discover/{country} or /discover/{umbrella}/{member}/...;
         // the last country-like segment wins.
@@ -131,15 +131,18 @@ class PdLocation {
   /// `/plates/...`: nothing is #coverage, one segment is a region or country
   /// page, two is a plate. An unknown or plate-less country falls back to
   /// #coverage rather than showing an empty page.
-  static PdLocation _plate(List<String> rest) {
+  static PdLocation _plate(List<String> rest, [String? language]) {
     const PdLocation coverage = PdLocation.landing(LandingAnchor.coverage);
     if (rest.isEmpty) return coverage;
     final GallerySource? region = umbrellaBySlug(rest.first);
     if (region != null && rest.length == 1) return PdLocation.region(region);
     final GallerySource? country = countryBySlug(rest.first);
     if (country == null) return coverage;
+    final String? lang = embedLanguages.contains(language) && language != embedLanguageFlutter
+        ? language
+        : null;
     if (rest.length == 1) {
-      return firstItemOf(country) == null ? coverage : PdLocation.country(country);
+      return firstItemOf(country) == null ? coverage : PdLocation.country(country, lang);
     }
     // `flutter` is the country page itself; the registry decides later
     // whether a built language is really there.
@@ -149,8 +152,11 @@ class PdLocation {
     }
     final CatalogueItem? item = itemBySlug(country, rest[1]) ?? firstItemOf(country);
     if (item == null) return coverage;
-    final String? lang = rest.length == 3 && embedLanguages.contains(rest[2]) ? rest[2] : null;
-    return PdLocation.playground(item, lang == embedLanguageFlutter ? null : lang);
+    final String? pathLang = rest.length == 3 && embedLanguages.contains(rest[2]) ? rest[2] : null;
+    return PdLocation.playground(
+      item,
+      pathLang == null ? lang : (pathLang == embedLanguageFlutter ? null : pathLang),
+    );
   }
 
   @override

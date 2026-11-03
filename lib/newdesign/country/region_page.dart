@@ -132,7 +132,8 @@ class _RegionPageState extends State<RegionPage> {
                     minWidth: 260,
                     gap: 12,
                     children: <Widget>[
-                      for (final GallerySource m in shown) _CountryCard(source: m),
+                      for (final GallerySource m in shown)
+                        _CountryCard(source: m),
                     ],
                   ),
               ],
@@ -155,7 +156,9 @@ class _CountryCard extends StatelessWidget {
     final PdNav nav = PdNav.of(context);
     final CatalogueItem? lead = firstItemOf(source);
     final String native = countryMeta[source.countryName]?.$2 ?? '';
-    final int types = catalogueItems.where((CatalogueItem i) => identical(i.source, source)).length;
+    final int types = catalogueItems
+        .where((CatalogueItem i) => identical(i.source, source))
+        .length;
 
     return PdTappable(
       onTap: lead == null ? null : () => nav.go(PdLocation.country(source)),
@@ -181,12 +184,20 @@ class _CountryCard extends StatelessWidget {
             children: <Widget>[
               Text(
                 source.countryName,
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: t.text),
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                  color: t.text,
+                ),
               ),
               if (native.isNotEmpty && native != source.countryName)
                 Text(
                   native,
-                  style: TextStyle(fontFamily: PdFonts.persian, fontSize: 14, color: t.subtle),
+                  style: TextStyle(
+                    fontFamily: PdFonts.persian,
+                    fontSize: 14,
+                    color: t.subtle,
+                  ),
                 ),
             ],
           ),

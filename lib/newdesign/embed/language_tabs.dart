@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../country/filter_chips.dart';
 import '../data/catalogue.dart';
 import 'embed_host.dart';
+import 'handover.dart';
 import 'embed_loader.dart';
 import 'protocol.dart';
 import 'registry.dart';
@@ -17,6 +18,8 @@ class LanguageTabs extends StatelessWidget {
     required this.lang,
     required this.onLang,
     required this.flutter,
+    required this.page,
+    this.spec,
   });
 
   final GallerySource source;
@@ -25,6 +28,13 @@ class LanguageTabs extends StatelessWidget {
   final String? lang;
   final ValueChanged<String?> onLang;
   final Widget flutter;
+
+  /// Lays out the plate-type list around the language's [detail]; the list
+  /// stays put when the language changes and only the detail is handed over.
+  final Widget Function(Widget detail) page;
+
+  /// The plate type an embedded component shows.
+  final String? spec;
 
   @override
   Widget build(BuildContext context) {
@@ -61,15 +71,23 @@ class LanguageTabs extends StatelessWidget {
               ),
               const SizedBox(height: 16),
             ],
-            if (component != null)
-              EmbedHost(
-                key: ValueKey<String>('${source.slug}/$active'),
-                component: component,
-                title:
-                    '${source.countryName} plate · ${embedLanguageLabels[active]}',
-              )
-            else
-              flutter,
+            page(
+              EmbedHandover(
+                embed: component != null,
+                child: component != null
+                    ? EmbedHost(
+                        key: ValueKey<String>('${source.slug}/$active'),
+                        component: component,
+                        spec: spec,
+                        title:
+                            '${source.countryName} plate · ${embedLanguageLabels[active]}',
+                      )
+                    : KeyedSubtree(
+                        key: const ValueKey<String>('flutter'),
+                        child: flutter,
+                      ),
+              ),
+            ),
           ],
         );
       },

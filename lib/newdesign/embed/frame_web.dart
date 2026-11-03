@@ -41,6 +41,14 @@ class _EmbedFrameState extends State<_EmbedFrame> {
       ..setAttribute('sandbox', 'allow-scripts allow-same-origin allow-forms');
     c.send = (Object message) =>
         _frame.contentWindow?.postMessage(message.jsify(), origin.toJS);
+    c.hideChooser = () {
+      final web.Document? doc = _frame.contentDocument;
+      if (doc == null) return;
+      doc.head?.appendChild(
+        doc.createElement('style')
+          ..textContent = 'select{display:none!important}',
+      );
+    };
     _sub = web.window.onMessage.listen((web.MessageEvent e) {
       if (e.origin != origin || e.source != _frame.contentWindow) return;
       c.onMessage(e.data.dartify());

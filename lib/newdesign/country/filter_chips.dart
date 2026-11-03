@@ -36,7 +36,13 @@ class PdFilterChip extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Text(label, style: TextStyle(fontSize: 14, color: selected ? t.text : t.muted)),
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 14,
+                color: selected ? t.text : t.muted,
+              ),
+            ),
             if (count != null) ...<Widget>[
               const SizedBox(width: 6),
               Text('$count', style: TextStyle(fontSize: 12, color: t.subtle)),
@@ -55,5 +61,6 @@ class PdFilterRow extends StatelessWidget {
   final List<Widget> children;
 
   @override
-  Widget build(BuildContext context) => Wrap(spacing: 6, runSpacing: 6, children: children);
+  Widget build(BuildContext context) =>
+      Wrap(spacing: 6, runSpacing: 6, children: children);
 }
