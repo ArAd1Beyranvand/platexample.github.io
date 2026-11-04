@@ -1,0 +1,6 @@
+<body style="margin:0"><iframe id=f style="width:490px;height:900px;border:0"></iframe><script>
+const q=new URLSearchParams(location.search);const f=document.getElementById('f');window.log=[];
+f.src='/components/'+q.get('c')+'/'+q.get('l')+'/index.html';
+addEventListener('message',e=>{const m=e.data;log.push([m.type,m.payload&&m.payload.height]);
+ if(m.type==='hello') f.contentWindow.postMessage({ns:'plate-embed',v:1,type:'init',payload:{spec:q.get('s'),theme:'dark',locale:'en',keypad:true,plateOnly:false}},'*');});
+</script>
