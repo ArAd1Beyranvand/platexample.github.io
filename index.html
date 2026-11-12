@@ -210,18 +210,17 @@
         ],
         reg: '١٣ ٤٥٢٧١ · 13 45271'
       },
-      { // palestine_plate: PSWestBankPlates.modernCar
-        name: 'Palestine', native: 'فلسطين', sub: 'West Bank · 2018', halo: '#3c875d',
-        w: 520, h: 110, r: 8, field: '#ffffff', ink: '#3c875d', ghost: 'rgba(155,193,171,.55)', border: 3,
-        rules: [[441, 8, 5, 94], [452, 51, 46, 5]],
-        panel: { box: [452, 8, 46, 94], caption: { lines: ['ف', 'P'], x: 475, y: [31, 82], size: 32, color: '#3c875d', anchor: 'middle', font: FA, weight: 700 } },
-        labels: [{ text: '-', box: [71.4, 36.6, 32.2, 36.8], size: 64, font: LA, weight: 600 }, { text: '-', box: [344.4, 36.6, 32.2, 36.8], size: 64, font: LA, weight: 600 }],
+      { // palestine_plate: PSGazaPlates.car2012
+        name: 'Palestine', native: 'فلسطين', sub: 'Gaza · 2012', halo: '#007a3d',
+        w: 520, h: 110, r: 8, field: '#ffffff', ink: '#0b0d10', ghost: 'rgba(11,13,16,.2)', border: 3,
+        panel: { box: [455, 0, 55, 110], flag: { href: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 1200'%3E%3Crect width='600' height='1200'/%3E%3Crect width='400' height='1200' fill='%23fff'/%3E%3Crect width='200' height='1200' fill='%23007a3d'/%3E%3Cpath d='M0 0H600L300 400Z' fill='%23ce1126'/%3E%3C/svg%3E", box: [455, 0, 55, 110] } },
+        labels: [{ text: '-', box: [64.9, 36.6, 32.2, 36.8], size: 64, font: LA, weight: 600 }, { text: '-', box: [292.9, 36.6, 32.2, 36.8], size: 64, font: LA, weight: 600 }],
         slots: [
-          { box: [19.5, 9, 55, 92], cells: 1, value: '7', size: 104, font: LA, weight: 600, stretch: 62 },
-          { box: [109.5, 9, 232, 92], cells: 4, value: '1234', size: 104, font: LA, weight: 600, stretch: 62 },
-          { box: [375.5, 9, 55, 92], cells: 1, value: 'H', size: 104, font: LA, weight: 600, stretch: 62 }
+          { box: [20, 9, 47, 92], cells: 1, value: '3', size: 104, font: LA, weight: 600, stretch: 62 },
+          { box: [93, 9, 204, 92], cells: 4, value: '0234', size: 104, font: LA, weight: 600, stretch: 62 },
+          { box: [321, 9, 102, 92], cells: 2, value: '05', size: 104, font: LA, weight: 600, stretch: 62 }
         ],
-        reg: '7-1234-H'
+        reg: '3-0234-05'
       }
     ];
 
@@ -312,8 +311,11 @@
           el('rect', { x: pb[0], y: pb[1], width: pb[2], height: pb[3], fill: p.regions ? p.regions[0].fill : 'none' }, wipePart('panel', pb, -1, 0));
           el('image', { href: f.href, x: f.box[0], y: f.box[1], width: f.box[2], height: f.box[3], preserveAspectRatio: 'none' }, wipePart('flag', f.box, -1, 0));
         }
-        var c = p.panel.caption, cs = wipePart('caption', pb, 0, -1, 4);
-        c.lines.forEach(function (line, i) { text(cs, line, c.x, c.y[i], c.size, c); });
+        var c = p.panel.caption;
+        if (c) {
+          var cs = wipePart('caption', pb, 0, -1, 4);
+          c.lines.forEach(function (line, i) { text(cs, line, c.x, c.y[i], c.size, c); });
+        }
       }
       (p.rules || []).forEach(function (r) { drawPart('rule', r); });
       (p.labels || []).forEach(function (l) {
