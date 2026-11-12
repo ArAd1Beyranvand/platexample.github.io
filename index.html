@@ -488,7 +488,8 @@
     });
   })();
 
-  window.addEventListener('flutter-first-frame', function () {
+  // Sent by the app once FontsGate opens; flutter-first-frame comes while the page is still empty.
+  window.addEventListener('pd-ready', function () {
     var l = document.getElementById('splash');
     if (!l) return;
     l.classList.add('splash-hidden');
