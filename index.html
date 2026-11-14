@@ -1,6 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <script>
+    // Links from before path URLs: /#/plates/iran is /plates/iran.
+    if (location.hash.indexOf('#/') === 0) history.replaceState(null, '', location.hash.slice(1));
+  </script>
   <!-- Replaced by `flutter build --base-href`; must start and end with "/". -->
   <base href="/">
 
@@ -24,12 +28,13 @@
 
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="plate_number_holder">
+  <meta name="apple-mobile-web-app-title" content="platexample">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
   <link rel="icon" type="image/png" href="favicon.png"/>
 
   <title>License plates of all countries · platexample</title>
   <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#050607">
 
   <!-- The gallery's own fonts, so the splash and the first frame share a face. -->
   <link rel="preload" href="assets/assets/fonts/Archivo-latin.ttf" as="font" type="font/ttf" crossorigin>
