@@ -1,6 +1,6 @@
 {
  "version": 1,
- "generated": "2026-11-15T22:56:27Z",
+ "generated": "2026-11-16T12:17:17Z",
  "components": {
   "abkhazia": {
    "flutter": {
@@ -17,8 +17,8 @@
    },
    "typescript": {
     "url": "/components/albania/typescript/",
-    "hash": "4e51b2db",
-    "size": 41601
+    "hash": "cd1d5d64",
+    "size": 51576
    },
    "kotlin": {
     "url": "/components/albania/kotlin/",
@@ -27,8 +27,8 @@
    },
    "python": {
     "url": "/components/albania/python/",
-    "hash": "ce024271",
-    "size": 17847
+    "hash": "16266cd5",
+    "size": 17662
    }
   },
   "algeria": {
@@ -49,8 +49,8 @@
    },
    "python": {
     "url": "/components/algeria/python/",
-    "hash": "b35ca0b4",
-    "size": 23183
+    "hash": "a3415c85",
+    "size": 23040
    }
   },
   "andorra": {
@@ -66,13 +66,13 @@
    },
    "kotlin": {
     "url": "/components/andorra/kotlin/",
-    "hash": "e49aa3b0",
-    "size": 2289717
+    "hash": "ba678ec0",
+    "size": 2307614
    },
    "python": {
     "url": "/components/andorra/python/",
-    "hash": "b1a17026",
-    "size": 164286
+    "hash": "9e861d96",
+    "size": 164150
    }
   },
   "angola": {
@@ -88,13 +88,13 @@
    },
    "kotlin": {
     "url": "/components/angola/kotlin/",
-    "hash": "ca5d6596",
-    "size": 2125506
+    "hash": "1011d4ce",
+    "size": 2143969
    },
    "python": {
     "url": "/components/angola/python/",
-    "hash": "7c0595f8",
-    "size": 3130
+    "hash": "d48fb26c",
+    "size": 2984
    }
   },
   "anguilla": {
@@ -112,13 +112,13 @@
    },
    "kotlin": {
     "url": "/components/antigua-and-barbuda/kotlin/",
-    "hash": "0b470618",
-    "size": 2177717
+    "hash": "8f18a7c8",
+    "size": 2195901
    },
    "python": {
     "url": "/components/antigua-and-barbuda/python/",
-    "hash": "bfb06a2d",
-    "size": 58751
+    "hash": "89af0b66",
+    "size": 58608
    }
   },
   "argentina": {
@@ -134,13 +134,13 @@
    },
    "kotlin": {
     "url": "/components/argentina/kotlin/",
-    "hash": "878f7a82",
-    "size": 2161543
+    "hash": "3da03145",
+    "size": 2180018
    },
    "python": {
     "url": "/components/argentina/python/",
-    "hash": "bbed030d",
-    "size": 5244
+    "hash": "1a94f5c4",
+    "size": 5006
    }
   },
   "australia": {
@@ -156,13 +156,13 @@
    },
    "kotlin": {
     "url": "/components/australia/kotlin/",
-    "hash": "0de160e1",
-    "size": 2166893
+    "hash": "10ce80e9",
+    "size": 2185379
    },
    "python": {
     "url": "/components/australia/python/",
-    "hash": "da49d108",
-    "size": 5821
+    "hash": "dcac1c5f",
+    "size": 5662
    }
   },
   "austria": {
@@ -178,13 +178,13 @@
    },
    "kotlin": {
     "url": "/components/austria/kotlin/",
-    "hash": "30ac5369",
-    "size": 2395686
+    "hash": "a6c911ea",
+    "size": 2414096
    },
    "python": {
     "url": "/components/austria/python/",
-    "hash": "5ace6078",
-    "size": 216766
+    "hash": "f5d4b223",
+    "size": 216620
    }
   },
   "bahamas": {
@@ -200,13 +200,13 @@
    },
    "kotlin": {
     "url": "/components/bahamas/kotlin/",
-    "hash": "29329519",
-    "size": 2130408
+    "hash": "c8b8d1d7",
+    "size": 2148333
    },
    "python": {
     "url": "/components/bahamas/python/",
-    "hash": "659fe46c",
-    "size": 3487
+    "hash": "d9b18c5a",
+    "size": 3347
    }
   },
   "bangladesh": {
@@ -222,13 +222,13 @@
    },
    "kotlin": {
     "url": "/components/bangladesh/kotlin/",
-    "hash": "d8537d7c",
-    "size": 2127596
+    "hash": "5860748f",
+    "size": 2146074
    },
    "python": {
     "url": "/components/bangladesh/python/",
-    "hash": "30960250",
-    "size": 3422
+    "hash": "ef2fac68",
+    "size": 3281
    }
   },
   "barbados": {
@@ -239,13 +239,13 @@
    },
    "kotlin": {
     "url": "/components/barbados/kotlin/",
-    "hash": "e36c18f8",
-    "size": 2130586
+    "hash": "424b413c",
+    "size": 2149004
    },
    "python": {
     "url": "/components/barbados/python/",
-    "hash": "77c34c16",
-    "size": 3380
+    "hash": "353ebac7",
+    "size": 3245
    }
   },
   "belgium": {
@@ -256,13 +256,13 @@
    },
    "kotlin": {
     "url": "/components/belgium/kotlin/",
-    "hash": "3337c394",
-    "size": 2151048
+    "hash": "58b06056",
+    "size": 2169587
    },
    "python": {
     "url": "/components/belgium/python/",
-    "hash": "8156bc90",
-    "size": 4572
+    "hash": "a5efa212",
+    "size": 4392
    }
   },
   "belize": {
@@ -273,13 +273,13 @@
    },
    "kotlin": {
     "url": "/components/belize/kotlin/",
-    "hash": "eaeb9e0e",
-    "size": 2209865
+    "hash": "d78ec4eb",
+    "size": 2228350
    },
    "python": {
     "url": "/components/belize/python/",
-    "hash": "48ef4158",
-    "size": 75816
+    "hash": "b114ae86",
+    "size": 75669
    }
   },
   "benin": {
@@ -290,13 +290,13 @@
    },
    "kotlin": {
     "url": "/components/benin/kotlin/",
-    "hash": "21431ead",
-    "size": 2133172
+    "hash": "cf923d7c",
+    "size": 2151503
    },
    "python": {
     "url": "/components/benin/python/",
-    "hash": "4659f1c3",
-    "size": 11912
+    "hash": "4a2d3892",
+    "size": 11764
    }
   },
   "bhutan": {
@@ -307,13 +307,13 @@
    },
    "kotlin": {
     "url": "/components/bhutan/kotlin/",
-    "hash": "dce491d6",
-    "size": 2139744
+    "hash": "4b2ddeb3",
+    "size": 2158083
    },
    "python": {
     "url": "/components/bhutan/python/",
-    "hash": "c1ddfb1f",
-    "size": 4331
+    "hash": "0c743587",
+    "size": 4184
    }
   },
   "bolivia": {
@@ -324,13 +324,13 @@
    },
    "kotlin": {
     "url": "/components/bolivia/kotlin/",
-    "hash": "9e5a7703",
-    "size": 2417940
+    "hash": "62cabf41",
+    "size": 2436424
    },
    "python": {
     "url": "/components/bolivia/python/",
-    "hash": "e6e459e4",
-    "size": 259437
+    "hash": "7139fedd",
+    "size": 259297
    }
   },
   "bosnia-and-herzegovina": {
@@ -341,13 +341,13 @@
    },
    "kotlin": {
     "url": "/components/bosnia-and-herzegovina/kotlin/",
-    "hash": "f559e2eb",
-    "size": 2150340
+    "hash": "8daa5e48",
+    "size": 2169076
    },
    "python": {
     "url": "/components/bosnia-and-herzegovina/python/",
-    "hash": "a46964a8",
-    "size": 4407
+    "hash": "40ba20a6",
+    "size": 4226
    }
   },
   "botswana": {
@@ -358,13 +358,13 @@
    },
    "kotlin": {
     "url": "/components/botswana/kotlin/",
-    "hash": "a773d436",
-    "size": 2128959
+    "hash": "c2788700",
+    "size": 2147416
    },
    "python": {
     "url": "/components/botswana/python/",
-    "hash": "0b4d6abe",
-    "size": 3223
+    "hash": "947fccbe",
+    "size": 3078
    }
   },
   "brazil": {
@@ -375,13 +375,13 @@
    },
    "kotlin": {
     "url": "/components/brazil/kotlin/",
-    "hash": "1f934acb",
-    "size": 2145013
+    "hash": "3958fb7e",
+    "size": 2163388
    },
    "python": {
     "url": "/components/brazil/python/",
-    "hash": "46dddc10",
-    "size": 8118
+    "hash": "e2daa919",
+    "size": 7975
    }
   },
   "brunei": {
@@ -392,13 +392,13 @@
    },
    "kotlin": {
     "url": "/components/brunei/kotlin/",
-    "hash": "7b2a758e",
-    "size": 2146025
+    "hash": "70ea1ce9",
+    "size": 2164541
    },
    "python": {
     "url": "/components/brunei/python/",
-    "hash": "80ef1254",
-    "size": 4255
+    "hash": "81ef9aa6",
+    "size": 4074
    }
   },
   "bulgaria": {
@@ -409,13 +409,13 @@
    },
    "kotlin": {
     "url": "/components/bulgaria/kotlin/",
-    "hash": "e4b33b71",
-    "size": 2155160
+    "hash": "1a92cc69",
+    "size": 2173571
    },
    "python": {
     "url": "/components/bulgaria/python/",
-    "hash": "5b9d97d2",
-    "size": 4597
+    "hash": "0c3dcd0d",
+    "size": 4451
    }
   },
   "burkina-faso": {
@@ -426,13 +426,13 @@
    },
    "kotlin": {
     "url": "/components/burkina-faso/kotlin/",
-    "hash": "c94ab38e",
-    "size": 2189488
+    "hash": "5e0ff268",
+    "size": 2208134
    },
    "python": {
     "url": "/components/burkina-faso/python/",
-    "hash": "dfcaa9f1",
-    "size": 57836
+    "hash": "5f2dce6c",
+    "size": 57690
    }
   },
   "burundi": {
@@ -443,13 +443,13 @@
    },
    "kotlin": {
     "url": "/components/burundi/kotlin/",
-    "hash": "f7787c2a",
-    "size": 2134473
+    "hash": "6f15257f",
+    "size": 2152827
    },
    "python": {
     "url": "/components/burundi/python/",
-    "hash": "c20a31cb",
-    "size": 3096
+    "hash": "8e51a29c",
+    "size": 2949
    }
   },
   "cambodia": {
@@ -460,30 +460,30 @@
    },
    "kotlin": {
     "url": "/components/cambodia/kotlin/",
-    "hash": "acd30eeb",
-    "size": 2140203
+    "hash": "90222229",
+    "size": 2158426
    },
    "python": {
     "url": "/components/cambodia/python/",
-    "hash": "9a82b393",
-    "size": 4059
+    "hash": "93766980",
+    "size": 3884
    }
   },
   "cameroon": {
    "typescript": {
     "url": "/components/cameroon/typescript/",
-    "hash": "89d40c39",
-    "size": 65185
+    "hash": "54ac083b",
+    "size": 75103
    },
    "kotlin": {
     "url": "/components/cameroon/kotlin/",
-    "hash": "a778363d",
-    "size": 2187724
+    "hash": "d85ff903",
+    "size": 2205881
    },
    "python": {
     "url": "/components/cameroon/python/",
-    "hash": "5a41cdde",
-    "size": 58667
+    "hash": "46869216",
+    "size": 58500
    }
   },
   "canada": {
@@ -494,13 +494,13 @@
    },
    "kotlin": {
     "url": "/components/canada/kotlin/",
-    "hash": "0dc0ce39",
-    "size": 2138495
+    "hash": "42963c86",
+    "size": 2156681
    },
    "python": {
     "url": "/components/canada/python/",
-    "hash": "7a450760",
-    "size": 11102
+    "hash": "dfebd159",
+    "size": 10965
    }
   },
   "canary-islands": {
@@ -511,13 +511,13 @@
    },
    "kotlin": {
     "url": "/components/canary-islands/kotlin/",
-    "hash": "ccc4915a",
-    "size": 2148010
+    "hash": "b35a63d0",
+    "size": 2166333
    },
    "python": {
     "url": "/components/canary-islands/python/",
-    "hash": "521162c4",
-    "size": 4563
+    "hash": "8a01430e",
+    "size": 4420
    }
   },
   "cape-verde": {
@@ -528,13 +528,13 @@
    },
    "kotlin": {
     "url": "/components/cape-verde/kotlin/",
-    "hash": "88c22d89",
-    "size": 2136977
+    "hash": "1c588825",
+    "size": 2155119
    },
    "python": {
     "url": "/components/cape-verde/python/",
-    "hash": "bbfecccf",
-    "size": 4394
+    "hash": "78b757d1",
+    "size": 4243
    }
   },
   "caribbean": {
@@ -545,13 +545,13 @@
    },
    "kotlin": {
     "url": "/components/caribbean/kotlin/",
-    "hash": "e460f6a8",
-    "size": 2278888
+    "hash": "c38afee2",
+    "size": 2297238
    },
    "python": {
     "url": "/components/caribbean/python/",
-    "hash": "ddb6a8e7",
-    "size": 61291
+    "hash": "63d50b9c",
+    "size": 60440
    }
   },
   "central-african-republic": {
@@ -562,13 +562,13 @@
    },
    "kotlin": {
     "url": "/components/central-african-republic/kotlin/",
-    "hash": "710cbbed",
-    "size": 2126417
+    "hash": "90ce8ec9",
+    "size": 2144841
    },
    "python": {
     "url": "/components/central-african-republic/python/",
-    "hash": "c3478a31",
-    "size": 3621
+    "hash": "5bde55cf",
+    "size": 3473
    }
   },
   "chad": {
@@ -579,13 +579,13 @@
    },
    "kotlin": {
     "url": "/components/chad/kotlin/",
-    "hash": "e47f8d2e",
-    "size": 2128858
+    "hash": "ba68e01d",
+    "size": 2146909
    },
    "python": {
     "url": "/components/chad/python/",
-    "hash": "6d1d1ac4",
-    "size": 3542
+    "hash": "29cb26ce",
+    "size": 3365
    }
   },
   "chile": {
@@ -596,13 +596,13 @@
    },
    "kotlin": {
     "url": "/components/chile/kotlin/",
-    "hash": "c82b9287",
-    "size": 2155351
+    "hash": "1cddad19",
+    "size": 2173539
    },
    "python": {
     "url": "/components/chile/python/",
-    "hash": "022d952c",
-    "size": 5060
+    "hash": "35384e32",
+    "size": 4820
    }
   },
   "china": {
@@ -613,13 +613,13 @@
    },
    "kotlin": {
     "url": "/components/china/kotlin/",
-    "hash": "3ee847d4",
-    "size": 2196531
+    "hash": "6ec61bda",
+    "size": 2214689
    },
    "python": {
     "url": "/components/china/python/",
-    "hash": "ae9aaa83",
-    "size": 8556
+    "hash": "57e9f841",
+    "size": 8123
    }
   },
   "colombia": {
@@ -630,13 +630,13 @@
    },
    "kotlin": {
     "url": "/components/colombia/kotlin/",
-    "hash": "86c973de",
-    "size": 2166473
+    "hash": "74ba374b",
+    "size": 2184682
    },
    "python": {
     "url": "/components/colombia/python/",
-    "hash": "b499a893",
-    "size": 5203
+    "hash": "1c80b589",
+    "size": 5029
    }
   },
   "comoros": {
@@ -647,13 +647,13 @@
    },
    "kotlin": {
     "url": "/components/comoros/kotlin/",
-    "hash": "df03bfc7",
-    "size": 2176784
+    "hash": "eb3af67e",
+    "size": 2195017
    },
    "python": {
     "url": "/components/comoros/python/",
-    "hash": "f3a5439a",
-    "size": 8466
+    "hash": "f03f5927",
+    "size": 8211
    }
   },
   "costa-rica": {
@@ -664,13 +664,13 @@
    },
    "kotlin": {
     "url": "/components/costa-rica/kotlin/",
-    "hash": "9502fb8b",
-    "size": 2195881
+    "hash": "53a03998",
+    "size": 2213616
    },
    "python": {
     "url": "/components/costa-rica/python/",
-    "hash": "4530ba02",
-    "size": 10860
+    "hash": "d6bba859",
+    "size": 10715
    }
   },
   "croatia": {
@@ -681,13 +681,13 @@
    },
    "kotlin": {
     "url": "/components/croatia/kotlin/",
-    "hash": "0c4220b0",
-    "size": 2183386
+    "hash": "d0231049",
+    "size": 2201615
    },
    "python": {
     "url": "/components/croatia/python/",
-    "hash": "10c729e9",
-    "size": 28838
+    "hash": "14b794bb",
+    "size": 28663
    }
   },
   "cuba": {
@@ -698,13 +698,13 @@
    },
    "kotlin": {
     "url": "/components/cuba/kotlin/",
-    "hash": "c88afbf0",
-    "size": 2132677
+    "hash": "297465bc",
+    "size": 2150790
    },
    "python": {
     "url": "/components/cuba/python/",
-    "hash": "0b062486",
-    "size": 3472
+    "hash": "d75339ad",
+    "size": 3294
    }
   },
   "cyprus": {
@@ -715,13 +715,13 @@
    },
    "kotlin": {
     "url": "/components/cyprus/kotlin/",
-    "hash": "cb549f6c",
-    "size": 2162218
+    "hash": "bae52123",
+    "size": 2180354
    },
    "python": {
     "url": "/components/cyprus/python/",
-    "hash": "d7b51589",
-    "size": 5150
+    "hash": "4d15ee4c",
+    "size": 4907
    }
   },
   "czech-republic": {
@@ -732,13 +732,13 @@
    },
    "kotlin": {
     "url": "/components/czech-republic/kotlin/",
-    "hash": "852a681b",
-    "size": 2154930
+    "hash": "76b6b1db",
+    "size": 2173168
    },
    "python": {
     "url": "/components/czech-republic/python/",
-    "hash": "8ac1c75e",
-    "size": 4595
+    "hash": "ff611391",
+    "size": 4446
    }
   },
   "democratic-republic-of-the-congo": {
@@ -749,13 +749,13 @@
    },
    "kotlin": {
     "url": "/components/democratic-republic-of-the-congo/kotlin/",
-    "hash": "2e870f2a",
-    "size": 2145278
+    "hash": "2d2c5f0a",
+    "size": 2163842
    },
    "python": {
     "url": "/components/democratic-republic-of-the-congo/python/",
-    "hash": "1ab8daf3",
-    "size": 4801
+    "hash": "98cf3c64",
+    "size": 4614
    }
   },
   "denmark": {
@@ -766,13 +766,13 @@
    },
    "kotlin": {
     "url": "/components/denmark/kotlin/",
-    "hash": "d61a207a",
-    "size": 2160934
+    "hash": "3579231d",
+    "size": 2179057
    },
    "python": {
     "url": "/components/denmark/python/",
-    "hash": "ab121b58",
-    "size": 4670
+    "hash": "fca25825",
+    "size": 4490
    }
   },
   "djibouti": {
@@ -783,13 +783,13 @@
    },
    "kotlin": {
     "url": "/components/djibouti/kotlin/",
-    "hash": "955fa272",
-    "size": 2126746
+    "hash": "b176c8a8",
+    "size": 2144922
    },
    "python": {
     "url": "/components/djibouti/python/",
-    "hash": "0aec3c71",
-    "size": 3321
+    "hash": "7e4b014f",
+    "size": 3140
    }
   },
   "dominica": {
@@ -800,13 +800,13 @@
    },
    "kotlin": {
     "url": "/components/dominica/kotlin/",
-    "hash": "b004a13c",
-    "size": 2120237
+    "hash": "15177df3",
+    "size": 2138432
    },
    "python": {
     "url": "/components/dominica/python/",
-    "hash": "a89a2671",
-    "size": 2784
+    "hash": "43943f2a",
+    "size": 2610
    }
   },
   "dominican-republic": {
@@ -817,13 +817,13 @@
    },
    "kotlin": {
     "url": "/components/dominican-republic/kotlin/",
-    "hash": "cb758fb6",
-    "size": 2141280
+    "hash": "9691dbb4",
+    "size": 2159673
    },
    "python": {
     "url": "/components/dominican-republic/python/",
-    "hash": "74bd5343",
-    "size": 4058
+    "hash": "0735212c",
+    "size": 3917
    }
   },
   "ecuador": {
@@ -834,13 +834,13 @@
    },
    "kotlin": {
     "url": "/components/ecuador/kotlin/",
-    "hash": "7f9b9c71",
-    "size": 2138706
+    "hash": "3da331e8",
+    "size": 2156884
    },
    "python": {
     "url": "/components/ecuador/python/",
-    "hash": "e9df66d4",
-    "size": 3824
+    "hash": "f4cb0545",
+    "size": 3681
    }
   },
   "egypt": {
@@ -851,13 +851,13 @@
    },
    "kotlin": {
     "url": "/components/egypt/kotlin/",
-    "hash": "a274e70c",
-    "size": 2145191
+    "hash": "f5223d30",
+    "size": 2162847
    },
    "python": {
     "url": "/components/egypt/python/",
-    "hash": "89483ebb",
-    "size": 4055
+    "hash": "477f51ca",
+    "size": 3877
    }
   },
   "el-salvador": {
@@ -868,30 +868,30 @@
    },
    "kotlin": {
     "url": "/components/el-salvador/kotlin/",
-    "hash": "5f4fe002",
-    "size": 2127288
+    "hash": "d3f145e5",
+    "size": 2145426
    },
    "python": {
     "url": "/components/el-salvador/python/",
-    "hash": "77b87ae9",
-    "size": 3046
+    "hash": "0756f86c",
+    "size": 2908
    }
   },
   "equatorial-guinea": {
    "typescript": {
     "url": "/components/equatorial-guinea/typescript/",
-    "hash": "6aa19ec0",
-    "size": 59503
+    "hash": "3d47ff19",
+    "size": 69419
    },
    "kotlin": {
     "url": "/components/equatorial-guinea/kotlin/",
-    "hash": "0c583bd2",
-    "size": 2176871
+    "hash": "d4ec641e",
+    "size": 2195202
    },
    "python": {
     "url": "/components/equatorial-guinea/python/",
-    "hash": "0ccd605b",
-    "size": 53889
+    "hash": "5334a9d5",
+    "size": 53705
    }
   },
   "eritrea": {
@@ -902,13 +902,13 @@
    },
    "kotlin": {
     "url": "/components/eritrea/kotlin/",
-    "hash": "3cab16c4",
-    "size": 2122588
+    "hash": "3ada4ca8",
+    "size": 2140651
    },
    "python": {
     "url": "/components/eritrea/python/",
-    "hash": "b768003e",
-    "size": 2794
+    "hash": "9c5213ee",
+    "size": 2642
    }
   },
   "estonia": {
@@ -919,13 +919,13 @@
    },
    "kotlin": {
     "url": "/components/estonia/kotlin/",
-    "hash": "190157b9",
-    "size": 2242396
+    "hash": "d9047b5c",
+    "size": 2260601
    },
    "python": {
     "url": "/components/estonia/python/",
-    "hash": "99f9b71e",
-    "size": 107815
+    "hash": "1a6a02ba",
+    "size": 107666
    }
   },
   "eswatini": {
@@ -936,13 +936,13 @@
    },
    "kotlin": {
     "url": "/components/eswatini/kotlin/",
-    "hash": "3fd3da77",
-    "size": 2124118
+    "hash": "68feefc4",
+    "size": 2142311
    },
    "python": {
     "url": "/components/eswatini/python/",
-    "hash": "e660b211",
-    "size": 2999
+    "hash": "acdae886",
+    "size": 2862
    }
   },
   "ethiopia": {
@@ -953,13 +953,13 @@
    },
    "kotlin": {
     "url": "/components/ethiopia/kotlin/",
-    "hash": "50a3718d",
-    "size": 2140397
+    "hash": "bcafd6c2",
+    "size": 2158614
    },
    "python": {
     "url": "/components/ethiopia/python/",
-    "hash": "6996f24e",
-    "size": 4115
+    "hash": "9d6601aa",
+    "size": 3939
    }
   },
   "federated-states-of-micronesia": {
@@ -970,13 +970,13 @@
    },
    "kotlin": {
     "url": "/components/federated-states-of-micronesia/kotlin/",
-    "hash": "097aef18",
-    "size": 2129045
+    "hash": "80bdfc2d",
+    "size": 2147557
    },
    "python": {
     "url": "/components/federated-states-of-micronesia/python/",
-    "hash": "d48c5ed8",
-    "size": 3515
+    "hash": "e4dbc218",
+    "size": 3364
    }
   },
   "fiji": {
@@ -987,13 +987,13 @@
    },
    "kotlin": {
     "url": "/components/fiji/kotlin/",
-    "hash": "11ff1d28",
-    "size": 2125551
+    "hash": "ab7081c5",
+    "size": 2143631
    },
    "python": {
     "url": "/components/fiji/python/",
-    "hash": "a616a94c",
-    "size": 3116
+    "hash": "49f3606f",
+    "size": 2942
    }
   },
   "finland": {
@@ -1004,13 +1004,13 @@
    },
    "kotlin": {
     "url": "/components/finland/kotlin/",
-    "hash": "786886d2",
-    "size": 2170531
+    "hash": "1e3d4905",
+    "size": 2188667
    },
    "python": {
     "url": "/components/finland/python/",
-    "hash": "cc55da5d",
-    "size": 31645
+    "hash": "f5517486",
+    "size": 31499
    }
   },
   "france": {
@@ -1021,13 +1021,13 @@
    },
    "kotlin": {
     "url": "/components/france/kotlin/",
-    "hash": "8415895d",
-    "size": 2198651
+    "hash": "ae10825f",
+    "size": 2216760
    },
    "python": {
     "url": "/components/france/python/",
-    "hash": "3010cb33",
-    "size": 56048
+    "hash": "5734614f",
+    "size": 55901
    }
   },
   "gabon": {
@@ -1038,13 +1038,13 @@
    },
    "kotlin": {
     "url": "/components/gabon/kotlin/",
-    "hash": "2614df67",
-    "size": 2196379
+    "hash": "9ed18b0d",
+    "size": 2214393
    },
    "python": {
     "url": "/components/gabon/python/",
-    "hash": "95d363fb",
-    "size": 73687
+    "hash": "985b5efe",
+    "size": 73545
    }
   },
   "gambia": {
@@ -1055,13 +1055,13 @@
    },
    "kotlin": {
     "url": "/components/gambia/kotlin/",
-    "hash": "d1d0f616",
-    "size": 2140669
+    "hash": "59c60f1d",
+    "size": 2158764
    },
    "python": {
     "url": "/components/gambia/python/",
-    "hash": "95b31b04",
-    "size": 3865
+    "hash": "3746cd90",
+    "size": 3689
    }
   },
   "georgia-country": {
@@ -1072,13 +1072,13 @@
    },
    "kotlin": {
     "url": "/components/georgia-country/kotlin/",
-    "hash": "e556d121",
-    "size": 2161818
+    "hash": "486f8458",
+    "size": 2179645
    },
    "python": {
     "url": "/components/georgia-country/python/",
-    "hash": "0eeef340",
-    "size": 4681
+    "hash": "1e7612cf",
+    "size": 4533
    }
   },
   "germany": {
@@ -1094,13 +1094,13 @@
    },
    "kotlin": {
     "url": "/components/germany/kotlin/",
-    "hash": "f0292023",
-    "size": 2324795
+    "hash": "782de767",
+    "size": 2342914
    },
    "python": {
     "url": "/components/germany/python/",
-    "hash": "b064e07a",
-    "size": 35535
+    "hash": "9ba0f59e",
+    "size": 35360
    }
   },
   "ghana": {
@@ -1111,13 +1111,13 @@
    },
    "kotlin": {
     "url": "/components/ghana/kotlin/",
-    "hash": "7dc761aa",
-    "size": 2138668
+    "hash": "8ecdd63c",
+    "size": 2156794
    },
    "python": {
     "url": "/components/ghana/python/",
-    "hash": "e1282f02",
-    "size": 3763
+    "hash": "1f61f47b",
+    "size": 3613
    }
   },
   "greece": {
@@ -1128,13 +1128,13 @@
    },
    "kotlin": {
     "url": "/components/greece/kotlin/",
-    "hash": "f9fcfbf9",
-    "size": 2164760
+    "hash": "57154b0b",
+    "size": 2182900
    },
    "python": {
     "url": "/components/greece/python/",
-    "hash": "a69d6177",
-    "size": 20560
+    "hash": "4b3edeba",
+    "size": 20418
    }
   },
   "grenada": {
@@ -1145,13 +1145,13 @@
    },
    "kotlin": {
     "url": "/components/grenada/kotlin/",
-    "hash": "dd6944ea",
-    "size": 2120435
+    "hash": "e56c2b6c",
+    "size": 2138517
    },
    "python": {
     "url": "/components/grenada/python/",
-    "hash": "084935ef",
-    "size": 2788
+    "hash": "0f351c45",
+    "size": 2610
    }
   },
   "guatemala": {
@@ -1162,13 +1162,13 @@
    },
    "kotlin": {
     "url": "/components/guatemala/kotlin/",
-    "hash": "854dcfb0",
-    "size": 2123867
+    "hash": "229a880b",
+    "size": 2141970
    },
    "python": {
     "url": "/components/guatemala/python/",
-    "hash": "8a3326f1",
-    "size": 2891
+    "hash": "a49c0697",
+    "size": 2753
    }
   },
   "guinea": {
@@ -1179,13 +1179,13 @@
    },
    "kotlin": {
     "url": "/components/guinea/kotlin/",
-    "hash": "2e5898ad",
-    "size": 2158221
+    "hash": "72acadd2",
+    "size": 2176293
    },
    "python": {
     "url": "/components/guinea/python/",
-    "hash": "b3a4bb9a",
-    "size": 15902
+    "hash": "9ca59afd",
+    "size": 15754
    }
   },
   "guyana": {
@@ -1196,13 +1196,13 @@
    },
    "kotlin": {
     "url": "/components/guyana/kotlin/",
-    "hash": "9335ea0f",
-    "size": 2273333
+    "hash": "74f5fbc8",
+    "size": 2291472
    },
    "python": {
     "url": "/components/guyana/python/",
-    "hash": "03719c98",
-    "size": 138128
+    "hash": "a4c1f72e",
+    "size": 137919
    }
   },
   "haiti": {
@@ -1213,13 +1213,13 @@
    },
    "kotlin": {
     "url": "/components/haiti/kotlin/",
-    "hash": "e3465195",
-    "size": 2282491
+    "hash": "1dc02c01",
+    "size": 2300564
    },
    "python": {
     "url": "/components/haiti/python/",
-    "hash": "29d26f98",
-    "size": 145384
+    "hash": "387083ba",
+    "size": 145200
    }
   },
   "honduras": {
@@ -1230,13 +1230,13 @@
    },
    "kotlin": {
     "url": "/components/honduras/kotlin/",
-    "hash": "a7004516",
-    "size": 2131245
+    "hash": "60ea0116",
+    "size": 2149420
    },
    "python": {
     "url": "/components/honduras/python/",
-    "hash": "48409560",
-    "size": 3203
+    "hash": "6fdaa1aa",
+    "size": 3060
    }
   },
   "hungary": {
@@ -1247,13 +1247,13 @@
    },
    "kotlin": {
     "url": "/components/hungary/kotlin/",
-    "hash": "0455c166",
-    "size": 2172162
+    "hash": "d43bf204",
+    "size": 2190290
    },
    "python": {
     "url": "/components/hungary/python/",
-    "hash": "fef95155",
-    "size": 29498
+    "hash": "a0ef11e6",
+    "size": 29350
    }
   },
   "iceland": {
@@ -1264,13 +1264,13 @@
    },
    "kotlin": {
     "url": "/components/iceland/kotlin/",
-    "hash": "adb72163",
-    "size": 2146711
+    "hash": "deca8ddf",
+    "size": 2164873
    },
    "python": {
     "url": "/components/iceland/python/",
-    "hash": "84680970",
-    "size": 4057
+    "hash": "1d943d2e",
+    "size": 3883
    }
   },
   "india": {
@@ -1286,30 +1286,30 @@
    },
    "kotlin": {
     "url": "/components/india/kotlin/",
-    "hash": "688ad1d2",
-    "size": 2173115
+    "hash": "41b8736f",
+    "size": 2191204
    },
    "python": {
     "url": "/components/india/python/",
-    "hash": "63b4079e",
-    "size": 13229
+    "hash": "cad8c3ea",
+    "size": 13088
    }
   },
   "indian-ocean": {
    "typescript": {
     "url": "/components/indian-ocean/typescript/",
-    "hash": "1ddcce11",
-    "size": 145669
+    "hash": "61005db3",
+    "size": 155911
    },
    "kotlin": {
     "url": "/components/indian-ocean/kotlin/",
-    "hash": "87e0d61e",
-    "size": 2269137
+    "hash": "b3446435",
+    "size": 2287438
    },
    "python": {
     "url": "/components/indian-ocean/python/",
-    "hash": "10e2ebfc",
-    "size": 139585
+    "hash": "1bbabb72",
+    "size": 139359
    }
   },
   "indonesia": {
@@ -1320,13 +1320,13 @@
    },
    "kotlin": {
     "url": "/components/indonesia/kotlin/",
-    "hash": "b0bc49df",
-    "size": 2242495
+    "hash": "2569f912",
+    "size": 2260757
    },
    "python": {
     "url": "/components/indonesia/python/",
-    "hash": "46ac223b",
-    "size": 47892
+    "hash": "f6d20858",
+    "size": 47750
    }
   },
   "iran": {
@@ -1337,13 +1337,13 @@
    },
    "kotlin": {
     "url": "/components/iran/kotlin/",
-    "hash": "cead10fa",
-    "size": 2319953
+    "hash": "7d6c41ec",
+    "size": 2337636
    },
    "python": {
     "url": "/components/iran/python/",
-    "hash": "d7d15687",
-    "size": 47993
+    "hash": "647eedc9",
+    "size": 47774
    }
   },
   "iranshahr": {
@@ -1354,13 +1354,13 @@
    },
    "kotlin": {
     "url": "/components/iranshahr/kotlin/",
-    "hash": "8b3edd00",
-    "size": 3095471
+    "hash": "f81b46cd",
+    "size": 3114069
    },
    "python": {
     "url": "/components/iranshahr/python/",
-    "hash": "acb5a887",
-    "size": 607161
+    "hash": "ab449e73",
+    "size": 606328
    }
   },
   "italy": {
@@ -1371,13 +1371,13 @@
    },
    "kotlin": {
     "url": "/components/italy/kotlin/",
-    "hash": "493c3c0a",
-    "size": 2150495
+    "hash": "ba86a8f4",
+    "size": 2168612
    },
    "python": {
     "url": "/components/italy/python/",
-    "hash": "d9751cf2",
-    "size": 4366
+    "hash": "7541cf9a",
+    "size": 4223
    }
   },
   "ivory-coast": {
@@ -1388,13 +1388,13 @@
    },
    "kotlin": {
     "url": "/components/ivory-coast/kotlin/",
-    "hash": "e7ecf369",
-    "size": 2143939
+    "hash": "49a17d3a",
+    "size": 2162214
    },
    "python": {
     "url": "/components/ivory-coast/python/",
-    "hash": "2422e366",
-    "size": 3919
+    "hash": "bd89fcf7",
+    "size": 3767
    }
   },
   "jamaica": {
@@ -1405,13 +1405,13 @@
    },
    "kotlin": {
     "url": "/components/jamaica/kotlin/",
-    "hash": "2bf60ce7",
-    "size": 2123933
+    "hash": "0a6a916d",
+    "size": 2142058
    },
    "python": {
     "url": "/components/jamaica/python/",
-    "hash": "63d944e5",
-    "size": 3062
+    "hash": "46780849",
+    "size": 2881
    }
   },
   "japan": {
@@ -1422,13 +1422,13 @@
    },
    "kotlin": {
     "url": "/components/japan/kotlin/",
-    "hash": "b7b095e3",
-    "size": 2152017
+    "hash": "045a9e8f",
+    "size": 2170173
    },
    "python": {
     "url": "/components/japan/python/",
-    "hash": "2df4feaa",
-    "size": 5274
+    "hash": "77a830f5",
+    "size": 5073
    }
   },
   "jordan": {
@@ -1439,13 +1439,13 @@
    },
    "kotlin": {
     "url": "/components/jordan/kotlin/",
-    "hash": "59d58295",
-    "size": 2152128
+    "hash": "7bf66ba4",
+    "size": 2170387
    },
    "python": {
     "url": "/components/jordan/python/",
-    "hash": "483b1c67",
-    "size": 4706
+    "hash": "7438199f",
+    "size": 4512
    }
   },
   "kanak": {
@@ -1456,13 +1456,13 @@
    },
    "kotlin": {
     "url": "/components/kanak/kotlin/",
-    "hash": "f65b8d89",
-    "size": 2119725
+    "hash": "c28ad061",
+    "size": 2137856
    },
    "python": {
     "url": "/components/kanak/python/",
-    "hash": "702a2f1a",
-    "size": 2756
+    "hash": "9a4a6ff0",
+    "size": 2609
    }
   },
   "kenya": {
@@ -1473,13 +1473,13 @@
    },
    "kotlin": {
     "url": "/components/kenya/kotlin/",
-    "hash": "850c9c6d",
-    "size": 2147399
+    "hash": "7c8c120e",
+    "size": 2165551
    },
    "python": {
     "url": "/components/kenya/python/",
-    "hash": "a542536a",
-    "size": 3962
+    "hash": "e4b259e0",
+    "size": 3786
    }
   },
   "kiribati": {
@@ -1490,13 +1490,13 @@
    },
    "kotlin": {
     "url": "/components/kiribati/kotlin/",
-    "hash": "f00016dc",
-    "size": 2158281
+    "hash": "6b28826b",
+    "size": 2176487
    },
    "python": {
     "url": "/components/kiribati/python/",
-    "hash": "6e4462a3",
-    "size": 36828
+    "hash": "18431bac",
+    "size": 36688
    }
   },
   "kyrgyzstan": {
@@ -1507,13 +1507,13 @@
    },
    "kotlin": {
     "url": "/components/kyrgyzstan/kotlin/",
-    "hash": "7eb07aaf",
-    "size": 2305029
+    "hash": "e1a6c010",
+    "size": 2323329
    },
    "python": {
     "url": "/components/kyrgyzstan/python/",
-    "hash": "2c6aaa01",
-    "size": 133351
+    "hash": "a5a06504",
+    "size": 133173
    }
   },
   "laos": {
@@ -1524,13 +1524,13 @@
    },
    "kotlin": {
     "url": "/components/laos/kotlin/",
-    "hash": "fe5054cf",
-    "size": 2153331
+    "hash": "a15f433a",
+    "size": 2171534
    },
    "python": {
     "url": "/components/laos/python/",
-    "hash": "67f50889",
-    "size": 4463
+    "hash": "a7c5a22a",
+    "size": 4278
    }
   },
   "latvia": {
@@ -1541,13 +1541,13 @@
    },
    "kotlin": {
     "url": "/components/latvia/kotlin/",
-    "hash": "ba6bd41f",
-    "size": 2134152
+    "hash": "a92032fb",
+    "size": 2152401
    },
    "python": {
     "url": "/components/latvia/python/",
-    "hash": "36c1c213",
-    "size": 4146
+    "hash": "fe3e0ddd",
+    "size": 3879
    }
   },
   "lebanon": {
@@ -1558,13 +1558,13 @@
    },
    "kotlin": {
     "url": "/components/lebanon/kotlin/",
-    "hash": "b5d47f3d",
-    "size": 2152057
+    "hash": "fd113b4e",
+    "size": 2170198
    },
    "python": {
     "url": "/components/lebanon/python/",
-    "hash": "b99aa502",
-    "size": 5497
+    "hash": "e05fa456",
+    "size": 5354
    }
   },
   "lesotho": {
@@ -1575,13 +1575,13 @@
    },
    "kotlin": {
     "url": "/components/lesotho/kotlin/",
-    "hash": "04c36216",
-    "size": 2138084
+    "hash": "6c223a62",
+    "size": 2156150
    },
    "python": {
     "url": "/components/lesotho/python/",
-    "hash": "54af8e54",
-    "size": 17604
+    "hash": "53a14e00",
+    "size": 17427
    }
   },
   "liberia": {
@@ -1592,13 +1592,13 @@
    },
    "kotlin": {
     "url": "/components/liberia/kotlin/",
-    "hash": "b423014e",
-    "size": 2132342
+    "hash": "516a3b5f",
+    "size": 2150446
    },
    "python": {
     "url": "/components/liberia/python/",
-    "hash": "15dd6a97",
-    "size": 3288
+    "hash": "51445148",
+    "size": 3149
    }
   },
   "libya": {
@@ -1609,13 +1609,13 @@
    },
    "kotlin": {
     "url": "/components/libya/kotlin/",
-    "hash": "777044dd",
-    "size": 2177916
+    "hash": "4705be04",
+    "size": 2195984
    },
    "python": {
     "url": "/components/libya/python/",
-    "hash": "6c3d2e9e",
-    "size": 5186
+    "hash": "fd1aef1d",
+    "size": 5002
    }
   },
   "liechtenstein": {
@@ -1626,13 +1626,13 @@
    },
    "kotlin": {
     "url": "/components/liechtenstein/kotlin/",
-    "hash": "95f03071",
-    "size": 2239986
+    "hash": "c424f045",
+    "size": 2257806
    },
    "python": {
     "url": "/components/liechtenstein/python/",
-    "hash": "7f9a3dde",
-    "size": 89478
+    "hash": "1b07e2ba",
+    "size": 89331
    }
   },
   "lithuania": {
@@ -1643,13 +1643,13 @@
    },
    "kotlin": {
     "url": "/components/lithuania/kotlin/",
-    "hash": "4a4db75f",
-    "size": 2211901
+    "hash": "c5dcfa7e",
+    "size": 2230136
    },
    "python": {
     "url": "/components/lithuania/python/",
-    "hash": "2ef72344",
-    "size": 59701
+    "hash": "39962496",
+    "size": 59528
    }
   },
   "luxembourg": {
@@ -1660,13 +1660,13 @@
    },
    "kotlin": {
     "url": "/components/luxembourg/kotlin/",
-    "hash": "121dc570",
-    "size": 2130214
+    "hash": "658dec8e",
+    "size": 2148524
    },
    "python": {
     "url": "/components/luxembourg/python/",
-    "hash": "6d16fc11",
-    "size": 3631
+    "hash": "2b9ae072",
+    "size": 3449
    }
   },
   "madagascar": {
@@ -1677,13 +1677,13 @@
    },
    "kotlin": {
     "url": "/components/madagascar/kotlin/",
-    "hash": "6f75fbca",
-    "size": 2142886
+    "hash": "5694be0d",
+    "size": 2161150
    },
    "python": {
     "url": "/components/madagascar/python/",
-    "hash": "18f82aa5",
-    "size": 4651
+    "hash": "ffbeb5b5",
+    "size": 4399
    }
   },
   "madeira": {
@@ -1694,30 +1694,30 @@
    },
    "kotlin": {
     "url": "/components/madeira/kotlin/",
-    "hash": "43f74ade",
-    "size": 2138556
+    "hash": "b70a05b4",
+    "size": 2156241
    },
    "python": {
     "url": "/components/madeira/python/",
-    "hash": "176952e8",
-    "size": 3470
+    "hash": "4ae9d46c",
+    "size": 3385
    }
   },
   "malawi": {
    "typescript": {
     "url": "/components/malawi/typescript/",
-    "hash": "0f36d93b",
-    "size": 7956
+    "hash": "08113c35",
+    "size": 17872
    },
    "kotlin": {
     "url": "/components/malawi/kotlin/",
-    "hash": "8e8a8448",
-    "size": 2121479
+    "hash": "23209f2d",
+    "size": 2139642
    },
    "python": {
     "url": "/components/malawi/python/",
-    "hash": "2edcd253",
-    "size": 2805
+    "hash": "eeed1db8",
+    "size": 2663
    }
   },
   "malaysia": {
@@ -1728,13 +1728,13 @@
    },
    "kotlin": {
     "url": "/components/malaysia/kotlin/",
-    "hash": "f84be505",
-    "size": 2157171
+    "hash": "30b66def",
+    "size": 2175389
    },
    "python": {
     "url": "/components/malaysia/python/",
-    "hash": "a24970eb",
-    "size": 5116
+    "hash": "57cdad1b",
+    "size": 4974
    }
   },
   "maldives": {
@@ -1745,13 +1745,13 @@
    },
    "kotlin": {
     "url": "/components/maldives/kotlin/",
-    "hash": "524b5e2d",
-    "size": 2130026
+    "hash": "a96f14b9",
+    "size": 2148190
    },
    "python": {
     "url": "/components/maldives/python/",
-    "hash": "8e95309a",
-    "size": 3446
+    "hash": "a0c6cc10",
+    "size": 3269
    }
   },
   "mali": {
@@ -1762,13 +1762,13 @@
    },
    "kotlin": {
     "url": "/components/mali/kotlin/",
-    "hash": "8fd65ffa",
-    "size": 2119880
+    "hash": "5f602e10",
+    "size": 2137954
    },
    "python": {
     "url": "/components/mali/python/",
-    "hash": "efd18567",
-    "size": 2787
+    "hash": "bdf1a257",
+    "size": 2643
    }
   },
   "malta": {
@@ -1779,13 +1779,13 @@
    },
    "kotlin": {
     "url": "/components/malta/kotlin/",
-    "hash": "610505e1",
-    "size": 2143123
+    "hash": "9b68674d",
+    "size": 2161230
    },
    "python": {
     "url": "/components/malta/python/",
-    "hash": "90bf3959",
-    "size": 3993
+    "hash": "d7543c8b",
+    "size": 3810
    }
   },
   "marshall-islands": {
@@ -1796,13 +1796,13 @@
    },
    "kotlin": {
     "url": "/components/marshall-islands/kotlin/",
-    "hash": "d15c1191",
-    "size": 2124749
+    "hash": "93b6ae04",
+    "size": 2143101
    },
    "python": {
     "url": "/components/marshall-islands/python/",
-    "hash": "5debe703",
-    "size": 3384
+    "hash": "cbf7c748",
+    "size": 3249
    }
   },
   "mauritania": {
@@ -1813,13 +1813,13 @@
    },
    "kotlin": {
     "url": "/components/mauritania/kotlin/",
-    "hash": "0c72ca1a",
-    "size": 2168021
+    "hash": "581fd086",
+    "size": 2186248
    },
    "python": {
     "url": "/components/mauritania/python/",
-    "hash": "c959ca9d",
-    "size": 11651
+    "hash": "3856d65d",
+    "size": 11490
    }
   },
   "mauritius": {
@@ -1830,13 +1830,13 @@
    },
    "kotlin": {
     "url": "/components/mauritius/kotlin/",
-    "hash": "ae17c916",
-    "size": 2122544
+    "hash": "8115fe43",
+    "size": 2140649
    },
    "python": {
     "url": "/components/mauritius/python/",
-    "hash": "d44dc2f9",
-    "size": 2766
+    "hash": "4467052e",
+    "size": 2624
    }
   },
   "mexico": {
@@ -1847,13 +1847,13 @@
    },
    "kotlin": {
     "url": "/components/mexico/kotlin/",
-    "hash": "eb49aeb4",
-    "size": 2264580
+    "hash": "e5e981be",
+    "size": 2282253
    },
    "python": {
     "url": "/components/mexico/python/",
-    "hash": "1f9e7a23",
-    "size": 122187
+    "hash": "5e96de63",
+    "size": 122018
    }
   },
   "moldova": {
@@ -1864,13 +1864,13 @@
    },
    "kotlin": {
     "url": "/components/moldova/kotlin/",
-    "hash": "6776e680",
-    "size": 2188720
+    "hash": "f979c8db",
+    "size": 2206819
    },
    "python": {
     "url": "/components/moldova/python/",
-    "hash": "f27df4dd",
-    "size": 38739
+    "hash": "46e1935a",
+    "size": 38558
    }
   },
   "monaco": {
@@ -1881,13 +1881,13 @@
    },
    "kotlin": {
     "url": "/components/monaco/kotlin/",
-    "hash": "1a3fd2be",
-    "size": 2158242
+    "hash": "5944529f",
+    "size": 2176359
    },
    "python": {
     "url": "/components/monaco/python/",
-    "hash": "38e2eeba",
-    "size": 4392
+    "hash": "8e57aabe",
+    "size": 4241
    }
   },
   "mongolia": {
@@ -1898,13 +1898,13 @@
    },
    "kotlin": {
     "url": "/components/mongolia/kotlin/",
-    "hash": "ea4b4252",
-    "size": 2162764
+    "hash": "0ba82e1f",
+    "size": 2181024
    },
    "python": {
     "url": "/components/mongolia/python/",
-    "hash": "551f9dad",
-    "size": 33774
+    "hash": "59c87120",
+    "size": 33597
    }
   },
   "montenegro": {
@@ -1915,13 +1915,13 @@
    },
    "kotlin": {
     "url": "/components/montenegro/kotlin/",
-    "hash": "cfdd38fb",
-    "size": 2227366
+    "hash": "d6d6fd09",
+    "size": 2245739
    },
    "python": {
     "url": "/components/montenegro/python/",
-    "hash": "fc676b14",
-    "size": 80243
+    "hash": "dd378d88",
+    "size": 80094
    }
   },
   "morocco": {
@@ -1932,13 +1932,13 @@
    },
    "kotlin": {
     "url": "/components/morocco/kotlin/",
-    "hash": "3c930c77",
-    "size": 2222191
+    "hash": "7cb08c9e",
+    "size": 2239892
    },
    "python": {
     "url": "/components/morocco/python/",
-    "hash": "ec5adb58",
-    "size": 58443
+    "hash": "8b12b4df",
+    "size": 58261
    }
   },
   "mozambique": {
@@ -1949,13 +1949,13 @@
    },
    "kotlin": {
     "url": "/components/mozambique/kotlin/",
-    "hash": "727b6f87",
-    "size": 2289409
+    "hash": "7a173999",
+    "size": 2307590
    },
    "python": {
     "url": "/components/mozambique/python/",
-    "hash": "429490b7",
-    "size": 158404
+    "hash": "6942a950",
+    "size": 158264
    }
   },
   "myanmar": {
@@ -1966,13 +1966,13 @@
    },
    "kotlin": {
     "url": "/components/myanmar/kotlin/",
-    "hash": "d196f47f",
-    "size": 2158379
+    "hash": "e6295b6c",
+    "size": 2176554
    },
    "python": {
     "url": "/components/myanmar/python/",
-    "hash": "1f203a41",
-    "size": 4919
+    "hash": "a699f038",
+    "size": 4746
    }
   },
   "namibia": {
@@ -1983,13 +1983,13 @@
    },
    "kotlin": {
     "url": "/components/namibia/kotlin/",
-    "hash": "d722dc66",
-    "size": 2154094
+    "hash": "ca3d3d49",
+    "size": 2172219
    },
    "python": {
     "url": "/components/namibia/python/",
-    "hash": "caed9bc2",
-    "size": 5156
+    "hash": "14e65a75",
+    "size": 4984
    }
   },
   "nauru": {
@@ -2000,13 +2000,13 @@
    },
    "kotlin": {
     "url": "/components/nauru/kotlin/",
-    "hash": "48f05d91",
-    "size": 2126881
+    "hash": "fec78528",
+    "size": 2145010
    },
    "python": {
     "url": "/components/nauru/python/",
-    "hash": "4bc88caf",
-    "size": 3324
+    "hash": "3767a773",
+    "size": 3142
    }
   },
   "nepal": {
@@ -2017,13 +2017,13 @@
    },
    "kotlin": {
     "url": "/components/nepal/kotlin/",
-    "hash": "768ade7e",
-    "size": 2167577
+    "hash": "cd8998ee",
+    "size": 2185658
    },
    "python": {
     "url": "/components/nepal/python/",
-    "hash": "c0ede60a",
-    "size": 4874
+    "hash": "206620de",
+    "size": 4696
    }
   },
   "netherlands": {
@@ -2034,13 +2034,13 @@
    },
    "kotlin": {
     "url": "/components/netherlands/kotlin/",
-    "hash": "50f71fa1",
-    "size": 2166839
+    "hash": "b8246c43",
+    "size": 2185056
    },
    "python": {
     "url": "/components/netherlands/python/",
-    "hash": "1d24fadd",
-    "size": 4345
+    "hash": "199156ed",
+    "size": 4204
    }
   },
   "new-zealand": {
@@ -2051,13 +2051,13 @@
    },
    "kotlin": {
     "url": "/components/new-zealand/kotlin/",
-    "hash": "68b81686",
-    "size": 2133037
+    "hash": "c880eee8",
+    "size": 2151273
    },
    "python": {
     "url": "/components/new-zealand/python/",
-    "hash": "ad57732e",
-    "size": 3429
+    "hash": "cf69330a",
+    "size": 3252
    }
   },
   "nicaragua": {
@@ -2068,13 +2068,13 @@
    },
    "kotlin": {
     "url": "/components/nicaragua/kotlin/",
-    "hash": "c8c03788",
-    "size": 2131120
+    "hash": "73e5a931",
+    "size": 2149298
    },
    "python": {
     "url": "/components/nicaragua/python/",
-    "hash": "148d74f5",
-    "size": 3526
+    "hash": "cc1d9e55",
+    "size": 3386
    }
   },
   "niger": {
@@ -2085,13 +2085,13 @@
    },
    "kotlin": {
     "url": "/components/niger/kotlin/",
-    "hash": "20651702",
-    "size": 2155103
+    "hash": "1461522f",
+    "size": 2173307
    },
    "python": {
     "url": "/components/niger/python/",
-    "hash": "5fb7dda2",
-    "size": 13733
+    "hash": "66142f4f",
+    "size": 13590
    }
   },
   "nigeria": {
@@ -2102,30 +2102,30 @@
    },
    "kotlin": {
     "url": "/components/nigeria/kotlin/",
-    "hash": "aa203387",
-    "size": 2145646
+    "hash": "b8bdf25c",
+    "size": 2163818
    },
    "python": {
     "url": "/components/nigeria/python/",
-    "hash": "230488a9",
-    "size": 3709
+    "hash": "347b67fd",
+    "size": 3539
    }
   },
   "north-korea": {
    "typescript": {
     "url": "/components/north-korea/typescript/",
-    "hash": "285a67a8",
-    "size": 16669
+    "hash": "96e784f1",
+    "size": 26571
    },
    "kotlin": {
     "url": "/components/north-korea/kotlin/",
-    "hash": "5ac34f70",
-    "size": 2154510
+    "hash": "bf7dec50",
+    "size": 2172757
    },
    "python": {
     "url": "/components/north-korea/python/",
-    "hash": "70b6722a",
-    "size": 6632
+    "hash": "b7ccbae3",
+    "size": 6375
    }
   },
   "north-macedonia": {
@@ -2136,13 +2136,13 @@
    },
    "kotlin": {
     "url": "/components/north-macedonia/kotlin/",
-    "hash": "731aca9a",
-    "size": 2148221
+    "hash": "ee30b249",
+    "size": 2166626
    },
    "python": {
     "url": "/components/north-macedonia/python/",
-    "hash": "31e696c3",
-    "size": 4808
+    "hash": "3d859104",
+    "size": 4630
    }
   },
   "norway": {
@@ -2153,13 +2153,13 @@
    },
    "kotlin": {
     "url": "/components/norway/kotlin/",
-    "hash": "085ef105",
-    "size": 2144304
+    "hash": "9176b5da",
+    "size": 2162452
    },
    "python": {
     "url": "/components/norway/python/",
-    "hash": "1ee11caa",
-    "size": 4737
+    "hash": "80c9b228",
+    "size": 4600
    }
   },
   "pakistan": {
@@ -2170,13 +2170,13 @@
    },
    "kotlin": {
     "url": "/components/pakistan/kotlin/",
-    "hash": "9d1acacb",
-    "size": 2231137
+    "hash": "dcea63e3",
+    "size": 2249372
    },
    "python": {
     "url": "/components/pakistan/python/",
-    "hash": "94ec6fe0",
-    "size": 96174
+    "hash": "0ad2763e",
+    "size": 96033
    }
   },
   "palau": {
@@ -2187,13 +2187,13 @@
    },
    "kotlin": {
     "url": "/components/palau/kotlin/",
-    "hash": "87b2bfdf",
-    "size": 2157673
+    "hash": "1add6568",
+    "size": 2175844
    },
    "python": {
     "url": "/components/palau/python/",
-    "hash": "ee6f3c43",
-    "size": 4946
+    "hash": "b387dae0",
+    "size": 4808
    }
   },
   "palestine": {
@@ -2204,13 +2204,13 @@
    },
    "kotlin": {
     "url": "/components/palestine/kotlin/",
-    "hash": "077aa67d",
-    "size": 2190177
+    "hash": "d79d31a0",
+    "size": 2208334
    },
    "python": {
     "url": "/components/palestine/python/",
-    "hash": "760b60af",
-    "size": 23913
+    "hash": "4286ca41",
+    "size": 23731
    }
   },
   "panama": {
@@ -2221,13 +2221,13 @@
    },
    "kotlin": {
     "url": "/components/panama/kotlin/",
-    "hash": "0202454c",
-    "size": 2127018
+    "hash": "c5b522c4",
+    "size": 2145173
    },
    "python": {
     "url": "/components/panama/python/",
-    "hash": "f2a64089",
-    "size": 3255
+    "hash": "93edf667",
+    "size": 3068
    }
   },
   "papua-new-guinea": {
@@ -2238,13 +2238,13 @@
    },
    "kotlin": {
     "url": "/components/papua-new-guinea/kotlin/",
-    "hash": "f768733a",
-    "size": 2136377
+    "hash": "1155c4b8",
+    "size": 2154225
    },
    "python": {
     "url": "/components/papua-new-guinea/python/",
-    "hash": "9ed705e6",
-    "size": 3983
+    "hash": "8e6aa0db",
+    "size": 3801
    }
   },
   "paraguay": {
@@ -2255,13 +2255,13 @@
    },
    "kotlin": {
     "url": "/components/paraguay/kotlin/",
-    "hash": "d8870582",
-    "size": 2125646
+    "hash": "31175522",
+    "size": 2143745
    },
    "python": {
     "url": "/components/paraguay/python/",
-    "hash": "f7c3cdbd",
-    "size": 2954
+    "hash": "1e88f4c3",
+    "size": 2774
    }
   },
   "peru": {
@@ -2272,13 +2272,13 @@
    },
    "kotlin": {
     "url": "/components/peru/kotlin/",
-    "hash": "7df5895e",
-    "size": 2161529
+    "hash": "2908e89f",
+    "size": 2179695
    },
    "python": {
     "url": "/components/peru/python/",
-    "hash": "1b7d6491",
-    "size": 4777
+    "hash": "a193c74a",
+    "size": 4547
    }
   },
   "philippines": {
@@ -2289,13 +2289,13 @@
    },
    "kotlin": {
     "url": "/components/philippines/kotlin/",
-    "hash": "9af5fed7",
-    "size": 2231959
+    "hash": "a7fce555",
+    "size": 2250145
    },
    "python": {
     "url": "/components/philippines/python/",
-    "hash": "4a85f082",
-    "size": 6694
+    "hash": "64df9701",
+    "size": 6465
    }
   },
   "poland": {
@@ -2306,13 +2306,13 @@
    },
    "kotlin": {
     "url": "/components/poland/kotlin/",
-    "hash": "d27a44f8",
-    "size": 2171625
+    "hash": "32ade0c3",
+    "size": 2189877
    },
    "python": {
     "url": "/components/poland/python/",
-    "hash": "4ff34255",
-    "size": 6784
+    "hash": "0dd1127b",
+    "size": 6554
    }
   },
   "polynesia": {
@@ -2323,13 +2323,13 @@
    },
    "kotlin": {
     "url": "/components/polynesia/kotlin/",
-    "hash": "cf7028fa",
-    "size": 2149806
+    "hash": "68b9552e",
+    "size": 2168057
    },
    "python": {
     "url": "/components/polynesia/python/",
-    "hash": "c4bab455",
-    "size": 5909
+    "hash": "3c328e2f",
+    "size": 5419
    }
   },
   "portugal": {
@@ -2340,13 +2340,13 @@
    },
    "kotlin": {
     "url": "/components/portugal/kotlin/",
-    "hash": "551008bd",
-    "size": 2150983
+    "hash": "d25c0fda",
+    "size": 2169139
    },
    "python": {
     "url": "/components/portugal/python/",
-    "hash": "29e17665",
-    "size": 4581
+    "hash": "7f7051c4",
+    "size": 4401
    }
   },
   "republic-of-ireland": {
@@ -2357,13 +2357,13 @@
    },
    "kotlin": {
     "url": "/components/republic-of-ireland/kotlin/",
-    "hash": "d566e9ab",
-    "size": 2139303
+    "hash": "7fef3a5a",
+    "size": 2157642
    },
    "python": {
     "url": "/components/republic-of-ireland/python/",
-    "hash": "df5e0d57",
-    "size": 4252
+    "hash": "29868904",
+    "size": 4081
    }
   },
   "republic-of-the-congo": {
@@ -2374,13 +2374,13 @@
    },
    "kotlin": {
     "url": "/components/republic-of-the-congo/kotlin/",
-    "hash": "06d46918",
-    "size": 2139872
+    "hash": "e70cde37",
+    "size": 2158252
    },
    "python": {
     "url": "/components/republic-of-the-congo/python/",
-    "hash": "d700e84b",
-    "size": 15972
+    "hash": "2dee6699",
+    "size": 15785
    }
   },
   "romania": {
@@ -2391,13 +2391,13 @@
    },
    "kotlin": {
     "url": "/components/romania/kotlin/",
-    "hash": "14367760",
-    "size": 2159319
+    "hash": "c7509ea4",
+    "size": 2177482
    },
    "python": {
     "url": "/components/romania/python/",
-    "hash": "f29ae567",
-    "size": 4881
+    "hash": "74dd1b70",
+    "size": 4736
    }
   },
   "russia": {
@@ -2408,13 +2408,13 @@
    },
    "kotlin": {
     "url": "/components/russia/kotlin/",
-    "hash": "31a7aa01",
-    "size": 2582737
+    "hash": "d37ed567",
+    "size": 2600985
    },
    "python": {
     "url": "/components/russia/python/",
-    "hash": "a45cfa88",
-    "size": 199771
+    "hash": "dc4ed894",
+    "size": 198985
    }
   },
   "rwanda": {
@@ -2425,13 +2425,13 @@
    },
    "kotlin": {
     "url": "/components/rwanda/kotlin/",
-    "hash": "d56c16cd",
-    "size": 2122713
+    "hash": "a9ab0c9d",
+    "size": 2140727
    },
    "python": {
     "url": "/components/rwanda/python/",
-    "hash": "a8a38b3a",
-    "size": 2727
+    "hash": "28a3f048",
+    "size": 2584
    }
   },
   "sahara": {
@@ -2442,13 +2442,13 @@
    },
    "kotlin": {
     "url": "/components/sahara/kotlin/",
-    "hash": "f5af577e",
-    "size": 2135368
+    "hash": "7b2a5d1a",
+    "size": 2153470
    },
    "python": {
     "url": "/components/sahara/python/",
-    "hash": "8f8451fd",
-    "size": 3633
+    "hash": "2ab6e95a",
+    "size": 3475
    }
   },
   "saint-helena": {
@@ -2459,13 +2459,13 @@
    },
    "kotlin": {
     "url": "/components/saint-helena/kotlin/",
-    "hash": "908f19ff",
-    "size": 2137945
+    "hash": "7cfa7c19",
+    "size": 2156229
    },
    "python": {
     "url": "/components/saint-helena/python/",
-    "hash": "77f089f9",
-    "size": 4719
+    "hash": "b7a294b8",
+    "size": 4410
    }
   },
   "saint-kitts-and-nevis": {
@@ -2476,13 +2476,13 @@
    },
    "kotlin": {
     "url": "/components/saint-kitts-and-nevis/kotlin/",
-    "hash": "969af6da",
-    "size": 2122013
+    "hash": "d6340b66",
+    "size": 2140334
    },
    "python": {
     "url": "/components/saint-kitts-and-nevis/python/",
-    "hash": "69d7eb8e",
-    "size": 3111
+    "hash": "7855892f",
+    "size": 2968
    }
   },
   "saint-lucia": {
@@ -2493,13 +2493,13 @@
    },
    "kotlin": {
     "url": "/components/saint-lucia/kotlin/",
-    "hash": "cb00bfe5",
-    "size": 2129812
+    "hash": "5f71c9c2",
+    "size": 2147947
    },
    "python": {
     "url": "/components/saint-lucia/python/",
-    "hash": "eba82b32",
-    "size": 3293
+    "hash": "63bd1190",
+    "size": 3148
    }
   },
   "saint-vincent-and-the-grenadines": {
@@ -2510,30 +2510,30 @@
    },
    "kotlin": {
     "url": "/components/saint-vincent-and-the-grenadines/kotlin/",
-    "hash": "fb7ac726",
-    "size": 2123180
+    "hash": "b582773f",
+    "size": 2141745
    },
    "python": {
     "url": "/components/saint-vincent-and-the-grenadines/python/",
-    "hash": "d49666c4",
-    "size": 3317
+    "hash": "88449a1b",
+    "size": 3163
    }
   },
   "samoa": {
    "typescript": {
     "url": "/components/samoa/typescript/",
-    "hash": "233c536d",
-    "size": 9149
+    "hash": "8b07066c",
+    "size": 19051
    },
    "kotlin": {
     "url": "/components/samoa/kotlin/",
-    "hash": "c9ecb74a",
-    "size": 2125951
+    "hash": "6ee296ac",
+    "size": 2144115
    },
    "python": {
     "url": "/components/samoa/python/",
-    "hash": "62327a33",
-    "size": 3179
+    "hash": "065784ef",
+    "size": 3034
    }
   },
   "san-marino": {
@@ -2544,13 +2544,13 @@
    },
    "kotlin": {
     "url": "/components/san-marino/kotlin/",
-    "hash": "ea65c0ce",
-    "size": 2315014
+    "hash": "efe40815",
+    "size": 2333103
    },
    "python": {
     "url": "/components/san-marino/python/",
-    "hash": "2d891662",
-    "size": 179869
+    "hash": "6f40344f",
+    "size": 179726
    }
   },
   "senegal": {
@@ -2561,13 +2561,13 @@
    },
    "kotlin": {
     "url": "/components/senegal/kotlin/",
-    "hash": "c2352ebd",
-    "size": 2143066
+    "hash": "275ea786",
+    "size": 2161135
    },
    "python": {
     "url": "/components/senegal/python/",
-    "hash": "c9f7c0ed",
-    "size": 4456
+    "hash": "7a123777",
+    "size": 4310
    }
   },
   "serbia": {
@@ -2578,13 +2578,13 @@
    },
    "kotlin": {
     "url": "/components/serbia/kotlin/",
-    "hash": "c0648af2",
-    "size": 2357248
+    "hash": "58888138",
+    "size": 2375379
    },
    "python": {
     "url": "/components/serbia/python/",
-    "hash": "f360c636",
-    "size": 134112
+    "hash": "cd725235",
+    "size": 133903
    }
   },
   "seychelles": {
@@ -2595,13 +2595,13 @@
    },
    "kotlin": {
     "url": "/components/seychelles/kotlin/",
-    "hash": "09d93f5c",
-    "size": 2124860
+    "hash": "86df1f74",
+    "size": 2142958
    },
    "python": {
     "url": "/components/seychelles/python/",
-    "hash": "48052b7c",
-    "size": 2940
+    "hash": "908988dd",
+    "size": 2795
    }
   },
   "singapore": {
@@ -2612,13 +2612,13 @@
    },
    "kotlin": {
     "url": "/components/singapore/kotlin/",
-    "hash": "c01b7680",
-    "size": 2146519
+    "hash": "2013c929",
+    "size": 2164789
    },
    "python": {
     "url": "/components/singapore/python/",
-    "hash": "e0f4d100",
-    "size": 4343
+    "hash": "a14b94f1",
+    "size": 4169
    }
   },
   "slovakia": {
@@ -2629,13 +2629,13 @@
    },
    "kotlin": {
     "url": "/components/slovakia/kotlin/",
-    "hash": "7e16349c",
-    "size": 2186509
+    "hash": "bb9862ee",
+    "size": 2204588
    },
    "python": {
     "url": "/components/slovakia/python/",
-    "hash": "833c456e",
-    "size": 34169
+    "hash": "94ab19ae",
+    "size": 34025
    }
   },
   "slovenia": {
@@ -2646,13 +2646,13 @@
    },
    "kotlin": {
     "url": "/components/slovenia/kotlin/",
-    "hash": "41e0bac9",
-    "size": 2140901
+    "hash": "402a83db",
+    "size": 2159087
    },
    "python": {
     "url": "/components/slovenia/python/",
-    "hash": "b8bc1854",
-    "size": 4175
+    "hash": "f2669c97",
+    "size": 4034
    }
   },
   "solomon-islands": {
@@ -2663,13 +2663,13 @@
    },
    "kotlin": {
     "url": "/components/solomon-islands/kotlin/",
-    "hash": "d9ab4dc1",
-    "size": 2123586
+    "hash": "a34ac680",
+    "size": 2141773
    },
    "python": {
     "url": "/components/solomon-islands/python/",
-    "hash": "7fdf4a6b",
-    "size": 2973
+    "hash": "cb7d41ff",
+    "size": 2829
    }
   },
   "somalia": {
@@ -2680,13 +2680,13 @@
    },
    "kotlin": {
     "url": "/components/somalia/kotlin/",
-    "hash": "65dfb0e6",
-    "size": 2210317
+    "hash": "b19380f3",
+    "size": 2228389
    },
    "python": {
     "url": "/components/somalia/python/",
-    "hash": "cb677b5d",
-    "size": 74611
+    "hash": "71eff458",
+    "size": 74372
    }
   },
   "south-africa": {
@@ -2697,13 +2697,13 @@
    },
    "kotlin": {
     "url": "/components/south-africa/kotlin/",
-    "hash": "71ea62e7",
-    "size": 2132312
+    "hash": "e8ec2e3d",
+    "size": 2150511
    },
    "python": {
     "url": "/components/south-africa/python/",
-    "hash": "637b8f50",
-    "size": 3643
+    "hash": "c891ce4e",
+    "size": 3501
    }
   },
   "south-sudan": {
@@ -2714,13 +2714,13 @@
    },
    "kotlin": {
     "url": "/components/south-sudan/kotlin/",
-    "hash": "d7e2564b",
-    "size": 2131734
+    "hash": "fe4e0d89",
+    "size": 2149837
    },
    "python": {
     "url": "/components/south-sudan/python/",
-    "hash": "b5724087",
-    "size": 3130
+    "hash": "9d167b86",
+    "size": 2978
    }
   },
   "sovereign-military-order-of-malta": {
@@ -2731,13 +2731,13 @@
    },
    "kotlin": {
     "url": "/components/sovereign-military-order-of-malta/kotlin/",
-    "hash": "8c108685",
-    "size": 2117868
+    "hash": "c534176d",
+    "size": 2136009
    },
    "python": {
     "url": "/components/sovereign-military-order-of-malta/python/",
-    "hash": "0a2ec365",
-    "size": 3326
+    "hash": "01b3fa42",
+    "size": 3170
    }
   },
   "spain": {
@@ -2748,13 +2748,13 @@
    },
    "kotlin": {
     "url": "/components/spain/kotlin/",
-    "hash": "81a3d913",
-    "size": 2206337
+    "hash": "da7d3834",
+    "size": 2224534
    },
    "python": {
     "url": "/components/spain/python/",
-    "hash": "0e76cb9c",
-    "size": 7745
+    "hash": "ec44f5d6",
+    "size": 7322
    }
   },
   "sri-lanka": {
@@ -2765,13 +2765,13 @@
    },
    "kotlin": {
     "url": "/components/sri-lanka/kotlin/",
-    "hash": "ca7c5545",
-    "size": 2315680
+    "hash": "7de684db",
+    "size": 2333786
    },
    "python": {
     "url": "/components/sri-lanka/python/",
-    "hash": "6523a7a2",
-    "size": 189740
+    "hash": "b3ebfe44",
+    "size": 189565
    }
   },
   "sudan": {
@@ -2782,13 +2782,13 @@
    },
    "kotlin": {
     "url": "/components/sudan/kotlin/",
-    "hash": "25e5d493",
-    "size": 2128681
+    "hash": "61cfa583",
+    "size": 2146773
    },
    "python": {
     "url": "/components/sudan/python/",
-    "hash": "ff9f3ddf",
-    "size": 3486
+    "hash": "6780f3b8",
+    "size": 3307
    }
   },
   "suriname": {
@@ -2799,13 +2799,13 @@
    },
    "kotlin": {
     "url": "/components/suriname/kotlin/",
-    "hash": "7d03ae80",
-    "size": 2121832
+    "hash": "dc7a3c5a",
+    "size": 2139895
    },
    "python": {
     "url": "/components/suriname/python/",
-    "hash": "0807e90b",
-    "size": 2680
+    "hash": "bfc9159f",
+    "size": 2538
    }
   },
   "sweden": {
@@ -2816,13 +2816,13 @@
    },
    "kotlin": {
     "url": "/components/sweden/kotlin/",
-    "hash": "5d28df8c",
-    "size": 2142248
+    "hash": "2105be39",
+    "size": 2160356
    },
    "python": {
     "url": "/components/sweden/python/",
-    "hash": "65702b9e",
-    "size": 4250
+    "hash": "63adac97",
+    "size": 4075
    }
   },
   "switzerland": {
@@ -2833,13 +2833,13 @@
    },
    "kotlin": {
     "url": "/components/switzerland/kotlin/",
-    "hash": "0823489d",
-    "size": 2170834
+    "hash": "efedef07",
+    "size": 2189090
    },
    "python": {
     "url": "/components/switzerland/python/",
-    "hash": "efc89514",
-    "size": 9796
+    "hash": "ec3b8b49",
+    "size": 9624
    }
   },
   "syria": {
@@ -2850,13 +2850,13 @@
    },
    "kotlin": {
     "url": "/components/syria/kotlin/",
-    "hash": "ba5106d2",
-    "size": 2162574
+    "hash": "2c903203",
+    "size": 2180619
    },
    "python": {
     "url": "/components/syria/python/",
-    "hash": "46032471",
-    "size": 4351
+    "hash": "f43c550d",
+    "size": 4172
    }
   },
   "tanzania": {
@@ -2867,13 +2867,13 @@
    },
    "kotlin": {
     "url": "/components/tanzania/kotlin/",
-    "hash": "9c549e4c",
-    "size": 2133548
+    "hash": "6847f597",
+    "size": 2151692
    },
    "python": {
     "url": "/components/tanzania/python/",
-    "hash": "9b6de0b3",
-    "size": 3590
+    "hash": "67815f5e",
+    "size": 3409
    }
   },
   "thailand": {
@@ -2884,13 +2884,13 @@
    },
    "kotlin": {
     "url": "/components/thailand/kotlin/",
-    "hash": "7af6de99",
-    "size": 2149751
+    "hash": "9c6e9c6e",
+    "size": 2167919
    },
    "python": {
     "url": "/components/thailand/python/",
-    "hash": "1ba68d14",
-    "size": 4485
+    "hash": "a57787c4",
+    "size": 4302
    }
   },
   "timor-leste": {
@@ -2901,13 +2901,13 @@
    },
    "kotlin": {
     "url": "/components/timor-leste/kotlin/",
-    "hash": "a9a725d9",
-    "size": 2138679
+    "hash": "64de19db",
+    "size": 2156914
    },
    "python": {
     "url": "/components/timor-leste/python/",
-    "hash": "b893f6e7",
-    "size": 3931
+    "hash": "be64dd81",
+    "size": 3785
    }
   },
   "togo": {
@@ -2918,30 +2918,30 @@
    },
    "kotlin": {
     "url": "/components/togo/kotlin/",
-    "hash": "b46ef593",
-    "size": 2124689
+    "hash": "42130c3b",
+    "size": 2142706
    },
    "python": {
     "url": "/components/togo/python/",
-    "hash": "84e3d1dc",
-    "size": 3060
+    "hash": "5e7aa96f",
+    "size": 2914
    }
   },
   "tonga": {
    "typescript": {
     "url": "/components/tonga/typescript/",
-    "hash": "e718a209",
-    "size": 8508
+    "hash": "e2b2ebbd",
+    "size": 18390
    },
    "kotlin": {
     "url": "/components/tonga/kotlin/",
-    "hash": "e6c7777e",
-    "size": 2123381
+    "hash": "005fe86f",
+    "size": 2141422
    },
    "python": {
     "url": "/components/tonga/python/",
-    "hash": "0273aea1",
-    "size": 2985
+    "hash": "8ae24ac8",
+    "size": 2843
    }
   },
   "trinidad-and-tobago": {
@@ -2952,13 +2952,13 @@
    },
    "kotlin": {
     "url": "/components/trinidad-and-tobago/kotlin/",
-    "hash": "b659221e",
-    "size": 2129383
+    "hash": "65da91de",
+    "size": 2147643
    },
    "python": {
     "url": "/components/trinidad-and-tobago/python/",
-    "hash": "dcaf2cdf",
-    "size": 3635
+    "hash": "da97d67a",
+    "size": 3456
    }
   },
   "tunisia": {
@@ -2969,13 +2969,13 @@
    },
    "kotlin": {
     "url": "/components/tunisia/kotlin/",
-    "hash": "63a29396",
-    "size": 2147978
+    "hash": "2da848cb",
+    "size": 2166156
    },
    "python": {
     "url": "/components/tunisia/python/",
-    "hash": "393df50a",
-    "size": 4482
+    "hash": "14566afc",
+    "size": 4337
    }
   },
   "tuvalu": {
@@ -2986,13 +2986,13 @@
    },
    "kotlin": {
     "url": "/components/tuvalu/kotlin/",
-    "hash": "de814178",
-    "size": 2121880
+    "hash": "b268c30f",
+    "size": 2139961
    },
    "python": {
     "url": "/components/tuvalu/python/",
-    "hash": "500af14b",
-    "size": 2827
+    "hash": "e08f9a64",
+    "size": 2686
    }
   },
   "uganda": {
@@ -3003,13 +3003,13 @@
    },
    "kotlin": {
     "url": "/components/uganda/kotlin/",
-    "hash": "9523cb72",
-    "size": 2124147
+    "hash": "baeab42e",
+    "size": 2142160
    },
    "python": {
     "url": "/components/uganda/python/",
-    "hash": "979b72a1",
-    "size": 2830
+    "hash": "91869570",
+    "size": 2649
    }
   },
   "united-kingdom": {
@@ -3020,13 +3020,13 @@
    },
    "kotlin": {
     "url": "/components/united-kingdom/kotlin/",
-    "hash": "c54ad0a2",
-    "size": 2330127
+    "hash": "f3375546",
+    "size": 2348455
    },
    "python": {
     "url": "/components/united-kingdom/python/",
-    "hash": "6c2316d9",
-    "size": 121903
+    "hash": "85d229f2",
+    "size": 121474
    }
   },
   "uruguay": {
@@ -3037,13 +3037,13 @@
    },
    "kotlin": {
     "url": "/components/uruguay/kotlin/",
-    "hash": "9d0fa86c",
-    "size": 2163178
+    "hash": "329add2b",
+    "size": 2181208
    },
    "python": {
     "url": "/components/uruguay/python/",
-    "hash": "3cd188e3",
-    "size": 4552
+    "hash": "12c97890",
+    "size": 4383
    }
   },
   "vanuatu": {
@@ -3054,13 +3054,13 @@
    },
    "kotlin": {
     "url": "/components/vanuatu/kotlin/",
-    "hash": "dadcaf8c",
-    "size": 2159018
+    "hash": "48670d2e",
+    "size": 2177160
    },
    "python": {
     "url": "/components/vanuatu/python/",
-    "hash": "02333c50",
-    "size": 33526
+    "hash": "3fdb6393",
+    "size": 33346
    }
   },
   "vatican-city": {
@@ -3071,13 +3071,13 @@
    },
    "kotlin": {
     "url": "/components/vatican-city/kotlin/",
-    "hash": "b2d98472",
-    "size": 2126972
+    "hash": "ca654d54",
+    "size": 2145155
    },
    "python": {
     "url": "/components/vatican-city/python/",
-    "hash": "12a1152f",
-    "size": 3230
+    "hash": "7006a280",
+    "size": 3049
    }
   },
   "venezuela": {
@@ -3088,13 +3088,13 @@
    },
    "kotlin": {
     "url": "/components/venezuela/kotlin/",
-    "hash": "7fd689e8",
-    "size": 2134832
+    "hash": "d8b880eb",
+    "size": 2153018
    },
    "python": {
     "url": "/components/venezuela/python/",
-    "hash": "f257166c",
-    "size": 3981
+    "hash": "82d29608",
+    "size": 3849
    }
   },
   "vietnam": {
@@ -3105,13 +3105,13 @@
    },
    "kotlin": {
     "url": "/components/vietnam/kotlin/",
-    "hash": "a4895f3e",
-    "size": 2165116
+    "hash": "b4eeb3ee",
+    "size": 2183263
    },
    "python": {
     "url": "/components/vietnam/python/",
-    "hash": "fb5d3086",
-    "size": 5142
+    "hash": "90f6e724",
+    "size": 5000
    }
   },
   "yemen": {
@@ -3122,13 +3122,13 @@
    },
    "kotlin": {
     "url": "/components/yemen/kotlin/",
-    "hash": "9dc319af",
-    "size": 2275797
+    "hash": "5859cefe",
+    "size": 2293696
    },
    "python": {
     "url": "/components/yemen/python/",
-    "hash": "9982e9ac",
-    "size": 25121
+    "hash": "a85813a7",
+    "size": 24896
    }
   },
   "zambia": {
@@ -3139,13 +3139,13 @@
    },
    "kotlin": {
     "url": "/components/zambia/kotlin/",
-    "hash": "f940e6c8",
-    "size": 2122236
+    "hash": "3e1777a0",
+    "size": 2140254
    },
    "python": {
     "url": "/components/zambia/python/",
-    "hash": "3fe648e8",
-    "size": 2688
+    "hash": "92d26e98",
+    "size": 2542
    }
   },
   "zimbabwe": {
@@ -3156,13 +3156,13 @@
    },
    "kotlin": {
     "url": "/components/zimbabwe/kotlin/",
-    "hash": "458452de",
-    "size": 2125269
+    "hash": "c1d5e7b7",
+    "size": 2143399
    },
    "python": {
     "url": "/components/zimbabwe/python/",
-    "hash": "6a4328b9",
-    "size": 3146
+    "hash": "159eea2a",
+    "size": 2967
    }
   }
  }
