@@ -1,19 +1,19 @@
 {
  "version": 1,
- "generated": "2026-11-17T18:24:53Z",
+ "generated": "2026-11-17T20:46:53Z",
  "components": {
   "abkhazia": {
    "flutter": {
     "url": "/components/abkhazia/flutter/",
-    "hash": "55ede32a",
-    "size": 5316443
+    "hash": "2c10a0d6",
+    "size": 5334382
    }
   },
   "albania": {
    "flutter": {
     "url": "/components/albania/flutter/",
-    "hash": "7ffe28dc",
-    "size": 5130760
+    "hash": "3b44d7ef",
+    "size": 5149260
    },
    "typescript": {
     "url": "/components/albania/typescript/",
@@ -34,8 +34,8 @@
   "algeria": {
    "flutter": {
     "url": "/components/algeria/flutter/",
-    "hash": "af675202",
-    "size": 4980544
+    "hash": "c39d602a",
+    "size": 4988636
    },
    "typescript": {
     "url": "/components/algeria/typescript/",
@@ -56,8 +56,8 @@
   "andorra": {
    "flutter": {
     "url": "/components/andorra/flutter/",
-    "hash": "774323fc",
-    "size": 5113494
+    "hash": "01b230f3",
+    "size": 5122228
    },
    "typescript": {
     "url": "/components/andorra/typescript/",
@@ -78,8 +78,8 @@
   "angola": {
    "flutter": {
     "url": "/components/angola/flutter/",
-    "hash": "e76dc4ed",
-    "size": 4901283
+    "hash": "99b8d18e",
+    "size": 4910020
    },
    "typescript": {
     "url": "/components/angola/typescript/",
@@ -100,11 +100,16 @@
   "anguilla": {
    "flutter": {
     "url": "/components/anguilla/flutter/",
-    "hash": "c765893b",
-    "size": 5001406
+    "hash": "68b6e4a4",
+    "size": 5010075
    }
   },
   "antigua-and-barbuda": {
+   "flutter": {
+    "url": "/components/antigua-and-barbuda/flutter/",
+    "hash": "f85b644c",
+    "size": 5015783
+   },
    "typescript": {
     "url": "/components/antigua-and-barbuda/typescript/",
     "hash": "fbf85a00",
@@ -124,8 +129,8 @@
   "argentina": {
    "flutter": {
     "url": "/components/argentina/flutter/",
-    "hash": "4e26d480",
-    "size": 4909592
+    "hash": "68072da2",
+    "size": 4917849
    },
    "typescript": {
     "url": "/components/argentina/typescript/",
@@ -143,11 +148,18 @@
     "size": 1630
    }
   },
+  "ascension-island": {
+   "flutter": {
+    "url": "/components/ascension-island/flutter/",
+    "hash": "f928c972",
+    "size": 4907409
+   }
+  },
   "australia": {
    "flutter": {
     "url": "/components/australia/flutter/",
-    "hash": "351bb98c",
-    "size": 4915743
+    "hash": "4f475e86",
+    "size": 4923864
    },
    "typescript": {
     "url": "/components/australia/typescript/",
@@ -168,8 +180,8 @@
   "austria": {
    "flutter": {
     "url": "/components/austria/flutter/",
-    "hash": "103f23d2",
-    "size": 4961541
+    "hash": "2ff35cd4",
+    "size": 5181735
    },
    "typescript": {
     "url": "/components/austria/typescript/",
@@ -190,8 +202,8 @@
   "bahamas": {
    "flutter": {
     "url": "/components/bahamas/flutter/",
-    "hash": "5209a251",
-    "size": 4905159
+    "hash": "9bdf6705",
+    "size": 4913270
    },
    "typescript": {
     "url": "/components/bahamas/typescript/",
@@ -212,8 +224,8 @@
   "bangladesh": {
    "flutter": {
     "url": "/components/bangladesh/flutter/",
-    "hash": "b40a51bf",
-    "size": 4902297
+    "hash": "73ee6166",
+    "size": 4911027
    },
    "typescript": {
     "url": "/components/bangladesh/typescript/",
@@ -232,6 +244,11 @@
    }
   },
   "barbados": {
+   "flutter": {
+    "url": "/components/barbados/flutter/",
+    "hash": "a90978ca",
+    "size": 4908249
+   },
    "typescript": {
     "url": "/components/barbados/typescript/",
     "hash": "45c6d978",
@@ -248,7 +265,19 @@
     "size": 1565
    }
   },
+  "belarus": {
+   "flutter": {
+    "url": "/components/belarus/flutter/",
+    "hash": "47abf715",
+    "size": 5318191
+   }
+  },
   "belgium": {
+   "flutter": {
+    "url": "/components/belgium/flutter/",
+    "hash": "79e2e772",
+    "size": 4918617
+   },
    "typescript": {
     "url": "/components/belgium/typescript/",
     "hash": "05f4538b",
@@ -266,6 +295,11 @@
    }
   },
   "belize": {
+   "flutter": {
+    "url": "/components/belize/flutter/",
+    "hash": "4466782e",
+    "size": 5202354
+   },
    "typescript": {
     "url": "/components/belize/typescript/",
     "hash": "ed491009",
@@ -283,6 +317,11 @@
    }
   },
   "benin": {
+   "flutter": {
+    "url": "/components/benin/flutter/",
+    "hash": "b84d6d29",
+    "size": 4969109
+   },
    "typescript": {
     "url": "/components/benin/typescript/",
     "hash": "59ed74d1",
@@ -299,7 +338,19 @@
     "size": 10476
    }
   },
+  "bermuda": {
+   "flutter": {
+    "url": "/components/bermuda/flutter/",
+    "hash": "d8940a3e",
+    "size": 4962382
+   }
+  },
   "bhutan": {
+   "flutter": {
+    "url": "/components/bhutan/flutter/",
+    "hash": "c312f8c6",
+    "size": 4917909
+   },
    "typescript": {
     "url": "/components/bhutan/typescript/",
     "hash": "a8248f65",
@@ -317,6 +368,11 @@
    }
   },
   "bolivia": {
+   "flutter": {
+    "url": "/components/bolivia/flutter/",
+    "hash": "7479ca8f",
+    "size": 5390159
+   },
    "typescript": {
     "url": "/components/bolivia/typescript/",
     "hash": "69dfd51f",
@@ -331,6 +387,13 @@
     "url": "/components/bolivia/python/",
     "hash": "eae316af",
     "size": 256400
+   }
+  },
+  "bonaire": {
+   "flutter": {
+    "url": "/components/bonaire/flutter/",
+    "hash": "03f8f7aa",
+    "size": 4966559
    }
   },
   "bosnia-and-herzegovina": {
@@ -351,6 +414,11 @@
    }
   },
   "botswana": {
+   "flutter": {
+    "url": "/components/botswana/flutter/",
+    "hash": "ab08561f",
+    "size": 4908904
+   },
    "typescript": {
     "url": "/components/botswana/typescript/",
     "hash": "8c11eb9a",
@@ -368,6 +436,11 @@
    }
   },
   "brazil": {
+   "flutter": {
+    "url": "/components/brazil/flutter/",
+    "hash": "c2413a9b",
+    "size": 5133429
+   },
    "typescript": {
     "url": "/components/brazil/typescript/",
     "hash": "78ca58b0",
@@ -385,6 +458,11 @@
    }
   },
   "brunei": {
+   "flutter": {
+    "url": "/components/brunei/flutter/",
+    "hash": "ea043a0f",
+    "size": 4912746
+   },
    "typescript": {
     "url": "/components/brunei/typescript/",
     "hash": "4ec8a95a",
@@ -402,6 +480,11 @@
    }
   },
   "bulgaria": {
+   "flutter": {
+    "url": "/components/bulgaria/flutter/",
+    "hash": "54963500",
+    "size": 4917072
+   },
    "typescript": {
     "url": "/components/bulgaria/typescript/",
     "hash": "baad1caf",
@@ -436,6 +519,11 @@
    }
   },
   "burundi": {
+   "flutter": {
+    "url": "/components/burundi/flutter/",
+    "hash": "fe3a7534",
+    "size": 4911576
+   },
    "typescript": {
     "url": "/components/burundi/typescript/",
     "hash": "43dddd0b",
@@ -453,6 +541,11 @@
    }
   },
   "cambodia": {
+   "flutter": {
+    "url": "/components/cambodia/flutter/",
+    "hash": "2f42e485",
+    "size": 4913844
+   },
    "typescript": {
     "url": "/components/cambodia/typescript/",
     "hash": "c7fe239d",
@@ -470,6 +563,11 @@
    }
   },
   "cameroon": {
+   "flutter": {
+    "url": "/components/cameroon/flutter/",
+    "hash": "05c2e2e8",
+    "size": 5016854
+   },
    "typescript": {
     "url": "/components/cameroon/typescript/",
     "hash": "783d676d",
@@ -487,6 +585,11 @@
    }
   },
   "canada": {
+   "flutter": {
+    "url": "/components/canada/flutter/",
+    "hash": "40aaab58",
+    "size": 4969252
+   },
    "typescript": {
     "url": "/components/canada/typescript/",
     "hash": "8f2727b2",
@@ -571,7 +674,19 @@
     "size": 1653
    }
   },
+  "ceuta": {
+   "flutter": {
+    "url": "/components/ceuta/flutter/",
+    "hash": "f8cd55a3",
+    "size": 4917903
+   }
+  },
   "chad": {
+   "flutter": {
+    "url": "/components/chad/flutter/",
+    "hash": "643ec320",
+    "size": 4910963
+   },
    "typescript": {
     "url": "/components/chad/typescript/",
     "hash": "0908541f",
@@ -589,6 +704,11 @@
    }
   },
   "chile": {
+   "flutter": {
+    "url": "/components/chile/flutter/",
+    "hash": "134f1e4f",
+    "size": 4915272
+   },
    "typescript": {
     "url": "/components/chile/typescript/",
     "hash": "cb59a2a9",
@@ -606,6 +726,11 @@
    }
   },
   "china": {
+   "flutter": {
+    "url": "/components/china/flutter/",
+    "hash": "1f48daf7",
+    "size": 4917992
+   },
    "typescript": {
     "url": "/components/china/typescript/",
     "hash": "10cc3471",
@@ -623,6 +748,11 @@
    }
   },
   "colombia": {
+   "flutter": {
+    "url": "/components/colombia/flutter/",
+    "hash": "af86e6f9",
+    "size": 4921047
+   },
    "typescript": {
     "url": "/components/colombia/typescript/",
     "hash": "f34d7ede",
@@ -1084,8 +1214,8 @@
   "germany": {
    "flutter": {
     "url": "/components/germany/flutter/",
-    "hash": "a0380b99",
-    "size": 5020993
+    "hash": "b19620c2",
+    "size": 5029111
    },
    "typescript": {
     "url": "/components/germany/typescript/",

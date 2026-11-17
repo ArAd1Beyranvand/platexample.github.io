@@ -1108,6 +1108,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 --------------------------------------------------------------------------------
 async
+cli_util
 collection
 stream_channel
 typed_data
@@ -1352,6 +1353,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 --------------------------------------------------------------------------------
 characters
+ffi
 
 Copyright 2019, the Dart project authors. 
 
@@ -24340,7 +24342,6 @@ THE SOFTWARE.
 --------------------------------------------------------------------------------
 plugin_platform_interface
 url_launcher_platform_interface
-vector_graphics_codec
 
 Copyright 2013 The Flutter Authors. All rights reserved.
 
@@ -27312,6 +27313,7 @@ url_launcher_macos
 url_launcher_web
 url_launcher_windows
 vector_graphics
+vector_graphics_codec
 vector_graphics_compiler
 vector_math
 
